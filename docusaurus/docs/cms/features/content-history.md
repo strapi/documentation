@@ -12,7 +12,7 @@ tags:
 <GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 
 <Tldr>
-Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for a default of 14 days.
+Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for 14 days on the Growth plan and 90 days on the Enterprise plan.
 </Tldr>
 
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
@@ -38,7 +38,18 @@ To trace the actions performed by users of the admin panel, use [Audit Logs](/cm
 
 The only configurable aspect is how long versions are kept before they are deleted.
 
-Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and deletes every version older than the retention period. Regardless of the plan, versions are kept for a maximum of 90 days, counted from the creation date of each version.
+Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and deletes every version older than the retention period, counted from the creation date of each version.
+
+The retention period is defined by the license of your plan:
+
+| Plan | Retention period |
+|------|------------------|
+| CMS Growth | 14 days |
+| CMS Enterprise | 90 days |
+
+:::note
+Growth subscriptions that were active before the 14-day retention period was introduced keep their previous 30-day retention period.
+:::
 
 :::caution
 Versions deleted by the retention job cannot be recovered from the Content History interface.
