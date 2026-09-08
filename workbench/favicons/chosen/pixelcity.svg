@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="Pixel Docs City, a dimetric tile">
+  <rect width="32" height="32" fill="#221c2a"/>
+  <!-- the 2:1 ground tile the whole city is ruled on, with one tree on it -->
+  <path d="M2 20 L16 13 L30 20 L16 27 Z" fill="#47823c"/>
+  <path d="M2 20 L16 27 L16 29 L2 22 Z" fill="#2c6132"/>
+  <path d="M30 20 L16 27 L16 29 L30 22 Z" fill="#2c6132"/>
+  <rect x="15" y="14" width="2" height="5" fill="#4f3520"/>
+  <path d="M16 3 L22 13 L10 13 Z" fill="#6ba348"/>
+  <path d="M16 6 L21 13 L16 13 Z" fill="#2c6132"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="Carta Strapiana, the compass rose">
+  <rect width="32" height="32" fill="#f1e7d0"/>
+  <!-- the four-point rose, north struck in the chart's red -->
+  <path d="M16 1 L19 13 L16 16 L13 13 Z" fill="#8d2f22"/>
+  <path d="M31 16 L19 19 L16 16 L19 13 Z" fill="#2c2114"/>
+  <path d="M16 31 L13 19 L16 16 L19 19 Z" fill="#2c2114"/>
+  <path d="M1 16 L13 13 L16 16 L13 19 Z" fill="#4a3a24"/>
+  <circle cx="16" cy="16" r="2" fill="#f1e7d0"/>
+</svg>

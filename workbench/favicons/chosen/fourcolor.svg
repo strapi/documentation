@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Four-Color, Ben-Day dots and a bolt">
+  <rect width="32" height="32" fill="#ecdfc0"/>
+  <!-- a panel of halftone with one four-colour bolt through it -->
+  <g fill="#e0417f">
+    <rect x="3"  y="3"  width="2" height="2"/><rect x="9"  y="3"  width="2" height="2"/><rect x="15" y="3" width="2" height="2"/><rect x="21" y="3" width="2" height="2"/><rect x="27" y="3" width="2" height="2"/>
+    <rect x="6"  y="9"  width="2" height="2"/><rect x="12" y="9"  width="2" height="2"/><rect x="18" y="9" width="2" height="2"/><rect x="24" y="9" width="2" height="2"/>
+    <rect x="3"  y="15" width="2" height="2"/><rect x="9"  y="15" width="2" height="2"/><rect x="21" y="15" width="2" height="2"/><rect x="27" y="15" width="2" height="2"/>
+    <rect x="6"  y="21" width="2" height="2"/><rect x="12" y="21" width="2" height="2"/><rect x="18" y="21" width="2" height="2"/><rect x="24" y="21" width="2" height="2"/>
+    <rect x="3"  y="27" width="2" height="2"/><rect x="9"  y="27" width="2" height="2"/><rect x="15" y="27" width="2" height="2"/><rect x="21" y="27" width="2" height="2"/><rect x="27" y="27" width="2" height="2"/>
+  </g>
+  <path d="M20 1 L8 17 H15 L11 31 L25 13 H17 Z" fill="#e9c81f" stroke="#231c12" stroke-width="2"
+        stroke-linejoin="miter"/>
+</svg>

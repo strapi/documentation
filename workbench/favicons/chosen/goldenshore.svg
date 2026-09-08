@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Golden Shore, the low sun and its path">
+  <rect width="32" height="32" fill="#F0A860"/>
+  <rect x="0" y="17" width="32" height="15" fill="#0a2e3a"/>
+  <circle cx="16" cy="16" r="7" fill="#FFB65C"/>
+  <!-- the glitter path, which is what a low sun on water actually looks like -->
+  <g fill="#FFB65C">
+    <rect x="12" y="18" width="8"  height="2"/>
+    <rect x="11" y="21" width="10" height="2"/>
+    <rect x="9"  y="24" width="14" height="2"/>
+    <rect x="7"  y="27" width="18" height="2"/>
+    <rect x="5"  y="30" width="22" height="2"/>
+  </g>
+</svg>

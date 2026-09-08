@@ -60,7 +60,7 @@ one label at a time, and no regression.
 ## The Golden Shore
 
 - [ ] **The post-processing chain washes the colour out.** EffectComposer, GTAO, bloom and OutputPass are wired and reachable with `?fx=1`, but the first A/B against `?fx=0` came back flat and grey instead of golden: a colour-space or tone-mapping fault somewhere in the chain, not a look choice. Parked OFF by default until it is diagnosed. Isolating it needs a screenshot A/B, not a canvas readback: `drawImage` off a WebGL canvas without `preserveDrawingBuffer` returns pure black, which is how the first four measurements all read zero.
-- [ ] **Favicons.** Three proposals for the Design Lab and three for each world (asked 2026-09-08).
+- [ ] **The Design Lab's own favicon has nowhere to live.** The overprint was chosen and is waiting in `workbench/favicons/chosen/design-lab.svg`, but there is no portal page in the repo to hang it on. Install it when the portal exists.
 
 ## The Long Way Through
 
@@ -115,6 +115,10 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] The funnies and the botanist's stall stood too close to the landing. (2026-09-07: 11.1 and 5.8 tiles from spawn became 28.6 and 23.6; place2x2 learned the extra predicate place1 had.)
 - [x] The door prompts disagreed on case: the descriptive line under the title was sentence case on the sloop and capitals on the other five. (2026-09-07: all five follow the sloop now, case only, titles still capitals.)
 - [x] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. (2026-09-07: the lamplighter's yard now places after the harbour is measured and is constrained by proximity to the mooring, landing 9.4 tiles from the sloop.)
+
+## Across the lab
+
+- [x] Favicons, three proposals per subject. (2026-09-08: 24 marks, each in its own world's real palette read out of its own source. Judged at sixteen pixels in a tab, not on a plate; six failed that and were redrawn. Pierre chose eight; the seven worlds are installed and pushed, the lab's overprint waits for a portal to exist.)
 
 ## The Long Way Through
 

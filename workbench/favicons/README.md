@@ -32,3 +32,26 @@ Copy the chosen file next to that world's `index.html` and add one line to its h
 
 Safari wants a raster fallback for pinned tabs. If that matters, render 32x32 and 180x180
 PNGs from the same SVG so the drawing keeps one source of truth.
+
+## What was chosen, 2026-09-08
+
+`chosen/` holds the eight picks under the subject's own name, so nobody has to
+remember which numbered proposal won.
+
+| subject | chosen | installed |
+|---|---|---|
+| The Design Lab | the overprint | **not yet**: the portal page does not exist |
+| The Long Way Through | the walker and her lantern | `repo/experimental-design-longway` |
+| Pixel Docs City | the dimetric tile | `repo/experimental-design-pixelcity` |
+| The Herbarium | the pressed leaf | `repo/experimental-design-herbarium` |
+| FIRST LIGHT | the first sliver | `repo/experimental-design-firstlight` |
+| Carta Strapiana | the compass rose | `repo/experimental-design-carta` |
+| The Four-Color | Ben-Day dots and a bolt | `repo/experimental-design-fourcolor` |
+| The Golden Shore | the low sun and its path | `repo/experimental-design-goldenshore` |
+
+Each of the seven worlds now has `favicon.svg` beside its `index.html` and one
+`<link rel="icon">` in its head. The Golden Shore's replaced a placeholder plain
+circle that had been sitting inline in the head since that world was born.
+
+The Design Lab's overprint is waiting in `chosen/design-lab.svg`. When the portal
+is built, drop it in and link it the same way.
