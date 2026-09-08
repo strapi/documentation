@@ -77,51 +77,6 @@ function fanRatio(L) { return dist(L[LM.INDEX_TIP], L[LM.PINKY_TIP]) / handSize(
    happen. */
 const FAN_NEUTRAL = 0.89, FAN_DEADZONE = 0.15;
 
-/* A BRIEF PINCH IS A CLICK. Timing cannot be measured from this fixture: it
-   holds exactly two deliberate pinches, at 8.1s and 12.1s, both built to
-   test drag hysteresis, and nothing shorter but one incidental 667ms pinch
-   that was not a deliberate tap either. CLICK_MAX_MS instead follows the
-   platform convention for tap vs. long-press (iOS and Android both draw
-   that line at 500ms): 400ms sits comfortably under it, and more than 20x
-   under either real hold in the fixture, so no genuine drag can misread as
-   a click. CLICK_MAX_DIST IS measured: that one incidental still pinch
-   moves the palm at most 0.0224 of hand size from where it started over its
-   whole 667ms. 0.15 sits 6-7x above that natural jitter floor -- room for a
-   real hand's tremor during a fast tap -- while staying far under the 0.73
-   and 1.06 of hand size the two genuine holds accumulate once they actually
-   start dragging. */
-export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
-
-/* THE SWIPE. Recognised here, generally, on any open hand; what a `dismiss`
-   MEANS is decided entirely by whoever is listening (today: the hand-control
-   arming dialog, which reads it as decline; see firstlight.js). Lateral palm
-   speed, over hand size, per second -- the same ratio-to-hand-size rule as
-   everything else in this file. SWIPE_SPEED and SWIPE_FRAMES are held at the
-   values briefed: 1.0 units/s, sustained 4 frames, direction-consistent,
-   open hand only.
-
-   DISMISS IS OUTWARD, and outward depends on which hand it is: brushing
-   something away is an abduction, moving the arm away from the body's
-   midline, which costs less than crossing in front of yourself. For a
-   right hand that is rightward; for a left hand, leftward. The direction is
-   judged in SCREEN space, after hand/hands.js's own mirror (`rawX = 1 -
-   bx`), not in the raw landmark coordinates this file otherwise works in
-   throughout: a right hand moving to its own right is raw x DECREASING (the
-   camera sees you facing it) but screen x INCREASING, which is the
-   direction that actually reads as "outward" once mirrored for display.
-   Measuring in raw space instead would invert the sign and the gesture
-   would work backwards for everyone, so the flip is made explicit here
-   (screenSpeed = -rawSpeed) rather than left to be discovered by trial and
-   error. Handedness is read off the same frame the landmarks come from
-   (`h`); verified on the fixture: 1821 frames, one hand throughout,
-   labelled "Right" with zero flips, and across 389 two-hand frames the two
-   hands never once shared a label. A hand with no handedness reported (or a
-   source that never sends one) accepts a swipe in EITHER direction, still
-   requiring it stay consistent for the full streak: the direction only
-   exists to make the gesture comfortable, not to gate it shut when it is
-   simply unknown. */
-export const SWIPE_SPEED = 1.0, SWIPE_FRAMES = 4;
-
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
 function handSize(L) {
@@ -146,9 +101,7 @@ function fistCurl(L) {
    17). These four points are the rigid dorsal plate of the hand -- the part
    that does NOT fold when the fingers curl into a fist or draw together into
    a pinch. This is what the reticle is anchored to (see the report on the
-   old pinch-point anchor this replaced), what the click above measures its
-   "did the hand actually move" test from, and what the swipe below tracks
-   for lateral speed. */
+   old pinch-point anchor this replaced). */
 export function palmCentre(L) {
   const pts = [L[LM.WRIST], L[LM.INDEX_MCP], L[LM.MIDDLE_MCP], L[LM.PINKY_MCP]];
   return {
@@ -160,16 +113,6 @@ export function palmCentre(L) {
 export function makeGestureReader() {
   let present = false, pinched = false, fisted = false;
   let lastSeen = null;
-  // THE CLICK: captured at the instant a grab arms, read back at the instant
-  // it releases naturally. Never set on the fist-forced release below: a
-  // closing hand overriding a pinch is not a released click, it is a
-  // gesture changing its mind.
-  let grabStartT = null, grabStartPalm = null;
-  // THE SWIPE: a short streak counter, alive only while the hand reads
-  // open. swipeFired guards against firing `dismiss` on every frame of a
-  // streak that keeps qualifying past the fourth -- one swipe, one event.
-  let swipeStreak = 0, swipeDir = 0, swipeFired = false;
-  let lastPalmX = null, lastPalmT = null;
 
   return {
     state: () => ({ present, pinched, fisted }),
@@ -183,8 +126,6 @@ export function makeGestureReader() {
           if (pinched) { pinched = false; evs.push({ type: 'release', hand: null }); }
           if (fisted) fisted = false;
           if (present) { present = false; evs.push({ type: 'absent' }); }
-          grabStartT = null; grabStartPalm = null;
-          lastPalmX = null; lastPalmT = null; swipeStreak = 0; swipeDir = 0; swipeFired = false;
         }
         return evs;
       }
@@ -206,70 +147,24 @@ export function makeGestureReader() {
       if (!fisted && fc < FIST_ON) {
         fisted = true;
         evs.push({ type: 'lock', hand: primary.handedness });
-        if (pinched) {
-          pinched = false;
-          evs.push({ type: 'release', hand: primary.handedness });
-          // becoming a fist is the hand changing its mind, not a click
-          grabStartT = null; grabStartPalm = null;
-        }
+        if (pinched) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
       } else if (fisted && fc > FIST_OFF) {
         fisted = false;
       }
 
       if (!fisted) {
-        if (!pinched && pr < PINCH_ON) {
-          pinched = true;
-          grabStartT = t;
-          grabStartPalm = palmCentre(L);
-          evs.push({ type: 'grab', hand: primary.handedness });
-        } else if (pinched && pr > PINCH_OFF) {
-          pinched = false;
-          if (grabStartT !== null) {
-            const heldMs = (t - grabStartT) * 1000;
-            const moved = dist(palmCentre(L), grabStartPalm) / handSize(L);
-            if (heldMs <= CLICK_MAX_MS && moved <= CLICK_MAX_DIST) {
-              evs.push({ type: 'click' });
-            }
-          }
-          grabStartT = null; grabStartPalm = null;
-          evs.push({ type: 'release', hand: primary.handedness });
-        }
+        if (!pinched && pr < PINCH_ON) { pinched = true; evs.push({ type: 'grab', hand: primary.handedness }); }
+        else if (pinched && pr > PINCH_OFF) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
       }
 
-      // FAN (zoom rate) and SWIPE (dismiss): both read only on a hand that
-      // is, this frame, genuinely open -- neither pinched nor fisted -- so
-      // dragging or fisting never also spins the zoom or fires a dismiss.
+      // THE FAN (zoom rate): read only on a hand that is, this frame,
+      // genuinely open -- neither pinched nor fisted -- so dragging or
+      // fisting never also spins the zoom.
       if (!fisted && !pinched) {
         const dev = fanRatio(L) - FAN_NEUTRAL;
         if (Math.abs(dev) > FAN_DEADZONE) {
           evs.push({ type: 'fan', rate: dev > 0 ? dev - FAN_DEADZONE : dev + FAN_DEADZONE });
         }
-
-        const pc = palmCentre(L);
-        if (lastPalmX !== null && lastPalmT !== null && t > lastPalmT) {
-          const dt = t - lastPalmT;
-          const rawSpeed = ((pc.x - lastPalmX) / handSize(L)) / dt;
-          // screen space, not raw landmark space: see the comment on
-          // SWIPE_SPEED above for why this flip is not optional.
-          const screenSpeed = -rawSpeed;
-          const dir = screenSpeed > SWIPE_SPEED ? 1 : screenSpeed < -SWIPE_SPEED ? -1 : 0;
-          // outward for THIS hand: rightward (+1) for a hand labelled
-          // Right, leftward (-1) for one labelled Left, either direction
-          // (0, meaning "match whatever dir already is") for a hand with no
-          // handedness reported at all.
-          const wantDir = primary.handedness === 'Right' ? 1 : primary.handedness === 'Left' ? -1 : 0;
-          const qualifies = dir !== 0 && (wantDir === 0 || dir === wantDir);
-          if (qualifies && dir === swipeDir) swipeStreak++;
-          else { swipeStreak = qualifies ? 1 : 0; swipeDir = qualifies ? dir : 0; swipeFired = false; }
-          if (swipeStreak >= SWIPE_FRAMES && !swipeFired) {
-            swipeFired = true;
-            evs.push({ type: 'dismiss' });
-          }
-        }
-        lastPalmX = pc.x; lastPalmT = t;
-      } else {
-        lastPalmX = null; lastPalmT = null;
-        swipeStreak = 0; swipeDir = 0; swipeFired = false;
       }
 
       return evs;
