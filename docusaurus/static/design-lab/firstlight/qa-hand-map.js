@@ -194,6 +194,18 @@ const path = require('path');
       out.pipelineNoSnapBack = Math.abs(p2 - p1) < 0.05;
     }
 
+    // IMPORTANT 4: the hand's zoom bounds must match the world's own (0.06 to
+    // 8, see ZLN0/ZLN1 and the wheel handler in firstlight.js), not a
+    // separate pair the hand invented. A persisted assertion, replacing the
+    // throwaway script used to first prove this, so a future edit to either
+    // the hand's clamp or the world's constants cannot silently diverge.
+    fire('spread', { ratio: 50, start: true });
+    await settle();
+    out.zoomHighClamp = window.__handProbe.cam().ts;
+    fire('spread', { ratio: 0.001, start: true });
+    await settle();
+    out.zoomLowClamp = window.__handProbe.cam().ts;
+
     return out;
   });
 
@@ -212,10 +224,13 @@ const path = require('path');
   if (!r.startFlagRespected) fails.push('a spread event without start:true re-anchored the zoom base instead of continuing from it');
   if (!r.pipelineClimbed) fails.push(`full pipeline: gesture 1 did not raise the scale (s0 ${r.pipelineS0} -> s1 ${r.pipelineS1})`);
   if (!r.pipelineNoSnapBack) fails.push(`full pipeline: gesture 2's first frame snapped the scale back (s1 ${r.pipelineS1} -> s2 ${r.pipelineS2}, s0 was ${r.pipelineS0})`);
+  if (Math.abs(r.zoomHighClamp - 8) > 1e-6) fails.push(`an oversized spread ratio reached cam.ts=${r.zoomHighClamp}, wanted exactly 8`);
+  if (Math.abs(r.zoomLowClamp - 0.06) > 1e-6) fails.push(`an undersized spread ratio reached cam.ts=${r.zoomLowClamp}, wanted exactly 0.06`);
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
   console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
   console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   start flag respected ${r.startFlagRespected}   errors ${errors.length}`);
   console.log(`  full pipeline (source->hands.js->window->world): s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 after 400ms pause ${r.pipelineS2.toFixed(3)} (no snap-back ${r.pipelineNoSnapBack})`);
+  console.log(`  zoom bounds match the world's: high clamp ${r.zoomHighClamp} (want 8)   low clamp ${r.zoomLowClamp} (want 0.06)`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);
