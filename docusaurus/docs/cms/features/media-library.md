@@ -64,7 +64,7 @@ export default () => ({
 
 Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to go back to the previous UI: no asset, folder or setting is lost when you switch either way.
 
-The [Usage](#usage) section of this page describes the UI that is enabled by default, and the guided tour above shows it too. The new UI has its own page, [Media Library beta](/cms/features/media-library-beta). The [Configuration](#configuration) section applies to both.
+The [Usage](#usage) section of this page describes the UI that is enabled by default, and the guided tour above shows it too. While new UI is in beta, it is documented on its own page, [Media Library beta](/cms/features/media-library-beta). The [Configuration](#configuration) section applies to both.
 
 The flag changes the <Icon name="images" /> Media Library page of the admin panel, and adds the upload dialog described in [following upload progress](/cms/features/media-library-beta#upload-progress) to the whole admin panel. The following are not affected and still behave as documented:
 
