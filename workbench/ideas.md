@@ -57,6 +57,11 @@ was written as one binding condition of a wave, so each is buildable on its own;
 a time is fine. Every one of them must hold the world's existing laws: nothing gates the reading,
 one label at a time, and no regression.
 
+## The Golden Shore
+
+- [ ] **The post-processing chain washes the colour out.** EffectComposer, GTAO, bloom and OutputPass are wired and reachable with `?fx=1`, but the first A/B against `?fx=0` came back flat and grey instead of golden: a colour-space or tone-mapping fault somewhere in the chain, not a look choice. Parked OFF by default until it is diagnosed. Isolating it needs a screenshot A/B, not a canvas readback: `drawImage` off a WebGL canvas without `preserveDrawingBuffer` returns pure black, which is how the first four measurements all read zero.
+- [ ] **Favicons.** Three proposals for the Design Lab and three for each world (asked 2026-09-08).
+
 ## The Long Way Through
 
 - [ ] **The gorge echo.** Where the real relief forms a gorge, the whistle returns an echo, delayed by the width and pitch-shifted.
