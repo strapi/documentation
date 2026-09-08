@@ -12,7 +12,7 @@ tags:
 <GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 
 <Tldr>
-Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for 14 days on the Growth plan and 90 days on the Enterprise plan.
+Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for 14 days on the Growth plan and 30 days on the Enterprise plan.
 </Tldr>
 
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
@@ -42,13 +42,15 @@ Content History is not a permanent archive. Versions are deleted automatically: 
 
 The retention period is defined by the license of your plan:
 
-| Plan | Retention period |
-|------|------------------|
-| CMS Growth | 14 days |
-| CMS Enterprise | 90 days |
+| Plan | Default retention period | Maximum retention period |
+|------|--------------------------|--------------------------|
+| CMS Growth | 14 days | 14 days |
+| CMS Enterprise | 30 days | 90 days |
+
+The retention period cannot be extended on the Growth plan. On the Enterprise plan, contact the Strapi sales team to raise it up to 90 days.
 
 :::note
-Growth subscriptions that were active before the 14-day retention period was introduced keep their previous 30-day retention period.
+Growth projects that were already using a 30-day retention period when the 14-day default was introduced keep it until October 31, 2026.
 :::
 
 :::caution

@@ -340,7 +340,7 @@ The [Content History](/cms/features/content-history) feature can be configured w
 | `history.retentionDays`           | How long history versions are kept, in days.<br /><br />_The value can only shorten the retention period, see the note under the table._                                                            | integer       | Defined by the license                                                                                                              |
 
 :::note Retention days for Content History
-The `history.retentionDays` value is only taken into account if it is _smaller_ than the value stored in the license information. It cannot be used to keep history versions for longer than the license allows. The license sets the retention period to 14 days on the Growth plan and 90 days on the Enterprise plan (see [Content History](/cms/features/content-history#configuration)).
+The `history.retentionDays` value is only taken into account if it is _smaller_ than the value stored in the license information. It cannot be used to keep history versions for longer than the license allows. The license sets the retention period to 14 days on the Growth plan and 30 days on the Enterprise plan, where it can be raised up to a 90-day maximum (see [Content History](/cms/features/content-history#configuration)).
 :::
 
 ## Feature flags
