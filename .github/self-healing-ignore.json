@@ -1239,6 +1239,16 @@
       "number": 27448,
       "reason": "Router: Internal admin UI enhancement for drawer interaction behavior. The change modifies internal drawer component behavior (opt-in outside-click dismissal for the asset details drawer) but does not expose new user-facing APIs, configuration options, or public features. No documentation updates needed.",
       "added": "2026-09-04"
+    },
+    {
+      "number": 27565,
+      "reason": "Router: Internal error handling improvement in data transfer. Improves error messages shown to operators but doesn't change public-facing behavior or add new features requiring documentation",
+      "added": "2026-09-08"
+    },
+    {
+      "number": 27543,
+      "reason": "Router: Internal error handling fix for upload feature edge case. Prevents process crashes from fast-rejecting providers but doesn't change user-facing API or features",
+      "added": "2026-09-08"
     }
   ]
 }
