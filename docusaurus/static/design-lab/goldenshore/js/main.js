@@ -335,6 +335,16 @@ async function boot() {
       bloom: WORLD.bloomPass ? { strength: WORLD.bloomPass.strength, radius: WORLD.bloomPass.radius, threshold: WORLD.bloomPass.threshold } : null,
       dpr: WORLD.renderer.getPixelRatio(),
     }),
+    /* switch the whole chain in and out on a LIVE page. Two page loads cannot
+       A/B this world: its sun moves, so two loads are never the same hour, and
+       that confound is what produced a false "the composer washes the colour
+       out" verdict. One page, one sun, one frame state. */
+    fxBypass: (off) => {
+      if (off) { if (WORLD.composer) { WORLD.__fxHeld = WORLD.composer; WORLD.composer = null; } }
+      else if (WORLD.__fxHeld) { WORLD.composer = WORLD.__fxHeld; WORLD.__fxHeld = null; }
+      return !WORLD.composer;
+    },
+    sunNow: () => WORLD.sunElevation,
     setFx: (o) => {
       if (o.gtao !== undefined && WORLD.gtaoPass) WORLD.gtaoPass.enabled = o.gtao;
       if (o.aoBlend !== undefined && WORLD.gtaoPass) WORLD.gtaoPass.blendIntensity = o.aoBlend;

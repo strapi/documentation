@@ -1,5 +1,53 @@
 # The Golden Shore
 
+## 2026-09-08 · THE POST CHAIN, JUDGED AND CUT DOWN
+
+**The earlier verdict was wrong.** The note left yesterday said the chain washed the golden hour
+out to a flat grey. It did no such thing. The two frames compared came from two page loads, and
+this world's sun moves, so they were two different hours of the evening. A/B'd properly, on one
+page with the sun frozen and the composer switched in and out between two shots, the chain is
+about 7% brighter, 9% warmer and 7% less saturated, in the same direction at every vantage.
+
+That is not a fault. It is highlights being kept in half float and tone mapped, instead of
+clipping at 1.0 on the way into an 8-bit canvas. The composed frame is the more correct one.
+
+The tell that it was neither effect: **bloom alone and ambient occlusion alone moved the frame by
+the same 7% and 8%**, which no two different effects ever would. It was the round trip.
+
+**Two real defects came out of looking properly.** The composer's default target asks for no
+multisampling while the canvas is created with `antialias: true`, so switching the chain on threw
+every hard edge in the world away; the target is now built with `samples: 4`. And the earlier
+attempt to measure any of this by canvas readback returned pure black for four different pass
+combinations, because `drawImage` off a WebGL canvas without `preserveDrawingBuffer` always does.
+Screenshots, decoded in a second page, are the only honest reading.
+
+**What settles it is cost, not colour.** Walked over one route, on one page, switching passes:
+
+| | round trip | bloom | gtao | all of it | chain off | budget |
+|---|---|---|---|---|---|---|
+| dpr 1 | +0.3 ms | +2.2 ms | +7.2 ms | +8.8 ms | 9.0 ms | 16.7 ms |
+| dpr 2 | +7.1 ms | +7.1 ms | +21.3 ms | +36.3 ms | 13.3 ms | 16.7 ms |
+
+Bloom is cheap. Ambient occlusion is not worth seven milliseconds for contact shadows in a world
+lit this flatly. And at retina the bare round trip alone already spends half the frame.
+
+**So the chain ships with bloom only, and only where the pixel ratio leaves room for it.** On a
+retina Mac it does not run at all, which is stated rather than hidden: `WORLD.fxSkipped` says why.
+Bloom itself was retuned from 0.28 over a 0.9 threshold to **0.20 over 1.0**, so that only the sun
+disc, the water glitter and a lit lantern horn cross the line.
+
+| switch | effect |
+|---|---|
+| default | bloom, if the pixel ratio is 1.5 or under |
+| `?fx=0` | never compose |
+| `?fx=1` | compose whatever the ratio, for looking at the cost |
+| `?fx=ao` | add ambient occlusion, to see what seven milliseconds buys |
+
+**The honest conclusion for the PS4-era ambition**: post-processing is not where the remaining
+gain is in this world. Material maps are. Six normal maps and two roughness maps exist across the
+whole coast; that is the next thing worth doing.
+
+
 ## 2026-09-08 · THE FOOTSTEPS, SECOND BUILD
 
 The owner, on the first build: *"le son des pieds est toujours mauvais, ça ne ressemble
