@@ -311,6 +311,18 @@ By default Strapi webhooks can be triggered by the following events:
 Private fields are not sent in the payload.
 :::
 
+### Entry payload content
+
+For all entry events except `entry.delete` and `entry.unpublish`, the `entry` object contains the whole entry, with all its relations, media, components, and dynamic zones already populated. Repeatable components and dynamic zones are sent in their stored order, which is the order defined in the Content Manager.
+
+This population is not configurable: there is no option to choose which fields are populated, nor to change how they are sorted. The `webhooks.populateRelations` option of Strapi 4 was [removed in Strapi 5](/cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations).
+
+For the `entry.delete` and `entry.unpublish` events, the entry is not read again before the payload is sent, so relations, media, and components are usually not included.
+
+:::tip
+If you need a payload with a different content or structure, send the request yourself from a [lifecycle hook](/cms/backend-customization/models#lifecycle-hooks).
+:::
+
 ### Headers
 
 When a payload is delivered to your webhook's URL, it will contain specific headers:
