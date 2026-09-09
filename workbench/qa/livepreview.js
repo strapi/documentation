@@ -334,7 +334,13 @@ http.createServer((q, r) => {
     }
     const ext = path.extname(f);
     let body = d;
-    if (ext === '.html') {
+    /* THE RECORDER IS SERVED UNTOUCHED. Every other page gets the live-reload
+       script injected below, which reloads whenever that world's files change.
+       On FIRST LIGHT's hand-calibration recorder that would throw away an
+       unsaved clip in the middle of a take, and those takes cost the owner 70
+       seconds of performing gestures on cue. */
+    const noInject = /(^|\/)record\.html$/.test(rest);
+    if (ext === '.html' && !noInject) {
       /* skip when native: a build that carries its own __labback keeps it */
       const rawhtml = d.toString('utf8');
       let html = rawhtml.includes('__labback')
