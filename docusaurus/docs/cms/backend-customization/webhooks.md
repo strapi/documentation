@@ -314,11 +314,17 @@ Private fields are not sent in the payload.
 
 ### Entry payload content
 
-For all entry events except `entry.delete` and `entry.unpublish`, the `entry` object contains the whole entry, with all its relations, media, components, and dynamic zones already populated. Repeatable components and dynamic zones are sent in their stored order, which is the order defined in the Content Manager.
+Inside `entry`, `documentId` identifies the document while `id` identifies the version the event is about. A draft and its published version share the same `documentId` and have different `id` values, and discarding a draft creates a new version, so the `id` changes again.
+
+For all entry events except `entry.delete` and `entry.unpublish`, the entry is read again before the payload is sent, so it contains the whole entry, with all its relations, media, components, and dynamic zones populated. Repeatable components and dynamic zone items are sent in their stored order, which is the order defined in the Content Manager, and each of them carries its own `id`.
 
 This population is not configurable: there is no option to choose which fields are populated, nor to change how they are sorted. The `webhooks.populateRelations` option of Strapi 4 was [removed in Strapi 5](/cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations).
 
-For the `entry.delete` and `entry.unpublish` events, the entry is not read again before the payload is sent, so relations, media, and components are usually not included.
+The `entry.delete` and `entry.unpublish` events are not read again: their `entry` object is the one the deleting or unpublishing request itself returned. Deleting and unpublishing from the admin panel show what this means in practice: the `entry.unpublish` payload carries the fully populated entry, while the `entry.delete` payload carries only the fields of the entry itself.
+
+:::note
+A single action in the admin panel can trigger more than one event. Publishing an entry saves its draft first, so `entry.update` is sent just before `entry.publish`.
+:::
 
 :::tip
 If you need a payload with a different content or structure, send the request yourself from a [lifecycle hook](/cms/backend-customization/models#lifecycle-hooks).
