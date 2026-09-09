@@ -34,19 +34,13 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 ## 7.1.2
 
 <br />
-### <Icon name='sparkle' /> New content
-
-<br />
-
-#### CMS
-- [Move the beta Media Library usage documentation to its own page](https://github.com/strapi/documentation/pull/3450)
-
 ### <Icon name='pen-nib' /> Updated content
 
 <br />
 
 #### CMS
 - [Document the new beta Media Library UI](https://github.com/strapi/documentation/pull/3433)
+- [Move the beta Media Library usage documentation to its own page](https://github.com/strapi/documentation/pull/3450)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
