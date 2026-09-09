@@ -34,21 +34,14 @@ Last updated 2026-09-09.
 
 ## FIRST LIGHT, hand control
 
-- [ ] **DECIDE: the hand now has two modes, and you did not ask for that.** NAVIGATE aims, pinches
-  and drags; ZOOM spreads and closes. They are switched on a panel, bottom right, that the hand can
-  press by aiming and pinching, and that also carries a live status of what the tracker sees and a
-  CAMERA OFF button. The reason is real: the aperture band overlaps the pinch band, so one open hand
-  doing both had every gesture fighting its neighbour, which is most of what "the controls feel
-  wrong" was. The cost is equally real: it is a mode, and your own spec was one hand doing
-  everything. Judge it with your hand, and if you want it gone the relative zoom works without the
-  modes; it would just have to be suppressed while pinched.
-
-- [ ] **The controls feel wrong: dezooms easily, cannot re-zoom, dragging is hard.** WAITING ON HIS
-  HAND. The cause underneath all three symptoms is answered (see the archived zoom item: absolute
-  aperture, not an inverted sign), and zoom and drag no longer share one open hand at all, so
-  neither fights the other. What is left is a judgement only he can make. If it persists, the
-  remaining dials are ZOOM_GAIN, now named and derived in firstlight.js rather than a bare 2.4, the
-  aperture dead zone in hands.js at 0.025, and the drag gain.
+- [ ] **Re-test the whole vocabulary with your own hand.** WAITING ON HIM, and it is the only thing
+  left on this feature. Six causes have been found and fixed since he last touched it, five of them
+  measured off his own calibration clip rather than reasoned about, and the two that had been
+  reasoned about turned out to be wrong. Nothing is left to guess: what remains is whether it FEELS
+  right, which no probe can answer. If it does not, the dials are ZOOM_GAIN in firstlight.js (2.4,
+  one unhurried open of the hand covers the world's whole zoom range), the aperture dead zone in
+  hands.js (0.025), SWIPE_DIST in gestures.js (0.6 of a hand width in 0.25s, against his own
+  weakest deliberate brush at 0.82), and the drag gain.
 
 **The lesson, and it is the twelfth of the day.** Every test asserts that a positive deviation
 produces a positive rate, which is self-consistent whichever way the physical gesture actually maps.
@@ -69,9 +62,6 @@ Stage 1 shipped on `repo/experimental-design-firstlight` and the owner tested it
 vocabulary is being revised from that test. Decisions taken 2026-09-08, in his words where they
 were his:
 
-- [ ] **Zoom is too sensitive.** WAITING ON HIS EAR AND HIS HAND. One number governs it, as he
-  asked: ZOOM_GAIN in firstlight.js, at 2.4, derived so that one unhurried full open of the hand
-  covers this world's whole 0.06 to 8 range. Turn it down if that is still too fast.
 ## The Golden Shore
 
 - [ ] **The weather is a fixed script, and it should not be.** Four states exist and are good (`clear`, `sirocco`, `squall`, `mist`), but `stateAt()` runs the same ten-minute reel every visit in the same order at the same seconds: mist only on a 40 percent arrival coin, clear to 300 s, sirocco to 396, clear to 424, squall to 540, clear after. Asked 2026-09-08: make it genuinely varied, so it is not always windy, sometimes rains, sometimes storms, sometimes fogs. **No snow, it is a beach.** Two pieces: give the sequence real variability (weighted choice with sensible transitions and durations rather than a fixed reel), and add a proper thunderstorm, since `squall` is rain and wind with no lightning and no thunder. Any state can be previewed today with `?wx=clear|sirocco|squall|mist`.
@@ -248,6 +238,13 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] The carved notice could rise behind the landing card with mouse-dead answers. (2026-09-07: the card stands aside first, without the walker pick a real dismissal opens; YES verified hit-testable.)
 
 ## FIRST LIGHT, hand control
+
+- [x] DECIDE: the hand has two modes, and you did not ask for that. (2026-09-09: removed, on his answer, "je ne veux pas avoir a gerer 2 modes: j'elargis la main, ca zoom, je referme la main, ca dezoom". They existed because the aperture band overlapped the pinch band and every gesture fought its neighbour; the calibration clip settled that at the recogniser instead, by telling a real pinch from a flat closed hand on the aperture. The panel keeps what it is for: what the tracker sees, and a way to turn the camera off that needs no gesture.)
+- [x] The modal does not capture the consent: neither the brush nor the pinch does anything. (2026-09-09, commit 6541f0c6e: one root cause for both, and neither was where two evenings of reasoning had put it. The pinch never RELEASED: the band asked thumb-to-index back over 1.00 and his hand between two taps reads a median of 0.88, so one tap armed the grab and it never let go; five taps came out as two episodes, the second 3.1 seconds long. And the brush was gated on an unpinched hand, while he brushes with a relaxed one, thumb near the index, so 80 frames of that take were invisible to it. Both are measured off his clip now: five clicks from five taps, three dismisses from five brushes, and zero of either across 2061 frames of ordinary use.)
+- [x] I cannot pinch to select a page. (2026-09-09, commit 6541f0c6e: the release threshold above, plus a click that no longer depends on duration in either direction. A pinch that does not travel is a click however long it is held, which is the mouse's own rule; the 400ms cap was a touchscreen convention and one of his five taps ran to 733ms. His taps travel 0.027 to 0.054 of a hand width and his drags 1.00, so the bound sits at 0.25.)
+- [x] Closing the hand does not zoom out. (2026-09-09: closing the fingers brings the thumb in with them, so the gesture read a thumb-to-index median of 0.29, inside the pinch band, and the world grabbed the chart and went blind to the zoom for 76 of its 139 frames. The aperture separates them cleanly, 0.53 to 0.91 for a real pinch against 0.10 to 0.59 for the fingers closed, and it now gates arming a pinch. His aperture range for zoom is 0.50 closed, 0.97 at rest, 1.25 spread.)
+- [x] One misread label refuses the brush. (2026-09-09: the landmarker calls his hand Right 1172 times and Left 27, flipping six times, and the flips land during the fast movements, which is exactly when a brush happens. A single Left frame inverted the direction gate and refused the gesture. The last eight readings vote on it now, about a third of a second at his frame rate.)
+- [x] The recorder, and the test that never existed. (2026-09-09, commits 82b22ef5c, afad10479, dd6da3d2d: hand/record.html records eight labelled takes at his own pace, started with his other hand, landmarks only; qa-hand-calibration.js replays the result and asserts what his gestures actually do. Two of my own bugs in the swipe were only visible at the 23 fps his camera really runs at: a window that kept a sample from outside itself and then required the span to be inside it, and a glitch guard that refuses a genuinely fast hand.)
 - [x] The second hand does nothing. (2026-09-08: the landmarker asks for one hand, which is cheaper per frame and removes the question of which hand is primary.)
 - [x] An arming dialog that teaches the gestures, and is answered BY a gesture. (2026-09-08, and finished 2026-09-09: it reuses the #guide dialog, a brief pinch confirms, a brush of the open hand declines and goes through the real disarm path so the camera actually stops. Two faults found after it shipped are fixed with it: it owns the hand while it waits, in commit 716fd5ba1, and its copy is rewritten for the two modes under a bumped session key so anyone who saw the old wording sees the new one. Both answers stay clickable by mouse, and the panel adds a third way out.)
 - [x] A brief pinch that does not move opens the page. (2026-09-08, hardened 2026-09-09 in commit d3628e821: the click measures the pinch's WHOLE excursion rather than where it happened to end, so a pinch that wanders and comes back is a drag and not a tap, and it asks for at least 60ms so a one-frame flicker cannot open a page.)
