@@ -104,6 +104,15 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 - [x] The phantom battery's two failures. (2026-09-07: neither was a defect. ENTER ran after a tap that had already navigated; and the tap check demanded the law the owner replaced when he asked that clickable things stay clickable in guided view. Re-cut, five checks pass.)
 ## The Long Way Through
 
+- [ ] **The signposts are drawn to a fixed size and the text runs off them.** Reported 2026-09-09
+  with a shot: a board on the trail carries a label whose characters cross its right edge and hang
+  in the air past the frame. The board has to be sized to its content instead, wrapping onto two
+  lines or three when the label needs them, and the post, the shadow and the hit box have to follow
+  the board rather than assume its old size. Check the longest labels in the corpus, not the one in
+  the shot: page titles run to well over sixty characters.
+
+## The Long Way Through
+
 
 ## Across the worlds
 
