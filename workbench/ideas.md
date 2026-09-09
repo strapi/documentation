@@ -34,14 +34,38 @@ Last updated 2026-09-09.
 
 ## FIRST LIGHT, hand control
 
-- [ ] **Re-test the whole vocabulary with your own hand.** WAITING ON HIM, and it is the only thing
-  left on this feature. Six causes have been found and fixed since he last touched it, five of them
-  measured off his own calibration clip rather than reasoned about, and the two that had been
-  reasoned about turned out to be wrong. Nothing is left to guess: what remains is whether it FEELS
-  right, which no probe can answer. If it does not, the dials are ZOOM_GAIN in firstlight.js (2.4,
-  one unhurried open of the hand covers the world's whole zoom range), the aperture dead zone in
-  hands.js (0.025), SWIPE_DIST in gestures.js (0.6 of a hand width in 0.25s, against his own
-  weakest deliberate brush at 0.82), and the drag gain.
+- [ ] **The pinch still does not open a page for him, after three rounds. PARKED 2026-09-09 evening
+  at his request: "on reglera ca un autre jour".** Everything measurable now says it works, which is
+  precisely the state to be careful about.
+  What is proven: his own five taps, from the calibration clip, replayed through the whole world at
+  the clip's own timing, produce five clicks and open the body they are aimed at (`qa-hand-live.js`,
+  green). The recogniser reads five clicks out of five (`qa-hand-calibration.js`, green). The target
+  reaches 112px on screen, up from the 28px that made every earlier attempt hopeless. Eleven probes
+  pass.
+  So the gap left is between the replay and his room. **Start tomorrow by asking the ONE question
+  the panel now answers**, instead of reasoning: while pinching, does it read `HAND TRACKED · N
+  FPS`, `PINCH HELD`, `PINCH, NOT A CLICK · THE HAND TRAVELLED x`, or `NOTHING UNDER THE RETICLE`?
+  And does the reticle's ring FILL when he holds it over the lit body at the centre? Those two
+  answers separate the four remaining possibilities, and none of them can be told apart from the
+  code:
+  1. the ring never fills: he is not aiming where he thinks, or the reticle's own position is
+     offset from where his hand feels it should be. The comfort box maps the middle 60 percent of
+     the frame to the whole screen, which is a guess nobody has checked against him.
+  2. `PINCH HELD` appears and no click follows: the release is not being seen, and the band would
+     need his numbers again, taken at the world's own frame rate rather than the recorder's.
+  3. `NOTHING UNDER THE RETICLE`: aiming, and the answer is a bigger snap or a snap that keeps the
+     last body it touched for a moment.
+  4. nothing at all appears: the camera in the WORLD is not delivering what it delivers on the
+     recorder page, which the frame rate on that same line would show immediately.
+  Consider recording a second clip **through the world** rather than the recorder page: the one
+  difference the calibration clip cannot capture is that the world renders a canvas and mixes audio
+  while the camera runs.
+
+- [ ] **The dials, once it works.** ZOOM_GAIN in firstlight.js (2.4: one unhurried open of the hand
+  covers the world's whole zoom range), the aperture dead zone and stillness in hands.js (0.015 and
+  0.05), SWIPE_DIST in gestures.js (0.6 of a hand width inside 0.25s, against his own weakest
+  deliberate brush at 0.82), and the drag gain. All four are derived on his clip, so they are
+  starting points and not settled numbers.
 
 **The lesson, and it is the twelfth of the day.** Every test asserts that a positive deviation
 produces a positive rate, which is self-consistent whichever way the physical gesture actually maps.
