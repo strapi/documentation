@@ -341,19 +341,44 @@ This event is triggered when a new entry is created.
 ```json
 {
   "event": "entry.create",
-  "createdAt": "2020-01-10T08:47:36.649Z",
+  "createdAt": "2026-09-09T08:49:26.158Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
     "id": 1,
-    "geolocation": {},
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
     "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:47:36.264Z",
-    "cover": null,
-    "images": []
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:26.150Z",
+    "publishedAt": null,
+    "openingHours": [
+      {
+        "id": 1,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 2,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 1,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 1,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -367,19 +392,44 @@ This event is triggered when an entry is updated.
 ```json
 {
   "event": "entry.update",
-  "createdAt": "2020-01-10T08:58:26.563Z",
+  "createdAt": "2026-09-09T08:49:27.382Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
     "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
-    "cover": null,
-    "images": []
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:27.377Z",
+    "publishedAt": null,
+    "openingHours": [
+      {
+        "id": 1,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 2,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 1,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 1,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -393,19 +443,17 @@ This event is triggered when an entry is deleted.
 ```json
 {
   "event": "entry.delete",
-  "createdAt": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2026-09-09T08:49:33.501Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
-    "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
-    "cover": null,
-    "images": []
+    "id": 3,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
+    "publishedAt": null
   }
 }
 ```
@@ -419,20 +467,44 @@ This event is triggered when an entry is published.
 ```json
 {
   "event": "entry.publish",
-  "createdAt": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2026-09-09T08:49:28.619Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
-    "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
-    "publishedAt": "2020-08-29T14:20:12.134Z",
-    "cover": null,
-    "images": []
+    "id": 2,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
+    "publishedAt": "2026-09-09T08:49:28.607Z",
+    "openingHours": [
+      {
+        "id": 3,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 4,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 2,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 2,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -446,20 +518,44 @@ This event is triggered when an entry is unpublished.
 ```json
 {
   "event": "entry.unpublish",
-  "createdAt": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2026-09-09T08:49:32.287Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
-    "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
-    "publishedAt": null,
-    "cover": null,
-    "images": []
+    "id": 2,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
+    "publishedAt": "2026-09-09T08:49:28.607Z",
+    "openingHours": [
+      {
+        "id": 3,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 4,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 2,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 2,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -473,21 +569,44 @@ This event is triggered when the draft version of an entry is discarded, which r
 ```json
 {
   "event": "entry.draft-discard",
-  "createdAt": "2020-01-10T09:04:12.443Z",
+  "createdAt": "2026-09-09T08:49:31.065Z",
   "model": "address",
   "uid": "api::address.address",
   "entry": {
-    "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T09:04:12.108Z",
+    "id": 3,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
     "publishedAt": null,
-    "cover": null,
-    "images": []
+    "openingHours": [
+      {
+        "id": 5,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 6,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 3,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 3,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
