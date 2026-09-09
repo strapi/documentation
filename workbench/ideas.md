@@ -31,12 +31,6 @@ Last updated 2026-09-07.
 
 ### Tested 2026-09-08 evening, four faults. Fix these first.
 
-- [ ] **The dialog does not capture the hand.** The map is already being driven while the arming
-  dialog is still open, before the user has confirmed or declined. His words: "c'est un gros
-  probleme". This is the same principle already agreed for the reader: a surface with focus owns
-  the hand and everything behind it is frozen. The dialog is a surface with focus and nobody
-  applied the rule to it. Until it is answered, the only live gestures should be its own two.
-
 - [ ] **The swipe to decline does not fire.** Three candidate causes, in order of likelihood, and
   the first is mine: SWIPE_SPEED was raised from 1.0 to 2.5 to kill four false positives per
   minute, and it was never once proven that a real deliberate swipe clears 2.5, because the
@@ -276,3 +270,7 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] Land's End is out of the Tab index. (2026-09-07: it sat at the top and gave away the end of the trail; still reached on foot, from the last page, or by #lands-end.)
 - [x] Halve the music, whatever file is playing. (2026-09-07: one level at the music bus, LAYER_LEVEL mus 0.5, effects left at 1.)
 - [x] The carved notice could rise behind the landing card with mouse-dead answers. (2026-09-07: the card stands aside first, without the walker pick a real dismissal opens; YES verified hit-testable.)
+
+## FIRST LIGHT, hand control
+
+- [x] The dialog does not capture the hand. (2026-09-09, commit 716fd5ba1: the rule existed, on exactly one of the world's six hand listeners, hand:click, and move, grab, release and fan never consulted it. It now lives in one predicate, handCaptured(), read by one wrapper, onHandControl(), that every control listener goes through, so a listener added later cannot skip it. present and absent stay direct because they only ever clear state, and taking focus releases whatever the chart was holding, so a hand pinched as the camera arms does not keep the map grabbed. The reticle keeps tracking throughout: the visitor has to see the camera found their hand while reading what the gestures do. qa-hand-map.js gained THE DIALOG OWNS THE HAND, which asserts on the camera targets and not on the dialog, and failed on both freeze assertions before the change.)
