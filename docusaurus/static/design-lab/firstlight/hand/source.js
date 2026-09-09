@@ -27,13 +27,15 @@ export function makeCameraSource() {
   let state = 'off', stream = null, landmarker = null, video = null, raf = 0;
   let visionPromise = null; // memoized: the 11MB import is paid for once per source, not once per arm()
   let armToken = null;      // the in-flight arm()'s cancellation flag, or null when idle
+  let lastVideoTime = -1;
   const subs = [];
   const emit = (f) => { for (const cb of subs) cb(f); };
   const stopTracks = (s) => { if (s) s.getTracks().forEach(t => t.stop()); };
 
   async function loop() {
     if (state !== 'on') return;
-    if (video.readyState >= 2) {
+    if (video.readyState >= 2 && video.currentTime !== lastVideoTime) {
+      lastVideoTime = video.currentTime;
       let res = null;
       try { res = landmarker.detectForVideo(video, performance.now()); } catch (e) { res = null; }
       if (res) {
@@ -43,9 +45,9 @@ export function makeCameraSource() {
             && res.handednesses[i][0].categoryName) || 'Right',
         }));
         emit({ hands });
-      }
+      } else emit({ hands: [] });
     }
-    raf = requestAnimationFrame(loop);
+    if (state === 'on') raf = requestAnimationFrame(loop);
   }
 
   return {
@@ -74,6 +76,7 @@ export function makeCameraSource() {
       // landmarker's WASM/GPU resources for the life of the page.
       if (landmarker) { try { landmarker.close(); } catch (e) {} landmarker = null; }
       state = 'off';
+      lastVideoTime = -1;
     },
     async arm() {
       if (state === 'on' || state === 'loading') return;
@@ -131,7 +134,10 @@ export function makeCameraSource() {
           video: { width: 640, height: 480, facingMode: 'user' }, audio: false,
         });
       } catch (e) {
-        if (!token.aborted) state = 'denied';
+        if (!token.aborted) {
+          state = 'denied';
+          if (landmarker) { try { landmarker.close(); } catch (error) {} landmarker = null; }
+        }
         return;
       }
       if (token.aborted) {
@@ -146,7 +152,10 @@ export function makeCameraSource() {
       video = document.createElement('video');
       video.autoplay = true; video.playsInline = true; video.muted = true;
       video.srcObject = stream;
-      await video.play().catch(() => {});
+      try { await video.play(); } catch (error) {
+        if (!token.aborted) { this.disarm(); state = 'denied'; }
+        return;
+      }
       if (token.aborted) return; // disarm() already tore down stream/video/state
 
       state = 'on';

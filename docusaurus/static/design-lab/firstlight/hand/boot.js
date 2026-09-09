@@ -10,6 +10,8 @@ const btn = document.getElementById('handctlbtn');
 if (btn) {
   const api = startHands({});
   window.__hands = api;                 /* probes and the world read the state here */
+  window.addEventListener('pagehide', () => api.disarm());
+  document.addEventListener('visibilitychange', () => { if (document.hidden) api.disarm(); });
   const label = (s) => {
     const kbd = btn.querySelector('kbd');
     if (kbd) kbd.textContent = s === 'on' ? 'ON' : s === 'loading' ? '…' : 'OFF';
