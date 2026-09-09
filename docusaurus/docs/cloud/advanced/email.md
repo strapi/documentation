@@ -28,7 +28,7 @@ Please be advised that Strapi is unable to provide support for third-party email
 :::prerequisites
 
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for another email provider (see <ExternalLink to="https://market.strapi.io/providers" text="Strapi Market"/>).
+- Credentials for another email provider (see <ExternalLink to="https://community.strapi.io/marketplace" text="Strapi Community Hub"/>).
 
 :::
 
@@ -42,7 +42,7 @@ Configuring another email provider for use with Strapi Cloud requires 3 steps:
 
 ### Install the Provider Plugin
 
-Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the <ExternalLink to="https://market.strapi.io/providers" text="Marketplace"/>.
+Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the <ExternalLink to="https://community.strapi.io/marketplace" text="Marketplace"/>.
 
 ### Configure the Provider
 
@@ -92,7 +92,7 @@ export default ({ env }) => ({
 The file structure must match the above path exactly, or the configuration will not be applied to Strapi Cloud.
 :::
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the <ExternalLink to="https://market.strapi.io/providers" text="Marketplace"/>.
+Each provider will have different configuration settings available. Review the respective entry for that provider in the <ExternalLink to="https://community.strapi.io/marketplace" text="Marketplace"/>.
 
 **Example:**
 <Tabs groupId="js-ts">

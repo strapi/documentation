@@ -242,7 +242,7 @@ Click on any of the following cards to get more details about a specific topic:
 </CustomDocCardsWrapper>
 
 :::tip Replacing the WYSIWYG
-The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/features/custom-fields), for instance using the <ExternalLink to="https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor" text="CKEditor custom field plugin"/>.
+The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/features/custom-fields), for instance using the <ExternalLink to="https://community.strapi.io/marketplace/ckeditor-strapi-plugin-ckeditor" text="CKEditor custom field plugin"/>.
 :::
 
 :::info
