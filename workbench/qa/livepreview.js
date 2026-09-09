@@ -1,28 +1,30 @@
-/* The Design Lab gallery: thumbnails, live status, archives, and back-links. */
+/* The Design Lab gallery: thumbnails, live status, archives, and back-links.
+
+   Where the worlds are served FROM is qa/worldsource.js, shared with the
+   thumbnailer so the two can never disagree about it. Read the story at the
+   top of that file: this gallery used to serve a disposable scratchpad, and
+   most of its cards ended up showing worlds that could not load. */
 const http = require('http'), fs = require('fs'), path = require('path');
-const SP = '/private/tmp/claude-501/-Users-piwi-code-documentation/0d8629c6-231f-4fec-94af-6fe3669d37b8/scratchpad';
-const FINAL = SP + '/final/builds';
-const IMG = '/Users/piwi/code/documentation/docusaurus/static/img';
-const THUMBS = SP + '/qa/gallery-thumbs';
+const { IMG, THUMBS, readWorld, rev } = require('./worldsource.js');
 const PORT = 8787;
 
 const CATALOG = [
-  { key: 'longway',       name: 'The Long Way Through', dir: FINAL + '/longway',       note: 'the corpus as one walkable trail',       sec: 'main' },
-  { key: 'pixelcity',     name: 'Pixel Docs City',      dir: FINAL + '/pixelcity', note: 'an explorable pixel town, seasons turning',  sec: 'main' },
-  { key: 'herbarium',     name: 'The Herbarium',        dir: SP + '/bold5/s7',     note: '290 specimens grown from git history',       sec: 'main' },
-  { key: 'firstlight',    name: 'FIRST LIGHT',          dir: FINAL + '/firstlight',    note: 'first probe in an unmapped system',      sec: 'main' },
-  { key: 'cartastrapiana', name: 'Carta Strapiana',     dir: FINAL + '/deadreckoning', note: 'the committee cut: a living engraving you sail', sec: 'main' },
-  { key: 'bythedeep',      name: 'By the Deep',          dir: FINAL + '/bythedeep',     note: 'archived: the cartoon sea that opened the cartoon question', sec: 'archive' },
-  { key: 'secreta',        name: 'The Four-Color',       dir: FINAL + '/secret-a',      note: 'a Silver Age Docs Code comic - grab one off the rack', sec: 'main' },
+  { key: 'longway',       name: 'The Long Way Through',       note: 'the corpus as one walkable trail',       sec: 'main' },
+  { key: 'pixelcity',     name: 'Pixel Docs City', note: 'an explorable pixel town, seasons turning',  sec: 'main' },
+  { key: 'herbarium',     name: 'The Herbarium',     note: '290 specimens grown from git history',       sec: 'main' },
+  { key: 'firstlight',    name: 'FIRST LIGHT',    note: 'first probe in an unmapped system',      sec: 'main' },
+  { key: 'cartastrapiana', name: 'Carta Strapiana', note: 'the committee cut: a living engraving you sail', sec: 'main' },
+  { key: 'bythedeep',      name: 'By the Deep',     note: 'archived: the cartoon sea that opened the cartoon question', sec: 'archive' },
+  { key: 'secreta',        name: 'The Four-Color',      note: 'a Silver Age Docs Code comic - grab one off the rack', sec: 'main' },
 
 
 
 
-  { key: 'goldenshore',   name: 'The Golden Shore',      dir: FINAL + '/photoreal-a', note: 'a walkable coast at golden hour, in the forge', sec: 'main' },
-  { key: 'alpenglow',      name: 'Alpenglow',            dir: FINAL + '/btd-prop-c', note: 'archived: every page a summit, the climb that opened the cartoon question', sec: 'archive' },
-  { key: 'secretb',        name: 'The Kit',              dir: FINAL + '/secret-b',      note: 'archived while still on its sprues - the lab narrows to six', sec: 'archive' },
-  { key: 'cityx',         name: 'The Diorama',          dir: FINAL + '/diorama',   note: 'archived with honors - it told the truth about 290 pages in one perfect golden minute',            sec: 'archive' },
-  { key: 'workingsea',    name: 'The Working Sea',      dir: FINAL + '/workingsea',    note: 'b. the Coast of Lights - the coast that taught the portal to tend: fog to the Long Way, moths to the Diorama, 57 packets to FIRST LIGHT', sec: 'archive' },
+  { key: 'goldenshore',   name: 'The Golden Shore', note: 'a walkable coast at golden hour, in the forge', sec: 'main' },
+  { key: 'alpenglow',      name: 'Alpenglow', note: 'archived: every page a summit, the climb that opened the cartoon question', sec: 'archive' },
+  { key: 'secretb',        name: 'The Kit',      note: 'archived while still on its sprues - the lab narrows to six', sec: 'archive' },
+  { key: 'cityx',         name: 'The Diorama',   note: 'archived with honors - it told the truth about 290 pages in one perfect golden minute',            sec: 'archive' },
+  { key: 'workingsea',    name: 'The Working Sea',    note: 'b. the Coast of Lights - the coast that taught the portal to tend: fog to the Long Way, moths to the Diorama, 57 packets to FIRST LIGHT', sec: 'archive' },
 ];
 const CHIPPOS = {"cityx":"bl112","pianola":"br56","herbarium":"br","pixelcity":"bl12x304","workingsea":"br","firstlight":"bl12x455c","cartastrapiana":"br","bythedeep":"br","deepwater":"br","secreta":"br","secretb":"br","longway":"br","arcade2":"br","galaxy":"br","lampfall":"br","deadwax":"br","projectionist":"br"};
 const byKey = Object.fromEntries(CATALOG.map((c) => [c.key, c]));
@@ -30,21 +32,6 @@ const MIME = { '.html':'text/html; charset=utf-8', '.css':'text/css; charset=utf
   '.js':'text/javascript; charset=utf-8', '.json':'application/json', '.png':'image/png',
   '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.gif':'image/gif', '.svg':'image/svg+xml',
   '.webp':'image/webp', '.ico':'image/x-icon', '.txt':'text/plain; charset=utf-8', '.ogg':'audio/ogg', '.mp3':'audio/mpeg', '.wav':'audio/wav', '.m4a':'audio/mp4' };
-
-function rev(key) {
-  const c = byKey[key]; if (!c) return { rev: 0, files: 0, ready: false };
-  let newest = 0, n = 0, has = false;
-  try {
-    for (const f of fs.readdirSync(c.dir)) {
-      if (f.startsWith('prev-') || f === 'content.json' || f === 'graph.json') continue;
-      if (!/\.(html|css|js)$/.test(f)) continue;
-      const st = fs.statSync(path.join(c.dir, f));
-      newest = Math.max(newest, Math.floor(st.mtimeMs)); n++;
-      if (f === 'index.html') has = true;
-    }
-  } catch (e) { /* not there yet */ }
-  return { rev: newest, files: n, ready: has };
-}
 
 const RELOAD = `<script>(function(){var k=location.pathname.split('/')[1]||'';var cur=null;
 setInterval(function(){fetch('/__rev?k='+k,{cache:'no-store'}).then(function(r){return r.json()})
@@ -204,7 +191,7 @@ function card(c) {
   const stamp = t ? String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0') : '';
   const building = !r.ready || r.rev > Date.now() - 15 * 60 * 1000;
   const status = !r.ready ? 'being built · waiting for first files'
-    : (building ? 'being built · updated ' + stamp : 'live · ' + r.files + ' files');
+    : (building ? 'being built · updated ' + stamp + ' · ' + r.src : 'live · ' + r.files + ' files · ' + r.src);
   const media = hasThumb
     ? `<img src="/thumbs/${c.key}.png?r=${r.rev}" alt="" loading="lazy">`
     : `<div class="ph"><span class="d"></span><span class="d"></span><span class="d"></span></div>`;
@@ -336,8 +323,8 @@ http.createServer((q, r) => {
   const key = seg[0];
   if (!byKey[key]) { r.writeHead(404); return r.end('unknown build'); }
   const rest = seg.slice(1).join('/') || 'index.html';
-  const f = path.join(byKey[key].dir, rest);
-  fs.readFile(f, (e, d) => {
+  const f = rest;                       /* only its extension is read below */
+  readWorld(key, rest, (e, d) => {
     if (e) {
       if (rest === 'index.html') {
         r.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
