@@ -21339,6 +21339,7 @@ By default Strapi webhooks can be triggered by the following events:
 | [`entry.delete`](#entrydelete)    | Triggered when a Content Type entry is deleted.       |
 | [`entry.publish`](#entrypublish)   | Triggered when a Content Type entry is published.\*   |
 | [`entry.unpublish`](#entryunpublish) | Triggered when a Content Type entry is unpublished.\* |
+| [`entry.draft-discard`](#entry-draft-discard) | Triggered when the draft version of a Content Type entry is discarded.\*<br />This event is not listed in the **Webhooks** form of the admin panel, so subscribing to it requires creating the webhook programmatically. |
 | [`media.create`](#mediacreate)    | Triggered when a media is created.                    |
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
@@ -21355,15 +21356,25 @@ Private fields are not sent in the payload.
 
 ### Entry payload content
 
-For all entry events except `entry.delete` and `entry.unpublish`, the `entry` object contains the whole entry, with all its relations, media, components, and dynamic zones already populated. Repeatable components and dynamic zones are sent in their stored order, which is the order defined in the Content Manager.
+Inside `entry`, `documentId` identifies the document while `id` identifies the version the event is about. A draft and its published version share the same `documentId` and have different `id` values, and discarding a draft creates a new version, so the `id` changes again.
+
+For all entry events except `entry.delete` and `entry.unpublish`, the entry is read again before the payload is sent, so it contains the whole entry, with all its relations, media, components, and dynamic zones populated. Repeatable components and dynamic zone items are sent in their stored order, which is the order defined in the Content Manager, and each of them carries its own `id`.
 
 This population is not configurable: there is no option to choose which fields are populated, nor to change how they are sorted. The `webhooks.populateRelations` option of Strapi 4 was [removed in Strapi 5](/cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations).
 
-For the `entry.delete` and `entry.unpublish` events, the entry is not read again before the payload is sent, so relations, media, and components are usually not included.
+The `entry.delete` and `entry.unpublish` events are not read again: their `entry` object is the one the deleting or unpublishing request itself returned. Deleting and unpublishing from the admin panel show what this means in practice: the `entry.unpublish` payload carries the fully populated entry, while the `entry.delete` payload carries only the fields of the entry itself.
+
+:::note
+A single action in the admin panel can trigger more than one event. Publishing an entry saves its draft first, so `entry.update` is sent just before `entry.publish`.
+:::
 
 :::tip
 If you need a payload with a different content or structure, send the request yourself from a [lifecycle hook](/cms/backend-customization/models#lifecycle-hooks).
 :::
+
+### Media payload content
+
+Media events send a different envelope from entry events: `event`, `createdAt` and `media`, with no `model` and no `uid`. The `media` object is the file entry itself, including the `formats` generated for an image, and it does not carry the entries the file is attached to.
 
 ### Headers
 
@@ -21382,19 +21393,44 @@ This event is triggered when a new entry is created.
 ```json
 {
   "event": "entry.create",
-  "createdAt": "2020-01-10T08:47:36.649Z",
+  "createdAt": "2026-09-09T08:49:26.158Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
     "id": 1,
-    "geolocation": {},
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
     "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:47:36.264Z",
-    "cover": null,
-    "images": []
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:26.150Z",
+    "publishedAt": null,
+    "openingHours": [
+      {
+        "id": 1,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 2,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 1,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 1,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -21408,19 +21444,44 @@ This event is triggered when an entry is updated.
 ```json
 {
   "event": "entry.update",
-  "createdAt": "2020-01-10T08:58:26.563Z",
+  "createdAt": "2026-09-09T08:49:27.382Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
     "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
-    "cover": null,
-    "images": []
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:27.377Z",
+    "publishedAt": null,
+    "openingHours": [
+      {
+        "id": 1,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 2,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 1,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 1,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -21434,19 +21495,17 @@ This event is triggered when an entry is deleted.
 ```json
 {
   "event": "entry.delete",
-  "createdAt": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2026-09-09T08:49:33.501Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
-    "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
-    "cover": null,
-    "images": []
+    "id": 3,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
+    "publishedAt": null
   }
 }
 ```
@@ -21460,20 +21519,44 @@ This event is triggered when an entry is published.
 ```json
 {
   "event": "entry.publish",
-  "createdAt": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2026-09-09T08:49:28.619Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
-    "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
-    "publishedAt": "2020-08-29T14:20:12.134Z",
-    "cover": null,
-    "images": []
+    "id": 2,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
+    "publishedAt": "2026-09-09T08:49:28.607Z",
+    "openingHours": [
+      {
+        "id": 3,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 4,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 2,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 2,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -21487,20 +21570,95 @@ This event is triggered when an entry is unpublished.
 ```json
 {
   "event": "entry.unpublish",
-  "createdAt": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2026-09-09T08:49:32.287Z",
   "model": "address",
+  "uid": "api::address.address",
   "entry": {
-    "id": 1,
-    "geolocation": {},
-    "city": "Paris",
-    "postal_code": null,
-    "category": null,
-    "full_name": "Paris",
-    "createdAt": "2020-01-10T08:47:36.264Z",
-    "updatedAt": "2020-01-10T08:58:26.210Z",
+    "id": 2,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
+    "publishedAt": "2026-09-09T08:49:28.607Z",
+    "openingHours": [
+      {
+        "id": 3,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 4,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 2,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 2,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
+  }
+}
+```
+
+### `entry.draft-discard`  {#entry-draft-discard}
+
+This event is triggered when the draft version of an entry is discarded, which restores the draft from the published version.
+
+**Example payload**
+
+```json
+{
+  "event": "entry.draft-discard",
+  "createdAt": "2026-09-09T08:49:31.065Z",
+  "model": "address",
+  "uid": "api::address.address",
+  "entry": {
+    "id": 3,
+    "documentId": "w7vfs319acmaxnurjk5vaaza",
+    "city": "Paris 1er",
+    "postalCode": "75001",
+    "createdAt": "2026-09-09T08:49:26.150Z",
+    "updatedAt": "2026-09-09T08:49:28.603Z",
     "publishedAt": null,
-    "cover": null,
-    "images": []
+    "openingHours": [
+      {
+        "id": 5,
+        "day": "monday",
+        "from": "09:00",
+        "to": "18:00"
+      },
+      {
+        "id": 6,
+        "day": "tuesday",
+        "from": "10:00",
+        "to": "19:00"
+      }
+    ],
+    "blocks": [
+      {
+        "id": 3,
+        "body": "Ring the bell twice.",
+        "__component": "address.note"
+      },
+      {
+        "id": 3,
+        "email": "paris@example.com",
+        "phone": "0102030405",
+        "__component": "address.contact"
+      }
+    ]
   }
 }
 ```
@@ -21514,21 +21672,77 @@ This event is triggered when you upload a file on entry creation or through the 
 ```json
 {
   "event": "media.create",
-  "createdAt": "2020-01-10T10:58:41.115Z",
+  "createdAt": "2026-09-09T09:03:55.238Z",
   "media": {
     "id": 1,
-    "name": "image.png",
-    "hash": "353fc98a19e44da9acf61d71b11895f9",
-    "sha256": "huGUaFJhmcZRHLcxeQNKblh53vtSUXYaB16WSOe0Bdc",
+    "documentId": "af1tfhdljtcm8076utj20ury",
+    "name": "photo.png",
+    "alternativeText": null,
+    "caption": null,
+    "focalPoint": null,
+    "width": 3024,
+    "height": 1646,
+    "formats": {
+      "thumbnail": {
+        "name": "thumbnail_photo.png",
+        "hash": "thumbnail_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 245,
+        "height": 133,
+        "size": 35.61,
+        "sizeInBytes": 35614,
+        "url": "/uploads/thumbnail_photo_27421e3364.png"
+      },
+      "small": {
+        "name": "small_photo.png",
+        "hash": "small_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 500,
+        "height": 272,
+        "size": 117.45,
+        "sizeInBytes": 117447,
+        "url": "/uploads/small_photo_27421e3364.png"
+      },
+      "medium": {
+        "name": "medium_photo.png",
+        "hash": "medium_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 750,
+        "height": 408,
+        "size": 233.53,
+        "sizeInBytes": 233529,
+        "url": "/uploads/medium_photo_27421e3364.png"
+      },
+      "large": {
+        "name": "large_photo.png",
+        "hash": "large_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 1000,
+        "height": 544,
+        "size": 387.81,
+        "sizeInBytes": 387809,
+        "url": "/uploads/large_photo_27421e3364.png"
+      }
+    },
+    "hash": "photo_27421e3364",
     "ext": ".png",
     "mime": "image/png",
-    "size": 228.19,
-    "url": "/uploads/353fc98a19e44da9acf61d71b11895f9.png",
+    "size": 497.97,
+    "url": "/uploads/photo_27421e3364.png",
+    "previewUrl": null,
     "provider": "local",
     "provider_metadata": null,
-    "createdAt": "2020-01-10T10:58:41.095Z",
-    "updatedAt": "2020-01-10T10:58:41.095Z",
-    "related": []
+    "createdAt": "2026-09-09T09:03:55.235Z",
+    "updatedAt": "2026-09-09T09:03:55.235Z",
+    "publishedAt": "2026-09-09T09:03:55.235Z"
   }
 }
 ```
@@ -21542,21 +21756,30 @@ This event is triggered when you replace a media or update the metadata of a med
 ```json
 {
   "event": "media.update",
-  "createdAt": "2020-01-10T10:58:41.115Z",
+  "createdAt": "2026-09-09T09:03:57.075Z",
   "media": {
     "id": 1,
-    "name": "image.png",
-    "hash": "353fc98a19e44da9acf61d71b11895f9",
-    "sha256": "huGUaFJhmcZRHLcxeQNKblh53vtSUXYaB16WSOe0Bdc",
+    "documentId": "af1tfhdljtcm8076utj20ury",
+    "name": "Overview of the Media Library",
+    "alternativeText": "The Media Library overview, in dark mode",
+    "caption": "Media Library",
+    "focalPoint": null,
+    "width": 3024,
+    "height": 1646,
+    "formats": {
+      // the four generated formats, as in the media.create payload above
+    },
+    "hash": "photo_27421e3364",
     "ext": ".png",
     "mime": "image/png",
-    "size": 228.19,
-    "url": "/uploads/353fc98a19e44da9acf61d71b11895f9.png",
+    "size": 497.97,
+    "url": "/uploads/photo_27421e3364.png",
+    "previewUrl": null,
     "provider": "local",
     "provider_metadata": null,
-    "createdAt": "2020-01-10T10:58:41.095Z",
-    "updatedAt": "2020-01-10T10:58:41.095Z",
-    "related": []
+    "createdAt": "2026-09-09T09:03:55.235Z",
+    "updatedAt": "2026-09-09T09:03:57.073Z",
+    "publishedAt": "2026-09-09T09:03:55.235Z"
   }
 }
 ```
@@ -21570,21 +21793,30 @@ This event is triggered only when you delete a media through the media interface
 ```json
 {
   "event": "media.delete",
-  "createdAt": "2020-01-10T11:02:46.232Z",
+  "createdAt": "2026-09-09T09:03:58.588Z",
   "media": {
-    "id": 11,
-    "name": "photo.png",
-    "hash": "43761478513a4c47a5fd4a03178cfccb",
-    "sha256": "HrpDOKLFoSocilA6B0_icA9XXTSPR9heekt2SsHTZZE",
+    "id": 1,
+    "documentId": "af1tfhdljtcm8076utj20ury",
+    "name": "Overview of the Media Library",
+    "alternativeText": "The Media Library overview, in dark mode",
+    "caption": "Media Library",
+    "focalPoint": null,
+    "width": 3024,
+    "height": 1646,
+    "formats": {
+      // the four generated formats, as in the media.create payload above
+    },
+    "hash": "photo_27421e3364",
     "ext": ".png",
     "mime": "image/png",
-    "size": 4947.76,
-    "url": "/uploads/43761478513a4c47a5fd4a03178cfccb.png",
+    "size": 497.97,
+    "url": "/uploads/photo_27421e3364.png",
+    "previewUrl": null,
     "provider": "local",
     "provider_metadata": null,
-    "createdAt": "2020-01-07T19:34:32.168Z",
-    "updatedAt": "2020-01-07T19:34:32.168Z",
-    "related": []
+    "createdAt": "2026-09-09T09:03:55.235Z",
+    "updatedAt": "2026-09-09T09:03:57.073Z",
+    "publishedAt": "2026-09-09T09:03:55.235Z"
   }
 }
 ```
