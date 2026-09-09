@@ -42,7 +42,7 @@ You can see the count being used at the top of the relation in the Content Manag
 
 The actual relational values are fetched using another endpoint. This was made to enhance the performance of the Content Manager requests.
 
-To simplify webhook consumption, you can enable the  (see [server configuration](/cms/configurations/server#available-options)). When enabled, all relations values are populated and sent to the webhook consumers, resulting in performance decrease.
+To simplify webhook consumption, you can enable the `webhooks.populateRelations` option in the `config/server` file. When enabled, all relations values are populated and sent to the webhook consumers, resulting in performance decrease.
 
 </SideBySideColumn>
 
