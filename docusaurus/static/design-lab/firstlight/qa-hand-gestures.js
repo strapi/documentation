@@ -37,7 +37,7 @@ const path = require('path');
   const r = await page.evaluate(async () => {
     const {
       makeGestureReader, PINCH_ON, FAN_NEUTRAL, FAN_DEADZONE,
-      CLICK_MAX_MS, CLICK_MAX_DIST, SWIPE_DIST, SWIPE_WINDOW, SWIPE_MIN_SAMPLES,
+      CLICK_MIN_MS, CLICK_MAX_DIST, SWIPE_DIST, SWIPE_WINDOW, SWIPE_MIN_SAMPLES,
     } = await import('./hand/gestures.js');
 
     /* Build a synthetic hand. `size` is wrist-to-middle-knuckle in image units,
@@ -215,34 +215,54 @@ const path = require('path');
       out.fanWhileFisted = types(fisted).filter(x => x === 'fan').length;
     }
 
-    // 6. A BRIEF PINCH IS A CLICK. CLICK_MAX_MS and CLICK_MAX_DIST are
-    // imported, not copied, for the same reason PINCH_ON is above.
+    // 6. A PINCH THAT DOES NOT TRAVEL IS A CLICK, and how long it is held has
+    // nothing to do with it: what separates a click from a drag is whether
+    // the hand moved, exactly as on a mouse. The duration cap this replaced
+    // was a touchscreen convention, and on the owner's own hand it refused
+    // every tap he made. CLICK_MIN_MS and CLICK_MAX_DIST are imported, not
+    // copied, for the same reason PINCH_ON is above.
     {
       const g = makeGestureReader();
       let t = 0;
       g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);           // open, establish palm at cx=0.5
       const grabEvs = g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033); // grab, no movement
       out.clickGrabFired = types(grabEvs).indexOf('grab') >= 0;
-      // 1.2, not 0.9: releasing needs pr to cross PINCH_OFF=1.00, the
-      // RELEASE threshold, and 0.9 sits inside the hysteresis band (never
-      // releases at all) -- the same distinction test 1's hysteresis check
-      // above exists to prove matters.
-      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.5, 0.5)), t += (CLICK_MAX_MS / 1000) * 0.4); // brief, still, released
+      // 1.2, not 0.5: releasing needs pr to cross PINCH_OFF, the RELEASE
+      // threshold, and 0.5 sits inside the hysteresis band, where it would
+      // never release at all -- the same distinction test 1's hysteresis
+      // check above exists to prove matters.
+      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.5, 0.5)), t += 0.21);  // brief, still, released
       out.briefClickFired = types(releaseEvs).indexOf('click') >= 0;
       out.briefReleaseFired = types(releaseEvs).indexOf('release') >= 0;
     }
-    // 6b. held too long, still no movement: must NOT click. Time alone must
-    // disqualify it, or a click stops feeling like a click and starts
-    // feeling like every held gesture just times out into one.
+    // 6b. HELD A LONG TIME AND STILL: this IS a click, and the assertion
+    // used to say the opposite. On the calibration clip the owner's five taps
+    // last 134 to 733ms and travel 0.027 to 0.054 of a hand width, while his
+    // two drags travel 1.00: the hand in the air holds a pinch for as long as
+    // it takes to see something happen, so a cap on the duration only ever
+    // refused real taps. One of those five, at 733ms, was already past the
+    // 400ms cap that shipped.
     {
       const g = makeGestureReader();
       let t = 0;
       g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);
       g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033);           // grab
-      t += (CLICK_MAX_MS / 1000) * 2.5;                              // held well past CLICK_MAX_MS
+      t += 1.6;                                                      // held, and held, without moving
       const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.5, 0.5)), t);
       out.longHoldReleaseFired = types(releaseEvs).indexOf('release') >= 0;
       out.longHoldClickFired = types(releaseEvs).indexOf('click') >= 0;
+    }
+    // 6b2. AND A FLICKER IS NOT A CLICK. A pinch that appears and vanishes
+    // inside one frame is a landmark estimate wobbling, not a hand, and
+    // CLICK_MIN_MS is the whole of what stands between that and a page
+    // opening by itself.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);
+      g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033);           // grab
+      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.5, 0.5)), t += (CLICK_MIN_MS / 1000) * 0.5);
+      out.flickerClickFired = types(releaseEvs).indexOf('click') >= 0;
     }
     // 6c. released quickly, but dragged first: must NOT click. Time alone is
     // not enough either, or a fast flick-drag would misread as a tap.
@@ -251,8 +271,8 @@ const path = require('path');
       let t = 0;
       g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);
       g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033);           // grab at cx=0.5
-      t += (CLICK_MAX_MS / 1000) * 0.4;                              // quick, but...
-      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.60, 0.5)), t); // ...moved 0.10 (0.5 of hand size) before releasing
+      t += 0.21;                                                     // quick, but...
+      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.60, 0.5)), t); // ...moved 0.10, half a hand width, twice CLICK_MAX_DIST
       out.draggedReleaseFired = types(releaseEvs).indexOf('release') >= 0;
       out.draggedClickFired = types(releaseEvs).indexOf('click') >= 0;
     }
@@ -367,17 +387,22 @@ const path = require('path');
       }
       out.swipeSlowCrossFired = fired;
     }
-    // 7d. the same qualifying (outward, unambiguous-speed) motion, but
-    // PINCHED: open-hand-only means exactly that. A drag across the screen
-    // must never also read as a dismiss.
+    // 7d. A DRAG MUST NEVER DISMISS, and it is its SPEED that says so, not
+    // the shape of the hand. The swipe used to be gated on an unpinched hand,
+    // and on the calibration clip that made 80 frames of the owner's brush
+    // take invisible to it: he brushes with a relaxed hand, thumb near the
+    // index, which reads as a pinch. His drags move 1.00 hand width in 1.9 to
+    // 4.0 seconds, twenty times slower than his brushes, so this case moves a
+    // pinched hand at a real drag's pace: 0.9 of a hand width over 2 seconds.
     {
       const g = makeGestureReader();
       let t = 0, cx = 0.70;
-      g.read(f(hand(0.20, 0.2, 1, cx, 0.5)), t += 0.033);            // pinched from the start
+      g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.043);            // open, then pinches
+      g.read(f(hand(0.20, 0.2, 1, cx, 0.5)), t += 0.043);
       let fired = false;
-      for (let i = 0; i < 6; i++) {
-        cx -= 0.07;
-        const evs = g.read(f(hand(0.20, 0.2, 1, cx, 0.5)), t += 0.033);
+      for (let i = 0; i < 46; i++) {                                 // 2 seconds at 23 fps
+        cx -= 0.18 / 46;                                             // 0.9 of a hand width in all
+        const evs = g.read(f(hand(0.20, 0.2, 1, cx, 0.5)), t += 0.043);
         if (types(evs).indexOf('dismiss') >= 0) fired = true;
       }
       out.swipeWhilePinchedFired = fired;
@@ -502,8 +527,9 @@ const path = require('path');
   if (!r.clickGrabFired) fails.push('a click test setup problem: the grab never fired');
   if (!r.briefReleaseFired) fails.push('a click test setup problem: the release never fired');
   if (!r.briefClickFired) fails.push('a brief, still pinch did not fire a click');
+  if (r.flickerClickFired) fails.push(`a pinch shorter than CLICK_MIN_MS fired a click`);
   if (!r.longHoldReleaseFired) fails.push('a click test setup problem: the long-hold release never fired');
-  if (r.longHoldClickFired) fails.push('a pinch held well past CLICK_MAX_MS, released without moving, still fired a click');
+  if (!r.longHoldClickFired) fails.push('a pinch held a long time and released without moving did not fire a click; how long it is held is not what makes a click');
   if (!r.draggedReleaseFired) fails.push('a click test setup problem: the dragged release never fired');
   if (r.draggedClickFired) fails.push('a pinch released quickly but after a real drag still fired a click');
   if (!r.fistOverrideReleaseFired) fails.push('a fist overtaking a pinch did not fire a release');
@@ -524,7 +550,7 @@ const path = require('path');
   if (r.swipeGlitchFired) fails.push('a one-frame tracking jump of 1.5 hand widths fired a dismiss; a window needs two measured intervals');
   if (r.swipeJitteredCount !== 1) fails.push(`a deliberate swipe on frames 20-70ms apart fired dismiss ${r.swipeJitteredCount} times, wanted exactly 1 (this is the case the two earlier versions failed)`);
   if (r.swipeSlowCrossFired) fails.push('a hand crossing one hand width over 0.4s fired a dismiss; that is reaching, not brushing');
-  if (r.swipeWhilePinchedFired) fails.push('a pinched hand moving fast and consistently fired a dismiss; swipe must be open-hand only');
+  if (r.swipeWhilePinchedFired) fails.push('a hand dragging at a real drag pace fired a dismiss');
   if (r.swipeLeftOutwardCount !== 1) fails.push(`a left hand swiping outward (the mirror-image direction) fired dismiss ${r.swipeLeftOutwardCount} times, wanted exactly 1`);
   if (r.swipeUnknownReversalFired) fails.push('unknown handedness, direction reversal mid-streak, still fired a dismiss');
   if (r.swipeUnknownSustainedCount !== 1) fails.push(`unknown handedness, sustained one direction, fired dismiss ${r.swipeUnknownSustainedCount} times, wanted exactly 1`);
@@ -543,8 +569,8 @@ const path = require('path');
   console.log(`  hysteresis flips ${r.flips}   near/far pinched ${r.nearPinched}/${r.farPinched}   dead man's switch released ${r.releasedOnLoss} still-grabbed ${r.stillGrabbed}`);
   console.log(`  fist-vs-pinch: fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}`);
   console.log(`  fan: spread rate ${r.fanSpreadRate}   closed rate ${r.fanClosedRate}   neutral events ${r.fanNeutralEvents} (want 0)   while pinched ${r.fanWhilePinched} (want 0)   while fisted ${r.fanWhileFisted} (want 0)`);
-  console.log(`  click: brief ${r.briefClickFired}   long-hold ${r.longHoldClickFired} (want false)   dragged ${r.draggedClickFired} (want false)   fist-override release ${r.fistOverrideReleaseFired} click ${r.fistOverrideClickFired} (want false)`);
-  console.log(`  swipe: right-outward count ${r.swipeRightOutwardCount} (want 1)   right-inward fired ${r.swipeRightInwardFired} (want false)   short streak fired ${r.swipeShortStreakFired} (want false)   while pinched ${r.swipeWhilePinchedFired} (want false)   left-outward count ${r.swipeLeftOutwardCount} (want 1)   unknown-handedness reversal fired ${r.swipeUnknownReversalFired} (want false)   unknown-handedness sustained count ${r.swipeUnknownSustainedCount} (want 1)`);
+  console.log(`  click: brief ${r.briefClickFired}   long-hold ${r.longHoldClickFired} (want true)   flicker ${r.flickerClickFired} (want false)   dragged ${r.draggedClickFired} (want false)   fist-override release ${r.fistOverrideReleaseFired} click ${r.fistOverrideClickFired} (want false)`);
+  console.log(`  swipe: right-outward count ${r.swipeRightOutwardCount} (want 1)   right-inward fired ${r.swipeRightInwardFired} (want false)   glitch fired ${r.swipeGlitchFired} (want false)   jittered ${r.swipeJitteredCount} (want 1)   slow cross ${r.swipeSlowCrossFired} (want false)   dragging ${r.swipeWhilePinchedFired} (want false)   left-outward count ${r.swipeLeftOutwardCount} (want 1)   unknown-handedness reversal fired ${r.swipeUnknownReversalFired} (want false)   unknown-handedness sustained count ${r.swipeUnknownSustainedCount} (want 1)`);
   console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   clicks ${r.fixtureClicks} (want 0)   fans ${r.fixtureFans}   dismiss ${r.fixtureDismiss} (want 0)   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();

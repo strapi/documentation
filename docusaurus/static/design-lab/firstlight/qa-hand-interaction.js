@@ -54,14 +54,17 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
       const output = {};
       let lastMove;
       window.addEventListener('hand:move', event => { lastMove = event.detail; });
+      /* NO MODE TO CHOOSE. The owner refused the two modes this file used to
+         click between: "je ne veux pas avoir a gerer 2 modes: j'elargis la
+         main, ca zoom, je referme la main, ca dezoom". So an opening hand
+         zooms from the first frame, with nothing selected first. */
       const initialScale = window.__handProbe.cam().ts;
       for (let index = 0; index < 15; index++) await push(0.7 + index * 0.04);
-      output.navigationDoesNotZoom = window.__handProbe.cam().ts === initialScale;
+      output.openingZoomsWithNoMode = window.__handProbe.cam().ts > initialScale * 1.3;
       for (let index = 0; index < 8; index++) await push(0.9, 0.38);
       const targetX = (1 - (0.38 - 0.2) / 0.6) * innerWidth;
       output.pointerSettlesWithinQuarterSecond = Math.abs(lastMove.x - targetX) < 20;
       await push(0.9);
-      document.querySelector('[data-hand-mode="zoom"]').click();
       await push(0.8);
       const start = window.__handProbe.cam();
       for (let index = 1; index <= 12; index++) await push(0.8 + index * 0.04);
@@ -76,7 +79,6 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
       output.stalledSourceHidesReticle = !document.getElementById('hand-reticle').classList.contains('on');
       await push(1.4);
       output.reentryDoesNotZoom = window.__handProbe.cam().ts === beforeLoss;
-      document.querySelector('[data-hand-mode="navigate"]').click();
       await push(0.9);
       const beforeDrag = window.__handProbe.cam().tx;
       await push(0.9, 0.5, true);
@@ -88,7 +90,10 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
       reader.read(hand(0.9, 0.6, true), 0.15);
       reader.read(hand(0.9, 0.5, true), 0.22);
       output.returningDragDoesNotClick = !reader.read(hand(0.9), 0.3).some(event => event.type === 'click');
-      output.swipeAtFrameRates = [15, 30, 60].map(fps => {
+      /* 23 is not a round number, it is the rate his camera was measured at
+         on the calibration clip: 43ms between frames, and the rate at which
+         two versions of this gesture had already failed. */
+      output.swipeAtFrameRates = [15, 23, 30, 60].map(fps => {
         const swipe = makeGestureReader();
         let count = 0;
         for (let index = 0; index <= Math.ceil(fps * 0.3); index++) {
@@ -96,7 +101,10 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
         }
         return count;
       });
-      const zoomButton = document.querySelector('[data-hand-mode="zoom"]').getBoundingClientRect();
+      /* THE PANEL IS STILL PRESSED BY THE HAND, and CAMERA OFF is what is
+         left on it: a way out that needs no gesture to be recognised, which
+         matters most on the day a gesture is not. */
+      const zoomButton = document.querySelector('[data-hand-off]').getBoundingClientRect();
       const buttonFrame = pinched => {
         const frame = hand(0.9, 0.5, pinched);
         const targetPalmX = 0.2 + 0.6 * (1 - (zoomButton.x + zoomButton.width / 2) / innerWidth);
@@ -110,10 +118,8 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
       for (let index = 0; index < 15; index++) { source.push(buttonFrame(false)); await wait(34); }
       source.push(buttonFrame(true)); await wait(100);
       source.push(buttonFrame(false)); await wait(34);
-      output.pinchSelectsZoomButton = api.mode() === 'zoom';
-      api.disarm();
+      output.pinchPressesCameraOff = api.state() === 'off';
       output.offHidesPanel = document.getElementById('hand-panel').hidden;
-      output.offResetsMode = api.mode() === 'navigate';
       output.headerFits = Array.from(document.querySelector('#topbar').children).every(element => {
         const rect = element.getBoundingClientRect();
         return rect.width === 0 || rect.right <= innerWidth;
@@ -123,7 +129,7 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
     });
     console.log(JSON.stringify(result, null, 2));
     for (const [name, value] of Object.entries(result)) {
-      if (name === 'swipeAtFrameRates') assert.deepEqual(value, [1, 1, 1], name);
+      if (name === 'swipeAtFrameRates') assert.deepEqual(value, [1, 1, 1, 1], name);
       else assert.equal(value, true, name);
     }
     assert.deepEqual(errors, []);

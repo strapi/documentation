@@ -2639,7 +2639,7 @@
       }
     });
     onHandControl('grab', function () {
-      if (handControlAt() || (window.__hands && window.__hands.mode() === 'zoom')) return;
+      if (handControlAt()) return;
       handGrab = true; handLastX = handX; handLastY = handY;
     });
     onHandControl('release', function () { handGrab = false; });
@@ -3754,9 +3754,9 @@
      -- both also reachable by mouse (the same two buttons the quick guide
      uses), since nothing in this world may be reachable only by gesture. */
 
-  var HAND_GUIDE_KEY = 'firstlight.handguide.v2';
+  var HAND_GUIDE_KEY = 'firstlight.handguide.v3';
   var HAND_GUIDE_STEPS = [
-    ['YOUR HAND, TWO MODES', 'In NAVIGATE, aim with your palm: pinch briefly to open a body, or hold the pinch and move to drag. Select ZOOM in the hand panel, then spread your fingers to zoom in or bring them together to zoom out. Holding still stops the zoom; a fist lets you rest and start again. Aim and pinch the panel buttons to change mode. Confirm with a quick pinch, or brush your open hand outward to turn the camera off. Mouse and keyboard remain available.']
+    ['HAND CONTROL ONLINE', 'The camera is on, and your hand is now steering the chart. Aim with your palm. Open your hand to zoom in and close it to zoom out. Pinch briefly to open whatever the reticle rests on, or hold the pinch and move to drag the chart. A fist is a rest: nothing happens while you hold one. Confirm with a quick pinch, or brush your open hand outward to turn the camera off. Mouse and keyboard remain available throughout.']
   ];
   function maybeHandGuide() {
     if (handGuideOn) return;

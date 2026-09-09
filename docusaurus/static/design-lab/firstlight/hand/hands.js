@@ -25,7 +25,16 @@ export function startHands(opts) {
   let reader = makeGestureReader();
   const fx = makeOneEuro({ minCutoff: 1.5, beta: 4 }), fy = makeOneEuro({ minCutoff: 1.5, beta: 4 });
   let t0 = null;
-  let mode = 'navigate', aperture = null, zoomAnchor = null, lastFrameAt = 0;
+  /* NO MODES. There were two for an afternoon, NAVIGATE and ZOOM, on a panel
+     the hand could press. The owner refused them outright: "je ne veux pas
+     avoir a gerer 2 modes: j'elargis la main, ca zoom, je referme la main, ca
+     dezoom". They existed because the aperture band overlapped the pinch band
+     and one open hand doing both had every gesture fighting its neighbour;
+     the calibration clip settled that differently, by telling a pinch from a
+     flat closed hand on the aperture itself (see PINCH_FAN_MIN in
+     gestures.js). So zoom needs no mode: it reads the aperture of a hand that
+     is open, and a hand that is pinching is not open. */
+  let aperture = null, zoomAnchor = null, lastFrameAt = 0;
   let lastScreen = null;
 
   /* THE LATCH. Closing the hand is itself a motion, so even palmCentre --
@@ -79,14 +88,13 @@ export function startHands(opts) {
       // 2026-09-08 and it read backwards to him, since opening a closed hand
       // spends the first half of the movement below the neutral and so
       // dezooms while it opens. Zoom is a RELATIVE gesture now, and it is
-      // fired below, from the aperture's frame-to-frame delta, in zoom mode
-      // only. One event reaches the world for zoom, `hand:zoom`, and nothing
-      // else.
+      // fired below, from the aperture's frame-to-frame delta. One event
+      // reaches the world for zoom, `hand:zoom`, and nothing else.
       if (type === 'fan') continue;
       if (type === 'pose') {
-        fire('pose', { ...detail, mode });
+        fire('pose', detail);
         const overPanel = lastScreen && document.elementFromPoint(lastScreen.x, lastScreen.y)?.closest('#hand-panel');
-        if (mode === 'zoom' && detail.aperture !== null && lastScreen && !overPanel) {
+        if (detail.aperture !== null && lastScreen && !overPanel) {
           if (aperture !== null) {
             const delta = detail.aperture - aperture;
             if (Math.abs(delta) > 0.025) {
@@ -158,13 +166,6 @@ export function startHands(opts) {
 
   return {
     state: () => source.state(),
-    mode: () => mode,
-    setMode(next) {
-      mode = next === 'zoom' ? 'zoom' : 'navigate';
-      aperture = null; zoomAnchor = null; latched = false;
-      fire('release', {});
-      fire('mode', { mode });
-    },
     destroy() { this.disarm(); clearInterval(watchdog); },
     disarm() {
       source.disarm(); fx.reset(); fy.reset(); t0 = null;
@@ -180,8 +181,7 @@ export function startHands(opts) {
       // a latchAnchor/latchReported pair the new hand never produced.
       latched = false;
       lastRawX = null; lastRawY = null;
-      lastFrameAt = 0; lastScreen = null; aperture = null; zoomAnchor = null; mode = 'navigate';
-      fire('mode', { mode });
+      lastFrameAt = 0; lastScreen = null; aperture = null; zoomAnchor = null;
       // turning the feature off must visibly turn it off: without this, only
       // hand:state fires, and nothing ever tells the reticle (or the world's
       // own handGrab/handSnap bookkeeping) that the hand is gone, so it kept

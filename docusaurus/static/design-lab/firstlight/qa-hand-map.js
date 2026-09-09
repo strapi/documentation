@@ -211,7 +211,6 @@ const path = require('path');
       // hand-control guide, once per session. This case does not care about
       // that dialog, so it is answered the way a mouse would answer it.
       closeGuide();
-      api.setMode('zoom');
       await settle();
 
       const sweep = async (from, to, steps) => {

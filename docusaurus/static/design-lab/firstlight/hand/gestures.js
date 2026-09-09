@@ -19,12 +19,40 @@ export const LM = {
   MIDDLE_MCP: 9, MIDDLE_TIP: 12, RING_TIP: 16, PINKY_TIP: 20, PINKY_MCP: 17,
 };
 
-/* PINCH: thumb and index tip coming together, over hand size. Derived from
-   the 1821-frame reference fixture: closed frames sit at 0.04-0.42, open
-   frames at 1.18-1.56, and the whole 0.42-1.18 span between them is a true
-   zero-density gap but for a handful of in-between-motion frames. PINCH_ON
-   =0.55 and PINCH_OFF=1.00 both land on values the fixture never produces. */
-export const PINCH_ON = 0.55, PINCH_OFF = 1.00; // thumb to index, over hand size
+/* PINCH: thumb and index tip coming together, over hand size.
+
+   PINCH_OFF WAS 1.00 AND THAT IS WHY NO PAGE COULD BE OPENED. The first band
+   came from the reference clip, where closed frames sit at 0.04-0.42 and open
+   frames at 1.18-1.56, so 1.00 looked like the middle of an empty gap. But
+   that clip holds only three long deliberate holds. On the calibration clip
+   (qa-fixtures/hand-calibration-2026-09-09.json), which holds five deliberate
+   TAPS, the hand between two taps reads a median of 0.88, a third quartile of
+   0.95 and a maximum of 1.11: it RELAXES between taps, it does not open. So
+   the release threshold was above almost everything the hand does, one tap
+   armed the grab, and it never let go: five taps came out as two pinch
+   episodes, the second of them 3.1 seconds long, with the world believing it
+   was being dragged the whole time.
+
+   0.45 and 0.70, measured on that clip. Deliberate taps close to 0.16 and
+   drags to 0.08, both far under 0.45. Between taps the hand sits at 0.74 and
+   above, clear of 0.70, so every tap releases; the hysteresis band is still
+   0.25 wide, which is what keeps a grab from flickering. */
+export const PINCH_ON = 0.45, PINCH_OFF = 0.70; // thumb to index, over hand size
+
+/* A PINCH KEEPS THE OTHER FINGERS APART, and that is what tells one from a
+   flat hand with the fingers closed. Closing the fingers brings the thumb in
+   with them: on the calibration clip that gesture reads a thumb-to-index
+   median of 0.29, deep inside the pinch band, so the world read it as a grab
+   and suppressed the zoom for 76 of its 139 frames -- "je referme la main, ca
+   ne dezoome pas". The two are cleanly separated by the aperture, index tip
+   to pinky tip over hand size, on the frames where thumb and index are
+   closed:
+     a real pinch, tap and drag together: 0.53 to 0.91, p10 0.63, median 0.73
+     the fingers closed together:         0.10 to 0.59, p90 0.50, median 0.38
+   PINCH_FAN_MIN sits at 0.62, between those two. It gates ARMING only, and
+   never the release: a drag that curls up on its way across the chart would
+   otherwise drop the map halfway. */
+export const PINCH_FAN_MIN = 0.62;
 
 /* FIST cannot be told apart from a pinch by thumb-to-index distance: closing
    the whole hand also brings the thumb near the index tip, so in the fixture
@@ -77,20 +105,41 @@ function fanRatio(L) { return dist(L[LM.INDEX_TIP], L[LM.PINKY_TIP]) / handSize(
    happen. */
 const FAN_NEUTRAL = 0.89, FAN_DEADZONE = 0.15;
 
-/* A BRIEF PINCH IS A CLICK. Timing cannot be measured from this fixture: it
-   holds exactly two deliberate pinches, at 8.1s and 12.1s, both built to
-   test drag hysteresis, and nothing shorter but one incidental 667ms pinch
-   that was not a deliberate tap either. CLICK_MAX_MS instead follows the
-   platform convention for tap vs. long-press (iOS and Android both draw
-   that line at 500ms): 400ms sits comfortably under it, and more than 20x
-   under either real hold in the fixture, so no genuine drag can misread as
-   a click. CLICK_MAX_DIST IS measured: that one incidental still pinch
-   moves the palm at most 0.0224 of hand size from where it started over its
-   whole 667ms. 0.15 sits 6-7x above that natural jitter floor -- room for a
-   real hand's tremor during a fast tap -- while staying far under the 0.73
-   and 1.06 of hand size the two genuine holds accumulate once they actually
-   start dragging. */
-export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
+/* A PINCH THAT DOES NOT TRAVEL IS A CLICK, and how long it lasts has nothing
+   to do with it.
+
+   THE FIRST VERSION ASKED FOR 400ms, and the owner could not open a single
+   page with it: "je n'arrive toujours pas a pinch pour selectionner une
+   page". That number came from the platform convention for a tap against a
+   long-press, which iOS and Android both draw at 500ms -- a convention about
+   a FINGER ON GLASS, where the finger arrives, touches and leaves in one
+   motion. A hand pinching in the air is nothing like that: it closes, holds
+   while the person checks that something happened, and opens. Half a second
+   is a quick pinch by that standard. The fixture could not have caught this,
+   as it was written: it holds no deliberate tap at all, so the one threshold
+   in this file that gates the most ordinary act in the vocabulary was the
+   one derived from a convention instead of from him. That is the same
+   mistake as the swipe's, in a different unit.
+
+   SO THE RULE IS THE MOUSE'S RULE. A mouse click is a press and a release
+   without travel in between, at any speed: what separates a click from a
+   drag is whether the pointer MOVED, not how long the button was down. The
+   excursion test already does exactly that job, and it does it over the
+   whole pinch rather than at its end, so a pinch that wanders and comes back
+   is a drag and not a tap.
+
+   CLICK_MAX_DIST IS MEASURED, and generously. The one incidental still pinch
+   in the fixture moves the palm at most 0.0224 of hand size across its whole
+   667ms, while the two genuine drag holds accumulate 0.73 and 1.06. Nothing
+   the clip contains lands between 0.03 and 0.73, so 0.25 sits ten times over
+   the still hand's own jitter -- room for a real hand's tremor while it
+   holds -- and still three times under the smallest movement that was
+   actually a drag.
+
+   CLICK_MIN_MS stays, at 60ms, and it is not about the gesture: it is about
+   the tracker. A pinch that appears and vanishes inside a frame or two is a
+   landmark estimate wobbling, not a hand, and it must not open a page. */
+export const CLICK_MIN_MS = 60, CLICK_MAX_DIST = 0.25;
 
 /* THE SWIPE. Recognised here, generally, on any open hand; what a `dismiss`
    MEANS is decided entirely by whoever is listening (today: the hand-control
@@ -156,10 +205,19 @@ export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
    has settled, meaning its net displacement over the window falls back under
    SWIPE_REARM. Ending the open hand (a pinch, a fist, or losing the hand)
    re-arms it too. */
-export const SWIPE_DIST = 0.7, SWIPE_WINDOW = 0.25, SWIPE_MIN_SAMPLES = 3,
-  SWIPE_MAX_JUMP = 0.75, SWIPE_REARM = 0.2;
+export const SWIPE_DIST = 0.6, SWIPE_WINDOW = 0.25, SWIPE_MIN_SAMPLES = 3,
+  SWIPE_REARM = 0.2;
 
+const HAND_VOTES = 8;                         // about a third of a second at 23 fps
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+
+function votedHand(votes) {
+  if (!votes.length) return null;
+  let right = 0;
+  for (const v of votes) if (v === 'Right') right++;
+  if (right * 2 === votes.length) return null;   // a real tie is not a hand
+  return right * 2 > votes.length ? 'Right' : 'Left';
+}
 
 function handSize(L) {
   // rigid, always visible, and unaffected by which fingers are curled
@@ -205,7 +263,16 @@ export function makeGestureReader() {
   // THE SWIPE: the palm's recent path, alive only while the hand reads open.
   // Oldest first, trimmed to SWIPE_WINDOW, in RAW landmark x (the screen flip
   // is applied where the displacement is read, once).
-  let swipeTrail = [], swipeFired = false;
+  let swipeTrail = [], swipeFired = false, swipePending = false;
+  /* HANDEDNESS IS VOTED ON, NOT READ. The dismiss direction depends on which
+     hand it is, so a single misread label refuses the gesture outright. On the
+     calibration clip the landmarker calls this hand Right 1172 times and Left
+     27 times, and it flips six times -- during the fast movements, which is
+     exactly when a brush is being performed. So the last HAND_VOTES readings
+     decide, by majority: at 23 fps that is about a third of a second, long
+     enough that one stray frame cannot invert the gesture and short enough to
+     follow a real change of hand. */
+  let handVotes = [];
 
   return {
     state: () => ({ present, pinched, fisted }),
@@ -220,7 +287,7 @@ export function makeGestureReader() {
           if (fisted) fisted = false;
           if (present) { present = false; evs.push({ type: 'absent' }); }
           grabStartT = null; grabStartPalm = null;
-          swipeTrail = []; swipeFired = false;
+          swipeTrail = []; swipeFired = false; swipePending = false; handVotes = [];
         }
         return evs;
       }
@@ -229,6 +296,11 @@ export function makeGestureReader() {
 
       const primary = hands[0];
       const L = primary.landmarks;
+      if (primary.handedness) {
+        handVotes.push(primary.handedness);
+        if (handVotes.length > HAND_VOTES) handVotes.shift();
+      }
+      const handed = votedHand(handVotes);
       const pr = pinchRatio(L);
       const fc = fistCurl(L);
       if (pinched && grabStartPalm) {
@@ -256,7 +328,9 @@ export function makeGestureReader() {
       }
 
       if (!fisted) {
-        if (!pinched && pr < PINCH_ON) {
+        // the aperture gates arming only, so a pinch that curls up while it
+        // drags keeps holding: see PINCH_FAN_MIN above
+        if (!pinched && pr < PINCH_ON && fanRatio(L) > PINCH_FAN_MIN) {
           pinched = true;
           grabStartT = t;
           grabStartPalm = palmCentre(L);
@@ -267,8 +341,15 @@ export function makeGestureReader() {
           if (grabStartT !== null) {
             const heldMs = (t - grabStartT) * 1000;
             const moved = dist(palmCentre(L), grabStartPalm) / handSize(L);
-            if (heldMs >= 60 && heldMs <= CLICK_MAX_MS && Math.max(moved, grabMaxDistance) <= CLICK_MAX_DIST) {
-              evs.push({ type: 'click' });
+            const travel = Math.max(moved, grabMaxDistance);
+            // the reason is reported either way: a pinch that is not read as
+            // a click is the single most confusing thing this vocabulary can
+            // do, and the panel says which of the two tests refused it
+            if (heldMs >= CLICK_MIN_MS && travel <= CLICK_MAX_DIST) {
+              evs.push({ type: 'click', heldMs, travel });
+            } else {
+              evs.push({ type: 'noclick', heldMs, travel,
+                         why: heldMs < CLICK_MIN_MS ? 'too brief' : 'the hand travelled' });
             }
           }
           grabStartT = null; grabStartPalm = null;
@@ -276,53 +357,87 @@ export function makeGestureReader() {
         }
       }
 
-      // FAN (zoom rate) and SWIPE (dismiss): both read only on a hand that
-      // is, this frame, genuinely open -- neither pinched nor fisted -- so
-      // dragging or fisting never also spins the zoom or fires a dismiss.
+      // THE APERTURE, which zoom reads, only on a hand that is genuinely
+      // open this frame: dragging or fisting must never also spin the zoom.
       if (!fisted && !pinched) {
         evs.push({ type: 'pose', aperture: fanRatio(L), posture: 'open' });
         const dev = fanRatio(L) - FAN_NEUTRAL;
         if (Math.abs(dev) > FAN_DEADZONE) {
           evs.push({ type: 'fan', rate: dev > 0 ? dev - FAN_DEADZONE : dev + FAN_DEADZONE });
         }
+      } else {
+        evs.push({ type: 'pose', posture: fisted ? 'rest' : 'pinch', aperture: null });
+      }
 
+      /* THE SWIPE RUNS ON ANY HAND THAT IS NOT A FIST, pinched or not, and
+         that is measured rather than relaxed on principle. On the calibration
+         clip the owner's brushing hand reads thumb-to-index at a median of
+         0.56, dipping under the arming threshold: he brushes with a RELAXED
+         hand, thumb near the index, not a flat open one. With the swipe gated
+         on an unpinched hand, 80 of that take's frames were invisible to it
+         and not one brush fired.
+         What separates a brush from a drag is not the shape of the hand, it
+         is the speed. His brushes cover up to 1.47 hand widths in 214ms; his
+         drags cover 1.00 in 1.9 to 4.0 SECONDS, twenty times slower. The
+         displacement rule below already tells those apart by a factor of
+         five, so it does the discriminating, and the hand is allowed to be
+         however he holds it. A fist still stops it: a closed hand travelling
+         is a hand being put down. */
+      if (!fisted) {
         const pc = palmCentre(L);
         swipeTrail.push({ t, x: pc.x });
-        // the window is a time window, and it keeps the sample that has just
-        // fallen out of it as the oldest one, so a displacement is always
-        // measured over the full window rather than over whatever is left
-        while (swipeTrail.length > 2 && t - swipeTrail[1].t > SWIPE_WINDOW) swipeTrail.shift();
+        /* trimmed to samples strictly INSIDE the window. An earlier version
+           kept the one that had just fallen out of it, so that a displacement
+           was always measured over the full window, and then asked the span
+           to be within the window as well: the two cannot both hold. At 23
+           fps, the frame rate the calibration clip was actually taken at, the
+           extra sample put every span at 254 to 267ms against a 250ms window
+           and the rule refused every single brush the owner performed. */
+        while (swipeTrail.length > 1 && t - swipeTrail[0].t > SWIPE_WINDOW) swipeTrail.shift();
         const oldest = swipeTrail[0];
         // screen space, not raw landmark space, and this is the only place
         // the flip happens: see the comment on SWIPE_DIST above for why it is
         // not optional
         const hs = handSize(L);
         const net = -(pc.x - oldest.x) / hs;
-        // the largest single interval in the window, which is how a tracking
-        // jump is told apart from a hand actually travelling
-        let jump = 0;
-        for (let i = 1; i < swipeTrail.length; i++) {
-          jump = Math.max(jump, Math.abs(swipeTrail[i].x - swipeTrail[i - 1].x) / hs);
-        }
         const dir = net > 0 ? 1 : -1;
+        /* NO REVERSAL INSIDE THE WINDOW. A hand travelling covers its
+           distance without changing its mind; a hand waving about, or a
+           tracker that jumps and comes back, does not. This replaced a guard
+           that asked no single interval to carry more than three quarters of
+           the net, which was written against a tracker glitch at 30 fps and
+           refused real gestures at 23: the owner's brush covers 1.43 hand
+           widths of which one 43ms frame carries 1.27, because that is what a
+           fast hand looks like when the camera only sees it three times. */
+        let reversed = false;
+        for (let i = 1; i < swipeTrail.length; i++) {
+          const step = -(swipeTrail[i].x - swipeTrail[i - 1].x) / hs;
+          if (step * dir < -SWIPE_REARM) { reversed = true; break; }
+        }
         // outward for THIS hand: rightward (+1) for a hand labelled Right,
         // leftward (-1) for one labelled Left, either direction for a hand
         // with no handedness reported at all
-        const wantDir = primary.handedness === 'Right' ? 1 : primary.handedness === 'Left' ? -1 : 0;
+        const wantDir = handed === 'Right' ? 1 : handed === 'Left' ? -1 : 0;
         const outward = wantDir === 0 || dir === wantDir;
+        /* ONE FRAME OF CONFIRMATION. A hand being taken OUT of the picture
+           sweeps sideways exactly like a brush, and on the calibration clip
+           the take that does that twice fired two dismisses. So a qualifying
+           window arms the gesture and the NEXT frame that still shows a hand
+           fires it: a hand that is gone by then was leaving, not brushing.
+           The cost is one frame, 43ms at the rate his camera runs. */
         if (swipeFired) {
           if (Math.abs(net) < SWIPE_REARM) swipeFired = false;
-        } else if (swipeTrail.length >= SWIPE_MIN_SAMPLES
-                   && t - oldest.t <= SWIPE_WINDOW
-                   && Math.abs(net) >= SWIPE_DIST
-                   && jump <= SWIPE_MAX_JUMP * Math.abs(net)
-                   && outward) {
-          swipeFired = true;
+        } else if (swipePending) {
+          swipePending = false; swipeFired = true;
           evs.push({ type: 'dismiss' });
+        } else if (swipeTrail.length >= SWIPE_MIN_SAMPLES
+                   && Math.abs(net) >= SWIPE_DIST
+                   && !reversed
+                   && outward) {
+          swipePending = true;
         }
       } else {
-        evs.push({ type: 'pose', posture: fisted ? 'rest' : 'pinch', aperture: null });
-        swipeTrail = []; swipeFired = false;
+        swipeTrail = []; swipeFired = false; swipePending = false;
       }
 
       return evs;
