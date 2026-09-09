@@ -2580,11 +2580,25 @@
       return target && target.closest('#hand-panel button');
     }
 
+    /* HOW CLOSE THE HAND HAS TO BE, and it was nowhere near enough. 46 was
+       passed here as "a hand's tolerance against a mouse's 15", but pick()
+       spends only 0.6 of what it is given (see its own `tol * 0.6`), so the
+       hand's real target was 28 SCREEN PIXELS at the opening zoom. Measured
+       across the whole screen at the cold open: a hand pointing anywhere
+       snapped to a body on 0 of 576 sampled points, because the one body on
+       the chart at that moment is a 28px disc at the exact centre. No pinch
+       could ever have opened a page, however well it was read, and that is
+       the whole of "le pinch pour ouvrir une page ne fonctionne pas du tout".
+
+       HAND_SNAP_PX is in screen pixels and undoes pick()'s own discount, so
+       the number here is the number that is true on screen. 110px is about a
+       thumb's width at arm's length on this display, and it is the tolerance
+       a touchscreen gives a finger for the same reason: the pointer is a limb,
+       not a mouse. It applies to the HAND only; the mouse keeps its 15. */
+    var HAND_SNAP_PX = 110;
     function handSnapAt(sx, sy) {
       var wp = s2w(sx, sy);
-      // the same radius picker mouse hover uses, opened up because a hand is
-      // not a mouse: 15 px of tolerance is a mouse's, 46 is a hand's
-      return pick(wp[0], wp[1], 46 / cam.s);
+      return pick(wp[0], wp[1], (HAND_SNAP_PX / 0.6) / cam.s);
     }
 
     /* The world's CONTROL listeners go through here, never straight onto
@@ -2662,7 +2676,12 @@
         if (window.__handHud) window.__handHud.say('OPENING ' + stars[handSnap].page.title.toUpperCase());
         location.hash = '#' + stars[handSnap].slug;
       } else if (window.__handHud) {
-        window.__handHud.say('NOTHING UNDER THE RETICLE');
+        // and at the start of a visit there is exactly ONE body on the chart,
+        // so "nothing under the reticle" is not the useful half of the
+        // sentence: what to aim at is
+        window.__handHud.say(chartN > 1
+          ? 'NOTHING UNDER THE RETICLE'
+          : 'NOTHING CHARTED YET · AIM AT THE LIT BEACON');
       }
     });
     /* ZOOM, and the only way the hand reaches the scale. `delta` is the

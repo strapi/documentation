@@ -604,7 +604,18 @@ body.darkadapt #log-tag{opacity:.32}
   left: -13px; top: -13px; width: 26px; height: 26px; opacity: 1;
   border-color: var(--mint, #5AFFC8);
 }
-#hand-reticle.snapped .hr-ring { border-style: dashed; }
+/* WHEN THE HAND CAN OPEN SOMETHING, IT HAS TO BE UNMISTAKABLE. A dashed
+   border was the only difference, and the difference that matters to a hand
+   in the air is between "this pinch will do something" and "this pinch will
+   do nothing": that is the question two evenings of testing could not answer
+   from the screen. So the ring fills, brightens and grows a little, which
+   reads at a glance and from the corner of the eye. */
+#hand-reticle.snapped .hr-ring {
+  border-style: solid; border-width: 3px; opacity: 1;
+  left: -25px; top: -25px; width: 50px; height: 50px;
+  background: rgba(255, 176, 0, .16);
+  box-shadow: 0 0 12px rgba(255, 176, 0, .45);
+}
 #hand-reticle .hr-tag {
   position: absolute; left: 28px; top: -8px; white-space: nowrap;
   font: 400 10.5px/1 ui-monospace, SFMono-Regular, monospace;
