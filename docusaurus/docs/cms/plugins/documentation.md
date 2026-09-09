@@ -31,7 +31,7 @@ The Documentation plugin automates your API documentation creation. It basically
     `@strapi/plugin-documentation`
   </IdentityCardItem>
     <IdentityCardItem icon="plus-square" title="Additional resources">
-    <ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-documentation" text="Strapi Marketplace page" />
+    <ExternalLink to="https://community.strapi.io/marketplace/strapi-plugin-documentation" text="Strapi Marketplace page" />
   </IdentityCardItem>
 </IdentityCard>
 

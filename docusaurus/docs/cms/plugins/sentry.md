@@ -19,7 +19,7 @@ This plugin enables you to track errors in your Strapi application using Sentry.
 <IdentityCard isPlugin>
   <IdentityCardItem icon="navigation-arrow" title="Location">Only usable and configurable via server code</IdentityCardItem>
   <IdentityCardItem icon="package" title="Package name">`@strapi/plugin-sentry`</IdentityCardItem>
-  <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-sentry" text="Strapi Marketplace page"/> <ExternalLink to="https://sentry.io/" text="Sentry page"/></IdentityCardItem>
+  <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://community.strapi.io/marketplace/strapi-plugin-sentry" text="Strapi Marketplace page"/> <ExternalLink to="https://sentry.io/" text="Sentry page"/></IdentityCardItem>
 </IdentityCard>
 
 By using the Sentry plugin you can:

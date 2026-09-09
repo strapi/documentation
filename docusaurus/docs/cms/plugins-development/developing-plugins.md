@@ -21,10 +21,10 @@ Strapi plugins extend core functionality using Admin Panel API, Server API, or M
 </Tldr>
 
 
-Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the <ExternalLink to="https://market.strapi.io" text="Marketplace"/>. Once created, your plugin can be:
+Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the <ExternalLink to="https://community.strapi.io/marketplace" text="Marketplace"/>. Once created, your plugin can be:
 
 - used as a local plugin, working only with a specific Strapi project,
-- or <ExternalLink to="https://market.strapi.io/submit-plugin" text="submitted to the Marketplace"/> to be shared with the community.
+- or <ExternalLink to="https://community.strapi.io/submit/plugin" text="submitted to the Marketplace"/> to be shared with the community.
 
 👉 To start developing a Strapi plugin:
 

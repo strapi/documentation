@@ -168,7 +168,7 @@ export default [
 </Tabs>
 
 :::tip
-For a full list of upload providers and their required domains, see the <ExternalLink to="https://market.strapi.io/providers" text="Strapi Market"/>.
+For a full list of upload providers and their required domains, see the <ExternalLink to="https://community.strapi.io/marketplace" text="Strapi Community Hub"/>.
 :::
 
 ## Custom CORS headers

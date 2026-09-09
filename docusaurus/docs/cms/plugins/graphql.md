@@ -29,7 +29,7 @@ By default Strapi create [REST endpoints](/cms/api/rest#endpoints) for each of y
 <IdentityCard isPlugin>
   <IdentityCardItem icon="navigation-arrow" title="Location">Usable via the admin panel.<br/>Configured through both admin panel and server code, with different sets of options.</IdentityCardItem>
   <IdentityCardItem icon="package" title="Package name">`@strapi/plugin-graphql`  </IdentityCardItem>
-  <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-graphql" text="Strapi Marketplace page"/> </IdentityCardItem>
+  <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://community.strapi.io/marketplace/strapi-plugin-graphql" text="Strapi Marketplace page"/> </IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage

@@ -40,7 +40,7 @@ Before getting into the upgrade process itself, take the following precautions:
     * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.
 3. **Ensure the plugins you are using are compatible with Strapi 5**.
 
-  To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the <ExternalLink to="https://market.strapi.io/plugins?version=v5" text="Marketplace"/> website.
+  To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the <ExternalLink to="https://community.strapi.io/marketplace" text="Marketplace"/> website.
 
 ## Step 2: Run automated migrations
 

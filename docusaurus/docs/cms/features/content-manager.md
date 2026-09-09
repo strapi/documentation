@@ -333,7 +333,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows automatically generating a UID based on the content type name.                                                                                                                                                                                                |
 
 :::note
-Filling out a [custom field](/cms/features/content-type-builder#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the <ExternalLink to="https://market.strapi.io" text="Marketplace"/>.
+Filling out a [custom field](/cms/features/content-type-builder#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the <ExternalLink to="https://community.strapi.io/marketplace" text="Marketplace"/>.
 :::
 
 #### Components
