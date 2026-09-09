@@ -23,8 +23,10 @@ const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 export function startHands(opts) {
   const source = (opts && opts.source) || makeCameraSource();
   let reader = makeGestureReader();
-  const fx = makeOneEuro({}), fy = makeOneEuro({});
+  const fx = makeOneEuro({ minCutoff: 1.5, beta: 4 }), fy = makeOneEuro({ minCutoff: 1.5, beta: 4 });
   let t0 = null;
+  let mode = 'navigate', aperture = null, zoomAnchor = null, lastFrameAt = 0;
+  let lastScreen = null;
 
   /* THE LATCH. Closing the hand is itself a motion, so even palmCentre --
      twelve times steadier than the old anchor -- still drifts a little while
@@ -55,6 +57,7 @@ export function startHands(opts) {
   const fire = (name, detail) => window.dispatchEvent(new CustomEvent('hand:' + name, { detail }));
 
   source.onFrame((frame) => {
+    lastFrameAt = performance.now();
     const now = performance.now() / 1000;
     if (t0 === null) t0 = now;
     const t = now - t0;
@@ -69,6 +72,35 @@ export function startHands(opts) {
     // date the next time gestures.js adds one.
     for (const ev of events) {
       const { type, ...detail } = ev;
+      // THE FAN IS NOT FORWARDED. gestures.js still measures it, because the
+      // aperture and its dead zone are calibrated against the reference clip
+      // and that measurement is worth keeping, but the world no longer reads
+      // a zoom out of an ABSOLUTE aperture: the owner tested that on
+      // 2026-09-08 and it read backwards to him, since opening a closed hand
+      // spends the first half of the movement below the neutral and so
+      // dezooms while it opens. Zoom is a RELATIVE gesture now, and it is
+      // fired below, from the aperture's frame-to-frame delta, in zoom mode
+      // only. One event reaches the world for zoom, `hand:zoom`, and nothing
+      // else.
+      if (type === 'fan') continue;
+      if (type === 'pose') {
+        fire('pose', { ...detail, mode });
+        const overPanel = lastScreen && document.elementFromPoint(lastScreen.x, lastScreen.y)?.closest('#hand-panel');
+        if (mode === 'zoom' && detail.aperture !== null && lastScreen && !overPanel) {
+          if (aperture !== null) {
+            const delta = detail.aperture - aperture;
+            if (Math.abs(delta) > 0.025) {
+              fire('zoom', { delta: Math.max(-0.12, Math.min(0.12, delta)), ...zoomAnchor });
+              aperture = detail.aperture;
+            }
+          } else { aperture = detail.aperture; zoomAnchor = { ...lastScreen }; }
+        } else { aperture = null; zoomAnchor = null; }
+        continue;
+      }
+      if (type === 'absent') {
+        aperture = null; zoomAnchor = null; lastScreen = null;
+        fx.reset(); fy.reset(); lastRawX = null; lastRawY = null;
+      }
       fire(type, detail);
     }
     // unlatch immediately on any release, including one fired by the dead
@@ -106,14 +138,34 @@ export function startHands(opts) {
     }
     lastRawX = outX; lastRawY = outY;
 
-    fire('move', {
+    lastScreen = {
       x: fx.filter(outX, t) * window.innerWidth,
       y: fy.filter(outY, t) * window.innerHeight,
-    });
+    };
+    fire('move', lastScreen);
   });
+
+  const watchdog = setInterval(() => {
+    if (source.state() === 'on' && lastFrameAt && performance.now() - lastFrameAt > 180) {
+      const events = reader.read({ hands: [] }, performance.now() / 1000 - t0);
+      if (events.length) {
+        latched = false; aperture = null; zoomAnchor = null; lastScreen = null;
+        fx.reset(); fy.reset(); lastRawX = null; lastRawY = null;
+        for (const event of events) fire(event.type, event);
+      }
+    }
+  }, 60);
 
   return {
     state: () => source.state(),
+    mode: () => mode,
+    setMode(next) {
+      mode = next === 'zoom' ? 'zoom' : 'navigate';
+      aperture = null; zoomAnchor = null; latched = false;
+      fire('release', {});
+      fire('mode', { mode });
+    },
+    destroy() { this.disarm(); clearInterval(watchdog); },
     disarm() {
       source.disarm(); fx.reset(); fy.reset(); t0 = null;
       // a fresh reader, not just a fresh filter: without this, present,
@@ -128,6 +180,8 @@ export function startHands(opts) {
       // a latchAnchor/latchReported pair the new hand never produced.
       latched = false;
       lastRawX = null; lastRawY = null;
+      lastFrameAt = 0; lastScreen = null; aperture = null; zoomAnchor = null; mode = 'navigate';
+      fire('mode', { mode });
       // turning the feature off must visibly turn it off: without this, only
       // hand:state fires, and nothing ever tells the reticle (or the world's
       // own handGrab/handSnap bookkeeping) that the hand is gone, so it kept

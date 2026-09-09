@@ -94,66 +94,70 @@ export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
 
 /* THE SWIPE. Recognised here, generally, on any open hand; what a `dismiss`
    MEANS is decided entirely by whoever is listening (today: the hand-control
-   arming dialog, which reads it as decline; see firstlight.js). Lateral palm
-   speed, over hand size, per second -- the same ratio-to-hand-size rule as
-   everything else in this file, not a raw image-space speed: a threshold in
-   raw units would mean "swipe harder the further you sit from the camera",
-   the exact mistake this file's own PINCH/FIST thresholds already correct
-   elsewhere.
+   arming dialog, which reads it as decline; see firstlight.js).
 
-   SWIPE_SPEED WAS FIRST SET TO 1.0, from a measurement taken in raw image
-   units and applied here without converting it -- a hand is roughly 0.279
-   of the frame, so a raw-unit speed reads about 3.6x SMALLER than the same
-   motion measured over hand size. The result was a threshold about 3.6x too
-   low for the units this code actually compares against.
+   A SWIPE IS A DISPLACEMENT, NOT A RUN OF FAST FRAMES. Two earlier versions
+   asked each frame to clear a speed, and both failed the same way. At 1.0
+   unit/s ordinary use fired the most destructive gesture in this vocabulary
+   about every 17 seconds. Raised to 2.5 the false positives went to zero and
+   the owner's own deliberate swipe stopped firing at all -- twice, on two
+   evenings. The reason is that per-frame speed is not a property of the
+   gesture: a real swipe accelerates and decelerates, its frames arrive 20 to
+   70 ms apart on a camera that is also running a hand model, and ONE frame
+   under the bar reset the streak and the distance accumulated with it. A test
+   written with evenly spaced timestamps cannot see any of that, which is why
+   one existed and passed while the gesture did not work.
 
-   RE-MEASURED IN THE RIGHT UNITS (lateral palm speed over hand size, per
-   second), over 1819 consecutive frame pairs across the whole fixture,
-   every hand state included: median 0.064, p90 0.53, p99 1.40, single-frame
-   maximum 2.04. Sustained runs of SWIPE_FRAMES=4 consecutive frames past a
-   threshold, on this same natural footage with no deliberate swipe anywhere
-   in it:
-     threshold 1.0 -> 4 involuntary triggers
-     threshold 1.5 -> 0
-     threshold 2.0 -> 0
-     threshold 2.5 -> 0
-   At the old 1.0, ordinary use fires the single most destructive gesture in
-   this vocabulary (a dismiss disarms the camera) roughly every 17 seconds
-   by accident.
+   So the gesture is measured whole: the net lateral displacement of the palm
+   over a short WINDOW, in hand widths, in screen space. No frame has to clear
+   anything on its own.
 
-   SWIPE_SPEED = 2.5, not 1.5, even though 1.5 already shows zero here: 1.5
-   sits barely above this clip's own p99 (1.40) and BELOW its single fastest
-   frame (2.04), so a slightly brisker day reaches it. 2.5 clears that
-   fastest natural frame with real margin, while a deliberate swipe -- two
-   or three hand widths in about a fifth of a second -- reads as ten or more
-   in these units: the margin sits on the safe side of a gesture that cannot
-   be undone. (This file's own state reset on every pinch/fist transition,
-   see makeGestureReader below, already suppresses two of those four raw
-   1.0-threshold triggers before the direction gate below even runs; the
-   number above is measured without either protection, on purpose, so the
-   choice of 2.5 does not quietly depend on them.)
+   SWIPE_DIST = 0.7 hand widths in SWIPE_WINDOW = 0.25 s. That is a mean speed
+   of 2.8 units/s, which keeps the margin the 2.5 threshold was chosen for:
+   measured over 1819 consecutive frame pairs of the reference clip, all hand
+   states included, ordinary motion runs a median of 0.064 and a p99 of 1.40
+   units/s, and its single fastest frame reaches 2.04. Sustained over a
+   quarter second it never comes close: the clip produces ZERO dismisses under
+   this rule (asserted in qa-hand-gestures.js), while a deliberate swipe --
+   two or three hand widths in about a fifth of a second -- clears 0.7 several
+   times over.
+
+   SWIPE_MIN_SAMPLES = 3 and SWIPE_MAX_JUMP = 0.75 are together the guard the
+   old frame counter really provided, against the tracker rather than against
+   the hand. A glitch teleports the palm a hand width between two frames and
+   then sits still, and a window that only asked for three samples would fire
+   on it the moment an ordinary third frame arrived to make up the count. So
+   the displacement must also be PROGRESSIVE: no single interval inside the
+   window may account for more than 0.75 of the net. A real swipe at any
+   frame rate spreads itself over its frames, a sixth of the movement each at
+   30 fps, so it clears that easily; a teleport carries all of it in one
+   interval and is refused. 0.75 is deliberately generous, because a real
+   swipe accelerates and its fastest interval does carry more than its share.
 
    DISMISS IS OUTWARD, and outward depends on which hand it is: brushing
    something away is an abduction, moving the arm away from the body's
-   midline, which costs less than crossing in front of yourself. For a
-   right hand that is rightward; for a left hand, leftward. The direction is
-   judged in SCREEN space, after hand/hands.js's own mirror (`rawX = 1 -
-   bx`), not in the raw landmark coordinates this file otherwise works in
-   throughout: a right hand moving to its own right is raw x DECREASING (the
-   camera sees you facing it) but screen x INCREASING, which is the
-   direction that actually reads as "outward" once mirrored for display.
-   Measuring in raw space instead would invert the sign and the gesture
-   would work backwards for everyone, so the flip is made explicit here
-   (screenSpeed = -rawSpeed) rather than left to be discovered by trial and
-   error. Handedness is read off the same frame the landmarks come from
-   (`h`); verified on the fixture: 1821 frames, one hand throughout,
-   labelled "Right" with zero flips, and across 389 two-hand frames the two
-   hands never once shared a label. A hand with no handedness reported (or a
-   source that never sends one) accepts a swipe in EITHER direction, still
-   requiring it stay consistent for the full streak: the direction only
-   exists to make the gesture comfortable, not to gate it shut when it is
-   simply unknown. */
-export const SWIPE_SPEED = 2.5, SWIPE_FRAMES = 4;
+   midline, which costs less than crossing in front of yourself. For a right
+   hand that is rightward; for a left hand, leftward. The direction is judged
+   in SCREEN space, after hand/hands.js's own mirror (`rawX = 1 - bx`), not in
+   the raw landmark coordinates this file otherwise works in: a right hand
+   moving to its own right is raw x DECREASING (the camera sees you facing it)
+   but screen x INCREASING, which is the direction that actually reads as
+   "outward" once mirrored for display. Measuring in raw space instead would
+   invert the sign and the gesture would work backwards for everyone, so the
+   flip is made explicit below rather than left to trial and error. Handedness
+   is read off the same frame the landmarks come from; verified on the
+   fixture: 1821 frames, one hand throughout, labelled "Right" with zero
+   flips, and across 389 two-hand frames the two hands never once shared a
+   label. A hand with no handedness reported accepts a swipe in EITHER
+   direction: the direction exists to make the gesture comfortable, not to
+   gate it shut when it is simply unknown.
+
+   ONE SWIPE, ONE EVENT: after firing, the gesture re-arms only once the palm
+   has settled, meaning its net displacement over the window falls back under
+   SWIPE_REARM. Ending the open hand (a pinch, a fist, or losing the hand)
+   re-arms it too. */
+export const SWIPE_DIST = 0.7, SWIPE_WINDOW = 0.25, SWIPE_MIN_SAMPLES = 3,
+  SWIPE_MAX_JUMP = 0.75, SWIPE_REARM = 0.2;
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
@@ -197,12 +201,11 @@ export function makeGestureReader() {
   // it releases naturally. Never set on the fist-forced release below: a
   // closing hand overriding a pinch is not a released click, it is a
   // gesture changing its mind.
-  let grabStartT = null, grabStartPalm = null;
-  // THE SWIPE: a short streak counter, alive only while the hand reads
-  // open. swipeFired guards against firing `dismiss` on every frame of a
-  // streak that keeps qualifying past the fourth -- one swipe, one event.
-  let swipeStreak = 0, swipeDir = 0, swipeFired = false;
-  let lastPalmX = null, lastPalmT = null;
+  let grabStartT = null, grabStartPalm = null, grabMaxDistance = 0;
+  // THE SWIPE: the palm's recent path, alive only while the hand reads open.
+  // Oldest first, trimmed to SWIPE_WINDOW, in RAW landmark x (the screen flip
+  // is applied where the displacement is read, once).
+  let swipeTrail = [], swipeFired = false;
 
   return {
     state: () => ({ present, pinched, fisted }),
@@ -217,7 +220,7 @@ export function makeGestureReader() {
           if (fisted) fisted = false;
           if (present) { present = false; evs.push({ type: 'absent' }); }
           grabStartT = null; grabStartPalm = null;
-          lastPalmX = null; lastPalmT = null; swipeStreak = 0; swipeDir = 0; swipeFired = false;
+          swipeTrail = []; swipeFired = false;
         }
         return evs;
       }
@@ -228,6 +231,9 @@ export function makeGestureReader() {
       const L = primary.landmarks;
       const pr = pinchRatio(L);
       const fc = fistCurl(L);
+      if (pinched && grabStartPalm) {
+        grabMaxDistance = Math.max(grabMaxDistance, dist(palmCentre(L), grabStartPalm) / handSize(L));
+      }
 
       // Fist is decided first, and on its own independent measure, because
       // it is the only one of the two that actually discriminates a fist from
@@ -254,13 +260,14 @@ export function makeGestureReader() {
           pinched = true;
           grabStartT = t;
           grabStartPalm = palmCentre(L);
+          grabMaxDistance = 0;
           evs.push({ type: 'grab', hand: primary.handedness });
         } else if (pinched && pr > PINCH_OFF) {
           pinched = false;
           if (grabStartT !== null) {
             const heldMs = (t - grabStartT) * 1000;
             const moved = dist(palmCentre(L), grabStartPalm) / handSize(L);
-            if (heldMs <= CLICK_MAX_MS && moved <= CLICK_MAX_DIST) {
+            if (heldMs >= 60 && heldMs <= CLICK_MAX_MS && Math.max(moved, grabMaxDistance) <= CLICK_MAX_DIST) {
               evs.push({ type: 'click' });
             }
           }
@@ -273,36 +280,49 @@ export function makeGestureReader() {
       // is, this frame, genuinely open -- neither pinched nor fisted -- so
       // dragging or fisting never also spins the zoom or fires a dismiss.
       if (!fisted && !pinched) {
+        evs.push({ type: 'pose', aperture: fanRatio(L), posture: 'open' });
         const dev = fanRatio(L) - FAN_NEUTRAL;
         if (Math.abs(dev) > FAN_DEADZONE) {
           evs.push({ type: 'fan', rate: dev > 0 ? dev - FAN_DEADZONE : dev + FAN_DEADZONE });
         }
 
         const pc = palmCentre(L);
-        if (lastPalmX !== null && lastPalmT !== null && t > lastPalmT) {
-          const dt = t - lastPalmT;
-          const rawSpeed = ((pc.x - lastPalmX) / handSize(L)) / dt;
-          // screen space, not raw landmark space: see the comment on
-          // SWIPE_SPEED above for why this flip is not optional.
-          const screenSpeed = -rawSpeed;
-          const dir = screenSpeed > SWIPE_SPEED ? 1 : screenSpeed < -SWIPE_SPEED ? -1 : 0;
-          // outward for THIS hand: rightward (+1) for a hand labelled
-          // Right, leftward (-1) for one labelled Left, either direction
-          // (0, meaning "match whatever dir already is") for a hand with no
-          // handedness reported at all.
-          const wantDir = primary.handedness === 'Right' ? 1 : primary.handedness === 'Left' ? -1 : 0;
-          const qualifies = dir !== 0 && (wantDir === 0 || dir === wantDir);
-          if (qualifies && dir === swipeDir) swipeStreak++;
-          else { swipeStreak = qualifies ? 1 : 0; swipeDir = qualifies ? dir : 0; swipeFired = false; }
-          if (swipeStreak >= SWIPE_FRAMES && !swipeFired) {
-            swipeFired = true;
-            evs.push({ type: 'dismiss' });
-          }
+        swipeTrail.push({ t, x: pc.x });
+        // the window is a time window, and it keeps the sample that has just
+        // fallen out of it as the oldest one, so a displacement is always
+        // measured over the full window rather than over whatever is left
+        while (swipeTrail.length > 2 && t - swipeTrail[1].t > SWIPE_WINDOW) swipeTrail.shift();
+        const oldest = swipeTrail[0];
+        // screen space, not raw landmark space, and this is the only place
+        // the flip happens: see the comment on SWIPE_DIST above for why it is
+        // not optional
+        const hs = handSize(L);
+        const net = -(pc.x - oldest.x) / hs;
+        // the largest single interval in the window, which is how a tracking
+        // jump is told apart from a hand actually travelling
+        let jump = 0;
+        for (let i = 1; i < swipeTrail.length; i++) {
+          jump = Math.max(jump, Math.abs(swipeTrail[i].x - swipeTrail[i - 1].x) / hs);
         }
-        lastPalmX = pc.x; lastPalmT = t;
+        const dir = net > 0 ? 1 : -1;
+        // outward for THIS hand: rightward (+1) for a hand labelled Right,
+        // leftward (-1) for one labelled Left, either direction for a hand
+        // with no handedness reported at all
+        const wantDir = primary.handedness === 'Right' ? 1 : primary.handedness === 'Left' ? -1 : 0;
+        const outward = wantDir === 0 || dir === wantDir;
+        if (swipeFired) {
+          if (Math.abs(net) < SWIPE_REARM) swipeFired = false;
+        } else if (swipeTrail.length >= SWIPE_MIN_SAMPLES
+                   && t - oldest.t <= SWIPE_WINDOW
+                   && Math.abs(net) >= SWIPE_DIST
+                   && jump <= SWIPE_MAX_JUMP * Math.abs(net)
+                   && outward) {
+          swipeFired = true;
+          evs.push({ type: 'dismiss' });
+        }
       } else {
-        lastPalmX = null; lastPalmT = null;
-        swipeStreak = 0; swipeDir = 0; swipeFired = false;
+        evs.push({ type: 'pose', posture: fisted ? 'rest' : 'pinch', aperture: null });
+        swipeTrail = []; swipeFired = false;
       }
 
       return evs;

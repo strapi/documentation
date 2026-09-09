@@ -36,6 +36,46 @@ const path = require('path');
     const out = {};
     const fire = (n, d) => window.dispatchEvent(new CustomEvent('hand:' + n, { detail: d || {} }));
     const settle = () => new Promise(r2 => setTimeout(r2, 120));
+    /* THE HAND-CONTROL GUIDE is shown once per session, and only on a state
+       change to 'on'. A case that wants to see it again has to close whatever
+       dialog is standing (both guides answer their own NEXT button) and then
+       forget every version of the guide's session key. The key carries a
+       version and has been bumped once already, when the copy was rewritten
+       for the two modes: the cases below cleared the OLD name, silently
+       stopped seeing the dialog, and six assertions in this file went on
+       passing or failing about the QUICK guide instead. Hence also
+       handGuideUp(), which asks WHICH dialog is standing rather than whether
+       any is. */
+    const closeGuide = () => {
+      for (let i = 0; i < 6 && !document.getElementById('guide').hidden; i++) {
+        document.getElementById('gd-next').click();
+      }
+    };
+    const clearGuides = () => {
+      closeGuide();
+      for (const k of Object.keys(sessionStorage)) {
+        if (k.indexOf('firstlight.handguide') === 0) sessionStorage.removeItem(k);
+      }
+    };
+    const handGuideUp = () => !document.getElementById('guide').hidden
+      && document.getElementById('gd-title').textContent === 'HAND CONTROL';
+
+    /* THE CAMERA EASES toward its target, and every case above moves that
+       target. Any case that aims at a body's SCREEN position therefore has to
+       wait for the easing to arrive, not for a fixed delay: the zoom case
+       before this one takes the target to 4.5 and back, and reading a screen
+       position while cam.s is still travelling aims the hand at where the
+       body used to be. That is exactly how this case failed once, with the
+       pointer settling on the pixel the probe asked for and the world snapping
+       to nothing. */
+    const cameraStill = async () => {
+      for (let i = 0; i < 80; i++) {
+        const c = window.__handProbe.cam();
+        if (Math.abs(c.s - c.ts) < 1e-3 && Math.abs(c.x - c.tx) < 0.5 && Math.abs(c.y - c.ty) < 0.5) return true;
+        await new Promise(r2 => setTimeout(r2, 50));
+      }
+      return false;
+    };
     const tag = () => { const e = document.getElementById('hand-reticle'); return e ? e.querySelector('.hr-tag').textContent : null; };
     const snappedClass = () => { const e = document.getElementById('hand-reticle'); return !!e && e.classList.contains('snapped'); };
 
@@ -102,15 +142,13 @@ const path = require('path');
     out.drivesTargetNotPosition = out.gapAfterDrag > 10;
     fire('release');
 
-    // ── THE FAN, synthetic: zoom anchored on the reticle ────────────────
+    // ── ZOOM, synthetic: anchored on the reticle ────────────────────────
     // park the reticle over a screen point, note the world point under it
-    // (in target-space, since the hand only ever moves targets), feed a
-    // sustained FAN rate, and check that point is still there. `rate` is a
-    // deflection, not a distance: firstlight.js's own hand:fan listener
-    // integrates it over the REAL wall-clock time between events (see its
-    // own comment), so this dispatches several events with a real delay
-    // between each rather than one single event carrying an extreme value
-    // the way the old two-hand `ratio` field allowed.
+    // (in target-space, since the hand only ever moves targets), feed a run
+    // of zoom steps, and check that point is still there. `delta` is the
+    // CHANGE in the hand's aperture since the last frame, so the world takes
+    // one step per event and integrates nothing: unlike the deflection this
+    // replaced, no wall-clock delay between events is needed, or meaningful.
     fire('move', { x: 900, y: 250 });
     await settle();
     const camAnchor = window.__handProbe.cam();
@@ -119,58 +157,38 @@ const path = require('path');
     const w0 = worldAtReticle(camAnchor);
 
     const s0 = window.__handProbe.cam().ts;
-    for (let i = 0; i < 8; i++) {
-      fire('fan', { rate: 0.2 });                 // fingers spread: zoom in
-      await new Promise(r2 => setTimeout(r2, 40));
-    }
+    for (let i = 0; i < 8; i++) fire('zoom', { delta: 0.06, x: 900, y: 250 });   // opening: zoom in
+    await settle();
     out.zoomedIn = window.__handProbe.cam().ts > s0;
     const camAfterIn = window.__handProbe.cam();
     const w1 = worldAtReticle(camAfterIn);
     out.anchorHeldOnZoomIn = Math.hypot(w1[0] - w0[0], w1[1] - w0[1]) < 2;
 
     const s1 = window.__handProbe.cam().ts;
-    for (let i = 0; i < 8; i++) {
-      fire('fan', { rate: -0.2 });                // fingers closed: zoom out
-      await new Promise(r2 => setTimeout(r2, 40));
-    }
+    for (let i = 0; i < 8; i++) fire('zoom', { delta: -0.06, x: 900, y: 250 });  // closing: zoom out
+    await settle();
     out.zoomedOut = window.__handProbe.cam().ts < s1;
 
-    // ── THE FAN, full pipeline, seam included ───────────────────────────
+    // ── ZOOM, full pipeline, seam included ──────────────────────────────
     // Real frames, through a real makeFakeSource, through the real
-    // startHands() forwarder, out as real window events, into
-    // firstlight.js's real listener, read back from window.__handProbe.
-    // This replaces the old two-hand pipeline case: that one proved the
-    // `start` flag survived hands.js's generic forwarder (a flag this
-    // redesign has no equivalent of -- a continuous rate has no gesture
-    // "start" to anchor, which is one of the failure modes item 1 removes
-    // entirely, not merely fixes). What this case proves instead is that a
-    // real, sustained one-hand FAN -- open then closed -- reaches cam.ts
-    // through every hop between a fake camera frame and the world's own
-    // target, in both directions.
+    // startHands() forwarder, out as real window events, into firstlight.js's
+    // real listener, read back from window.__handProbe. What it proves is the
+    // shape the gesture took on 2026-09-09: a hand that OPENS zooms in and a
+    // hand that CLOSES zooms out, from the aperture's frame-to-frame change,
+    // in zoom mode, through every hop between a fake camera frame and the
+    // world's own target. The absolute version this replaced read backwards
+    // to the owner, because opening a closed hand spends the first half of
+    // the movement below the neutral aperture.
     {
       const { startHands } = await import('./hand/hands.js');
       const { makeFakeSource } = await import('./hand/source.js');
-      // open hand, curl=1: fanRatio ~1.118, clearly past the dead zone's
-      // high edge (FAN_NEUTRAL + FAN_DEADZONE = 1.04) -- "fingers spread".
-      const openHand = (cx, cy) => {
-        const size = 0.20, pinch = 0.9, curl = 1;
-        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
-        L[0] = { x: cx, y: cy + size, z: 0 };
-        L[9] = { x: cx, y: cy, z: 0 };
-        L[5] = { x: cx - size * 0.4, y: cy, z: 0 };
-        L[17] = { x: cx + size * 0.4, y: cy, z: 0 };
-        L[8] = { x: cx - size * 0.5 * curl, y: cy - size * curl, z: 0 };
-        L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };
-        L[12] = { x: cx, y: cy - size * 1.05 * curl, z: 0 };
-        L[16] = { x: cx + size * 0.35 * curl, y: cy - size * 0.95 * curl, z: 0 };
-        L[20] = { x: cx + size * 0.6 * curl, y: cy - size * 0.8 * curl, z: 0 };
-        return { landmarks: L, handedness: 'Right' };
-      };
-      // curl=0.5: fanRatio ~0.559, past the dead zone's low edge (0.74),
-      // while fistCurl stays ~1.48 (nowhere near FIST_ON=0.95) -- "fingers
-      // closed", not a fist.
-      const closedHand = (cx, cy) => {
-        const size = 0.20, pinch = 0.9, curl = 0.5;
+      // one hand, at a given aperture: `curl` scales the finger tips, so
+      // fanRatio (index tip to pinky tip over hand size) follows it almost
+      // linearly. curl 0.55 is fingers together, 1.15 is spread; fistCurl
+      // stays around 1.5 throughout, nowhere near FIST_ON=0.95, so this is
+      // never read as a fist, and pinch=0.9 keeps it unpinched.
+      const handAt = (curl, cx, cy) => {
+        const size = 0.20, pinch = 0.9;
         const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
         L[0] = { x: cx, y: cy + size, z: 0 };
         L[9] = { x: cx, y: cy, z: 0 };
@@ -187,27 +205,29 @@ const path = require('path');
       const api = startHands({ source: src });
       await api.arm();
       // arm() fires a GLOBAL hand:state 'on' (see hands.js's fire(), which
-      // dispatches on window, not scoped to this instance), which is
-      // exactly the seam the dedicated dismiss pipeline case below tests --
-      // but it means the FIRST arm() call anywhere in this file also opens
-      // the hand-control guide, once per session. This case does not care
-      // about that dialog, so it is closed the same way a mouse would.
-      if (!document.getElementById('guide').hidden) document.getElementById('gd-next').click();
+      // dispatches on window, not scoped to this instance), which is exactly
+      // the seam the dedicated dismiss pipeline case below tests -- but it
+      // means the FIRST arm() call anywhere in this file also opens the
+      // hand-control guide, once per session. This case does not care about
+      // that dialog, so it is answered the way a mouse would answer it.
+      closeGuide();
+      api.setMode('zoom');
+      await settle();
 
+      const sweep = async (from, to, steps) => {
+        for (let i = 0; i <= steps; i++) {
+          src.push({ hands: [handAt(from + (to - from) * (i / steps), 0.5, 0.5)] });
+          await new Promise(r2 => setTimeout(r2, 30));
+        }
+      };
+      await sweep(0.55, 0.55, 2);                 // settle: the first aperture only arms the delta
       const p0 = window.__handProbe.cam().ts;
-      for (let i = 0; i < 45; i++) {
-        src.push({ hands: [openHand(0.5, 0.5)] });
-        await new Promise(r2 => setTimeout(r2, 30));
-      }
+      await sweep(0.55, 1.15, 14);                // the hand opens
       const p1 = window.__handProbe.cam().ts;
-
-      for (let i = 0; i < 45; i++) {
-        src.push({ hands: [closedHand(0.5, 0.5)] });
-        await new Promise(r2 => setTimeout(r2, 30));
-      }
+      await sweep(1.15, 0.55, 14);                // and closes again
       const p2 = window.__handProbe.cam().ts;
 
-      api.disarm();
+      api.destroy();
 
       out.pipelineS0 = p0;
       out.pipelineS1 = p1;
@@ -230,7 +250,12 @@ const path = require('path');
     {
       const { startHands, COMFORT } = await import('./hand/hands.js');
       const { makeFakeSource } = await import('./hand/source.js');
+      out.clickCameraStill = await cameraStill();
       const qsScreen = window.__handProbe.starScreen(window.__handProbe.qs());
+      // kept in the output because the last two investigations of this case
+      // both began by asking where the body actually was on screen
+      out.clickSetupQsScreen = qsScreen;
+      out.clickSetupCam = window.__handProbe.cam();
       const rawXTarget = qsScreen[0] / window.innerWidth;
       const rawYTarget = qsScreen[1] / window.innerHeight;
       // invert hands.js's own `bx = (p.x - (0.5 - COMFORT.w/2)) / COMFORT.w;
@@ -263,11 +288,19 @@ const path = require('path');
       const src = makeFakeSource();
       const api = startHands({ source: src });
       await api.arm();
+      closeGuide();   // this case is not about the dialog, and a dialog owns the hand
 
+      let lastMove = null;
+      const watchMove = (e) => { lastMove = e.detail; };
+      window.addEventListener('hand:move', watchMove);
       for (let i = 0; i < 15; i++) {
         src.push({ hands: [handAt(0.9, targetCx, targetCy)] });  // open, settling
         await new Promise(r2 => setTimeout(r2, 20));
       }
+      window.removeEventListener('hand:move', watchMove);
+      // where the pointer actually settled, kept for the same reason as the
+      // body's position above
+      out.clickSettledAt = lastMove ? [Math.round(lastMove.x), Math.round(lastMove.y)] : null;
       const snapIdx = window.__handProbe.snapped();
       out.clickSetupSnapped = snapIdx >= 0;
       out.clickSetupSlug = window.__handProbe.slug(snapIdx);
@@ -292,9 +325,17 @@ const path = require('path');
     // single-shot input anymore, a rate is integrated over real elapsed
     // time (see firstlight.js's own hand:fan listener), so reaching the
     // clamp needs several events with real delays between them.
-    for (let i = 0; i < 15; i++) { fire('fan', { rate: 50 }); await new Promise(r2 => setTimeout(r2, 40)); }
+    // the pipeline case above ended in destroy(), which fires hand:absent,
+    // and the world forgets the hand's position on absent -- zoom refuses to
+    // act on a position nobody has observed, so re-establish one first
+    fire('present');
+    fire('move', { x: 600, y: 400 });
+    await settle();
+    for (let i = 0; i < 30; i++) fire('zoom', { delta: 0.5, x: 600, y: 400 });
+    await settle();
     out.zoomHighClamp = window.__handProbe.cam().ts;
-    for (let i = 0; i < 15; i++) { fire('fan', { rate: -50 }); await new Promise(r2 => setTimeout(r2, 40)); }
+    for (let i = 0; i < 60; i++) fire('zoom', { delta: -0.5, x: 600, y: 400 });
+    await settle();
     out.zoomLowClamp = window.__handProbe.cam().ts;
 
     // ── THE SWIPE DECLINES THE HAND-CONTROL GUIDE, full pipeline ─────────
@@ -306,7 +347,7 @@ const path = require('path');
     // storage key is cleared first so the dialog is guaranteed to show
     // regardless of what earlier cases in this file already armed.
     {
-      sessionStorage.removeItem('firstlight.handguide.v1');
+      clearGuides();
       const { startHands } = await import('./hand/hands.js');
       const { makeFakeSource } = await import('./hand/source.js');
       const src = makeFakeSource();
@@ -322,7 +363,7 @@ const path = require('path');
       window.__hands = api;
       await api.arm();                                          // fires hand:state 'on' -> maybeHandGuide()
       await new Promise(r2 => setTimeout(r2, 60));
-      out.guideShownOnArm = !document.getElementById('guide').hidden;
+      out.guideShownOnArm = handGuideUp();
 
       // a real hand, open, moving steadily OUTWARD for a Right hand: raw x
       // DECREASING (hands.js mirrors x for display), well past SWIPE_SPEED
@@ -341,11 +382,19 @@ const path = require('path');
         L[20] = { x: cx + size * 0.6 * curl, y: cy - size * 0.8 * curl, z: 0 };
         return { landmarks: L, handedness: 'Right' };
       };
+      // A DELIBERATE swipe, at the amplitude the owner described: with
+      // size=0.20, six steps of -0.07 cover 2.1 hand widths, several times
+      // SWIPE_DIST inside one SWIPE_WINDOW. The earlier version of this case
+      // moved 0.03 a frame, 0.9 of a hand width in total, which is close
+      // enough to the threshold that the real wall-clock intervals here
+      // decided whether it fired: it passed under the old per-frame rule and
+      // failed under the new displacement one, for no reason to do with
+      // either. A test of a gesture has to model the gesture, not the bar.
       let cx = 0.70;
       src.push({ hands: [openHandAt(cx, 0.5)] });
       await new Promise(r2 => setTimeout(r2, 30));
       for (let i = 0; i < 6; i++) {
-        cx -= 0.03;
+        cx -= 0.07;
         src.push({ hands: [openHandAt(cx, 0.5)] });
         await new Promise(r2 => setTimeout(r2, 30));
       }
@@ -365,14 +414,14 @@ const path = require('path');
     // hand:click, and the other five never heard about it. This case tests
     // the rule where it actually has to hold: on the camera targets.
     {
-      sessionStorage.removeItem('firstlight.handguide.v1');
+      clearGuides();
       const { startHands } = await import('./hand/hands.js');
       const { makeFakeSource } = await import('./hand/source.js');
       const api = startHands({ source: makeFakeSource() });
       window.__hands = api;
       await api.arm();
       await new Promise(r2 => setTimeout(r2, 60));
-      out.captureGuideShown = !document.getElementById('guide').hidden;
+      out.captureGuideShown = handGuideUp();
 
       // the click case above left a body open, and opening one eases the
       // camera: let that finish before measuring what is meant to be a
@@ -393,7 +442,7 @@ const path = require('path');
       const during = window.__handProbe.cam();
       out.captureFrozenPan = Math.abs(during.tx - before.tx) < 1e-6 && Math.abs(during.ty - before.ty) < 1e-6;
       out.captureFrozenZoom = Math.abs(during.ts - before.ts) < 1e-6;
-      out.captureStillOpen = !document.getElementById('guide').hidden;
+      out.captureStillOpen = handGuideUp();
 
       // and the capture LIFTS on the answer: the same events, once the
       // dialog has been confirmed by its own gesture, do reach the chart.
@@ -419,7 +468,7 @@ const path = require('path');
     // mouse-confirm and mouse-decline are proven apart from each other, not
     // just as two assertions on the same run.
     {
-      sessionStorage.removeItem('firstlight.handguide.v1');
+      clearGuides();
       const { startHands } = await import('./hand/hands.js');
       const { makeFakeSource } = await import('./hand/source.js');
       const src = makeFakeSource();
@@ -427,7 +476,7 @@ const path = require('path');
       window.__hands = api;
       await api.arm();
       await new Promise(r2 => setTimeout(r2, 60));
-      out.mouseConfirmGuideShown = !document.getElementById('guide').hidden;
+      out.mouseConfirmGuideShown = handGuideUp();
       document.getElementById('gd-next').click();                 // CONFIRM, by mouse
       out.mouseConfirmGuideHidden = document.getElementById('guide').hidden;
       out.mouseConfirmCameraStillOn = api.state() === 'on';        // confirming must NOT disarm
@@ -439,7 +488,7 @@ const path = require('path');
       // startHands/makeFakeSource pair, exactly as a real second visit
       // would be), which is also why this case waits for the click to have
       // an effect rather than assuming session state from the case above.
-      sessionStorage.removeItem('firstlight.handguide.v1');
+      clearGuides();
       const { startHands } = await import('./hand/hands.js');
       const { makeFakeSource } = await import('./hand/source.js');
       const src = makeFakeSource();
@@ -447,7 +496,7 @@ const path = require('path');
       window.__hands = api;
       await api.arm();
       await new Promise(r2 => setTimeout(r2, 60));
-      out.mouseDeclineGuideShown = !document.getElementById('guide').hidden;
+      out.mouseDeclineGuideShown = handGuideUp();
       document.getElementById('gd-skip').click();                 // TURN OFF CAMERA, by mouse
       await new Promise(r2 => setTimeout(r2, 30));
       out.mouseDeclineGuideHidden = document.getElementById('guide').hidden;
@@ -466,13 +515,14 @@ const path = require('path');
   if (!r.hudClearedOnAbsent) fails.push('the HUD kept its label after the hand left, got ' + JSON.stringify(r.hudTagAfterAbsent));
   if (!r.txMoved) fails.push('a pinched drag did not move the camera target');
   if (!r.drivesTargetNotPosition) fails.push('the hand set the camera position directly instead of its target');
-  if (!r.zoomedIn) fails.push('a sustained positive fan rate did not raise the scale target');
+  if (!r.zoomedIn) fails.push('a run of opening steps did not raise the scale target');
   if (!r.anchorHeldOnZoomIn) fails.push('zooming in did not keep the world point under the reticle fixed');
-  if (!r.zoomedOut) fails.push('a sustained negative fan rate did not lower the scale target');
+  if (!r.zoomedOut) fails.push('a run of closing steps did not lower the scale target');
   if (!r.pipelineClimbed) fails.push(`full pipeline: a real open hand did not raise the scale (s0 ${r.pipelineS0} -> s1 ${r.pipelineS1})`);
   if (!r.pipelineFellBack) fails.push(`full pipeline: a real closed hand did not lower the scale (s1 ${r.pipelineS1} -> s2 ${r.pipelineS2})`);
-  if (Math.abs(r.zoomHighClamp - 8) > 1e-6) fails.push(`a sustained extreme fan rate reached cam.ts=${r.zoomHighClamp}, wanted exactly 8`);
-  if (Math.abs(r.zoomLowClamp - 0.06) > 1e-6) fails.push(`a sustained extreme negative fan rate reached cam.ts=${r.zoomLowClamp}, wanted exactly 0.06`);
+  if (Math.abs(r.zoomHighClamp - 8) > 1e-6) fails.push(`a sustained run of opening steps reached cam.ts=${r.zoomHighClamp}, wanted exactly 8`);
+  if (Math.abs(r.zoomLowClamp - 0.06) > 1e-6) fails.push(`a sustained run of closing steps reached cam.ts=${r.zoomLowClamp}, wanted exactly 0.06`);
+  if (!r.clickCameraStill) fails.push('click test setup problem: the camera never stopped easing, so no screen position was stable to aim at');
   if (!r.clickSetupSnapped) fails.push('click test setup problem: the settled hand snapped to nothing');
   if (!r.clickHashChanged) fails.push('a brief pinch over a snapped body did not change location.hash at all');
   if (!r.clickHashMatches) fails.push(`a brief pinch opened ${JSON.stringify(r.clickSetupSlug)}'s slug incorrectly (want '#${r.clickSetupSlug}')`);
@@ -495,7 +545,8 @@ const path = require('path');
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
   console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
   console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   errors ${errors.length}`);
-  console.log(`  full pipeline (source->hands.js->window->world), one-hand fan: s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 ${r.pipelineS2.toFixed(3)} (fell back ${r.pipelineFellBack})`);
+  console.log(`  full pipeline (source->hands.js->window->world), aperture sweep: s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 ${r.pipelineS2.toFixed(3)} (fell back ${r.pipelineFellBack})`);
+  console.log(`  click pipeline: QS at ${r.clickSetupQsScreen.map(Math.round).join(',')} pointer at ${JSON.stringify(r.clickSettledAt)} cam ts ${r.clickSetupCam.ts.toFixed(2)} tx ${Math.round(r.clickSetupCam.tx)} ty ${Math.round(r.clickSetupCam.ty)}`);
   console.log(`  click pipeline: setup snapped ${r.clickSetupSnapped} slug ${JSON.stringify(r.clickSetupSlug)}   hash changed ${r.clickHashChanged}   hash matches ${r.clickHashMatches}   reader opened ${r.clickReaderOpened}`);
   console.log(`  zoom bounds match the world's: high clamp ${r.zoomHighClamp} (want 8)   low clamp ${r.zoomLowClamp} (want 0.06)`);
   console.log(`  dismiss pipeline: guide shown on arm ${r.guideShownOnArm}   guide hidden after swipe ${r.guideHiddenAfterSwipe}   camera off after swipe ${r.cameraOffAfterSwipe}`);

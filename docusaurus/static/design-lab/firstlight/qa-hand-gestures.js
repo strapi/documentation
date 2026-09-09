@@ -37,7 +37,7 @@ const path = require('path');
   const r = await page.evaluate(async () => {
     const {
       makeGestureReader, PINCH_ON, FAN_NEUTRAL, FAN_DEADZONE,
-      CLICK_MAX_MS, CLICK_MAX_DIST, SWIPE_SPEED, SWIPE_FRAMES,
+      CLICK_MAX_MS, CLICK_MAX_DIST, SWIPE_DIST, SWIPE_WINDOW, SWIPE_MIN_SAMPLES,
     } = await import('./hand/gestures.js');
 
     /* Build a synthetic hand. `size` is wrist-to-middle-knuckle in image units,
@@ -281,18 +281,18 @@ const path = require('path');
       out.fistOverrideClickFired = types(closing).indexOf('click') >= 0;
     }
 
-    // 7. THE SWIPE (dismiss), RIGHT hand, genuinely OUTWARD, and fast
-    // enough to be UNAMBIGUOUS -- not merely above SWIPE_SPEED, but built to
-    // model an actual deliberate swipe (two or three hand widths in about a
-    // fifth of a second), so this proves the recognizer still fires at all
-    // at the corrected threshold, not just that it stays quiet (a test that
-    // only ever asserts absence would still pass with the feature deleted).
+    // 7. THE SWIPE (dismiss), RIGHT hand, genuinely OUTWARD, and built to
+    // model an actual deliberate swipe: the owner's own description, two or
+    // three hand widths in about a fifth of a second. This proves the
+    // recogniser fires AT ALL, which is the half that was missing twice: a
+    // suite that only ever asserts absence still passes with the feature
+    // deleted, and that is exactly how a threshold nobody could reach
+    // shipped, twice, on two evenings.
     // hands.js mirrors x for display (rawX = 1 - bx), so a right hand moving
     // to its own right -- outward, the dismiss direction -- is screen x
-    // INCREASING but raw landmark x DECREASING. With size=0.20 and
-    // dt=0.033, a step of -0.07 gives a screen speed of (0.07/0.20)/0.033
-    // ~= 10.6 units/s, comfortably past SWIPE_SPEED=2.5 and in the
-    // ten-or-more range a real deliberate swipe reads as.
+    // INCREASING but raw landmark x DECREASING. With size=0.20 a step of
+    // -0.07 is 0.35 hand widths, so six of them cover 2.1 widths: several
+    // times SWIPE_DIST inside one SWIPE_WINDOW.
     {
       const g = makeGestureReader();
       let t = 0, cx = 0.70, dismissCount = 0;
@@ -321,19 +321,51 @@ const path = require('path');
       }
       out.swipeRightInwardFired = fired;
     }
-    // 7c. only 3 qualifying (outward, unambiguous-speed) frames
-    // (SWIPE_FRAMES is 4): must not fire. Speed alone is not enough either.
+    // 7c. A TRACKING GLITCH, which is what the old frame counter was really
+    // guarding against: the palm teleports a hand and a half between two
+    // consecutive frames and stays put. However large that jump is, two
+    // samples are one measured interval, and SWIPE_MIN_SAMPLES=3 asks for
+    // two before a window may fire.
     {
       const g = makeGestureReader();
-      let t = 0, cx = 0.70;
+      g.read(f(hand(0.20, 0.9, 1, 0.75, 0.5)), 0.033);
+      const jumped = g.read(f(hand(0.20, 0.9, 1, 0.45, 0.5)), 0.066);   // 1.5 hand widths in one frame
+      const after = g.read(f(hand(0.20, 0.9, 1, 0.45, 0.5)), 0.099);    // and stays there
+      out.swipeGlitchFired = types(jumped).concat(types(after)).indexOf('dismiss') >= 0;
+    }
+    // 7c2. A DELIBERATE SWIPE ON A CAMERA THAT IS NOT KEEPING TIME. The
+    // frames of the same gesture arrive 20 to 70 ms apart, which is what a
+    // webcam running a hand model actually delivers, and one interval is slow
+    // enough that a per-frame speed test would have failed on it. The whole
+    // displacement is what is asked for, so it fires once regardless. This is
+    // the case both earlier versions of the swipe would have failed, and
+    // neither suite contained: every timestamp in them was evenly spaced.
+    {
+      const g = makeGestureReader();
+      let t = 0, cx = 0.75, dismissCount = 0;
+      g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
+      for (const dt of [0.02, 0.07, 0.033, 0.05, 0.025, 0.068]) {
+        cx -= 0.07;
+        const evs = g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += dt);
+        dismissCount += types(evs).filter(x => x === 'dismiss').length;
+      }
+      out.swipeJitteredCount = dismissCount;                          // exactly 1
+    }
+    // 7c3. A HAND SIMPLY MOVING ACROSS THE FRAME, one hand width over four
+    // tenths of a second: the same distance a swipe covers, spread over long
+    // enough that no window inside it reaches SWIPE_DIST. Reaching across the
+    // desk is not a dismissal.
+    {
+      const g = makeGestureReader();
+      let t = 0, cx = 0.75;
       g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
       let fired = false;
-      for (let i = 0; i < 3; i++) {
-        cx -= 0.07;
+      for (let i = 0; i < 12; i++) {
+        cx -= 0.20 / 12;
         const evs = g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
         if (types(evs).indexOf('dismiss') >= 0) fired = true;
       }
-      out.swipeShortStreakFired = fired;
+      out.swipeSlowCrossFired = fired;
     }
     // 7d. the same qualifying (outward, unambiguous-speed) motion, but
     // PINCHED: open-hand-only means exactly that. A drag across the screen
@@ -380,7 +412,13 @@ const path = require('path');
       const g = makeGestureReader();
       let t = 0, cx = 0.40;
       g.read(f(handUnknown(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
-      const steps = [-0.07, -0.07, 0.07, 0.07, -0.07, -0.07];
+      // 0.02 is 0.1 of a hand width per frame, inside the reference clip's
+      // own ordinary range: a hand waving about, not brushing anything away.
+      // (The old version of this case moved 0.35 of a hand width per frame,
+      // which is not a wave at all; under a rule that measures the whole
+      // displacement, two of those in one direction ARE a brush, and the
+      // case would have been asserting that a real gesture must not work.)
+      const steps = [-0.02, -0.02, 0.02, 0.02, -0.02, -0.02];
       let fired = false;
       for (const d of steps) {
         cx += d;
@@ -483,19 +521,20 @@ const path = require('path');
   if (r.fixtureFans < 50) fails.push(`fixture fan events ${r.fixtureFans}, wanted 50+ (real open-hand motion crossing the dead zone)`);
   if (r.swipeRightOutwardCount !== 1) fails.push(`a right hand swiping outward fired dismiss ${r.swipeRightOutwardCount} times, wanted exactly 1`);
   if (r.swipeRightInwardFired) fails.push('a right hand swiping inward (toward its own midline) fired a dismiss; dismiss is outward only');
-  if (r.swipeShortStreakFired) fails.push('a 3-frame streak (short of SWIPE_FRAMES=4) fired a dismiss');
+  if (r.swipeGlitchFired) fails.push('a one-frame tracking jump of 1.5 hand widths fired a dismiss; a window needs two measured intervals');
+  if (r.swipeJitteredCount !== 1) fails.push(`a deliberate swipe on frames 20-70ms apart fired dismiss ${r.swipeJitteredCount} times, wanted exactly 1 (this is the case the two earlier versions failed)`);
+  if (r.swipeSlowCrossFired) fails.push('a hand crossing one hand width over 0.4s fired a dismiss; that is reaching, not brushing');
   if (r.swipeWhilePinchedFired) fails.push('a pinched hand moving fast and consistently fired a dismiss; swipe must be open-hand only');
   if (r.swipeLeftOutwardCount !== 1) fails.push(`a left hand swiping outward (the mirror-image direction) fired dismiss ${r.swipeLeftOutwardCount} times, wanted exactly 1`);
   if (r.swipeUnknownReversalFired) fails.push('unknown handedness, direction reversal mid-streak, still fired a dismiss');
   if (r.swipeUnknownSustainedCount !== 1) fails.push(`unknown handedness, sustained one direction, fired dismiss ${r.swipeUnknownSustainedCount} times, wanted exactly 1`);
-  // SWIPE_SPEED was corrected from 1.0 to 2.5 (see the comment on it in
-  // gestures.js: the original 1.0 was derived in raw image units and never
-  // converted to this file's own hand-size-normalised units, about a 3.6x
-  // error). At 1.0 this clip's entirely natural, non-deliberate motion fired
-  // 2 real dismisses; at 2.5 it fires none, because this clip contains no
-  // deliberate swipe at all. Zero is therefore the correct, and stronger,
-  // expectation: it asserts ordinary movement never dismisses, not merely
-  // that a specific pair of accidents still happens to reproduce. (Zero
+  // The swipe has been through three rules: a per-frame speed of 1.0, which
+  // fired on ordinary use about every 17 seconds; 2.5, which fired on nothing
+  // at all, the owner's own deliberate swipe included; and the displacement
+  // window in force now, 0.7 of a hand width inside 0.25s. This clip holds no
+  // deliberate swipe anywhere in it, so zero is the correct and stronger
+  // expectation: it asserts ordinary movement never dismisses, rather than
+  // that a particular pair of accidents still reproduces. (Zero
   // alone would also pass with the whole feature deleted -- the
   // swipeRightOutwardCount/swipeLeftOutwardCount/swipeUnknownSustainedCount
   // assertions above are what prove the recognizer still fires at all, at a

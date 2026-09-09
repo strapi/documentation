@@ -580,6 +580,17 @@ body.darkadapt #log-tag{opacity:.32}
   transition: opacity .18s ease;
 }
 #hand-reticle.on { opacity: 1; }
+#hand-panel { position: fixed; right: 16px; bottom: 18px; z-index: 150; width: min(390px, calc(100vw - 32px)); padding: 14px; border: 1px solid #a57538; background: #090c12; color: #ffcf8a; font: 12px/1.5 'IBM Plex Mono', monospace; box-sizing: border-box; }
+#hand-panel[hidden] { display: none; }
+.hand-modes { display: flex; gap: 8px; margin-top: 10px; }
+.hand-modes button { flex: 1; min-height: 48px; border: 1px solid #a57538; background: #090c12; color: #ffcf8a; font: inherit; cursor: pointer; }
+.hand-modes button[aria-pressed="true"], .hand-modes button:hover, .hand-modes button:focus-visible { background: #ffcf8a; color: #090c12; }
+.hand-hint { margin: 10px 0 0; }
+@media (max-width: 1450px) {
+  #topbar { gap: 6px; }
+  #topbar .brand-s, #topbar .clock, #topbar kbd { display: none; }
+  #topbar .search { min-width: 100px; }
+}
 #hand-reticle .hr-ring {
   position: absolute; left: -21px; top: -21px; width: 42px; height: 42px;
   border: 2px solid var(--amber, #FFB000); border-radius: 50%;

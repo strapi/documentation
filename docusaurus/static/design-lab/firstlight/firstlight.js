@@ -2563,16 +2563,6 @@
        the tremor smoothing for free, with machinery that has been running
        since the first version of this world. */
     var handX = 0, handY = 0, handGrab = false, handLastX = 0, handLastY = 0, handSnap = -1;
-    var fanLastT = null;
-    // FAN_GAIN is the one number this gesture is tuned by, the owner's own
-    // ask ("la sensibilite devient un seul nombre a regler"): `rate` (see
-    // gestures.js) is the fan ratio's excess past its dead zone, typically up
-    // to about 0.3-0.4 at a fully spread or closed hand. Held there for a
-    // full second this gain takes cam.ts through roughly a 2x change
-    // (ln(2)/0.3 ~= 2.3): fingers spread keeps zooming in while held,
-    // together keeps zooming out, at a pace that reads as deliberate rather
-    // than the old gesture's snap-to-a-distance sensitivity.
-    var FAN_GAIN = 2.3;
     // handPosKnown guards against computing a drag delta from a position
     // that was never actually observed. handX/handY start at (0, 0) as
     // placeholders, not as a real reading; a hand:grab carries no position
@@ -2584,6 +2574,11 @@
     // every hand:absent too, since the same gap opens again for the next
     // hand: its first position is equally unknown to this world.
     var handPosKnown = false;
+    var handButton = null;
+    function handControlAt() {
+      var target = document.elementFromPoint(handX, handY);
+      return target && target.closest('#hand-panel button');
+    }
 
     function handSnapAt(sx, sy) {
       var wp = s2w(sx, sy);
@@ -2605,7 +2600,7 @@
       });
     }
     function releaseHandState() {
-      handGrab = false; handSnap = -1; handPosKnown = false; fanLastT = null;
+      handGrab = false; handSnap = -1; handPosKnown = false;
       if (window.__handHud) window.__handHud.setSnapped('');
     }
     handReleaseWorld = releaseHandState;
@@ -2624,6 +2619,12 @@
         handLastX = handX; handLastY = handY;
       }
       handX = nx; handY = ny;
+      handButton = handControlAt();
+      if (handButton) {
+        handGrab = false; handSnap = -1;
+        if (window.__handHud) window.__handHud.setSnapped(handButton.textContent);
+        return;
+      }
       if (handGrab) {
         var dx = handX - handLastX, dy = handY - handLastY;
         cam.tx -= dx / cam.s; cam.ty -= dy / cam.s;
@@ -2638,6 +2639,7 @@
       }
     });
     onHandControl('grab', function () {
+      if (handControlAt() || (window.__hands && window.__hands.mode() === 'zoom')) return;
       handGrab = true; handLastX = handX; handLastY = handY;
     });
     onHandControl('release', function () { handGrab = false; });
@@ -2650,55 +2652,46 @@
       // gesture instead: a pinch confirms it, and the canvas underneath must
       // not also open a body the same instant.
       if (handGuideOn) { confirmHandGuide(); return; }
+      var button = handControlAt();
+      if (button) { button.click(); return; }
       if (handSnap >= 0) location.hash = '#' + stars[handSnap].slug;
     });
-    onHandControl('fan', function (e) {
-      // Fingers spread zooms in and keeps zooming while held; fingers
-      // together zooms out; the dead zone (FAN_NEUTRAL/FAN_DEADZONE in
-      // gestures.js) means a hand merely resting open does nothing. `rate`
-      // is a deflection, not a position -- gestures.js is proved with
-      // hand-built frames and has no real clock of its own to trust for
-      // elapsed wall time between camera frames, so THIS world turns the
-      // deflection into a change, over however long it actually was since
-      // the last such event.
-      var now = performance.now() / 1000;
-      var dt = fanLastT === null ? 0 : Math.min(0.25, now - fanLastT);
-      fanLastT = now;
-      if (dt <= 0) { dirty = true; return; }
-      var next = cam.ts * Math.exp(e.detail.rate * FAN_GAIN * dt);
-      // the world's own bounds (see ZLN0/ZLN1 above and the wheel handler
-      // below), not a separate pair the hand invented: past 8, the zoom
-      // voice's pitch is already clamped and goes flat, and past the world's
-      // own maximum is not a place the hand should be able to reach that the
-      // wheel cannot.
-      next = Math.max(0.06, Math.min(8, next));
-      if (next !== cam.ts) {
-        // The hand drives cam.ts, the TARGET, and lets the world's existing
-        // easing loop (cam.s += ds * e) chase it, which is what absorbs hand
-        // tremor and the whole reason the hand drives targets rather than
-        // cam.s directly. Comparing the sound against cam.s would feed it a
-        // scale that is still catching up to a target set several frames
-        // ago; the PREVIOUS TARGET is the honest "where this gesture already
-        // meant to be", so that is what zoomSound is measured against here,
-        // unlike the wheel below which sets cam.s directly and so compares
-        // against that.
-        zoomSound(next > cam.ts, next, cam.ts);
-        // Zoom around the reticle's last known screen position, not the
-        // screen centre, or spreading your hand over a distant body would
-        // push it off screen, the opposite of what the gesture means. This is
-        // the same before/after world-point trick the wheel handler below
-        // uses, worked in target-space (cam.tx/ty/ts) since the hand never
-        // touches cam.x/y/s directly.
-        var bx = (handX - viewCX()) / cam.ts + cam.tx;
-        var by = (handY - H / 2) / cam.ts + cam.ty;
-        cam.ts = next;
-        var ax = (handX - viewCX()) / cam.ts + cam.tx;
-        var ay = (handY - H / 2) / cam.ts + cam.ty;
-        cam.tx += bx - ax; cam.ty += by - ay;
-      }
+    /* ZOOM, and the only way the hand reaches the scale. `delta` is the
+       CHANGE in the hand's aperture since the last frame, in hand widths,
+       already clamped and dead-zoned by hand/hands.js, and it only arrives in
+       zoom mode. Relative, not absolute, because the absolute version read
+       backwards to the owner: opening a closed hand spends the first half of
+       the movement below the neutral aperture, so it dezoomed while it
+       opened. Opening now always zooms in and closing always zooms out,
+       wherever the hand happens to start.
+
+       ZOOM_GAIN turns that delta into a scale factor. The aperture of one
+       hand spans about 0.5 (fingers together) to 1.45 (spread) on the
+       reference clip, so a full deliberate open covers roughly 0.9: at 2.4
+       that is a factor of e^(0.9*2.4) ~= 8.7, the whole of this world's
+       0.06..8 range in one unhurried gesture, and a small adjustment stays
+       small. The world's own bounds are used, not a pair the hand invented.
+
+       The hand drives cam.ts, the TARGET, and lets the easing loop chase it,
+       which is what absorbs tremor. It zooms around the reticle rather than
+       the screen centre, or spreading your hand over a distant body would
+       push it off screen: the same before/after world-point trick the wheel
+       handler uses, in target space, from the anchor hands.js captured when
+       the gesture began, so the body under the reticle stays under it for the
+       whole movement instead of drifting frame by frame. */
+    var ZOOM_GAIN = 2.4;
+    onHandControl('zoom', function (e) {
+      if (!handPosKnown || handControlAt()) return;
+      var previous = cam.ts;
+      var next = Math.max(0.06, Math.min(8, previous * Math.exp(e.detail.delta * ZOOM_GAIN)));
+      if (next === previous) { dirty = true; return; }
+      var anchorX = e.detail.x, anchorY = e.detail.y;
+      cam.tx += (anchorX - viewCX()) * (1 / previous - 1 / next);
+      cam.ty += (anchorY - H / 2) * (1 / previous - 1 / next);
+      cam.ts = next;
+      zoomSound(next > previous, next, previous);
       dirty = true;
     });
-
     window.__handProbe = {
       cam: function () { return { x: cam.x, y: cam.y, s: cam.s, tx: cam.tx, ty: cam.ty, ts: cam.ts }; },
       snapped: function () { return handSnap; },
@@ -3761,9 +3754,9 @@
      -- both also reachable by mouse (the same two buttons the quick guide
      uses), since nothing in this world may be reachable only by gesture. */
 
-  var HAND_GUIDE_KEY = 'firstlight.handguide.v1';
+  var HAND_GUIDE_KEY = 'firstlight.handguide.v2';
   var HAND_GUIDE_STEPS = [
-    ['HAND CONTROL ONLINE', 'The camera is on, and your hand is now steering the chart instead of the mouse. Open your hand and spread the fingers to zoom in, close them to zoom out, pinch and move to drag the chart, and a quick pinch clicks whatever the reticle rests on. Confirm with a quick pinch, or swipe your open hand to turn the camera back off.']
+    ['YOUR HAND, TWO MODES', 'In NAVIGATE, aim with your palm: pinch briefly to open a body, or hold the pinch and move to drag. Select ZOOM in the hand panel, then spread your fingers to zoom in or bring them together to zoom out. Holding still stops the zoom; a fist lets you rest and start again. Aim and pinch the panel buttons to change mode. Confirm with a quick pinch, or brush your open hand outward to turn the camera off. Mouse and keyboard remain available.']
   ];
   function maybeHandGuide() {
     if (handGuideOn) return;
@@ -3821,6 +3814,7 @@
     });
     window.addEventListener('hand:state', function (e) {
       if (e.detail.state === 'on') maybeHandGuide();
+      else if (handGuideOn) { handGuideOn = false; $('guide').hidden = true; }
     });
     // THE SWIPE. hand/gestures.js recognises it generally, on any open hand,
     // and emits `hand:dismiss` with no opinion about what it means. This is
