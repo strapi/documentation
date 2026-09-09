@@ -1514,8 +1514,7 @@ To retrieve component-specific nested relations, media fields, or components wit
 
 :::tip Community plugin: shorter dynamic zone queries
 Fragment syntax can get verbose when a dynamic zone accepts many components.
-<ExternalLink to="https://github.com/notum-cz/strapi-plugin-smart-populate" text="Smart Populate"/> is a community plugin maintained by Notum.
-It reads your component schemas when Strapi starts and builds the matching populate object.
+<ExternalLink to="https://github.com/notum-cz/strapi-plugin-smart-populate" text="Smart Populate"/> is a community plugin that reads your component schemas when Strapi starts and builds the matching populate object.
 Once the plugin and its REST middleware are set up, a request can pass the `smart` token instead:
 
 ```bash

@@ -335,9 +335,7 @@ To populate component-specific nested relations, media fields, or components wit
 
 :::tip Community plugin: shorter dynamic zone populate objects
 The populate object can get long when a dynamic zone accepts many components.
-<ExternalLink to="https://github.com/notum-cz/strapi-plugin-smart-populate" text="Smart Populate"/> is a community plugin maintained by Notum.
-It reads your component schemas when Strapi starts and builds that object for you,
-so a query can pass the `smart` token instead:
+<ExternalLink to="https://github.com/notum-cz/strapi-plugin-smart-populate" text="Smart Populate"/> is a community plugin that reads your component schemas when Strapi starts and builds that object for you, so a query can pass the `smart` token instead:
 
 ```js
 await strapi.documents('api::article.article').findMany({
