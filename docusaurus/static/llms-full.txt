@@ -21353,6 +21353,18 @@ By default Strapi webhooks can be triggered by the following events:
 Private fields are not sent in the payload.
 :::
 
+### Entry payload content
+
+For all entry events except `entry.delete` and `entry.unpublish`, the `entry` object contains the whole entry, with all its relations, media, components, and dynamic zones already populated. Repeatable components and dynamic zones are sent in their stored order, which is the order defined in the Content Manager.
+
+This population is not configurable: there is no option to choose which fields are populated, nor to change how they are sorted. The `webhooks.populateRelations` option of Strapi 4 was [removed in Strapi 5](/cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations).
+
+For the `entry.delete` and `entry.unpublish` events, the entry is not read again before the payload is sent, so relations, media, and components are usually not included.
+
+:::tip
+If you need a payload with a different content or structure, send the request yourself from a [lifecycle hook](/cms/backend-customization/models#lifecycle-hooks).
+:::
+
 ### Headers
 
 When a payload is delivered to your webhook's URL, it will contain specific headers:
@@ -21843,7 +21855,6 @@ Projects scaffolded with `create-strapi-app` include security-hardened defaults 
 | `rest.strictParams: true` and `documents.strictParams: true` | `config/api.*` | Rejects requests with unknown query or body parameters (see [API configuration](/cms/configurations/api)). |
 | `jwtManagement: 'refresh'` with `sessions.httpOnly: true` | `config/plugins.*` (users-permissions) | Enables refresh-token-based auth with HTTP-only session cookies for the Users & Permissions feature (see [Users & Permissions](/cms/features/users-permissions#jwt-management-modes)). |
 | `upload.config.security.allowedTypes` and `upload.config.security.deniedTypes` | `config/plugins.*` (upload) | Restricts uploads to approved file types and blocks dangerous MIME types (see [Media Library](/cms/features/media-library#security)). |
-| `webhooks.populateRelations: false` | `config/server.*` | Prevents relation data from being included in webhook payloads (see [Server configuration](/cms/configurations/server)). |
 | `JWT_SECRET` | `.env` | A randomly generated secret is included in the scaffolded `.env` file. |
 
 All defaults can be adjusted in the corresponding configuration files to match your project's requirements.
@@ -27821,7 +27832,6 @@ The `/config/server.js` file can include the following parameters:
 | `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | [http.serverOptions](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener)    | {}                  |
 | `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/cms/features/data-management/transfer)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
 | `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
-| `webhooks.populateRelations`        | When `true`, relation fields are included in webhook event payloads. Set to `false` to keep payloads lightweight and avoid exposing relational data in outgoing webhook requests. | boolean | `true` |                                                                                                                                                                                                                                                                                                                            | boolean                                                                                           | `true`              |
 | `logger.startup.enabled`            | Toggle the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
 | `openapi`                            | [OpenAPI](/cms/api/openapi) endpoint configuration. Both endpoints use `access: 'disabled'` by default and are not registered.                                                                                                                                                                                                                                                                                 | object                                                                                            |                     |
@@ -43718,7 +43728,7 @@ You can see the count being used at the top of the relation in the Content Manag
 
 The actual relational values are fetched using another endpoint. This was made to enhance the performance of the Content Manager requests.
 
-To simplify webhook consumption, you can enable the  (see [server configuration](/cms/configurations/server#available-options)). When enabled, all relations values are populated and sent to the webhook consumers, resulting in performance decrease.
+To simplify webhook consumption, you can enable the `webhooks.populateRelations` option in the `config/server` file. When enabled, all relations values are populated and sent to the webhook consumers, resulting in performance decrease.
 
 **In Strapi 5**
 
