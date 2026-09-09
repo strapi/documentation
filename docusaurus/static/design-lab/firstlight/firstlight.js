@@ -2654,7 +2654,16 @@
       if (handGuideOn) { confirmHandGuide(); return; }
       var button = handControlAt();
       if (button) { button.click(); return; }
-      if (handSnap >= 0) location.hash = '#' + stars[handSnap].slug;
+      // A CLICK THAT OPENS NOTHING SAYS SO. Aiming is the half of this
+      // gesture the recogniser cannot report on: a pinch can be read
+      // perfectly and still land on empty sky, and from the outside that is
+      // indistinguishable from a pinch nobody saw.
+      if (handSnap >= 0) {
+        if (window.__handHud) window.__handHud.say('OPENING ' + stars[handSnap].page.title.toUpperCase());
+        location.hash = '#' + stars[handSnap].slug;
+      } else if (window.__handHud) {
+        window.__handHud.say('NOTHING UNDER THE RETICLE');
+      }
     });
     /* ZOOM, and the only way the hand reaches the scale. `delta` is the
        CHANGE in the hand's aperture since the last frame, in hand widths,

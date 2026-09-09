@@ -20,6 +20,12 @@ export const COMFORT = { w: 0.6, h: 0.6 };
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
+/* the zoom gate, all four measured on qa-fixtures/hand-calibration-2026-09-09.json */
+const ZOOM_SMOOTH = 3;      // frames averaged, which is what kills the landmark wobble
+const ZOOM_TREND = 2;       // frames of one sign: noise alternates, a hand opening does not
+const ZOOM_DEAD = 0.015;    // of aperture, per frame, after smoothing
+const ZOOM_STILL = 0.05;    // palm travel and hand-size change allowed while zooming
+
 export function startHands(opts) {
   const source = (opts && opts.source) || makeCameraSource();
   let reader = makeGestureReader();
@@ -34,7 +40,10 @@ export function startHands(opts) {
      flat closed hand on the aperture itself (see PINCH_FAN_MIN in
      gestures.js). So zoom needs no mode: it reads the aperture of a hand that
      is open, and a hand that is pinching is not open. */
-  let aperture = null, zoomAnchor = null, lastFrameAt = 0;
+  let zoomAnchor = null, lastFrameAt = 0;
+  /* the zoom gate's own state: the smoothed aperture, the run of signs, and
+     the previous pose, which is what stillness is measured against */
+  let apHist = [], apPrev = null, apSigns = [], lastPose = null;
   let lastScreen = null;
 
   /* THE LATCH. Closing the hand is itself a motion, so even palmCentre --
@@ -92,21 +101,59 @@ export function startHands(opts) {
       // reaches the world for zoom, `hand:zoom`, and nothing else.
       if (type === 'fan') continue;
       if (type === 'pose') {
-        fire('pose', detail);
+        fire('pose', { ...detail, fps: reader.state().fps });
         const overPanel = lastScreen && document.elementFromPoint(lastScreen.x, lastScreen.y)?.closest('#hand-panel');
-        if (detail.aperture !== null && lastScreen && !overPanel) {
-          if (aperture !== null) {
-            const delta = detail.aperture - aperture;
-            if (Math.abs(delta) > 0.025) {
+        if (detail.aperture === null || !lastScreen || overPanel) {
+          apHist = []; apPrev = null; apSigns = []; zoomAnchor = null; lastPose = null;
+          continue;
+        }
+        /* ZOOM READS THE FINGERS, NOT THE ARM. Moving the hand through space,
+           toward the camera or across it, was zooming: "deplacer ma main dans
+           l'espace, en avant ou en arriere, zoom / dezoom aussi". The
+           aperture is a ratio to hand size, so it survives distance in
+           principle, but the landmarks wobble while the hand travels and the
+           ratio moves with them: measured on the calibration clip, the frame
+           to frame aperture change exceeded the old 0.025 dead zone on 125 of
+           the 203 frames of the brush take and 50 of the 185 of the drag,
+           against 0 of 92 for a hand held still. Integrating that noise is
+           what moved the scale.
+           Three gates, and all three numbers come off that clip. The aperture
+           is SMOOTHED over three frames, which is what kills the wobble. The
+           change has to keep ONE SIGN for two frames running, because noise
+           alternates and a hand opening does not. And the hand has to be
+           STILL in space: palm and hand size steady to within 0.05, so
+           travelling and zooming cannot be confused.
+           What that does to the clip, as a net scale change per take: a hand
+           held still 1.00, spread 1.22, closed 0.56, tapping 1.00, dragging
+           1.05, brushing 1.13. Before the gates, tapping came out at 0.59 and
+           taking the hand out of frame at 3.68. */
+        const still = lastPose !== null && lastPose.size > 0
+          && Math.hypot(detail.palm.x - lastPose.palm.x, detail.palm.y - lastPose.palm.y) / detail.size < ZOOM_STILL
+          && Math.abs(detail.size - lastPose.size) / lastPose.size < ZOOM_STILL;
+        lastPose = detail;
+        apHist.push(detail.aperture);
+        if (apHist.length > ZOOM_SMOOTH) apHist.shift();
+        if (apHist.length === ZOOM_SMOOTH) {
+          const smooth = apHist.reduce((a, b) => a + b, 0) / apHist.length;
+          if (apPrev !== null) {
+            const delta = smooth - apPrev;
+            apSigns.push(Math.sign(delta));
+            if (apSigns.length > ZOOM_TREND) apSigns.shift();
+            const oneWay = apSigns.length === ZOOM_TREND && apSigns[0] !== 0
+              && apSigns.every((x) => x === apSigns[0]);
+            if (still && oneWay && Math.abs(delta) > ZOOM_DEAD) {
+              if (!zoomAnchor) zoomAnchor = { ...lastScreen };
               fire('zoom', { delta: Math.max(-0.12, Math.min(0.12, delta)), ...zoomAnchor });
-              aperture = detail.aperture;
+            } else if (!still) {
+              zoomAnchor = null;
             }
-          } else { aperture = detail.aperture; zoomAnchor = { ...lastScreen }; }
-        } else { aperture = null; zoomAnchor = null; }
+          }
+          apPrev = smooth;
+        }
         continue;
       }
       if (type === 'absent') {
-        aperture = null; zoomAnchor = null; lastScreen = null;
+        zoomAnchor = null; lastScreen = null; apHist = []; apPrev = null; apSigns = []; lastPose = null;
         fx.reset(); fy.reset(); lastRawX = null; lastRawY = null;
       }
       fire(type, detail);
@@ -153,11 +200,18 @@ export function startHands(opts) {
     fire('move', lastScreen);
   });
 
+  /* THE WATCHDOG waits four of the camera's own frames, and never less than
+     400ms. At a fixed 180ms it fired on ordinary jitter as soon as the page
+     got heavy enough to slow the camera down, feeding the recogniser an empty
+     frame in the middle of a gesture and tearing it down. */
   const watchdog = setInterval(() => {
-    if (source.state() === 'on' && lastFrameAt && performance.now() - lastFrameAt > 180) {
+    const fps = reader.state().fps || 23;
+    const wait = Math.max(400, (1000 / fps) * 4);
+    if (source.state() === 'on' && lastFrameAt && performance.now() - lastFrameAt > wait) {
       const events = reader.read({ hands: [] }, performance.now() / 1000 - t0);
       if (events.length) {
-        latched = false; aperture = null; zoomAnchor = null; lastScreen = null;
+        latched = false; zoomAnchor = null; lastScreen = null;
+        apHist = []; apPrev = null; apSigns = []; lastPose = null;
         fx.reset(); fy.reset(); lastRawX = null; lastRawY = null;
         for (const event of events) fire(event.type, event);
       }
@@ -181,7 +235,8 @@ export function startHands(opts) {
       // a latchAnchor/latchReported pair the new hand never produced.
       latched = false;
       lastRawX = null; lastRawY = null;
-      lastFrameAt = 0; lastScreen = null; aperture = null; zoomAnchor = null;
+      lastFrameAt = 0; lastScreen = null; zoomAnchor = null;
+      apHist = []; apPrev = null; apSigns = []; lastPose = null;
       // turning the feature off must visibly turn it off: without this, only
       // hand:state fires, and nothing ever tells the reticle (or the world's
       // own handGrab/handSnap bookkeeping) that the hand is gone, so it kept

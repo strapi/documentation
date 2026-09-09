@@ -37,10 +37,28 @@ export function mountHud() {
     status.textContent = ({ on: 'WAITING FOR YOUR HAND', loading: 'STARTING CAMERA…', denied: 'CAMERA ACCESS UNAVAILABLE', unsupported: 'CAMERA NOT SUPPORTED', unreachable: 'TRACKING MODEL UNAVAILABLE' })[event.detail.state] || 'CAMERA OFF';
   });
   window.addEventListener('hand:pose', (event) => {
-    status.textContent = event.detail.posture === 'rest' ? 'RESTING'
+    /* THE PANEL IS THE ONLY WAY IN, when a gesture does not work, to tell
+       apart "it cannot see my hand", "it sees the pinch but will not call it
+       a click" and "there is nothing under the reticle to open". Two evenings
+       went into that question with nothing on screen to answer it. The frame
+       rate is here for the same reason: everything with a time in it is
+       scaled by it, and it is the number that differs most between a light
+       page and this world. A held message wins for a moment, so a refusal is
+       readable rather than overwritten by the next frame. */
+    if (holdUntil > performance.now()) return;
+    const fps = event.detail.fps ? ` · ${Math.round(event.detail.fps)} FPS` : '';
+    status.textContent = (event.detail.posture === 'rest' ? 'RESTING'
       : event.detail.posture === 'pinch' ? 'PINCH HELD'
-      : 'HAND TRACKED';
+      : 'HAND TRACKED') + fps;
   });
+  let holdUntil = 0;
+  const say = (text, ms = 1600) => { status.textContent = text; holdUntil = performance.now() + ms; };
+  window.addEventListener('hand:noclick', (e) => {
+    say(e.detail.why === 'too brief'
+      ? 'PINCH TOO BRIEF TO BE A CLICK'
+      : `PINCH, NOT A CLICK · THE HAND TRAVELLED ${e.detail.travel.toFixed(2)}`);
+  });
+  window.addEventListener('hand:dismiss', () => say('BRUSH SEEN'));
   let x = 0, y = 0, pending = false;
 
   const paint = () => {
@@ -59,6 +77,9 @@ export function mountHud() {
   window.addEventListener('hand:release', () => reticle.classList.remove('grabbing'));
 
   return {
+    /* the world says what a gesture actually did, since only it knows: see
+       its hand:click listener */
+    say,
     setSnapped(label) {
       tag.textContent = label || '';
       reticle.classList.toggle('snapped', !!label);

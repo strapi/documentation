@@ -71,7 +71,18 @@ export const PINCH_FAN_MIN = 0.62;
    through it. FIST_ON and FIST_OFF sit inside that band, close to its two
    edges, so they arm and disarm on genuine held state and never on a hold. */
 const FIST_ON = 0.95, FIST_OFF = 1.35;        // curl of middle+ring+pinky to wrist, over hand size
-const LOST_MS = 150;                          // the dead man's switch
+/* THE DEAD MAN'S SWITCH, and it has to follow the camera rather than a
+   number. 150ms was chosen against a 30fps camera, where it is four and a
+   half frames. The owner's camera runs at 23 fps on a light page, 43ms a
+   frame, and the world is a good deal heavier than a light page: at 12 fps
+   150ms is under two frames, so ordinary jitter reads as a hand that has
+   gone. Every gesture then ends as an absence instead of a release, which
+   evaluates no click and clears the swipe's trail -- which is exactly what
+   "le pinch ne marche toujours pas" and "le balayage ne fonctionne pas" look
+   like from the inside.
+   So it is three times the interval the camera is actually delivering, and
+   never less than 300ms. */
+const LOST_MS_MIN = 300, LOST_FRAMES = 3;
 
 /* THE FAN drives zoom now: index tip to pinky tip, over hand size. The owner
    found the old two-hand pinch-distance zoom both the wrong gesture ("je
@@ -273,15 +284,24 @@ export function makeGestureReader() {
      enough that one stray frame cannot invert the gesture and short enough to
      follow a real change of hand. */
   let handVotes = [];
+  /* what the camera is actually delivering, in seconds between frames, most
+     recent last. Everything with a time in it is scaled by this. */
+  let gaps = [], lastFrameT = null;
+  const frameGap = () => {
+    if (gaps.length < 3) return 0.043;             // 23 fps until proven otherwise
+    const s2 = [...gaps].sort((a, b) => a - b);
+    return s2[Math.floor(s2.length / 2)];
+  };
+  const lostMs = () => Math.max(LOST_MS_MIN, frameGap() * 1000 * LOST_FRAMES);
 
   return {
-    state: () => ({ present, pinched, fisted }),
+    state: () => ({ present, pinched, fisted, fps: frameGap() > 0 ? 1 / frameGap() : 0 }),
     read(frame, t) {
       const evs = [];
       const hands = (frame && frame.hands) || [];
 
       if (hands.length === 0) {
-        if (lastSeen !== null && (t - lastSeen) * 1000 >= LOST_MS) {
+        if (lastSeen !== null && (t - lastSeen) * 1000 >= lostMs()) {
           // the dead man's switch: never strand the world holding something
           if (pinched) { pinched = false; evs.push({ type: 'release', hand: null }); }
           if (fisted) fisted = false;
@@ -291,6 +311,11 @@ export function makeGestureReader() {
         }
         return evs;
       }
+      if (lastFrameT !== null && t > lastFrameT && t - lastFrameT < 1) {
+        gaps.push(t - lastFrameT);
+        if (gaps.length > 24) gaps.shift();
+      }
+      lastFrameT = t;
       lastSeen = t;
       if (!present) { present = true; evs.push({ type: 'present' }); }
 
@@ -360,7 +385,12 @@ export function makeGestureReader() {
       // THE APERTURE, which zoom reads, only on a hand that is genuinely
       // open this frame: dragging or fisting must never also spin the zoom.
       if (!fisted && !pinched) {
-        evs.push({ type: 'pose', aperture: fanRatio(L), posture: 'open' });
+        // the pose carries the raw palm and hand size as well as the
+        // aperture, because whoever turns an aperture into zoom has to know
+        // whether the HAND was moving while the fingers were: see the zoom
+        // gate in hands.js
+        evs.push({ type: 'pose', posture: 'open', aperture: fanRatio(L),
+                   size: handSize(L), palm: palmCentre(L) });
         const dev = fanRatio(L) - FAN_NEUTRAL;
         if (Math.abs(dev) > FAN_DEADZONE) {
           evs.push({ type: 'fan', rate: dev > 0 ? dev - FAN_DEADZONE : dev + FAN_DEADZONE });

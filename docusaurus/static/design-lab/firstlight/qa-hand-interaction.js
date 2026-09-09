@@ -70,12 +70,29 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
       for (let index = 1; index <= 12; index++) await push(0.8 + index * 0.04);
       const opened = window.__handProbe.cam();
       output.spreadZoomsIn = opened.ts > start.ts * 1.8;
+      /* A HAND HELD OPEN AND STILL MUST NOT DRIFT THE SCALE, which is the
+         point of the dead zone and of the trend gate. The first frames of
+         this rest are not part of the question: the aperture is smoothed over
+         three frames, so the tail of the spread above is still inside the
+         window and legitimately finishes its own gesture. Three resting
+         frames flush it, and the drift is measured after that. */
+      for (let index = 0; index < 3; index++) await push(1.28);
+      const resting = window.__handProbe.cam();
       for (let index = 0; index < 12; index++) await push(1.28 + (index % 2 ? 0.005 : -0.005));
-      output.restingDoesNotDrift = window.__handProbe.cam().ts === opened.ts;
+      output.restingDoesNotDrift = window.__handProbe.cam().ts === resting.ts;
       for (let index = 1; index <= 12; index++) await push(1.28 - index * 0.04);
       output.closingZoomsOut = window.__handProbe.cam().ts < opened.ts / 1.8;
+      /* A STALLED CAMERA STILL LOSES THE HAND, and 800ms is not a round
+         number either: the watchdog now waits four of the camera's own frames
+         and never less than 400ms, and the dead man's switch three frames and
+         never less than 300ms. Both were fixed at 180 and 150ms, chosen
+         against a 30fps camera; on a page heavy enough to slow the camera
+         down they fired on ordinary jitter and tore down every gesture in
+         progress, which is what "le pinch ne marche toujours pas" looked like
+         from the inside. The cost of the trade is here: a camera that truly
+         stops is noticed in about half a second rather than a fifth of one. */
       const beforeLoss = window.__handProbe.cam().ts;
-      await wait(300);
+      await wait(800);
       output.stalledSourceHidesReticle = !document.getElementById('hand-reticle').classList.contains('on');
       await push(1.4);
       output.reentryDoesNotZoom = window.__handProbe.cam().ts === beforeLoss;
