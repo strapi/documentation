@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FIRST LIGHT · hand calibration</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<!--
+  THE GUIDED RECORDER. It exists because every threshold in hand/gestures.js
+  that gates a gesture was derived from a clip that does not contain that
+  gesture. The reference clip holds no deliberate tap, no brush, and no named
+  open or close, so the click was calibrated from a touchscreen convention and
+  the swipe from a speed nobody had ever performed. Both failed on a real hand,
+  twice, and the tests could not see it: they were written in the same
+  convention they were checking.
+
+  So this page records the gestures themselves, named and timed, from the
+  camera that will be used, at the distance and in the light it will be used
+  in. It writes ONE file of raw landmarks and step labels. No image is stored:
+  21 points per hand per frame, and nothing else. Derived numbers are shown
+  live but never written, so a future formula is not calibrated against
+  today's formula's output.
+
+  It is deliberately not part of the world. FIRST LIGHT is being judged by
+  feel, and an instrument in the middle of it would be one more thing in the
+  frame.
+-->
+<style>
+  :root { color-scheme: dark; --amber: #FFB000; --bg: #06080b; --ink: #EDF2F0;
+          --dim: rgba(237,242,240,.55); --line: rgba(237,242,240,.18); }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+         font: 14px/1.5 'IBM Plex Mono', ui-monospace, monospace; display: flex;
+         flex-direction: column; align-items: center; padding: 28px 20px 60px; }
+  h1 { font-family: 'IBM Plex Sans Condensed', system-ui, sans-serif; font-size: 15px;
+       letter-spacing: .28em; text-transform: uppercase; color: var(--amber); margin: 0 0 4px; }
+  .sub { color: var(--dim); font-size: 12px; letter-spacing: .08em; margin: 0 0 26px; }
+  .wrap { width: 100%; max-width: 760px; }
+  .stage { border: 1px solid var(--line); padding: 26px 22px; min-height: 208px;
+           display: flex; flex-direction: column; justify-content: center; text-align: center; }
+  .step { font-size: 11px; letter-spacing: .22em; color: var(--dim); text-transform: uppercase; }
+  .cue { font-family: 'IBM Plex Sans Condensed', system-ui, sans-serif; font-size: 34px;
+         letter-spacing: .04em; margin: 12px 0 6px; }
+  .hint { color: var(--dim); max-width: 52ch; margin: 0 auto; }
+  .bar { height: 3px; background: rgba(237,242,240,.12); margin-top: 20px; position: relative; }
+  .bar i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--amber); }
+  .rest .cue { color: var(--dim); }
+  .btn { font: inherit; letter-spacing: .14em; text-transform: uppercase; color: var(--ink);
+         background: transparent; border: 1px solid var(--line); padding: 9px 16px; cursor: pointer; }
+  .btn:hover:not(:disabled) { border-color: var(--amber); color: var(--amber); }
+  .btn:disabled { opacity: .35; cursor: default; }
+  .btn.go { border-color: var(--amber); color: var(--amber); }
+  .row { display: flex; gap: 10px; align-items: center; margin-top: 18px; flex-wrap: wrap; }
+  table { width: 100%; border-collapse: collapse; margin-top: 26px; font-size: 12.5px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid rgba(237,242,240,.08); }
+  th { color: var(--dim); font-weight: 400; letter-spacing: .12em; text-transform: uppercase; font-size: 10.5px; }
+  td.n { color: var(--amber); font-variant-numeric: tabular-nums; }
+  .state { font-size: 12px; color: var(--dim); margin-top: 12px; }
+  .events { margin-top: 14px; height: 92px; overflow: hidden; font-size: 12px; color: var(--dim); }
+  .events b { color: var(--amber); font-weight: 400; }
+  .note { color: var(--dim); font-size: 12px; margin-top: 22px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .warn { color: #FF8A6A; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>FIRST LIGHT · hand calibration</h1>
+  <p class="sub">One guided clip, about 70 seconds. Landmarks only, no picture is recorded.</p>
+
+  <div class="stage" id="stage">
+    <div class="step" id="stepline">not started</div>
+    <div class="cue" id="cue">Sit where you normally sit</div>
+    <p class="hint" id="hint">Put your right hand up in front of the camera, about where you would hold it to steer the chart. Then press START and follow the cues. Do each gesture the way you actually do it, not the way you think it should be done: the point is to record you.</p>
+    <div class="bar"><i id="prog"></i></div>
+  </div>
+
+  <div class="row">
+    <button class="btn go" id="start">Start the camera</button>
+    <button class="btn" id="save" disabled>Save the clip</button>
+    <button class="btn" id="redo" disabled>Start over</button>
+    <span class="state" id="status">camera off</span>
+  </div>
+
+  <table>
+    <tr><th>what the tracker sees</th><th>now</th><th>meaning</th></tr>
+    <tr><td>hand</td><td class="n" id="m-hand">-</td><td>handedness as MediaPipe labels it, after mirroring</td></tr>
+    <tr><td>pinch</td><td class="n" id="m-pinch">-</td><td>thumb tip to index tip, over hand size. Under 0.55 arms a grab</td></tr>
+    <tr><td>fist curl</td><td class="n" id="m-fist">-</td><td>middle, ring and pinky to the wrist. Under 0.95 reads as a fist</td></tr>
+    <tr><td>index curl</td><td class="n" id="m-index">-</td><td>index tip to the wrist. A pinch keeps it out, a fist folds it in</td></tr>
+    <tr><td>aperture</td><td class="n" id="m-fan">-</td><td>index tip to pinky tip, over hand size. This is what zoom reads</td></tr>
+    <tr><td>lateral speed</td><td class="n" id="m-speed">-</td><td>palm, in hand widths per second. A brush needs 0.7 of one inside 0.25s</td></tr>
+    <tr><td>state</td><td class="n" id="m-state">-</td><td>what the recogniser thinks the hand is doing</td></tr>
+  </table>
+
+  <div class="events" id="events"></div>
+
+  <p class="note" id="note">The file lands in your downloads as <code>firstlight-hand-calibration-&lt;date&gt;.json</code>. It holds the timestamp, the 21 landmarks and the step label for every frame, and nothing else.</p>
+</div>
+
+<script type="module">
+import { makeCameraSource, makeFakeSource } from './source.js';
+import { makeGestureReader, palmCentre, LM } from './gestures.js';
+
+/* THE SCRIPT. Every gesture the thresholds gate, each one held long enough to
+   have a middle that is unambiguous, each one separated by a rest so its
+   boundaries can be found without guessing, and each one labelled in the file
+   so nothing has to be inferred from the shape of the data afterwards.
+
+   `hold` is the cue; `rest` is the beat after it. Repeats are separate steps
+   rather than one long one, so every tap and every brush is its own labelled
+   sample: five of a gesture tell you its spread, one tells you nothing. */
+const SCRIPT = [
+  { id: 'neutral', cue: 'Hand up, open, still', hint: 'Where you would naturally hold it. This is the neutral everything else is measured against, and it also records how much a resting hand drifts on its own.', hold: 3.5, rest: 0.8 },
+
+  { id: 'spread', cue: 'Spread your fingers WIDE', hint: 'As wide as is comfortable, and hold it there.', hold: 2.5, rest: 1.2, reps: 2 },
+  { id: 'together', cue: 'Bring your fingers TOGETHER', hint: 'Fingers straight and closed against each other, like a flat hand. Not a fist.', hold: 2.5, rest: 1.2, reps: 2 },
+  { id: 'fist', cue: 'Make a FIST', hint: 'A real fist, thumb wherever it naturally goes.', hold: 2.5, rest: 1.2, reps: 2 },
+
+  { id: 'tap', cue: 'PINCH, as if clicking', hint: 'Thumb and index together and open again, at your own speed. One per cue.', hold: 1.8, rest: 0.9, reps: 5 },
+  { id: 'drag', cue: 'PINCH and MOVE the hand', hint: 'Hold the pinch and drag, the way you would move the chart, then let go.', hold: 2.6, rest: 1.2, reps: 2 },
+  { id: 'brush', cue: 'BRUSH your open hand outward', hint: 'The way you would actually wave something away. Away from your body, not across it.', hold: 1.8, rest: 1.0, reps: 5 },
+
+  { id: 'gone', cue: 'Take your hand OUT of frame', hint: 'All the way out, then bring it back when the cue changes.', hold: 2.0, rest: 1.5, reps: 2 },
+];
+
+/* flatten the repeats into the running order, so the file's step list is the
+   list of samples and not a list of instructions.
+
+   ?fast=1 runs the same script at a tenth of the durations. It is there so a
+   probe can drive the whole sequence, and the file it writes, in seven
+   seconds instead of seventy; a clip recorded that way is worthless as
+   calibration and the file says so in its own `fast` field. */
+const FAST = new URLSearchParams(location.search).has('fast');
+const SPEED = FAST ? 0.1 : 1;
+const STEPS = [];
+for (const s of SCRIPT) {
+  const reps = s.reps || 1;
+  for (let i = 1; i <= reps; i++) {
+    STEPS.push({ id: s.id, n: i, of: reps, cue: s.cue, hint: s.hint,
+                 hold: s.hold * SPEED, rest: s.rest * SPEED });
+  }
+}
+
+const $ = (id) => document.getElementById(id);
+/* ?src=fake swaps the webcam for the fake source the world's probes drive, so
+   the whole sequence and the file it writes can be proved without a camera and
+   without a hand. The world exposes window.__handProbe for the same reason. */
+const FAKE = new URLSearchParams(location.search).get('src') === 'fake';
+const source = FAKE ? makeFakeSource() : makeCameraSource();
+const reader = makeGestureReader();
+
+let frames = [], steps = [], t0 = null, running = false, done = false;
+let stepIndex = -1, phase = 'idle', phaseEnds = 0, lastPalm = null, lastT = null;
+const eventLog = [];
+
+const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+const handSize = (L) => Math.max(1e-6, dist(L[LM.WRIST], L[LM.MIDDLE_MCP]));
+const curlTo = (L, tip) => dist(L[tip], L[LM.WRIST]) / handSize(L);
+const fistCurl = (L) => ([LM.MIDDLE_TIP, LM.RING_TIP, LM.PINKY_TIP]
+  .reduce((sum, tip) => sum + dist(L[tip], L[LM.WRIST]), 0) / 3) / handSize(L);
+
+function say(state) { $('status').textContent = state; }
+function showStep() {
+  const s = STEPS[stepIndex];
+  if (!s) return;
+  $('stepline').textContent = `step ${stepIndex + 1} of ${STEPS.length} · ${s.id}${s.of > 1 ? ` ${s.n} of ${s.of}` : ''}`;
+  $('cue').textContent = phase === 'hold' ? s.cue : 'Rest';
+  $('hint').textContent = phase === 'hold' ? s.hint : 'Let the hand relax, stay in frame.';
+  $('stage').className = phase === 'hold' ? 'stage' : 'stage rest';
+}
+
+/* `now` is performance.now(), in milliseconds, and so is phaseEnds: that is
+   the clock the cues are timed on. A step's own from/to are written in
+   SECONDS SINCE THE FIRST FRAME, the same clock every frame's `t` carries,
+   because their whole job is to say which frames belong to which gesture. The
+   two were mixed once and the probe caught it: the first step claimed to span
+   349.3 to 315 of a clip 7.6 seconds long. Nothing advances before the first
+   frame has arrived either, since t0 does not exist until then, and a
+   recording that begins before its own clock does has no epoch to speak of. */
+function advance(now) {
+  if (!running || t0 === null) return;
+  if (now < phaseEnds) return;
+  const at = (now - t0) / 1000;
+  if (phase === 'hold') {
+    const s = STEPS[stepIndex];
+    steps[steps.length - 1].to = at;
+    phase = 'rest';
+    phaseEnds = now + s.rest * 1000;
+    showStep();
+    return;
+  }
+  stepIndex++;
+  if (stepIndex >= STEPS.length) { finish(); return; }
+  const s = STEPS[stepIndex];
+  phase = 'hold';
+  phaseEnds = now + s.hold * 1000;
+  steps.push({ id: s.id, n: s.n, of: s.of, from: at, to: null });
+  showStep();
+}
+
+function finish() {
+  running = false; done = true;
+  phase = 'idle';
+  $('stepline').textContent = `finished · ${frames.length} frames`;
+  $('cue').textContent = 'Done';
+  $('hint').textContent = 'Press SAVE THE CLIP, then hand me the file. If a gesture went wrong, start over instead: a clip you are not happy with is worse than no clip, because every threshold will be derived from it.';
+  $('stage').className = 'stage';
+  $('prog').style.width = '100%';
+  $('save').disabled = false;
+  $('redo').disabled = false;
+  source.disarm();
+  say('camera off · clip held in this page until you save it');
+}
+
+source.onFrame((frame) => {
+  const now = performance.now();
+  const hands = (frame && frame.hands) || [];
+  if (t0 === null) t0 = now;
+  const t = (now - t0) / 1000;
+
+  /* the recogniser runs alongside, only so the readout can show what the
+     current rules make of the gesture. Its output is never recorded. */
+  for (const ev of reader.read({ hands }, t)) {
+    if (ev.type === 'pose' || ev.type === 'fan') continue;
+    eventLog.unshift(`<b>${t.toFixed(2)}s</b> ${ev.type}${ev.travel !== undefined ? ` · travel ${ev.travel.toFixed(2)}` : ''}${ev.why ? ` · ${ev.why}` : ''}`);
+    eventLog.length = Math.min(eventLog.length, 6);
+    $('events').innerHTML = eventLog.join('<br>');
+  }
+
+  if (hands.length) {
+    const L = hands[0].landmarks;
+    const p = palmCentre(L);
+    const hs = handSize(L);
+    $('m-hand').textContent = hands[0].handedness || 'unknown';
+    $('m-pinch').textContent = (dist(L[LM.THUMB_TIP], L[LM.INDEX_TIP]) / hs).toFixed(2);
+    $('m-fist').textContent = fistCurl(L).toFixed(2);
+    $('m-index').textContent = curlTo(L, LM.INDEX_TIP).toFixed(2);
+    $('m-fan').textContent = (dist(L[LM.INDEX_TIP], L[LM.PINKY_TIP]) / hs).toFixed(2);
+    if (lastPalm && lastT !== null && t > lastT) {
+      $('m-speed').textContent = (Math.abs(p.x - lastPalm.x) / hs / (t - lastT)).toFixed(2);
+    }
+    lastPalm = p; lastT = t;
+    const st = reader.state();
+    $('m-state').textContent = st.fisted ? 'fist' : st.pinched ? 'pinched' : st.present ? 'open' : 'no hand';
+  } else {
+    $('m-hand').textContent = '-'; $('m-state').textContent = 'no hand';
+    lastPalm = null; lastT = null;
+  }
+
+  if (running) {
+    /* RAW ONLY, and rounded to four decimals: the landmarker's own precision
+       is nowhere near that, and it keeps the file to a few megabytes. `s` is
+       the index of the step being performed, or -1 during a rest. */
+    frames.push({
+      t: +t.toFixed(4),
+      s: phase === 'hold' ? stepIndex : -1,
+      hands: hands.map((h) => ({
+        h: h.handedness || null,
+        p: h.landmarks.map((pt) => [+pt.x.toFixed(4), +pt.y.toFixed(4)]),
+      })),
+    });
+    advance(now);
+    const s = STEPS[stepIndex];
+    if (s) {
+      const total = (phase === 'hold' ? s.hold : s.rest) * 1000;
+      const left = Math.max(0, phaseEnds - now);
+      $('prog').style.width = `${Math.round(100 * (1 - left / total))}%`;
+    }
+  }
+});
+
+$('start').addEventListener('click', async () => {
+  $('start').disabled = true;
+  say('starting the camera and fetching the hand model, about 11 MB…');
+  await source.arm();
+  const st = source.state();
+  say(st === 'on' ? 'recording' : `camera ${st}`);
+  if (st !== 'on') {
+    $('start').disabled = false;
+    $('cue').textContent = 'The camera did not start';
+    $('hint').innerHTML = '<span class="warn">' + (st === 'denied'
+      ? 'Permission was refused, or another application holds the camera. Allow it for this page and press start again.'
+      : st === 'unsupported' ? 'This browser will not give a camera to a page served over plain HTTP from anything but localhost.'
+      : 'The hand-tracking model could not be fetched. Check the network and press start again.') + '</span>';
+    return;
+  }
+  frames = []; steps = []; eventLog.length = 0; t0 = null;
+  stepIndex = -1; phase = 'rest'; phaseEnds = 0; running = true; done = false;
+  $('save').disabled = true; $('redo').disabled = false;
+  /* the first frame starts the sequence, not this click: it is what sets the
+     clock everything is timestamped against */
+});
+
+$('redo').addEventListener('click', () => { location.reload(); });
+
+$('save').addEventListener('click', () => {
+  const seconds = frames.length ? frames[frames.length - 1].t : 0;
+  const clip = {
+    source: 'firstlight-hand-calibration',
+    created: new Date().toISOString(),
+    fast: FAST || undefined,   /* a clip recorded at a tenth of the durations calibrates nothing */
+    /* the frame rate the clip was actually taken at, which is a property of
+       the machine and the light and matters to every threshold with a time in
+       it: an interval that a 60fps camera crosses in four frames takes one on
+       a 15fps one */
+    fps: seconds > 0 ? +(frames.length / seconds).toFixed(2) : 0,
+    seconds: +seconds.toFixed(2),
+    viewport: [window.innerWidth, window.innerHeight],
+    /* every step, in the order performed, with the seconds it spans. A frame
+       carries the index of the step it belongs to, or -1 between them. */
+    steps: steps.map((s, i) => ({ i, ...s, to: s.to === null ? seconds : +s.to.toFixed(3), from: +s.from.toFixed(3) })),
+    frames,
+  };
+  const blob = new Blob([JSON.stringify(clip)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `firstlight-hand-calibration-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  say(`saved · ${frames.length} frames over ${seconds.toFixed(1)}s at about ${clip.fps} fps`);
+});
+
+/* QA-only, and only when the source is faked: what the page has recorded so
+   far, and the script it is following. */
+if (FAKE) {
+  window.__rec = {
+    push: (frame) => source.push(frame),
+    frames: () => frames.length,
+    steps: () => steps.length,
+    script: () => STEPS.map((s) => s.id),
+    finished: () => done,
+  };
+}
+
+/* A CLIP THAT HAS NOT BEEN SAVED YET MUST NOT BE LOST TO A RELOAD. When this
+   page is opened through the Design Lab gallery, the gallery injects its own
+   live-reload script: it reloads the page whenever the world's files change,
+   which during a working afternoon is often, and a reload takes the recording
+   with it. */
+window.addEventListener('beforeunload', (e) => {
+  if (!running && !(done && frames.length)) return;
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('pagehide', () => source.disarm());
+document.addEventListener('visibilitychange', () => { if (document.hidden && !running) source.disarm(); });
+</script>
+</body>
+</html>
