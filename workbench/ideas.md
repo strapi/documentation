@@ -6,7 +6,7 @@ answer to "what is left to do": when he asks, read this, not a memory and not a 
 Tick a box when the work is done AND pushed, then move the line down to **Archives** at the
 foot of this file, keeping the section it came from. The working list above stays short that way.
 
-Last updated 2026-09-07.
+Last updated 2026-09-09.
 
 ## Across the lab
 
@@ -22,19 +22,6 @@ Last updated 2026-09-07.
   When building it, match FIRST LIGHT's own idiom, and keep it discreet enough that it does not
   hint at the crossings, which stay easter eggs.
 
-- [ ] **FIRST LIGHT's top bar now overflows by 77 pixels**, 1357 against a 1280 viewport, so
-  something is pushed off screen. Caused by today's work: the `HAND CONTROL` button was added to
-  that bar. Found while looking for the missing lab link. Fix before adding anything else to that
-  bar, and note that whatever way home gets built will need room there too.
-  2026-09-09: reproduced at the pushed commit and measured at seven widths by the new
-  `qa-topbar.js` in that world. It names what falls off, which the report could not: the **?**
-  button ends at 1285 and the **mission clock** at 1357, and the search box is crushed to 190px on
-  the way, a flex row paying for itself with the only item that can shrink. It fits at 1366 and
-  above. NOT FIXED HERE: a media query hiding the strapline, the clock and the key caps under
-  1450px, with a floor under the search, was sitting uncommitted in the worktree from another pass
-  the same afternoon, and the probe passes at all seven widths with it applied. Whoever wrote it
-  should land it; tick this then.
-
 ## FIRST LIGHT
 
 - [ ] **The cold open's sub-prompt is printed on top of the mission log.** Seen on FIRST LIGHT's own
@@ -47,24 +34,21 @@ Last updated 2026-09-07.
 
 ## FIRST LIGHT, hand control
 
-### Tested 2026-09-08 evening, four faults. Fix these first.
+- [ ] **DECIDE: the hand now has two modes, and you did not ask for that.** NAVIGATE aims, pinches
+  and drags; ZOOM spreads and closes. They are switched on a panel, bottom right, that the hand can
+  press by aiming and pinching, and that also carries a live status of what the tracker sees and a
+  CAMERA OFF button. The reason is real: the aperture band overlaps the pinch band, so one open hand
+  doing both had every gesture fighting its neighbour, which is most of what "the controls feel
+  wrong" was. The cost is equally real: it is a mode, and your own spec was one hand doing
+  everything. Judge it with your hand, and if you want it gone the relative zoom works without the
+  modes; it would just have to be suppressed while pinched.
 
-- [ ] **The swipe to decline does not fire.** Three candidate causes, in order of likelihood, and
-  the first is mine: SWIPE_SPEED was raised from 1.0 to 2.5 to kill four false positives per
-  minute, and it was never once proven that a real deliberate swipe clears 2.5, because the
-  reference clip contains no swipe. I said so at the time. Second candidate: the handedness
-  polarity or the screen-space sign is inverted, so the gesture only fires inward. Third: the
-  dialog is not listening. Diagnose in that order, and get a real swipe on video this time.
-
-- [ ] **Opening the hand zooms OUT instead of in.** A sign inversion on the fan. Almost certainly
-  the root of the complaint below as well: if opening dezooms, then zooming in requires closing the
-  fingers, which walks the hand toward the fist and pinch thresholds and makes everything fight.
-  Fix the sign first, then re-judge the rest.
-
-- [ ] **The controls feel wrong: dezooms easily, cannot re-zoom, dragging is hard.** Re-test after
-  the sign fix before tuning anything, since one inverted axis can produce all three symptoms.
-  If it persists: the rate mapping, the dead zone at 0.15, and the drag gain each need a pass, and
-  he is the instrument.
+- [ ] **The controls feel wrong: dezooms easily, cannot re-zoom, dragging is hard.** WAITING ON HIS
+  HAND. The cause underneath all three symptoms is answered (see the archived zoom item: absolute
+  aperture, not an inverted sign), and zoom and drag no longer share one open hand at all, so
+  neither fights the other. What is left is a judgement only he can make. If it persists, the
+  remaining dials are ZOOM_GAIN, now named and derived in firstlight.js rather than a bare 2.4, the
+  aperture dead zone in hands.js at 0.025, and the drag gain.
 
 **The lesson, and it is the twelfth of the day.** Every test asserts that a positive deviation
 produces a positive rate, which is self-consistent whichever way the physical gesture actually maps.
@@ -74,55 +58,20 @@ nothing anywhere proves a real gesture passes it. **Both faults are the same sha
 connects the code's convention to a human's actual movement.** The fixture can only fix that if it
 contains the gestures, so the next reference clip must include a deliberate swipe, a deliberate
 fan open and a deliberate fan close, each named and timed.
+**2026-09-09, half answered.** Both faults are fixed and both now have tests that connect the code
+to a movement: a synthetic deliberate swipe at four frame rates and on jittered frames, and an
+aperture sweep driven through the real pipeline from a fake camera to the camera target. Synthetic
+is not the same as his hand, so the clip is still worth recording, and it is the only way to settle
+the two items left open above.
 
 
 Stage 1 shipped on `repo/experimental-design-firstlight` and the owner tested it. The gesture
 vocabulary is being revised from that test. Decisions taken 2026-09-08, in his words where they
 were his:
 
-- [ ] **Zoom: drop the two-hand pinch distance, use one hand opening and closing.** "l'idee de
-  pincer 2 mains puis les rapprocher ou eloigner etait une mauvaise idee. je prefererai qu'en fait
-  on ferme ou ouvre la main pour joindre ou ecarter les doigts". Measured on his own reference
-  clip: the fan of index tip to pinky tip over hand size reads 0.89 median on an open hand, 0.40
-  on a fist (cleanly separate) and 0.67 on a pinch (overlapping), so the zoom must be suppressed
-  while pinched. The open-hand fan spans only 1.8 to 1 in that clip, which is why the proposal is
-  that the fan drives a RATE with a dead zone rather than a position: duration gives the amplitude,
-  sensitivity becomes one number, and the world's zoom voice, written to last exactly as long as
-  the hand keeps going, finally gets the gesture it was composed for.
-- [ ] **Zoom is too sensitive.** Falls out of the rate change above, but confirm by ear afterwards.
-- [ ] **The fist loses its action and keeps its job.** "je ne suis pas convaincu sur l'idee de
-  fermer pour verrouiller. pour quoi faire ?" Verified: nothing listens to `hand:lock` at all, so
-  the fist already does nothing. Its DETECTION stays, because a closing hand mechanically brings
-  thumb and index together and would otherwise read as a grab every time he rests his hand.
-- [ ] **A brief pinch that does not move opens the page.** Proposed and not yet confirmed. It is
-  what every pointing device already means by a click, it needs no new gesture, and it restores
-  the only action the hand cannot otherwise perform: actually reading a page.
-- [ ] **An arming dialog that teaches the gestures, and is answered BY a gesture.** His idea, and it
-  is better than a text panel: the guide stops describing the vocabulary and becomes the first
-  exercise of it. It opens when the camera arms, names what is happening ("your camera is now
-  turned on and you are now controlling the interface with hand gestures"), describes the moves,
-  then asks for a **brief pinch to confirm** or a **swipe right to decline**. Confirming by doing
-  proves the tracking sees you at the moment you learn the gesture, rather than three minutes later
-  when you think the world is broken.
-  Reuse FIRST LIGHT's existing `#guide` dialog rather than inventing a popup: it already has the
-  frame, the SKIP and NEXT buttons, session memory and the world's voice.
-  **Declining must turn the camera OFF**, through the same disarm path the button uses, which stops
-  every track. His emphasis: "non ferme le dialogue ET eteint la camera, tres important". Hiding
-  the dialog while the camera keeps running would reintroduce by the back door exactly the trust
-  bug fixed on 2026-09-08.
-  The swipe is a TIER TWO verb: it exists only while this dialog has focus and does nothing
-  anywhere else, which is the spec's own architecture getting its first real use.
-  Threshold derived from his reference clip, not guessed: lateral palm speed above 1.0 units/s
-  sustained over 4 frames, open hand only. His natural maximum with an open hand across 69 seconds
-  was 0.44 u/s and there were ZERO sustained bursts above 1.0, so false positives are impossible by
-  a factor of more than two. Not yet proven: that a real deliberate swipe clears the bar, since the
-  clip contains none.
-  Both controls stay clickable with the mouse. Nothing is reachable only by gesture.
-
-- [ ] **The second hand does nothing.** Owner confirmed. Consequence worth taking: set the
-  landmarker to one hand instead of two. Cheaper per frame, and it removes the ambiguity of which
-  hand is primary, which today depends on MediaPipe's return order rather than on anything stable.
-
+- [ ] **Zoom is too sensitive.** WAITING ON HIS EAR AND HIS HAND. One number governs it, as he
+  asked: ZOOM_GAIN in firstlight.js, at 2.4, derived so that one unhurried full open of the hand
+  covers this world's whole 0.06 to 8 range. Turn it down if that is still too fast.
 ## The Golden Shore
 
 - [ ] **The weather is a fixed script, and it should not be.** Four states exist and are good (`clear`, `sirocco`, `squall`, `mist`), but `stateAt()` runs the same ten-minute reel every visit in the same order at the same seconds: mist only on a 40 percent arrival coin, clear to 300 s, sirocco to 396, clear to 424, squall to 540, clear after. Asked 2026-09-08: make it genuinely varied, so it is not always windy, sometimes rains, sometimes storms, sometimes fogs. **No snow, it is a beach.** Two pieces: give the sequence real variability (weighted choice with sensible transitions and durations rather than a fixed reel), and add a proper thunderstorm, since `squall` is rain and wind with no lightning and no thunder. Any state can be previewed today with `?wx=clear|sirocco|squall|mist`.
@@ -290,9 +239,17 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] The carved notice could rise behind the landing card with mouse-dead answers. (2026-09-07: the card stands aside first, without the walker pick a real dismissal opens; YES verified hit-testable.)
 
 ## FIRST LIGHT, hand control
+- [x] The second hand does nothing. (2026-09-08: the landmarker asks for one hand, which is cheaper per frame and removes the question of which hand is primary.)
+- [x] An arming dialog that teaches the gestures, and is answered BY a gesture. (2026-09-08, and finished 2026-09-09: it reuses the #guide dialog, a brief pinch confirms, a brush of the open hand declines and goes through the real disarm path so the camera actually stops. Two faults found after it shipped are fixed with it: it owns the hand while it waits, in commit 716fd5ba1, and its copy is rewritten for the two modes under a bumped session key so anyone who saw the old wording sees the new one. Both answers stay clickable by mouse, and the panel adds a third way out.)
+- [x] A brief pinch that does not move opens the page. (2026-09-08, hardened 2026-09-09 in commit d3628e821: the click measures the pinch's WHOLE excursion rather than where it happened to end, so a pinch that wanders and comes back is a drag and not a tap, and it asks for at least 60ms so a one-frame flicker cannot open a page.)
+- [x] The fist loses its action and keeps its job. (2026-09-08, and still true: nothing listens for a lock, and the detection stays because a closing hand brings thumb and index together and would otherwise read as a grab every time he rests his hand. The panel's status now says RESTING when it sees one, so the fist is legible instead of silent.)
+- [x] Zoom: drop the two-hand pinch distance, use one hand opening and closing. (2026-09-09: the two-hand pinch is gone and one hand does it, as asked. The RATE-with-a-dead-zone half of the proposal was built, tested by him, and replaced the same day: a rate read off an absolute aperture is what made opening the hand dezoom. The measurements that proposal rested on still hold and are still in gestures.js, which keeps measuring the fan for them; nothing consumes it. Zoom is a relative delta now, in its own mode.)
+- [x] Opening the hand zooms OUT instead of in. (2026-09-09, commit d3628e821: NOT a sign inversion, which is why reading the code for one found nothing. The fan drove the zoom from the hand's ABSOLUTE aperture against a neutral, so opening a closed hand spent the first half of the movement below that neutral and dezoomed while it opened, and a hand resting on the wrong side of the neutral drifted on its own. Zoom is the aperture's frame-to-frame CHANGE now: opening always zooms in and closing always zooms out, wherever the hand starts. Proven through the whole stack, from fake camera frames to cam.ts: an aperture sweep from fingers together to spread takes the scale 0.90 to 4.50, and the reverse sweep brings it back.)
+- [x] The swipe to decline does not fire. (2026-09-09, commit d3628e821: none of the three candidates was it. The rule was wrong in kind, not in value. A per-frame speed is not a property of a gesture: a real swipe accelerates and decelerates, its frames arrive 20 to 70 ms apart on a camera that is also running a hand model, and ONE frame under the bar reset the streak and the distance accumulated with it. So the swipe is measured whole now: 0.7 of a hand width of net lateral displacement inside 0.25s, with a progressive-displacement guard so a one-frame tracking jump cannot pass as a gesture. Measured: zero dismisses across the 2061 frames of the reference clip, one dismiss for a deliberate swipe at 15, 24, 30 and 60 fps and on jittered 20-70ms frames, none for a hand crossing one hand width over four tenths of a second, none inward, none for a teleport. Proven through the real pipeline too, wall clock and all: the arming dialog closes and the camera goes off.)
 
 - [x] The dialog does not capture the hand. (2026-09-09, commit 716fd5ba1: the rule existed, on exactly one of the world's six hand listeners, hand:click, and move, grab, release and fan never consulted it. It now lives in one predicate, handCaptured(), read by one wrapper, onHandControl(), that every control listener goes through, so a listener added later cannot skip it. present and absent stay direct because they only ever clear state, and taking focus releases whatever the chart was holding, so a hand pinched as the camera arms does not keep the map grabbed. The reticle keeps tracking throughout: the visitor has to see the camera found their hand while reading what the gestures do. qa-hand-map.js gained THE DIALOG OWNS THE HAND, which asserts on the camera targets and not on the dialog, and failed on both freeze assertions before the change.)
 
 ## Across the lab
+- [x] FIRST LIGHT's top bar overflows by 77 pixels. (2026-09-09, commits db0d2ca25 and d3628e821: `qa-topbar.js` measures the bar at seven widths and names what falls off, which the report could not: the ? button ended at 1285 and the mission clock at 1357 in a 1280 viewport, and the search box was crushed to 190px on the way, a flex row paying for itself with the only item that can shrink. The fix, from the Codex pass taken over here, is a media query under 1450px that hides the strapline, the clock and the key caps and puts a floor under the search. Passes at 1280, 1366, 1440, 1512, 1600, 1728 and 1920. Room for the way home now exists in that bar.)
 
 - [x] Most of the gallery cards show a world that does not work. (2026-09-09, commits d85e27010, da575a0be, 2631659c5, 86a1eaf24: two defects, both fixed. The gallery served every world from the scratchpad of session 0d8629c6 under /private/tmp, where six living build dirs had lost their data bundles around 00:16 that morning, so the worlds genuinely failed and their cards were their own error dialogs. Serving now resolves through qa/worldsource.js: the worktree if that branch is checked out, else the branch read straight out of git as blobs, else the old path for the two archives that have no branch yet. And the thumbnailer no longer publishes whatever it captured: five gates stand between a screenshot and a card, a rejected shot leaves the old card alone, and three recipes were wrong too, the Long Way entering a door, the Herbarium's key panel covering the cabinet, the Golden Shore arriving in mist. All twelve cards reshot and looked at one by one. qa/labcheck.js now answers the whole question in one command, and says 12 of 12 today.)
