@@ -1523,6 +1523,7 @@ GET /api/articles?populate[blocks]=smart
 ```
 
 Relations inside components are populated 1 level deep by default, and can be adjusted per component.
+It is not a `populate=deep` plugin, a category the [REST API documentation advises against](/cms/api/rest/populate-select#population): the populate object comes from your schemas and relations are not expanded recursively.
 This plugin is not maintained by Strapi.
 :::
 
