@@ -330,6 +330,10 @@ A single action in the admin panel can trigger more than one event. Publishing a
 If you need a payload with a different content or structure, send the request yourself from a [lifecycle hook](/cms/backend-customization/models#lifecycle-hooks).
 :::
 
+### Media payload content
+
+Media events send a different envelope from entry events: `event`, `createdAt` and `media`, with no `model` and no `uid`. The `media` object is the file entry itself, including the `formats` generated for an image, and it does not carry the entries the file is attached to.
+
 ### Headers
 
 When a payload is delivered to your webhook's URL, it will contain specific headers:
@@ -626,21 +630,77 @@ This event is triggered when you upload a file on entry creation or through the 
 ```json
 {
   "event": "media.create",
-  "createdAt": "2020-01-10T10:58:41.115Z",
+  "createdAt": "2026-09-09T09:03:55.238Z",
   "media": {
     "id": 1,
-    "name": "image.png",
-    "hash": "353fc98a19e44da9acf61d71b11895f9",
-    "sha256": "huGUaFJhmcZRHLcxeQNKblh53vtSUXYaB16WSOe0Bdc",
+    "documentId": "af1tfhdljtcm8076utj20ury",
+    "name": "photo.png",
+    "alternativeText": null,
+    "caption": null,
+    "focalPoint": null,
+    "width": 3024,
+    "height": 1646,
+    "formats": {
+      "thumbnail": {
+        "name": "thumbnail_photo.png",
+        "hash": "thumbnail_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 245,
+        "height": 133,
+        "size": 35.61,
+        "sizeInBytes": 35614,
+        "url": "/uploads/thumbnail_photo_27421e3364.png"
+      },
+      "small": {
+        "name": "small_photo.png",
+        "hash": "small_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 500,
+        "height": 272,
+        "size": 117.45,
+        "sizeInBytes": 117447,
+        "url": "/uploads/small_photo_27421e3364.png"
+      },
+      "medium": {
+        "name": "medium_photo.png",
+        "hash": "medium_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 750,
+        "height": 408,
+        "size": 233.53,
+        "sizeInBytes": 233529,
+        "url": "/uploads/medium_photo_27421e3364.png"
+      },
+      "large": {
+        "name": "large_photo.png",
+        "hash": "large_photo_27421e3364",
+        "ext": ".png",
+        "mime": "image/png",
+        "path": null,
+        "width": 1000,
+        "height": 544,
+        "size": 387.81,
+        "sizeInBytes": 387809,
+        "url": "/uploads/large_photo_27421e3364.png"
+      }
+    },
+    "hash": "photo_27421e3364",
     "ext": ".png",
     "mime": "image/png",
-    "size": 228.19,
-    "url": "/uploads/353fc98a19e44da9acf61d71b11895f9.png",
+    "size": 497.97,
+    "url": "/uploads/photo_27421e3364.png",
+    "previewUrl": null,
     "provider": "local",
     "provider_metadata": null,
-    "createdAt": "2020-01-10T10:58:41.095Z",
-    "updatedAt": "2020-01-10T10:58:41.095Z",
-    "related": []
+    "createdAt": "2026-09-09T09:03:55.235Z",
+    "updatedAt": "2026-09-09T09:03:55.235Z",
+    "publishedAt": "2026-09-09T09:03:55.235Z"
   }
 }
 ```
@@ -654,21 +714,30 @@ This event is triggered when you replace a media or update the metadata of a med
 ```json
 {
   "event": "media.update",
-  "createdAt": "2020-01-10T10:58:41.115Z",
+  "createdAt": "2026-09-09T09:03:57.075Z",
   "media": {
     "id": 1,
-    "name": "image.png",
-    "hash": "353fc98a19e44da9acf61d71b11895f9",
-    "sha256": "huGUaFJhmcZRHLcxeQNKblh53vtSUXYaB16WSOe0Bdc",
+    "documentId": "af1tfhdljtcm8076utj20ury",
+    "name": "Overview of the Media Library",
+    "alternativeText": "The Media Library overview, in dark mode",
+    "caption": "Media Library",
+    "focalPoint": null,
+    "width": 3024,
+    "height": 1646,
+    "formats": {
+      // the four generated formats, as in the media.create payload above
+    },
+    "hash": "photo_27421e3364",
     "ext": ".png",
     "mime": "image/png",
-    "size": 228.19,
-    "url": "/uploads/353fc98a19e44da9acf61d71b11895f9.png",
+    "size": 497.97,
+    "url": "/uploads/photo_27421e3364.png",
+    "previewUrl": null,
     "provider": "local",
     "provider_metadata": null,
-    "createdAt": "2020-01-10T10:58:41.095Z",
-    "updatedAt": "2020-01-10T10:58:41.095Z",
-    "related": []
+    "createdAt": "2026-09-09T09:03:55.235Z",
+    "updatedAt": "2026-09-09T09:03:57.073Z",
+    "publishedAt": "2026-09-09T09:03:55.235Z"
   }
 }
 ```
@@ -682,21 +751,30 @@ This event is triggered only when you delete a media through the media interface
 ```json
 {
   "event": "media.delete",
-  "createdAt": "2020-01-10T11:02:46.232Z",
+  "createdAt": "2026-09-09T09:03:58.588Z",
   "media": {
-    "id": 11,
-    "name": "photo.png",
-    "hash": "43761478513a4c47a5fd4a03178cfccb",
-    "sha256": "HrpDOKLFoSocilA6B0_icA9XXTSPR9heekt2SsHTZZE",
+    "id": 1,
+    "documentId": "af1tfhdljtcm8076utj20ury",
+    "name": "Overview of the Media Library",
+    "alternativeText": "The Media Library overview, in dark mode",
+    "caption": "Media Library",
+    "focalPoint": null,
+    "width": 3024,
+    "height": 1646,
+    "formats": {
+      // the four generated formats, as in the media.create payload above
+    },
+    "hash": "photo_27421e3364",
     "ext": ".png",
     "mime": "image/png",
-    "size": 4947.76,
-    "url": "/uploads/43761478513a4c47a5fd4a03178cfccb.png",
+    "size": 497.97,
+    "url": "/uploads/photo_27421e3364.png",
+    "previewUrl": null,
     "provider": "local",
     "provider_metadata": null,
-    "createdAt": "2020-01-07T19:34:32.168Z",
-    "updatedAt": "2020-01-07T19:34:32.168Z",
-    "related": []
+    "createdAt": "2026-09-09T09:03:55.235Z",
+    "updatedAt": "2026-09-09T09:03:57.073Z",
+    "publishedAt": "2026-09-09T09:03:55.235Z"
   }
 }
 ```
