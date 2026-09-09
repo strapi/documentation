@@ -10,23 +10,6 @@ Last updated 2026-09-07.
 
 ## Across the lab
 
-- [ ] **Most of the gallery cards show a world that does not work.** Reported 2026-09-09. Looked
-  at, not guessed: FIRST LIGHT's card is its own "Instrument failure - Failed to execute 'json' on
-  'Response': Unexpected end of JSON input" dialog, Pixel Docs City's is "Could not load the city"
-  with the same JSON error, and the Herbarium's is its loading splash, UNLOCKING THE CABINET, caught
-  before the plates were mounted. Two separate defects behind it.
-  **One: the gallery serves a disposable directory.** `workbench/qa/livepreview.js` serves every
-  world out of the scratchpad of session 0d8629c6 under `/private/tmp`, and six of those build dirs
-  have lost their data bundle (`content.json`, `graph.json`, `communities.json`, `provenance.json`,
-  and FIRST LIGHT's `parts/`): longway, pixelcity, firstlight, deadreckoning, cartastrapiana and
-  bythedeep, all emptied around 00:16 on 2026-09-09. So the worlds genuinely fail to load, in the
-  gallery and anywhere else that scratchpad is served from. Every one of the seven branches carries
-  a complete, self-contained copy WITH its data, so the fix is to serve the branch and stop
-  depending on `/private/tmp` at all.
-  **Two: the thumbnailer publishes whatever it captured.** Nothing checks that the page reported no
-  error or reached its ready state before a card is overwritten, which is how an error dialog and a
-  splash screen became the two most visible images in the lab.
-
 - [ ] **FIRST LIGHT is the only world with no way back to the Design Lab.** Every other world has
   one. Not a regression: it never had one at any point in its history.
   Settled by LOOKING at the rendered page, after four grep-based answers that each contradicted the
@@ -43,6 +26,16 @@ Last updated 2026-09-07.
   something is pushed off screen. Caused by today's work: the `HAND CONTROL` button was added to
   that bar. Found while looking for the missing lab link. Fix before adding anything else to that
   bar, and note that whatever way home gets built will need room there too.
+
+## FIRST LIGHT
+
+- [ ] **The cold open's sub-prompt is printed on top of the mission log.** Seen on FIRST LIGHT's own
+  gallery card, at 1200 by 750: "FIRST SURVEY TARGET - BEGIN HERE - URS-043..." and "TRAINS ARRIVING
+  - CLICK THE BEACON - OR PRESS / TO SEARCH" are drawn over two lines of the log panel, both
+  unreadable. The changelog records the same collision being fixed once by bringing the log panel's
+  cap down from 184px to 138px, so this is that fix not holding at a shorter viewport rather than a
+  new fault. Measure at several heights and make the two boxes exclude each other instead of
+  agreeing at one size.
 
 ## FIRST LIGHT, hand control
 
@@ -291,3 +284,7 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 ## FIRST LIGHT, hand control
 
 - [x] The dialog does not capture the hand. (2026-09-09, commit 716fd5ba1: the rule existed, on exactly one of the world's six hand listeners, hand:click, and move, grab, release and fan never consulted it. It now lives in one predicate, handCaptured(), read by one wrapper, onHandControl(), that every control listener goes through, so a listener added later cannot skip it. present and absent stay direct because they only ever clear state, and taking focus releases whatever the chart was holding, so a hand pinched as the camera arms does not keep the map grabbed. The reticle keeps tracking throughout: the visitor has to see the camera found their hand while reading what the gestures do. qa-hand-map.js gained THE DIALOG OWNS THE HAND, which asserts on the camera targets and not on the dialog, and failed on both freeze assertions before the change.)
+
+## Across the lab
+
+- [x] Most of the gallery cards show a world that does not work. (2026-09-09, commits d85e27010, da575a0be, 2631659c5, 86a1eaf24: two defects, both fixed. The gallery served every world from the scratchpad of session 0d8629c6 under /private/tmp, where six living build dirs had lost their data bundles around 00:16 that morning, so the worlds genuinely failed and their cards were their own error dialogs. Serving now resolves through qa/worldsource.js: the worktree if that branch is checked out, else the branch read straight out of git as blobs, else the old path for the two archives that have no branch yet. And the thumbnailer no longer publishes whatever it captured: five gates stand between a screenshot and a card, a rejected shot leaves the old card alone, and three recipes were wrong too, the Long Way entering a door, the Herbarium's key panel covering the cabinet, the Golden Shore arriving in mist. All twelve cards reshot and looked at one by one. qa/labcheck.js now answers the whole question in one command, and says 12 of 12 today.)
