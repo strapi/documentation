@@ -1512,6 +1512,20 @@ Dynamic zones are highly dynamic content structures by essence. When querying dy
 
 To retrieve component-specific nested relations, media fields, or components within a dynamic zone, you must define per-component populate queries using the `on` property (fragment population syntax). This is because different components in a dynamic zone can have completely different structures, and require their own unique nested queries.
 
+:::tip Community plugin: shorter dynamic zone queries
+Fragment syntax can get verbose when a dynamic zone accepts many components.
+<ExternalLink to="https://github.com/notum-cz/strapi-plugin-smart-populate" text="Smart Populate"/> is a community plugin maintained by Notum.
+It reads your component schemas when Strapi starts and builds the matching populate object.
+Once the plugin and its REST middleware are set up, a request can pass the `smart` token instead:
+
+```bash
+GET /api/articles?populate[blocks]=smart
+```
+
+Relations inside components are populated 1 level deep by default, and can be adjusted per component.
+This plugin is not maintained by Strapi.
+:::
+
 For instance, in the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application:
 
 - A `blocks` dynamic zone exists on the `article` content-type <ScreenshotNumberReference number="1" />.
