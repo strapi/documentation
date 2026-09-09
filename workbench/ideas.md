@@ -26,6 +26,14 @@ Last updated 2026-09-07.
   something is pushed off screen. Caused by today's work: the `HAND CONTROL` button was added to
   that bar. Found while looking for the missing lab link. Fix before adding anything else to that
   bar, and note that whatever way home gets built will need room there too.
+  2026-09-09: reproduced at the pushed commit and measured at seven widths by the new
+  `qa-topbar.js` in that world. It names what falls off, which the report could not: the **?**
+  button ends at 1285 and the **mission clock** at 1357, and the search box is crushed to 190px on
+  the way, a flex row paying for itself with the only item that can shrink. It fits at 1366 and
+  above. NOT FIXED HERE: a media query hiding the strapline, the clock and the key caps under
+  1450px, with a floor under the search, was sitting uncommitted in the worktree from another pass
+  the same afternoon, and the probe passes at all seven widths with it applied. Whoever wrote it
+  should land it; tick this then.
 
 ## FIRST LIGHT
 
