@@ -10,6 +10,23 @@ Last updated 2026-09-07.
 
 ## Across the lab
 
+- [ ] **Most of the gallery cards show a world that does not work.** Reported 2026-09-09. Looked
+  at, not guessed: FIRST LIGHT's card is its own "Instrument failure - Failed to execute 'json' on
+  'Response': Unexpected end of JSON input" dialog, Pixel Docs City's is "Could not load the city"
+  with the same JSON error, and the Herbarium's is its loading splash, UNLOCKING THE CABINET, caught
+  before the plates were mounted. Two separate defects behind it.
+  **One: the gallery serves a disposable directory.** `workbench/qa/livepreview.js` serves every
+  world out of the scratchpad of session 0d8629c6 under `/private/tmp`, and six of those build dirs
+  have lost their data bundle (`content.json`, `graph.json`, `communities.json`, `provenance.json`,
+  and FIRST LIGHT's `parts/`): longway, pixelcity, firstlight, deadreckoning, cartastrapiana and
+  bythedeep, all emptied around 00:16 on 2026-09-09. So the worlds genuinely fail to load, in the
+  gallery and anywhere else that scratchpad is served from. Every one of the seven branches carries
+  a complete, self-contained copy WITH its data, so the fix is to serve the branch and stop
+  depending on `/private/tmp` at all.
+  **Two: the thumbnailer publishes whatever it captured.** Nothing checks that the page reported no
+  error or reached its ready state before a card is overwritten, which is how an error dialog and a
+  splash screen became the two most visible images in the lab.
+
 - [ ] **FIRST LIGHT is the only world with no way back to the Design Lab.** Every other world has
   one. Not a regression: it never had one at any point in its history.
   Settled by LOOKING at the rendered page, after four grep-based answers that each contradicted the
