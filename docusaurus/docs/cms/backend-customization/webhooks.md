@@ -297,6 +297,7 @@ By default Strapi webhooks can be triggered by the following events:
 | [`entry.delete`](#entrydelete)    | Triggered when a Content Type entry is deleted.       |
 | [`entry.publish`](#entrypublish)   | Triggered when a Content Type entry is published.\*   |
 | [`entry.unpublish`](#entryunpublish) | Triggered when a Content Type entry is unpublished.\* |
+| [`entry.draft-discard`](#entry-draft-discard) | Triggered when the draft version of a Content Type entry is discarded.\*<br />This event is not listed in the **Webhooks** form of the admin panel, so subscribing to it requires creating the webhook programmatically. |
 | [`media.create`](#mediacreate)    | Triggered when a media is created.                    |
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
@@ -456,6 +457,34 @@ This event is triggered when an entry is unpublished.
     "full_name": "Paris",
     "createdAt": "2020-01-10T08:47:36.264Z",
     "updatedAt": "2020-01-10T08:58:26.210Z",
+    "publishedAt": null,
+    "cover": null,
+    "images": []
+  }
+}
+```
+
+### `entry.draft-discard`  {#entry-draft-discard}
+
+This event is triggered when the draft version of an entry is discarded, which restores the draft from the published version.
+
+**Example payload**
+
+```json
+{
+  "event": "entry.draft-discard",
+  "createdAt": "2020-01-10T09:04:12.443Z",
+  "model": "address",
+  "uid": "api::address.address",
+  "entry": {
+    "id": 1,
+    "geolocation": {},
+    "city": "Paris",
+    "postal_code": null,
+    "category": null,
+    "full_name": "Paris",
+    "createdAt": "2020-01-10T08:47:36.264Z",
+    "updatedAt": "2020-01-10T09:04:12.108Z",
     "publishedAt": null,
     "cover": null,
     "images": []
