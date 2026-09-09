@@ -8,12 +8,20 @@ name: Unflag released PRs
 # deterministic test: the source PR's merge commit is either an ancestor of the
 # newest published v5 tag, or it is not.
 #
-# Runs Wednesdays because that is when Strapi ships (10 of the last 12 releases),
-# and again on Thursday to catch releases that slip by a day.
+# It runs hourly and does the full work only when its inputs have changed. Those
+# inputs are exactly two: the newest published v5 tag, and the set of open PRs
+# carrying the label. Nothing else can change the answer, so a run that
+# recognises the fingerprint of that pair exits after two API calls. A release is
+# therefore picked up within the hour, any day of the week, and the workflow then
+# goes quiet on its own instead of relying on a schedule that has to guess when
+# Strapi ships.
+#
+# When it does unflag something it dispatches `automerge-cron.yml`, rather than
+# leaving the PRs for the next morning's scheduled run.
 
 on:
   schedule:
-    - cron: '0 15 * * 3,4' # 15:00 UTC Wed + Thu, after the usual release window
+    - cron: '0 * * * *' # hourly; the decision marker keeps the idle runs cheap
   workflow_dispatch:
     inputs:
       dry_run:
@@ -21,6 +29,18 @@ on:
         required: false
         type: boolean
         default: false
+      ignore_marker:
+        description: 'Re-evaluate even if this release was already processed'
+        required: false
+        type: boolean
+        default: true
+
+# Hourly runs of a 20-second job cannot realistically overlap, but queueing is
+# the right answer if they ever do: two concurrent passes would race on the same
+# label removals and both dispatch the merge.
+concurrency:
+  group: unflag-released-prs
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -50,22 +70,16 @@ jobs:
           fetch-depth: 1
           filter: blob:none
 
-      - name: Remove the label from released PRs
+      # Everything the decision depends on, resolved in two API calls before any
+      # per-PR work happens.
+      - name: Resolve the decision inputs
+        id: inputs
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
-          DRY_RUN: ${{ inputs.dry_run }}
         run: |
           set -euo pipefail
 
           LABEL="flag: merge pending release"
-          SCRIPT=".github/scripts/is-strapi-pr-released.sh"
-          chmod +x "$SCRIPT"
-
-          # Labels that keep a PR flagged even once its source has shipped.
-          # A PR can be held back for reasons unrelated to the release: an area
-          # being reworked by hand (Media Library revamp), or an explicit veto.
-          # Removing the flag would make those PRs auto-merge candidates.
-          HOLD_LABELS=("temp - future media lib" "flag: don't merge")
 
           # Resolve the reference tag once, so every PR in this run is judged
           # against the same release and the log states which one.
@@ -79,7 +93,6 @@ jobs:
           fi
 
           echo "Latest published v5 release: $TAG"
-          echo ""
 
           gh pr list --repo strapi/documentation \
             --state open --label "$LABEL" --limit 100 \
@@ -88,15 +101,76 @@ jobs:
           COUNT=$(jq 'length' /tmp/flagged.json)
           echo "Open PRs carrying '$LABEL': $COUNT"
 
-          if [ "$COUNT" -eq 0 ]; then
-            echo "Nothing to do."
-            echo "no_changes=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
+          # The tag and the PR numbers are the entire input space of the decision
+          # below: `is-strapi-pr-released.sh` compares a PR against that tag and
+          # nothing else. Hashing the pair gives a key that changes exactly when
+          # a re-run could produce a different answer — a new release, or a PR
+          # flagged or unflagged since the last pass.
+          FINGERPRINT=$( { echo "$TAG"; jq -c '[.[].number] | sort' /tmp/flagged.json; } \
+            | sha256sum | cut -c1-16)
+          echo "Decision fingerprint: $FINGERPRINT"
+
+          {
+            echo "tag=$TAG"
+            echo "count=$COUNT"
+            echo "fingerprint=$FINGERPRINT"
+          } >> "$GITHUB_OUTPUT"
+
+      # A hit means an earlier run already answered this exact question and acted
+      # on it. Nothing is downloaded: only the presence of the key matters.
+      #
+      # The Actions cache holds the marker rather than a committed file (which
+      # would trigger a production deployment every time it changed) or a
+      # repository variable (which PAT_TOKEN_PIWI, scoped to `repo` alone, cannot
+      # write). Entries unused for seven days are evicted, which costs one extra
+      # full run and nothing else.
+      - name: Look for a decision marker
+        id: marker
+        if: steps.inputs.outputs.count != '0' && inputs.ignore_marker != true
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/unflag-marker
+          key: unflag-decision-${{ steps.inputs.outputs.fingerprint }}
+          lookup-only: true
+
+      - name: Report the early exit
+        if: steps.marker.outputs.cache-hit == 'true'
+        env:
+          TAG: ${{ steps.inputs.outputs.tag }}
+          COUNT: ${{ steps.inputs.outputs.count }}
+        run: |
+          echo "This release and this set of $COUNT flagged PR(s) were already processed."
+          echo "Nothing can have changed since. Exiting."
+          {
+            echo "## Unflag released PRs"
+            echo ""
+            echo "Already processed for \`$TAG\` with the same $COUNT flagged PR(s) — no work to do."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Remove the label from released PRs
+        id: unflag
+        if: steps.inputs.outputs.count != '0' && steps.marker.outputs.cache-hit != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          TAG: ${{ steps.inputs.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          LABEL="flag: merge pending release"
+          SCRIPT=".github/scripts/is-strapi-pr-released.sh"
+          chmod +x "$SCRIPT"
+
+          # Labels that keep a PR flagged even once its source has shipped.
+          # A PR can be held back for reasons unrelated to the release: an area
+          # being reworked by hand (Media Library revamp), or an explicit veto.
+          # Removing the flag would make those PRs auto-merge candidates.
+          HOLD_LABELS=("temp - future media lib" "flag: don't merge")
 
           UNFLAGGED=0
           STILL_WAITING=0
           SKIPPED=0
+          ERRORS=0
           HELD=0
           SUMMARY=""      # Markdown, for the GitHub step summary
           SLACK_LIST=""   # <url|text>, for Slack
@@ -163,7 +237,7 @@ jobs:
                     "repos/strapi/documentation/issues/$DOC_PR/labels/$ENCODED" \
                     --silent 2>/tmp/unflag-error; then
                     echo "::warning::#$DOC_PR — could not remove the label: $(cat /tmp/unflag-error | head -1)"
-                    SKIPPED=$((SKIPPED + 1))
+                    ERRORS=$((ERRORS + 1))
                     continue
                   fi
                 fi
@@ -187,7 +261,7 @@ jobs:
                 # An API error must never be read as "not released" — leave the
                 # PR alone and make the failure visible.
                 echo "::warning::#$DOC_PR — could not determine release state of strapi#$SOURCE: $RESULT"
-                SKIPPED=$((SKIPPED + 1))
+                ERRORS=$((ERRORS + 1))
                 ;;
             esac
           done < <(jq -r '.[].number' /tmp/flagged.json)
@@ -195,7 +269,11 @@ jobs:
           set -e
 
           echo ""
-          echo "Unflagged: $UNFLAGGED | still waiting: $STILL_WAITING | held: $HELD | skipped: $SKIPPED"
+          echo "Unflagged: $UNFLAGGED | still waiting: $STILL_WAITING | held: $HELD | skipped: $SKIPPED | errors: $ERRORS"
+
+          # Saved by the marker step below. The content is informational; the
+          # cache key is what carries the meaning.
+          echo "$TAG unflagged=$UNFLAGGED" > /tmp/unflag-marker
 
           {
             echo "## Unflag released PRs"
@@ -207,7 +285,8 @@ jobs:
             echo "| Unflagged | $UNFLAGGED |"
             echo "| Still waiting for a release | $STILL_WAITING |"
             echo "| Held by a label (manual handling) | $HELD |"
-            echo "| Skipped (no source PR or API error) | $SKIPPED |"
+            echo "| Skipped (no source PR in the body) | $SKIPPED |"
+            echo "| Errors (no answer, retried next run) | $ERRORS |"
             if [ "$UNFLAGGED" -gt 0 ]; then
               echo ""
               echo "**Unflagged:**"
@@ -218,12 +297,67 @@ jobs:
 
           {
             echo "unflagged=$UNFLAGGED"
+            echo "errors=$ERRORS"
             echo "tag=$TAG"
             echo "slack_list<<SLACK_EOF"
             printf '%b' "$SLACK_LIST"
             echo "SLACK_EOF"
           } >> "$GITHUB_OUTPUT"
-        id: unflag
+
+      # Written only when every flagged PR got a definite answer. A rate limit or
+      # a failed label removal must not be remembered as "this release is
+      # handled": the next hourly run has to try those PRs again.
+      #
+      # A run that unflags something changes the PR set, so the next run computes
+      # a different fingerprint and does one more full pass. That pass is not
+      # waste: it is what confirms the remaining PRs are still waiting, and it is
+      # the one that ends up marked.
+      - name: Record the decision marker
+        if: steps.unflag.outputs.errors == '0' && inputs.dry_run != true
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/unflag-marker
+          key: unflag-decision-${{ steps.inputs.outputs.fingerprint }}
+
+      # The PRs that just became mergeable were created and quarantined weeks
+      # ago, so waiting for tomorrow's 08:00 UTC run buys no supervision the
+      # quarantine has not already bought. Dispatching here is what turns a
+      # release into a merge within minutes.
+      #
+      # The pause lets `check-labels` re-run on the `unlabeled` events this job
+      # produced (4 to 11 seconds in recent runs, plus queue time). Without it,
+      # automerge-cron reads the stale failing check and reports every PR as
+      # held.
+      #
+      # Ninety seconds also keeps the dispatch inside automerge-eligibility's
+      # 5-minute quiet period, and that is deliberate: a PR that becomes eligible
+      # only because of this unflagging is still unlabelled when the merge run
+      # reads the list, so it keeps its Slack announcement and its full 24 hours
+      # and lands at the next scheduled run. Only PRs the gate or the maintainer
+      # had already cleared go in now.
+      - name: Trigger the auto-merge run
+        id: trigger
+        if: steps.unflag.outputs.unflagged != '' && steps.unflag.outputs.unflagged != '0' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          set -uo pipefail
+
+          echo "Waiting 90s for check-labels to re-run on the unflagged PRs"
+          sleep 90
+
+          # Always the main version of the merge workflow, whatever ref this run
+          # was dispatched from: an unmerged edit to automerge-cron must not be
+          # what merges PRs.
+          if gh workflow run automerge-cron.yml --repo "$GITHUB_REPOSITORY" --ref main; then
+            echo "Dispatched automerge-cron"
+            echo "triggered=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Could not dispatch automerge-cron — the 08:00 UTC run will pick these up"
+            echo "triggered=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          exit 0
 
       - name: Notify Slack
         if: steps.unflag.outputs.unflagged != '' && steps.unflag.outputs.unflagged != '0' && inputs.dry_run != true
@@ -236,6 +370,7 @@ jobs:
           COUNT: ${{ steps.unflag.outputs.unflagged }}
           TAG: ${{ steps.unflag.outputs.tag }}
           SLACK_LIST: ${{ steps.unflag.outputs.slack_list }}
+          TRIGGERED: ${{ steps.trigger.outputs.triggered }}
         run: |
           if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
             echo "Slack not configured, skipping notification"
@@ -245,10 +380,16 @@ jobs:
           DATE=$(date -u '+%Y-%m-%d')
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
+          if [ "$TRIGGERED" = "true" ]; then
+            MERGE_LINE="Auto-merge triggered: the ones already labelled go in now, the others are yours to review."
+          else
+            MERGE_LINE="Auto-merge not triggered — the 08:00 UTC run will pick up whatever is labelled."
+          fi
+
           # Slack links are <url|text>, not Markdown. The list arrives already
           # formatted; only the wrapper is built here.
-          TEXT=$(printf ':noted: *Docs — released, ready to review* (%s)\n*%s PR(s)* no longer waiting on a release (now in `%s`):\n%s\n<%s|View run>' \
-            "$DATE" "$COUNT" "$TAG" "$SLACK_LIST" "$RUN_URL")
+          TEXT=$(printf ':noted: *Docs — released* (%s)\n*%s PR(s)* no longer waiting on a release (now in `%s`):\n%s%s\n<%s|View run>' \
+            "$DATE" "$COUNT" "$TAG" "$SLACK_LIST" "$MERGE_LINE" "$RUN_URL")
 
           curl -s -X POST "https://slack.com/api/chat.postMessage" \
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \

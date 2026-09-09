@@ -25,6 +25,16 @@ permissions:
   contents: write
   pull-requests: write
 
+# Two runs must never merge in parallel. Since unflag-released-prs.yml dispatches
+# this workflow the moment a release lands, a dispatched run can now coincide
+# with the scheduled one: both would call `gh pr merge` on the same PR, the
+# loser would report a merge failure, and the Slack recap would raise an alarm
+# about a PR that went in cleanly. Queue instead of cancelling, so a dispatch
+# arriving mid-run is still honoured.
+concurrency:
+  group: automerge-cron
+  cancel-in-progress: false
+
 env:
   ELIGIBLE_LABEL: 'automerge: eligible'
   # Set by hand when the maintainer has read a PR and vouched for it despite a
