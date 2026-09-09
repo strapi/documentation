@@ -78,6 +78,28 @@
   var announced = Object.create(null);
   var guideStep = 0, guideOn = false, handGuideOn = false;
 
+  /* WHO OWNS THE HAND. A surface with focus owns it: while the hand-control
+     arming dialog waits for its answer, its own two gestures -- a brief
+     pinch confirms, a swipe of the open hand declines -- are the only live
+     ones, and the chart behind it is frozen. The reticle keeps tracking,
+     because the visitor has to SEE that the camera found their hand while
+     they read what the gestures do; what freezes is the world, not the
+     pointer.
+
+     The rule lives here, in one predicate consulted by one wrapper (see
+     onHandControl in wireSky), and not as a check repeated on each
+     listener: its first version was written on exactly one of the world's
+     six hand listeners, hand:click, and the other five kept driving the map
+     behind a dialog nobody had answered yet -- "c'est un gros probleme".
+     Anything else that takes focus later (the reader, on the same agreed
+     principle) becomes one more clause of this function, and every listener
+     inherits it at once. */
+  function handCaptured() { return handGuideOn; }
+  /* Assigned by wireSky, which owns the world-side hand state this clears.
+     Called when a surface TAKES focus, so a hand that was mid-drag when the
+     dialog opened is not left holding the chart for as long as it is up. */
+  var handReleaseWorld = function () {};
+
   var ghost = null;               /* {x,y,label} pencil-ghosted destination */
   var transitAnim = null;         /* {t0, di} a body crossing the beacon's light */
   var transitTimer = 0;
@@ -2570,12 +2592,27 @@
       return pick(wp[0], wp[1], 46 / cam.s);
     }
 
-    window.addEventListener('hand:present', function () { handGrab = false; });
-    window.addEventListener('hand:absent', function () {
+    /* The world's CONTROL listeners go through here, never straight onto
+       window: one place for the focus rule above to hold, so a listener
+       cannot be added later that quietly ignores it. hand:present and
+       hand:absent are not control and stay direct -- they only ever CLEAR
+       state, and a hand that leaves while a dialog is up must still be
+       forgotten. */
+    function onHandControl(name, fn) {
+      window.addEventListener('hand:' + name, function (e) {
+        if (handCaptured()) return;
+        fn(e);
+      });
+    }
+    function releaseHandState() {
       handGrab = false; handSnap = -1; handPosKnown = false; fanLastT = null;
       if (window.__handHud) window.__handHud.setSnapped('');
-    });
-    window.addEventListener('hand:move', function (e) {
+    }
+    handReleaseWorld = releaseHandState;
+
+    window.addEventListener('hand:present', function () { handGrab = false; });
+    window.addEventListener('hand:absent', releaseHandState);
+    onHandControl('move', function (e) {
       var nx = e.detail.x, ny = e.detail.y;
       if (!handPosKnown) {
         // the first position this world has ever observed for this hand:
@@ -2600,10 +2637,10 @@
         dirty = true;
       }
     });
-    window.addEventListener('hand:grab', function () {
+    onHandControl('grab', function () {
       handGrab = true; handLastX = handX; handLastY = handY;
     });
-    window.addEventListener('hand:release', function () { handGrab = false; });
+    onHandControl('release', function () { handGrab = false; });
     window.addEventListener('hand:click', function () {
       // A brief pinch is a click: open whatever is under the reticle right
       // now, exactly the path a mouse click already uses (see wireSky's own
@@ -2615,7 +2652,7 @@
       if (handGuideOn) { confirmHandGuide(); return; }
       if (handSnap >= 0) location.hash = '#' + stars[handSnap].slug;
     });
-    window.addEventListener('hand:fan', function (e) {
+    onHandControl('fan', function (e) {
       // Fingers spread zooms in and keeps zooming while held; fingers
       // together zooms out; the dead zone (FAN_NEUTRAL/FAN_DEADZONE in
       // gestures.js) means a hand merely resting open does nothing. `rate`
@@ -3739,6 +3776,10 @@
     // than queuing behind it, if the quick guide happened to be showing.
     if (guideOn) hideGuide();
     handGuideOn = true;
+    // the dialog now owns the hand (see handCaptured): let go of anything
+    // the chart was holding at that instant, or a hand that happened to be
+    // pinched as the camera armed would keep the map grabbed underneath.
+    handReleaseWorld();
     renderGuideStep();
     $('guide').hidden = false;
   }

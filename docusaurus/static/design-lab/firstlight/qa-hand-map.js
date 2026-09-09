@@ -355,6 +355,62 @@ const path = require('path');
       out.cameraOffAfterSwipe = api.state() === 'off';
     }
 
+    // ── THE DIALOG OWNS THE HAND ─────────────────────────────
+    // The arming dialog is a surface with focus, and a surface with focus
+    // owns the hand: while it waits for its answer, its own two gestures are
+    // the only live ones and the chart behind it is frozen. Its first
+    // version was driving the map while still asking whether the visitor
+    // wanted a hand at all ("c'est un gros probleme"), because the capture
+    // rule was written on exactly one of the world's six hand listeners,
+    // hand:click, and the other five never heard about it. This case tests
+    // the rule where it actually has to hold: on the camera targets.
+    {
+      sessionStorage.removeItem('firstlight.handguide.v1');
+      const { startHands } = await import('./hand/hands.js');
+      const { makeFakeSource } = await import('./hand/source.js');
+      const api = startHands({ source: makeFakeSource() });
+      window.__hands = api;
+      await api.arm();
+      await new Promise(r2 => setTimeout(r2, 60));
+      out.captureGuideShown = !document.getElementById('guide').hidden;
+
+      // the click case above left a body open, and opening one eases the
+      // camera: let that finish before measuring what is meant to be a
+      // camera at rest, or the drift would be read as a broken freeze.
+      location.hash = '';
+      await new Promise(r2 => setTimeout(r2, 1500));
+
+      const before = window.__handProbe.cam();
+      fire('present');
+      fire('move', { x: 600, y: 400 });
+      await settle();
+      fire('grab');
+      fire('move', { x: 980, y: 220 });          // a drag, if anything were listening
+      await settle();
+      for (let i = 0; i < 6; i++) { fire('fan', { rate: 0.35 }); await new Promise(r2 => setTimeout(r2, 40)); }
+      fire('release');
+      await settle();
+      const during = window.__handProbe.cam();
+      out.captureFrozenPan = Math.abs(during.tx - before.tx) < 1e-6 && Math.abs(during.ty - before.ty) < 1e-6;
+      out.captureFrozenZoom = Math.abs(during.ts - before.ts) < 1e-6;
+      out.captureStillOpen = !document.getElementById('guide').hidden;
+
+      // and the capture LIFTS on the answer: the same events, once the
+      // dialog has been confirmed by its own gesture, do reach the chart.
+      fire('click');                              // a brief pinch = CONFIRM
+      await settle();
+      out.captureLiftedOnConfirm = document.getElementById('guide').hidden;
+      fire('move', { x: 600, y: 400 });
+      await settle();
+      fire('grab');
+      fire('move', { x: 980, y: 220 });
+      await settle();
+      const after = window.__handProbe.cam();
+      out.captureThawedPan = Math.abs(after.tx - during.tx) > 1;
+      fire('release'); fire('absent');
+      api.disarm();
+    }
+
     // ── BOTH ANSWERS, BY MOUSE ────────────────────────────────────────
     // Nothing in this project may be reachable only by gesture: the same
     // two answers the swipe and the pinch give must also be one click each,
@@ -424,6 +480,12 @@ const path = require('path');
   if (!r.guideShownOnArm) fails.push('the hand-control guide did not appear when the camera armed');
   if (!r.guideHiddenAfterSwipe) fails.push('a qualifying swipe did not close the hand-control guide');
   if (!r.cameraOffAfterSwipe) fails.push('declining the hand-control guide by swipe did not disarm the camera (the trust bug)');
+  if (!r.captureGuideShown) fails.push('capture test setup problem: the guide did not appear on arm');
+  if (!r.captureFrozenPan) fails.push('the map panned while the arming dialog was still waiting for its answer');
+  if (!r.captureFrozenZoom) fails.push('the map zoomed while the arming dialog was still waiting for its answer');
+  if (!r.captureStillOpen) fails.push('the arming dialog closed on a gesture that is not one of its two answers');
+  if (!r.captureLiftedOnConfirm) fails.push('a brief pinch did not confirm the arming dialog');
+  if (!r.captureThawedPan) fails.push('the hand still could not drag the map after the dialog was answered');
   if (!r.mouseConfirmGuideShown) fails.push('mouse-confirm test setup problem: the guide did not appear on arm');
   if (!r.mouseConfirmGuideHidden) fails.push('clicking CONFIRM (#gd-next) did not close the hand-control guide');
   if (!r.mouseConfirmCameraStillOn) fails.push('clicking CONFIRM disarmed the camera; confirming must leave it on');
@@ -437,6 +499,7 @@ const path = require('path');
   console.log(`  click pipeline: setup snapped ${r.clickSetupSnapped} slug ${JSON.stringify(r.clickSetupSlug)}   hash changed ${r.clickHashChanged}   hash matches ${r.clickHashMatches}   reader opened ${r.clickReaderOpened}`);
   console.log(`  zoom bounds match the world's: high clamp ${r.zoomHighClamp} (want 8)   low clamp ${r.zoomLowClamp} (want 0.06)`);
   console.log(`  dismiss pipeline: guide shown on arm ${r.guideShownOnArm}   guide hidden after swipe ${r.guideHiddenAfterSwipe}   camera off after swipe ${r.cameraOffAfterSwipe}`);
+  console.log(`  the dialog owns the hand: frozen pan ${r.captureFrozenPan}   frozen zoom ${r.captureFrozenZoom}   stayed open ${r.captureStillOpen}   thawed on confirm ${r.captureThawedPan}`);
   console.log(`  both answers by mouse: confirm hides guide ${r.mouseConfirmGuideHidden} camera stays on ${r.mouseConfirmCameraStillOn}   decline hides guide ${r.mouseDeclineGuideHidden} camera off ${r.mouseDeclineCameraOff}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
