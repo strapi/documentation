@@ -183,7 +183,7 @@ Please be advised that Strapi is unable to provide support for third-party email
 :::prerequisites
 
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for another email provider (see [Strapi Market](https://market.strapi.io/providers)).
+- Credentials for another email provider (see [Strapi Community Hub](https://community.strapi.io/marketplace)).
 
 :::
 
@@ -197,7 +197,7 @@ Configuring another email provider for use with Strapi Cloud requires 3 steps:
 
 ### Install the Provider Plugin
 
-Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://community.strapi.io/marketplace).
 
 ### Configure the Provider
 
@@ -235,7 +235,7 @@ module.exports = ({ env }) => ({
 The file structure must match the above path exactly, or the configuration will not be applied to Strapi Cloud.
 :::
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://community.strapi.io/marketplace).
 
 **Example:**
 <Tabs groupId="js-ts">
@@ -541,7 +541,7 @@ module.exports = [
 ```
 
 :::tip
-For a full list of upload providers and their required domains, see the [Strapi Market](https://market.strapi.io/providers).
+For a full list of upload providers and their required domains, see the [Strapi Community Hub](https://community.strapi.io/marketplace).
 :::
 
 ## Custom CORS headers
@@ -629,7 +629,7 @@ Please be advised that Strapi is unable to provide support for third-party uploa
 :::prerequisites
 
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for a third-party upload provider (see [Strapi Market](https://market.strapi.io/providers)).
+- Credentials for a third-party upload provider (see [Strapi Community Hub](https://community.strapi.io/marketplace)).
 
 :::
 
@@ -642,7 +642,7 @@ Configuring a third-party upload provider for use with Strapi Cloud requires the
 
 ### Install the provider plugin
 
-Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://community.strapi.io/marketplace).
 
 ### Configure the provider
 
@@ -680,7 +680,7 @@ upload: {
 The file structure must match the above path exactly, or the configuration will not be applied to Strapi Cloud.
 :::
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://community.strapi.io/marketplace).
 
 **Example:**
 <Tabs groupId="js-ts">
@@ -2820,7 +2820,7 @@ This section is about the admin panel bundle under `/src/admin`. To change serve
 Starting with a direct customization in `/src/admin/app` is the right default for project-specific needs. Consider moving to a plugin-based approach when one or more of these signals appear:
 
 - You are duplicating the same admin customization across several Strapi projects.
-- You want to version and distribute the extension — either internally or through the [Strapi Marketplace](https://market.strapi.io/).
+- You want to version and distribute the extension — either internally or through the [Strapi Marketplace](https://community.strapi.io/marketplace).
 - You need stronger automated testing independent from a single project codebase.
 - Multiple teams need shared ownership and release management for the same extension.
 
@@ -3916,7 +3916,7 @@ This page covers customization of the **WYSIWYG markdown editor** used for `rich
 
 Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in rich text editor. To change the default editor, several options are at your disposal:
 
-- You can install a third-party plugin, such as one for CKEditor, by visiting [Strapi](https://market.strapi.io/).
+- You can install a third-party plugin, such as one for CKEditor, by visiting [Strapi](https://community.strapi.io/marketplace).
 - You can create your own plugin to create and register a fully custom WYSIWYG field (see [custom fields documentation](/cms/features/custom-fields)).
 
 :::tip Next steps
@@ -26169,7 +26169,7 @@ The [Media Library](/cms/features/media-library) feature is powered by a back-en
 
 By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available and add an extension to the core capabilities of the plugin. Use them to upload your files to another location, such as AWS S3 or Cloudinary.
 
-Strapi maintains official providers, discoverable via the [Marketplace](https://market.strapi.io/?types=provider). Community-maintained providers are also available via [npm](https://www.npmjs.com/search?q=strapi%20provider).
+Strapi maintains official providers, discoverable via the [Marketplace](https://community.strapi.io/marketplace). Community-maintained providers are also available via [npm](https://www.npmjs.com/search?q=strapi%20provider).
 
 A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
@@ -26191,7 +26191,7 @@ npm install @strapi/provider-upload-aws-s3 --save
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, create it first.
 
-Each provider will have different configuration settings available. Please review the respective entry for that provider on dedicated pages below for the Strapi-maintained providers, or on the provider's [Marketplace](https://market.strapi.io/?types=provider) page.
+Each provider will have different configuration settings available. Please review the respective entry for that provider on dedicated pages below for the Strapi-maintained providers, or on the provider's [Marketplace](https://community.strapi.io/marketplace) page.
 
 The providers maintained by Strapi are the following. Clicking on a card will redirect you to a docs page with a configuration example:
 
@@ -31999,7 +31999,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows automatically generating a UID based on the content type name.                                                                                                                                                                                                |
 
 :::note
-Filling out a [custom field](/cms/features/content-type-builder#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
+Filling out a [custom field](/cms/features/content-type-builder#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://community.strapi.io/marketplace).
 :::
 
 #### Components
@@ -32679,7 +32679,7 @@ When using dynamic zones, different components cannot have the same field name w
 
 [Custom fields](/cms/features/custom-fields) are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/cms/plugins/installing-plugins-via-marketplace) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
 
-Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
+Each custom field type can have basic and advanced settings. The [Marketplace](https://community.strapi.io/marketplace) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
 ### Deleting content-types
 
@@ -32724,7 +32724,7 @@ Available in both Development & Production environment
 
 ## Configuration
 
-Ready-made custom fields can be found on the [Marketplace](https://market.strapi.io/?categories=Custom+fields). Once installed these, no other configuration is required, and you can start using them (see [usage](#usage)).
+Ready-made custom fields can be found on the [Marketplace](https://community.strapi.io/marketplace). Once installed these, no other configuration is required, and you can start using them (see [usage](#usage)).
 
 You can also develop your own custom field.
 
@@ -33302,7 +33302,7 @@ Once added to Strapi, custom fields can be added to any content type. Custom fie
 
 <!-- TODO: add screenshot of content-type builder with custom fields tab here -->
 
-Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
+Each custom field type can have basic and advanced settings. The [Marketplace](https://community.strapi.io/marketplace) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
 ### In the code
 
@@ -45049,7 +45049,7 @@ Before getting into the upgrade process itself, take the following precautions:
     * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.
 3. **Ensure the plugins you are using are compatible with Strapi 5**.
 
-  To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the [Marketplace](https://market.strapi.io/plugins?version=v5) website.
+  To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the [Marketplace](https://community.strapi.io/marketplace) website.
 
 ## Step 2: Run automated migrations
 
@@ -47171,7 +47171,7 @@ Click on any of the following cards to get more details about a specific topic:
 - [Fetch client](/cms/plugins-development/admin-fetch-client): Make authenticated HTTP requests from the admin panel using useFetchClient and getFetchClient.
 
 :::tip Replacing the WYSIWYG
-The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/features/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
+The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/features/custom-fields), for instance using the [CKEditor custom field plugin](https://community.strapi.io/marketplace/ckeditor-strapi-plugin-ckeditor).
 :::
 
 :::info
@@ -48481,10 +48481,10 @@ Source: https://docs.strapi.io/cms/plugins-development/developing-plugins
 
 Strapi plugins extend core functionality using Admin Panel API, Server API, or MCP server tools. Plugins can be local or published to the Marketplace, and are created using the Plugin SDK.
 
-Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the [Marketplace](https://market.strapi.io). Once created, your plugin can be:
+Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the [Marketplace](https://community.strapi.io/marketplace). Once created, your plugin can be:
 
 - used as a local plugin, working only with a specific Strapi project,
-- or [submitted to the Marketplace](https://market.strapi.io/submit-plugin) to be shared with the community.
+- or [submitted to the Marketplace](https://community.strapi.io/submit/plugin) to be shared with the community.
 
 👉 To start developing a Strapi plugin:
 
@@ -51631,7 +51631,7 @@ Usable via the admin panel.<br/>Configured through both admin panel and server c
 
 **Additional resources**
 
-[Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-documentation)
+[Strapi Marketplace page](https://community.strapi.io/marketplace/strapi-plugin-documentation)
 
 :::caution Unmaintained plugin
 The Documentation plugin is not actively maintained and may not work with Strapi 5.
@@ -51922,7 +51922,7 @@ Usable via the admin panel.<br/>Configured through both admin panel and server c
 
 **Additional resources**
 
-[Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-graphql)
+[Strapi Marketplace page](https://community.strapi.io/marketplace/strapi-plugin-graphql)
 
 ## Installation
 
@@ -52929,12 +52929,12 @@ Source: https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace
 
 # Using the Marketplace
 
-The in-app Marketplace lists plugins and providers with badges, search, and “More” links to detailed Strapi Market pages. This documentation outlines browsing cards and following provider-specific instructions to install new integrations.
+The in-app Marketplace lists plugins and providers with badges, search, and “More” links to detailed Strapi Community Hub pages. This documentation outlines browsing cards and following provider-specific instructions to install new integrations.
 
 Strapi comes with built-in plugins such as [Documentation](/cms/plugins/documentation), [GraphQL](/cms/plugins/graphql), and [Sentry](/cms/plugins/sentry). The Marketplace is where users can find additional plugins to customize Strapi applications, and additional providers to extend plugins. The Marketplace is located in the admin panel, indicated by  _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
 
-:::note strapi In-app Marketplace vs. Market website
-The Marketplace in the admin panel displays all existing plugins, regardless of the version of Strapi they are for. All plugins can also be discoverable through the [Strapi Market](https://market.strapi.io) website.
+:::note strapi In-app Marketplace vs. Community Hub website
+The Marketplace in the admin panel displays all existing plugins, regardless of the version of Strapi they are for. All plugins can also be discoverable through the [Strapi Community Hub](https://community.strapi.io/marketplace) website.
 
 Keep in mind however that v4 and v5 plugins are not cross-compatible, but that providers are compatible both with v4 and v5 plugins.
 :::
@@ -52946,9 +52946,9 @@ The Plugins and Providers tabs display each plugin/provider on individual cards 
   -  to indicate it was verified by Strapi.
 - the number of times the plugin/provider was starred on GitHub and downloaded
 - the description
-- a **More**  button to be redirected to the Market website for additional information, including about the version of Strapi the plugin is for, and implementation instructions
+- a **More**  button to be redirected to the Community Hub website for additional information, including about the version of Strapi the plugin is for, and implementation instructions
 
-In the top right corner of the Marketplace, the **Submit plugin** button redirects to the Strapi Market where it is possible to submit your own plugin and provider.
+In the top right corner of the Marketplace, the **Submit plugin** button redirects to the Strapi Community Hub where it is possible to submit your own plugin and provider.
 
 :::tip Tips
 
@@ -52964,7 +52964,7 @@ To install a new plugin or provider via the Marketplace:
 1. Go to the  *Marketplace*.
 2. Choose the **Plugins** tab to browse available plugins or the **Providers** tab to browse available providers.
 3. Choose an available plugin/provider and click on the **More**  button.
-4. Once redirected to the Strapi Market website, follow the plugin/provider-specific implementation instructions.
+4. Once redirected to the Strapi Community Hub website, follow the plugin/provider-specific implementation instructions.
 
 :::strapi Developing Strapi plugins
 Can't find a plugin that suits your use case? Feel free to [create your own](/cms/plugins-development/developing-plugins)!
@@ -52991,7 +52991,7 @@ Only usable and configurable via server code
 
 **Additional resources**
 
-[Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-sentry) [Sentry page](https://sentry.io/)
+[Strapi Marketplace page](https://community.strapi.io/marketplace/strapi-plugin-sentry) [Sentry page](https://sentry.io/)
 
 By using the Sentry plugin you can:
 
