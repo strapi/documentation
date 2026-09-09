@@ -29,7 +29,51 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.52.3](https://github.com/strapi/strapi/releases/tag/v5.52.3)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.53.0](https://github.com/strapi/strapi/releases/tag/v5.53.0)._
+
+## 7.1.2
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Move the beta Media Library usage documentation to its own page](https://github.com/strapi/documentation/pull/3450)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document the new beta Media Library UI](https://github.com/strapi/documentation/pull/3433)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Replace the webhook payload examples with captured Strapi 5 payloads](https://github.com/strapi/documentation/pull/3455)
+- [Document webhook entry payload content and drop populateRelations](https://github.com/strapi/documentation/pull/3454)
+- [Clarify the entry points of a local plugin set up without the Plugin SDK](https://github.com/strapi/documentation/pull/3451)
+- [Change content history retention period to 14 days](https://github.com/strapi/documentation/pull/3442)
+
+#### Repository
+- [Point Marketplace links to the Strapi Community Hub](https://github.com/strapi/documentation/pull/3457)
+- [Fix the self-healing PR descriptions and avoids em dashes at creation](https://github.com/strapi/documentation/pull/3444)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.1.1
 
