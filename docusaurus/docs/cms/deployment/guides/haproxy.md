@@ -13,6 +13,11 @@ tags:
 - server configuration
 ---
 
+import ProxyServerUrl from '/docs/snippets/proxy-server-url.md'
+import ProxyTrustHeaders from '/docs/snippets/proxy-trust-headers.md'
+import StrapiUploadBodyLimits from '/docs/snippets/strapi-upload-body-limits.md'
+import MultiInstanceCaveats from '/docs/snippets/multi-instance-strapi-caveats.md'
+
 # Proxying Strapi with HAProxy
 
 <Tldr>
@@ -35,40 +40,7 @@ Strapi needs to know the public address it is served from, and it needs to trust
 
 ### Set the public URL
 
-The `url` option in the server configuration defines the public address of your application. Strapi uses it to build absolute URLs for password reset emails, third-party login providers, and media asset paths.
-
-Set it to the address your application's visitors use in their browser:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="/config/server.js"
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: env('PUBLIC_URL', 'https://api.example.com'),
-  app: {
-    keys: env.array('APP_KEYS'),
-  },
-});
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/config/server.ts"
-export default ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: env('PUBLIC_URL', 'https://api.example.com'),
-  app: {
-    keys: env.array('APP_KEYS'),
-  },
-});
-```
-
-</TabItem>
-</Tabs>
+<ProxyServerUrl />
 
 :::caution
 Changing `/config/server.js` requires rebuilding the admin panel. Run `yarn build` or `npm run build` after saving the file.
@@ -76,57 +48,9 @@ Changing `/config/server.js` requires rebuilding the admin panel. Run `yarn buil
 
 ### Trust the proxy headers
 
-HAProxy adds an `X-Forwarded-For` header carrying the original client IP address. Strapi ignores that header until you enable proxy support through the `proxy` options:
+HAProxy adds an `X-Forwarded-For` header carrying the original client IP address. Strapi ignores that header until you turn proxy support on.
 
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="/config/server.js"
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: env('PUBLIC_URL', 'https://api.example.com'),
-  // highlight-start
-  proxy: {
-    koa: true,
-    maxIpsCount: 1,
-  },
-  // highlight-end
-  app: {
-    keys: env.array('APP_KEYS'),
-  },
-});
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/config/server.ts"
-export default ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: env('PUBLIC_URL', 'https://api.example.com'),
-  // highlight-start
-  proxy: {
-    koa: true,
-    maxIpsCount: 1,
-  },
-  // highlight-end
-  app: {
-    keys: env.array('APP_KEYS'),
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
-The 2 options play different roles:
-
-| Option | Effect |
-|--------|--------|
-| `proxy.koa` | When `true`, Strapi trusts the `X-Forwarded-*` headers. Client IP, protocol, and host are read from the proxy instead of the socket. |
-| `proxy.maxIpsCount` | Number of addresses to read from the end of the forwarded header chain. Set it to `1` for a single HAProxy instance, or to the number of proxies when requests pass through several. |
+<ProxyTrustHeaders />
 
 :::danger
 Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. A client can then send `X-Forwarded-For: 203.0.113.9` and, once HAProxy appends the real address, Strapi reads the spoofed value from the front of the chain instead of the real one at the end. Always set `maxIpsCount` to the real number of proxies in front of Strapi.
@@ -138,27 +62,7 @@ Strapi reads the header named by `proxy.ipHeader`, which defaults to `X-Forwarde
 
 HAProxy does not cap request body size by default, so the Strapi limits are the ones that apply. If you upload files through the Media Library, raise them.
 
-On the Strapi side, the `body` middleware parses incoming requests. Uploaded files arrive as multipart data, so `formidable.maxFileSize` is the option that caps them. The `formLimit` and `jsonLimit` options cover ordinary form fields and JSON payloads, not the file itself:
-
-```js title="/config/middlewares.js"
-module.exports = [
-  // ...
-  {
-    name: 'strapi::body',
-    config: {
-      formLimit: '100mb', // form body
-      jsonLimit: '100mb', // JSON body
-      textLimit: '100mb', // text body
-      formidable: {
-        maxFileSize: 100 * 1024 * 1024, // uploaded file size, in bytes
-      },
-    },
-  },
-  // ...
-];
-```
-
-The Media Library provider enforces a separate `sizeLimit`, which defaults to 1 GB (see [local upload provider configuration](/cms/configurations/media-library-providers/local-upload) and [max file size](/cms/features/media-library#max-file-size) to change it).
+<StrapiUploadBodyLimits />
 
 Large uploads also need room in the HAProxy timeouts, which the configuration below sets to 60 seconds. Raise `timeout client` and `timeout server` if uploads take longer than that to complete.
 
@@ -255,17 +159,7 @@ backend strapi_back
 
 Because the instances share one database, a few Strapi behaviors need attention before you scale out.
 
-:::danger
-Strapi runs its schema synchronization on startup, once per process, with no coordination between instances. A restart that leaves the content-types unchanged is safe, because the synchronization detects an unchanged schema and does nothing. A release that changes content-types or adds migrations is not: instances booting at the same time issue concurrent schema changes against the same database.
-
-Start or roll one instance at a time for those releases, and let it finish booting before the next one starts. Spreading instances across separate hosts does not avoid this, because the conflict is between processes sharing a database rather than between machines.
-:::
-
-:::caution
-[CRON jobs](/cms/configurations/cron) are scheduled inside each Strapi process, so a job runs once per instance rather than once overall. If your project enables `cron`, either run the jobs outside Strapi or keep them on a single dedicated instance that does not serve traffic.
-:::
-
-Uploads need shared storage as well. The default local upload provider writes files to the instance's own disk, so a file uploaded through one instance is missing from the others. Use one of the [Media Library providers](/cms/configurations/media-library-providers) backed by object storage when you run more than one instance.
+<MultiInstanceCaveats />
 
 ## Validation
 
