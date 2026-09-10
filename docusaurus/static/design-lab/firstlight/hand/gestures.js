@@ -33,11 +33,24 @@ export const LM = {
    episodes, the second of them 3.1 seconds long, with the world believing it
    was being dragged the whole time.
 
-   0.45 and 0.70, measured on that clip. Deliberate taps close to 0.16 and
-   drags to 0.08, both far under 0.45. Between taps the hand sits at 0.74 and
-   above, clear of 0.70, so every tap releases; the hysteresis band is still
-   0.25 wide, which is what keeps a grab from flickering. */
-export const PINCH_ON = 0.45, PINCH_OFF = 0.70; // thumb to index, over hand size
+   0.30 and 0.70, measured on that clip. His deliberate taps close to 0.16
+   and his drags to 0.08; between taps the hand sits at 0.74 and above, clear
+   of 0.70, so every tap releases, and the hysteresis band stays wide enough
+   that a grab cannot flicker.
+
+   ARMING IS TIGHT, 0.30 AND NOT 0.45, and that number is the answer to a
+   question he asked: is a fist not the rest position? To this camera, in two
+   dimensions, HIS FIST AND HIS PINCH ARE THE SAME PICTURE -- thumb to index
+   reads a median of 0.26 in his fist take against 0.16 in his taps, and the
+   index curls to 0.85 in both. Nothing separates them, so keeping a clenched
+   fist as a rest and accepting the pinch he actually makes cannot both be
+   had. What CAN be had, and is what 0.30 buys, is that a hand which is merely
+   RELAXED is never a pinch: across the 204 frames of his brush take, where
+   the hand is loose and half closed, thumb to index never once goes under
+   0.35. So the rest position is the relaxed hand, or the hand out of frame,
+   and a deliberately clenched fist counts as a pinch. Moving that number back
+   to 0.45 restores the old behaviour if he prefers the fist. */
+export const PINCH_ON = 0.30, PINCH_OFF = 0.70; // thumb to index, over hand size
 
 /* A PINCH KEEPS THE OTHER FINGERS APART, and that is what tells one from a
    flat hand with the fingers closed. Closing the fingers brings the thumb in
@@ -332,30 +345,55 @@ export function makeGestureReader() {
         grabMaxDistance = Math.max(grabMaxDistance, dist(palmCentre(L), grabStartPalm) / handSize(L));
       }
 
-      // Fist is decided first, and on its own independent measure, because
-      // it is the only one of the two that actually discriminates a fist from
-      // a pinch (see the comment on FIST_ON above: thumb-to-index distance
-      // cannot). A pinch is then only armed while the hand is not fisted, so
-      // closing the whole hand into a fist is never also read as a grab, and
-      // closing further while already pinching releases the pinch instead of
-      // stacking a lock on top of it.
+      /* A CLOSED HAND CAN PINCH, and the fist stops being able to veto it.
+         "j'ai tendance a vouloir pincer avec le pouce et l'index en gardant
+         les autres 3 doigts du poing fermes": that is how he pinches, and it
+         was the one shape the recogniser refused. It refused it twice over --
+         the fist detector claimed the hand first and forced a release, and
+         the aperture gate added yesterday asked the other fingers to stay
+         apart -- so his pinch only ever armed if the hand happened to drift
+         open while he held it, which is exactly the "hold for a second or two
+         and release" he had to learn.
+
+         MEASURED, AND THE MEASUREMENT IS WHY THIS IS NOT A SEPARATION. On the
+         reference clip, the frames where thumb and index are closed with the
+         other three curled read an index curl of 0.84 to 0.89 -- the same
+         0.86 to 1.02 a real fist reads on the calibration clip. In two
+         dimensions, at this frame rate, a thumb-index ring held in front of
+         curled fingers and a fist are the same picture. So there is nothing to
+         tell apart, and the choice is which of the two gestures to keep.
+
+         His pinch wins, because the fist never had an action: nothing listens
+         for `lock`, and its detection existed only to stop a closing hand
+         from reading as a grab -- the very thing he wants it to read as. The
+         cost, stated plainly: a hand that closes into a fist in front of an
+         armed camera and opens again without travelling now opens a page. The
+         rest position is the hand out of frame, which the dead man's switch
+         already handles.
+
+         `fisted` still exists, and still suppresses the aperture, so a
+         closing hand cannot also spin the zoom. */
       if (!fisted && fc < FIST_ON) {
         fisted = true;
         evs.push({ type: 'lock', hand: primary.handedness });
-        if (pinched) {
-          pinched = false;
-          evs.push({ type: 'release', hand: primary.handedness });
-          // becoming a fist is the hand changing its mind, not a click
-          grabStartT = null; grabStartPalm = null;
-        }
       } else if (fisted && fc > FIST_OFF) {
         fisted = false;
       }
 
-      if (!fisted) {
-        // the aperture gates arming only, so a pinch that curls up while it
-        // drags keeps holding: see PINCH_FAN_MIN above
-        if (!pinched && pr < PINCH_ON && fanRatio(L) > PINCH_FAN_MIN) {
+      {
+        /* THE ONE SHAPE THAT IS NOT A PINCH: the fingers held straight and
+           joined, which is his zoom-out gesture and brings the thumb in with
+           them. That one IS separable, and on the aperture rather than on the
+           thumb: with the fingers extended (fist curl over FIST_ON) and the
+           tips gathered (aperture under PINCH_FAN_MIN), the hand is a flat
+           closed hand and not a ring. Measured on the calibration clip:
+           fingers joined read a fist curl of 1.29 to 1.54 with an aperture of
+           0.24 to 0.50, while every real pinch of his -- open-handed or
+           curled -- either spreads the aperture past 0.6 or curls the fingers
+           under FIST_ON. It gates ARMING only: a pinch that changes shape
+           while it drags keeps holding. */
+        const together = fc > FIST_ON && fanRatio(L) < PINCH_FAN_MIN;
+        if (!pinched && pr < PINCH_ON && !together) {
           pinched = true;
           grabStartT = t;
           grabStartPalm = palmCentre(L);
@@ -411,11 +449,21 @@ export function makeGestureReader() {
          drags cover 1.00 in 1.9 to 4.0 SECONDS, twenty times slower. The
          displacement rule below already tells those apart by a factor of
          five, so it does the discriminating, and the hand is allowed to be
-         however he holds it. A fist still stops it: a closed hand travelling
-         is a hand being put down. */
-      if (!fisted) {
+         however he holds it.
+         AND A FIST DOES NOT STOP IT EITHER, which it did until his third
+         test: on the calibration clip his brushing hand reads a fist curl
+         down to 0.85, so part of every brush was claimed by the fist detector
+         and the swipe went silent for those frames. He brushes with a relaxed
+         hand and a relaxed hand is a half-closed one. The displacement is the
+         whole of the test now. */
+      /* AND NOT WHILE PINCHING: a pinched hand is dragging, and a drag that
+         wanders up the screen would otherwise scroll a page as well as move
+         the chart. His brushing hand is never pinched now that arming asks
+         for 0.30 (measured: it never goes under 0.35), so this costs the
+         gesture nothing. */
+      if (!pinched) {
         const pc = palmCentre(L);
-        swipeTrail.push({ t, x: pc.x });
+        swipeTrail.push({ t, x: pc.x, y: pc.y });
         /* trimmed to samples strictly INSIDE the window. An earlier version
            kept the one that had just fallen out of it, so that a displacement
            was always measured over the full window, and then asked the span
@@ -429,7 +477,17 @@ export function makeGestureReader() {
         // the flip happens: see the comment on SWIPE_DIST above for why it is
         // not optional
         const hs = handSize(L);
-        const net = -(pc.x - oldest.x) / hs;
+        /* THE SWEEP HAS TWO AXES NOW. Sideways is the brush that dismisses;
+           up and down is what he asked for to read a page: "j'aimerais
+           pouvoir scroller sur la page en deplacant la main vers le haut et
+           le bas de facon repetee". One gesture, one dominant axis: whichever
+           of the two displacements is larger decides which it was, so a brush
+           cannot also scroll and a scroll cannot also dismiss. y is not
+           mirrored, only x is. */
+        const netX = -(pc.x - oldest.x) / hs;
+        const netY = (pc.y - oldest.y) / hs;
+        const horizontal = Math.abs(netX) >= Math.abs(netY);
+        const net = horizontal ? netX : netY;
         const dir = net > 0 ? 1 : -1;
         /* NO REVERSAL INSIDE THE WINDOW. A hand travelling covers its
            distance without changing its mind; a hand waving about, or a
@@ -441,7 +499,9 @@ export function makeGestureReader() {
            fast hand looks like when the camera only sees it three times. */
         let reversed = false;
         for (let i = 1; i < swipeTrail.length; i++) {
-          const step = -(swipeTrail[i].x - swipeTrail[i - 1].x) / hs;
+          const step = horizontal
+            ? -(swipeTrail[i].x - swipeTrail[i - 1].x) / hs
+            : (swipeTrail[i].y - swipeTrail[i - 1].y) / hs;
           if (step * dir < -SWIPE_REARM) { reversed = true; break; }
         }
         // outward for THIS hand: rightward (+1) for a hand labelled Right,
@@ -458,13 +518,21 @@ export function makeGestureReader() {
         if (swipeFired) {
           if (Math.abs(net) < SWIPE_REARM) swipeFired = false;
         } else if (swipePending) {
+          const which = swipePending;
           swipePending = false; swipeFired = true;
-          evs.push({ type: 'dismiss' });
+          /* a sideways brush MEANS nothing here, and neither does a vertical
+             sweep: gestures.js recognises, and whoever is listening decides
+             (today: the arming dialog reads a brush as decline, and the
+             reader reads one as close and a sweep as scroll) */
+          if (which === 'x') evs.push({ type: 'dismiss' });
+          else evs.push({ type: 'sweep', dir: which === 'down' ? 'down' : 'up' });
         } else if (swipeTrail.length >= SWIPE_MIN_SAMPLES
                    && Math.abs(net) >= SWIPE_DIST
                    && !reversed
-                   && outward) {
-          swipePending = true;
+                   && (horizontal ? outward : true)) {
+          // up and down are both meaningful, so the vertical axis has no
+          // outward direction to respect: only the sideways one does
+          swipePending = horizontal ? 'x' : (dir > 0 ? 'down' : 'up');
         }
       } else {
         swipeTrail = []; swipeFired = false; swipePending = false;

@@ -324,6 +324,12 @@ const path = require('path');
     // single-shot input anymore, a rate is integrated over real elapsed
     // time (see firstlight.js's own hand:fan listener), so reaching the
     // clamp needs several events with real delays between them.
+    /* the click case above opened a page, and a page being read OWNS THE
+       HAND (see handCaptured in firstlight.js): with it open the chart
+       answers nothing, which is the point of the reader case below and would
+       make this one measure a frozen camera. Close it first. */
+    location.hash = '';
+    await new Promise(r2 => setTimeout(r2, 400));
     // the pipeline case above ended in destroy(), which fires hand:absent,
     // and the world forgets the hand's position on absent -- zoom refuses to
     // act on a position nobody has observed, so re-establish one first
@@ -459,6 +465,61 @@ const path = require('path');
       api.disarm();
     }
 
+    // ── THE READER OWNS THE HAND ─────────────────────────────────────────
+    // A page being read is a surface with focus, and the second clause of the
+    // rule the arming dialog established: "quand une page de doc est ouverte,
+    // la navigation sur la carte DOIT etre annulee". Behind it the chart stops
+    // answering the hand entirely; in front of it the hand reads, which is a
+    // brush to close and a sweep to scroll.
+    {
+      location.hash = '#' + window.__handProbe.slug(window.__handProbe.qs());
+      await new Promise(r2 => setTimeout(r2, 700));
+      out.readerOpened = !document.getElementById('reader').hidden;
+      const rd = document.getElementById('reader');
+
+      const before = window.__handProbe.cam();
+      fire('present');
+      fire('move', { x: 500, y: 400 });
+      await settle();
+      fire('grab');
+      fire('move', { x: 900, y: 250 });
+      await settle();
+      for (let i = 0; i < 6; i++) fire('zoom', { delta: 0.35, x: 500, y: 400 });
+      fire('release');
+      await settle();
+      const during = window.__handProbe.cam();
+      out.readerFrozePan = Math.abs(during.tx - before.tx) < 1e-6 && Math.abs(during.ty - before.ty) < 1e-6;
+      out.readerFrozeZoom = Math.abs(during.ts - before.ts) < 1e-6;
+
+      // a pinch must not reach through the page to open a body behind it
+      const hashBefore = location.hash;
+      fire('click');
+      await settle();
+      out.readerAtePinch = location.hash === hashBefore;
+
+      // and it scrolls, one chunk per sweep, in both directions
+      rd.scrollTop = 0;
+      fire('sweep', { dir: 'down' });
+      await new Promise(r2 => setTimeout(r2, 700));
+      out.sweptDown = rd.scrollTop;
+      fire('sweep', { dir: 'up' });
+      await new Promise(r2 => setTimeout(r2, 700));
+      out.sweptBackUp = rd.scrollTop < out.sweptDown;
+
+      // a brush closes it, through the same line the close button uses
+      fire('dismiss');
+      await new Promise(r2 => setTimeout(r2, 400));
+      out.brushClosedThePage = document.getElementById('reader').hidden && location.hash === '#/';
+      // and with the page gone the chart answers the hand again
+      fire('move', { x: 500, y: 400 });
+      await settle();
+      fire('grab');
+      fire('move', { x: 900, y: 250 });
+      await settle();
+      out.chartBackAfterClose = Math.abs(window.__handProbe.cam().tx - during.tx) > 1;
+      fire('release'); fire('absent');
+    }
+
     // ── BOTH ANSWERS, BY MOUSE ────────────────────────────────────────
     // Nothing in this project may be reachable only by gesture: the same
     // two answers the swipe and the pinch give must also be one click each,
@@ -535,6 +596,14 @@ const path = require('path');
   if (!r.captureStillOpen) fails.push('the arming dialog closed on a gesture that is not one of its two answers');
   if (!r.captureLiftedOnConfirm) fails.push('a brief pinch did not confirm the arming dialog');
   if (!r.captureThawedPan) fails.push('the hand still could not drag the map after the dialog was answered');
+  if (!r.readerOpened) fails.push('reader test setup problem: the page never opened');
+  if (!r.readerFrozePan) fails.push('the chart panned while a page was open; the reader owns the hand');
+  if (!r.readerFrozeZoom) fails.push('the chart zoomed while a page was open; the reader owns the hand');
+  if (!r.readerAtePinch) fails.push('a pinch reached through the open page and opened a body behind it');
+  if (!(r.sweptDown > 100)) fails.push(`a sweep down scrolled the page by ${r.sweptDown}px, wanted a real chunk`);
+  if (!r.sweptBackUp) fails.push('a sweep up did not scroll the page back');
+  if (!r.brushClosedThePage) fails.push('a brush did not close the open page');
+  if (!r.chartBackAfterClose) fails.push('the chart did not answer the hand again once the page was closed');
   if (!r.mouseConfirmGuideShown) fails.push('mouse-confirm test setup problem: the guide did not appear on arm');
   if (!r.mouseConfirmGuideHidden) fails.push('clicking CONFIRM (#gd-next) did not close the hand-control guide');
   if (!r.mouseConfirmCameraStillOn) fails.push('clicking CONFIRM disarmed the camera; confirming must leave it on');
@@ -549,6 +618,7 @@ const path = require('path');
   console.log(`  click pipeline: setup snapped ${r.clickSetupSnapped} slug ${JSON.stringify(r.clickSetupSlug)}   hash changed ${r.clickHashChanged}   hash matches ${r.clickHashMatches}   reader opened ${r.clickReaderOpened}`);
   console.log(`  zoom bounds match the world's: high clamp ${r.zoomHighClamp} (want 8)   low clamp ${r.zoomLowClamp} (want 0.06)`);
   console.log(`  dismiss pipeline: guide shown on arm ${r.guideShownOnArm}   guide hidden after swipe ${r.guideHiddenAfterSwipe}   camera off after swipe ${r.cameraOffAfterSwipe}`);
+  console.log(`  the reader owns the hand: frozen pan ${r.readerFrozePan} zoom ${r.readerFrozeZoom}   pinch eaten ${r.readerAtePinch}   swept ${r.sweptDown}px then back ${r.sweptBackUp}   brush closed it ${r.brushClosedThePage}   chart back ${r.chartBackAfterClose}`);
   console.log(`  the dialog owns the hand: frozen pan ${r.captureFrozenPan}   frozen zoom ${r.captureFrozenZoom}   stayed open ${r.captureStillOpen}   thawed on confirm ${r.captureThawedPan}`);
   console.log(`  both answers by mouse: confirm hides guide ${r.mouseConfirmGuideHidden} camera stays on ${r.mouseConfirmCameraStillOn}   decline hides guide ${r.mouseDeclineGuideHidden} camera off ${r.mouseDeclineCameraOff}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');

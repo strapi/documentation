@@ -91,10 +91,13 @@
      listener: its first version was written on exactly one of the world's
      six hand listeners, hand:click, and the other five kept driving the map
      behind a dialog nobody had answered yet -- "c'est un gros probleme".
-     Anything else that takes focus later (the reader, on the same agreed
-     principle) becomes one more clause of this function, and every listener
-     inherits it at once. */
-  function handCaptured() { return handGuideOn; }
+     THE READER IS THE SECOND CLAUSE, and it was always meant to be: "quand
+     une page de doc est ouverte, la navigation sur la carte DOIT etre
+     annulee". A page being read is a surface with focus, so the chart behind
+     it stops answering the hand entirely: no pan, no zoom, no snapping to
+     bodies nobody can see. What the hand does instead is read -- a brush
+     closes the page and a sweep up or down scrolls it, both wired below. */
+  function handCaptured() { return handGuideOn || readerOpen(); }
   /* Assigned by wireSky, which owns the world-side hand state this clears.
      Called when a surface TAKES focus, so a hand that was mid-drag when the
      dialog opened is not left holding the chart for as long as it is up. */
@@ -2668,6 +2671,9 @@
       if (handGuideOn) { confirmHandGuide(); return; }
       var button = handControlAt();
       if (button) { button.click(); return; }
+      // the reader owns the hand while it is open, so a pinch does not reach
+      // through it to open a body nobody can see behind it
+      if (readerOpen()) return;
       // A CLICK THAT OPENS NOTHING SAYS SO. Aiming is the half of this
       // gesture the recogniser cannot report on: a pinch can be read
       // perfectly and still land on empty sky, and from the outside that is
@@ -2917,6 +2923,10 @@
     renderPage(page);
     $('reader').hidden = false;
     $('reader').scrollTop = 0;
+    // the reader now owns the hand (see handCaptured): let go of anything the
+    // chart was holding, or a hand that was mid-drag keeps it for as long as
+    // the page is open
+    handReleaseWorld();
     $('photom').hidden = false;
     scrollToAnchor(r.anchor);
     closeResults();
@@ -3850,7 +3860,33 @@
     // thing that gives the event a meaning: decline, and only while this
     // dialog actually has focus.
     window.addEventListener('hand:dismiss', function () {
-      if (handGuideOn) declineHandGuide();
+      if (handGuideOn) { declineHandGuide(); return; }
+      /* AND IT CLOSES THE PAGE, which is what he asked a brush to be worth
+         while reading: "le balayage devrait permettre de fermer la page de
+         documentation ouverte". Through the same one line the close button
+         uses, so there is one way to close a page and not two. */
+      if (readerOpen()) {
+        if (window.__handHud) window.__handHud.say('CLOSING THE PAGE');
+        location.hash = '#/';
+      }
+    });
+    /* A SWEEP UP OR DOWN READS THE PAGE. His own words: "j'aimerais pouvoir
+       scroller sur la page en deplacant la main vers le haut et le bas de
+       facon repetee". One sweep is one chunk, not a continuous grip: a hand
+       held in the air cannot hold a scroll position steady, and repeated
+       sweeps are what he described doing.
+       The chunk is 0.7 of what is on screen, which is what a page-down key
+       gives, so two sweeps advance a screenful and a bit. Smooth-scrolled, so
+       the eye can follow where the text went, unless the visitor has asked
+       for less motion. A sweep DOWN scrolls down, the way a wheel and an
+       arrow key both do; it is one line to invert if his hand disagrees. */
+    window.addEventListener('hand:sweep', function (e) {
+      if (!readerOpen()) return;
+      var rd = $('reader');
+      var chunk = Math.max(120, rd.clientHeight * 0.7);
+      var reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+      rd.scrollBy({ top: e.detail.dir === 'down' ? chunk : -chunk, behavior: reduced ? 'auto' : 'smooth' });
+      if (window.__handHud) window.__handHud.say(e.detail.dir === 'down' ? 'SCROLLING DOWN' : 'SCROLLING UP', 700);
     });
     wirePhotometer();
     /* (f) the four-colour insert under the mission papers */

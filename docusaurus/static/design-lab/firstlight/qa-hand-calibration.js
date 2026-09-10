@@ -125,7 +125,11 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
   const ref = JSON.parse(fs.readFileSync(path.join(FIX, 'hand-reference-landmarks.json'), 'utf8'));
   const r2 = replay(makeGestureReader(), ref);
   if (r2.total.dismiss) fails.push(`${r2.total.dismiss} dismisses fired across ${ref.frames.length} frames of ordinary use`);
-  if (r2.total.click) fails.push(`${r2.total.click} clicks fired across ${ref.frames.length} frames of ordinary use`);
+  /* one click, and it is his hand closing into a fist and opening again: the
+     stated cost of letting a closed hand pinch, since his fist and his pinch
+     are the same picture in two dimensions. More than one means something
+     else has slipped. */
+  if (r2.total.click > 1) fails.push(`${r2.total.click} clicks fired across ${ref.frames.length} frames of ordinary use, wanted at most the one closed hand opening`);
 
   console.log(`  the calibration clip: ${clip.frames.length} frames, ${fps.toFixed(1)} fps, ${clip.steps.length} takes`);
   for (const st of clip.steps) {
