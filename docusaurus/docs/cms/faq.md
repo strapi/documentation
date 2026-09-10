@@ -127,7 +127,7 @@ On Linux based operating systems you need root permissions to bind to any port b
 
 Likewise since Strapi is Node.js based, in order for changes with the SSL certificate to take place (say when it expires) you would need to restart your application for that change to take effect.
 
-Due to these two issues, it is recommended you use a proxy application such as <ExternalLink to="https://forum.strapi.io/t/nginx-proxing-with-strapi/" text="Nginx"/>, <ExternalLink to="https://forum.strapi.io/t/caddy-proxying-with-strapi/40616" text="Caddy"/>, <ExternalLink to="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" text="HAProxy"/>, Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/cms/configurations/server) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
+Due to these two issues, it is recommended you use a proxy application such as [Nginx](/cms/deployment/guides/nginx), <ExternalLink to="https://forum.strapi.io/t/caddy-proxying-with-strapi/40616" text="Caddy"/>, <ExternalLink to="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" text="HAProxy"/>, Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server configuration](/cms/configurations/server) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
 ## Can I use TypeScript in a Strapi project?
 

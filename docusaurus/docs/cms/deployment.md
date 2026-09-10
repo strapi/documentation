@@ -282,11 +282,11 @@ The <ExternalLink to="https://strapi.io/integrations" text="integrations page"/>
 
 <br/>
 
-In addition, community-maintained guides for additional providers are available in the <ExternalLink to="https://forum.strapi.io/c/community-guides/28" text="Strapi Forum"/>. This includes the following guides:
+In addition, the following guides cover serving Strapi behind a reverse proxy and running it under a process manager:
 
 <CustomDocCard emoji="🔗" small title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
 <CustomDocCard emoji="🔗" small title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />
-<CustomDocCard emoji="🔗" small title="Proxying with NGinx" link="https://forum.strapi.io/t/nginx-proxing-with-strapi/" />
+<CustomDocCard icon="plugs-connected" small title="Proxying with Nginx" link="/cms/deployment/guides/nginx" />
 <CustomDocCard emoji="🔗" small title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
 
 <br/>
