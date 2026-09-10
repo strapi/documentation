@@ -178,7 +178,7 @@ npm run start:win
 </Tabs>
 
 :::caution
-We highly recommend using <ExternalLink to="https://github.com/Unitech/pm2/" text="pm2"/> to manage your process.
+We highly recommend using a process manager such as [PM2](/cms/deployment/guides/pm2) to manage your process.
 :::
 
 If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
@@ -277,7 +277,7 @@ The following guides cover serving Strapi behind a reverse proxy and running it 
 <CustomDocCard icon="gear-fine" title="Proxying with HAProxy" description="Serve Strapi through an HAProxy load balancer over HTTPS." link="/cms/deployment/guides/haproxy" />
 <CustomDocCard icon="gear-fine" title="Proxying with Nginx" description="Serve Strapi through an Nginx reverse proxy over HTTPS." link="/cms/deployment/guides/nginx" />
 <CustomDocCard icon="gear-fine" title="Proxying with Traefik" description="Serve a containerized Strapi application through Traefik over HTTPS." link="/cms/deployment/guides/traefik" />
-<CustomDocCard icon="arrow-square-out" title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
+<CustomDocCard icon="gear-fine" title="Using the PM2 process manager" description="Keep Strapi running with PM2, and start it again after a reboot." link="/cms/deployment/guides/pm2" />
 </CustomDocCardsWrapper>
 
 <br/>
