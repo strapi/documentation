@@ -1249,6 +1249,16 @@
       "number": 27543,
       "reason": "Router: Internal error handling fix for upload feature edge case. Prevents process crashes from fast-rejecting providers but doesn't change user-facing API or features",
       "added": "2026-09-08"
+    },
+    {
+      "number": 27588,
+      "reason": "Router: Internal admin UI bug fix for mobile responsiveness. No user-facing API or behavior changes that require user-facing documentation. The fix maintains existing functionality without altering documented features.",
+      "added": "2026-09-10"
+    },
+    {
+      "number": 27524,
+      "reason": "Router: Bug fix that restores correct Media Library behavior. The fix prevents a regression where replaced files were incorrectly moved to root. Existing Media Library documentation already describes the correct expected behavior.",
+      "added": "2026-09-10"
     }
   ]
 }
