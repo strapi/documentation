@@ -24302,6 +24302,40 @@ export default ({ env }) => ({
 
 
 
+# Audit Logs
+Source: https://docs.strapi.io/cms/features/audit-logs
+
+## Code-based configuration
+Description: For Strapi Cloud projects, the value stored in the license information applies, unless a smaller value is defined in the configuration file.
+(Source: https://docs.strapi.io/cms/features/audit-logs#code-based-configuration)
+
+Language: JavaScript
+File path: /config/admin.js
+
+```js
+module.exports = ({ env }) => ({
+  // … other configuration properties
+  auditLogs: {
+    retentionDays: 30,
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/admin.ts
+
+```ts
+export default ({ env }) => ({
+  // … other configuration properties
+  auditLogs: {
+    retentionDays: 30,
+  },
+});
+```
+
+
+
 # Content History
 Source: https://docs.strapi.io/cms/features/content-history
 
