@@ -257,6 +257,35 @@ In addition to content management tools, Strapi registers the following built-in
 
 Built-in utility tools are only available in development mode (when `autoReload` is enabled) and do not require specific admin permissions.
 
+#### Media Library tools
+
+<VersionBadge version="5.53.1"/>
+
+Strapi registers 3 read tools for the Media Library. All 3 require the `plugin::upload.read` permission on the Admin token. If the token does not grant that permission, the tools do not appear in `tools/list` and calling them returns a permission error.
+
+| Tool | Description |
+|------|-------------|
+| `media_list_assets` | Lists Media Library assets with pagination and optional filters. |
+| `media_get_asset` | Returns a single asset by its numeric `id`. |
+| `media_list_folders` | Returns the complete folder tree as a nested structure. |
+
+Tool responses include a fixed allowlist of fields: `id`, `name`, `alternativeText`, `caption`, `url`, `mime`, `size`, `width`, `height`, `ext`, `folder`, and timestamps. Fields that could expose storage provider credentials or internal paths (`provider`, `provider_metadata`, `hash`, `formats`, `folderPath`) are never returned, even if the content type is extended later.
+
+The `media_list_assets` tool accepts the following optional parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `page` | Number | Page number, 1-indexed (default: 1). |
+| `pageSize` | Number | Number of assets per page (default: 25, max: 100). |
+| `folderId` | Number or null | Numeric folder ID to list assets from a specific folder, or `null` for root-level assets only. Omit to list all assets regardless of folder. |
+| `mime` | String | MIME type prefix filter (e.g., `"image"` matches all image MIME types). |
+| `name` | String | Partial asset name filter (case-insensitive substring match). |
+| `sort` | String | Sort expression in `field:direction` format (e.g., `"name:asc"` or `"createdAt:desc"`). |
+
+The `media_get_asset` tool requires 1 parameter: `id`, the numeric asset ID. Document ID strings are not accepted.
+
+The `media_list_folders` tool accepts no parameters and returns the full folder hierarchy.
+
 ### Content management through prompts
 
 Once connected, you can interact with your Strapi content using natural language:
