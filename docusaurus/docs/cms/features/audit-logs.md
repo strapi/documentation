@@ -39,6 +39,51 @@ The Audit Logs feature provides a searchable and filterable display of all activ
   }}
 />
 
+## Configuration
+
+The only configurable aspect is how long logs are kept before they are deleted.
+
+Audit Logs are not a permanent archive. Logs older than the retention period are deleted automatically. The retention period defaults to 90 days.
+
+:::caution
+Logs deleted at the end of the retention period cannot be recovered from the Audit Logs interface.
+:::
+
+### Code-based configuration
+
+The retention period is set with the [`auditLogs.retentionDays`](/cms/configurations/admin-panel#audit-logs) parameter of the `/config/admin` file.
+
+For Strapi Cloud projects, the value stored in the license information applies, unless a _smaller_ value is defined in the configuration file.
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // … other configuration properties
+  auditLogs: {
+    retentionDays: 30,
+  },
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/admin.ts"
+export default ({ env }) => ({
+  // … other configuration properties
+  auditLogs: {
+    retentionDays: 30,
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+There is no equivalent setting in the admin panel: the retention period can only be configured from the `/config/admin` file.
+
 ## Usage
 
 **Path to use the feature:** <Icon name="gear-six" /> Settings > Administration Panel - Audit Logs

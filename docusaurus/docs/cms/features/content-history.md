@@ -12,7 +12,7 @@ tags:
 <GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 
 <Tldr>
-Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for a default of 14 days.
+Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for 14 days on the Growth plan and 30 days on the Enterprise plan.
 </Tldr>
 
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
@@ -38,7 +38,21 @@ To trace the actions performed by users of the admin panel, use [Audit Logs](/cm
 
 The only configurable aspect is how long versions are kept before they are deleted.
 
-Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and deletes every version older than the retention period. Regardless of the plan, versions are kept for a maximum of 90 days, counted from the creation date of each version.
+Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and deletes every version older than the retention period, counted from the creation date of each version.
+
+The retention period is defined by the license of your plan:
+
+| Plan | Default retention period | Maximum retention period |
+|------|--------------------------|--------------------------|
+| CMS Growth | 14 days | 14 days |
+| CMS Enterprise | 30 days | 90 days |
+
+The retention period cannot be extended on the Growth plan.
+Contact the <ExternalLink to="https://strapi.io/contact-sales" text="Strapi sales team"/> to upgrade to the Enterprise plan, which offers 30 days by default and can be extended up to 90 days.
+
+:::note
+Growth projects that were already using a 30-day retention period when the 14-day default was introduced keep it.
+:::
 
 :::caution
 Versions deleted by the retention job cannot be recovered from the Content History interface.
