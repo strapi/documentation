@@ -24,7 +24,23 @@ const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const ZOOM_SMOOTH = 3;      // frames averaged, which is what kills the landmark wobble
 const ZOOM_TREND = 2;       // frames of one sign: noise alternates, a hand opening does not
 const ZOOM_DEAD = 0.015;    // of aperture, per frame, after smoothing
-const ZOOM_STILL = 0.05;    // palm travel and hand-size change allowed while zooming
+/* HOW FAR THE FINGERS MUST TRAVEL BEFORE ANY OF IT COUNTS. An episode holds
+   the scale to a function of the aperture, which is what stopped the
+   direction inverting, but it also meant the idle drift of a hand waiting
+   between taps was faithfully turned into zoom: replaying his own tap take
+   through the world moved the scale 20 times and left it half a turn out.
+   Measured as the span between the first and ninth decile of a take: the
+   fingers drift 0.03 while he taps and 0.35 while he deliberately spreads, so
+   0.08 sits between them with room. Once an episode has crossed it, the whole
+   function applies, back through the base included: what arms the gesture is
+   not what limits it. */
+const ZOOM_ARM = 0.08;
+/* 0.03 and not 0.05: swept across both calibration clips, the tighter value
+   keeps the zoom gestures nearly intact (43 and 35 readable steps while
+   spreading, 30 and 26 while closing) and cuts what a travelling hand leaks
+   by a third to a half -- brushing from 44 steps to 25, and the up-and-down
+   scroll from 34 to 16. A hand that is going somewhere is not zooming. */
+const ZOOM_STILL = 0.03;    // palm travel and hand-size change allowed while zooming
 
 export function startHands(opts) {
   const source = (opts && opts.source) || makeCameraSource();
@@ -44,7 +60,7 @@ export function startHands(opts) {
   /* the zoom gate's own state: the smoothed aperture, the run of signs, and
      the previous pose, which is what stillness is measured against */
   let apHist = [], apPrev = null, apSigns = [], lastPose = null;
-  let zoomBase = null, zoomStart = true;
+  let zoomBase = null, zoomStart = true, zoomArmed = false;
   let lastScreen = null;
 
   /* THE LATCH. Closing the hand is itself a motion, so even palmCentre --
@@ -105,30 +121,37 @@ export function startHands(opts) {
         fire('pose', { ...detail, fps: reader.state().fps });
         const overPanel = lastScreen && document.elementFromPoint(lastScreen.x, lastScreen.y)?.closest('#hand-panel');
         if (detail.aperture === null || !lastScreen || overPanel) {
-          apHist = []; apPrev = null; apSigns = []; zoomAnchor = null; lastPose = null;
-          zoomBase = null; zoomStart = true;
+          /* a pinch, a fist, or the hand over the panel: the episode is over,
+             and the scale stays exactly where the hand left it */
+          apHist = []; apPrev = null; zoomAnchor = null; lastPose = null;
+          zoomBase = null; zoomStart = true; zoomArmed = false;
           continue;
         }
-        /* ZOOM READS THE FINGERS, NOT THE ARM. Moving the hand through space,
-           toward the camera or across it, was zooming: "deplacer ma main dans
-           l'espace, en avant ou en arriere, zoom / dezoom aussi". The
-           aperture is a ratio to hand size, so it survives distance in
-           principle, but the landmarks wobble while the hand travels and the
-           ratio moves with them: measured on the calibration clip, the frame
-           to frame aperture change exceeded the old 0.025 dead zone on 125 of
-           the 203 frames of the brush take and 50 of the 185 of the drag,
-           against 0 of 92 for a hand held still. Integrating that noise is
-           what moved the scale.
-           Three gates, and all three numbers come off that clip. The aperture
-           is SMOOTHED over three frames, which is what kills the wobble. The
-           change has to keep ONE SIGN for two frames running, because noise
-           alternates and a hand opening does not. And the hand has to be
-           STILL in space: palm and hand size steady to within 0.05, so
-           travelling and zooming cannot be confused.
-           What that does to the clip, as a net scale change per take: a hand
-           held still 1.00, spread 1.22, closed 0.56, tapping 1.00, dragging
-           1.05, brushing 1.13. Before the gates, tapping came out at 0.59 and
-           taking the hand out of frame at 3.68. */
+        /* ZOOM IS HOW OPEN THE HAND IS, FOR AS LONG AS IT STAYS OPEN.
+           An EPISODE begins the first time an open hand moves its fingers and
+           lasts until it pinches, fists or leaves: within it the scale is
+           zoomFrom * exp(aperture - base), a function and not a total.
+
+           Three shapes have been tried and this is the first that behaves.
+           Per-frame deltas summed by the world ratcheted on noise. Anchoring
+           per BURST -- re-anchoring whenever the hand moved too much to be
+           read -- was worse in a way that only showed on his own clips: a hand
+           opens fast and relaxes slowly, so the slow direction always has more
+           readable frames, and every re-anchor threw away the outbound trip so
+           it never cancelled the return. Simulated over his spread take, that
+           drifted the scale to 0.89 while he was OPENING his hand, and over
+           his closing take to 1.83. The direction he complained about was not
+           noise, it was arithmetic.
+
+           Held as one function over an episode, spreading and relaxing back
+           return to the same scale because they return to the same aperture,
+           and what he keeps is what he holds. To keep a zoom he ENDS the
+           episode: pinch, make a fist, or lower the hand, and the next episode
+           anchors where this one left the scale.
+
+           Stillness now decides whether the scale is UPDATED, not whether the
+           episode lives: a hand travelling holds its zoom instead of
+           re-anchoring it. */
         const still = lastPose !== null && lastPose.size > 0
           && Math.hypot(detail.palm.x - lastPose.palm.x, detail.palm.y - lastPose.palm.y) / detail.size < ZOOM_STILL
           && Math.abs(detail.size - lastPose.size) / lastPose.size < ZOOM_STILL;
@@ -137,37 +160,18 @@ export function startHands(opts) {
         if (apHist.length > ZOOM_SMOOTH) apHist.shift();
         if (apHist.length === ZOOM_SMOOTH) {
           const smooth = apHist.reduce((a, b) => a + b, 0) / apHist.length;
-          if (apPrev !== null) {
-            const delta = smooth - apPrev;
-            apSigns.push(Math.sign(delta));
-            if (apSigns.length > ZOOM_TREND) apSigns.shift();
-            const oneWay = apSigns.length === ZOOM_TREND && apSigns[0] !== 0
-              && apSigns.every((x) => x === apSigns[0]);
-            /* A ZOOM GESTURE HAS A BEGINNING, and the aperture is reported
-               against it. Sending a per-frame DELTA and letting the world
-               integrate it was the wrong shape: the aperture is noisy, so a
-               couple of noise frames of one sign passed the trend gate and
-               ratcheted the scale the wrong way, and nothing ever took it
-               back. "le zoom, qui parfois dezoom au lieu de zoomer ou
-               l'inverse" is exactly what an integrator does with noise.
-               Now the first qualifying frame opens a gesture and every frame
-               after it reports the aperture and the base it started from, so
-               the world can hold cam.ts to a pure function of how far the
-               hand has opened SINCE the gesture began. A noisy frame moves
-               the scale a hair and the next frame takes it back; nothing
-               accumulates, and the direction cannot invert. */
-            if (still && oneWay && Math.abs(delta) > ZOOM_DEAD) {
-              if (!zoomAnchor) {
-                zoomAnchor = { ...lastScreen };
-                zoomBase = apPrev;         /* where the hand was one frame before it began */
-              }
-              fire('zoom', { aperture: smooth, base: zoomBase, start: zoomStart, ...zoomAnchor });
-              zoomStart = false;
-            } else if (!still) {
-              zoomAnchor = null; zoomStart = true;
-            }
+          if (zoomBase === null) {
+            /* the episode's own zero: the aperture the hand held when it
+               started, so nothing moves until the fingers do */
+            zoomBase = smooth; zoomAnchor = { ...lastScreen }; zoomStart = true;
+          } else if (still
+                     && (zoomArmed || Math.abs(smooth - zoomBase) > ZOOM_ARM)
+                     && Math.abs(smooth - (apPrev === null ? zoomBase : apPrev)) > ZOOM_DEAD) {
+            zoomArmed = true;
+            fire('zoom', { aperture: smooth, base: zoomBase, start: zoomStart, ...zoomAnchor });
+            zoomStart = false;
+            apPrev = smooth;
           }
-          apPrev = smooth;
         }
         continue;
       }

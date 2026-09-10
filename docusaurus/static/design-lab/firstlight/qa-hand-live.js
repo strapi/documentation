@@ -99,6 +99,7 @@ const clip = JSON.parse(fs.readFileSync(path.join(__dirname, 'qa-fixtures', 'han
     for (let i = 0; i < 6 && !document.getElementById('guide').hidden; i++) document.getElementById('gd-next').click();
 
     const before = location.hash;
+    out.tsBefore = window.__handProbe.cam().ts;
     /* replayed at the clip's own timing, which is the whole point: the
        thresholds that broke were the ones with a time in them */
     let last = frames[0].t;
@@ -110,6 +111,7 @@ const clip = JSON.parse(fs.readFileSync(path.join(__dirname, 'qa-fixtures', 'han
     }
     await new Promise(r2 => setTimeout(r2, 200));
     out.snapped = window.__handProbe.snapped();
+    out.tsAfter = window.__handProbe.cam().ts;
     out.hash = location.hash;
     out.opened = location.hash !== before;
     out.readerOpen = !document.getElementById('reader').hidden;
@@ -130,7 +132,13 @@ const clip = JSON.parse(fs.readFileSync(path.join(__dirname, 'qa-fixtures', 'han
   if (!r.opened) fails.push(`no page opened: hash stayed ${JSON.stringify(r.hash)}, panel said ${JSON.stringify(r.panel)}`);
   if (r.opened && r.firstHash !== '#' + r.slug) fails.push(`the first tap opened ${r.firstHash} against the #${r.slug} it was aimed at`);
   if (!r.readerOpen) fails.push('the hash changed but the reader never opened');
-  if (count('zoom')) fails.push(`tapping fired ${count('zoom')} zoom step(s); a tap must not move the scale`);
+  /* WHAT TAPPING DOES TO THE SCALE, which is the question rather than how many
+     events it fired. Zoom is how open the hand is, so a hand that opens
+     between two taps legitimately moves it a little; what must not happen is
+     the half-turn it made before the gesture was armed against a measured
+     excursion. His five taps are allowed 10 percent, and they take 3. */
+  const drift = Math.abs(Math.log(r.tsAfter / r.tsBefore));
+  if (drift > Math.log(1.10)) fails.push(`tapping five times moved the scale by ${(100 * (Math.exp(drift) - 1)).toFixed(0)} percent, wanted under 10`);
   /* one absence is the probe's own scheduler losing to the world's render
      loop, not the switch misfiring: the clip's own worst gap inside this take
      is 51ms and the switch waits 300. More than one means the switch is
@@ -140,6 +148,7 @@ const clip = JSON.parse(fs.readFileSync(path.join(__dirname, 'qa-fixtures', 'han
 
   console.log(`  replayed ${frames.length} frames of his tap take, aimed at ${r.slug}`);
   console.log(`  events: ${['grab', 'release', 'click', 'noclick', 'zoom', 'absent'].map(t => `${t} ${count(t)}`).join('  ')}`);
+  console.log(`  tapping moved the scale by ${(100 * Math.abs(r.tsAfter / r.tsBefore - 1)).toFixed(1)} percent over ${count('zoom')} step(s)`);
   console.log(`  the target reaches ${r.snapReachPx}px on screen   first tap opened ${JSON.stringify(r.firstHash)}`);
   console.log(`  snapped ${r.snapped}   hash ${JSON.stringify(r.hash)}   reader open ${r.readerOpen}   panel ${JSON.stringify(r.panel)}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');

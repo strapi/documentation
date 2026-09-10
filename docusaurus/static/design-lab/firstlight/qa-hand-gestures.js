@@ -36,7 +36,7 @@ const path = require('path');
 
   const r = await page.evaluate(async () => {
     const {
-      makeGestureReader, PINCH_ON, FAN_NEUTRAL, FAN_DEADZONE,
+      makeGestureReader, PINCH_ON_F, PINCH_REF_START, FAN_NEUTRAL, FAN_DEADZONE,
       CLICK_MIN_MS, CLICK_MAX_DIST, SWIPE_DIST, SWIPE_WINDOW, SWIPE_MIN_SAMPLES,
     } = await import('./hand/gestures.js');
 
@@ -80,7 +80,10 @@ const path = require('path');
       let t = 0, flips = 0, last = null;
       g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);           // open first
       for (let i = 0; i < 60; i++) {
-        const pinch = PINCH_ON + (i % 2 ? 0.02 : -0.02);             // straddling PINCH_ON
+        // the arming threshold is a FRACTION of what this hand's open reads,
+        // so the value to straddle is computed rather than imported: the
+        // reference starts at PINCH_REF_START for a hand nobody has seen yet
+        const pinch = PINCH_ON_F * PINCH_REF_START + (i % 2 ? 0.02 : -0.02);
         g.read(f(hand(0.20, pinch, 1, 0.5, 0.5)), t += 0.033);
         const now = g.state().pinched;
         if (last !== null && now !== last) flips++;

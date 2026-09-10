@@ -50,7 +50,40 @@ export const LM = {
    0.35. So the rest position is the relaxed hand, or the hand out of frame,
    and a deliberately clenched fist counts as a pinch. Moving that number back
    to 0.45 restores the old behaviour if he prefers the fist. */
-export const PINCH_ON = 0.30, PINCH_OFF = 0.70; // thumb to index, over hand size
+/* THE THRESHOLDS ARE FRACTIONS OF HIS OWN OPEN HAND, MEASURED LIVE, and that
+   is the answer to three days of "it works in the clip and not in the room".
+
+   Two clips of the same hand, recorded a day apart, do not agree. On
+   2026-09-10 he sat closer -- his hand spans 0.23 of the frame against 0.18
+   -- and EVERY ratio in this file slid by about a fifth:
+     his resting open hand, thumb to index:  1.12 on the 09-09 clip, 0.93 on the 09-10
+     between two taps, ninth decile:         1.00 ...................  0.62
+     his index's own reach, resting:         1.05 ...................  0.81
+   A fixed release threshold of 0.70 sat comfortably inside yesterday's gap and
+   ABOVE almost everything today's hand does, so the pinch armed and never let
+   go: 192 of the 209 frames of today's tap take read as still pinched. The
+   ratio to hand size survives distance in theory and does not survive posture
+   in practice, because the wrist-to-knuckle span it divides by lies in the
+   palm's own plane while the finger spans do not: tilt the hand and they
+   foreshorten at different rates.
+
+   The FRACTIONS, though, agree across both days:
+     thumb-index at the tightest tap, over the resting hand:  0.14 and 0.26
+     thumb-index between taps, over the resting hand:         0.66 and 0.67
+     index reach in a fist, over the resting reach:           0.40 and 0.44
+     index reach in his natural pinch, over resting:          ---- and 0.67
+   So the thresholds are fractions of a reference this file keeps for itself,
+   the high-water mark of what it has recently seen the hand do, and they
+   follow him when he moves closer, leans back or turns his hand. */
+export const PINCH_ON_F = 0.35;      // of the open hand's thumb-to-index
+export const PINCH_OFF_F = 0.60;     // of it, for the release
+/* the references decay towards what the hand is doing NOW over about six
+   seconds at 23 fps, which is slow enough that a long pinch cannot drag them
+   down with it and quick enough to follow him sitting back. The starting
+   values are the medians of the two clips' resting takes, so the very first
+   gesture of a visit is judged against a real hand rather than a zero. */
+const REF_DECAY = 0.995;
+export const PINCH_REF_START = 1.0, REACH_REF_START = 0.9;
 
 /* A PINCH KEEPS THE OTHER FINGERS APART, and that is what tells one from a
    flat hand with the fingers closed. Closing the fingers brings the thumb in
@@ -73,13 +106,23 @@ export const PINCH_FAN_MIN = 0.62;
    ("non je ne veux pas ca", about a fist that opens counting as a click). Both
    are possible, but only through the index's own reach: a ring keeps the index
    out, a fist rolls it in.
-   PINCH_INDEX_REACH sits at 0.58, between a fist's 0.54 and his tightest tap's
-   0.61. It is consulted ONLY when the hand reads as a fist: an open hand that
-   pinches is not asked to prove anything. PINCH_RING_FRAMES = 2 kills the
-   three transition frames of a fist on its way open that do clear 0.58: a
-   held ring passes it in 86ms at his frame rate, a hand passing through does
-   not hold anything. */
-export const PINCH_INDEX_REACH = 0.58, PINCH_RING_FRAMES = 2;
+   PINCH_INDEX_REACH sits at 0.46, and unlike the first attempt at it that
+   number comes from a recording of the gesture itself. The 2026-09-10 clip
+   holds a take of him pinching the way he actually does, and it settles the
+   question the 09-09 clip could not:
+     his natural pinch, thumb-index under 0.30: index reach 0.49 to 0.58
+     his clenched fist, same condition:         index reach 0.20 to 0.43
+   Nothing lands between 0.43 and 0.49, so 0.46 splits them with margin on
+   both sides: 18 of his 18 natural-pinch frames arm, 0 of his 62 fist frames
+   do. The first guess at this, 0.58, was set from his OPEN-handed taps and
+   let exactly one of those 18 frames through, which is why his own pinch
+   still did not work after it shipped.
+   It is consulted ONLY when the hand reads as a fist: an open hand that
+   pinches is not asked to prove anything. PINCH_RING_FRAMES = 2 covers a fist
+   on its way open passing through the band: a held ring clears it in 86ms at
+   his frame rate, and a hand passing through holds nothing. */
+export const PINCH_INDEX_REACH_F = 0.55;   // of the open hand's own index reach
+export const PINCH_RING_FRAMES = 2;
 
 /* FIST cannot be told apart from a pinch by thumb-to-index distance: closing
    the whole hand also brings the thumb near the index tip, so in the fixture
@@ -127,6 +170,27 @@ const LOST_MS_MIN = 300, LOST_FRAMES = 3;
    plenty of room (fist's own max is 0.904, well under the dead zone floor
    below). */
 function fanRatio(L) { return dist(L[LM.INDEX_TIP], L[LM.PINKY_TIP]) / handSize(L); }
+
+/* WHAT ZOOM READS: the middle tip to the pinky tip, and NOT the index, for
+   the same reason fistCurl excludes it -- the index is the finger a pinch
+   moves, so a measure that includes it cannot tell a hand opening from a hand
+   about to tap. It could not, and the tap take of his own clip zoomed the
+   chart two steps on its way to a click.
+   Measured, as the span between the first and ninth decile of a take, which
+   is how much of the zoom range that take would sweep:
+                    index-to-pinky   middle-to-pinky
+     his taps            0.16             0.03
+     his natural pinch   0.17             0.03
+     his drag            0.26             0.14
+     spreading           0.40             0.35
+     closing             0.69             0.64
+   Five times steadier under a pinch, and the zoom gesture keeps all of its
+   range. fanRatio stays as it is, because the one job it still has -- telling
+   a flat hand with the fingers JOINED from a pinch, see PINCH_FAN_MIN -- was
+   calibrated on it, and his natural pinch reads LOWER than his joined fingers
+   on the middle-to-pinky measure, which would invert that veto. Two measures,
+   two jobs, each named for its own. */
+function zoomSpan(L) { return dist(L[LM.MIDDLE_TIP], L[LM.PINKY_TIP]) / handSize(L); }
 
 /* FAN_NEUTRAL and FAN_DEADZONE are derived from that same 898-frame OPEN
    distribution, not chosen. Without a dead zone a hand held open and merely
@@ -250,10 +314,14 @@ export const SWIPE_DIST = 0.6, SWIPE_WINDOW = 0.25, SWIPE_MIN_SAMPLES = 3,
    sideways brush closes the page being read; a vertical sweep scrolls it by a
    chunk. One of those cannot be undone by making the same gesture again and
    the other is undone by sweeping back, so they do not deserve the same bar.
-   0.45 of a hand width against 0.6, inside the same window: the owner could
-   not scroll at all at 0.6 ("j'ai ete incapable de faire scroller la page").
-   It is a starting point and not a measurement: no clip contains that
-   movement yet, which is why the recorder now asks for it. */
+   0.45 of a hand width against 0.6, inside the same window, and it is measured
+   now rather than guessed: the 2026-09-10 clip holds a take of him moving his
+   hand up and down to scroll, and his sweeps reach 1.00 to 1.20 of a hand
+   width in about 220ms. Replayed through this rule, that take fires 20 sweeps
+   across his six movements, 9 up and 11 down; at 0.6 it fires 14, at 0.3 it
+   fires 27. 0.45 is the middle of that, and it is well clear of the 0.19 of
+   sideways drift those same windows carry, so a scroll is never read as a
+   brush. */
 export const SWEEP_DIST_V = 0.45;
 
 const HAND_VOTES = 8;                         // about a third of a second at 23 fps
@@ -339,6 +407,10 @@ export function makeGestureReader() {
   // consecutive frames of a held thumb-index ring, which is what a fisted
   // hand has to show before it may arm a pinch
   let ringFrames = 0;
+  /* WHAT THIS HAND'S OPEN LOOKS LIKE, kept as a decaying high-water mark so
+     every threshold below is a fraction of it rather than a number from
+     someone else's afternoon. */
+  let pinchRef = PINCH_REF_START, reachRef = REACH_REF_START;
   /* what the camera is actually delivering, in seconds between frames, most
      recent last. Everything with a time in it is scaled by this. */
   let gaps = [], lastFrameT = null;
@@ -350,7 +422,8 @@ export function makeGestureReader() {
   const lostMs = () => Math.max(LOST_MS_MIN, frameGap() * 1000 * LOST_FRAMES);
 
   return {
-    state: () => ({ present, pinched, fisted, fps: frameGap() > 0 ? 1 / frameGap() : 0 }),
+    state: () => ({ present, pinched, fisted, fps: frameGap() > 0 ? 1 / frameGap() : 0,
+                    pinchRef, reachRef, pinchOn: PINCH_ON_F * pinchRef, pinchOff: PINCH_OFF_F * pinchRef }),
     read(frame, t) {
       const evs = [];
       const hands = (frame && frame.hands) || [];
@@ -383,6 +456,20 @@ export function makeGestureReader() {
       const handed = votedHand(handVotes);
       const pr = pinchRatio(L);
       const fc = fistCurl(L);
+      const ir = indexReach(L);
+      /* ONLY AN OPEN HAND UPDATES THE REFERENCE, because that is what the
+         reference describes. Letting a pinched hand feed it made the
+         thresholds shrink while a long drag was held -- the decay pulled them
+         under the hand's own drift -- so a four-second drag released and
+         re-armed in the middle of itself. A hand that is pinching or fisted is
+         not showing you what its open looks like. */
+      if (!pinched && !fisted) {
+        pinchRef = Math.max(pr, pinchRef * REF_DECAY);
+        reachRef = Math.max(ir, reachRef * REF_DECAY);
+      }
+      const PINCH_ON = PINCH_ON_F * pinchRef;
+      const PINCH_OFF = PINCH_OFF_F * pinchRef;
+      const REACH_MIN = PINCH_INDEX_REACH_F * reachRef;
       if (pinched && grabStartPalm) {
         grabMaxDistance = Math.max(grabMaxDistance, dist(palmCentre(L), grabStartPalm) / handSize(L));
       }
@@ -437,7 +524,7 @@ export function makeGestureReader() {
         const together = fc > FIST_ON && fanRatio(L) < PINCH_FAN_MIN;
         // a held ring: thumb and index closed with the index still reaching,
         // which is the only thing that tells his closed-hand pinch from a fist
-        if (pr < PINCH_ON && indexReach(L) > PINCH_INDEX_REACH) ringFrames++;
+        if (pr < PINCH_ON && ir > REACH_MIN) ringFrames++;
         else ringFrames = 0;
         const mayArm = !fisted || ringFrames >= PINCH_RING_FRAMES;
         if (!pinched && pr < PINCH_ON && !together && mayArm) {
@@ -474,7 +561,7 @@ export function makeGestureReader() {
         // aperture, because whoever turns an aperture into zoom has to know
         // whether the HAND was moving while the fingers were: see the zoom
         // gate in hands.js
-        evs.push({ type: 'pose', posture: 'open', aperture: fanRatio(L),
+        evs.push({ type: 'pose', posture: 'open', aperture: zoomSpan(L),
                    size: handSize(L), palm: palmCentre(L) });
         const dev = fanRatio(L) - FAN_NEUTRAL;
         if (Math.abs(dev) > FAN_DEADZONE) {

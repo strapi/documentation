@@ -17,6 +17,14 @@
    question: the gestures must fire in the clip that contains them, and must
    not fire in the clip of ordinary use that does not.
 
+   TWO CLIPS, AND THAT IS THE POINT. The same hand, recorded a day apart, does
+   not read the same: on 2026-09-10 he sat closer and every ratio in
+   gestures.js slid by about a fifth, which is why a release threshold that
+   looked comfortable on the first clip sat above almost everything the second
+   one does, and his pinch armed and never let go. The thresholds are
+   fractions of his own open hand now, kept live, and the assertion that
+   matters most in this file is that ONE set of them serves BOTH days.
+
    Usage: node qa-hand-calibration.js */
 
 'use strict';
@@ -55,7 +63,7 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
   const { makeGestureReader } = await import('./hand/gestures.js');
   const fails = [];
 
-  /* ---- the calibration clip: the gestures must be recognised ---- */
+  /* ---- the first calibration clip ---- */
   const clip = JSON.parse(fs.readFileSync(path.join(FIX, 'hand-calibration-2026-09-09.json'), 'utf8'));
   if (clip.fast) fails.push('the calibration fixture was recorded in fast mode and calibrates nothing');
   const byId = {};
@@ -126,6 +134,51 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
   if (!ev('gone', 'absent')) fails.push('the hand leaving the frame did not trip the dead man\'s switch');
   if (!ev('gone', 'present')) fails.push('the hand coming back was not announced');
 
+  /* ---- THE SECOND CLIP, a day later and a hand held differently ---- */
+  const clip2 = JSON.parse(fs.readFileSync(path.join(FIX, 'hand-calibration-2026-09-10.json'), 'utf8'));
+  const byId2 = {};
+  for (const st of clip2.steps) byId2[st.id] = st.i;
+  const r3 = replay(makeGestureReader(), clip2);
+  const t2 = (id) => r3.byTake[byId2[id]] || { ev: {}, open: 0, pinch: 0, rest: 0, aperture: [] };
+  const ev2 = (id, type) => t2(id).ev[type] || 0;
+
+  /* THE POSTURE SHIFT, asserted so the two clips are known to differ: if a
+     re-recording ever made them agree, this file would stop testing the thing
+     it exists for. Hand size is the distance to the camera. */
+  const sizeOf = (c) => {
+     const f = c.frames.find((x) => x.hands.length);
+     const p = f.hands[0].p;
+     return Math.hypot(p[0][0] - p[9][0], p[0][1] - p[9][1]);
+  };
+  if (!(sizeOf(clip2) > sizeOf(clip) * 1.1)) {
+    fails.push(`the two clips no longer differ in posture (hand spans ${sizeOf(clip).toFixed(3)} and ${sizeOf(clip2).toFixed(3)}), so this file has stopped testing what it exists for`);
+  }
+
+  /* HIS NATURAL PINCH, the gesture that took three evenings: thumb and index
+     with the other three fingers closed. Five of them, five clicks. */
+  if (ev2('pinchnatural', 'click') !== 5) fails.push(`his five natural pinches produced ${ev2('pinchnatural', 'click')} clicks on the second clip, wanted 5`);
+  /* and the same take must not be read as a fist doing nothing */
+  if (!ev2('pinchnatural', 'grab')) fails.push('his natural pinch armed no grab at all on the second clip');
+
+  /* THE TAP TAKE OF THE SECOND CLIP is the one that broke under fixed
+     thresholds: 192 of its 209 frames read as still pinched, because his hand
+     between taps only opens to 0.62 that day against 1.00 the day before. */
+  if (ev2('tap', 'click') < 5) fails.push(`the second clip's taps produced ${ev2('tap', 'click')} clicks, wanted at least 5`);
+  if (t2('tap').pinch > t2('tap').open) fails.push(`the second clip's tap take reads pinched for ${t2('tap').pinch} frames against ${t2('tap').open} open: the pinch is not releasing`);
+
+  /* THE SCROLL, whose threshold was guessed until this clip existed */
+  if (ev2('scroll', 'sweep') < 8) fails.push(`his six up-and-down movements produced ${ev2('scroll', 'sweep')} sweeps, wanted at least 8`);
+  if (ev2('scroll', 'dismiss')) fails.push(`scrolling fired ${ev2('scroll', 'dismiss')} dismiss(es); a vertical sweep must never close the page`);
+
+  /* and the same floors as the first clip */
+  if (ev2('fist', 'click')) fails.push(`the second clip's fist take fired ${ev2('fist', 'click')} click(s)`);
+  if (ev2('fist', 'grab')) fails.push(`the second clip's fist take armed ${ev2('fist', 'grab')} grab(s); a fist is the rest position`);
+  for (const type of ['grab', 'click', 'dismiss']) {
+    if (ev2('neutral', type)) fails.push(`a hand held still fired ${ev2('neutral', type)} ${type}(s) on the second clip`);
+  }
+  if (ev2('together', 'grab')) fails.push(`closing the fingers armed ${ev2('together', 'grab')} grab(s) on the second clip`);
+  if (ev2('brush', 'dismiss') < 2) fails.push(`his brushes produced ${ev2('brush', 'dismiss')} dismisses on the second clip`);
+
   /* ---- and the reference clip: ordinary use must trigger nothing ---- */
   const ref = JSON.parse(fs.readFileSync(path.join(FIX, 'hand-reference-landmarks.json'), 'utf8'));
   const r2 = replay(makeGestureReader(), ref);
@@ -139,6 +192,11 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
     console.log(`    ${st.id.padEnd(9)} ${list}`);
   }
   console.log(`  aperture, closed to neutral to spread: ${apOf('together').toFixed(2)} / ${apOf('neutral').toFixed(2)} / ${apOf('spread').toFixed(2)}`);
+  console.log(`  the second clip, a day later, hand ${(100 * sizeOf(clip2) / sizeOf(clip) - 100).toFixed(0)}% larger in frame: ${clip2.frames.length} frames, ${clip2.steps.length} takes`);
+  for (const st of clip2.steps) {
+    const b2 = r3.byTake[st.i] || { ev: {} };
+    console.log(`    ${st.id.padEnd(13)} ${Object.entries(b2.ev).map(([k, v]) => `${k} ${v}`).join('  ') || 'nothing'}`);
+  }
   console.log(`  his taps: ${taps.map(t => `${Math.round(t.heldMs)}ms/${t.travel.toFixed(3)}`).join('  ')}`);
   console.log(`  the reference clip, ${ref.frames.length} frames of ordinary use: ${Object.entries(r2.total).map(([k, v]) => `${k} ${v}`).join('  ')}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');

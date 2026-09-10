@@ -42,8 +42,12 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
         landmarks[17] = { x: palmX + size * 0.4, y: 0.45 };
         landmarks[8] = { x: palmX - size * aperture / 2, y: 0.45 - size };
         landmarks[20] = { x: palmX + size * aperture / 2, y: 0.45 - size };
-        landmarks[12] = { x: palmX, y: 0.45 - size };
-        landmarks[16] = { x: palmX + size * 0.2, y: 0.45 - size };
+        /* the middle and ring tips SPREAD with the aperture too. Zoom reads
+           the middle tip to the pinky tip now, and not the index, because the
+           index is the finger a pinch moves: a synthetic hand whose middle
+           finger never moves is a hand this world cannot zoom with. */
+        landmarks[12] = { x: palmX - size * aperture / 6, y: 0.45 - size };
+        landmarks[16] = { x: palmX + size * aperture / 6, y: 0.45 - size };
         landmarks[4] = { x: landmarks[8].x + size * (pinched ? 0.2 : 1.3), y: landmarks[8].y };
         return { hands: [{ landmarks, handedness: 'Right' }] };
       };
