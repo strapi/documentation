@@ -1069,7 +1069,7 @@ If you haven't edited the [configuration file](#available-options), it is alread
 A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/cms/plugins/graphql#code-based-configuration) to limit the maximum number of nested fields that can be queried in a single request. **By default, no depth limit is applied** — set `depthLimit` explicitly (e.g. to `10`) in production. Similarly, set `maxLimit` to cap the number of items a single query can return, as the default (`-1`) allows unlimited results.
 
 :::tip
-To increase GraphQL security even further, 3rd-party tools can be used. See the guide about <ExternalLink to="https://forum.strapi.io/t/use-graphql-armor-with-strapi/" text="using GraphQL Armor with Strapi on the forum"/>.
+To increase GraphQL security even further, 3rd-party tools can be used, such as <ExternalLink to="https://escape.tech/graphql-armor/docs/getting-started" text="GraphQL Armor"/>, a set of security middlewares for GraphQL servers.
 :::
 
 ## Usage
