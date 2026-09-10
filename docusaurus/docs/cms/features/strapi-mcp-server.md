@@ -214,7 +214,7 @@ The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible c
 
 ### Available tools
 
-The MCP server exposes 2 categories of tools: content management tools generated from your schema, and built-in utility tools.
+The MCP server exposes 3 categories of tools: content management tools generated from your schema, built-in utility tools, and Media Library tools.
 
 #### Content management tools
 
@@ -278,9 +278,9 @@ The `media_list_assets` tool accepts the following optional parameters:
 | `page` | Number | Page number, 1-indexed (default: 1). |
 | `pageSize` | Number | Number of assets per page (default: 25, max: 100). |
 | `folderId` | Number or null | Numeric folder ID to list assets from a specific folder, or `null` for root-level assets only. Omit to list all assets regardless of folder. |
-| `mime` | String | MIME type prefix filter (e.g., `"image"` matches all image MIME types). |
+| `mime` | String | MIME type filter. A value without a slash is matched as a prefix (`"image"` matches every `image/*` type), a full type is matched exactly and case-insensitively (`"image/png"`). |
 | `name` | String | Partial asset name filter (case-insensitive substring match). |
-| `sort` | String | Sort expression in `field:direction` format (e.g., `"name:asc"` or `"createdAt:desc"`). |
+| `sort` | String | Sort order (default: `createdAt:DESC`). Only 6 values are accepted: `createdAt:ASC`, `createdAt:DESC`, `name:ASC`, `name:DESC`, `updatedAt:ASC`, and `updatedAt:DESC`. The direction is uppercase and any other value is rejected. |
 
 The `media_get_asset` tool requires 1 parameter: `id`, the numeric asset ID. Document ID strings are not accepted.
 
