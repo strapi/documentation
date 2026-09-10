@@ -260,9 +260,14 @@ The [Audit Logs](/cms/features/audit-logs) feature can be configured with the fo
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `auditLogs.enabled`               | Enable or disable the Audit Logs feature                                                                                                                         | boolean       | `true`                                                                                                                              |
 | `auditLogs.retentionDays`         | How long Audit Logs are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers, see the note under the table._               | integer       | 90                                                                                                                                  |
+| `auditLogs.exportMaxRows`         | Maximum number of entries included in a single CSV export <VersionBadge version="5.53+" noTooltip />                                                           | integer       | `1000000`                                                                                                                           |
 
 :::note Retention days for self-hosted vs. Strapi Cloud users
 For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
+:::
+
+:::tip
+Exporting audit logs requires the `read` and `export` Audit Logs permissions. Grant these under **Settings > Administration Panel > Roles**, in the Audit Logs section. The `GET /admin/audit-logs/export` endpoint returns a 403 if either permission is missing.
 :::
 
 ## Authentication
