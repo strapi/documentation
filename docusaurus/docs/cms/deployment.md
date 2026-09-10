@@ -273,7 +273,7 @@ Before following any of the guides listed below:
 The following guides cover serving Strapi behind a reverse proxy and running it under a process manager:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="arrow-square-out" title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
+<CustomDocCard icon="plugs-connected" title="Proxying with Caddy" link="/cms/deployment/guides/caddy" />
 <CustomDocCard icon="arrow-square-out" title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />
 <CustomDocCard icon="plugs-connected" title="Proxying with Nginx" description="Serve Strapi through an Nginx reverse proxy over HTTPS." link="/cms/deployment/guides/nginx" />
 <CustomDocCard icon="arrow-square-out" title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
