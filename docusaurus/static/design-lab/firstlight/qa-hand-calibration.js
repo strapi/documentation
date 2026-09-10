@@ -118,6 +118,11 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
   /* THE FIST is still detected, and THE HAND LEAVING still trips the dead
      man's switch. */
   if (!ev('fist', 'lock')) fails.push('a fist was not detected');
+  /* AND A FIST DOES NOT CLICK, which is the line he drew: "non je ne veux pas
+     ca". His fist and his pinch are the same picture by thumb-to-index and by
+     index-to-wrist; what separates them is the index's own reach, and a fisted
+     hand must show a held ring before it may arm at all. */
+  if (ev('fist', 'click')) fails.push(`his fist take fired ${ev('fist', 'click')} click(s); a fist is the rest position`);
   if (!ev('gone', 'absent')) fails.push('the hand leaving the frame did not trip the dead man\'s switch');
   if (!ev('gone', 'present')) fails.push('the hand coming back was not announced');
 
@@ -125,11 +130,7 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
   const ref = JSON.parse(fs.readFileSync(path.join(FIX, 'hand-reference-landmarks.json'), 'utf8'));
   const r2 = replay(makeGestureReader(), ref);
   if (r2.total.dismiss) fails.push(`${r2.total.dismiss} dismisses fired across ${ref.frames.length} frames of ordinary use`);
-  /* one click, and it is his hand closing into a fist and opening again: the
-     stated cost of letting a closed hand pinch, since his fist and his pinch
-     are the same picture in two dimensions. More than one means something
-     else has slipped. */
-  if (r2.total.click > 1) fails.push(`${r2.total.click} clicks fired across ${ref.frames.length} frames of ordinary use, wanted at most the one closed hand opening`);
+  if (r2.total.click) fails.push(`${r2.total.click} clicks fired across ${ref.frames.length} frames of ordinary use`);
 
   console.log(`  the calibration clip: ${clip.frames.length} frames, ${fps.toFixed(1)} fps, ${clip.steps.length} takes`);
   for (const st of clip.steps) {

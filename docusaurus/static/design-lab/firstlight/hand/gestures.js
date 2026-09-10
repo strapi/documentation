@@ -67,6 +67,20 @@ export const PINCH_ON = 0.30, PINCH_OFF = 0.70; // thumb to index, over hand siz
    otherwise drop the map halfway. */
 export const PINCH_FAN_MIN = 0.62;
 
+/* A CLOSED HAND CAN PINCH, BUT A FIST STILL RESTS. The owner asked for the
+   first ("j'ai tendance a vouloir pincer avec le pouce et l'index en gardant
+   les autres 3 doigts du poing fermes") and refused the second being given up
+   ("non je ne veux pas ca", about a fist that opens counting as a click). Both
+   are possible, but only through the index's own reach: a ring keeps the index
+   out, a fist rolls it in.
+   PINCH_INDEX_REACH sits at 0.58, between a fist's 0.54 and his tightest tap's
+   0.61. It is consulted ONLY when the hand reads as a fist: an open hand that
+   pinches is not asked to prove anything. PINCH_RING_FRAMES = 2 kills the
+   three transition frames of a fist on its way open that do clear 0.58: a
+   held ring passes it in 86ms at his frame rate, a hand passing through does
+   not hold anything. */
+export const PINCH_INDEX_REACH = 0.58, PINCH_RING_FRAMES = 2;
+
 /* FIST cannot be told apart from a pinch by thumb-to-index distance: closing
    the whole hand also brings the thumb near the index tip, so in the fixture
    EVERY held-fist frame also reads as "pinched" by that measure alone (274 of
@@ -250,6 +264,21 @@ function handSize(L) {
 function pinchRatio(L) {
   return dist(L[LM.THUMB_TIP], L[LM.INDEX_TIP]) / handSize(L);
 }
+/* THE INDEX'S OWN REACH: its tip to its OWN knuckle, over hand size. This is
+   what tells a thumb-index RING held in front of closed fingers from a fist,
+   and it is the measure that was missing while those two looked identical.
+   Index-tip-to-WRIST cannot do it -- 0.85 in both -- because a bent index
+   reaching for the thumb ends up about as far from the wrist as a rolled one.
+   Locally it is a different story: a fist rolls the index tip back onto its
+   own knuckle, a ring keeps it out.
+   Measured. A clenched fist: 0.20 to 0.54 across 69 of its 72 curled frames.
+   His deliberate taps: 0.61 to 0.69, all 15 of them. His drag holds: 0.40 to
+   0.68. The three fist frames that do reach past the threshold are the
+   transition, the hand on its way open, which is why arming while fisted also
+   asks for the ring to be HELD (see PINCH_RING_FRAMES). */
+function indexReach(L) {
+  return dist(L[LM.INDEX_TIP], L[LM.INDEX_MCP]) / handSize(L);
+}
 function fistCurl(L) {
   // deliberately excludes the index: it is the finger a pinch also curls, so
   // including it would make this measure blind to the exact case it exists
@@ -297,6 +326,9 @@ export function makeGestureReader() {
      enough that one stray frame cannot invert the gesture and short enough to
      follow a real change of hand. */
   let handVotes = [];
+  // consecutive frames of a held thumb-index ring, which is what a fisted
+  // hand has to show before it may arm a pinch
+  let ringFrames = 0;
   /* what the camera is actually delivering, in seconds between frames, most
      recent last. Everything with a time in it is scaled by this. */
   let gaps = [], lastFrameT = null;
@@ -320,7 +352,7 @@ export function makeGestureReader() {
           if (fisted) fisted = false;
           if (present) { present = false; evs.push({ type: 'absent' }); }
           grabStartT = null; grabStartPalm = null;
-          swipeTrail = []; swipeFired = false; swipePending = false; handVotes = [];
+          swipeTrail = []; swipeFired = false; swipePending = false; handVotes = []; ringFrames = 0;
         }
         return evs;
       }
@@ -393,7 +425,12 @@ export function makeGestureReader() {
            under FIST_ON. It gates ARMING only: a pinch that changes shape
            while it drags keeps holding. */
         const together = fc > FIST_ON && fanRatio(L) < PINCH_FAN_MIN;
-        if (!pinched && pr < PINCH_ON && !together) {
+        // a held ring: thumb and index closed with the index still reaching,
+        // which is the only thing that tells his closed-hand pinch from a fist
+        if (pr < PINCH_ON && indexReach(L) > PINCH_INDEX_REACH) ringFrames++;
+        else ringFrames = 0;
+        const mayArm = !fisted || ringFrames >= PINCH_RING_FRAMES;
+        if (!pinched && pr < PINCH_ON && !together && mayArm) {
           pinched = true;
           grabStartT = t;
           grabStartPalm = palmCentre(L);

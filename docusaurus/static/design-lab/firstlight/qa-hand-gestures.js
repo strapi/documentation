@@ -150,10 +150,30 @@ const path = require('path');
          would mean the grip had been dropped and retaken in the middle of one
          continuous gesture, which is the flicker the hysteresis exists to
          prevent. */
+      /* AND THE SHAPE HE ACTUALLY MAKES: the other three curled, exactly as
+         above, but the index REACHING for the thumb instead of rolled into
+         the palm. Its tip is put a full 0.7 of hand size from its own
+         knuckle, past PINCH_INDEX_REACH, and the ring is held for two frames
+         because one frame of it is what a fist passing through looks like. */
+      {
+        const ring = (cx, cy) => {
+          const built = fistHand(0.20, 0.2, 0.7, cx, cy);
+          const L = built.landmarks;
+          L[5] = { x: cx - 0.02, y: cy, z: 0 };                 // index knuckle
+          L[8] = { x: cx - 0.02, y: cy - 0.14, z: 0 };          // its tip, out front: reach 0.70
+          L[4] = { x: L[8].x + 0.2 * 0.20, y: L[8].y, z: 0 };   // thumb tip against it
+          return { landmarks: L, handedness: 'Right' };
+        };
+        const g2 = makeGestureReader();
+        let t2 = 0;
+        g2.read(f(fistHand(0.20, 0.9, 1.9, 0.5, 0.5)), t2 += 0.043);   // open first
+        const one = g2.read(f(ring(0.5, 0.5)), t2 += 0.043);
+        const two = g2.read(f(ring(0.5, 0.5)), t2 += 0.043);
+        out.ringPinchGrabbed = types(one).concat(types(two)).indexOf('grab') >= 0;
+      }
+
       const opening = g.read(f(fistHand(0.20, 0.2, 1.9, 0.5, 0.5)), t += 0.033);
-      out.pinchAfterFistKeptHolding = types(opening).indexOf('release') < 0
-        && types(opening).indexOf('grab') < 0
-        && g.state().pinched;
+      out.pinchAfterFist = types(opening).indexOf('grab') >= 0;
     }
 
     // 5. THE FAN. hand()'s curl=1 places index and pinky at fanRatio ~1.118
@@ -525,18 +545,19 @@ const path = require('path');
   if (!r.releasedOnLoss) fails.push('tracking was lost while grabbed and no release was emitted');
   if (r.stillGrabbed) fails.push('still grabbed after tracking was lost');
   if (!r.fistFired) fails.push('closing the whole hand into a fist did not fire a lock');
-  /* A CLOSED HAND CAN PINCH NOW, so closing into a fist with the thumb tucked
-     against the index DOES grab, and that inverts an assertion this file used
-     to make. It is not a regression, it is the owner's own gesture: "j'ai
-     tendance a vouloir pincer avec le pouce et l'index en gardant les autres 3
-     doigts du poing fermes". Measured, and this is why there is nothing to
-     separate: his fist reads thumb-to-index at a median of 0.26 and his
-     deliberate taps at 0.16, with the index curled to 0.85 in both. What the
-     tight 0.30 arming threshold does buy is that a merely RELAXED hand never
-     grabs: across his brush take, 204 frames of a loose half-closed hand,
-     thumb-to-index never goes under 0.35. */
-  if (!r.fistAlsoGrabbed) fails.push('a fist with the thumb against the index did not grab; that is how he pinches');
-  if (!r.pinchAfterFistKeptHolding) fails.push('a fist opening into an unambiguous pinch did not simply keep holding');
+  /* A FIST STILL RESTS, and it took two goes to get here. He pinches with the
+     other three fingers closed, which by thumb-to-index and index-to-wrist is
+     the same picture as a fist (0.26 against 0.16, and 0.85 in both). For an
+     afternoon a fist therefore counted as a pinch, and he refused that
+     outright -- "non je ne veux pas ca" -- because a fist that opens without
+     travelling would open a page. The index's own reach is what separates
+     them after all: a fist rolls the tip back onto its own knuckle (0.20 to
+     0.54 across 69 of 72 frames), a ring keeps it out (0.61 to 0.69 across
+     all of his taps). So a FISTED hand has to show a held ring before it may
+     arm, and this synthetic fist shows none. */
+  if (r.fistAlsoGrabbed) fails.push('closing into a fist also fired a grab; a fist is the rest position');
+  if (!r.ringPinchGrabbed) fails.push('a held thumb-index ring with the other fingers curled did not grab; that is how he pinches');
+  if (!r.pinchAfterFist) fails.push('a fist opening into an unambiguous pinch did not fire a grab');
   if (!(r.fanSpreadRate > 0)) fails.push(`a clearly spread hand gave fan rate ${r.fanSpreadRate}, wanted a positive number`);
   if (!(r.fanClosedRate < 0)) fails.push(`a clearly closed (not fisted) hand gave fan rate ${r.fanClosedRate}, wanted a negative number`);
   if (r.fanNeutralEvents !== 0) fails.push(`a hand resting inside the dead zone produced ${r.fanNeutralEvents} fan event(s), wanted 0`);
@@ -563,15 +584,10 @@ const path = require('path');
   // instant they start dragging; the one short, incidental pinch (667ms)
   // still exceeds CLICK_MAX_MS on its own. 0 is the honest, measured count,
   // not an assumption.
-  /* THE COST, COUNTED. This clip holds no deliberate tap, but it does hold
-     three of his hands closing into a fist and opening again without
-     travelling, and under the rule that lets him pinch with a closed hand,
-     one of those is a click. It is stated here rather than hidden because it
-     is the price of the gesture working at all: about one accidental page in
-     69 seconds of deliberately gesturing at a camera. A recording of his
-     fist-STYLE pinch is what would allow better than that; nothing in either
-     clip contains one yet. */
-  if (r.fixtureClicks > 1) fails.push(`fixture clicks ${r.fixtureClicks}, wanted at most 1 (a closed hand opening, the cost of pinching with a closed hand)`);
+  /* NO ACCIDENTAL CLICK, which the held-ring rule buys back: for an afternoon
+     a fist counted as a pinch and this clip fired one, which is the cost he
+     refused. */
+  if (r.fixtureClicks !== 0) fails.push(`fixture clicks ${r.fixtureClicks}, wanted exactly 0 (this clip holds no deliberate tap)`);
   if (r.fixtureFans < 50) fails.push(`fixture fan events ${r.fixtureFans}, wanted 50+ (real open-hand motion crossing the dead zone)`);
   if (r.swipeRightOutwardCount !== 1) fails.push(`a right hand swiping outward fired dismiss ${r.swipeRightOutwardCount} times, wanted exactly 1`);
   if (r.swipeRightInwardFired) fails.push('a right hand swiping inward (toward its own midline) fired a dismiss; dismiss is outward only');
@@ -595,7 +611,7 @@ const path = require('path');
   // speed built to be unambiguously faster than 2.5, not merely above it.)
   if (r.fixtureDismiss !== 0) fails.push(`fixture dismiss events ${r.fixtureDismiss}, wanted exactly 0 (this clip has no deliberate swipe; see the report on the swipe threshold correction)`);
   console.log(`  hysteresis flips ${r.flips}   near/far pinched ${r.nearPinched}/${r.farPinched}   dead man's switch released ${r.releasedOnLoss} still-grabbed ${r.stillGrabbed}`);
-  console.log(`  fist-vs-pinch: fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist keeps holding ${r.pinchAfterFistKeptHolding}`);
+  console.log(`  fist-vs-pinch: fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}   held ring grabs ${r.ringPinchGrabbed}`);
   console.log(`  fan: spread rate ${r.fanSpreadRate}   closed rate ${r.fanClosedRate}   neutral events ${r.fanNeutralEvents} (want 0)   while pinched ${r.fanWhilePinched} (want 0)   while fisted ${r.fanWhileFisted} (want 0)`);
   console.log(`  click: brief ${r.briefClickFired}   long-hold ${r.longHoldClickFired} (want true)   flicker ${r.flickerClickFired} (want false)   dragged ${r.draggedClickFired} (want false)   fist-override release ${r.fistOverrideReleaseFired} click ${r.fistOverrideClickFired} (want false)`);
   console.log(`  swipe: right-outward count ${r.swipeRightOutwardCount} (want 1)   right-inward fired ${r.swipeRightInwardFired} (want false)   glitch fired ${r.swipeGlitchFired} (want false)   jittered ${r.swipeJitteredCount} (want 1)   slow cross ${r.swipeSlowCrossFired} (want false)   dragging ${r.swipeWhilePinchedFired} (want false)   left-outward count ${r.swipeLeftOutwardCount} (want 1)   unknown-handedness reversal fired ${r.swipeUnknownReversalFired} (want false)   unknown-handedness sustained count ${r.swipeUnknownSustainedCount} (want 1)`);
