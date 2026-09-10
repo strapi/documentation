@@ -12,6 +12,8 @@ tags:
 - server configuration
 ---
 
+import MultiInstanceCaveats from '/docs/snippets/multi-instance-strapi-caveats.md'
+
 # Running Strapi with PM2
 
 <Tldr>
@@ -228,22 +230,9 @@ module.exports = {
 
 Strapi runs in this mode, but it has no coordination between instances, so several behaviors change. Read this section before enabling it.
 
-:::danger
-Strapi runs its schema synchronization on startup, once per process, with no lock shared between instances. A restart that leaves the content-types unchanged is safe, because the synchronization detects an unchanged schema and does nothing. 2 other cases are not safe: a release that changes content-types, and a release with pending migrations. Instances starting together then issue concurrent schema changes and migrations against the same database.
+<MultiInstanceCaveats />
 
-For those releases, run a single instance first, let it finish starting, and scale up afterwards. This is a property of running several processes against one database, so moving the instances onto separate machines behind a load balancer does not avoid it.
-:::
-
-:::caution
-[CRON jobs](/cms/configurations/cron) are scheduled inside each Strapi process, so a job runs once per instance rather than once overall. A task set to run nightly runs as many times as you have instances. If your project sets `cron.enabled` to `true`, either move the jobs out of Strapi or keep them on a single instance.
-:::
-
-2 more consequences are worth knowing:
-
-- Anything Strapi holds in memory belongs to one instance only, because each instance is a separate process. Nothing in Strapi core replicates state between them.
-- The default local upload provider writes files to the instance's own disk. Instances on the same machine share that disk, but instances on different machines do not, so use one of the [Media Library providers](/cms/configurations/media-library-providers) backed by object storage if you later spread instances across hosts.
-
-Given these constraints, a single instance behind a reverse proxy is the simpler starting point. Add instances when you have measured that one is not enough, and sequence your deployments as described above.
+Given these constraints, start with a single instance behind a reverse proxy. Add instances once you have measured that one is not enough, and sequence those deployments as described above.
 
 ## Validation
 
