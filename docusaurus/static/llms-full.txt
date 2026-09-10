@@ -23143,9 +23143,14 @@ The [Audit Logs](/cms/features/audit-logs) feature can be configured with the fo
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `auditLogs.enabled`               | Enable or disable the Audit Logs feature                                                                                                                         | boolean       | `true`                                                                                                                              |
 | `auditLogs.retentionDays`         | How long Audit Logs are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers, see the note under the table._               | integer       | 90                                                                                                                                  |
+| `auditLogs.exportMaxRows`         | Maximum number of entries included in a single CSV export                                                            | integer       | `1000000`                                                                                                                           |
 
 :::note Retention days for self-hosted vs. Strapi Cloud users
 For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
+:::
+
+:::tip
+Exporting audit logs requires the `read` and `export` Audit Logs permissions. Grant these under **Settings > Administration Panel > Roles**, in the Audit Logs section. The `GET /admin/audit-logs/export` endpoint returns a 403 if either permission is missing.
 :::
 
 ## Authentication
@@ -31646,6 +31651,20 @@ By default, all logs are displayed in reverse chronological order. You can filte
 For any log item, click the  icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
 
 With Strapi , in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
+
+### Exporting audit logs
+
+Users with the `export` permission for Audit Logs can export the current filtered set of entries as a CSV file. To access this feature, the user's role must have both the **Read** and **Export** permissions under **Settings > Administration Panel > Roles > Audit Logs** (see [admin panel configuration](/cms/configurations/admin-panel#audit-logs)).
+
+To export audit logs:
+
+1. (Optional) Apply filters to select the entries to export.
+2. Click **Export** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
+3. Click **Download CSV** to save the exported file.
+
+Every export is itself recorded as an `audit-log.export` event. This event is included in the exported CSV file.
+
+By default, exports are limited to 1,000,000 rows. To change this limit, set the `auditLogs.exportMaxRows` parameter in the [admin panel configuration](/cms/configurations/admin-panel#audit-logs).
 
 
 
