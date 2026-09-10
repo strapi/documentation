@@ -131,7 +131,7 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open s
 <CustomDocCard icon="book-open" title="Docs MCP server" description="Connect the Strapi documentation to your IDE for up-to-date, reliable information." link="/cms/ai/docs-mcp-server" />
 </CustomDocCardsWrapper>
 
-The Strapi MCP server also exposes 3 read tools for the Media Library: `media_list_assets`, `media_get_asset`, and `media_list_folders`. These tools require an Admin token with the `plugin::upload.read` permission. See [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools) for parameters and usage details.
+The Strapi MCP server also exposes 3 read tools for the Media Library: `media_list_assets`, `media_get_asset`, and `media_list_folders`. These tools require an Admin token with the `plugin::upload.read` permission (see [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools) for parameters and usage details).
 
 ### Tips for better results with the Docs MCP server {#tips}
 

@@ -1078,6 +1078,10 @@ The Media Library feature has some endpoints that can accessed through Strapi's 
 <CustomDocCard icon="cube" title="Upload with the REST API" description="Learn how to use the Strapi's REST API to upload files through your code." link="/cms/api/rest/upload"/>
 </CustomDocCardsWrapper>
 
+### Usage with the MCP server
+
+AI clients connected to the [Strapi MCP server](/cms/features/strapi-mcp-server) can browse the Media Library through 3 read-only tools that list assets, return a single asset, and return the folder tree (see [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools)).
+
 ### Use public assets in your code {#public-assets}
 
 Public assets are static files (e.g., images, video, CSS files, etc.) that you want to make accessible to the outside world.

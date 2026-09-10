@@ -261,7 +261,7 @@ Built-in utility tools are only available in development mode (when `autoReload`
 
 <VersionBadge version="5.53.1"/>
 
-Strapi registers 3 read tools for the Media Library. All 3 require the `plugin::upload.read` permission on the Admin token. If the token does not grant that permission, the tools do not appear in `tools/list` and calling them returns a permission error.
+Strapi also registers 3 read tools for the [Media Library](/cms/features/media-library). All 3 require the `plugin::upload.read` permission on the Admin token. If the token does not grant that permission, the tools do not appear in `tools/list` and calling them returns a permission error.
 
 | Tool | Description |
 |------|-------------|
