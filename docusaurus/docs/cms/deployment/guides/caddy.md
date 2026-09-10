@@ -222,6 +222,10 @@ api.example.com {
 
 Keep this value at or above the Strapi `formLimit`, otherwise Caddy rejects uploads that Strapi would have accepted.
 
+:::note
+The `request_body` directive requires Caddy v2.10.0 or later, where it is still marked experimental and may change in a future release. On an earlier version, or if you would rather not depend on an experimental directive, leave it out and let `formidable.maxFileSize` in Strapi enforce the limit instead.
+:::
+
 ### Proxy to Strapi running in a container
 
 When Caddy and Strapi both run as containers, `reverse_proxy` targets the Strapi service by name. Inside the Caddy container, `127.0.0.1` refers to that container itself, not to Strapi. The Caddyfile below is mounted into the container by the Compose file that follows:
