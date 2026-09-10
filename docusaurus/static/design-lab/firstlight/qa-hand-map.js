@@ -156,8 +156,14 @@ const path = require('path');
     const worldAtReticle = (c) => [(900 - viewCXApprox) / c.ts + c.tx, (250 - 400) / c.ts + c.ty];
     const w0 = worldAtReticle(camAnchor);
 
+    /* the event carries the APERTURE and the base the gesture started from,
+       not a per-frame step: the world holds the scale to a function of how far
+       the hand has opened since the gesture began, so a noisy frame cannot
+       ratchet it (see the zoom listener in firstlight.js). */
     const s0 = window.__handProbe.cam().ts;
-    for (let i = 0; i < 8; i++) fire('zoom', { delta: 0.06, x: 900, y: 250 });   // opening: zoom in
+    for (let i = 1; i <= 8; i++) {
+      fire('zoom', { aperture: 0.9 + i * 0.06, base: 0.9, start: i === 1, x: 900, y: 250 });
+    }
     await settle();
     out.zoomedIn = window.__handProbe.cam().ts > s0;
     const camAfterIn = window.__handProbe.cam();
@@ -165,7 +171,9 @@ const path = require('path');
     out.anchorHeldOnZoomIn = Math.hypot(w1[0] - w0[0], w1[1] - w0[1]) < 2;
 
     const s1 = window.__handProbe.cam().ts;
-    for (let i = 0; i < 8; i++) fire('zoom', { delta: -0.06, x: 900, y: 250 });  // closing: zoom out
+    for (let i = 1; i <= 8; i++) {
+      fire('zoom', { aperture: 0.9 - i * 0.06, base: 0.9, start: i === 1, x: 900, y: 250 });
+    }
     await settle();
     out.zoomedOut = window.__handProbe.cam().ts < s1;
 
@@ -336,10 +344,14 @@ const path = require('path');
     fire('present');
     fire('move', { x: 600, y: 400 });
     await settle();
-    for (let i = 0; i < 30; i++) fire('zoom', { delta: 0.5, x: 600, y: 400 });
+    for (let i = 1; i <= 30; i++) {
+      fire('zoom', { aperture: 0.9 + i * 0.5, base: 0.9, start: i === 1, x: 600, y: 400 });
+    }
     await settle();
     out.zoomHighClamp = window.__handProbe.cam().ts;
-    for (let i = 0; i < 60; i++) fire('zoom', { delta: -0.5, x: 600, y: 400 });
+    for (let i = 1; i <= 30; i++) {
+      fire('zoom', { aperture: 0.9 - i * 0.5, base: 0.9, start: i === 1, x: 600, y: 400 });
+    }
     await settle();
     out.zoomLowClamp = window.__handProbe.cam().ts;
 
@@ -484,7 +496,7 @@ const path = require('path');
       fire('grab');
       fire('move', { x: 900, y: 250 });
       await settle();
-      for (let i = 0; i < 6; i++) fire('zoom', { delta: 0.35, x: 500, y: 400 });
+      for (let i = 1; i <= 6; i++) fire('zoom', { aperture: 0.9 + i * 0.35, base: 0.9, start: i === 1, x: 500, y: 400 });
       fire('release');
       await settle();
       const during = window.__handProbe.cam();

@@ -2714,10 +2714,23 @@
        the gesture began, so the body under the reticle stays under it for the
        whole movement instead of drifting frame by frame. */
     var ZOOM_GAIN = 2.4;
+    var zoomFrom = 0;                /* the scale this gesture began at */
     onHandControl('zoom', function (e) {
       if (!handPosKnown || handControlAt()) return;
+      /* The scale is a FUNCTION of how far the hand has opened since this
+         gesture began, not a running total of per-frame steps. An integrator
+         cannot take back a noisy frame, and the aperture is noisy: two frames
+         of noise in one direction used to ratchet the scale and stay there,
+         which is what "parfois ca dezoom au lieu de zoomer" was. Held as a
+         function, a bad frame is undone by the next good one. */
+      if (e.detail.start || !zoomFrom) zoomFrom = cam.ts;
       var previous = cam.ts;
-      var next = Math.max(0.06, Math.min(8, previous * Math.exp(e.detail.delta * ZOOM_GAIN)));
+      var next = Math.max(0.06, Math.min(8, zoomFrom * Math.exp((e.detail.aperture - e.detail.base) * ZOOM_GAIN)));
+      // a malformed event must not poison the camera: cam.ts = NaN takes the
+      // whole world down with it, silently, and every comparison against it
+      // afterwards is false. Found by feeding this listener the old event
+      // shape after it changed.
+      if (!isFinite(next)) return;
       if (next === previous) { dirty = true; return; }
       var anchorX = e.detail.x, anchorY = e.detail.y;
       cam.tx += (anchorX - viewCX()) * (1 / previous - 1 / next);

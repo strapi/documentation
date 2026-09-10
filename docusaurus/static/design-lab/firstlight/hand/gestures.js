@@ -246,6 +246,16 @@ export const CLICK_MIN_MS = 60, CLICK_MAX_DIST = 0.25;
 export const SWIPE_DIST = 0.6, SWIPE_WINDOW = 0.25, SWIPE_MIN_SAMPLES = 3,
   SWIPE_REARM = 0.2;
 
+/* THE VERTICAL SWEEP ASKS FOR LESS, AND THE REASON IS THE CONSEQUENCE. A
+   sideways brush closes the page being read; a vertical sweep scrolls it by a
+   chunk. One of those cannot be undone by making the same gesture again and
+   the other is undone by sweeping back, so they do not deserve the same bar.
+   0.45 of a hand width against 0.6, inside the same window: the owner could
+   not scroll at all at 0.6 ("j'ai ete incapable de faire scroller la page").
+   It is a starting point and not a measurement: no clip contains that
+   movement yet, which is why the recorder now asks for it. */
+export const SWEEP_DIST_V = 0.45;
+
 const HAND_VOTES = 8;                         // about a third of a second at 23 fps
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
@@ -564,7 +574,7 @@ export function makeGestureReader() {
           if (which === 'x') evs.push({ type: 'dismiss' });
           else evs.push({ type: 'sweep', dir: which === 'down' ? 'down' : 'up' });
         } else if (swipeTrail.length >= SWIPE_MIN_SAMPLES
-                   && Math.abs(net) >= SWIPE_DIST
+                   && Math.abs(net) >= (horizontal ? SWIPE_DIST : SWEEP_DIST_V)
                    && !reversed
                    && (horizontal ? outward : true)) {
           // up and down are both meaningful, so the vertical axis has no

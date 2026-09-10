@@ -44,6 +44,7 @@ export function startHands(opts) {
   /* the zoom gate's own state: the smoothed aperture, the run of signs, and
      the previous pose, which is what stillness is measured against */
   let apHist = [], apPrev = null, apSigns = [], lastPose = null;
+  let zoomBase = null, zoomStart = true;
   let lastScreen = null;
 
   /* THE LATCH. Closing the hand is itself a motion, so even palmCentre --
@@ -105,6 +106,7 @@ export function startHands(opts) {
         const overPanel = lastScreen && document.elementFromPoint(lastScreen.x, lastScreen.y)?.closest('#hand-panel');
         if (detail.aperture === null || !lastScreen || overPanel) {
           apHist = []; apPrev = null; apSigns = []; zoomAnchor = null; lastPose = null;
+          zoomBase = null; zoomStart = true;
           continue;
         }
         /* ZOOM READS THE FINGERS, NOT THE ARM. Moving the hand through space,
@@ -141,11 +143,28 @@ export function startHands(opts) {
             if (apSigns.length > ZOOM_TREND) apSigns.shift();
             const oneWay = apSigns.length === ZOOM_TREND && apSigns[0] !== 0
               && apSigns.every((x) => x === apSigns[0]);
+            /* A ZOOM GESTURE HAS A BEGINNING, and the aperture is reported
+               against it. Sending a per-frame DELTA and letting the world
+               integrate it was the wrong shape: the aperture is noisy, so a
+               couple of noise frames of one sign passed the trend gate and
+               ratcheted the scale the wrong way, and nothing ever took it
+               back. "le zoom, qui parfois dezoom au lieu de zoomer ou
+               l'inverse" is exactly what an integrator does with noise.
+               Now the first qualifying frame opens a gesture and every frame
+               after it reports the aperture and the base it started from, so
+               the world can hold cam.ts to a pure function of how far the
+               hand has opened SINCE the gesture began. A noisy frame moves
+               the scale a hair and the next frame takes it back; nothing
+               accumulates, and the direction cannot invert. */
             if (still && oneWay && Math.abs(delta) > ZOOM_DEAD) {
-              if (!zoomAnchor) zoomAnchor = { ...lastScreen };
-              fire('zoom', { delta: Math.max(-0.12, Math.min(0.12, delta)), ...zoomAnchor });
+              if (!zoomAnchor) {
+                zoomAnchor = { ...lastScreen };
+                zoomBase = apPrev;         /* where the hand was one frame before it began */
+              }
+              fire('zoom', { aperture: smooth, base: zoomBase, start: zoomStart, ...zoomAnchor });
+              zoomStart = false;
             } else if (!still) {
-              zoomAnchor = null;
+              zoomAnchor = null; zoomStart = true;
             }
           }
           apPrev = smooth;
@@ -154,6 +173,7 @@ export function startHands(opts) {
       }
       if (type === 'absent') {
         zoomAnchor = null; lastScreen = null; apHist = []; apPrev = null; apSigns = []; lastPose = null;
+        zoomBase = null; zoomStart = true;
         fx.reset(); fy.reset(); lastRawX = null; lastRawY = null;
       }
       fire(type, detail);
@@ -212,6 +232,7 @@ export function startHands(opts) {
       if (events.length) {
         latched = false; zoomAnchor = null; lastScreen = null;
         apHist = []; apPrev = null; apSigns = []; lastPose = null;
+        zoomBase = null; zoomStart = true;
         fx.reset(); fy.reset(); lastRawX = null; lastRawY = null;
         for (const event of events) fire(event.type, event);
       }
@@ -237,6 +258,7 @@ export function startHands(opts) {
       lastRawX = null; lastRawY = null;
       lastFrameAt = 0; lastScreen = null; zoomAnchor = null;
       apHist = []; apPrev = null; apSigns = []; lastPose = null;
+      zoomBase = null; zoomStart = true;
       // turning the feature off must visibly turn it off: without this, only
       // hand:state fires, and nothing ever tells the reticle (or the world's
       // own handGrab/handSnap bookkeeping) that the hand is gone, so it kept
