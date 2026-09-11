@@ -196,25 +196,49 @@ The following options are all in common use:
 | <ExternalLink to="https://github.com/nginx-proxy/acme-companion" text="nginx-proxy and acme-companion"/> | Container deployments, where certificates are issued per container without editing configuration by hand. |
 | A cloud load balancer or CDN | Setups where TLS is terminated upstream, for example by AWS Certificate Manager, Cloudflare, or your hosting provider's load balancer. |
 
-Whichever you choose, the Nginx server block ends up listening on 443 and pointing at the certificate files:
+Whichever you choose, the server block ends up listening on 443 and pointing at the certificate files. Replace the port 80 block created above with the following, which keeps a second block on 80 so plain HTTP requests are redirected rather than reaching Strapi:
 
 ```nginx title="/etc/nginx/sites-available/strapi.conf"
+# Send the upgrade hint only on requests that actually ask for it
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+server {
+    listen 80;
+    server_name api.example.com;
+
+    return 301 https://$host$request_uri;
+}
+
 server {
     listen 443 ssl;
+    http2 on;
     server_name api.example.com;
 
     ssl_certificate     /etc/nginx/certs/fullchain.pem;
     ssl_certificate_key /etc/nginx/certs/privkey.pem;
 
+    # Raise this to match the largest upload you accept
     client_max_body_size 100M;
 
     location / {
-        # the same proxy_pass and proxy_set_header directives shown above
+        proxy_pass http://127.0.0.1:1337;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
     }
 }
 ```
 
-Keep a second block on port 80 that redirects to HTTPS, so plain HTTP requests do not reach Strapi.
+`http2 on;` is a separate directive since Nginx 1.25.1. On an older release, write `listen 443 ssl http2;` instead. Reload Nginx once the certificate files are in place, and the checks below run against the HTTPS address.
 
 :::caution
 If TLS is terminated upstream by a load balancer or CDN, Nginx can keep listening on port 80. That upstream must still send `X-Forwarded-Proto: https`, otherwise Strapi treats the request as plain HTTP and generates `http://` URLs. Count every proxy in the chain when setting `proxy.maxIpsCount`.
@@ -253,7 +277,7 @@ Each of the following symptoms points at one side of the setup. The symptom is i
 
 - **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
 
-- **Admin panel sessions do not persist over HTTPS.** Nginx is not forwarding `X-Forwarded-Proto`, so Strapi treats the request as plain HTTP and does not mark the refresh-token cookie as `Secure`. Add the header to the `location` block.
+- **The admin panel refresh cookie is not marked `Secure`.** Nginx is not forwarding `X-Forwarded-Proto`, so Strapi treats the request as plain HTTP. The cookie still reaches the browser over HTTPS, because it defaults to `SameSite=Lax`, but it loses the `Secure` flag that keeps it off plain HTTP. Add the header to the `location` block.
 
 ## Next steps
 
