@@ -54,5 +54,6 @@ How to use
 - Badge (plan / status / version flags via named aliases like `<GrowthBadge>`, `<NewBadge>`) rules: `claude-plugins/inki/references/templates/components/badge.md`
 - Columns / ColumnLeft / ColumnRight (two-up side-by-side layout) rules: `claude-plugins/inki/references/templates/components/columns.md`
 - SubtleCallout (low-emphasis "good to know" aside) rules: `claude-plugins/inki/references/templates/components/subtle-callout.md`
+- CustomDocCard / CustomDocCardsWrapper (clickable navigation cards and their grid) rules: `claude-plugins/inki/references/templates/components/doc-cards.md`
 - Checklist / ChecklistItem (interactive checkbox lists) rules: `claude-plugins/inki/references/templates/components/checklist.md`
 - MermaidWithFallback (live Mermaid diagram with static fallback) rules: `claude-plugins/inki/references/templates/components/mermaid-with-fallback.md`
