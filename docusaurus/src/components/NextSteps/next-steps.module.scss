@@ -62,10 +62,16 @@
   border-radius: 12px;
   margin: 0 -24px;
   width: calc(100% + 48px);
+}
 
-  &:last-child {
-    border-bottom: none;
-  }
+// The separator belongs between steps, so only the last one drops it. A linked
+// step is wrapped in its own `<a class="stepLink">`, which makes `.step` the
+// only child there: `.step:last-child` would match on every linked step and
+// remove every separator. The rule has to look at the last child of `.steps`
+// instead, whether that child is the link wrapper or a bare unlinked step.
+.steps > :last-child .step,
+.steps > .step:last-child {
+  border-bottom: none;
 }
 
 .stepNumber {
