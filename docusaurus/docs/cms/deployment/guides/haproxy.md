@@ -28,7 +28,7 @@ Strapi listens on a plain HTTP port and does not terminate TLS itself. A reverse
 
 :::prerequisites
 - A Strapi 5 application that starts and runs locally (see [deployment guidelines](/cms/deployment#general-guidelines)).
-- HAProxy 2.2 or later, running either on the same host as Strapi or as a container that can reach it (see the <ExternalLink to="https://www.haproxy.org/download/3.3/doc/INSTALL" text="HAProxy installation instructions"/>). The health check syntax in this guide requires 2.2 or later.
+- HAProxy 2.2 or later, running either on the same host as Strapi or as a container that can reach it (see the <ExternalLink to="https://github.com/haproxy/haproxy/blob/master/INSTALL" text="HAProxy installation instructions"/>). The health check syntax in this guide requires 2.2 or later.
 - A domain name whose DNS `A` record points at the HAProxy host.
 - A TLS certificate and private key, concatenated into a single PEM file.
 - Shell access with `sudo` privileges.
@@ -78,7 +78,7 @@ HAProxy reads its configuration from `/etc/haproxy/haproxy.cfg`. The following d
 global
     log /dev/log local0
 
-    # Needed by the `show stat` command used in the Validation section
+    # Needed by the `show stat` command used when verifying the setup
     stats socket /var/run/haproxy.sock mode 660 level admin
 
 defaults
@@ -126,6 +126,56 @@ sudo systemctl reload haproxy
 ```
 
 The `haproxy -c` command checks the configuration without applying it. Reloading a broken configuration takes the site down, so do not skip it.
+
+### Proxy to Strapi running in a container
+
+When HAProxy and Strapi both run as containers, the `server` line targets the Strapi service by name. Inside the HAProxy container, `127.0.0.1` refers to that container itself, not to Strapi:
+
+```
+backend strapi_back
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 strapi:1337 check
+```
+
+Strapi must also bind to `0.0.0.0`. Bound to `localhost`, it accepts connections only from inside its own container and HAProxy cannot reach it. The `host` value set under [Set the public URL](#set-the-public-url) already uses `0.0.0.0`.
+
+The following Compose file puts both services on one network and publishes only HAProxy:
+
+```yml title="./docker-compose.yml"
+services:
+  strapi:
+    image: my-strapi-app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://api.example.com
+    # expose keeps the port reachable inside the network only
+    expose:
+      - '1337'
+    networks:
+      - web
+
+  haproxy:
+    image: haproxy:2.8-alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./haproxy/certs:/etc/haproxy/certs:ro
+    depends_on:
+      - strapi
+    networks:
+      - web
+
+networks:
+  web:
+```
+
+HAProxy resolves `strapi` once at startup. If the Strapi container is recreated with a new address, reload HAProxy, or declare a `resolvers` section so it re-resolves the name on its own.
 
 ### Health check Strapi
 
@@ -199,7 +249,7 @@ Each of the following symptoms points at one side of the setup. The symptom is i
 
 - **Strapi logs the HAProxy address as the client IP.** Either `option forwardfor` is missing from the HAProxy configuration, or `proxy.koa` is not set to `true` in Strapi.
 
-- **Admin panel sessions do not persist over HTTPS.** The `X-Forwarded-Proto` header is not being set, so Strapi treats the request as plain HTTP and does not mark the refresh-token cookie as `Secure`. Add the `http-request set-header` line to the frontend.
+- **The admin panel refresh cookie is not marked `Secure`.** The `X-Forwarded-Proto` header is not being set, so Strapi treats the request as plain HTTP. The cookie still reaches the browser over HTTPS, because it defaults to `SameSite=Lax`, but it loses the `Secure` flag that keeps it off plain HTTP. Add the `http-request set-header` line to the frontend.
 
 - **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
 
