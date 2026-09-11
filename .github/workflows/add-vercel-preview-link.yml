@@ -1,0 +1,89 @@
+name: Add the Vercel preview link to a PR description
+
+# Runs when Vercel finishes a Preview deployment, which is the first moment the
+# preview URL exists. Reacting to `pull_request` instead would fire before the
+# deployment and would have nothing to link to.
+#
+# Security: `deployment_status` runs in the context of the base repository, so
+# the token has write access even when the pull request comes from a community
+# fork, where a `pull_request` workflow would only get a read-only token. The
+# job never checks out the pull request's code: it only calls the API, so no
+# untrusted code ever runs with that token. The workflow file used is always the
+# one on the default branch, so a fork cannot alter this job through its PR.
+on:
+  deployment_status:
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  add-preview-link:
+    # Vercel names its per-PR environment "Preview". Production deployments and
+    # failed or in-progress builds are ignored.
+    if: >
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Preview'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add the preview link when the description has none
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const MARKER = 'Direct preview link';
+            // Vercel truncates a branch slug that does not fit the 63-character
+            // DNS label and appends a hash, so a slug-built host is only
+            // reliable below this length. Past it, fall back to the immutable
+            // deployment URL the event carries.
+            const MAX_SLUG = 35;
+
+            const { owner, repo } = context.repo;
+            const sha = context.payload.deployment.sha;
+
+            // `deployment.ref` is a SHA, not a branch name, so the pull request
+            // (and its head branch) has to be resolved from the commit.
+            const { data: prs } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner, repo, commit_sha: sha,
+            });
+            const pr = prs.find((p) => p.state === 'open');
+            if (!pr) {
+              core.info(`No open pull request for ${sha}, nothing to do.`);
+              return;
+            }
+
+            const body = pr.body || '';
+            if (body.includes(MARKER)) {
+              core.info(`PR #${pr.number} already has a preview link.`);
+              return;
+            }
+
+            // Link the page the PR adds, falling back to the most relevant page
+            // it changes. A PR touching no documentation page gets no link
+            // rather than a link to a page that does not exist.
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner, repo, pull_number: pr.number, per_page: 100,
+            });
+            const pages = files.filter((f) =>
+              f.filename.startsWith('docusaurus/docs/') && /\.mdx?$/.test(f.filename)
+            );
+            if (pages.length === 0) {
+              core.info(`PR #${pr.number} changes no documentation page.`);
+              return;
+            }
+            const page = pages.find((f) => f.status === 'added') || pages[0];
+            const path = page.filename
+              .replace(/^docusaurus\/docs/, '')
+              .replace(/\.mdx?$/, '')
+              .replace(/\/index$/, '');
+
+            const slug = pr.head.ref.replace(/\//g, '-');
+            const host = slug.length <= MAX_SLUG
+              ? `https://documentation-git-${slug}-strapijs.vercel.app`
+              : context.payload.deployment_status.environment_url;
+
+            const link = `\n\n${MARKER} 👉 [here](${host}${path})`;
+            await github.rest.pulls.update({
+              owner, repo, pull_number: pr.number, body: body + link,
+            });
+            core.info(`PR #${pr.number}: added ${host}${path}`);
