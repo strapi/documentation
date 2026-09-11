@@ -29043,8 +29043,10 @@ ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
-# Uncomment the following lines to set the admin panel URL at build time.
-# Without this, the admin panel defaults to localhost:1337.
+# Uncomment the following lines to pin the admin panel URL at build time.
+# Without them the admin panel calls the origin it is served from, which is
+# what you want behind a proxy; pin it only when the admin is served from a
+# different origin than the API.
 # ARG STRAPI_ADMIN_BACKEND_URL
 # ENV STRAPI_ADMIN_BACKEND_URL=${STRAPI_ADMIN_BACKEND_URL}
 ENV NODE_ENV=production
