@@ -156,11 +156,11 @@ networks:
 The `loadbalancer.server.port` label is the one people miss. Traefik routes to a port inside the container network, so the Strapi container needs no `ports` mapping of its own. Only Traefik publishes ports to the host, which keeps Strapi off the public interface.
 
 :::warning
-Mount a persistent volume for the certificate storage path, as shown above with `traefik_acme`. Traefik stores issued certificates in `acme.json`. Without it, every container restart requests new certificates, which reaches the <ExternalLink to="https://letsencrypt.org/docs/rate-limits/" text="Let's Encrypt rate limits"/> and leaves the site without a valid certificate until the limit resets.
-:::
+2 parts of this file carry consequences beyond Traefik itself:
 
-:::danger
-Mounting the Docker socket gives Traefik full access to the Docker API, which is equivalent to root on the host. The `:ro` flag shown above applies to the socket file rather than to the API, so it does not limit what Traefik can do through the socket. Treat it as a convention, not a boundary. Do not expose the Traefik dashboard publicly, and for a hardened deployment put the socket behind a proxy that exposes only the endpoints Traefik needs.
+- **Mount a persistent volume for the certificate storage path**, as shown above with `traefik_acme`. Traefik stores issued certificates in `acme.json`. Without it, every container restart requests new certificates, which reaches the <ExternalLink to="https://letsencrypt.org/docs/rate-limits/" text="Let's Encrypt rate limits"/> and leaves the site without a valid certificate until the limit resets.
+
+- **Mounting the Docker socket gives Traefik full access to the Docker API**, which is equivalent to root on the host. The `:ro` flag shown above applies to the socket file rather than to the API, so it does not limit what Traefik can do through the socket. Treat it as a convention, not a boundary. Do not expose the Traefik dashboard publicly, and for a hardened deployment put the socket behind a proxy that exposes only the endpoints Traefik needs.
 :::
 
 ### Cap the request body size
@@ -180,7 +180,7 @@ A request over the limit receives a `413` response.
 The `buffering` middleware reads the entire request body before forwarding it, spilling to disk beyond a threshold. That adds latency and disk usage on every upload, which is a poor trade for a Media Library that accepts large files. If your uploads are large, leave this middleware off and let `formidable.maxFileSize` in Strapi enforce the limit instead.
 :::
 
-## Validation
+## Verify the proxy setup
 
 Bring up the stack and check that Traefik reaches Strapi. Strapi exposes a health check route at `/_health` that responds with HTTP `204 No Content` and a `strapi` header:
 
@@ -204,22 +204,38 @@ Then confirm the rest of the chain:
 
 ## Troubleshooting
 
-**Traefik returns `404 page not found`.** No router matched the request. Confirm the container carries `traefik.enable=true`, that the `Host()` rule matches the domain you requested, and that both containers share the same Docker network.
+Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
 
-**Traefik returns `502 Bad Gateway`.** Traefik matched a route but could not reach Strapi. Confirm `loadbalancer.server.port` is `1337` and that Strapi is bound to `0.0.0.0` rather than `localhost`.
+- **Traefik returns `404 page not found`.** No router matched the request. Confirm the container carries `traefik.enable=true`, that the `Host()` rule matches the domain you requested, and that both containers share the same Docker network.
 
-**No certificate is issued.** The certificate challenge needs port 443 reachable from the public internet for `tlsChallenge`, and the domain's DNS `A` record must already resolve to this host. Check the Traefik logs with `docker compose logs traefik`.
+- **Traefik returns `502 Bad Gateway`.** Traefik matched a route but could not reach Strapi. Confirm `loadbalancer.server.port` is `1337` and that Strapi is bound to `0.0.0.0` rather than `localhost`.
 
-**Certificates are reissued on every restart.** The certificate storage path is not on a persistent volume, so `acme.json` is lost with the container.
+- **No certificate is issued.** The certificate challenge needs port 443 reachable from the public internet for `tlsChallenge`, and the domain's DNS `A` record must already resolve to this host. Check the Traefik logs with `docker compose logs traefik`.
 
-**Uploads fail with a `413` response.** The `buffering` middleware limit is lower than the file size. Raise `maxRequestBodyBytes`, or remove the middleware and let `formidable.maxFileSize` in Strapi enforce the limit.
+- **Certificates are reissued on every restart.** The certificate storage path is not on a persistent volume, so `acme.json` is lost with the container.
 
-**Strapi logs the Traefik container address as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
+- **Uploads fail with a `413` response.** The `buffering` middleware limit is lower than the file size. Raise `maxRequestBodyBytes`, or remove the middleware and let `formidable.maxFileSize` in Strapi enforce the limit.
 
-**Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL, rebuild the admin panel, and rebuild the image.
+- **Strapi logs the Traefik container address as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
+
+- **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL, rebuild the admin panel, and rebuild the image.
 
 ## Next steps
 
-- Review the full list of [server configuration options](/cms/configurations/server).
-- Read the [Docker installation guide](/cms/installation/docker) for building the Strapi image this guide routes to.
-- Read the [deployment guidelines](/cms/deployment) for build and environment variable requirements.
+<NextSteps title="">
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
+  <NextSteps.Step
+    title="Build the Strapi image"
+    description="The Docker installation guide covers the image this guide routes to."
+    link="/cms/installation/docker"
+  />
+  <NextSteps.Step
+    title="Read the deployment guidelines"
+    description="Build requirements and environment variables a production deployment needs."
+    link="/cms/deployment"
+  />
+</NextSteps>
