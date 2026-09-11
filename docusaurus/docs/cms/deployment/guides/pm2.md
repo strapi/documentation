@@ -3,6 +3,8 @@ title: Running Strapi with PM2
 sidebar_label: PM2
 displayed_sidebar: cmsSidebar
 description: Use the PM2 process manager to keep a Strapi application running, restart it on failure, and start it again after a reboot.
+pagination_prev: cms/deployment
+pagination_next: cms/deployment/guides
 tags:
 - deployment
 - deployment guide

@@ -3,6 +3,8 @@ title: Proxying Strapi with HAProxy
 sidebar_label: HAProxy
 displayed_sidebar: cmsSidebar
 description: Configure Strapi and HAProxy so that a Strapi application is served through an HAProxy load balancer over HTTPS.
+pagination_prev: cms/deployment
+pagination_next: cms/deployment/guides
 tags:
 - deployment
 - deployment guide

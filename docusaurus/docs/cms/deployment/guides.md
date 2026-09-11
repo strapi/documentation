@@ -1,6 +1,8 @@
 ---
 title: Deployment guides
 description: Guides for serving Strapi behind a reverse proxy and running it under a process manager.
+pagination_prev: cms/deployment
+pagination_next: cms/deployment/guides/caddy
 displayed_sidebar: cmsSidebar
 tags:
 - deployment

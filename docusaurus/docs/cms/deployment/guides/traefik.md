@@ -3,6 +3,8 @@ title: Proxying Strapi with Traefik
 sidebar_label: Traefik
 displayed_sidebar: cmsSidebar
 description: Configure Strapi and Traefik so that a containerized Strapi application is served through Traefik over HTTPS.
+pagination_prev: cms/deployment
+pagination_next: cms/deployment/guides
 tags:
 - containers
 - deployment
