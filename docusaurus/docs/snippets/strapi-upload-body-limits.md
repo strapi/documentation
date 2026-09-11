@@ -18,4 +18,4 @@ module.exports = [
 ];
 ```
 
-The Media Library provider enforces a separate `sizeLimit`, which defaults to 1 GB (see [local upload provider configuration](/cms/configurations/media-library-providers/local-upload) and [max file size](/cms/features/media-library#max-file-size) to change it).
+The Media Library provider enforces a separate `sizeLimit`, which defaults to 1 GB. To change it, see [local upload provider configuration](/cms/configurations/media-library-providers/local-upload) and [max file size](/cms/features/media-library#max-file-size).
