@@ -80,13 +80,15 @@ jobs:
             }
 
             // Link the page the PR adds, falling back to the most relevant page
-            // it changes. A PR touching no documentation page gets no link
-            // rather than a link to a page that does not exist.
+            // it changes. Only `cms/` and `cloud/` hold real pages: everything
+            // else under `docusaurus/docs/`, `snippets/` in particular, is a
+            // fragment imported into a page rather than a page readers open, so
+            // a PR that only touches those gets no link.
             const files = await github.paginate(github.rest.pulls.listFiles, {
               owner, repo, pull_number: pr.number, per_page: 100,
             });
             const pages = files.filter((f) =>
-              f.filename.startsWith('docusaurus/docs/') && /\.mdx?$/.test(f.filename)
+              /^docusaurus\/docs\/(cms|cloud)\//.test(f.filename) && /\.mdx?$/.test(f.filename)
             );
             if (pages.length === 0) {
               core.notice(`PR #${pr.number} changes no documentation page, no link to add.`);
