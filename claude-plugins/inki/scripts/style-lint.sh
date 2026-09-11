@@ -428,7 +428,7 @@ check_bold_overuse() {
 #                        of red and the severe stops standing out from the merely
 #                        annoying.
 #
-# A pair of different low-level types (:::note then :::tip) is harmless and is
+# A pair of different low-level types (:::info, :::note, :::tip) is harmless and is
 # not flagged, and neither is the documented :::prerequisites plus :::caution
 # page-header motif, as long as the run stops at two.
 # A fenced block between two callouts ends the run, since the second one then
