@@ -216,6 +216,17 @@ lint_file() {
       has_errors=1
     fi
 
+    # `:::danger` is not part of the style guide scale, which goes
+    # tip -> note -> prerequisites -> caution -> warning. `warning` is the top
+    # level and covers data loss, crash prevention, and unsupported behavior.
+    # In this repo both keywords render the same red block titled "Warning"
+    # (`src/theme/Admonition/index.js`, `src/scss/admonition.scss`), so `danger`
+    # adds no signal and only diverges from the documented scale.
+    if echo "$line" | grep -qE '^[[:space:]]*:::danger([[:space:]]|$)'; then
+      echo "error:${line_num}:danger-admonition::::danger is not in the style guide -- use :::warning (top level: data loss, crash prevention)"
+      has_errors=1
+    fi
+
     # Multi-action steps: numbered list items with joining words
     if echo "$line" | grep -qE '^[[:space:]]*[0-9]+\.[[:space:]]'; then
       if echo "$line" | grep -qEi "(,?[[:space:]]*${word_boundary_start}then${word_boundary_end}|${word_boundary_start}and then${word_boundary_end}|${word_boundary_start}and also${word_boundary_end}|,?[[:space:]]*${word_boundary_start}next${word_boundary_end})"; then
@@ -343,6 +354,7 @@ lint_file() {
   # so bold inside code is never counted. Paragraphs are blocks of consecutive
   # non-blank lines; the finding is reported on the paragraph's first line.
   check_bold_overuse "$file" "$stripped"
+  check_stacked_alerts "$file"
 }
 
 # Counts **bold** spans per paragraph and warns when a paragraph carries more
@@ -395,6 +407,73 @@ check_bold_overuse() {
       }
     }
   ' <<< "$stripped")
+
+  if [[ -n "$findings" ]]; then
+    echo "$findings"
+    has_warnings=1
+  fi
+}
+
+# Two high-level callouts in a row flatten the hierarchy: the reader sees a wall
+# of red blocks and stops telling the severe apart from the merely annoying.
+# Keep one alert and move the rest to prose or a bullet list.
+# Only the top of the style guide scale counts (caution, warning, and the legacy
+# danger): stacking note/tip/info blocks is common and harmless, and a
+# :::prerequisites followed by a :::caution is the documented page-header motif.
+# Reported on the opening line of the second callout. Blank lines between the two
+# do not clear the finding; a fenced block does, since the second callout then
+# carries its own context. Reads the original file rather than the stripped
+# content, where fenced blocks have already collapsed into blank lines.
+check_stacked_alerts() {
+  local file="$1"
+
+  local findings
+  findings=$(awk '
+    BEGIN {
+      in_code = 0; in_frontmatter = 0; line_num = 0
+      open_type = ""; closed_type = ""
+      alerts = "caution warning danger"
+    }
+
+    function is_alert(type) {
+      return index(alerts, type) > 0
+    }
+
+    {
+      line_num++
+
+      # Skip YAML frontmatter (--- delimited block at the top of the file).
+      if (line_num == 1 && $0 == "---") { in_frontmatter = 1; next }
+      if (in_frontmatter) { if ($0 == "---") in_frontmatter = 0; next }
+
+      # A fenced block between the two callouts separates them.
+      if ($0 ~ /^[[:space:]]*```/) { in_code = !in_code; closed_type = ""; next }
+      if (in_code) next
+
+      # Blank lines keep the pending state: ::: then a blank line then :::warning
+      # is still two stacked alerts.
+      if ($0 ~ /^[[:space:]]*$/) next
+
+      # Opening line of a callout (:::warning, :::caution Title). Nested
+      # callouts (::::) are left alone.
+      if (match($0, /^:::[a-zA-Z]+/)) {
+        type = substr($0, 4, RLENGTH - 3)
+
+        if (closed_type != "" && is_alert(closed_type) && is_alert(type)) {
+          print "warning:" line_num ":stacked-alerts:" closed_type " callout directly followed by a " type " one -- keep one alert and move the rest to prose or a list"
+        }
+
+        open_type = type
+        closed_type = ""
+        next
+      }
+
+      # Closing line of a callout.
+      if ($0 ~ /^:::[[:space:]]*$/) { closed_type = open_type; open_type = ""; next }
+
+      closed_type = ""
+    }
+  ' "$file")
 
   if [[ -n "$findings" ]]; then
     echo "$findings"

@@ -128,6 +128,14 @@ For each of the 12 rules, here is how to detect violations and what severity to 
 - **Strapi-specific (inline callouts):**
   - Bold prefixes used as callouts (`**Note:**`, `**Important:**`, `**Warning:**`, `**Caution:**`, `**Tip:**`) must be converted to Docusaurus admonitions (`:::note`, `:::caution`, `:::warning`, `:::tip`).
   - **Severity:** error
+- **Strapi-specific (callout scale):**
+  - The style guide scale, from lowest to highest, is `:::tip`, `:::note`, `:::prerequisites`, `:::caution`, `:::warning`, plus `:::strapi` for links to the Strapi ecosystem. `:::caution` covers mistake prevention, recommendations, and unstable behavior; `:::warning` is the top level and covers data loss, crash prevention, and unsupported behavior.
+  - `:::danger` is not part of the scale. It renders the same red block titled "Warning" as `:::warning` (`docusaurus/src/theme/Admonition/index.js`, `docusaurus/src/scss/admonition.scss`), so it adds no signal. Flag it and propose `:::warning`.
+  - **Severity:** error
+- **Strapi-specific (stacked alerts):**
+  - Two high-level callouts (`:::caution`, `:::warning`, `:::danger`) back to back, with nothing but blank lines between them, flatten the hierarchy: the reader sees a wall of red blocks and stops telling the severe apart from the merely annoying. Keep one alert and move the rest to prose or a bullet list.
+  - Stacked `:::note`, `:::tip`, and `:::info` blocks are common and harmless, and a `:::prerequisites` followed by a `:::caution` is the documented page-header motif. Do NOT flag either.
+  - **Severity:** warning
 
 ### Rule 3: Direct and neutral tone
 - **Detect:** Jokes, rhetorical questions, emojis (except in UI element references), casual language ("gonna", "wanna", "pretty cool", "awesome", "super")
