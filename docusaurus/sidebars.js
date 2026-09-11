@@ -52,6 +52,7 @@ const sidebars = {
           link: { type: 'generated-index', title: 'Deployment guides', slug: '/cms/deployment/guides' },
           items: [
             'cms/deployment/guides/caddy',
+            'cms/deployment/guides/haproxy',
             'cms/deployment/guides/nginx',
           ],
         },

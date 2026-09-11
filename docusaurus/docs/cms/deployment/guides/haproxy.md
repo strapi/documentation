@@ -237,7 +237,7 @@ Then confirm the rest of the chain:
 echo "show stat" | sudo socat stdio /var/run/haproxy.sock
 ```
 
-## Troubleshooting
+## <Icon name="bug" /> Troubleshooting
 
 Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
 
