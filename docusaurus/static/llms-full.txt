@@ -30660,9 +30660,10 @@ Before following any of the guides listed below:
 
 The following guides cover serving Strapi behind a reverse proxy and running it under a process manager:
 
-- [Proxying with Caddy](https://forum.strapi.io/t/caddy-proxying-with-strapi/)
-- [Proxying with HAProxy](https://forum.strapi.io/t/haproxy-proxying-with-strapi/)
+- [Proxying with Caddy](/cms/deployment/guides/caddy): Serve Strapi through a Caddy reverse proxy, with automatic HTTPS.
+- [Proxying with HAProxy](/cms/deployment/guides/haproxy): Serve Strapi through an HAProxy load balancer over HTTPS.
 - [Proxying with Nginx](/cms/deployment/guides/nginx): Serve Strapi through an Nginx reverse proxy over HTTPS.
+- [Proxying with Traefik](/cms/deployment/guides/traefik): Serve a containerized Strapi application through Traefik over HTTPS.
 - [Using the PM2 process manager](https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/)
 
 <br/>
@@ -30686,6 +30687,649 @@ The following external guide(s), not officially maintained by Strapi, might also
 :::strapi Multi-tenancy
 If you're looking for multi-tenancy options, the Strapi Blog has a [comprehensive guide](https://strapi.io/blog/multi-tenancy-in-strapi-a-comprehensive-guide).
 :::
+
+
+
+# Proxying Strapi with Caddy
+Source: https://docs.strapi.io/cms/deployment/guides/caddy
+
+# Proxying Strapi with Caddy
+
+Point `server.url` at your public domain and set `server.proxy.koa` to `true` so Strapi trusts the forwarded headers. Then write a 3-line Caddyfile, which obtains and renews the TLS certificate for you.
+
+Strapi listens on a plain HTTP port and does not terminate TLS itself. A reverse proxy such as Caddy sits in front of it to handle HTTPS, serve your application on port 443, and forward requests to the Strapi process. Caddy fills that role by provisioning and renewing TLS certificates for you. This guide covers the Strapi configuration that makes your application proxy-aware, then the Caddyfile that routes traffic to it. The Strapi changes belong in your project, so make them before you deploy. The Caddy changes are made on the machine or in the container that runs Caddy.
+
+:::prerequisites
+- A Strapi 5 application that starts and runs locally (see [deployment guidelines](/cms/deployment#general-guidelines)).
+- Caddy running either on the same host as Strapi or as a container on the same Docker network (see the [Caddy installation documentation](https://caddyserver.com/docs/install)).
+- A domain name whose DNS `A` record points at that server.
+- Ports 80 and 443 open to the public internet. Caddy needs port 80 to complete the certificate challenge.
+- Shell access with `sudo` privileges.
+:::
+
+## Configure Strapi for a reverse proxy
+
+Strapi needs to know the public address it is served from, and it needs to trust the headers the proxy adds. Without these 2 settings, Strapi builds URLs from `localhost:1337` and reads the proxy's IP address as the client IP.
+
+### Set the public URL
+
+The `url` option in the server configuration defines the public address of your application. Strapi uses it to build absolute URLs for password reset emails, third-party login providers, and media asset paths.
+
+Set it to the address your application's visitors use in their browser:
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+```ts title="/config/server.ts"
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+:::caution
+Changing `/config/server.js` requires rebuilding the admin panel. Run `yarn build` or `npm run build` after saving the file.
+:::
+
+### Trust the proxy headers
+
+Caddy adds an `X-Forwarded-For` header carrying the original client IP address. Strapi ignores that header until you turn proxy support on.
+
+Enable proxy support through the `proxy` options in the server configuration:
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  // highlight-start
+  proxy: {
+    koa: true,
+    maxIpsCount: 1,
+  },
+  // highlight-end
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+```ts title="/config/server.ts"
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  // highlight-start
+  proxy: {
+    koa: true,
+    maxIpsCount: 1,
+  },
+  // highlight-end
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+Each option plays a different role:
+
+| Option | Effect |
+|--------|--------|
+| `proxy.koa` | When `true`, Strapi trusts the `X-Forwarded-*` headers. Client IP, protocol, and host are read from the proxy instead of the socket. |
+| `proxy.maxIpsCount` |  Number of addresses to read from the end of the forwarded header chain. Set it to `1` for a single proxy, or to the number of proxies when requests pass through several. |
+| `proxy.ipHeader` |  Header the client IP is read from. It defaults to `X-Forwarded-For`, so set it only when your proxy sends another header, such as `CF-Connecting-IP`. |
+
+:::warning IP spoofing
+Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. Set `maxIpsCount` to the real number of proxies in front of Strapi so that only addresses added by your own infrastructure are read. Caddy discards client-supplied `X-Forwarded-*` values by default, so this matters most when a proxy or CDN sits in front of Caddy.
+:::
+
+Strapi reads the header named by `proxy.ipHeader`, which defaults to `X-Forwarded-For`. Caddy sets that same header, so you do not need to change it.
+
+Caddy helps here in a way that not every proxy does. It discards any `X-Forwarded-*` values a client sends and writes its own, so a client cannot inject a fake address into the chain. That protection depends on Caddy being the first proxy to see the request. If a CDN or load balancer sits in front of Caddy, declare it as a trusted proxy so Caddy preserves the addresses that upstream added:
+
+```
+{
+    servers {
+        trusted_proxies static private_ranges
+    }
+}
+
+api.example.com {
+    reverse_proxy 127.0.0.1:1337
+}
+```
+
+Count every proxy in that chain when you set `proxy.maxIpsCount` on the Strapi side.
+
+### Raise the body size limits for uploads
+
+Caddy does not cap request bodies by default, so the Strapi limits are the ones that apply. If you upload files through the Media Library, raise them.
+
+On the Strapi side, the `body` middleware parses incoming requests. Uploaded files arrive as multipart data, so `formidable.maxFileSize` is the option that caps them. The `formLimit` and `jsonLimit` options cover ordinary form fields and JSON payloads, not the file itself:
+
+```js title="/config/middlewares.js"
+module.exports = [
+  // ...
+  {
+    name: 'strapi::body',
+    config: {
+      formLimit: '100mb', // form body
+      jsonLimit: '100mb', // JSON body
+      textLimit: '100mb', // text body
+      formidable: {
+        maxFileSize: 100 * 1024 * 1024, // uploaded file size, in bytes
+      },
+    },
+  },
+  // ...
+];
+```
+
+The Media Library provider enforces a separate `sizeLimit`, which defaults to 1 GB. To change it, see [local upload provider configuration](/cms/configurations/media-library-providers/local-upload) and [max file size](/cms/features/media-library#max-file-size).
+
+## Configure Caddy
+
+With Strapi aware of the proxy, the next step is the Caddyfile that forwards traffic to it.
+
+### Write the Caddyfile
+
+Caddy reads its configuration from a single file, by default at `/etc/caddy/Caddyfile`. A working Strapi proxy takes 3 lines:
+
+```
+api.example.com {
+    reverse_proxy 127.0.0.1:1337
+}
+```
+
+Naming a public domain at the top of the block is what triggers automatic HTTPS. Caddy obtains a Let's Encrypt certificate for `api.example.com` on first start, redirects HTTP to HTTPS, and renews the certificate before it expires. No certificate paths appear in the configuration.
+
+The `reverse_proxy` directive sets `X-Forwarded-For`, `X-Forwarded-Proto`, and `X-Forwarded-Host` on its own, which is why the block stays short. Those are the headers the Strapi `proxy` options above rely on. WebSocket connections are also proxied without extra configuration, which the [remote data transfer](/cms/features/data-management/transfer) feature relies on.
+
+:::note
+The Caddyfile is the format most deployments use, but it is not the only one. Caddy's native configuration format is JSON, and config adapters translate YAML, TOML, HCL, CUE, and even an existing Nginx configuration into it. Select a format with the `--adapter` flag, as in `caddy run --config caddy.yaml --adapter yaml`. See the [Caddy config adapters documentation](https://caddyserver.com/docs/config-adapters) for the full list. The Strapi options in this guide are the same whichever format you choose.
+:::
+
+Reload Caddy to apply the file:
+
+```bash
+sudo caddy validate --config /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+```
+
+The `caddy validate` command checks the configuration before you reload. Reloading a broken configuration takes the site down, so do not skip it.
+
+### Set an upload size cap
+
+Caddy accepts request bodies of any size unless you tell it otherwise. Setting an explicit cap in `/etc/caddy/Caddyfile` rejects oversized uploads at the proxy rather than after Strapi has buffered them:
+
+```
+api.example.com {
+    request_body {
+        max_size 100MB
+    }
+
+    reverse_proxy 127.0.0.1:1337
+}
+```
+
+Keep this value at or above `formidable.maxFileSize` in the Strapi `body` middleware, otherwise Caddy rejects uploads that Strapi would have accepted. `formLimit` is not the one to compare against: it caps ordinary form fields, not the uploaded file.
+
+:::note
+The `max_size` subdirective is available since Caddy v2.3.0. On an earlier version, leave the block out and let `formidable.maxFileSize` in Strapi enforce the limit instead.
+:::
+
+### Proxy to Strapi running in a container
+
+When Caddy and Strapi both run as containers, `reverse_proxy` targets the Strapi service by name. Inside the Caddy container, `127.0.0.1` refers to that container itself, not to Strapi. The Caddyfile below is mounted into the container by the Compose file that follows:
+
+```
+api.example.com {
+    request_body {
+        max_size 100MB
+    }
+
+    reverse_proxy strapi:1337
+}
+```
+
+Strapi must also bind to `0.0.0.0`. Bound to `localhost`, it accepts connections only from inside its own container and Caddy cannot reach it. The `host` value shown earlier in this guide already uses `0.0.0.0`.
+
+The following Compose file puts both services on one network and publishes only Caddy:
+
+```yml title="./docker-compose.yml"
+services:
+  strapi:
+    image: my-strapi-app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://api.example.com
+    # expose keeps the port reachable inside the network only
+    expose:
+      - '1337'
+    networks:
+      - web
+
+  caddy:
+    image: caddy:alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    depends_on:
+      - strapi
+    networks:
+      - web
+
+volumes:
+  caddy_data:
+
+networks:
+  web:
+```
+
+:::warning
+Mount a persistent volume at `/data`, as shown above. Caddy stores issued certificates there. Without it, every container restart requests new certificates, which reaches the [Let](https://letsencrypt.org/docs/rate-limits/) and leaves the site without a valid certificate until the limit resets.
+:::
+
+## Verify the proxy setup
+
+Strapi exposes a health check route at `/_health` that responds with HTTP `204 No Content` and a `strapi` header. Requesting it through the proxy confirms that Caddy reaches Strapi:
+
+```bash
+curl -I https://api.example.com/_health
+```
+
+A working setup returns the status line and the header:
+
+```
+HTTP/2 204
+strapi: You are so French!
+```
+
+Then confirm the rest of the chain:
+
+1. Open `https://api.example.com/admin` in a browser and log in. The admin panel loads over HTTPS with no certificate warning.
+2. Upload an image in the Media Library. Its URL uses your domain rather than `localhost:1337`.
+3. Check the Strapi output for the real client IP address rather than `127.0.0.1`. If Strapi runs in the foreground, the addresses appear in that terminal.
+
+##  Troubleshooting
+
+Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
+
+- **Caddy fails to obtain a certificate.** The certificate challenge needs port 80 reachable from the public internet, and the domain's DNS `A` record must already resolve to this server. Check both, then read the Caddy logs with `journalctl -u caddy --no-pager | tail -50`.
+
+- **Caddy returns `502 Bad Gateway`.** Caddy cannot reach Strapi. Confirm the Strapi process is running and listening on the port used in `reverse_proxy`, then check that `host` in `/config/server.js` is not bound to an interface Caddy cannot reach.
+
+- **Uploads are rejected as too large.** The request exceeded a size limit. Raise `max_size` in the Caddyfile `request_body` block and `formidable.maxFileSize` in the Strapi `body` middleware, and raise the provider `sizeLimit` if the file is larger than 1 GB.
+
+- **Strapi logs `127.0.0.1` as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
+
+- **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
+
+## Next steps
+
+<NextSteps title="">
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
+
+
+
+# Proxying Strapi with HAProxy
+Source: https://docs.strapi.io/cms/deployment/guides/haproxy
+
+# Proxying Strapi with HAProxy
+
+Tell Strapi its public address and that a proxy sits in front of it, using the `server.url` and `server.proxy` options. Then define an HAProxy frontend that terminates TLS and a backend that health checks Strapi on `/_health`.
+
+Strapi listens on a plain HTTP port and does not terminate TLS itself. A reverse proxy such as HAProxy sits in front of it to handle HTTPS, serve your application on port 443, and forward requests to the Strapi process. HAProxy is a good fit when you also want health checking and load balancing across more than one Strapi instance. This guide covers the Strapi configuration that makes your application proxy-aware, then the HAProxy configuration that routes traffic to it. The Strapi changes belong in your project, so make them before you deploy. The HAProxy changes are made on the machine or in the container that runs HAProxy.
+
+:::prerequisites
+- A Strapi 5 application that starts and runs locally (see [deployment guidelines](/cms/deployment#general-guidelines)).
+- HAProxy 2.2 or later, running either on the same host as Strapi or as a container that can reach it (see the [HAProxy installation instructions](https://github.com/haproxy/haproxy/blob/master/INSTALL)). The health check syntax in this guide requires 2.2 or later.
+- A domain name whose DNS `A` record points at the HAProxy host.
+- A TLS certificate and private key, concatenated into a single PEM file.
+- Shell access with `sudo` privileges.
+:::
+
+## Configure Strapi for a reverse proxy
+
+Strapi needs to know the public address it is served from, and it needs to trust the headers the proxy adds. Without these 2 settings, Strapi builds URLs from `localhost:1337` and reads the proxy's IP address as the client IP.
+
+### Set the public URL
+
+The `url` option in the server configuration defines the public address of your application. Strapi uses it to build absolute URLs for password reset emails, third-party login providers, and media asset paths.
+
+Set it to the address your application's visitors use in their browser:
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+```ts title="/config/server.ts"
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+:::caution
+Changing `/config/server.js` requires rebuilding the admin panel. Run `yarn build` or `npm run build` after saving the file.
+:::
+
+### Trust the proxy headers
+
+HAProxy adds an `X-Forwarded-For` header carrying the original client IP address. Strapi ignores that header until you turn proxy support on.
+
+Enable proxy support through the `proxy` options in the server configuration:
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  // highlight-start
+  proxy: {
+    koa: true,
+    maxIpsCount: 1,
+  },
+  // highlight-end
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+```ts title="/config/server.ts"
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  // highlight-start
+  proxy: {
+    koa: true,
+    maxIpsCount: 1,
+  },
+  // highlight-end
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+Each option plays a different role:
+
+| Option | Effect |
+|--------|--------|
+| `proxy.koa` | When `true`, Strapi trusts the `X-Forwarded-*` headers. Client IP, protocol, and host are read from the proxy instead of the socket. |
+| `proxy.maxIpsCount` |  Number of addresses to read from the end of the forwarded header chain. Set it to `1` for a single proxy, or to the number of proxies when requests pass through several. |
+| `proxy.ipHeader` |  Header the client IP is read from. It defaults to `X-Forwarded-For`, so set it only when your proxy sends another header, such as `CF-Connecting-IP`. |
+
+:::warning IP spoofing
+Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. A client can then send `X-Forwarded-For: 203.0.113.9` and, once HAProxy appends the real address, Strapi reads the spoofed value from the front of the chain instead of the real one at the end. Always set `maxIpsCount` to the real number of proxies in front of Strapi.
+:::
+
+Strapi reads the header named by `proxy.ipHeader`, which defaults to `X-Forwarded-For`. The `option forwardfor` directive in the configuration below sets that same header, so you do not need to change it.
+
+### Raise the body size limits for uploads
+
+HAProxy does not cap request body size by default, so the Strapi limits are the ones that apply. If you upload files through the Media Library, raise them.
+
+On the Strapi side, the `body` middleware parses incoming requests. Uploaded files arrive as multipart data, so `formidable.maxFileSize` is the option that caps them. The `formLimit` and `jsonLimit` options cover ordinary form fields and JSON payloads, not the file itself:
+
+```js title="/config/middlewares.js"
+module.exports = [
+  // ...
+  {
+    name: 'strapi::body',
+    config: {
+      formLimit: '100mb', // form body
+      jsonLimit: '100mb', // JSON body
+      textLimit: '100mb', // text body
+      formidable: {
+        maxFileSize: 100 * 1024 * 1024, // uploaded file size, in bytes
+      },
+    },
+  },
+  // ...
+];
+```
+
+The Media Library provider enforces a separate `sizeLimit`, which defaults to 1 GB. To change it, see [local upload provider configuration](/cms/configurations/media-library-providers/local-upload) and [max file size](/cms/features/media-library#max-file-size).
+
+Large uploads also need room in the HAProxy timeouts, which the configuration below sets to 60 seconds. Raise `timeout client` and `timeout server` if uploads take longer than that to complete.
+
+## Configure HAProxy
+
+With Strapi aware of the proxy, the next step is the HAProxy frontend and backend that carry traffic to it.
+
+### Write the configuration
+
+HAProxy reads its configuration from `/etc/haproxy/haproxy.cfg`. The following defines a frontend that accepts public traffic and a backend that forwards it to Strapi:
+
+```
+global
+    log /dev/log local0
+
+    # Needed by the `show stat` command used when verifying the setup
+    stats socket /var/run/haproxy.sock mode 660 level admin
+
+defaults
+    mode http
+    log global
+    option httplog
+    option forwardfor
+    timeout connect 5s
+    timeout client 60s
+    timeout server 60s
+
+frontend strapi_front
+    bind :80
+    bind :443 ssl crt /etc/haproxy/certs/api.example.com.pem
+
+    # Send every plain HTTP request to HTTPS
+    http-request redirect scheme https unless { ssl_fc }
+
+    # Tell Strapi the original request arrived over HTTPS
+    http-request set-header X-Forwarded-Proto https if { ssl_fc }
+
+    default_backend strapi_back
+
+backend strapi_back
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 127.0.0.1:1337 check
+```
+
+3 directives in that file do the work Strapi depends on.
+
+`option forwardfor` adds the `X-Forwarded-For` header carrying the client address. Without it, Strapi sees only the HAProxy address.
+
+`http-request set-header X-Forwarded-Proto https if { ssl_fc }` is set by hand, because HAProxy does not add it for you. Strapi uses this header to mark the admin panel refresh-token cookie as `Secure`. Absolute URLs for password resets, login provider callbacks, and media assets are built from the `url` option instead, not from this header.
+
+`bind :443 ssl crt` expects the certificate and private key concatenated into one PEM file. This differs from Nginx, which takes them as 2 separate paths.
+
+Validate the file and reload HAProxy:
+
+```bash
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo systemctl reload haproxy
+```
+
+The `haproxy -c` command checks the configuration without applying it. Reloading a broken configuration takes the site down, so do not skip it.
+
+### Proxy to Strapi running in a container
+
+When HAProxy and Strapi both run as containers, the `server` line targets the Strapi service by name. Inside the HAProxy container, `127.0.0.1` refers to that container itself, not to Strapi:
+
+```
+backend strapi_back
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 strapi:1337 check
+```
+
+Strapi must also bind to `0.0.0.0`. Bound to `localhost`, it accepts connections only from inside its own container and HAProxy cannot reach it. The `host` value set under [Set the public URL](#set-the-public-url) already uses `0.0.0.0`.
+
+The following Compose file puts both services on one network and publishes only HAProxy:
+
+```yml title="./docker-compose.yml"
+services:
+  strapi:
+    image: my-strapi-app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://api.example.com
+    # expose keeps the port reachable inside the network only
+    expose:
+      - '1337'
+    networks:
+      - web
+
+  haproxy:
+    image: haproxy:2.8-alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./haproxy/certs:/etc/haproxy/certs:ro
+    depends_on:
+      - strapi
+    networks:
+      - web
+
+networks:
+  web:
+```
+
+HAProxy resolves `strapi` once at startup. If the Strapi container is recreated with a new address, reload HAProxy, or declare a `resolvers` section so it re-resolves the name on its own.
+
+### Health check Strapi
+
+Strapi exposes a health check route at `/_health` that responds with HTTP `204 No Content`. The backend above uses it to decide whether an instance should receive traffic:
+
+```
+backend strapi_back
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 127.0.0.1:1337 check
+```
+
+The `http-check send` line matters. Left to its default, `option httpchk` sends an `OPTIONS` request over HTTP/1.0, so naming the method and URI explicitly is what makes the check hit `/_health` as a `GET`. The `http-check expect status 204` line then requires exactly the status Strapi returns. Without it, HAProxy accepts any 2xx or 3xx response, which would treat an unrelated redirect as healthy.
+
+### Run several Strapi instances
+
+Add a `server` line per instance and a balancing algorithm to spread traffic across them:
+
+```
+backend strapi_back
+    balance roundrobin
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 10.0.0.11:1337 check
+    server strapi2 10.0.0.12:1337 check
+```
+
+Because the instances share one database, a few Strapi behaviors need attention before you scale out.
+
+:::warning Concurrent schema synchronization
+Strapi runs its schema synchronization on startup, once per process, with no lock shared between instances. A restart that leaves the content-types unchanged is safe, because the synchronization detects an unchanged schema and does nothing.
+
+The synchronization is not safe in 2 cases: a release that changes content-types, and a release with pending migrations. Instances starting together then issue concurrent schema changes and migrations against the same database.
+
+For those releases, start or roll a single instance first and let it finish booting before the next one starts. This is a property of running several processes against one database, so spreading the instances across separate hosts does not avoid it.
+:::
+
+Running several instances has 3 other consequences worth knowing:
+
+- [CRON jobs](/cms/configurations/cron) are scheduled inside each Strapi process, so a job runs once per instance rather than once overall. A task set to run nightly runs as many times as you have instances. If your project sets `cron.enabled` to `true`, either move the jobs out of Strapi or keep them on a single instance.
+- Anything Strapi holds in memory belongs to one instance only, because each instance is a separate process. Nothing in Strapi core replicates state between them.
+- The default local upload provider writes files to the instance's own disk. Instances sharing a machine and a project directory share that disk, but instances on different machines or in different containers do not. Use one of the [Media Library providers](/cms/configurations/media-library-providers) backed by object storage in that case.
+
+## Verify the proxy setup
+
+Requesting the health check route through the proxy confirms that HAProxy reaches Strapi:
+
+```bash
+curl -I https://api.example.com/_health
+```
+
+A working setup returns the status line and the header:
+
+```
+HTTP/2 204
+strapi: You are so French!
+```
+
+Then confirm the rest of the chain:
+
+1. Open `https://api.example.com/admin` in a browser and log in. The admin panel loads over HTTPS with no mixed-content warnings.
+2. Upload an image in the Media Library. Its URL uses your domain rather than `localhost:1337`.
+3. Check the Strapi output for the real client IP address rather than the HAProxy address.
+4. Confirm HAProxy considers the backend healthy. The `show stat` command reports each server's state:
+
+```bash
+echo "show stat" | sudo socat stdio /var/run/haproxy.sock
+```
+
+##  Troubleshooting
+
+Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
+
+- **HAProxy returns `503 Service Unavailable`.** No backend server is passing its health check. Confirm the Strapi process is running and that `curl -i http://127.0.0.1:1337/_health` returns `204` from the HAProxy host.
+
+- **The health check fails even though Strapi responds.** The `http-check expect status 204` line requires exactly `204`. If a proxy or middleware in front of the route changes the status, adjust the expected value to match what Strapi actually returns.
+
+- **Uploads fail or time out.** Raise `formidable.maxFileSize` in the Strapi `body` middleware, and raise `timeout client` and `timeout server` in HAProxy so the transfer has time to finish.
+
+- **Strapi logs the HAProxy address as the client IP.** Either `option forwardfor` is missing from the HAProxy configuration, or `proxy.koa` is not set to `true` in Strapi.
+
+- **The admin panel refresh cookie is not marked `Secure`.** The `X-Forwarded-Proto` header is not being set, so Strapi treats the request as plain HTTP. The cookie still reaches the browser over HTTPS, because it defaults to `SameSite=Lax`, but it loses the `Secure` flag that keeps it off plain HTTP. Add the `http-request set-header` line to the frontend.
+
+- **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
+
+## Next steps
+
+<NextSteps title="">
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
 
 
 
@@ -31044,6 +31688,309 @@ Each of the following symptoms points at one side of the setup. The symptom is i
     title="Review the server configuration options"
     description="The full list of options available in the server config file."
     link="/cms/configurations/server"
+  />
+
+
+
+# Proxying Strapi with Traefik
+Source: https://docs.strapi.io/cms/deployment/guides/traefik
+
+# Proxying Strapi with Traefik
+
+Tell Strapi its public address and that a proxy sits in front of it, using the `server.url` and `server.proxy` options. Then add Traefik labels to the Strapi container so Traefik discovers it, routes to port 1337, and requests a certificate for your domain.
+
+Strapi listens on a plain HTTP port and does not terminate TLS itself. A reverse proxy such as Traefik sits in front of it to handle HTTPS, serve your application on port 443, and forward requests to the Strapi process. Traefik differs from the other proxies in this section: instead of a configuration file describing your routes, it watches the Docker API and reads routing rules from labels on each container. That suits deployments where containers come and go. This guide covers the Strapi configuration that makes your application proxy-aware, then the Traefik setup that routes traffic to it.
+
+:::prerequisites
+- A Strapi 5 application that starts and runs locally (see [deployment guidelines](/cms/deployment#general-guidelines)).
+- Strapi packaged as a container image (see [Docker installation](/cms/installation/docker)).
+- [Docker Compose](https://docs.docker.com/compose/) installed on the host.
+- A domain name whose DNS `A` record points at that host.
+- Ports 80 and 443 open to the public internet. Traefik needs one of them to complete the certificate challenge.
+:::
+
+## Configure Strapi for a reverse proxy
+
+Strapi needs to know the public address it is served from, and it needs to trust the headers the proxy adds. Without these 2 settings, Strapi builds URLs from `localhost:1337` and reads the proxy's IP address as the client IP.
+
+### Set the public URL
+
+The `url` option in the server configuration defines the public address of your application. Strapi uses it to build absolute URLs for password reset emails, third-party login providers, and media asset paths.
+
+Set it to the address your application's visitors use in their browser:
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+```ts title="/config/server.ts"
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+The `host` value must stay `0.0.0.0`. Bound to `localhost`, Strapi accepts connections only from inside its own container and Traefik cannot reach it.
+
+:::caution
+Changing `/config/server.js` requires rebuilding the admin panel. Run `yarn build` or `npm run build` after saving the file, then rebuild your image.
+:::
+
+### Trust the proxy headers
+
+Traefik adds an `X-Forwarded-For` header carrying the original client IP address. Strapi ignores that header until you turn proxy support on.
+
+Enable proxy support through the `proxy` options in the server configuration:
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  // highlight-start
+  proxy: {
+    koa: true,
+    maxIpsCount: 1,
+  },
+  // highlight-end
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+```ts title="/config/server.ts"
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  // highlight-start
+  proxy: {
+    koa: true,
+    maxIpsCount: 1,
+  },
+  // highlight-end
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+Each option plays a different role:
+
+| Option | Effect |
+|--------|--------|
+| `proxy.koa` | When `true`, Strapi trusts the `X-Forwarded-*` headers. Client IP, protocol, and host are read from the proxy instead of the socket. |
+| `proxy.maxIpsCount` |  Number of addresses to read from the end of the forwarded header chain. Set it to `1` for a single proxy, or to the number of proxies when requests pass through several. |
+| `proxy.ipHeader` |  Header the client IP is read from. It defaults to `X-Forwarded-For`, so set it only when your proxy sends another header, such as `CF-Connecting-IP`. |
+
+:::warning IP spoofing
+Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. Set `maxIpsCount` to the real number of proxies in front of Strapi so that only addresses added by your own infrastructure are read.
+:::
+
+Strapi reads the header named by `proxy.ipHeader`, which defaults to `X-Forwarded-For`, and Traefik sets that same header. Traefik also sets `X-Forwarded-Proto`, which Strapi uses to mark the admin panel refresh-token cookie as `Secure`. Absolute URLs for password resets, login provider callbacks, and media assets are built from the `url` option instead, not from that header.
+
+Traefik helps here in a way that not every proxy does. By default it sanitizes the `X-Forwarded-*` headers a client sends and writes its own, so a client cannot inject a fake address into the chain. That protection depends on Traefik being the first proxy to see the request. If a CDN or load balancer sits in front of Traefik, list its addresses in the entry point's `forwardedHeaders.trustedIPs` so Traefik preserves what that upstream added, then count every proxy in the chain when you set `proxy.maxIpsCount`:
+
+```yml title="./traefik/traefik.yml"
+entryPoints:
+  websecure:
+    address: ':443'
+    forwardedHeaders:
+      trustedIPs:
+        - '203.0.113.0/24'
+```
+
+### Raise the body size limits for uploads
+
+Traefik streams request bodies through to the backend without a size cap unless you add one, so the Strapi limits are the ones that apply by default. If you upload files through the Media Library, raise them.
+
+On the Strapi side, the `body` middleware parses incoming requests. Uploaded files arrive as multipart data, so `formidable.maxFileSize` is the option that caps them. The `formLimit` and `jsonLimit` options cover ordinary form fields and JSON payloads, not the file itself:
+
+```js title="/config/middlewares.js"
+module.exports = [
+  // ...
+  {
+    name: 'strapi::body',
+    config: {
+      formLimit: '100mb', // form body
+      jsonLimit: '100mb', // JSON body
+      textLimit: '100mb', // text body
+      formidable: {
+        maxFileSize: 100 * 1024 * 1024, // uploaded file size, in bytes
+      },
+    },
+  },
+  // ...
+];
+```
+
+The Media Library provider enforces a separate `sizeLimit`, which defaults to 1 GB. To change it, see [local upload provider configuration](/cms/configurations/media-library-providers/local-upload) and [max file size](/cms/features/media-library#max-file-size).
+
+## Configure Traefik
+
+Traefik reads 2 kinds of configuration. Static configuration, which defines entry points and certificate resolvers, is set once when Traefik starts. Dynamic configuration, which defines routes, comes from container labels and is picked up as containers appear.
+
+### Write the static configuration
+
+The following file defines an entry point on each public port, redirects HTTP to HTTPS, and registers a Let's Encrypt certificate resolver:
+
+```yml title="./traefik/traefik.yml"
+entryPoints:
+  web:
+    address: ':80'
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ':443'
+
+providers:
+  docker:
+    # Only route to containers that opt in with traefik.enable=true
+    exposedByDefault: false
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: admin@example.com
+      storage: /acme/acme.json
+      tlsChallenge: {}
+```
+
+Setting `exposedByDefault` to `false` matters. Left at its default, Traefik publishes every container it can see, including ones you never meant to expose.
+
+### Route traffic to Strapi with labels
+
+With the static configuration in place, the Strapi container declares its own route through labels:
+
+```yml title="./docker-compose.yml"
+services:
+  traefik:
+    image: traefik:v3.7
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_acme:/acme
+    networks:
+      - web
+
+  strapi:
+    image: my-strapi-app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://api.example.com
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.strapi.rule=Host(`api.example.com`)'
+      - 'traefik.http.routers.strapi.entrypoints=websecure'
+      - 'traefik.http.routers.strapi.tls.certresolver=letsencrypt'
+      - 'traefik.http.services.strapi.loadbalancer.server.port=1337'
+    networks:
+      - web
+
+volumes:
+  traefik_acme:
+
+networks:
+  web:
+```
+
+The `loadbalancer.server.port` label is the one people miss. Traefik routes to a port inside the container network, so the Strapi container needs no `ports` mapping of its own. Only Traefik publishes ports to the host, which keeps Strapi off the public interface.
+
+:::warning
+2 parts of this file carry consequences beyond Traefik itself:
+
+- **Mount a persistent volume for the certificate storage path**, as shown above with `traefik_acme`. Traefik stores issued certificates in `acme.json`. Without it, every container restart requests new certificates, which reaches the [Let](https://letsencrypt.org/docs/rate-limits/) and leaves the site without a valid certificate until the limit resets.
+
+- **Mounting the Docker socket gives Traefik full access to the Docker API**, which is equivalent to root on the host. The `:ro` flag shown above applies to the socket file rather than to the API, so it does not limit what Traefik can do through the socket. Treat it as a convention, not a boundary. Do not expose the Traefik dashboard publicly, and for a hardened deployment put the socket behind a proxy that exposes only the endpoints Traefik needs.
+:::
+
+### Cap the request body size
+
+Traefik applies no request size limit by default. To reject oversized uploads at the proxy instead of at Strapi, add the `buffering` middleware to the Strapi container's labels:
+
+```yml title="./docker-compose.yml"
+    labels:
+      # ...
+      - 'traefik.http.middlewares.strapi-limit.buffering.maxRequestBodyBytes=104857600'
+      - 'traefik.http.routers.strapi.middlewares=strapi-limit'
+```
+
+A request over the limit receives a `413` response.
+
+:::note
+The `buffering` middleware reads the entire request body before forwarding it, spilling to disk beyond a threshold. That adds latency and disk usage on every upload, which is a poor trade for a Media Library that accepts large files. If your uploads are large, leave this middleware off and let `formidable.maxFileSize` in Strapi enforce the limit instead.
+:::
+
+## Verify the proxy setup
+
+Bring up the stack and check that Traefik reaches Strapi. Strapi exposes a health check route at `/_health` that responds with HTTP `204 No Content` and a `strapi` header:
+
+```bash
+docker compose up -d
+curl -I https://api.example.com/_health
+```
+
+A working setup returns the status line and the header:
+
+```
+HTTP/2 204
+strapi: You are so French!
+```
+
+Then confirm the rest of the chain:
+
+1. Open `https://api.example.com/admin` in a browser and log in. The admin panel loads over HTTPS with a valid certificate.
+2. Upload an image in the Media Library. Its URL uses your domain rather than `localhost:1337`.
+3. Check the Strapi container logs with `docker compose logs strapi` for the real client IP address rather than the Traefik container address.
+
+##  Troubleshooting
+
+Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
+
+- **Traefik returns `404 page not found`.** No router matched the request. Confirm the container carries `traefik.enable=true`, that the `Host()` rule matches the domain you requested, and that both containers share the same Docker network.
+
+- **Traefik returns `502 Bad Gateway`.** Traefik matched a route but could not reach Strapi. Confirm `loadbalancer.server.port` is `1337` and that Strapi is bound to `0.0.0.0` rather than `localhost`.
+
+- **No certificate is issued.** The certificate challenge needs port 443 reachable from the public internet for `tlsChallenge`, and the domain's DNS `A` record must already resolve to this host. Check the Traefik logs with `docker compose logs traefik`.
+
+- **Certificates are reissued on every restart.** The certificate storage path is not on a persistent volume, so `acme.json` is lost with the container.
+
+- **Uploads fail with a `413` response.** The `buffering` middleware limit is lower than the file size. Raise `maxRequestBodyBytes`, or remove the middleware and let `formidable.maxFileSize` in Strapi enforce the limit.
+
+- **Strapi logs the Traefik container address as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
+
+- **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL, rebuild the admin panel, and rebuild the image.
+
+## Next steps
+
+<NextSteps title="">
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
+  <NextSteps.Step
+    title="Build the Strapi image"
+    description="The Docker installation guide covers the image this guide routes to."
+    link="/cms/installation/docker"
   />
 
 
@@ -31527,7 +32474,7 @@ On Linux based operating systems you need root permissions to bind to any port b
 
 Likewise since Strapi is Node.js based, in order for changes with the SSL certificate to take place (say when it expires) you would need to restart your application for that change to take effect.
 
-Due to these two issues, it is recommended you use a proxy application such as [Nginx](/cms/deployment/guides/nginx), [Caddy](https://forum.strapi.io/t/caddy-proxying-with-strapi/40616), [HAProxy](https://forum.strapi.io/t/haproxy-proxying-with-strapi/), Apache, Traefik, or many others to handle your edge routing to Strapi. The [server configuration](/cms/configurations/server) has a `proxy` block for upstream proxies. Set `proxy.koa` to trust the forwarded headers, and `proxy.maxIpsCount` to the number of proxies in front of Strapi. `proxy.ipHeader` is optional and defaults to `X-Forwarded-For`. Backend plugins such as authentication providers and the upload plugin then build their URLs from the `url` option rather than from `localhost:1337`.
+Due to these two issues, it is recommended you use a proxy application such as [Nginx](/cms/deployment/guides/nginx), [Caddy](/cms/deployment/guides/caddy), [HAProxy](/cms/deployment/guides/haproxy), Apache, [Traefik](/cms/deployment/guides/traefik), or many others to handle your edge routing to Strapi. The [server configuration](/cms/configurations/server) has a `proxy` block for upstream proxies. Set `proxy.koa` to trust the forwarded headers, and `proxy.maxIpsCount` to the number of proxies in front of Strapi. `proxy.ipHeader` is optional and defaults to `X-Forwarded-For`. Backend plugins such as authentication providers and the upload plugin then build their URLs from the `url` option rather than from `localhost:1337`.
 
 ## Can I use TypeScript in a Strapi project?
 

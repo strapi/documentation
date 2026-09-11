@@ -23869,6 +23869,315 @@ jobs:
 
 
 
+# Proxying Strapi with Caddy
+Source: https://docs.strapi.io/cms/deployment/guides/caddy
+
+## Trust the proxy headers
+Description: Caddy helps here in a way that not every proxy does.
+(Source: https://docs.strapi.io/cms/deployment/guides/caddy#trust-the-proxy-headers)
+
+Language: JSON
+File path: /config/server.js
+
+```json
+{
+    servers {
+        trusted_proxies static private_ranges
+    }
+}
+
+api.example.com {
+    reverse_proxy 127.0.0.1:1337
+}
+```
+
+
+## Write the Caddyfile
+Description: Caddy reads its configuration from a single file, by default at /etc/caddy/Caddyfile.
+(Source: https://docs.strapi.io/cms/deployment/guides/caddy#write-the-caddyfile)
+
+Language: JavaScript
+File path: /config/server.js
+
+```js
+api.example.com {
+    reverse_proxy 127.0.0.1:1337
+}
+```
+
+Language: JavaScript
+File path: /config/server.js
+
+```js
+sudo caddy validate --config /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+```
+
+
+## Set an upload size cap
+Description: Caddy accepts request bodies of any size unless you tell it otherwise.
+(Source: https://docs.strapi.io/cms/deployment/guides/caddy#set-an-upload-size-cap)
+
+Language: JavaScript
+File path: N/A
+
+```
+api.example.com {
+    request_body {
+        max_size 100MB
+    }
+
+    reverse_proxy 127.0.0.1:1337
+}
+```
+
+
+## Proxy to Strapi running in a container
+Description: When Caddy and Strapi both run as containers, reverse_proxy targets the Strapi service by name.
+(Source: https://docs.strapi.io/cms/deployment/guides/caddy#proxy-to-strapi-running-in-a-container)
+
+Language: JavaScript
+File path: N/A
+
+```
+api.example.com {
+    request_body {
+        max_size 100MB
+    }
+
+    reverse_proxy strapi:1337
+}
+```
+
+Language: DOCKERFILE
+File path: ./docker-compose.yml
+
+```dockerfile
+services:
+  strapi:
+    image: my-strapi-app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://api.example.com
+    # expose keeps the port reachable inside the network only
+    expose:
+      - '1337'
+    networks:
+      - web
+
+  caddy:
+    image: caddy:alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    depends_on:
+      - strapi
+    networks:
+      - web
+
+volumes:
+  caddy_data:
+
+networks:
+  web:
+```
+
+
+## Verify the proxy setup
+Description: Strapi exposes a health check route at /_health that responds with HTTP 204 No Content and a strapi header.
+(Source: https://docs.strapi.io/cms/deployment/guides/caddy#verify-the-proxy-setup)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -I https://api.example.com/_health
+```
+
+Language: JavaScript
+File path: N/A
+
+```
+HTTP/2 204
+strapi: You are so French!
+```
+
+
+
+# Proxying Strapi with HAProxy
+Source: https://docs.strapi.io/cms/deployment/guides/haproxy
+
+## Write the configuration
+Description: HAProxy reads its configuration from /etc/haproxy/haproxy.cfg.
+(Source: https://docs.strapi.io/cms/deployment/guides/haproxy#write-the-configuration)
+
+Language: JavaScript
+File path: /config/server.js
+
+```js
+global
+    log /dev/log local0
+
+    # Needed by the `show stat` command used when verifying the setup
+    stats socket /var/run/haproxy.sock mode 660 level admin
+
+defaults
+    mode http
+    log global
+    option httplog
+    option forwardfor
+    timeout connect 5s
+    timeout client 60s
+    timeout server 60s
+
+frontend strapi_front
+    bind :80
+    bind :443 ssl crt /etc/haproxy/certs/api.example.com.pem
+
+    # Send every plain HTTP request to HTTPS
+    http-request redirect scheme https unless { ssl_fc }
+
+    # Tell Strapi the original request arrived over HTTPS
+    http-request set-header X-Forwarded-Proto https if { ssl_fc }
+
+    default_backend strapi_back
+
+backend strapi_back
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 127.0.0.1:1337 check
+```
+
+Language: JavaScript
+File path: /config/server.js
+
+```js
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo systemctl reload haproxy
+```
+
+
+## Proxy to Strapi running in a container
+Description: When HAProxy and Strapi both run as containers, the server line targets the Strapi service by name.
+(Source: https://docs.strapi.io/cms/deployment/guides/haproxy#proxy-to-strapi-running-in-a-container)
+
+Language: JavaScript
+File path: /config/server.js
+
+```js
+backend strapi_back
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 strapi:1337 check
+```
+
+Language: DOCKERFILE
+File path: ./docker-compose.yml
+
+```dockerfile
+services:
+  strapi:
+    image: my-strapi-app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://api.example.com
+    # expose keeps the port reachable inside the network only
+    expose:
+      - '1337'
+    networks:
+      - web
+
+  haproxy:
+    image: haproxy:2.8-alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./haproxy/certs:/etc/haproxy/certs:ro
+    depends_on:
+      - strapi
+    networks:
+      - web
+
+networks:
+  web:
+```
+
+
+## Health check Strapi
+Description: Strapi exposes a health check route at /_health that responds with HTTP 204 No Content.
+(Source: https://docs.strapi.io/cms/deployment/guides/haproxy#health-check-strapi)
+
+Language: JavaScript
+File path: N/A
+
+```
+backend strapi_back
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 127.0.0.1:1337 check
+```
+
+
+## Run several Strapi instances
+Description: Add a server line per instance and a balancing algorithm to spread traffic across them:
+(Source: https://docs.strapi.io/cms/deployment/guides/haproxy#run-several-strapi-instances)
+
+Language: JavaScript
+File path: N/A
+
+```
+backend strapi_back
+    balance roundrobin
+    option httpchk
+    http-check send meth GET uri /_health
+    http-check expect status 204
+
+    server strapi1 10.0.0.11:1337 check
+    server strapi2 10.0.0.12:1337 check
+```
+
+
+## Verify the proxy setup
+Description: Requesting the health check route through the proxy confirms that HAProxy reaches Strapi:
+(Source: https://docs.strapi.io/cms/deployment/guides/haproxy#verify-the-proxy-setup)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -I https://api.example.com/_health
+```
+
+Language: JavaScript
+File path: N/A
+
+```
+HTTP/2 204
+strapi: You are so French!
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+echo "show stat" | sudo socat stdio /var/run/haproxy.sock
+```
+
+
+
 # Proxying Strapi with Nginx
 Source: https://docs.strapi.io/cms/deployment/guides/nginx
 
@@ -24043,6 +24352,141 @@ Language: Bash
 File path: N/A
 
 ```bash
+curl -I https://api.example.com/_health
+```
+
+Language: JavaScript
+File path: N/A
+
+```
+HTTP/2 204
+strapi: You are so French!
+```
+
+
+
+# Proxying Strapi with Traefik
+Source: https://docs.strapi.io/cms/deployment/guides/traefik
+
+## Trust the proxy headers
+Description: Traefik helps here in a way that not every proxy does.
+(Source: https://docs.strapi.io/cms/deployment/guides/traefik#trust-the-proxy-headers)
+
+Language: YAML
+File path: ./traefik/traefik.yml
+
+```yaml
+entryPoints:
+  websecure:
+    address: ':443'
+    forwardedHeaders:
+      trustedIPs:
+        - '203.0.113.0/24'
+```
+
+
+## Write the static configuration
+Description: The following file defines an entry point on each public port, redirects HTTP to HTTPS, and registers a Let's Encrypt certificate resolver:
+(Source: https://docs.strapi.io/cms/deployment/guides/traefik#write-the-static-configuration)
+
+Language: DOCKERFILE
+File path: ./traefik/traefik.yml
+
+```dockerfile
+entryPoints:
+  web:
+    address: ':80'
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ':443'
+
+providers:
+  docker:
+    # Only route to containers that opt in with traefik.enable=true
+    exposedByDefault: false
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: admin@example.com
+      storage: /acme/acme.json
+      tlsChallenge: {}
+```
+
+
+## Route traffic to Strapi with labels
+Description: With the static configuration in place, the Strapi container declares its own route through labels:
+(Source: https://docs.strapi.io/cms/deployment/guides/traefik#route-traffic-to-strapi-with-labels)
+
+Language: YAML
+File path: ./docker-compose.yml
+
+```yaml
+services:
+  traefik:
+    image: traefik:v3.7
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_acme:/acme
+    networks:
+      - web
+
+  strapi:
+    image: my-strapi-app
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://api.example.com
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.strapi.rule=Host(`api.example.com`)'
+      - 'traefik.http.routers.strapi.entrypoints=websecure'
+      - 'traefik.http.routers.strapi.tls.certresolver=letsencrypt'
+      - 'traefik.http.services.strapi.loadbalancer.server.port=1337'
+    networks:
+      - web
+
+volumes:
+  traefik_acme:
+
+networks:
+  web:
+```
+
+
+## Cap the request body size
+Description: Traefik applies no request size limit by default.
+(Source: https://docs.strapi.io/cms/deployment/guides/traefik#cap-the-request-body-size)
+
+Language: YAML
+File path: ./docker-compose.yml
+
+```yaml
+    labels:
+      # ...
+      - 'traefik.http.middlewares.strapi-limit.buffering.maxRequestBodyBytes=104857600'
+      - 'traefik.http.routers.strapi.middlewares=strapi-limit'
+```
+
+
+## Verify the proxy setup
+Description: Bring up the stack and check that Traefik reaches Strapi.
+(Source: https://docs.strapi.io/cms/deployment/guides/traefik#verify-the-proxy-setup)
+
+Language: Bash
+File path: N/A
+
+```bash
+docker compose up -d
 curl -I https://api.example.com/_health
 ```
 
