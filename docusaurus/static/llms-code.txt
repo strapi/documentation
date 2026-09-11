@@ -24365,6 +24365,210 @@ strapi: You are so French!
 
 
 
+# Running Strapi with PM2
+Source: https://docs.strapi.io/cms/deployment/guides/pm2
+
+## Install PM2
+Description: Install PM2 globally so the pm2 command is available to your shell and to the startup script:
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#install-pm2)
+
+Language: Bash
+File path: .config.js
+
+```bash
+yarn global add pm2
+```
+
+---
+Language: Bash
+File path: .config.js
+
+```bash
+npm install -g pm2
+```
+
+Language: JavaScript
+File path: .config.js
+
+```js
+pm2 --version
+```
+
+
+## Build the admin panel
+Description: The admin panel is a static bundle that must be built before the server starts in production.
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#build-the-admin-panel)
+
+Language: JavaScript
+File path: .config.js
+
+```js
+NODE_ENV=production yarn build
+```
+
+---
+Language: JavaScript
+File path: .config.js
+
+```js
+NODE_ENV=production npm run build
+```
+
+
+## Create an ecosystem file
+Description: PM2 can start an application from the command line, but a configuration file keeps the settings under version control and makes each deployment repeatable.
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#create-an-ecosystem-file)
+
+Language: DOCKERFILE
+File path: /ecosystem.config.js
+
+```dockerfile
+module.exports = {
+  apps: [
+    {
+      name: 'strapi',
+      cwd: '/srv/strapi',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        HOST: '0.0.0.0',
+        PORT: 1337,
+      },
+    },
+  ],
+};
+```
+
+
+## Start Strapi with PM2
+Description: Start the application from the ecosystem file:
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#start-strapi-with-pm2)
+
+Language: Bash
+File path: N/A
+
+```bash
+pm2 start ecosystem.config.js
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+pm2 list
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+pm2 logs strapi --lines 100
+```
+
+
+## Keep Strapi running after a reboot
+Description: Generate the init script.
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#keep-strapi-running-after-a-reboot)
+
+Language: Bash
+File path: N/A
+
+```bash
+   pm2 startup
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+   pm2 save
+```
+
+
+## Manage logs
+Description: PM2 writes each application's output to files in ~/.pm2/logs/.
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#manage-logs)
+
+Language: Bash
+File path: N/A
+
+```bash
+pm2 install pm2-logrotate
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+pm2 set pm2-logrotate:max_size 10M
+pm2 set pm2-logrotate:retain 7
+```
+
+
+## Update a running deployment
+Description: Fetch the new code on the server.
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#update-a-running-deployment)
+
+Language: Bash
+File path: N/A
+
+```bash
+   pm2 restart strapi --update-env
+```
+
+
+## Run more than one instance
+Description: Add an entry point at the root of your project that starts Strapi directly:
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#run-more-than-one-instance)
+
+Language: JavaScript
+File path: /server.js
+
+```js
+const strapi = require('@strapi/strapi');
+
+strapi.createStrapi(/* {...} */).start();
+```
+
+Language: JavaScript
+File path: /ecosystem.config.js
+
+```js
+module.exports = {
+  apps: [
+    {
+      name: 'strapi',
+      cwd: '/srv/strapi',
+      // highlight-start
+      script: './server.js',
+      exec_mode: 'cluster',
+      instances: 'max',
+      // highlight-end
+      env: {
+        NODE_ENV: 'production',
+        HOST: '0.0.0.0',
+        PORT: 1337,
+      },
+    },
+  ],
+};
+```
+
+
+## Verify the application is running
+Description: Run pm2 list and check that the Strapi entry shows online with a restart count that is not climbing.
+(Source: https://docs.strapi.io/cms/deployment/guides/pm2#verify-the-application-is-running)
+
+Language: Bash
+File path: N/A
+
+```bash
+   curl -I http://localhost:1337/_health
+```
+
+
+
 # Proxying Strapi with Traefik
 Source: https://docs.strapi.io/cms/deployment/guides/traefik
 
