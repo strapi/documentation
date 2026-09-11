@@ -51,6 +51,7 @@ const sidebars = {
           collapsed: true,
           link: { type: 'generated-index', title: 'Deployment guides', slug: '/cms/deployment/guides' },
           items: [
+            'cms/deployment/guides/caddy',
             'cms/deployment/guides/nginx',
           ],
         },
