@@ -128,6 +128,16 @@ For each of the 12 rules, here is how to detect violations and what severity to 
 - **Strapi-specific (inline callouts):**
   - Bold prefixes used as callouts (`**Note:**`, `**Important:**`, `**Warning:**`, `**Caution:**`, `**Tip:**`) must be converted to Docusaurus admonitions (`:::note`, `:::caution`, `:::warning`, `:::tip`).
   - **Severity:** error
+- **Strapi-specific (callout scale):**
+  - The scale, from lowest to highest, is `:::info`, `:::note`, `:::tip`, `:::prerequisites`, `:::caution`, `:::warning`, plus `:::strapi` for links to the Strapi ecosystem. `:::caution` covers mistake prevention, recommendations, and unstable behavior; `:::warning` is the top level and covers data loss, crash prevention, and unsupported behavior.
+  - `:::danger` is not part of the scale. It renders the same red block titled "Warning" as `:::warning` (`docusaurus/src/theme/Admonition/index.js`, `docusaurus/src/scss/admonition.scss`), so it adds no signal. Flag it and propose `:::warning`.
+  - **Severity:** error
+- **Strapi-specific (consecutive callouts):**
+  - 3 or more callouts in a row, whatever their types, are a wall the reader stops reading. Keep one and move the rest to prose or a bullet list.
+  - Two callouts of the same type back to back are one callout: merge them into a single block, with a bullet per point.
+  - Two high-level callouts (`:::caution`, `:::warning`, `:::danger`) back to back flatten the hierarchy, and the severe stops standing out from the merely annoying. Keep one alert.
+  - A pair of different low-level types (`:::info`, `:::note`, `:::tip` in any combination) is harmless, and so is the documented `:::prerequisites` plus `:::caution` page-header motif, as long as the run stops at 2. Do NOT flag either.
+  - **Severity:** warning
 
 ### Rule 3: Direct and neutral tone
 - **Detect:** Jokes, rhetorical questions, emojis (except in UI element references), casual language ("gonna", "wanna", "pretty cool", "awesome", "super")
