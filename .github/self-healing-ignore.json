@@ -1259,6 +1259,11 @@
       "number": 27524,
       "reason": "Router: Bug fix that restores correct Media Library behavior. The fix prevents a regression where replaced files were incorrectly moved to root. Existing Media Library documentation already describes the correct expected behavior.",
       "added": "2026-09-10"
+    },
+    {
+      "number": 27608,
+      "reason": "Triage: administrative merge of release; no new behavior",
+      "added": "2026-09-11"
     }
   ]
 }
