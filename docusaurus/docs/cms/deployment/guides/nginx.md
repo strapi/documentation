@@ -3,6 +3,8 @@ title: Proxying Strapi with Nginx
 sidebar_label: Nginx
 displayed_sidebar: cmsSidebar
 description: Configure Strapi and Nginx so that a Strapi application is served through an Nginx reverse proxy over HTTPS.
+pagination_prev: cms/deployment
+pagination_next: cms/deployment/guides
 tags:
 - deployment
 - deployment guide

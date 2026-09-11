@@ -22976,7 +22976,7 @@ The server configuration for the admin panel can be configured with the followin
 | `port`                            | Port for the admin panel server. | string        | `8000`                                                                                                                              |
 
 :::note
-If you add a path to the `url` option, it won't prefix your application. To do so, use a proxy server like Nginx (see [optional software deployment guides](/cms/deployment#additional-resources)).
+If you add a path to the `url` option, it won't prefix your application. To do so, use a proxy server like Nginx (see [optional software deployment guides](/cms/deployment#deployment-guides)).
 :::
 
 ### Update the admin panel's path only
