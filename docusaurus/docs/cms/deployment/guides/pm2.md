@@ -248,7 +248,7 @@ Confirm the application is running and reachable:
 3. Reboot the server.
 4. Run `pm2 list` again. The application should be `online` without you having started it.
 
-## Troubleshooting
+## <Icon name="bug" /> Troubleshooting
 
 Each of the following symptoms points at a specific cause. The symptom is in bold, followed by what causes it and what to change:
 
