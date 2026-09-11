@@ -44,14 +44,7 @@ const sidebars = {
           id: 'cms/features/content-type-builder',
           label: 'Content Type Builder',
         },
-        {
-          type: 'category',
-          label: 'Deployment',
-          link: { type: 'doc', id: 'cms/deployment' },
-          items: [
-            'cms/deployment/guides/nginx',
-          ],
-        },
+        'cms/deployment',
         'cms/billing-portal',
       ],
     },
