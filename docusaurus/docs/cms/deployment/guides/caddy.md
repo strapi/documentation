@@ -223,6 +223,11 @@ Each of the following symptoms points at one side of the setup. The symptom is i
 ## Next steps
 
 <NextSteps title="">
+    <NextSteps.Step
+    title="Run Strapi under a process manager"
+    description="PM2 restarts Strapi on failure and starts it again after a reboot."
+    link="/cms/deployment/guides/pm2"
+  />
   <NextSteps.Step
     title="Review the server configuration options"
     description="The full list of options available in the server config file."
