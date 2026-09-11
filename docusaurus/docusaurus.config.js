@@ -365,7 +365,7 @@ const config = {
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['bash', 'diff', 'json'],
+        additionalLanguages: ['bash', 'diff', 'json', 'nginx', 'toml'],
       },
       zoom: {
         // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images

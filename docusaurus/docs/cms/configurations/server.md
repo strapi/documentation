@@ -37,8 +37,6 @@ The `/config/server.js` file can include the following parameters:
 | `host`<br/><br/>❗️ _Mandatory_     | Host name                                                                                                                                                                                                                                                                                                                                                                   | string                                                                                            | `localhost`         |
 | `port`<br/><br/>❗️ _Mandatory_     | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer                                                                                           | `1337`              |
 | `app.keys`<br/><br/>❗️ _Mandatory_ | Declare session keys (based on <ExternalLink to="https://github.com/koajs/session/blob/master/Readme.md" text="Koa session"/>), which is used by the `session` middleware for the Users & Permissions plugin and the Documentation plugin.                                                                                                                                                           | array of strings                                                                                  | `undefined`         |
-| `app.proxyIpHeader`                 | Proxy IP header name to trust when identifying the client's real IP address. Set when behind a reverse proxy (e.g., Nginx, Apache, load balancer). For security, always pair with `app.maxIpsCount` to prevent header spoofing. Example: `'X-Forwarded-For'`, `'CF-Connecting-IP'`.                                                                                        | string                                                                                            | `'X-Forwarded-For'` |
-| `app.maxIpsCount`                   | Maximum number of IP addresses to read from the proxy IP header. Must be set when using a reverse proxy to prevent IP spoofing attacks. Set to `1` for a single proxy, `2` for proxy chains, etc. Setting to `0` (Koa default) means unlimited, which is insecure behind a proxy.                                                                                             | integer                                                                                           | `0`                 |
 | `socket`                            | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g <ExternalLink to="https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode" text="Heroku nginx buildpack"/>) | string \| integer                                                                                 | `/tmp/nginx.socket` |
 | `emitErrors`                        | Enable errors to be emitted to `koa` when they happen in order to attach custom logic or use error reporting services.                                                                                                                                                                                                                                                      | boolean                                                                                           | `false`             |
 | `url`                               | Public url of the server. Required for many different features (ex: reset password, third login providers etc.). Also enables proxy support such as Apache or Nginx, example: `https://mywebsite.com/api`. The url can be relative, if so, it is used with `http://${host}:${port}` as the base url. An absolute url is however recommended.                                | string                                                                                            | `''`                |
@@ -48,6 +46,8 @@ The `/config/server.js` file can include the following parameters:
 | `proxy.http`                        | The proxy for all (non-fetch) http requests                                                                                                                                                                                                                                                                                                                                 | string                                                                                            |                     |
 | `proxy.https`                       | The proxy for all (non-fetch) https requests                                                                                                                                                                                                                                                                                                                                | string                                                                                            |                     |
 | `proxy.koa`                         | Set the koa variable `app.proxy`. When `true`, proxy header fields will be trusted.                                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
+| `proxy.ipHeader`                    | <VersionBadge version="5.52.0+" noTooltip /> Proxy IP header name to trust when identifying the client's real IP address. Set when behind a reverse proxy (e.g., Nginx, Apache, load balancer). For security, always pair with `proxy.maxIpsCount` to prevent header spoofing. Example: `'X-Forwarded-For'`, `'CF-Connecting-IP'`.                                                                                        | string                                                                                            | `'X-Forwarded-For'` |
+| `proxy.maxIpsCount`                 | <VersionBadge version="5.52.0+" noTooltip /> Maximum number of IP addresses to read from the proxy IP header. Must be set when using a reverse proxy to prevent IP spoofing attacks. Set to `1` for a single proxy, `2` for proxy chains, etc. Setting to `0` (Koa default) means unlimited, which is insecure behind a proxy.                                                                                             | integer                                                                                           | `0`                 |
 | `cron`                              | Cron configuration (powered by <ExternalLink to="https://github.com/node-schedule/node-schedule" text="`node-schedule`"/>)                                                                                                                                                                                                                                                                           | object                                                                                            |                     |
 | `cron.enabled`                      | Enable or disable [CRON jobs](/cms/configurations/cron.md) to schedule jobs at specific dates.                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
 | `cron.tasks`                        | Declare [CRON jobs](/cms/configurations/cron.md) to be run at specific dates.                                                                                                                                                                                                                                                                                          | object                                                                                            |                     |
@@ -147,13 +147,15 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 1337),
   app: {
     keys: env.array('APP_KEYS'),
-    proxyIpHeader: env('PROXY_IP_HEADER', 'X-Forwarded-For'),
-    maxIpsCount: env.int('MAX_IPS_COUNT', 1),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: { koa: env.bool('IS_PROXIED', true) },
+  proxy: {
+    koa: env.bool('IS_PROXIED', true),
+    ipHeader: env('PROXY_IP_HEADER', 'X-Forwarded-For'),
+    maxIpsCount: env.int('MAX_IPS_COUNT', 1),
+  },
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
   },
@@ -193,13 +195,15 @@ export default ({ env }) => ({
   port: env.int('PORT', 1337),
   app: {
     keys: env.array('APP_KEYS'),
-    proxyIpHeader: env('PROXY_IP_HEADER', 'X-Forwarded-For'),
-    maxIpsCount: env.int('MAX_IPS_COUNT', 1),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: { koa: env.bool('IS_PROXIED', true) },
+  proxy: {
+    koa: env.bool('IS_PROXIED', true),
+    ipHeader: env('PROXY_IP_HEADER', 'X-Forwarded-For'),
+    maxIpsCount: env.int('MAX_IPS_COUNT', 1),
+  },
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
   },

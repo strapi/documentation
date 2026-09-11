@@ -44,6 +44,7 @@ const RECOGNIZED_LANGS = new Set([
   'powershell', 'ps1',
   'sql', 'dockerfile',
   'toml', 'ini', 'env', 'dotenv', 'diff', 'text', 'html', 'graphql',
+  'nginx',
 ]);
 
 const DISPLAY_LANG_MAP = new Map([
@@ -73,6 +74,7 @@ const DISPLAY_LANG_MAP = new Map([
   ['sql', 'sql'],
   ['dockerfile', 'dockerfile'],
   ['toml', 'toml'],
+  ['nginx', 'nginx'],
   ['ini', 'ini'],
   ['env', 'env'],
   ['diff', 'diff'],
