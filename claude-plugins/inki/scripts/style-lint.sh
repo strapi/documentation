@@ -106,13 +106,16 @@ strip_excluded_content() {
 }
 
 # Helper: case-insensitive word match using grep -Ei with word boundaries
-# macOS grep -E does not support \b, so we use [[:<:]] and [[:>:]] on macOS
-# and \b on Linux.
-word_boundary_start='[[:<:]]'
-word_boundary_end='[[:>:]]'
-if grep -E '\b' /dev/null 2>/dev/null; then
+# GNU grep -E supports \b; the BSD grep shipped with macOS does not and uses
+# [[:<:]] and [[:>:]] instead. Probe with real input: matching against an empty
+# file always exits 1, so an exit-status probe on /dev/null can never succeed
+# and would leave every platform on the BSD classes.
+if printf 'x' | grep -qE '\bx\b' 2>/dev/null; then
   word_boundary_start='\b'
   word_boundary_end='\b'
+else
+  word_boundary_start='[[:<:]]'
+  word_boundary_end='[[:>:]]'
 fi
 
 lint_file() {
