@@ -264,9 +264,9 @@ Content-types created in one environment travel with your code, not with your da
 ## Additional resources
 
 :::prerequisites
-Before following any of the provider guides listed below:
+Before following any of the guides listed below:
 
-* Your Strapi project is [created](/cms/installation) and its code is hosted on GitHub.
+* Your Strapi project is [created](/cms/installation).
 * You have read the [general deployment guidelines](/cms/deployment#general-guidelines).
 :::
 
@@ -275,13 +275,13 @@ The following guides cover serving Strapi behind a reverse proxy and running it 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="arrow-square-out" title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
 <CustomDocCard icon="arrow-square-out" title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />
-<CustomDocCard icon="plugs-connected" title="Proxying with Nginx" link="/cms/deployment/guides/nginx" />
+<CustomDocCard icon="plugs-connected" title="Proxying with Nginx" description="Serve Strapi through an Nginx reverse proxy over HTTPS." link="/cms/deployment/guides/nginx" />
 <CustomDocCard icon="arrow-square-out" title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
 </CustomDocCardsWrapper>
 
 <br/>
 
-In addition, the <ExternalLink to="https://strapi.io/integrations" text="integrations page"/> of the Strapi website include information on how to integrate Strapi with many resources, including how to deploy Strapi on the following 3rd-party platforms:
+In addition, the <ExternalLink to="https://strapi.io/integrations" text="integrations page"/> of the Strapi website include information on how to integrate Strapi with many resources, including how to deploy Strapi on the following 3rd-party platforms. These guides expect your code to be hosted on GitHub:
 
 <CustomDocCard emoji="🔗" small title="Deploy Strapi on AWS"  link="https://strapi.io/integrations/aws" />
 
