@@ -31,9 +31,9 @@ The link has two parts: the **deployment host** and the **page path**. Build the
 
 ### Page path
 
-Identify the primary page path from the changed files: the most important new or modified `.md`/`.mdx` file under `docusaurus/docs/`, stripped of the `docusaurus/docs/` prefix and the `.md`/`.mdx` extension (e.g. `docusaurus/docs/cms/features/users-permissions.md` → `/cms/features/users-permissions`). Prefer a newly added page over a modified one.
+Identify the primary page path from the changed files: the most important new or modified `.md`/`.mdx` file under `docusaurus/docs/cms/` or `docusaurus/docs/cloud/`, stripped of the `docusaurus/docs/` prefix and the `.md`/`.mdx` extension (e.g. `docusaurus/docs/cms/features/users-permissions.md` → `/cms/features/users-permissions`). Prefer a newly added page over a modified one. Only `cms/` and `cloud/` hold pages readers open: anything else under `docusaurus/docs/`, `snippets/` in particular, is a fragment imported into a page, so it is never the preview target.
 
-**When no page under `docusaurus/docs/` is changed** (for example a `repo/` PR touching only `claude-plugins/`, config, or tooling), there is no doc page to preview: **omit the preview line entirely** rather than building a link to a page that does not exist. Do not fall back to the preview root. Skip the rest of this step.
+**When no page under `docusaurus/docs/cms/` or `docusaurus/docs/cloud/` is changed** (a `repo/` PR touching only `claude-plugins/`, config, or tooling, or a PR touching only `docusaurus/docs/snippets/`), there is no doc page to preview: **omit the preview line entirely** rather than building a link to a page that does not exist. Do not fall back to the preview root. Skip the rest of this step.
 
 ### Deployment host
 
