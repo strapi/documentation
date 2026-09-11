@@ -50,7 +50,7 @@ Caddy adds an `X-Forwarded-For` header carrying the original client IP address. 
 
 <ProxyTrustHeaders />
 
-:::caution
+:::warning IP spoofing
 Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. Set `maxIpsCount` to the real number of proxies in front of Strapi so that only addresses added by your own infrastructure are read. Caddy discards client-supplied `X-Forwarded-*` values by default, so this matters most when a proxy or CDN sits in front of Caddy.
 :::
 
@@ -123,10 +123,10 @@ api.example.com {
 }
 ```
 
-Keep this value at or above the Strapi `formLimit`, otherwise Caddy rejects uploads that Strapi would have accepted.
+Keep this value at or above `formidable.maxFileSize` in the Strapi `body` middleware, otherwise Caddy rejects uploads that Strapi would have accepted. `formLimit` is not the one to compare against: it caps ordinary form fields, not the uploaded file.
 
 :::note
-The `request_body` directive requires Caddy v2.10.0 or later, where it is still marked experimental and may change in a future release. On an earlier version, or if you would rather not depend on an experimental directive, leave it out and let `formidable.maxFileSize` in Strapi enforce the limit instead.
+The `max_size` subdirective is available since Caddy v2.3.0. On an earlier version, leave the block out and let `formidable.maxFileSize` in Strapi enforce the limit instead.
 :::
 
 ### Proxy to Strapi running in a container
