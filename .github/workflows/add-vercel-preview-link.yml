@@ -12,18 +12,28 @@ name: Add the Vercel preview link to a PR description
 # one on the default branch, so a fork cannot alter this job through its PR.
 on:
   deployment_status:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to add the preview link to'
+        required: true
+        type: string
 
 permissions:
   pull-requests: write
   contents: read
+  deployments: read
 
 jobs:
   add-preview-link:
     # Vercel names its per-PR environment "Preview". Production deployments and
-    # failed or in-progress builds are ignored.
+    # failed or in-progress builds are ignored. A manual run carries no
+    # deployment payload, so it bypasses that check and resolves the deployment
+    # from the pull request instead.
     if: >
-      github.event.deployment_status.state == 'success' &&
-      github.event.deployment.environment == 'Preview'
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Preview')
     runs-on: ubuntu-latest
 
     steps:
@@ -35,26 +45,37 @@ jobs:
             // Vercel truncates a branch slug that does not fit the 63-character
             // DNS label and appends a hash, so a slug-built host is only
             // reliable below this length. Past it, fall back to the immutable
-            // deployment URL the event carries.
+            // deployment URL.
             const MAX_SLUG = 35;
 
             const { owner, repo } = context.repo;
-            const sha = context.payload.deployment.sha;
+            const manual = context.eventName === 'workflow_dispatch';
 
-            // `deployment.ref` is a SHA, not a branch name, so the pull request
-            // (and its head branch) has to be resolved from the commit.
-            const { data: prs } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-              owner, repo, commit_sha: sha,
-            });
-            const pr = prs.find((p) => p.state === 'open');
-            if (!pr) {
-              core.info(`No open pull request for ${sha}, nothing to do.`);
-              return;
+            // Resolve the pull request. A deployment event carries only a SHA
+            // (`deployment.ref` is a SHA too, not a branch name), so the PR has
+            // to be looked up from the commit. A manual run names it directly.
+            let pr;
+            if (manual) {
+              const number = Number(context.payload.inputs.pr_number);
+              if (!Number.isInteger(number)) {
+                core.setFailed(`Not a PR number: ${context.payload.inputs.pr_number}`);
+                return;
+              }
+              ({ data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: number }));
+            } else {
+              const { data: prs } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner, repo, commit_sha: context.payload.deployment.sha,
+              });
+              pr = prs.find((p) => p.state === 'open');
+              if (!pr) {
+                core.info(`No open pull request for ${context.payload.deployment.sha}, nothing to do.`);
+                return;
+              }
             }
 
             const body = pr.body || '';
             if (body.includes(MARKER)) {
-              core.info(`PR #${pr.number} already has a preview link.`);
+              core.notice(`PR #${pr.number} already has a preview link, leaving it untouched.`);
               return;
             }
 
@@ -68,7 +89,7 @@ jobs:
               f.filename.startsWith('docusaurus/docs/') && /\.mdx?$/.test(f.filename)
             );
             if (pages.length === 0) {
-              core.info(`PR #${pr.number} changes no documentation page.`);
+              core.notice(`PR #${pr.number} changes no documentation page, no link to add.`);
               return;
             }
             const page = pages.find((f) => f.status === 'added') || pages[0];
@@ -78,12 +99,43 @@ jobs:
               .replace(/\/index$/, '');
 
             const slug = pr.head.ref.replace(/\//g, '-');
-            const host = slug.length <= MAX_SLUG
-              ? `https://documentation-git-${slug}-strapijs.vercel.app`
-              : context.payload.deployment_status.environment_url;
+            let host = `https://documentation-git-${slug}-strapijs.vercel.app`;
+
+            if (slug.length > MAX_SLUG) {
+              // The slug-built host would be truncated, so use the immutable
+              // deployment URL: taken from the event, or looked up from the
+              // PR's head commit on a manual run.
+              let url = manual ? null : context.payload.deployment_status.environment_url;
+
+              if (manual) {
+                const { data: deployments } = await github.rest.repos.listDeployments({
+                  owner, repo, sha: pr.head.sha, environment: 'Preview', per_page: 20,
+                });
+                for (const deployment of deployments) {
+                  const { data: statuses } = await github.rest.repos.listDeploymentStatuses({
+                    owner, repo, deployment_id: deployment.id, per_page: 20,
+                  });
+                  const success = statuses.find((s) => s.state === 'success' && s.environment_url);
+                  if (success) {
+                    url = success.environment_url;
+                    break;
+                  }
+                }
+              }
+
+              if (!url) {
+                core.setFailed(
+                  `Branch slug "${slug}" is ${slug.length} characters, over the ${MAX_SLUG} Vercel keeps, ` +
+                  'and no successful Preview deployment was found to fall back on. ' +
+                  'Re-run once the preview has finished building.'
+                );
+                return;
+              }
+              host = url.replace(/\/$/, '');
+            }
 
             const link = `\n\n${MARKER} 👉 [here](${host}${path})`;
             await github.rest.pulls.update({
               owner, repo, pull_number: pr.number, body: body + link,
             });
-            core.info(`PR #${pr.number}: added ${host}${path}`);
+            core.notice(`PR #${pr.number}: added ${host}${path}`);
