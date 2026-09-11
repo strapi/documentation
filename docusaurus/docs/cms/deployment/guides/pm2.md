@@ -111,7 +111,7 @@ The options serve the following purposes:
 | `script` and `args` | The command PM2 runs. Using the package manager rather than a path to a file keeps the behavior identical to starting Strapi by hand. |
 | `env` | Environment variables for the process. `NODE_ENV` must be `production` so Strapi loads the production configuration. |
 
-:::danger
+:::warning Secrets in version control
 Do not put secrets such as `APP_KEYS`, `ADMIN_JWT_SECRET`, or database credentials in the ecosystem file if it is committed to version control. Keep them in the server's `.env` file, which Strapi reads on startup, or inject them from your deployment tooling (see [environment configuration](/cms/configurations/environment)).
 :::
 
@@ -234,7 +234,7 @@ Strapi runs in this mode, but it has no coordination between instances, so sever
 
 Given these constraints, start with a single instance behind a reverse proxy. Add instances once you have measured that one is not enough, and sequence those deployments as described above.
 
-## Validation
+## Verify the application is running
 
 Confirm the application is running and reachable:
 
@@ -245,22 +245,39 @@ Confirm the application is running and reachable:
    curl -I http://localhost:1337/_health
    ```
 
-3. Reboot the server, then run `pm2 list` again. The application should be `online` without you starting it.
+3. Reboot the server.
+4. Run `pm2 list` again. The application should be `online` without you having started it.
 
 ## Troubleshooting
 
-**The process shows `errored` in `pm2 list`.** Read `pm2 logs strapi --lines 100`. A missing build, an unreachable database, or absent environment variables are the usual causes.
+Each of the following symptoms points at a specific cause. The symptom is in bold, followed by what causes it and what to change:
 
-**PM2 restarts Strapi in a loop.** The application exits immediately on startup. The logs name the reason. Until it is fixed, stop the loop with `pm2 stop strapi` rather than leaving it to retry.
+- **The process shows `errored` in `pm2 list`.** Read `pm2 logs strapi --lines 100`. A missing build, an unreachable database, or absent environment variables are the usual causes.
 
-**Strapi does not come back after a reboot.** Either the command printed by `pm2 startup` was never run, or `pm2 save` was not run after the application was added. Repeat both steps.
+- **PM2 restarts Strapi in a loop.** The application exits immediately on startup. The logs name the reason. Until it is fixed, stop the loop with `pm2 stop strapi` rather than leaving it to retry.
 
-**Changes to environment variables have no effect.** PM2 reuses the environment from when the process first started. Restart with `pm2 restart strapi --update-env`.
+- **Strapi does not come back after a reboot.** Either the command printed by `pm2 startup` was never run, or `pm2 save` was not run after the application was added. Repeat both steps.
 
-**The admin panel shows an old version after deploying.** The admin bundle was not rebuilt. Run the build with `NODE_ENV=production`, then restart.
+- **Changes to environment variables have no effect.** PM2 reuses the environment from when the process first started. Restart with `pm2 restart strapi --update-env`.
+
+- **The admin panel shows an old version after deploying.** The admin bundle was not rebuilt. Run the build with `NODE_ENV=production`, then restart.
 
 ## Next steps
 
-- Put a reverse proxy in front of Strapi to terminate HTTPS, as covered in the [Nginx](/cms/deployment/guides/nginx), [Caddy](/cms/deployment/guides/caddy), [HAProxy](/cms/deployment/guides/haproxy), and [Traefik](/cms/deployment/guides/traefik) guides.
-- Review the full list of [server configuration options](/cms/configurations/server).
-- Read the [deployment guidelines](/cms/deployment) for build and environment variable requirements.
+<NextSteps title="">
+  <NextSteps.Step
+    title="Put a reverse proxy in front of Strapi"
+    description="Terminate HTTPS with Nginx, Caddy, HAProxy, or Traefik."
+    link="/cms/deployment/guides/nginx"
+  />
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
+  <NextSteps.Step
+    title="Read the deployment guidelines"
+    description="Build requirements and environment variables a production deployment needs."
+    link="/cms/deployment"
+  />
+</NextSteps>
