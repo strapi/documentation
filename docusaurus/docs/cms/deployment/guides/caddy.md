@@ -34,7 +34,7 @@ Strapi listens on a plain HTTP port and does not terminate TLS itself. A reverse
 
 ## Configure Strapi for a reverse proxy
 
-Strapi needs to know the public address it is served from, and it needs to trust the headers the proxy adds. Without these two settings, Strapi builds URLs from `localhost:1337` and reads the proxy's IP address as the client IP.
+Strapi needs to know the public address it is served from, and it needs to trust the headers the proxy adds. Without these 2 settings, Strapi builds URLs from `localhost:1337` and reads the proxy's IP address as the client IP.
 
 ### Set the public URL
 
@@ -185,7 +185,7 @@ networks:
 Mount a persistent volume at `/data`, as shown above. Caddy stores issued certificates there. Without it, every container restart requests new certificates, which reaches the <ExternalLink to="https://letsencrypt.org/docs/rate-limits/" text="Let's Encrypt rate limits"/> and leaves the site without a valid certificate until the limit resets.
 :::
 
-## Validation
+## Verify the proxy setup
 
 Strapi exposes a health check route at `/_health` that responds with HTTP `204 No Content` and a `strapi` header. Requesting it through the proxy confirms that Caddy reaches Strapi:
 
@@ -208,18 +208,33 @@ Then confirm the rest of the chain:
 
 ## Troubleshooting
 
-**Caddy fails to obtain a certificate.** The certificate challenge needs port 80 reachable from the public internet, and the domain's DNS `A` record must already resolve to this server. Check both, then read the Caddy logs with `journalctl -u caddy --no-pager | tail -50`.
+Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
 
-**Caddy returns `502 Bad Gateway`.** Caddy cannot reach Strapi. Confirm the Strapi process is running and listening on the port used in `reverse_proxy`, then check that `host` in `/config/server.js` is not bound to an interface Caddy cannot reach.
+- **Caddy fails to obtain a certificate.** The certificate challenge needs port 80 reachable from the public internet, and the domain's DNS `A` record must already resolve to this server. Check both, then read the Caddy logs with `journalctl -u caddy --no-pager | tail -50`.
 
-**Uploads are rejected as too large.** The request exceeded a size limit. Raise `max_size` in the Caddyfile `request_body` block and `formidable.maxFileSize` in the Strapi `body` middleware, and raise the provider `sizeLimit` if the file is larger than 1 GB.
+- **Caddy returns `502 Bad Gateway`.** Caddy cannot reach Strapi. Confirm the Strapi process is running and listening on the port used in `reverse_proxy`, then check that `host` in `/config/server.js` is not bound to an interface Caddy cannot reach.
 
-**Strapi logs `127.0.0.1` as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
+- **Uploads are rejected as too large.** The request exceeded a size limit. Raise `max_size` in the Caddyfile `request_body` block and `formidable.maxFileSize` in the Strapi `body` middleware, and raise the provider `sizeLimit` if the file is larger than 1 GB.
 
-**Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
+- **Strapi logs `127.0.0.1` as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
+
+- **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
 
 ## Next steps
 
-- Run Strapi under a process manager such as PM2, so it restarts on failure and survives a reboot.
-- Review the full list of [server configuration options](/cms/configurations/server).
-- Read the [deployment guidelines](/cms/deployment) for build and environment variable requirements.
+<NextSteps title="">
+  <NextSteps.Step
+    title="Run Strapi under a process manager"
+    description="PM2 restarts Strapi on failure and starts it again after a reboot."
+  />
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
+  <NextSteps.Step
+    title="Read the deployment guidelines"
+    description="Build requirements and environment variables a production deployment needs."
+    link="/cms/deployment"
+  />
+</NextSteps>
