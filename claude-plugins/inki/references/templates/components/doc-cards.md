@@ -36,7 +36,7 @@ Use `<CustomDocCard>` for a clickable card that sends the reader to another page
 | Component | Effect |
 |-----------|--------|
 | `<CustomDocCardsWrapper>` | Lays the cards out as an auto-fitting grid (`repeat(auto-fill, minmax(min(240px, 100%), 1fr))`), so the same block renders as 2 columns at normal width and more in max-width mode, and collapses to 1 column on mobile. |
-| `<ExpandableDocCardsWrapper>` | Same grid, but shows only the first `initialVisible` cards (default 4) behind a "See more..." toggle. Use it for long provider lists. |
+| `<ExpandableDocCardsWrapper>` | Same grid, but shows only the first `initialVisible` cards (default 4) behind a "See more..." toggle. Use it for long provider lists (more than 6 cards for instance). |
 
 ## Rules
 
