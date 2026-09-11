@@ -270,7 +270,18 @@ Before following any of the provider guides listed below:
 * You have read the [general deployment guidelines](/cms/deployment#general-guidelines).
 :::
 
-The <ExternalLink to="https://strapi.io/integrations" text="integrations page"/> of the Strapi website include information on how to integrate Strapi with many resources, including how to deploy Strapi on the following 3rd-party platforms:
+The following guides cover serving Strapi behind a reverse proxy and running it under a process manager:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="arrow-square-out" title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
+<CustomDocCard icon="arrow-square-out" title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />
+<CustomDocCard icon="plugs-connected" title="Proxying with Nginx" link="/cms/deployment/guides/nginx" />
+<CustomDocCard icon="arrow-square-out" title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
+</CustomDocCardsWrapper>
+
+<br/>
+
+In addition, the <ExternalLink to="https://strapi.io/integrations" text="integrations page"/> of the Strapi website include information on how to integrate Strapi with many resources, including how to deploy Strapi on the following 3rd-party platforms:
 
 <CustomDocCard emoji="🔗" small title="Deploy Strapi on AWS"  link="https://strapi.io/integrations/aws" />
 
@@ -279,15 +290,6 @@ The <ExternalLink to="https://strapi.io/integrations" text="integrations page"/>
 <CustomDocCard emoji="🔗" small title="Deploy Strapi on DigitalOcean App Platform"  link="https://strapi.io/integrations/digital-ocean" />
 
 <CustomDocCard emoji="🔗" small title="Deploy Strapi on Heroku" link="https://strapi.io/integrations/heroku" />
-
-<br/>
-
-In addition, the following guides cover serving Strapi behind a reverse proxy and running it under a process manager:
-
-<CustomDocCard emoji="🔗" small title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
-<CustomDocCard emoji="🔗" small title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />
-<CustomDocCard icon="plugs-connected" small title="Proxying with Nginx" link="/cms/deployment/guides/nginx" />
-<CustomDocCard emoji="🔗" small title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
 
 <br/>
 
