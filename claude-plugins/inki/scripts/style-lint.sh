@@ -354,7 +354,7 @@ lint_file() {
   # so bold inside code is never counted. Paragraphs are blocks of consecutive
   # non-blank lines; the finding is reported on the paragraph's first line.
   check_bold_overuse "$file" "$stripped"
-  check_stacked_alerts "$file"
+  check_admonition_stacks "$file"
 }
 
 # Counts **bold** spans per paragraph and warns when a paragraph carries more
@@ -414,29 +414,56 @@ check_bold_overuse() {
   fi
 }
 
-# Two high-level callouts in a row flatten the hierarchy: the reader sees a wall
-# of red blocks and stops telling the severe apart from the merely annoying.
-# Keep one alert and move the rest to prose or a bullet list.
-# Only the top of the style guide scale counts (caution, warning, and the legacy
-# danger): stacking note/tip/info blocks is common and harmless, and a
-# :::prerequisites followed by a :::caution is the documented page-header motif.
-# Reported on the opening line of the second callout. Blank lines between the two
-# do not clear the finding; a fenced block does, since the second callout then
-# carries its own context. Reads the original file rather than the stripped
-# content, where fenced blocks have already collapsed into blank lines.
-check_stacked_alerts() {
+# Consecutive callouts, separated by nothing but blank lines, are checked for
+# three distinct defects:
+#
+#   admonition-run       3 or more in a row, whatever the types: a wall of
+#                        callouts the reader stops reading.
+#   same-type-admonitions  two callouts of the same type back to back: they are
+#                        one callout, and their points belong in one block as
+#                        bullets.
+#   stacked-alerts       two high-level callouts (caution, warning, the legacy
+#                        danger) back to back: the hierarchy flattens into a wall
+#                        of red and the severe stops standing out from the merely
+#                        annoying.
+#
+# A pair of different low-level types (:::note then :::tip) is harmless and is
+# not flagged, and neither is the documented :::prerequisites plus :::caution
+# page-header motif, as long as the run stops at two.
+# A fenced block between two callouts ends the run, since the second one then
+# carries its own context; a fenced block inside a callout does not.
+# Reads the original file rather than the stripped content, where fenced blocks
+# have already collapsed into blank lines.
+check_admonition_stacks() {
   local file="$1"
 
   local findings
   findings=$(awk '
     BEGIN {
-      in_code = 0; in_frontmatter = 0; line_num = 0
-      open_type = ""; closed_type = ""
+      in_code = 0; in_frontmatter = 0; in_admonition = 0
+      line_num = 0; run = 0; run_start = 0
       alerts = "caution warning danger"
     }
 
     function is_alert(type) {
       return index(alerts, type) > 0
+    }
+
+    # End of a run of consecutive callouts: report what the run contains.
+    function flush_run() {
+      if (run >= 3) {
+        print "warning:" run_start ":admonition-run:" run " admonitions in a row -- a wall of callouts, keep one and move the rest to prose or a list"
+      }
+
+      for (i = 2; i <= run; i++) {
+        if (types[i] == types[i - 1]) {
+          print "warning:" lines[i] ":same-type-admonitions:two " types[i] " callouts in a row -- merge them into one, with a bullet per point"
+        } else if (is_alert(types[i]) && is_alert(types[i - 1])) {
+          print "warning:" lines[i] ":stacked-alerts:" types[i - 1] " callout directly followed by a " types[i] " one -- keep one alert and move the rest to prose or a list"
+        }
+      }
+
+      run = 0
     }
 
     {
@@ -446,33 +473,40 @@ check_stacked_alerts() {
       if (line_num == 1 && $0 == "---") { in_frontmatter = 1; next }
       if (in_frontmatter) { if ($0 == "---") in_frontmatter = 0; next }
 
-      # A fenced block between the two callouts separates them.
-      if ($0 ~ /^[[:space:]]*```/) { in_code = !in_code; closed_type = ""; next }
+      # Fenced blocks. One inside a callout is part of it; one between callouts
+      # ends the run.
+      if ($0 ~ /^[[:space:]]*```/) {
+        in_code = !in_code
+        if (!in_code && !in_admonition) flush_run()
+        next
+      }
       if (in_code) next
 
-      # Blank lines keep the pending state: ::: then a blank line then :::warning
-      # is still two stacked alerts.
+      # Blank lines keep the run open: ::: then a blank line then :::note is
+      # still two stacked callouts.
       if ($0 ~ /^[[:space:]]*$/) next
 
-      # Opening line of a callout (:::warning, :::caution Title). Nested
-      # callouts (::::) are left alone.
+      # Opening line of a callout (:::note, :::warning Title). Nested callouts
+      # (::::) are left alone.
       if (match($0, /^:::[a-zA-Z]+/)) {
         type = substr($0, 4, RLENGTH - 3)
 
-        if (closed_type != "" && is_alert(closed_type) && is_alert(type)) {
-          print "warning:" line_num ":stacked-alerts:" closed_type " callout directly followed by a " type " one -- keep one alert and move the rest to prose or a list"
-        }
-
-        open_type = type
-        closed_type = ""
+        if (run == 0) run_start = line_num
+        run++
+        types[run] = type
+        lines[run] = line_num
+        in_admonition = 1
         next
       }
 
-      # Closing line of a callout.
-      if ($0 ~ /^:::[[:space:]]*$/) { closed_type = open_type; open_type = ""; next }
+      # Closing line of a callout. The run stays open.
+      if ($0 ~ /^:::[[:space:]]*$/) { in_admonition = 0; next }
 
-      closed_type = ""
+      # Any other prose: inside a callout it is its body, outside it ends the run.
+      if (!in_admonition) flush_run()
     }
+
+    END { flush_run() }
   ' "$file")
 
   if [[ -n "$findings" ]]; then
