@@ -371,6 +371,29 @@ The MCP server has the following limitations:
 - **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
 - **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
 
+### Compatibility and schema changes
+
+<VersionBadge version="5.53.1+" noTooltip />
+
+Starting with the version noted above, the built-in MCP server uses MCP TypeScript SDK v2. This brings two changes that affect clients and capability authors.
+
+#### JSON Schema 2020-12
+
+Tool `inputSchema` and `outputSchema` documents are now serialized as JSON Schema 2020-12 instead of the draft-07 dialect used in earlier versions. The key formatting differences are:
+
+- Positional tuples use `prefixItems` instead of the draft-07 `items` array form.
+- Recursive schemas (including the `list_*` filter parameters for content types) reference shared definitions via `$defs` instead of `definitions`.
+
+A strict MCP client that validates advertised schemas against JSON Schema 2020-12 now retains every tool Strapi advertises. Before this change, those clients rejected the draft-07 schemas and silently dropped tools from the usable list, which appeared as a missing-permissions problem with no server-side error logged. This is the failure described in [strapi/strapi#27395](https://github.com/strapi/strapi/issues/27395). Clients that do not validate the schema dialect at all are not affected.
+
+#### Handler context and capability result types
+
+Capability handlers still receive `{ args, extra }`. The `extra` value is now a Strapi-owned, all-optional handler context. The field names you already use in capability handlers are unchanged: cancellation, request and session identity, token information, request metadata, and originating HTTP request details.
+
+Tool, prompt, and resource results are Strapi-owned types exported from `@strapi/types` (`McpToolResult`, `McpPromptResult`, `McpResourceReadResult`, `McpResourceListingMetadata`, `McpContentBlock`). Existing constructions remain valid, including all five content variants, resource text and blob contents, and extension fields. `@strapi/types` no longer depends on the MCP SDK directly; core retains the SDK dependency for transport only.
+
+Empty capability categories now enumerate as an empty list instead of returning an unknown-method error.
+
 ### Plugin API
 
 Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service, so AI clients can trigger plugin-specific actions. Click on the card below to read more details:
