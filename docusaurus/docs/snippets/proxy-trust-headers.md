@@ -43,9 +43,10 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-The 2 options play different roles:
+Each option plays a different role:
 
 | Option | Effect |
 |--------|--------|
 | `proxy.koa` | When `true`, Strapi trusts the `X-Forwarded-*` headers. Client IP, protocol, and host are read from the proxy instead of the socket. |
-| `proxy.maxIpsCount` | Number of addresses to read from the end of the forwarded header chain. Set it to `1` for a single proxy, or to the number of proxies when requests pass through several. |
+| `proxy.maxIpsCount` | <VersionBadge version="5.52.0+" noTooltip /> Number of addresses to read from the end of the forwarded header chain. Set it to `1` for a single proxy, or to the number of proxies when requests pass through several. |
+| `proxy.ipHeader` | <VersionBadge version="5.52.0+" noTooltip /> Header the client IP is read from. It defaults to `X-Forwarded-For`, so set it only when your proxy sends another header, such as `CF-Connecting-IP`. |
