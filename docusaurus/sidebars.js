@@ -54,6 +54,7 @@ const sidebars = {
             'cms/deployment/guides/caddy',
             'cms/deployment/guides/haproxy',
             'cms/deployment/guides/nginx',
+            'cms/deployment/guides/traefik',
           ],
         },
         'cms/billing-portal',
