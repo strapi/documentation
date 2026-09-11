@@ -45,6 +45,15 @@ const sidebars = {
           label: 'Content Type Builder',
         },
         'cms/deployment',
+        {
+          type: 'category',
+          label: 'Deployment guides',
+          collapsed: true,
+          link: { type: 'generated-index', title: 'Deployment guides', slug: '/cms/deployment/guides' },
+          items: [
+            'cms/deployment/guides/nginx',
+          ],
+        },
         'cms/billing-portal',
       ],
     },
