@@ -355,6 +355,7 @@ lint_file() {
   # non-blank lines; the finding is reported on the paragraph's first line.
   check_bold_overuse "$file" "$stripped"
   check_admonition_stacks "$file"
+  check_doc_card_props "$file"
 }
 
 # Counts **bold** spans per paragraph and warns when a paragraph carries more
@@ -512,6 +513,63 @@ check_admonition_stacks() {
   if [[ -n "$findings" ]]; then
     echo "$findings"
     has_warnings=1
+  fi
+}
+
+# `<CustomDocCard>` silently ignores any prop it does not read. The component
+# (`docusaurus/src/components/CustomDocCard.js`) destructures exactly
+# `title`, `description`, `link`, `icon` and `small`, so an `emoji` prop renders
+# a card with no icon at all and no error anywhere. `<SubtleCallout>` does take
+# an `emoji`, which is why this check is scoped to the card component instead of
+# the prop name.
+# Handles the multi-line form of the tag, and skips fenced blocks so that a
+# documented anti-pattern in an example is not flagged.
+check_doc_card_props() {
+  local file="$1"
+
+  local findings
+  findings=$(awk '
+    BEGIN {
+      in_code = 0; in_card = 0; line_num = 0
+      known = " title description link icon small "
+    }
+
+    {
+      line_num++
+
+      if ($0 ~ /^[[:space:]]*```/) { in_code = !in_code; next }
+      if (in_code) next
+
+      line = $0
+      if (!in_card) {
+        if (line !~ /<CustomDocCard/) next
+        sub(/.*<CustomDocCard/, "", line)
+        in_card = 1
+      }
+
+      # Drop attribute values before looking for prop names, so that a query
+      # string in a link (`?a=b`) is not read as a prop.
+      work = line
+      gsub(/"[^"]*"/, "", work)
+
+      while (match(work, /[a-zA-Z][a-zA-Z0-9_-]*[[:space:]]*=/)) {
+        prop = substr(work, RSTART, RLENGTH)
+        sub(/[[:space:]]*=$/, "", prop)
+
+        if (index(known, " " prop " ") == 0) {
+          print "error:" line_num ":unknown-card-prop:<CustomDocCard> has no \"" prop "\" prop, so it is ignored at render time -- supported props are title, description, link, icon and small"
+        }
+
+        work = substr(work, RSTART + RLENGTH)
+      }
+
+      if (work ~ />/) in_card = 0
+    }
+  ' "$file")
+
+  if [[ -n "$findings" ]]; then
+    echo "$findings"
+    has_errors=1
   fi
 }
 
