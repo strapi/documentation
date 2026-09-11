@@ -202,7 +202,7 @@ Then confirm the rest of the chain:
 2. Upload an image in the Media Library. Its URL uses your domain rather than `localhost:1337`.
 3. Check the Strapi container logs with `docker compose logs strapi` for the real client IP address rather than the Traefik container address.
 
-## Troubleshooting
+## <Icon name="bug" /> Troubleshooting
 
 Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
 
