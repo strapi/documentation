@@ -49,7 +49,7 @@ Nginx adds an `X-Forwarded-For` header carrying the original client IP address. 
 
 <ProxyTrustHeaders />
 
-:::danger
+:::warning IP spoofing
 Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. A client can then send `X-Forwarded-For: 203.0.113.9` and, once Nginx appends the real address, Strapi reads the spoofed value from the front of the chain instead of the real one at the end. Always set `maxIpsCount` to the real number of proxies in front of Strapi.
 :::
 
@@ -243,18 +243,33 @@ Then confirm the rest of the chain:
 
 ## Troubleshooting
 
-**Nginx returns `502 Bad Gateway`.** Nginx cannot reach Strapi. Confirm the Strapi process is running and listening on the port used in `proxy_pass`. Then check that `host` in `/config/server.js` is not bound to an interface Nginx cannot reach.
+Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
 
-**Uploads fail with `413 Request Entity Too Large`.** The request exceeded a size limit. Raise `client_max_body_size` in Nginx and `formidable.maxFileSize` in the Strapi `body` middleware, and raise the provider `sizeLimit` if the file is larger than 1 GB. All 3 must allow the file.
+- **Nginx returns `502 Bad Gateway`.** Nginx cannot reach Strapi. Confirm the Strapi process is running and listening on the port used in `proxy_pass`. Then check that `host` in `/config/server.js` is not bound to an interface Nginx cannot reach.
 
-**Strapi logs `127.0.0.1` as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
+- **Uploads fail with `413 Request Entity Too Large`.** The request exceeded a size limit. Raise `client_max_body_size` in Nginx and `formidable.maxFileSize` in the Strapi `body` middleware, and raise the provider `sizeLimit` if the file is larger than 1 GB. All 3 must allow the file.
 
-**Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
+- **Strapi logs `127.0.0.1` as the client IP.** `proxy.koa` is not set to `true`, so Strapi reads the socket address instead of the forwarded header.
 
-**Admin panel sessions do not persist over HTTPS.** Nginx is not forwarding `X-Forwarded-Proto`, so Strapi treats the request as plain HTTP and does not mark the refresh-token cookie as `Secure`. Add the header to the `location` block.
+- **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
+
+- **Admin panel sessions do not persist over HTTPS.** Nginx is not forwarding `X-Forwarded-Proto`, so Strapi treats the request as plain HTTP and does not mark the refresh-token cookie as `Secure`. Add the header to the `location` block.
 
 ## Next steps
 
-- Run Strapi under a process manager such as PM2, so it restarts on failure and survives a reboot.
-- Review the full list of [server configuration options](/cms/configurations/server).
-- Read the [deployment guidelines](/cms/deployment) for build and environment variable requirements.
+<NextSteps title="">
+  <NextSteps.Step
+    title="Run Strapi under a process manager"
+    description="PM2 restarts Strapi on failure and starts it again after a reboot."
+  />
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
+  <NextSteps.Step
+    title="Read the deployment guidelines"
+    description="Build requirements and environment variables a production deployment needs."
+    link="/cms/deployment"
+  />
+</NextSteps>
