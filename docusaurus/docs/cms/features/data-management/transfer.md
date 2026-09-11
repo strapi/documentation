@@ -385,21 +385,7 @@ In Strapi v4 this was controlled by the `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` en
 
 ## Troubleshooting
 
-**A transfer behind an nginx reverse proxy fails.** When nginx proxies requests into a localhost, the transfer can fail if headers are not forwarded. Ensure all the headers are forwarded correctly by changing the configuration file in `/etc/nginx/sites-available/yourdomain` as follows:
-
-```
-server {
-    listen 80;
-    server_name <yourdomain>;
-    location / {
-        proxy_pass http://localhost:1337;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_set_header Host $host;
-        include proxy_params;
-    }
-}
-```
+**A transfer behind an nginx reverse proxy fails.** A transfer opens a WebSocket connection, which fails when the proxy does not forward the connection upgrade. The server block in the [Nginx guide](/cms/deployment/guides/nginx) forwards it, through `proxy_http_version 1.1` and the `Upgrade` and `Connection` headers. Both are required: without `proxy_http_version 1.1` the upgrade never happens, whatever headers are set.
 
 **A connection is refused when targeting `localhost`.** Try changing the address to <ExternalLink to="http://127.0.0.1:1337/admin" text="http://127.0.0.1:1337/admin"/>.
 
