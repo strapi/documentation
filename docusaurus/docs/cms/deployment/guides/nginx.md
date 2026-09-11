@@ -220,7 +220,7 @@ Keep a second block on port 80 that redirects to HTTPS, so plain HTTP requests d
 If TLS is terminated upstream by a load balancer or CDN, Nginx can keep listening on port 80. That upstream must still send `X-Forwarded-Proto: https`, otherwise Strapi treats the request as plain HTTP and generates `http://` URLs. Count every proxy in the chain when setting `proxy.maxIpsCount`.
 :::
 
-## Validation
+## Verify the proxy setup
 
 Strapi exposes a health check route at `/_health` that responds with HTTP `204 No Content` and a `strapi` header. Requesting it through the proxy confirms that Nginx reaches Strapi:
 
