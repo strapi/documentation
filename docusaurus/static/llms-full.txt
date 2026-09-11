@@ -30649,7 +30649,7 @@ Content-types created in one environment travel with your code, not with your da
 [Strapi Cloud](/cloud/intro) handles this pipeline for you: it [builds and deploys](/cloud/getting-started/deployment) on every push to the tracked branch, so no workflow file is needed.
 :::
 
-## Additional resources
+## Deployment guides
 
 :::prerequisites
 Before following any of the guides listed below:
