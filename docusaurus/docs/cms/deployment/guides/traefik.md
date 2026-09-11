@@ -54,7 +54,7 @@ Traefik adds an `X-Forwarded-For` header carrying the original client IP address
 
 <ProxyTrustHeaders />
 
-:::caution
+:::warning IP spoofing
 Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. Set `maxIpsCount` to the real number of proxies in front of Strapi so that only addresses added by your own infrastructure are read.
 :::
 
