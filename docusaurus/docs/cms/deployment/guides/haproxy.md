@@ -52,7 +52,7 @@ HAProxy adds an `X-Forwarded-For` header carrying the original client IP address
 
 <ProxyTrustHeaders />
 
-:::danger
+:::warning IP spoofing
 Setting `proxy.koa` to `true` without `proxy.maxIpsCount` leaves the count at its default of `0`, which means unlimited. A client can then send `X-Forwarded-For: 203.0.113.9` and, once HAProxy appends the real address, Strapi reads the spoofed value from the front of the chain instead of the real one at the end. Always set `maxIpsCount` to the real number of proxies in front of Strapi.
 :::
 
@@ -161,7 +161,7 @@ Because the instances share one database, a few Strapi behaviors need attention 
 
 <MultiInstanceCaveats />
 
-## Validation
+## Verify the proxy setup
 
 Requesting the health check route through the proxy confirms that HAProxy reaches Strapi:
 
@@ -189,20 +189,35 @@ echo "show stat" | sudo socat stdio /var/run/haproxy.sock
 
 ## Troubleshooting
 
-**HAProxy returns `503 Service Unavailable`.** No backend server is passing its health check. Confirm the Strapi process is running and that `curl -i http://127.0.0.1:1337/_health` returns `204` from the HAProxy host.
+Each of the following symptoms points at one side of the setup. The symptom is in bold, followed by what causes it and what to change:
 
-**The health check fails even though Strapi responds.** The `http-check expect status 204` line requires exactly `204`. If a proxy or middleware in front of the route changes the status, adjust the expected value to match what Strapi actually returns.
+- **HAProxy returns `503 Service Unavailable`.** No backend server is passing its health check. Confirm the Strapi process is running and that `curl -i http://127.0.0.1:1337/_health` returns `204` from the HAProxy host.
 
-**Uploads fail or time out.** Raise `formidable.maxFileSize` in the Strapi `body` middleware, and raise `timeout client` and `timeout server` in HAProxy so the transfer has time to finish.
+- **The health check fails even though Strapi responds.** The `http-check expect status 204` line requires exactly `204`. If a proxy or middleware in front of the route changes the status, adjust the expected value to match what Strapi actually returns.
 
-**Strapi logs the HAProxy address as the client IP.** Either `option forwardfor` is missing from the HAProxy configuration, or `proxy.koa` is not set to `true` in Strapi.
+- **Uploads fail or time out.** Raise `formidable.maxFileSize` in the Strapi `body` middleware, and raise `timeout client` and `timeout server` in HAProxy so the transfer has time to finish.
 
-**Admin panel sessions do not persist over HTTPS.** The `X-Forwarded-Proto` header is not being set, so Strapi treats the request as plain HTTP and does not mark the refresh-token cookie as `Secure`. Add the `http-request set-header` line to the frontend.
+- **Strapi logs the HAProxy address as the client IP.** Either `option forwardfor` is missing from the HAProxy configuration, or `proxy.koa` is not set to `true` in Strapi.
 
-**Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
+- **Admin panel sessions do not persist over HTTPS.** The `X-Forwarded-Proto` header is not being set, so Strapi treats the request as plain HTTP and does not mark the refresh-token cookie as `Secure`. Add the `http-request set-header` line to the frontend.
+
+- **Password reset emails link to `localhost:1337`.** The `url` option is unset or still points at the local address. Set it to the public URL and rebuild the admin panel.
 
 ## Next steps
 
-- Run Strapi under a process manager such as PM2, so it restarts on failure and survives a reboot.
-- Review the full list of [server configuration options](/cms/configurations/server).
-- Read the [deployment guidelines](/cms/deployment) for build and environment variable requirements.
+<NextSteps title="">
+  <NextSteps.Step
+    title="Run Strapi under a process manager"
+    description="PM2 restarts Strapi on failure and starts it again after a reboot."
+  />
+  <NextSteps.Step
+    title="Review the server configuration options"
+    description="The full list of options available in the server config file."
+    link="/cms/configurations/server"
+  />
+  <NextSteps.Step
+    title="Read the deployment guidelines"
+    description="Build requirements and environment variables a production deployment needs."
+    link="/cms/deployment"
+  />
+</NextSteps>
