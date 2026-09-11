@@ -30690,6 +30690,25 @@ If you're looking for multi-tenancy options, the Strapi Blog has a [comprehensiv
 
 
 
+# Deployment guides
+Source: https://docs.strapi.io/cms/deployment/guides
+
+# Deployment guides
+
+The following guides cover serving Strapi behind a reverse proxy and running it under a process manager. They all assume a Strapi project that is [created](/cms/installation) and that you have read the [general deployment guidelines](/cms/deployment#general-guidelines).
+
+- [Proxying with Caddy](/cms/deployment/guides/caddy): Serve Strapi through a Caddy reverse proxy, with automatic HTTPS.
+- [Proxying with HAProxy](/cms/deployment/guides/haproxy): Serve Strapi through an HAProxy load balancer over HTTPS.
+- [Proxying with Nginx](/cms/deployment/guides/nginx): Serve Strapi through an Nginx reverse proxy over HTTPS.
+- [Proxying with Traefik](/cms/deployment/guides/traefik): Serve a containerized Strapi application through Traefik over HTTPS.
+- [Using the PM2 process manager](/cms/deployment/guides/pm2): Keep Strapi running with PM2, and start it again after a reboot.
+
+<br/>
+
+For hosting on a 3rd-party platform, and for the general requirements a production deployment has to meet, see the [deployment](/cms/deployment) page.
+
+
+
 # Proxying Strapi with Caddy
 Source: https://docs.strapi.io/cms/deployment/guides/caddy
 
