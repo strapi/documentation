@@ -37,7 +37,7 @@ Some configuration options for the Media Library are available in the admin pane
 
 ### Admin panel configuration
 
-In the admin panel, some Media Library settings are available via the Global Settings to manage the format, file size, and orientation of uploaded assets. It is also possible, directly via the Media Library to configure the view.
+In the admin panel, some Media Library settings are available via the Global Settings to manage the format, file size, and orientation of uploaded assets. <!-- It is also possible, directly via the Media Library to configure the view. -->
 
 #### Configuring settings
 
@@ -55,7 +55,7 @@ In the admin panel, some Media Library settings are available via the Global Set
 2. Click on the **Save** button.
 
 :::tip
-When images in your library lack a caption or an alternative text, the AI metadata setting reports how many, and offers a **Generate metadata** button to generate the missing metadata in the background. Review the result: AI can make mistakes.
+When images in your library lack a caption or an alternative text, the AI metadata setting reports how many, and offers a **Generate metadata** button to generate the missing metadata in the background. Please review the results, AI can make mistakes.
 :::
 
 <ThemedImage
@@ -66,7 +66,7 @@ When images in your library lack a caption or an alternative text, the AI metada
   }}
 />
 
-#### Configuring the view
+<!-- #### Configuring the view
 
 **Path to configure the feature:** <Icon name="images" /> Media Library
 
@@ -98,7 +98,7 @@ Both settings are used as the defaults in the Content Manager's media upload mod
     light: '/img/assets/media-library/media-library_configure-the-view.png',
     dark: '/img/assets/media-library/media-library_configure-the-view_DARK.png',
   }}
-/>
+/> -->
 
 ### Code-based configuration
 
@@ -108,7 +108,7 @@ The Media Library is powered in the backend server by the Upload package, which 
 
 <VersionBadge version="5.54.0+" noTooltip />
 
-The Media Library described on this page is the default. To restore the previous interface, set the `useLegacyMediaLibrary` property to `true` in the [`config/features` file](/cms/configurations/features):
+The Media Library described on this page is the default UI since Strapi v5.54.0. To restore the previous interface, set the `useLegacyMediaLibrary` property to `true` in the [`config/features` file](/cms/configurations/features):
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -131,12 +131,13 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-The property sits at the top level of the file, not inside the `future` object: it is supported configuration rather than an experimental preview, so it is not a future flag and carries no <FeatureFlagBadge /> badge. From server code, read it with `strapi.features.isEnabled('useLegacyMediaLibrary')`.
-
-It replaces the `betaMediaLibrary` future flag, which is removed. A project that set `future.betaMediaLibrary` to `true` now gets the same interface by changing nothing, since it is the default.
-
+:::tip
+From server code, read this configuration setting with `strapi.features.isEnabled('useLegacyMediaLibrary')`.
+:::
 
 #### Providers
+
+The Media Library supports providers to add upload support from various third parties.
 
 <MediaLibraryProvidersList />
 
@@ -164,12 +165,10 @@ When using the default upload provider, the following specific configuration opt
 | `concurrentUploadRequests` | Number of files the admin panel uploads to the server in parallel (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
 | `concurrentUploadSize` | Number of files the server processes in parallel within a single upload request (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
 
-:::note
-The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
-:::
+:::note Notes
 
-:::note
-If you wish to override the image function to generate custom file names, please refer to the [Plugins extension](/cms/plugins-development/plugins-extension#within-the-extensions-folder) documentation.
+* The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin, but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
+* If you wish to override the image function to generate custom file names, please refer to the [Plugins extension](/cms/plugins-development/plugins-extension#within-the-extensions-folder) documentation.
 :::
 
 #### Example custom configuration
@@ -400,79 +399,10 @@ Only files matching the defined security rules are uploaded.
 
 The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
 
-:::tip New projects
 Apps scaffolded with `create-strapi-app` include a pre-configured `security` block in the generated `config/plugins.*` file. See the *Security defaults generated by `create-strapi-app`* details block below for the full lists.
-:::
-
-##### SVG uploads
-
-Since Strapi <VersionBadge version="5.52.2+" noTooltip />, `image/svg+xml` is part of the `deniedTypes` generated by `create-strapi-app`, so SVG uploads are refused even though they match the `image/*` wildcard in `allowedTypes`. An explicit `deniedTypes` entry always takes precedence over a wildcard in `allowedTypes`.
-
-SVG files can embed browser-active content such as scripts and event handlers, which is why they are denied by default. This affects newly generated projects only: existing projects keep their current configuration unless you add the same entry yourself.
-
-To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config/plugins.*` file. Serve the resulting files from a domain that does not share cookies or local storage with your application, or with a `Content-Disposition: attachment` header, so an uploaded SVG cannot run scripts in the context of your site.
-
-:::note
-You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
-:::
-
-##### File type detection for ambiguous MIME types
-
-When browsers report generic MIME types for files (such as `application/octet-stream`), Strapi's Media Library performs file-type detection by examining the file's actual content bytes. This ensures accurate file classification and filtering, particularly for formats like `.mov` files on Windows systems, which are often reported with generic MIME types by the browser.
-
-The file type detection is used for:
-
-- Classifying media in the Media Library preview and grid
-- Validating media field constraints (e.g., `allowedTypes: ['video/*']`) in the Content Manager
-
-:::note
-The server remains the security boundary. While the admin panel performs client-side file type detection for better UX, the backend validates the file's MIME type before storage. This means that even if the browser initially misidentifies a file type, the correct MIME type is detected and stored on the server.
-:::
-
-You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="/config/plugins.js"
-module.exports = {
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="/config/plugins.ts"
-export default {
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
-
-</TabItem>
-
-</Tabs>
 
 <details>
-<summary>Security defaults generated by <code>create-strapi-app</code></summary>
+<summary>Security defaults generated by <code>create-strapi-app</code>:</summary>
 
 New projects declare the 2 lists as separate variables and pass them to the `upload` plugin, alongside the other generated plugin configuration:
 
@@ -567,6 +497,76 @@ export default config;
 </Tabs>
 
 </details>
+
+
+##### SVG uploads
+
+Since Strapi <VersionBadge version="5.52.2+" noTooltip />, `image/svg+xml` is part of the `deniedTypes` generated by `create-strapi-app`, so SVG uploads are refused even though they match the `image/*` wildcard in `allowedTypes`. An explicit `deniedTypes` entry always takes precedence over a wildcard in `allowedTypes`.
+
+SVG files can embed browser-active content such as scripts and event handlers, which is why they are denied by default. This affects newly generated projects only. Existing projects keep their current configuration unless you add the same entry yourself.
+
+To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config/plugins.*` file (see [security](#security)). Serve the resulting files from a domain that does not share cookies or local storage with your application, or with a `Content-Disposition: attachment` header, so an uploaded SVG cannot run scripts in the context of your site.
+
+:::note
+You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
+:::
+
+##### File type detection for ambiguous MIME types
+
+When browsers report generic MIME types for files (such as `application/octet-stream`), Strapi's Media Library performs file-type detection by examining the file's actual content bytes. This ensures accurate file classification and filtering, particularly for formats like `.mov` files on Windows systems, which are often reported with generic MIME types by the browser.
+
+The file type detection is used for:
+
+- Classifying media in the Media Library preview and grid
+- Validating media field constraints (e.g., `allowedTypes: ['video/*']`) in the Content Manager
+
+:::note
+The server remains the security boundary. While the admin panel performs client-side file type detection for better UX, the backend validates the file's MIME type before storage. This means that even if the browser initially misidentifies a file type, the correct MIME type is detected and stored on the server.
+:::
+
+You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+
 
 #### Upload request timeout
 
@@ -809,15 +809,17 @@ The Media Library is organized in the following areas:
 Each folder and asset in the list has a checkbox to select it (see [selecting items](#selecting-items)) and a <Icon name="dots-three" classes="ph-bold" /> button (see [using the item actions menu](#item-actions)). The Media Library calls a folder or an asset an _item_, and several controls use that word.
 
 <details>
-<summary>What changed from the previous Media Library</summary>
+<summary>What changed from the previous Media Library:</summary>
 
-| In the previous UI | In the new Media Library |
+Strapi v5.54.0 introduces a revamped Media Library. The following table highlights the main changes in the UI:
+
+| In the previous UI | In the new Media Library <VersionBadge version="5.54.0+"/> |
 | --- | --- |
 | **Add new assets** and **Add new folder** buttons | A single **New** button that does both (see [adding assets](#adding-assets)) |
 | Breadcrumbs above the list | A folder tree on the left (see [navigating folders](#navigating-folders)) |
 | Folder cards displaying how many items they hold | Folder names only. To know how many assets a folder holds directly, open it and read the page title |
 | Pagination, with an _Entries per page_ setting | No pagination: more assets load as you scroll |
-| A <Icon name="gear-six" /> button to configure the view | No view configuration (see [configuring the view](#configuring-the-view)) |
+| A <Icon name="gear-six" /> button to configure the view | No view configuration |
 | A <Icon name="magnifying-glass" classes="ph-bold" /> button opening a search field | A search field always displayed in the toolbar (see [searching assets](#searching-assets)) |
 | A _Details_ window that covers the library | A details panel that leaves the list usable (see [managing individual assets](#managing-assets)) |
 | A crop mode and a focal point mode, opened separately | A single _Crop & Focus area_ editor (see [cropping images and setting a focus area](#cropping-images)) |
@@ -868,14 +870,6 @@ Strapi does not enforce a maximum folder depth. The folder tree expands automati
 
 The <Icon name="dots-three" classes="ph-bold" /> button of an asset or a folder opens a menu that acts on that item only, whatever else is selected in the list.
 
-On an asset, the menu offers:
-
-- <Icon name="arrows-counter-clockwise" classes="ph-bold" /> **Replace media**
-- <Icon name="link" classes="ph-bold" /> **Copy link to media**
-- <Icon name="download-simple" /> **Download media**
-- <Icon name="arrow-right" classes="ph-bold" /> **Move to folder**
-- <Icon name="trash" /> **Delete**
-
 <ThemedImage
   alt="Actions menu of an asset, opened from the grid view"
   sources={{
@@ -884,7 +878,15 @@ On an asset, the menu offers:
   }}
 />
 
-On a folder, it offers:
+On an asset, the menu offers:
+
+- <Icon name="arrows-counter-clockwise" classes="ph-bold" /> **Replace media**
+- <Icon name="link" classes="ph-bold" /> **Copy link to media**
+- <Icon name="download-simple" /> **Download media**
+- <Icon name="arrow-right" classes="ph-bold" /> **Move to folder**
+- <Icon name="trash" /> **Delete**
+
+On a folder, the menu offers:
 
 - <Icon name="link" classes="ph-bold" /> **Copy link to folder**
 - <Icon name="pencil-simple" /> **Rename folder**
@@ -909,8 +911,12 @@ The menu requires the _Create_ permission of the Upload plugin. Without it, righ
 
 ### Adding assets
 
+Assets are always uploaded to the location you are currently browsing. Navigate to the target folder before uploading, or move the assets afterwards (see [moving assets and folders](#moving-assets)).
+
+In an empty folder, and in a new project, the list is replaced by a _No assets yet_ message with an **Add assets** button that opens the same file browser as **New** > **File upload**.
+
 <details>
-<summary>Media types the Media Library previews</summary>
+<summary>Media types the Media Library previews:</summary>
 
 | Media type | Extensions |
 | ---------- | --------------------------------------------------------------- |
@@ -921,16 +927,14 @@ The menu requires the _Create_ permission of the Upload plugin. Without it, righ
 <br/>
 
 The Media Library itself does not restrict file types. Which files are accepted is decided by the `security.allowedTypes` and `security.deniedTypes` options (see [security](#security)) and by the maximum file size (see [max file size](#max-file-size)). SVG files are denied by default in projects generated with Strapi <VersionBadge version="5.52.2+" noTooltip /> and later (see [SVG uploads](#svg-uploads)).
+<br/>
 
 </details>
 
-Assets are always uploaded to the location you are currently browsing. Navigate to the target folder before uploading, or move the assets afterwards (see [moving assets and folders](#moving-assets)).
-
-In an empty folder, and in a new project, the list is replaced by a _No assets yet_ message with an **Add assets** button that opens the same file browser as **New** > **File upload**.
 
 There are 3 ways to add assets.
 
-#### Uploading files from your computer
+#### Uploading files from your computer with the New button
 
 <ThemedImage
   alt="New button menu, offering to create a folder or upload files"
@@ -946,7 +950,7 @@ There are 3 ways to add assets.
 
 The upload starts immediately and its progress is reported in the upload dialog (see [following upload progress](#upload-progress)).
 
-#### Uploading files by drag and drop
+#### Uploading files from your computer by drag and drop
 
 1. Drag one or several files from your computer onto the Media Library.
 2. Check the destination folder named in the _Drop here to upload to_ overlay.
@@ -1004,7 +1008,7 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 <GrowthBadge />
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
@@ -1030,17 +1034,9 @@ The toolbar offers a <Icon name="funnel-simple" classes="ph-bold" /> **Filter** 
 
 Type in the toolbar's _Search_ field to find assets and folders by name.
 
-<ThemedImage
-  alt="Media Library displaying the results of a search, with the number of folders and assets found"
-  sources={{
-    light: '/img/assets/media-library/media-library_search-results.png',
-    dark: '/img/assets/media-library/media-library_search-results_DARK.png',
-  }}
-/>
-
 The search covers the whole library, not only the folder you are browsing, and it returns both folders and assets. The page title becomes _Search results for "your term"_ followed by the number of folders and assets found.
 
-To leave the search, click the <Icon name="x" classes="ph-bold" /> **Clear** button inside the search field, or navigate to a folder in the folder tree.
+To leave the search, click the <Icon name="x" classes="ph-bold" /> **Clear** button inside the search field, press the `Esc` key while still in the search field, or navigate to a folder in the folder tree.
 
 When a search returns nothing, the list is replaced by a _No results found_ message with a <Icon name="x" classes="ph-bold" /> **Clear search** button.
 
@@ -1051,17 +1047,8 @@ When a search returns nothing, the list is replaced by a _No results found_ mess
 | Filter field | Values | Conditions |
 | --- | --- | --- |
 | _Type_ | Folder, Picture, Audio, Video, Document | is, is not |
-| _Creation date_ | A relative preset, from 1 day ago to 1 year ago | is exactly, within the last, not within the last |
-| _Creation date_ | A custom date range | is, is not |
+| _Creation date_ | A relative preset, from 1 day ago to 1 year ago, or a custom range | <ul><li>For presets: is exactly, within the last, not within the last</li><li>For custom date ranges: is, is not</li></ul> |
 | _Last modified_ | A relative preset, from 1 day ago to 1 year ago | is exactly, within the last, not within the last |
-
-<ThemedImage
-  alt="Filter menu of the Media Library, with a filter already applied below the toolbar"
-  sources={{
-    light: '/img/assets/media-library/media-library_filter-menu.png',
-    dark: '/img/assets/media-library/media-library_filter-menu_DARK.png',
-  }}
-/>
 
 To filter the list:
 
@@ -1083,14 +1070,6 @@ When the active filters match nothing, the list is replaced by a _No items match
 #### Sorting assets
 
 Click the **Sort** button in the toolbar to change the order of the list. The button label always names the active rule, for instance _Sort: Most recent updates_.
-
-<ThemedImage
-  alt="Sort menu of the Media Library, with a Sort section and a Folders section"
-  sources={{
-    light: '/img/assets/media-library/media-library_sort-menu.png',
-    dark: '/img/assets/media-library/media-library_sort-menu_DARK.png',
-  }}
-/>
 
 The _Sort_ section offers 6 mutually exclusive rules: Oldest uploads, Most recent updates (the default), A to Z, Z to A, File size ascending, and File size descending.
 
@@ -1150,7 +1129,7 @@ One editor handles both cropping and the focus area. The focus area, also called
 1. Click an image in the list to open its details panel.
 2. Click the <Icon name="crop" classes="ph-bold" /> **Crop** button on the preview. The _Crop & Focus area_ editor opens.
 3. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
-4. (optional) Click the <Icon name="link" classes="ph-bold" /> **Lock aspect ratio** button to resize both dimensions together.
+4. (optional) Click the <Icon name="link" classes="ph-bold" /> button to lock aspect ratio, so it resizes both dimensions together.
 5. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
 6. Save your changes:
     - Click **Apply** to crop the original asset. The asset keeps its ID, so content already using it is updated.
@@ -1158,12 +1137,9 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 To leave the editor without changing anything, click **Cancel**.
 
-:::note
-The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
-:::
-
-:::note
-The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
+:::info
+* The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
+* The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
 :::
 
 #### Replacing an asset file
@@ -1184,7 +1160,7 @@ The previous file is permanently replaced and cannot be recovered. If [AI metada
 1. Click the asset in the list to open its details panel.
 2. Click the <Icon name="download-simple" /> **Download** button to save the file to your computer, or the <Icon name="link" classes="ph-bold" /> **Copy link** button to copy its URL to the clipboard.
 
-Both actions are also available from the asset's <Icon name="dots-three" classes="ph-bold" /> actions menu, as **Download media** and **Copy link to media**.
+Both actions are also available from the asset's <Icon name="dots-three" classes="ph-bold" /> actions menu, as **Copy link to media** and **Download media**.
 
 :::note
 **Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's <Icon name="dots-three" classes="ph-bold" /> actions menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
@@ -1225,7 +1201,7 @@ In the table view, a **Select all** checkbox in the header row selects every ite
 
 Selecting an item displays the bulk actions bar at the bottom of the interface. The bar reports how many items are selected and offers the bulk actions. Click <Icon name="x" classes="ph-bold" /> **Clear selection** to empty the selection.
 
-In the grid view as well as the table view, the bar also offers a **Select all** button <VersionBadge version="5.52.3+" noTooltip /> that selects every folder and asset currently displayed. Only the items already loaded are selected: scroll further down the list, then click **Select all** again to add the newly loaded items. Unlike the checkbox of the table view header, the button does not empty the selection when everything is already selected.
+In the grid view as well as the table view, the bar also offers a **Select all** button that selects every folder and asset currently displayed. Only the items already loaded are selected: scroll further down the list, then click **Select all** again to add the newly loaded items. Unlike the checkbox of the table view header, the button does not empty the selection when everything is already selected.
 
 <ThemedImage
   alt="Bulk actions bar at the bottom of the Media Library, with several items selected"
