@@ -742,7 +742,24 @@ jobs:
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add .github/self-healing-ignore.json
             git commit -m "Auto-ignore $ADDED rejected PRs from self-healing run"
-            git push
+
+            # main moves while the pipeline runs, so a plain push loses the race.
+            PUSHED=false
+            for ATTEMPT in 1 2 3; do
+              if git push origin HEAD:main; then
+                PUSHED=true
+                break
+              fi
+              git fetch --quiet origin main || break
+              git rebase origin/main || { git rebase --abort || true; break; }
+            done
+
+            # Losing the ignore list must not cost the run its Drafter stage.
+            # These PRs are simply looked at again on the next run.
+            if [ "$PUSHED" != 'true' ]; then
+              echo "::warning title=Ignore list not updated::${ADDED} rejected PR(s) could not be recorded, they will be re-evaluated on the next run"
+              git reset --hard HEAD~1
+            fi
           fi
 
       # ── Step B: Sonnet Drafter (only if full-complexity targets found) ──
