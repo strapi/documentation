@@ -214,7 +214,7 @@ The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible c
 
 ### Available tools
 
-The MCP server exposes 2 categories of tools: content management tools generated from your schema, and built-in utility tools.
+The MCP server exposes 3 categories of tools: content management tools generated from your schema, Media Library tools, and built-in utility tools.
 
 #### Content management tools
 
@@ -246,6 +246,37 @@ The tools generated differ depending on whether the content type is a collection
 
 The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
 
+
+#### Media Library tools
+
+<VersionBadge version="5.54.0+" noTooltip />
+
+The [Media Library](/cms/features/media-library) registers 10 tools for reading and managing assets and folders. Unlike content management tools, these are not generated from your schema: the same set is always registered, and each tool is exposed only if the Admin token grants the permission listed below.
+
+| Tool | Permission required | Description |
+|------|--------------------|-------------|
+| `media_list_assets` | `read` | List assets, optionally scoped to one folder with `folderId` |
+| `media_get_asset` | `read` | Get a single asset by id |
+| `media_list_folders` | `read` | List the folder structure as a nested tree |
+| `media_update_asset` | `update` | Update `name`, `alternativeText` or `caption` |
+| `media_move_assets` | `update` | Move assets into another folder, in bulk |
+| `media_delete_assets` | `update` | Permanently delete assets, in bulk |
+| `media_create_folder` | `create` | Create a folder, optionally inside a parent folder |
+| `media_rename_folder` | `update` | Rename a folder |
+| `media_move_folder` | `update` | Move a folder into another parent folder |
+| `media_delete_folder` | `update` | Delete folders and everything they contain |
+
+Assets and folders are identified by numeric ids rather than document IDs, and the two are independent sequences: the same number can name both an asset and a folder. Take asset ids from `media_list_assets` or `media_get_asset`, and folder ids from `media_list_folders`.
+
+`media_update_asset` writes metadata only. The file itself, its URL, its MIME type and its size belong to the [upload provider](/cms/configurations/media-library-providers) and cannot be changed over MCP. Use `media_move_assets` to change which folder an asset sits in, and `media_rename_folder` rather than `media_move_folder` to change a folder name.
+
+`media_move_assets` and `media_move_folder` both accept `null` as the destination, meaning the Media Library root. A folder cannot be moved into itself or into one of its own descendants.
+
+:::warning Deletions are permanent
+`media_delete_assets` and `media_delete_folder` remove files from the database and from the storage provider, together with every generated thumbnail and size variant. There is no trash and no undo, and deleting a folder cascades to every subfolder and file inside it. Neither tool can tell whether an asset is referenced by an entry, so a successful deletion is not evidence that nothing was using it.
+
+Both accept a `dryRun` parameter, which reports what would be removed without removing anything. They differ on partial failure: `media_delete_assets` keeps the deletions that succeeded and reports the rest, while `media_delete_folder` rejects the whole call if any id does not resolve to a folder.
+:::
 
 #### Built-in utility tools
 
