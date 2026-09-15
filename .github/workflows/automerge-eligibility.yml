@@ -68,16 +68,22 @@ jobs:
       # steps after it run under `shell: bash {0}`, where an empty result reads
       # as "nothing to label" and the job goes green. Answering the question
       # once, here, is what keeps the second case from being silent.
+      # `path:` is load-bearing. Checked out at the workspace root, this step
+      # leaves a partial, sparse clone behind, and the full checkout that
+      # follows does not restore everything: the 2026-09-15 dry run lost
+      # .github/scripts/is-strapi-pr-released.sh that way. Its own directory
+      # keeps the preflight out of the way of whatever the job checks out next.
       - name: Checkout the check-pat action
         uses: actions/checkout@v4
         with:
+          path: .preflight
           sparse-checkout: .github/actions
           sparse-checkout-cone-mode: false
           fetch-depth: 1
           filter: blob:none
 
       - name: Check PAT_TOKEN_PIWI
-        uses: ./.github/actions/check-pat
+        uses: ./.preflight/.github/actions/check-pat
         with:
           token: ${{ secrets.PAT_TOKEN_PIWI }}
 
