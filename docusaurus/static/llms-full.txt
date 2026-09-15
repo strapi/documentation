@@ -33846,7 +33846,7 @@ Clicking on the **...** button next to **Save** gives access to other options, s
 
 ### Creating content-types
 
-The Content-type Builder allows to create new content-types: single and collection types, but also components.
+The Content-type Builder allows you to create new content-types: single and collection types, but also components.
 
 #### Creating content-types with Strapi AI  {#strapi-ai}  
 
@@ -33883,7 +33883,7 @@ For more information about Strapi AI, please refer to the [dedicated support art
 1. Choose whether you want to create a collection type or a single type.
 2. In the  Content-type Builder's category of the content-type you want to create, click on **Create new collection/single type**.
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
-4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows to fix any pluralization mistake.
+4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows you to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -33910,7 +33910,7 @@ New content-types are only considered created once they have been saved. Saving 
 
 ### Editing content-types
 
-The Content-type Builder allows to manage all existing content-types. For an chosen content-type or component to edit, the right side of the Content-type Builder interface displays all available editing and management options.
+The Content-type Builder allows you to manage all existing content-types. For a chosen content-type or component to edit, the right side of the Content-type Builder interface displays all available editing and management options.
 
 #### Settings
 
@@ -34066,7 +34066,7 @@ The Password field displays a password field that is encrypted.
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
 
-The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
+The Media field allows you to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -34087,7 +34087,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_relation.svg" /> Relation {#relation}
 
-The Relation field allows to establish a relation with another content-type, that must be a collection type.
+The Relation field allows you to establish a relation with another content-type, that must be a collection type.
 
 There are 6 different types of relations:
 
@@ -34166,7 +34166,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_json.svg" /> JSON {#json}
 
-The JSON field allows to configure data in a JSON format, to store JSON objects or arrays.
+The JSON field allows you to configure data in a JSON format, to store JSON objects or arrays.
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -34227,7 +34227,7 @@ The Password field displays a password field that is encrypted.
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration {#enum}
 
-The Enumeration field allows to configure a list of values displayed in a drop-down list.
+The Enumeration field allows you to configure a list of values displayed in a drop-down list.
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -34298,7 +34298,7 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_component.svg" /> Components {#components}
 
-Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
+Components are a combination of several fields. Components allow you to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
 
 When configuring a component through the Content-type Builder, it is possible to either:
 
