@@ -330,9 +330,19 @@ jobs:
           cat .github/prompts/docs-self-healing-triage.md >> $GITHUB_OUTPUT
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
 
+      # The three agent steps pin the action to a commit rather than following
+      # `@v1`. `@v1` moved between 2026-09-11 and 2026-09-15, and on the new
+      # commit the Router stopped working: it answered "What PR list should I
+      # process?" in a single turn, called no tool, and the run went green with
+      # no results file. Triage, on the same commit, was unaffected. The
+      # expired PAT hid this for three days by failing the job before it got
+      # here. A floating tag on a third-party action is the same class of
+      # problem as an expiring token: an outside change that rewrites the
+      # pipeline without a commit in this repository.
       - name: Run Triage (Haiku)
         if: steps.check-prs.outputs.has_prs == 'true'
-        uses: anthropics/claude-code-action@v1
+        # Pinned, not @v1. See the note above the Triage step.
+        uses: anthropics/claude-code-action@0a8d3c9443bbff909ab973b6a17a340b913f229f # v1, 2026-09-11
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
@@ -519,7 +529,8 @@ jobs:
       - name: Run Router (Haiku)
         if: steps.check-triage.outputs.has_candidates == 'true'
         id: router
-        uses: anthropics/claude-code-action@v1
+        # Pinned, not @v1. See the note above the Triage step.
+        uses: anthropics/claude-code-action@0a8d3c9443bbff909ab973b6a17a340b913f229f # v1, 2026-09-11
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
@@ -812,7 +823,8 @@ jobs:
 
       - name: Run Drafter (Sonnet)
         if: steps.check-router.outputs.has_targets == 'true'
-        uses: anthropics/claude-code-action@v1
+        # Pinned, not @v1. See the note above the Triage step.
+        uses: anthropics/claude-code-action@0a8d3c9443bbff909ab973b6a17a340b913f229f # v1, 2026-09-11
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
