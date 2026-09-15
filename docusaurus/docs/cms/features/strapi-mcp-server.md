@@ -249,9 +249,9 @@ The publish, unpublish, and discard_draft tools are only generated when [Draft &
 
 #### Media Library tools {#media-library-tools}
 
-<VersionBadge version="5.53.1+" noTooltip />
+<VersionBadge version="5.54.0" />
 
-Strapi registers 10 tools for the [Media Library](/cms/features/media-library): 3 for reading, and 7 for writing that are available with Strapi <VersionBadge version="5.54.0+" noTooltip />. Unlike content management tools they are not generated from your schema, so the same set is always registered. Each tool is exposed only if the Admin token grants the permission listed below: a tool the token cannot use does not appear in `tools/list`, and calling it returns a permission error.
+Strapi registers 10 tools for the [Media Library](/cms/features/media-library): 3 for reading and 7 for writing. Unlike content management tools they are not generated from your schema, so the same set is always registered. Each tool is exposed only if the Admin token grants the permission listed below: a tool the token cannot use does not appear in `tools/list`, and calling it returns a permission error.
 
 | Tool | Permission required | Description |
 |------|--------------------|-------------|
