@@ -373,7 +373,7 @@ The MCP server has the following limitations:
 
 ### Compatibility and schema changes
 
-<VersionBadge version="5.53.1+" noTooltip />
+<VersionBadge version="5.53.0+" noTooltip />
 
 Starting with the version noted above, the built-in MCP server uses MCP TypeScript SDK v2. This brings two changes that affect clients and capability authors.
 
