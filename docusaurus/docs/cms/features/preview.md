@@ -555,6 +555,7 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 
 * Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the <Icon name="arrow-line-left" classes="ph-bold" /> and <Icon name="arrow-line-right" classes="ph-bold" /> buttons.
 * Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
+* Blocks fields are edited the same way. Double-click a paragraph, heading, quote, list, or image and the popover opens with the cursor on that block.
 
 <!-- TODO: add dark mode GIF -->
 <ThemedImage
@@ -569,6 +570,6 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 This feature is currently experimental. Feel free to share <ExternalLink to="https://feedback.strapi.io/" text="feedback"/> or <ExternalLink to="https://github.com/strapi/strapi/issues" text="issues" /> with the Strapi team.
 
 The current version of Live Preview comes with the following limitations:
-* Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
+* Within a Blocks field, code blocks are never highlighted, and image blocks are only highlighted when they have an alternative text.
 * Fields in dynamic zones are not handled.
 :::
