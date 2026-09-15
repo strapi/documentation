@@ -1,0 +1,55 @@
+name: 'Check PAT'
+description: >-
+  Validates a personal access token before a workflow depends on it, so an
+  expired or revoked token fails the run with a readable message.
+
+inputs:
+  token:
+    description: 'The token to validate.'
+    required: true
+  name:
+    description: 'Name of the secret holding it, used in the messages.'
+    required: false
+    default: 'PAT_TOKEN_PIWI'
+  warn-days:
+    description: 'Report the token as expiring when fewer than this many days remain.'
+    required: false
+    default: '14'
+  fail-on-error:
+    description: >-
+      Fail the step when the token is rejected. Set to false to let the caller
+      read the outputs and decide.
+    required: false
+    default: 'true'
+
+outputs:
+  status:
+    description: >-
+      `ok`, `expiring` (valid but close to its expiry), `dead` (GitHub rejected
+      it), or `unknown` (GitHub could not be reached, so nothing was proved).
+    value: ${{ steps.check.outputs.status }}
+  login:
+    description: 'The account the token authenticates as. Empty when it is dead.'
+    value: ${{ steps.check.outputs.login }}
+  message:
+    description: 'One line describing the outcome. Safe for a public log.'
+    value: ${{ steps.check.outputs.message }}
+  details-file:
+    description: >-
+      Path to a file holding scopes and expiry. Read it inside a `run:` step.
+      Never pass its contents through `env:`, which GitHub prints in the log.
+    value: ${{ steps.check.outputs.details_file }}
+
+runs:
+  using: composite
+  steps:
+    - id: check
+      shell: bash
+      env:
+        TOKEN: ${{ inputs.token }}
+        SECRET_NAME: ${{ inputs.name }}
+        WARN_DAYS: ${{ inputs.warn-days }}
+        FAIL_ON_ERROR: ${{ inputs.fail-on-error }}
+      # `bash <file>`, not the file directly: it does not depend on the
+      # executable bit surviving the checkout.
+      run: bash "${GITHUB_ACTION_PATH}/check-pat.sh"

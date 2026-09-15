@@ -1,0 +1,124 @@
+name: PAT health
+
+# Daily canary for PAT_TOKEN_PIWI, the token five workflows authenticate with.
+# Also the proof to run by hand after rotating the secret.
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # 01:00 UTC daily, 30 min before Docs Self-Healing
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Only the composite action is needed. A full checkout of this repository
+      # transfers ~400 MB; sparse + blob:none brings it to a few KB.
+      - name: Checkout the check-pat action
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/actions
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+          filter: blob:none
+
+      # continue-on-error, not fail-fast: a dead token must still reach Slack.
+      # The job is failed further down, after the notification has gone out.
+      - name: Check PAT_TOKEN_PIWI
+        id: pat
+        continue-on-error: true
+        uses: ./.github/actions/check-pat
+        with:
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+          name: PAT_TOKEN_PIWI
+          warn-days: '14'
+          fail-on-error: 'false'
+
+      # This repository is public, and so is this summary. Scopes and expiry
+      # belong in the Slack alert, not here.
+      - name: Write the report
+        env:
+          STATUS: ${{ steps.pat.outputs.status }}
+          LOGIN: ${{ steps.pat.outputs.login }}
+          MESSAGE: ${{ steps.pat.outputs.message }}
+        run: |
+          set -uo pipefail
+
+          case "$STATUS" in
+            ok)       ICON='✅' ;;
+            expiring) ICON='⚠️' ;;
+            unknown)  ICON='❔' ;;
+            *)        ICON='🔴' ;;
+          esac
+
+          {
+            echo "## ${ICON} PAT_TOKEN_PIWI: ${STATUS:-unknown}"
+            echo ""
+            echo "$MESSAGE"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Authenticates as | ${LOGIN:-n/a} |"
+            echo ""
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$STATUS" = 'dead' ]; then
+            {
+              echo "### Fix"
+              echo ""
+              echo '```sh'
+              echo "gh secret set PAT_TOKEN_PIWI --repo ${GITHUB_REPOSITORY}"
+              echo "gh workflow run 'PAT health' --repo ${GITHUB_REPOSITORY}"
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # `unknown` is deliberately silent: GitHub was unreachable, which proves
+      # nothing about the token. The next daily run answers the question.
+      #
+      # The detail is read from a file rather than passed through `env:`, which
+      # GitHub prints in the public log.
+      - name: Notify Slack
+        if: steps.pat.outputs.status == 'dead' || steps.pat.outputs.status == 'expiring'
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
+          STATUS: ${{ steps.pat.outputs.status }}
+          DETAILS_FILE: ${{ steps.pat.outputs.details-file }}
+        run: |
+          set -uo pipefail
+
+          if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
+            echo "Slack not configured, skipping notification"
+            exit 0
+          fi
+
+          DETAILS=$(cat "$DETAILS_FILE" 2>/dev/null) || DETAILS='no detail available'
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
+
+          if [ "$STATUS" = 'expiring' ]; then
+            TEXT=$(printf ':warning: *PAT_TOKEN_PIWI expires soon* (%s)\n```%s```\nRotate it before the docs automation goes quiet.\n<%s|View run>' \
+              "$DATE" "$DETAILS" "$RUN_URL")
+          else
+            TEXT=$(printf ':rotating_light: *PAT_TOKEN_PIWI is dead* (%s)\n```%s```\nUntil it is rotated: self-healing fails, auto-merge reports success and merges nothing, released PRs stay flagged.\n<%s|View run>' \
+              "$DATE" "$DETAILS" "$RUN_URL")
+          fi
+
+          curl -s -X POST 'https://slack.com/api/chat.postMessage' \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H 'Content-type: application/json; charset=utf-8' \
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$TEXT" '{channel: $channel, text: $text}')" \
+            > /dev/null || echo "Slack notification failed (non-blocking)"
+
+      # Last, so the notification above always goes out first. A token that is
+      # merely expiring does not fail the run.
+      - name: Fail when the token is dead
+        if: steps.pat.outputs.status == 'dead'
+        run: |
+          echo "PAT_TOKEN_PIWI is not usable. See the job summary for the fix."
+          exit 1
