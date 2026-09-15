@@ -31,50 +31,8 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
 
 <Guideflow lightId="mk6z26zaqp" darkId="9r2m74otok"/>
 
-:::strapi New Media Library available in <BetaBadge/>
-Strapi has completely reworked the Media Library UI. It is available as a beta feature <VersionBadge version="5.52.2+" noTooltip /> for the next few weeks, before it becomes the default UI. Enable it by setting the `future.betaMediaLibrary` property to `true` in the `config/features` file:
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="/config/features.js"
-module.exports = () => ({
-  future: {
-    // highlight-next-line
-    betaMediaLibrary: true,
-  },
-});
-```
-
-</TabItem>
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="/config/features.ts"
-export default () => ({
-  future: {
-    // highlight-next-line
-    betaMediaLibrary: true,
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
-Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to go back to the previous UI: no asset, folder or setting is lost when you switch either way.
-
-The [Usage](#usage) section of this page describes the UI that is enabled by default, and the guided tour above shows it too. While new UI is in beta, it is documented on its own page, [Media Library beta](/cms/features/media-library-beta). The [Configuration](#configuration) section applies to both.
-
-The flag changes the <Icon name="images" /> Media Library page of the admin panel, and adds the upload dialog described in [following upload progress](/cms/features/media-library-beta#upload-progress) to the whole admin panel. The following are not affected and still behave as documented:
-
-- the media field of the <Icon name="feather" /> Content Manager, which still opens the previous asset picker,
-- the <Icon name="gear-six" /> _Settings > Global Settings > Media Library_ page,
-- the [Upload REST API](/cms/api/rest/upload).
-
-The Media Library page displays a notice reminding you that this is a beta and that some features are still in progress. Read the [features configuration](/cms/configurations/features) documentation before enabling the flag, where the `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` environment variable is also documented.
-
-You can <ExternalLink text="read more about the beta here" to="https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f" /> and report any issue you run into on the <ExternalLink text="strapi/strapi repository" to="https://github.com/strapi/strapi/issues" />.
+:::note Upgrade to the new Media Library
+The redesigned Media Library UI became the default in Strapi 5.54.0 <VersionBadge version="5.54.0+" noTooltip />. Existing applications that had no feature flag set receive a one-time startup log message describing the change. To revert to the previous UI, set `useLegacyMediaLibrary: true` in the `config/features` file (see [opting out of the new Media Library](#opting-out)).
 :::
 
 ## Configuration
@@ -116,15 +74,15 @@ When images in your library lack a caption or an alternative text, the AI metada
 
 **Path to configure the feature:** <Icon name="images" /> Media Library
 
-:::caution With the beta Media Library enabled
-The <Icon name="gear-six" /> button and the view configuration page described below are not available while the `betaMediaLibrary` future flag is enabled, because the beta Media Library replaces both settings:
+:::caution With the new Media Library (default)
+The <Icon name="gear-six" /> button and the view configuration page described below are not available with the new Media Library, which is enabled by default since Strapi 5.54.0. The new Media Library replaces both settings:
 
 - assets load as you scroll instead of being paginated, so there is no page size to define,
-- the sort order is chosen from the toolbar and stored in the page URL (see [sorting assets](/cms/features/media-library-beta#sorting-assets)).
+- the sort order is chosen from the toolbar and stored in the page URL.
 
-A bookmarked link to `/admin/plugins/upload/configuration` displays a blank page rather than an error while the flag is enabled.
+A bookmarked link to `/admin/plugins/upload/configuration` displays a blank page rather than an error when the new Media Library is active.
 
-Both settings still apply to the media field of the <Icon name="feather" /> Content Manager. To change them, set the flag back to `false` temporarily.
+Both settings still apply to the media field of the <Icon name="feather" /> Content Manager and when `useLegacyMediaLibrary: true` is set in the `config/features` file.
 :::
 
 1. Click on the <Icon name="gear-six" /> button just above the list of folders and assets, on the right side of the interface.
@@ -678,7 +636,7 @@ Both values must be integers greater than or equal to 1. Any other value, `0` in
 :::
 
 :::note
-`concurrentUploadRequests` is only read by the beta Media Library. With the `betaMediaLibrary` future flag disabled the option has no effect: the previous UI sends one request per asset and starts them all at the same time. `concurrentUploadSize` applies in both cases, because the server enforces it.
+`concurrentUploadRequests` is only read by the new (default) Media Library. With `useLegacyMediaLibrary: true` set, the option has no effect: the previous UI sends one request per asset and starts them all at the same time. `concurrentUploadSize` applies in both cases, because the server enforces it.
 :::
 
 #### Responsive Images
@@ -790,6 +748,48 @@ export default ({ env }) => ({
 
 </Tabs>
 
+#### Opting out of the new Media Library {#opting-out}
+
+<VersionBadge version="5.54.0+" noTooltip />
+
+The redesigned Media Library UI is enabled by default since Strapi 5.54.0. To revert to the previous Media Library, add `useLegacyMediaLibrary: true` to the `config/features` file:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/features.js"
+module.exports = {
+  // highlight-next-line
+  useLegacyMediaLibrary: true,
+};
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/features.ts"
+export default {
+  // highlight-next-line
+  useLegacyMediaLibrary: true,
+};
+```
+
+</TabItem>
+</Tabs>
+
+Restart your Strapi application after the configuration change. Setting the flag to `false` or removing it re-enables the new Media Library.
+
+The flag can also be controlled through the `USE_LEGACY_MEDIA_LIBRARY` environment variable:
+
+```sh
+USE_LEGACY_MEDIA_LIBRARY=true yarn develop
+```
+
+:::note
+No assets, folders, or settings are lost when switching between the 2 Media Library UIs. The [view settings](#configuring-the-view) only apply when `useLegacyMediaLibrary` is enabled.
+:::
+
 ## Usage
 
 **Path to use the feature:** <Icon name="images" /> Media Library
@@ -813,7 +813,7 @@ Assets uploaded to the Media Library can be inserted into content-types using th
 From the Media Library, it is possible to:
 
 - upload a new asset (see [adding assets](/cms/features/media-library#adding-assets)) or create a new folder (see [organizing assets with folders](/cms/features/media-library#organizing-assets-with-folders)) <ScreenshotNumberReference number="1" />,
-- sort the assets and folders or set filters <ScreenshotNumberReference number="2" /> to find assets and folders more easily,
+- sort the assets and folders or set filters <ScreenshotNumberReference number="2" /> to find assets and folders more quickly,
 - toggle between the list view <Icon name="list" classes="ph-bold"/> and the grid view <Icon name="squares-four"/> to display assets, access settings <Icon name="gear-six" /> to [configure the view](#configuring-the-view), and make a textual search <Icon name="magnifying-glass" classes="ph-bold" /> <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
 - and view, navigate through, and manage folders <ScreenshotNumberReference number="4" />.
 
