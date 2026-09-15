@@ -15,6 +15,11 @@ on:
         required: false
         type: boolean
         default: false
+      since:
+        description: 'Look back to this UTC instant instead of 24h (e.g. 2026-09-11T01:41:27Z). Use it to catch up after missed runs.'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   docs-self-healing:
@@ -58,14 +63,25 @@ jobs:
           token: ${{ secrets.PAT_TOKEN_PIWI }}
           fetch-depth: 50
 
-      - name: List and filter merged PRs in last 24 hours
+      - name: List and filter recently merged PRs
         if: inputs.audit_only != true
         id: check-prs
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          SINCE_INPUT: ${{ inputs.since }}
         run: |
-          echo "Checking for PRs merged into strapi/strapi develop in the last 24h..."
-          SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || date -u -v-24H '+%Y-%m-%dT%H:%M:%SZ')
+          # The window is 24h because the schedule is daily. When a run is
+          # missed the merges inside that gap are never looked at again, so
+          # `since` exists to replay an arbitrary window by hand. It was added
+          # after the 2026-09-11 token expiry cost two runs and left four days
+          # of strapi/strapi merges untriaged.
+          SINCE="${SINCE_INPUT:-}"
+          if [ -n "$SINCE" ]; then
+            echo "Checking for PRs merged into strapi/strapi develop since $SINCE (manual window)..."
+          else
+            SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || date -u -v-24H '+%Y-%m-%dT%H:%M:%SZ')
+            echo "Checking for PRs merged into strapi/strapi develop in the last 24h..."
+          fi
 
           # Fetch all merged PRs with metadata
           gh api search/issues \
@@ -75,7 +91,7 @@ jobs:
             --jq '.items | [.[] | {number, title, author: .user.login, html_url: .pull_request.html_url, labels: [.labels[].name]}]' > /tmp/all-prs.json
 
           TOTAL=$(jq 'length' /tmp/all-prs.json)
-          echo "Found $TOTAL merged PRs in the last 24h"
+          echo "Found $TOTAL merged PRs since $SINCE"
 
           # 1. Remove manually ignored PRs (from .github/self-healing-ignore.json)
           IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
@@ -190,7 +206,7 @@ jobs:
           } >> $GITHUB_OUTPUT
 
           # Log detailed pre-filtering results in summary
-          echo "### Pre-filtering ($TOTAL merged PRs in 24h)" >> $GITHUB_STEP_SUMMARY
+          echo "### Pre-filtering ($TOTAL merged PRs since $SINCE)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           # List manually ignored PRs (first — most important to see)
