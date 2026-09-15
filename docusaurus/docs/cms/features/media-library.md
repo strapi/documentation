@@ -104,6 +104,38 @@ Both settings are used as the defaults in the Content Manager's media upload mod
 
 The Media Library is powered in the backend server by the Upload package, which can be configured and extended through providers.
 
+#### Restoring the previous Media Library {#use-legacy-media-library}
+
+<VersionBadge version="5.54.0+" noTooltip />
+
+The Media Library described on this page is the default. To restore the previous interface, set the `useLegacyMediaLibrary` property to `true` in the [`config/features` file](/cms/configurations/features):
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/features.js"
+module.exports = ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/features.ts"
+export default ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+
+</TabItem>
+</Tabs>
+
+The property sits at the top level of the file, not inside the `future` object: it is supported configuration rather than an experimental preview, so it is not a future flag and carries no <FeatureFlagBadge /> badge. From server code, read it with `strapi.features.isEnabled('useLegacyMediaLibrary')`.
+
+It replaces the `betaMediaLibrary` future flag, which is removed. A project that set `future.betaMediaLibrary` to `true` now gets the same interface by changing nothing, since it is the default.
+
+
 #### Providers
 
 <MediaLibraryProvidersList />
