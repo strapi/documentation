@@ -62,6 +62,14 @@ jobs:
           fetch-depth: 1
           filter: blob:none
 
+      # A dead PAT answers 401 to every `gh` call below. `gh` then writes the
+      # error to stderr and emits empty JSON, which this job reads as "nothing
+      # eligible" and reports as success, exactly what happened on 2026-09-14.
+      - name: Check PAT_TOKEN_PIWI
+        uses: ./.github/actions/check-pat
+        with:
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+
       - name: Check the absence period
         id: absence
         shell: bash {0}

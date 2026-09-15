@@ -63,6 +63,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Every `gh` call below authenticates with the PAT. The first one runs
+      # under `set -euo pipefail` and would fail the job on a 401, but the three
+      # steps after it run under `shell: bash {0}`, where an empty result reads
+      # as "nothing to label" and the job goes green. Answering the question
+      # once, here, is what keeps the second case from being silent.
+      - name: Checkout the check-pat action
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/actions
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+          filter: blob:none
+
+      - name: Check PAT_TOKEN_PIWI
+        uses: ./.github/actions/check-pat
+        with:
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+
       - name: Check scope
         id: scope
         env:

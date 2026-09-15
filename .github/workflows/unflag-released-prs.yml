@@ -45,10 +45,21 @@ jobs:
       - name: Checkout the release-detection script
         uses: actions/checkout@v4
         with:
-          sparse-checkout: .github/scripts
+          sparse-checkout: |
+            .github/scripts
+            .github/actions
           sparse-checkout-cone-mode: false
           fetch-depth: 1
           filter: blob:none
+
+      # The step below runs under `set -euo pipefail`, so a dead PAT does fail
+      # the job rather than pass silently. What it does not do is say why: the
+      # log shows a `gh` 401 and nothing that names the secret. This preflight
+      # names it, and gives every PAT consumer the same first step to read.
+      - name: Check PAT_TOKEN_PIWI
+        uses: ./.github/actions/check-pat
+        with:
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
 
       - name: Remove the label from released PRs
         env:

@@ -30,6 +30,23 @@ jobs:
   auto-respond:
     runs-on: ubuntu-latest
     steps:
+      # The checkout below authenticates with the PAT. When the PAT is dead that
+      # step fails with "could not read Username for 'https://github.com'" and
+      # exit code 128, a message that never mentions the token. This pair of
+      # steps costs a few KB and a second, and turns it into a named cause.
+      - name: Checkout the check-pat action
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/actions
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+          filter: blob:none
+
+      - name: Check PAT_TOKEN_PIWI
+        uses: ./.github/actions/check-pat
+        with:
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
