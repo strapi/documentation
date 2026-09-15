@@ -1,0 +1,80 @@
+name: 'Check PAT'
+description: >-
+  Validates the personal access token a workflow depends on before the workflow
+  uses it, so an expired or revoked token fails the run with a readable message
+  instead of surfacing as an opaque `git exit 128` or, worse, as a green run
+  that quietly did nothing.
+
+# WHY THIS EXISTS
+#
+# On 2026-09-11 PAT_TOKEN_PIWI expired. The two consumers reacted differently
+# and both reactions were bad:
+#
+#   docs-self-healing.yml  failed on `actions/checkout` with
+#                          "could not read Username for 'https://github.com'"
+#                          and exit code 128, a message that says nothing
+#                          about the token.
+#   automerge-cron.yml     reported SUCCESS. `gh pr list` returned 401, the
+#                          output files were empty, the counters read 0, and
+#                          Slack announced "nothing to merge". Auto-merge was
+#                          dead for four days behind a green check.
+#
+# One call to GET /user answers the question both workflows failed to ask.
+
+inputs:
+  token:
+    description: 'The token to validate.'
+    required: true
+  name:
+    description: 'Name of the secret holding it, used in the messages.'
+    required: false
+    default: 'PAT_TOKEN_PIWI'
+  warn-days:
+    description: 'Report the token as expiring when fewer than this many days remain.'
+    required: false
+    default: '14'
+  fail-on-error:
+    description: >-
+      Fail the step when the token is rejected. Set to false to let the caller
+      read the outputs and decide (used by pat-health.yml so it can notify
+      Slack before failing the job).
+    required: false
+    default: 'true'
+
+outputs:
+  status:
+    description: >-
+      `ok`, `expiring` (valid but close to its expiry), `dead` (GitHub rejected
+      it), or `unknown` (GitHub could not be reached, so nothing was proved).
+    value: ${{ steps.check.outputs.status }}
+  login:
+    description: 'The account the token authenticates as. Empty when it is dead.'
+    value: ${{ steps.check.outputs.login }}
+  scopes:
+    description: 'Scopes carried by the token, as reported by GitHub.'
+    value: ${{ steps.check.outputs.scopes }}
+  expires-at:
+    description: >-
+      Expiry reported by GitHub. Empty when the token carries no expiry or when
+      GitHub does not report one.
+    value: ${{ steps.check.outputs.expires_at }}
+  days-left:
+    description: 'Whole days until expiry. Empty when no expiry is reported.'
+    value: ${{ steps.check.outputs.days_left }}
+  message:
+    description: 'One line describing the outcome, ready to paste into Slack.'
+    value: ${{ steps.check.outputs.message }}
+
+runs:
+  using: composite
+  steps:
+    - id: check
+      shell: bash
+      env:
+        TOKEN: ${{ inputs.token }}
+        SECRET_NAME: ${{ inputs.name }}
+        WARN_DAYS: ${{ inputs.warn-days }}
+        FAIL_ON_ERROR: ${{ inputs.fail-on-error }}
+      # `bash <file>`, not the file directly: it does not depend on the
+      # executable bit surviving the checkout.
+      run: bash "${GITHUB_ACTION_PATH}/check-pat.sh"
