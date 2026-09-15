@@ -1264,6 +1264,16 @@
       "number": 27608,
       "reason": "Triage: administrative merge of release; no new behavior",
       "added": "2026-09-11"
+    },
+    {
+      "number": 27626,
+      "reason": "Triage: internal build tooling/CI fix",
+      "added": "2026-09-15"
+    },
+    {
+      "number": 27594,
+      "reason": "Triage: internal implementation fix for MCP tools",
+      "added": "2026-09-15"
     }
   ]
 }
