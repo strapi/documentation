@@ -971,7 +971,11 @@ Files dropped from your computer always land in the folder you are currently bro
 3. In the _URL(s)_ field of the _Import from URL_ dialog, type or paste up to 20 URLs, one per line.
 4. Click **Upload**.
 
-Strapi downloads each file server-side and adds it to the current folder. The server reports no incremental byte count for this flow, so the upload dialog displays a moving progress bar without a percentage.
+Strapi downloads each file server-side and adds it to the current folder. The upload dialog reports byte-level progress as the server fetches each file: the progress bar advances in real time during the fetch phase, then hands off to the upload step and completes. <VersionBadge version="5.53.1+" noTooltip />
+
+:::note
+When the remote server does not include a `Content-Length` response header, the total size is unknown. The progress bar stays indeterminate for that file until the fetch completes, then completes normally.
+:::
 
 :::caution
 URLs must use the `http` or `https` protocol, and must resolve to a publicly reachable address. URLs that resolve to a private or internal address, such as `localhost` or an address on your own network, are rejected to prevent server-side request forgery.
@@ -1328,6 +1332,10 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 :::
 
 Folders can also be deleted in bulk, together with assets (see [deleting items in bulk](#bulk-delete)).
+
+### Usage with the MCP server
+
+AI clients connected to the [Strapi MCP server](/cms/features/strapi-mcp-server) can browse and manage the Media Library through dedicated tools: 3 read-only tools that list assets, return a single asset and return the folder tree, and 7 write tools that update asset metadata, move and delete assets, and create, rename, move and delete folders (see [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools)).
 
 ### Usage with the REST API
 

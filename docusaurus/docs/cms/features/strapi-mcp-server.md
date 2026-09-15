@@ -214,7 +214,7 @@ The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible c
 
 ### Available tools
 
-The MCP server exposes 2 categories of tools: content management tools generated from your schema, and built-in utility tools.
+The MCP server exposes 3 categories of tools: content management tools generated from your schema, Media Library tools, and built-in utility tools.
 
 #### Content management tools
 
@@ -246,6 +246,52 @@ The tools generated differ depending on whether the content type is a collection
 
 The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
 
+
+#### Media Library tools {#media-library-tools}
+
+<VersionBadge version="5.53.1+" noTooltip />
+
+Strapi registers 10 tools for the [Media Library](/cms/features/media-library): 3 for reading, and 7 for writing that are available with Strapi <VersionBadge version="5.54.0+" noTooltip />. Unlike content management tools they are not generated from your schema, so the same set is always registered. Each tool is exposed only if the Admin token grants the permission listed below: a tool the token cannot use does not appear in `tools/list`, and calling it returns a permission error.
+
+| Tool | Permission required | Description |
+|------|--------------------|-------------|
+| `media_list_assets` | `plugin::upload.read` | Lists assets, with pagination and optional filters |
+| `media_get_asset` | `plugin::upload.read` | Returns a single asset by its numeric `id` |
+| `media_list_folders` | `plugin::upload.read` | Returns the complete folder tree as a nested structure |
+| `media_update_asset` | `plugin::upload.assets.update` | Updates `name`, `alternativeText` or `caption` |
+| `media_move_assets` | `plugin::upload.assets.update` | Moves assets into another folder, in bulk |
+| `media_delete_assets` | `plugin::upload.assets.update` | Permanently deletes assets, in bulk |
+| `media_create_folder` | `plugin::upload.assets.create` | Creates a folder, optionally inside a parent folder |
+| `media_rename_folder` | `plugin::upload.assets.update` | Renames a folder |
+| `media_move_folder` | `plugin::upload.assets.update` | Moves a folder into another parent folder |
+| `media_delete_folder` | `plugin::upload.assets.update` | Deletes folders and everything they contain |
+
+Tool responses include a fixed allowlist of fields: `id`, `name`, `alternativeText`, `caption`, `url`, `mime`, `size`, `width`, `height`, `ext`, `folder`, and timestamps. Fields that could expose storage provider credentials or internal paths (`provider`, `provider_metadata`, `hash`, `formats`, `folderPath`) are never returned, even if the content type is extended later.
+
+Assets and folders are identified by numeric ids rather than document IDs, and the two are independent sequences: the same number can name both an asset and a folder. Take asset ids from `media_list_assets` or `media_get_asset`, and folder ids from `media_list_folders`.
+
+**Reading.** The `media_list_assets` tool accepts the following optional parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `page` | Number | Page number, 1-indexed (default: 1). |
+| `pageSize` | Number | Number of assets per page (default: 25, max: 100). |
+| `folderId` | Number or null | Numeric folder ID to list assets from a specific folder, or `null` for root-level assets only. Omit to list all assets regardless of folder. |
+| `mime` | String | MIME type filter. A value without a slash is matched as a prefix (`"image"` matches every `image/*` type), a full type is matched exactly and case-insensitively (`"image/png"`). |
+| `name` | String | Partial asset name filter (case-insensitive substring match). |
+| `sort` | String | Sort order (default: `createdAt:DESC`). Only 6 values are accepted: `createdAt:ASC`, `createdAt:DESC`, `name:ASC`, `name:DESC`, `updatedAt:ASC`, and `updatedAt:DESC`. The direction is uppercase and any other value is rejected. |
+
+The `media_get_asset` tool requires 1 parameter: `id`, the numeric asset ID. Document ID strings are not accepted. The `media_list_folders` tool accepts no parameters and returns the full folder hierarchy.
+
+**Writing.** `media_update_asset` writes metadata only. The file itself, its URL, its MIME type and its size belong to the [upload provider](/cms/configurations/media-library-providers) and cannot be changed over MCP. Use `media_move_assets` to change which folder an asset sits in, and `media_rename_folder` rather than `media_move_folder` to change a folder name.
+
+`media_move_assets` and `media_move_folder` both accept `null` as the destination, meaning the Media Library root. A folder cannot be moved into itself or into one of its own descendants.
+
+:::warning Deletions are permanent
+`media_delete_assets` and `media_delete_folder` remove files from the database and from the storage provider, together with every generated thumbnail and size variant. There is no trash and no undo, and deleting a folder cascades to every subfolder and file inside it. Neither tool can tell whether an asset is referenced by an entry, so a successful deletion is not evidence that nothing was using it.
+
+Both accept a `dryRun` parameter, which reports what would be removed without removing anything. They differ on partial failure: `media_delete_assets` keeps the deletions that succeeded and reports the rest, while `media_delete_folder` rejects the whole call if any id does not resolve to a folder.
+:::
 
 #### Built-in utility tools
 
