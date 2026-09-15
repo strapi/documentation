@@ -20,6 +20,11 @@ on:
         required: false
         type: string
         default: ''
+      until:
+        description: 'Upper bound of the window, UTC. Pair it with `since` to replay a long catch-up in slices the Router can actually handle.'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   docs-self-healing:
@@ -75,29 +80,43 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           SINCE_INPUT: ${{ inputs.since }}
+          UNTIL_INPUT: ${{ inputs.until }}
         run: |
           # The window is 24h because the schedule is daily. When a run is
           # missed the merges inside that gap are never looked at again, so
           # `since` exists to replay an arbitrary window by hand. It was added
           # after the 2026-09-11 token expiry cost two runs and left four days
           # of strapi/strapi merges untriaged.
+          #
+          # `until` closes the window. The Router prompt caps itself at 5 PRs
+          # per run, and a four-day catch-up carries far more than that: the
+          # first replay handed it 16 and it answered "What PR list should I
+          # process?" without calling a single tool. A long catch-up has to be
+          # run in slices, and that needs both bounds.
           SINCE="${SINCE_INPUT:-}"
+          UNTIL="${UNTIL_INPUT:-}"
           if [ -n "$SINCE" ]; then
-            echo "Checking for PRs merged into strapi/strapi develop since $SINCE (manual window)..."
+            echo "Checking for PRs merged into strapi/strapi develop since $SINCE${UNTIL:+ until $UNTIL} (manual window)..."
           else
             SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || date -u -v-24H '+%Y-%m-%dT%H:%M:%SZ')
             echo "Checking for PRs merged into strapi/strapi develop in the last 24h..."
           fi
 
+          if [ -n "$UNTIL" ]; then
+            MERGED_QUERY="merged:$SINCE..$UNTIL"
+          else
+            MERGED_QUERY="merged:>=$SINCE"
+          fi
+
           # Fetch all merged PRs with metadata
           gh api search/issues \
             --method GET \
-            -f q="repo:strapi/strapi is:pr is:merged base:develop merged:>=$SINCE" \
+            -f q="repo:strapi/strapi is:pr is:merged base:develop $MERGED_QUERY" \
             -f per_page=50 \
             --jq '.items | [.[] | {number, title, author: .user.login, html_url: .pull_request.html_url, labels: [.labels[].name]}]' > /tmp/all-prs.json
 
           TOTAL=$(jq 'length' /tmp/all-prs.json)
-          echo "Found $TOTAL merged PRs since $SINCE"
+          echo "Found $TOTAL merged PRs ($MERGED_QUERY)"
 
           # 1. Remove manually ignored PRs (from .github/self-healing-ignore.json)
           IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
@@ -212,7 +231,7 @@ jobs:
           } >> $GITHUB_OUTPUT
 
           # Log detailed pre-filtering results in summary
-          echo "### Pre-filtering ($TOTAL merged PRs since $SINCE)" >> $GITHUB_STEP_SUMMARY
+          echo "### Pre-filtering ($TOTAL merged PRs, $MERGED_QUERY)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           # List manually ignored PRs (first — most important to see)
