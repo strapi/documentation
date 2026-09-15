@@ -145,8 +145,43 @@ baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_B
 
 :::
 
-:::caution Deprecated root-level credential format
-Older Strapi guides and blog posts show `accessKeyId` and `secretAccessKey` placed directly in `s3Options`. This root-level format still works but triggers a deprecation warning. Pass credentials inside a `credentials` object instead (as shown in the examples above).
+:::caution Migrating from Strapi v4: two changes may be required
+
+If you are upgrading from Strapi v4, your S3 provider configuration may need **two** updates:
+
+**1. Add the `s3Options` wrapper.** In Strapi v4, all settings could be placed directly under `providerOptions`. Strapi v5 requires them inside an `s3Options` key:
+
+```js
+// v4 format — no longer valid in v5:
+providerOptions: {
+  accessKeyId: env('AWS_ACCESS_KEY_ID'),
+  secretAccessKey: env('AWS_ACCESS_SECRET'),
+  region: env('AWS_REGION'),
+  params: { Bucket: env('AWS_BUCKET') },
+},
+```
+
+**2. Wrap credentials in a `credentials` object.** Even after moving settings into `s3Options`, placing `accessKeyId` and `secretAccessKey` directly inside `s3Options` is deprecated and triggers a warning:
+
+```js
+// Deprecated (triggers warning):
+s3Options: {
+  accessKeyId: env('AWS_ACCESS_KEY_ID'),
+  secretAccessKey: env('AWS_ACCESS_SECRET'),
+  // ...
+},
+
+// Correct:
+s3Options: {
+  credentials: {
+    accessKeyId: env('AWS_ACCESS_KEY_ID'),
+    secretAccessKey: env('AWS_ACCESS_SECRET'),
+  },
+  // ...
+},
+```
+
+The `s3-keys-wrapped-in-credentials` codemod (run automatically by `npx @strapi/upgrade major`) handles step 2 but **not** step 1. If your v4 configuration used the root-level `providerOptions` format without `s3Options`, you must add the `s3Options` wrapper manually.
 :::
 
 :::info AWS credential provider functions
