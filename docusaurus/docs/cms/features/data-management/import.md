@@ -60,6 +60,22 @@ The following documentation details the available options to customize your data
 
 Each folder contains one or more `.jsonl` files where each line represents a single record. The format allows you to edit or transform data before re‑importing it.
 
+### Asset metadata validation
+
+<VersionBadge version="5.54.0+" noTooltip />
+
+Every file under `assets/uploads` ships with a metadata sidecar under `assets/metadata`. Before touching the destination, `strapi import` checks the following:
+
+- every upload under `assets/uploads` has a matching sidecar under `assets/metadata`
+- every sidecar contains valid JSON
+- every sidecar describes a JSON object, rather than a list, a string, or `null`
+- every sidecar declares the fields that asset restore requires
+- the filename recorded in each sidecar matches the name of the upload that sidecar accompanies
+
+An archive that fails any of these checks is rejected before the existing data is backed up or deleted, so the destination is left exactly as it was and the fix is to produce a new export. This is a preflight check, not a repair: Strapi does not reconstruct missing metadata or match assets by filename or hash.
+
+The check is skipped when assets are excluded from the import, either with `--exclude files` or with an `--only` list that leaves them out.
+
 To prepare an archive for manual review or modification:
 
 <Tabs groupId="yarn-npm">
