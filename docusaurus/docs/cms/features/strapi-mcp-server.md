@@ -246,7 +246,6 @@ The tools generated differ depending on whether the content type is a collection
 
 The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
 
-
 #### Media Library tools {#media-library-tools}
 
 <VersionBadge version="5.54.0" />
