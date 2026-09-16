@@ -321,7 +321,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text (Markdown) | Write your textual content in the editor, in Markdown. Some basic formatting options (titles, bold, italics, underline) are available in the top bar of the editor to apply to selected text. A **Preview mode/Markdown mode** button to switch between modes is also available. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview. |
 | Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon <Icon name="dots-six-vertical" classes="ph-bold"/> on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <!-- <br /><br /> 💡 Type `/` in the editor to have access to the list of all available options and select one. --> <br /><br /> 💡 You can use text formatting keyboard shortcuts in the Blocks editor (e.g. bold, italics, underline, and pasting link). |
-| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
+| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow you to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation. |
 | Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/cms/features/media-library) or from a [folder](/cms/features/media-library#organizing-assets-with-folders) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
 | Relation    | Choose an entry from the drop-down list. See [relational fields](#relational-fields) for more information.                                                                                                                                                                                                          |
@@ -484,7 +484,7 @@ The relational fields of a content-type are displayed among regular fields. For 
 
 <TabItem value="OneChoice" label="One-choice relational fields">
 
-Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
+Many-to-one, one-to-one, and one-way types of relation only allow you to choose one entry per relational field.
 
 <ThemedImage
   alt="One-choice relational fields"
@@ -506,7 +506,7 @@ To remove the entry selected in the drop-down list, click on the delete button <
 
 <TabItem value="MultipleChoice" label="Multiple-choice relational fields">
 
-Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
+Many-to-many, one-to-many, and many-ways types of relation allow you to choose several entries per relational field.
 
 <ThemedImage
   alt="Multiple choices relational fields"
