@@ -27,8 +27,6 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-
-
 _Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.54.0](https://github.com/strapi/strapi/releases/tag/v5.54.0)._
 
 ## 7.2.0
@@ -44,8 +42,6 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Add a guide for proxying Strapi with HAProxy](https://github.com/strapi/documentation/pull/3463)
 - [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3462)
 - [Add a guide for proxying Strapi with Nginx](https://github.com/strapi/documentation/pull/3461)
-
-#### Repository
 - [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3475)
 
 ### <Icon name='pen-nib' /> Updated content
@@ -53,8 +49,13 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 <br />
 
 #### CMS
-- [Document the new Media Library as the default at GA](https://github.com/strapi/documentation/pull/3448)
+- [Document the new Media Library](https://github.com/strapi/documentation/pull/3448)
 - [Clarify Content History and Audit Logs retention periods](https://github.com/strapi/documentation/pull/3447)
+- [Update Live Preview support for Blocks fields](https://github.com/strapi/documentation/pull/3482)
+- [Document audit log CSV export](https://github.com/strapi/documentation/pull/3446)
+- [Document release actions in audit logs](https://github.com/strapi/documentation/pull/3443)
+- [Document the asset metadata preflight on import](https://github.com/strapi/documentation/pull/3486)
+- [Add MCP server schema dialect and SDK v2 compatibility section](https://github.com/strapi/documentation/pull/3453)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
@@ -63,18 +64,12 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 #### CMS
 - [Fix "allows to" grammar in Media Library page](https://github.com/strapi/documentation/pull/3491)
 - [Fix "allow(s) to" grammar in Content Manager page](https://github.com/strapi/documentation/pull/3490)
-- [Document the asset metadata preflight on import](https://github.com/strapi/documentation/pull/3486)
 - [Clarify that an expired access token does not end the admin session](https://github.com/strapi/documentation/pull/3485)
-- [Update Live Preview support for Blocks fields](https://github.com/strapi/documentation/pull/3482)
 - [Fix grammar in Content-type Builder page](https://github.com/strapi/documentation/pull/3479)
 - [Add missing pagination previous/next links to new deployment pages](https://github.com/strapi/documentation/pull/3478)
 - [Correct what the url option does and what the admin URL defaults to](https://github.com/strapi/documentation/pull/3474)
 - [Scope the admin cookie path requirement to the versions it affects](https://github.com/strapi/documentation/pull/3468)
 - [Replace the dead GraphQL Armor forum link with the project documentation](https://github.com/strapi/documentation/pull/3467)
-- [Add MCP server schema dialect and SDK v2 compatibility section](https://github.com/strapi/documentation/pull/3453)
-- [Update URL upload progress description in beta Media Library](https://github.com/strapi/documentation/pull/3452)
-- [Document audit log CSV export](https://github.com/strapi/documentation/pull/3446)
-- [Document release actions in audit logs](https://github.com/strapi/documentation/pull/3443)
 
 #### Repository
 - [Fix "allow(s) to" grammar across CMS and Cloud documentation](https://github.com/strapi/documentation/pull/3492)
