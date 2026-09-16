@@ -29,15 +29,7 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<!-- <Guideflow lightId="mk6z26zaqp" darkId="9r2m74otok"/> temporarily hidden while we're updating it-->
-
-<ThemedImage
-  alt="Media Library settings"
-  sources={{
-    light: '/img/assets/media-library/temp-media-lib-overview-placeholder.png',
-    dark: '/img/assets/media-library/temp-media-lib-overview-placeholder_DARK.png',
-  }}
-/>
+<Guideflow lightId="ok8v0jeaxp" darkId="ok8v0jeaxp"/>
 
 ## Configuration
 
