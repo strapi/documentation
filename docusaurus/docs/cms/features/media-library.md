@@ -915,24 +915,15 @@ Assets are always uploaded to the location you are currently browsing. Navigate 
 
 In an empty folder, and in a new project, the list is replaced by a _No assets yet_ message with an **Add assets** button that opens the same file browser as **New** > **File upload**.
 
-<details>
-<summary>Media types the Media Library previews:</summary>
-
-| Media type | Extensions |
-| ---------- | --------------------------------------------------------------- |
-| Image      | - JPEG<br />- PNG<br />- GIF<br />- SVG<br />- TIFF<br />- ICO<br />- DVU   |
-| Video      | - MPEG<br />- MP4<br />- MOV (Quicktime)<br />- WMV<br />- AVI<br />- FLV |
-| Audio      | - MP3<br />- WAV<br />- OGG                                         |
-| File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
-<br/>
-
+:::note Supported files
 The Media Library itself does not restrict file types. Which files are accepted is decided by the `security.allowedTypes` and `security.deniedTypes` options (see [security](#security)) and by the maximum file size (see [max file size](#max-file-size)). SVG files are denied by default in projects generated with Strapi <VersionBadge version="5.52.2+" noTooltip /> and later (see [SVG uploads](#svg-uploads)).
-<br/>
+:::
 
-</details>
+:::info File previews
+Zip, xls, csv, and json files are not previewed. Images, video, and audio files are previewed.
+:::
 
-
-There are 3 ways to add assets.
+There are 3 ways to add assets: by uploading from your computer, by dragging and dropping into the Media Library UI, or from a URL.
 
 #### Uploading files from your computer with the New button
 
