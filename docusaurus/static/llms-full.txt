@@ -33681,7 +33681,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text (Markdown) | Write your textual content in the editor, in Markdown. Some basic formatting options (titles, bold, italics, underline) are available in the top bar of the editor to apply to selected text. A **Preview mode/Markdown mode** button to switch between modes is also available. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview. |
 | Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon  on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <!-- <br /><br /> 💡 Type `/` in the editor to have access to the list of all available options and select one. --> <br /><br /> 💡 You can use text formatting keyboard shortcuts in the Blocks editor (e.g. bold, italics, underline, and pasting link). |
-| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
+| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow you to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation. |
 | Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/cms/features/media-library) or from a [folder](/cms/features/media-library#organizing-assets-with-folders) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
 | Relation    | Choose an entry from the drop-down list. See [relational fields](#relational-fields) for more information.                                                                                                                                                                                                          |
@@ -33778,7 +33778,7 @@ In the Content Manager, from the edit view of my Restaurant entries, I can manag
 
 The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.-->
 
-Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
+Many-to-one, one-to-one, and one-way types of relation only allow you to choose one entry per relational field.
 
 To select the only relevant relational field's entry:
 
@@ -33787,7 +33787,7 @@ To select the only relevant relational field's entry:
 
 To remove the entry selected in the drop-down list, click on the delete button .
 
-Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
+Many-to-many, one-to-many, and many-ways types of relation allow you to choose several entries per relational field.
 
 To select the relevant relational field's entries:
 
@@ -35418,6 +35418,20 @@ The following documentation details the available options to customize your data
 
 Each folder contains one or more `.jsonl` files where each line represents a single record. The format allows you to edit or transform data before re‑importing it.
 
+### Asset metadata validation
+
+Every file under `assets/uploads` ships with a metadata sidecar under `assets/metadata`. Before touching the destination, `strapi import` checks the following:
+
+- every upload under `assets/uploads` has a matching sidecar under `assets/metadata`
+- every sidecar contains valid JSON
+- every sidecar describes a JSON object, rather than a list, a string, or `null`
+- every sidecar declares the fields that asset restore requires
+- the filename recorded in each sidecar matches the name of the upload that sidecar accompanies
+
+An archive that fails any of these checks is rejected before the existing data is backed up or deleted, so the destination is left exactly as it was and the fix is to produce a new export. This is a preflight check, not a repair: Strapi does not reconstruct missing metadata or match assets by filename or hash.
+
+The check is skipped when assets are excluded from the import, either with `--exclude files` or with an `--only` list that leaves them out.
+
 To prepare an archive for manual review or modification:
 
 ```bash
@@ -36741,7 +36755,7 @@ When using the default upload provider, the following specific configuration opt
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | `providerOptions.localServer`        | Options that will be passed to [koa-static](https://github.com/koajs/static) upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `1000000000`<br/><br/>(1 GB in bytes) |
-| `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
+| `breakpoints`             | Allows you to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures [sharp](https://sharp.pixelplumbing.com/) image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security (see [security](#security)) | Object | - |
 | `concurrentUploadRequests` | Number of files the admin panel uploads to the server in parallel (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
