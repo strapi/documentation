@@ -26806,7 +26806,7 @@ export default {
 Source: https://docs.strapi.io/cms/features/media-library
 
 ## Restoring the previous Media Library
-Description: The Media Library described on this page is the default.
+Description: The Media Library described on this page is the default UI since Strapi v5.54.0.
 (Source: https://docs.strapi.io/cms/features/media-library#use-legacy-media-library)
 
 Language: JavaScript
@@ -27020,44 +27020,9 @@ export default {
 ```
 
 
-## File type detection for ambiguous MIME types
-Description: You can provide them by creating or editing the /config/plugins file.
-(Source: https://docs.strapi.io/cms/features/media-library#file-type-detection-for-ambiguous-mime-types)
-
-Language: JavaScript
-File path: /config/plugins.js
-
-```js
-module.exports = {
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
-
----
-Language: TypeScript
-File path: /config/plugins.ts
-
-```ts
-export default {
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
+## Security
+Description: New projects declare the 2 lists as separate variables and pass them to the upload plugin, alongside the other generated plugin configuration:
+(Source: https://docs.strapi.io/cms/features/media-library#security)
 
 Language: JavaScript
 File path: /config/plugins.js
@@ -27142,6 +27107,46 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
 });
 
 export default config;
+```
+
+
+## File type detection for ambiguous MIME types
+Description: You can provide them by creating or editing the /config/plugins file.
+(Source: https://docs.strapi.io/cms/features/media-library#file-type-detection-for-ambiguous-mime-types)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
 ```
 
 
