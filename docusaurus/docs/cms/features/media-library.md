@@ -2,7 +2,7 @@
 title: Media Library
 displayed_sidebar: cmsSidebar
 sidebar_position: 1
-description: Learn to use the Media Library which allows to display and manage all assets uploaded in the application.
+description: Learn to use the Media Library which allows you to display and manage all assets uploaded in the application.
 toc_max_heading_level: 5
 tags:
 - admin panel
@@ -159,7 +159,7 @@ When using the default upload provider, the following specific configuration opt
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | `providerOptions.localServer`        | Options that will be passed to <ExternalLink to="https://github.com/koajs/static" text="koa-static"/> upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `1000000000`<br/><br/>(1 GB in bytes) |
-| `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
+| `breakpoints`             | Allows you to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security (see [security](#security)) | Object | - |
 | `concurrentUploadRequests` | Number of files the admin panel uploads to the server in parallel (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
