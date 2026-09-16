@@ -43,7 +43,7 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
   - the project's metadata, including the Production app internal name and the Subscription ID, which can be useful for debugging & support purposes.
 - *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
 
-- *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows you to enable/disable the "deploy on push" option.
 - *Danger zone*, with:
   - *Transfer ownership*: for the project owner to transfer the ownership of the Cloud project to an already existing maintainer (see [Transferring project ownership](#transferring-project-ownership)).
   - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-a-strapi-cloud-project)).
@@ -150,7 +150,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 ### Environments {#environments}
 <CloudProBadge /> <CloudBusinessBadge />
 
-The <Icon name="stack" /> *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
+The <Icon name="stack" /> *Environments* tab allows you to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 <ThemedImage
   alt="Project overview"
@@ -295,7 +295,7 @@ The <Icon name="faders" /> *Configuration* tab for the environment-level setting
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
-- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows you to enable/disable the "deploy on push" option.
 - *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)) or to remove all data and assets from the current environment while keeping its settings (see [Clearing an environment](#clearing-an-environment)).
 - *Danger zone*: to permanently delete an additional environment (see [Deleting an environment](#deleting-an-environment)).
 

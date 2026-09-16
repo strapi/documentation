@@ -18,7 +18,7 @@ tags:
 Draft & Publish separates drafts from live entries, allowing editors to stage content before release. This documentation shows how to enable it per content type and manage publish or unpublish actions.
 </Tldr>
 
-The Draft & Publish feature allows to manage drafts for your content.
+The Draft & Publish feature allows you to manage drafts for your content.
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>

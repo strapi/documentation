@@ -1144,7 +1144,7 @@ Strapi Cloud is a PaaS hosting platform for deploying Strapi CMS projects, offer
 
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
-- **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS ([Software-as-a-Service](https://en.wikipedia.org/wiki/Software_as_a_service)) version of Strapi CMS and should rather be considered as a PaaS ([Platform-as-a-Service](https://en.wikipedia.org/wiki/Platform_as_a_service)). Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
+- **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows you to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS ([Software-as-a-Service](https://en.wikipedia.org/wiki/Software_as_a_service)) version of Strapi CMS and should rather be considered as a PaaS ([Platform-as-a-Service](https://en.wikipedia.org/wiki/Platform_as_a_service)). Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
 
 - **Strapi Cloud Pricing Plans** <br/> As a Strapi Cloud user you have the choice between 3 plans: Starter, Pro, and Business. Depending on the plan, you have access to different functionalities, support and customization options (see [Pricing page](https://strapi.io/pricing-cloud) for more details). In this Strapi Cloud documentation, the  and  badges can be displayed below a section's title to indicate that the feature is only available starting from the corresponding plan. If no badge is shown, the feature is available on the Starter plan. Only Pro and Business badges are used in Cloud docs because Starter is the baseline plan; the  component exists for consistency with other Strapi documentation but is not displayed on Cloud pages.
 
@@ -2006,7 +2006,7 @@ The  *General* tab for the project-level settings enables you to check and updat
   - the project's metadata, including the Production app internal name and the Subscription ID, which can be useful for debugging & support purposes.
 - *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
 
-- *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows you to enable/disable the "deploy on push" option.
 - *Danger zone*, with:
   - *Transfer ownership*: for the project owner to transfer the ownership of the Cloud project to an already existing maintainer (see [Transferring project ownership](#transferring-project-ownership)).
   - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-a-strapi-cloud-project)).
@@ -2103,7 +2103,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 ### Environments {#environments}
 
-The  *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
+The  *Environments* tab allows you to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 :::note
 The billing cycle of additional environments you purchase will match the billing cycle of your plan.
@@ -2242,7 +2242,7 @@ The  *Configuration* tab for the environment-level settings enables you to check
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
-- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows you to enable/disable the "deploy on push" option.
 - *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)) or to remove all data and assets from the current environment while keeping its settings (see [Clearing an environment](#clearing-an-environment)).
 - *Danger zone*: to permanently delete an additional environment (see [Deleting an environment](#deleting-an-environment)).
 
@@ -23194,6 +23194,8 @@ Strapi's session management system supports both admin panel authentication and 
 - Device-specific sessions for targeted logout
 - Configurable token lifespans for different security requirements
 
+An expired access token does not end the admin session. With Strapi  a tab left idle past `accessTokenLifespan` stays open, keeps any unsaved work, and the next request renews the token without the user noticing. What ends a session is the refresh window: `idleSessionLifespan` and `maxSessionLifespan` below, or a session revoked from the Sessions page. The admin panel warns about unsaved changes only in those cases, and when the user logs out.
+
 To configure session lifespans and behavior, use the following parameters:
 
 | Parameter                                 | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
@@ -33519,7 +33521,7 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 
 #### Filtering entries {#filtering-entries}
 
-Right above the list view table, on the left side of the interface, a  **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
+Right above the list view table, on the left side of the interface, a  **Filters** button is displayed. It allows you to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
 To set a new filter:
 
@@ -33681,7 +33683,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text (Markdown) | Write your textual content in the editor, in Markdown. Some basic formatting options (titles, bold, italics, underline) are available in the top bar of the editor to apply to selected text. A **Preview mode/Markdown mode** button to switch between modes is also available. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview. |
 | Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon  on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <!-- <br /><br /> 💡 Type `/` in the editor to have access to the list of all available options and select one. --> <br /><br /> 💡 You can use text formatting keyboard shortcuts in the Blocks editor (e.g. bold, italics, underline, and pasting link). |
-| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
+| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow you to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation. |
 | Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/cms/features/media-library) or from a [folder](/cms/features/media-library#organizing-assets-with-folders) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
 | Relation    | Choose an entry from the drop-down list. See [relational fields](#relational-fields) for more information.                                                                                                                                                                                                          |
@@ -33778,7 +33780,7 @@ In the Content Manager, from the edit view of my Restaurant entries, I can manag
 
 The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.-->
 
-Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
+Many-to-one, one-to-one, and one-way types of relation only allow you to choose one entry per relational field.
 
 To select the only relevant relational field's entry:
 
@@ -33787,7 +33789,7 @@ To select the only relevant relational field's entry:
 
 To remove the entry selected in the drop-down list, click on the delete button .
 
-Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
+Many-to-many, one-to-many, and many-ways types of relation allow you to choose several entries per relational field.
 
 To select the relevant relational field's entries:
 
@@ -35418,6 +35420,20 @@ The following documentation details the available options to customize your data
 
 Each folder contains one or more `.jsonl` files where each line represents a single record. The format allows you to edit or transform data before re‑importing it.
 
+### Asset metadata validation
+
+Every file under `assets/uploads` ships with a metadata sidecar under `assets/metadata`. Before touching the destination, `strapi import` checks the following:
+
+- every upload under `assets/uploads` has a matching sidecar under `assets/metadata`
+- every sidecar contains valid JSON
+- every sidecar describes a JSON object, rather than a list, a string, or `null`
+- every sidecar declares the fields that asset restore requires
+- the filename recorded in each sidecar matches the name of the upload that sidecar accompanies
+
+An archive that fails any of these checks is rejected before the existing data is backed up or deleted, so the destination is left exactly as it was and the fix is to produce a new export. This is a preflight check, not a repair: Strapi does not reconstruct missing metadata or match assets by filename or hash.
+
+The check is skipped when assets are excluded from the import, either with `--exclude files` or with an `--only` list that leaves them out.
+
 To prepare an archive for manual review or modification:
 
 ```bash
@@ -35927,7 +35943,7 @@ Source: https://docs.strapi.io/cms/features/draft-and-publish
 
 Draft & Publish separates drafts from live entries, allowing editors to stage content before release. This documentation shows how to enable it per content type and manage publish or unpublish actions.
 
-The Draft & Publish feature allows to manage drafts for your content.
+The Draft & Publish feature allows you to manage drafts for your content.
 
 **Plan**
 
@@ -36476,7 +36492,7 @@ Source: https://docs.strapi.io/cms/features/internationalization
 
 Internationalization manages content in multiple locales directly from the admin panel. This documentation explains how to add locales, translate entries, and control locale-specific permissions.
 
-The Internationalization feature allows to manage content in different languages, called "locales".
+The Internationalization feature allows you to manage content in different languages, called "locales".
 
 **Plan**
 
@@ -36547,7 +36563,7 @@ A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configuratio
 
 **Path to use the feature:**  Content Manager, edit view of your content type
 
-In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows to switch locales.
+In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows you to switch locales.
 
 :::info
 The selected locale persists when navigating between content types. For instance, if you select the Spanish locale while editing a content-type, switching to another content type will keep the Spanish locale selected, even if that content type does not have Internationalization enabled. This makes it easier to work in a specific locale across your content.
@@ -36741,7 +36757,7 @@ When using the default upload provider, the following specific configuration opt
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | `providerOptions.localServer`        | Options that will be passed to [koa-static](https://github.com/koajs/static) upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `1000000000`<br/><br/>(1 GB in bytes) |
-| `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
+| `breakpoints`             | Allows you to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures [sharp](https://sharp.pixelplumbing.com/) image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security (see [security](#security)) | Object | - |
 | `concurrentUploadRequests` | Number of files the admin panel uploads to the server in parallel (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
@@ -38301,7 +38317,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 ### Editing a role
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application.
+The role edition interface allows you to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application.
 
 It is accessible from *Administration panel > Roles* either after clicking on the edit button  on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
@@ -38311,7 +38327,7 @@ It isn't possible to edit the permissions of the Super Admin role. All configura
 
 #### Editing role's details
 
-The details area of an administrator role editing interface allow to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
+The details area of an administrator role editing interface allows you to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
 
 | Role details  | Instructions   |
 | ------------- | -------------- |
@@ -38324,7 +38340,7 @@ In the top right corner, you can see a counter indicating how many administrator
 
 #### Configuring role's permissions
 
-The permissions area of an administrator role editing interface allows to configure in detail what actions an administrator can do for any part of the Strapi application.
+The permissions area of an administrator role editing interface allows you to configure in detail what actions an administrator can do for any part of the Strapi application.
 
 It is displayed as a table, split into 4 categories: [Collection types](#collection-and-single-types), [Single types](#collection-and-single-types), [Plugins](#plugins-and-settings) and [Settings](#plugins-and-settings).
 
@@ -38353,35 +38369,35 @@ The Plugins and Settings categories both display a sub-category per available pl
 
 <TabItem value="plugins" label="Plugins">
 
-By default, packages permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users & Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions feature allowing to manage end users). Each package has its own specific set of permissions.
+By default, packages permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users & Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions feature allowing you to manage end users). Each package has its own specific set of permissions.
 
 | Package name          | Permissions |
 | -------------------- | ----------- |
-| Content-Releases <br /> *(Releases)* | <ul><li>General</li><ul><li>"Read" - gives access to the Releases feature</li><li>"Create" - allows to create releases</li><li>"Edit" - allows to edit releases</li><li>"Delete" - allows to delete releases</li><li>"Publish" - allows to publish releases</li><li>"Remove an entry from a release"</li><li>"Add an entry to a release"</li></ul></ul> |
-| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
+| Content-Releases <br /> *(Releases)* | <ul><li>General</li><ul><li>"Read" - gives access to the Releases feature</li><li>"Create" - allows you to create releases</li><li>"Edit" - allows you to edit releases</li><li>"Delete" - allows you to delete releases</li><li>"Publish" - allows you to publish releases</li><li>"Remove an entry from a release"</li><li>"Add an entry to a release"</li></ul></ul> |
+| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows you to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows you to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows you to configure the layout of a component</li></ul></ul> |
 | Content-Type-Builder | <ul><li>General</li><ul><li>"Read" - gives access to the Content-type Builder plugin in read-only mode</li></ul></ul> |
-| Upload <br /> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li><li>"Configure view" - allows to configure the view of the Media Library</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows to upload media files</li> <li>"Update (crop, details, replace) + delete" - allows to edit uploaded media files</li><li>"Download" - allows to download uploaded media files</li><li>"Copy link" - allows to copy the link of an uploaded media file</li></ul></ul> |
-| Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows to create end-user roles</li><li>"Read" - allows to see created end-user roles</li><li>"Update" - allows to edit end-user roles</li><li>"Delete" - allows to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows to see providers</li><li>"Edit" - allows to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows to access the email templates</li><li>"Edit" - allows to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br />*General > Settings > Users & Permissions plugin* |
+| Upload <br /> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li><li>"Configure view" - allows you to configure the view of the Media Library</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows you to upload media files</li> <li>"Update (crop, details, replace) + delete" - allows you to edit uploaded media files</li><li>"Download" - allows you to download uploaded media files</li><li>"Copy link" - allows you to copy the link of an uploaded media file</li></ul></ul> |
+| Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows you to create end-user roles</li><li>"Read" - allows you to see created end-user roles</li><li>"Update" - allows you to edit end-user roles</li><li>"Delete" - allows you to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows you to see providers</li><li>"Edit" - allows you to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows you to access the email templates</li><li>"Edit" - allows you to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows you to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows you to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br />*General > Settings > Users & Permissions plugin* |
 
 <TabItem value="settings" label="Settings">
 
-Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel. They also allow to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
+Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel. They also allow you to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
 
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
-| Content Releases | <ul><li>Options</li><ul><li>"Read" - allows to access the Releases settings</li><li>"Edit" - allows to edit the Releases settings</li></ul></ul> 👉 Path reminder to the Releases settings: <br />*General > Settings > Global Settings - Releases* |
+| Content Releases | <ul><li>Options</li><ul><li>"Read" - allows you to access the Releases settings</li><li>"Edit" - allows you to edit the Releases settings</li></ul></ul> 👉 Path reminder to the Releases settings: <br />*General > Settings > Global Settings - Releases* |
 | Email | <ul><li>General</li><ul><li>"Access the Email settings page" - gives access to Email settings</li></ul></ul> 👉 Path reminder to Email settings: <br /> *General > Settings > Users & Permissions plugin - Email templates* |
 | Media Library | <ul><li>General</li><ul><li>"Access the Media Library settings page" - gives access to Media Library settings</li></ul></ul> 👉 Path reminder to Media Library settings: <br /> *General > Settings > Global Settings - Media Library* |
-| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows to create new locales</li><li>"Read" - allows to see available locales</li><li>"Update" - allows to edit available locales</li><li>"Delete" - allows to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
-| Review Workflows | <ul><li>"Create" - allows to create workflows</li><li>"Read" - allows to see created workflows</li><li>"Update" - allows to edit workflows</li><li>"Delete" - allows to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
-| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows to access the SSO settings</li><li>"Update" - allows to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
-| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
+| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows you to create new locales</li><li>"Read" - allows you to see available locales</li><li>"Update" - allows you to edit available locales</li><li>"Delete" - allows you to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
+| Review Workflows | <ul><li>"Create" - allows you to create workflows</li><li>"Read" - allows you to see created workflows</li><li>"Update" - allows you to edit workflows</li><li>"Delete" - allows you to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
+| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows you to access the SSO settings</li><li>"Update" - allows you to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
+| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul> |
-| Webhooks | <ul><li>General</li><ul><li>"Create" - allows to create webhooks</li><li>"Read" - allows to see created webhooks</li><li>"Update" - allows to edit webhooks</li><li>"Delete" - allows to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
-| Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows to create administrator accounts</li><li>"Read" - allows to see existing administrator accounts</li><li>"Update" - allows to edit administrator accounts</li><li>"Delete" - allows to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows to create administrator roles</li><li>"Read" - allows to see created administrator roles</li><li>"Update" - allows to edit administrator roles</li><li>"Delete" - allows to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
+| Webhooks | <ul><li>General</li><ul><li>"Create" - allows you to create webhooks</li><li>"Read" - allows you to see created webhooks</li><li>"Update" - allows you to edit webhooks</li><li>"Delete" - allows you to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
+| Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
 | API Tokens |  <ul><li>API tokens</li><ul><li>"Access the API tokens settings page" - toggles access to the API tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br /> *General > Settings > Global Settings - API Tokens* |
 | Admin Tokens | <ul><li>Admin tokens</li><ul><li>"Access the Admin tokens settings page" - toggles access to the Admin Tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Admin tokens</li><li>"Read" - allows you to see created Admin tokens</li><li>"Update" - allows editing of Admin tokens</li><li>"Delete (revoke)" - allows deletion of Admin tokens</li><li>"Regenerate" - allows regeneration of Admin tokens</li></ul></ul> 👉 Path reminder to Admin Tokens settings: <br /> *General > Settings > Administration Panel - Admin Tokens*  |
-| Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
+| Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows you to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
 | Transfer Tokens | <ul><li>Transfer tokens</li><ul><li>"Access the Transfer tokens settings page" - toggles access to the Transfer tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Transfer tokens</li><li>"Read" - allows you to see created Transfer tokens (disabling this permission will disable access to the *Global Settings - Transfer Tokens* settings)</li><li>"Update" - allows editing of Transfer tokens</li><li>"Delete (revoke)" - allows deletion of Transfer tokens</li> <li> "Regenerate" - allows regeneration of the Transfer token</li></ul></ul> 👉 Path reminder to Transfer Tokens settings: <br /> *General > Settings > Global Settings - Transfer Tokens* |
 
 4. Click on the **Save** button on the top right corner.
@@ -38392,7 +38408,7 @@ To create admin permissions for your custom plugin, please refer to our [dedicat
 
 #### Setting custom conditions for permissions
 
-For each permission of each category, a  **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission.
+For each permission of each category, a  **Settings** button is displayed. It allows you to push the permission configuration further by defining additional conditions for the administrators to be granted the permission.
 
 There are 2 default additional conditions:
 - the administrator must be the creator,

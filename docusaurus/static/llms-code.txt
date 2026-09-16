@@ -26058,9 +26058,9 @@ npm run strapi export -- --no-encrypt --exclude media-library
 # Data import
 Source: https://docs.strapi.io/cms/features/data-management/import
 
-## Understand the import archive
+## Asset metadata validation
 Description: To prepare an archive for manual review or modification:
-(Source: https://docs.strapi.io/cms/features/data-management/import#understand-the-import-archive)
+(Source: https://docs.strapi.io/cms/features/data-management/import#asset-metadata-validation)
 
 Language: JavaScript
 File path: N/A
