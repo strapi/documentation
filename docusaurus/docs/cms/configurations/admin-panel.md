@@ -309,6 +309,8 @@ Strapi's session management system supports both admin panel authentication and 
 - Device-specific sessions for targeted logout
 - Configurable token lifespans for different security requirements
 
+An expired access token does not end the admin session. With Strapi <VersionBadge version="5.54.0+" noTooltip /> a tab left idle past `accessTokenLifespan` stays open, keeps any unsaved work, and the next request renews the token without the user noticing. What ends a session is the refresh window: `idleSessionLifespan` and `maxSessionLifespan` below, or a session revoked from the Sessions page. The admin panel warns about unsaved changes only in those cases, and when the user logs out.
+
 To configure session lifespans and behavior, use the following parameters:
 
 | Parameter                                 | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
