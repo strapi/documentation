@@ -36637,6 +36637,8 @@ Available and activated by default
 
 Available in both Development & Production environment
 
+<!--  temporarily hidden while we're updating it-->
+
 ## Configuration
 
 Some configuration options for the Media Library are available in the admin panel, and some are handled via your Strapi project's code.
