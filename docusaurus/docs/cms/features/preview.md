@@ -568,7 +568,5 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 :::caution Experimental feature
 This feature is currently experimental. Feel free to share <ExternalLink to="https://feedback.strapi.io/" text="feedback"/> or <ExternalLink to="https://github.com/strapi/strapi/issues" text="issues" /> with the Strapi team.
 
-The current version of Live Preview comes with the following limitations:
-* Within a Blocks field, code blocks are never highlighted, and image blocks are only highlighted when they have an alternative text.
-* Fields in dynamic zones are not handled.
+The current version of Live Preview comes with one limitation: fields in dynamic zones are not handled.
 :::
