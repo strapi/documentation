@@ -1264,6 +1264,11 @@
       "number": 27608,
       "reason": "Triage: administrative merge of release; no new behavior",
       "added": "2026-09-11"
+    },
+    {
+      "number": 27583,
+      "reason": "Triage: Internal release process and CI/CD tooling hardening",
+      "added": "2026-09-16"
     }
   ]
 }
