@@ -19,7 +19,7 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 Internationalization manages content in multiple locales directly from the admin panel. This documentation explains how to add locales, translate entries, and control locale-specific permissions.
 </Tldr>
 
-The Internationalization feature allows to manage content in different languages, called "locales".
+The Internationalization feature allows you to manage content in different languages, called "locales".
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
@@ -108,7 +108,7 @@ A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configuratio
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
 
-In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows to switch locales.
+In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows you to switch locales.
 
 :::info
 The selected locale persists when navigating between content types. For instance, if you select the Spanish locale while editing a content-type, switching to another content type will keep the Spanish locale selected, even if that content type does not have Internationalization enabled. This makes it easier to work in a specific locale across your content.

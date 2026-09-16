@@ -95,7 +95,7 @@ Sorting can be enabled for most fields displayed in the list view table (see <Ex
 
 #### Filtering entries {#filtering-entries}
 
-Right above the list view table, on the left side of the interface, a <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
+Right above the list view table, on the left side of the interface, a <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button is displayed. It allows you to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
 <ThemedImage
   alt="Filters in the Content Manager"
