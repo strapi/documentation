@@ -31,7 +31,18 @@ containing `targets`, `doc_type`, `template`, `guide`, and `confidence`.
 - Style Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/style-checker.md`
 - Integrity Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/integrity-checker.md`
 
-For each PR, read the pre-fetched body and diff from `/tmp/pr-<NUMBER>-body.txt` and `/tmp/pr-<NUMBER>.diff`.
+For each PR, read the pre-fetched body from `/tmp/pr-<NUMBER>-body.txt`, then check the
+diff size before reading it:
+
+```bash
+wc -l < "/tmp/pr-<NUMBER>.diff"
+```
+
+Over 3000 lines, do not read the file: log the PR as an error with reason "Diff too large"
+and move to the next one. Otherwise read `/tmp/pr-<NUMBER>.diff`. These diffs are real as
+of 2026-09-17; before that the pre-fetch wrote PR metadata into them, so an empty file now
+means the fetch failed, not that the PR is empty. Do not work around it with `gh pr diff`:
+route on the body and say so in the summary.
 
 Follow the auto-chain execution from the Orchestrator:
 

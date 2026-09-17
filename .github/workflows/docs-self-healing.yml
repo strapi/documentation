@@ -252,7 +252,26 @@ jobs:
           for NUMBER in $(jq -r '.[].number' /tmp/new-prs.json); do
             echo "Fetching body and diff for PR #$NUMBER..."
             gh api "repos/strapi/strapi/pulls/$NUMBER" --jq '.body' > "/tmp/pr-${NUMBER}-body.txt" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}-body.txt"
-            gh api "repos/strapi/strapi/pulls/$NUMBER.diff" > "/tmp/pr-${NUMBER}.diff" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}.diff"
+            # The diff needs the media type in an Accept header. A `.diff`
+            # suffix on the path looks like it does the same job and does not:
+            # `gh api repos/.../pulls/27593.diff` silently returns the pull
+            # request as JSON. That was the shape of this line from 2026-04-16
+            # (#3062) to 2026-09-17, so every diff written here was metadata,
+            # `wc -l` was always 0, the oversize guard below could never fire,
+            # and Triage, Router and Drafter all routed on the PR title and
+            # body alone for five months.
+            gh api "repos/strapi/strapi/pulls/$NUMBER" \
+              --header "Accept: application/vnd.github.v3.diff" \
+              > "/tmp/pr-${NUMBER}.diff" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}.diff"
+
+            # Whatever comes back must look like a diff. A non-empty file that
+            # does not is the failure above repeating itself under another
+            # cause, and handing an agent JSON it was told is a diff is worse
+            # than handing it nothing: it cannot tell that context is missing.
+            if [ -s "/tmp/pr-${NUMBER}.diff" ] && ! head -1 "/tmp/pr-${NUMBER}.diff" | grep -q '^diff --git'; then
+              echo "::warning::PR #$NUMBER diff fetch returned non-diff content, blanking it. Agents will route on the PR body alone."
+              : > "/tmp/pr-${NUMBER}.diff"
+            fi
 
             DIFF_LINES=$(wc -l < "/tmp/pr-${NUMBER}.diff")
             echo "  PR #$NUMBER: body $(wc -c < "/tmp/pr-${NUMBER}-body.txt") bytes, diff $DIFF_LINES lines"
