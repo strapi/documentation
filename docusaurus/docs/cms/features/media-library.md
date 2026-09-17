@@ -151,6 +151,17 @@ If you need to install other providers or create your own, please refer to the f
 Code-based configuration instructions on the present page detail options for the default upload provider. If using another provider, please refer to the available configuration parameters in that provider's documentation.
 :::
 
+#### Private storage providers
+
+<!-- source: packages/core/upload/server/src/services/extensions/utils.ts, packages/core/upload/server/src/services/extensions/index.ts, packages/core/upload/server/src/migrations/unsign-richtext-and-blocks-urls.ts -->
+When the configured provider is private (for example, an S3 bucket with `ACL: 'private'`), every file URL Strapi returns is a signed URL that expires after `signedUrlExpires`. Media fields are re-signed on every read, but richtext and blocks fields embed the URL directly in their value.
+
+Strapi stores the unsigned URL for richtext and blocks fields in the database, and signs it again each time the entry is read, in the admin panel and through the REST and Document Service APIs. This also applies to richtext and blocks attributes nested in components and dynamic zones. Rows written before this behavior was introduced, which still hold a signed URL, are rewritten automatically the next time the application starts.
+
+:::caution
+A file uploaded with a per-file `path` provider option cannot be re-signed from a richtext or blocks field: the URL is recognized as belonging to the provider, but its storage key cannot be rebuilt from the URL alone, and the signed link returns a `403` error. Media fields have the same limitation.
+:::
+
 #### Available options
 
 When using the default upload provider, the following specific configuration options can be declared in an `upload.config` object within [the `config/plugins` file](/cms/configurations/plugins). All parameters are optional:
