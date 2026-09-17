@@ -34,9 +34,18 @@ echo "$FILTERED_PRS"
 
 For each PR number from Step 2:
 
-- Read `/tmp/pr-<NUMBER>-body.txt` and `/tmp/pr-<NUMBER>.diff`
-- If the diff exceeds 3000 lines, mark as `skipped` with reason "Diff too large"
-- Otherwise, apply the Router logic to decide if docs need updating
+- Read `/tmp/pr-<NUMBER>-body.txt`
+- Check the diff size **before** reading it: `wc -l < "/tmp/pr-<NUMBER>.diff"`
+- Over 3000 lines, mark as `skipped` with reason "Diff too large" and do not read the file.
+  You have a 200K context and several PRs to get through: reading one oversized diff to
+  find out it was oversized costs you the rest of the run.
+- Otherwise read `/tmp/pr-<NUMBER>.diff` and apply the Router logic to decide if docs need
+  updating
+
+These diffs carry real content as of 2026-09-17. Until then the pre-fetch wrote PR metadata
+into them and every routing decision was made on the title and body alone, so an empty file
+now means the fetch failed rather than that the PR is empty. Route on the body in that case
+and say so in `reason`. Do not fetch the diff yourself.
 
 ## Step 4 — Write the routing result
 

@@ -31,7 +31,18 @@ containing `targets`, `doc_type`, `template`, `guide`, and `confidence`.
 - Style Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/style-checker.md`
 - Integrity Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/integrity-checker.md`
 
-For each PR, read the pre-fetched body and diff from `/tmp/pr-<NUMBER>-body.txt` and `/tmp/pr-<NUMBER>.diff`.
+For each PR, read the pre-fetched body from `/tmp/pr-<NUMBER>-body.txt`, then check the
+diff size before reading it:
+
+```bash
+wc -l < "/tmp/pr-<NUMBER>.diff"
+```
+
+Over 3000 lines, do not read the file: log the PR as an error with reason "Diff too large"
+and move to the next one. Otherwise read `/tmp/pr-<NUMBER>.diff`. These diffs are real as
+of 2026-09-17; before that the pre-fetch wrote PR metadata into them, so an empty file now
+means the fetch failed, not that the PR is empty. Do not work around it with `gh pr diff`:
+route on the body and say so in the summary.
 
 Follow the auto-chain execution from the Orchestrator:
 
@@ -207,6 +218,31 @@ Documents [#27436](https://github.com/strapi/strapi/pull/27436)
 Direct preview link 👉 [here](https://documentation-git-cms-document-release-audit-logs-strapijs.vercel.app/cms/features/releases)"
 ```
 
+Record the PR in the run summary **immediately**, before touching anything else. The file
+is seeded with empty arrays by the workflow, so you only ever append to it:
+
+```bash
+jq --argjson n <NUMBER> --arg t "<SOURCE_PR_TITLE>" --arg p "<DOC_PR_URL>" --arg b "$BRANCH_NAME" \
+  '.processed += [{"number": $n, "title": $t, "doc_pr": $p, "branch": $b}]' \
+  /tmp/self-healing-summary.json > /tmp/summary-updated.json \
+  && mv /tmp/summary-updated.json /tmp/self-healing-summary.json
+```
+
+This is not bookkeeping you can leave for the end. Your run can stop at any turn without
+warning, and everything not yet in this file is then invisible: on 2026-09-17 the turn cap
+hit seven seconds after PR #3495 was opened, and the run reported zero doc PRs created.
+The workflow also reads this file to keep a rerun from redrafting what you already
+delivered, so an unrecorded PR becomes a duplicate.
+
+Log a failed PR the same way, as it fails:
+
+```bash
+jq --argjson n <NUMBER> --arg t "<SOURCE_PR_TITLE>" --arg e "<WHAT WENT WRONG>" \
+  '.errors += [{"number": $n, "title": $t, "error": $e}]' \
+  /tmp/self-healing-summary.json > /tmp/summary-updated.json \
+  && mv /tmp/summary-updated.json /tmp/self-healing-summary.json
+```
+
 Then reset the working copy before processing the next PR:
 ```bash
 git checkout main
@@ -214,9 +250,14 @@ git clean -fd
 git reset --hard origin/main
 ```
 
-## Step 4 — Write run summary
+## Step 4 — Check the run summary
 
-Write a JSON summary to `/tmp/self-healing-summary.json`:
+By now `/tmp/self-healing-summary.json` is already complete: the workflow seeded it and you
+appended to it after each PR in Step 3. Read it back and confirm every routed PR appears in
+exactly one of the two arrays, then stop. Do not rewrite the file from memory, which would
+drop anything recorded before a context compaction.
+
+The shape it should have:
 
 ```json
 {
@@ -229,7 +270,8 @@ Write a JSON summary to `/tmp/self-healing-summary.json`:
 }
 ```
 
-**Always write this file**, even if all arrays are empty.
+If a routed PR is in neither array, append it to `errors` with what stopped it. Empty
+arrays are a valid outcome and mean no PR needed drafting.
 
 ## Rules
 
