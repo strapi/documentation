@@ -16,13 +16,13 @@ tags:
 Future flags in `/config/features` toggle experimental Strapi features, allowing early testing at your own risk.
 </Tldr>
 
-The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**.
+The `config/features.js|ts` file is used to enable feature flags. It holds 2 kinds of flags: **future flags**, nested in a `future` object, which enable experimental features, and **stable flags**, at the top level of the file, which switch the behaviour of features that have already shipped.
 
 Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback on these new features or changes. With these experimental features, developers have the flexibility to choose and integrate new features and changes into their Strapi applications as they become available in the current major version as well as assist us in shaping these new features.
 
 Such experimental features are indicated by a <FeatureFlagBadge /> badge throughout the documentation, where the name of the feature flag to use is included in the badge (e.g., <FeatureFlagBadge feature="FeatureFlagName" noTooltip />). Enabling these features requires enabling the corresponding future flags. Future flags differ from features that are in alpha in that future flags are disabled by default.
 
-:::danger
+:::warning
 Enable future flags at your own risk. Experimental features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.
 :::
 
@@ -107,10 +107,39 @@ Developers can use the following APIs to interact with future flags:
 
 - `strapi.features.future` returns the `isEnabled()` that can be used to determine if a future flag is enabled, using the following method: `strapi.features.future.isEnabled('featureName')`.
 
+- `strapi.features.isEnabled('flagName')` does the same for a stable flag.
+
 ## Available future flags
 
 | Property name | Related feature | Suggested environment variable name | Maturity |
 | ------------- | --------------- | ---------------------------------- | -------- |
-| `betaMediaLibrary` | [Media Library](/cms/features/media-library) | `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` | The feature works end to end, and its property name, route and menu entry are already the ones it will ship with. It may still change before it becomes generally available. |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` | The feature works, but its design is still being validated against real usage. |
 
+## Available stable flags
+
+Stable flags are permanent configuration options declared at the top level of `config/features.js|ts`, outside the `future` object. Unlike future flags they carry no removal promise and no <FeatureFlagBadge /> badge: they switch a supported feature rather than opting into a preview.
+
+| Property name | Related feature | Suggested environment variable name | Description |
+| ------------- | --------------- | ---------------------------------- | ----------- |
+| `useLegacyMediaLibrary` | [Media Library](/cms/features/media-library#use-legacy-media-library) | `USE_LEGACY_MEDIA_LIBRARY` | Restores the previous Media Library interface. Defaults to `false`, so the redesigned interface is the one you get. |
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/features.js"
+module.exports = ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/features.ts"
+export default ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+
+</TabItem>
+</Tabs>

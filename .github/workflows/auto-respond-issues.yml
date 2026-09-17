@@ -485,7 +485,7 @@ jobs:
           # prompt edits (an injected run must not be able to weaken the next one),
           # and no reading the runner's env or the git credential store.
           claude_args: >-
-            --model claude-sonnet-4-6
+            --model claude-sonnet-5
             --max-turns 50
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
             --disallowedTools

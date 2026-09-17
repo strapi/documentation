@@ -27,9 +27,226 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.54.0](https://github.com/strapi/strapi/releases/tag/v5.54.0)._
+
+## 7.2.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add a guide for running Strapi with the PM2 process manager](https://github.com/strapi/documentation/pull/3465)
+- [Add a guide for proxying Strapi with Traefik](https://github.com/strapi/documentation/pull/3464)
+- [Add a guide for proxying Strapi with HAProxy](https://github.com/strapi/documentation/pull/3463)
+- [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3462)
+- [Add a guide for proxying Strapi with Nginx](https://github.com/strapi/documentation/pull/3461)
+- [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3475)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document the new Media Library](https://github.com/strapi/documentation/pull/3448)
+- [Clarify Content History and Audit Logs retention periods](https://github.com/strapi/documentation/pull/3447)
+- [Update Live Preview support for Blocks fields](https://github.com/strapi/documentation/pull/3482)
+- [Document audit log CSV export](https://github.com/strapi/documentation/pull/3446)
+- [Document release actions in audit logs](https://github.com/strapi/documentation/pull/3443)
+- [Document the asset metadata preflight on import](https://github.com/strapi/documentation/pull/3486)
+- [Add MCP server schema dialect and SDK v2 compatibility section](https://github.com/strapi/documentation/pull/3453)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix "allows to" grammar in Media Library page](https://github.com/strapi/documentation/pull/3491)
+- [Fix "allow(s) to" grammar in Content Manager page](https://github.com/strapi/documentation/pull/3490)
+- [Clarify that an expired access token does not end the admin session](https://github.com/strapi/documentation/pull/3485)
+- [Fix grammar in Content-type Builder page](https://github.com/strapi/documentation/pull/3479)
+- [Add missing pagination previous/next links to new deployment pages](https://github.com/strapi/documentation/pull/3478)
+- [Correct what the url option does and what the admin URL defaults to](https://github.com/strapi/documentation/pull/3474)
+- [Scope the admin cookie path requirement to the versions it affects](https://github.com/strapi/documentation/pull/3468)
+- [Replace the dead GraphQL Armor forum link with the project documentation](https://github.com/strapi/documentation/pull/3467)
+
+#### Repository
+- [Fix "allow(s) to" grammar across CMS and Cloud documentation](https://github.com/strapi/documentation/pull/3492)
+- [Nest the deployment guides under the Deployment entry](https://github.com/strapi/documentation/pull/3477)
+- [Allow running the preview link workflow manually on an existing PR](https://github.com/strapi/documentation/pull/3472)
+- [Add the Vercel preview link to PR descriptions automatically](https://github.com/strapi/documentation/pull/3471)
+- [Remove the unused step separator from the NextSteps component](https://github.com/strapi/documentation/pull/3470)
+- [Encode the callout scale and the doc card props in the Inki linter](https://github.com/strapi/documentation/pull/3469)
+- [Fix the word boundary probe in the Inki style linter](https://github.com/strapi/documentation/pull/3466)
+- [Fix the proxy header config keys and register nginx and toml code blocks](https://github.com/strapi/documentation/pull/3460)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/yfwmaniish" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/116950854?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="yfwmaniish"/>
+</a>
+</div>
+<br/>
+<br/>
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.53.0](https://github.com/strapi/strapi/releases/tag/v5.53.0)._
+
+
+## 7.2.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add a guide for running Strapi with the PM2 process manager](https://github.com/strapi/documentation/pull/3465)
+- [Add a guide for proxying Strapi with Traefik](https://github.com/strapi/documentation/pull/3464)
+- [Add a guide for proxying Strapi with HAProxy](https://github.com/strapi/documentation/pull/3463)
+- [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3462)
+- [Add a guide for proxying Strapi with Nginx](https://github.com/strapi/documentation/pull/3461)
+
+#### Repository
+- [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3475)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document the new Media Library as the default at GA](https://github.com/strapi/documentation/pull/3448)
+- [Clarify Content History and Audit Logs retention periods](https://github.com/strapi/documentation/pull/3447)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix "allows to" grammar in Media Library page](https://github.com/strapi/documentation/pull/3491)
+- [Fix "allow(s) to" grammar in Content Manager page](https://github.com/strapi/documentation/pull/3490)
+- [Document the asset metadata preflight on import](https://github.com/strapi/documentation/pull/3486)
+- [Clarify that an expired access token does not end the admin session](https://github.com/strapi/documentation/pull/3485)
+- [Update Live Preview support for Blocks fields](https://github.com/strapi/documentation/pull/3482)
+- [Fix grammar in Content-type Builder page](https://github.com/strapi/documentation/pull/3479)
+- [Add missing pagination previous/next links to new deployment pages](https://github.com/strapi/documentation/pull/3478)
+- [Correct what the url option does and what the admin URL defaults to](https://github.com/strapi/documentation/pull/3474)
+- [Scope the admin cookie path requirement to the versions it affects](https://github.com/strapi/documentation/pull/3468)
+- [Replace the dead GraphQL Armor forum link with the project documentation](https://github.com/strapi/documentation/pull/3467)
+- [Add MCP server schema dialect and SDK v2 compatibility section](https://github.com/strapi/documentation/pull/3453)
+- [Update URL upload progress description in beta Media Library](https://github.com/strapi/documentation/pull/3452)
+- [Document audit log CSV export](https://github.com/strapi/documentation/pull/3446)
+- [Document release actions in audit logs](https://github.com/strapi/documentation/pull/3443)
+
+#### Repository
+- [Fix "allow(s) to" grammar across CMS and Cloud documentation](https://github.com/strapi/documentation/pull/3492)
+- [Nest the deployment guides under the Deployment entry](https://github.com/strapi/documentation/pull/3477)
+- [Allow running the preview link workflow manually on an existing PR](https://github.com/strapi/documentation/pull/3472)
+- [Add the Vercel preview link to PR descriptions automatically](https://github.com/strapi/documentation/pull/3471)
+- [Remove the unused step separator from the NextSteps component](https://github.com/strapi/documentation/pull/3470)
+- [Encode the callout scale and the doc card props in the Inki linter](https://github.com/strapi/documentation/pull/3469)
+- [Fix the word boundary probe in the Inki style linter](https://github.com/strapi/documentation/pull/3466)
+- [Fix the proxy header config keys and register nginx and toml code blocks](https://github.com/strapi/documentation/pull/3460)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/yfwmaniish" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/116950854?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="yfwmaniish"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
+
+## 7.2.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add a guide for running Strapi with the PM2 process manager](https://github.com/strapi/documentation/pull/3465)
+- [Add a guide for proxying Strapi with Traefik](https://github.com/strapi/documentation/pull/3464)
+- [Add a guide for proxying Strapi with HAProxy](https://github.com/strapi/documentation/pull/3463)
+- [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3462)
+- [Add a guide for proxying Strapi with Nginx](https://github.com/strapi/documentation/pull/3461)
+
+#### Repository
+- [Add a guide for proxying Strapi with Caddy](https://github.com/strapi/documentation/pull/3475)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document the new Media Library as the default at GA](https://github.com/strapi/documentation/pull/3448)
+- [Clarify Content History and Audit Logs retention periods](https://github.com/strapi/documentation/pull/3447)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix "allows to" grammar in Media Library page](https://github.com/strapi/documentation/pull/3491)
+- [Fix "allow(s) to" grammar in Content Manager page](https://github.com/strapi/documentation/pull/3490)
+- [Document the asset metadata preflight on import](https://github.com/strapi/documentation/pull/3486)
+- [Clarify that an expired access token does not end the admin session](https://github.com/strapi/documentation/pull/3485)
+- [Update Live Preview support for Blocks fields](https://github.com/strapi/documentation/pull/3482)
+- [Fix grammar in Content-type Builder page](https://github.com/strapi/documentation/pull/3479)
+- [Add missing pagination previous/next links to new deployment pages](https://github.com/strapi/documentation/pull/3478)
+- [Correct what the url option does and what the admin URL defaults to](https://github.com/strapi/documentation/pull/3474)
+- [Scope the admin cookie path requirement to the versions it affects](https://github.com/strapi/documentation/pull/3468)
+- [Replace the dead GraphQL Armor forum link with the project documentation](https://github.com/strapi/documentation/pull/3467)
+- [Add MCP server schema dialect and SDK v2 compatibility section](https://github.com/strapi/documentation/pull/3453)
+- [Update URL upload progress description in beta Media Library](https://github.com/strapi/documentation/pull/3452)
+- [Document audit log CSV export](https://github.com/strapi/documentation/pull/3446)
+- [Document release actions in audit logs](https://github.com/strapi/documentation/pull/3443)
+
+#### Repository
+- [Fix "allow(s) to" grammar across CMS and Cloud documentation](https://github.com/strapi/documentation/pull/3492)
+- [Nest the deployment guides under the Deployment entry](https://github.com/strapi/documentation/pull/3477)
+- [Allow running the preview link workflow manually on an existing PR](https://github.com/strapi/documentation/pull/3472)
+- [Add the Vercel preview link to PR descriptions automatically](https://github.com/strapi/documentation/pull/3471)
+- [Remove the unused step separator from the NextSteps component](https://github.com/strapi/documentation/pull/3470)
+- [Encode the callout scale and the doc card props in the Inki linter](https://github.com/strapi/documentation/pull/3469)
+- [Fix the word boundary probe in the Inki style linter](https://github.com/strapi/documentation/pull/3466)
+- [Fix the proxy header config keys and register nginx and toml code blocks](https://github.com/strapi/documentation/pull/3460)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/yfwmaniish" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/116950854?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="yfwmaniish"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.1.2
 

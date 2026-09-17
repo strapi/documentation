@@ -1144,7 +1144,7 @@ Strapi Cloud is a PaaS hosting platform for deploying Strapi CMS projects, offer
 
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
-- **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS ([Software-as-a-Service](https://en.wikipedia.org/wiki/Software_as_a_service)) version of Strapi CMS and should rather be considered as a PaaS ([Platform-as-a-Service](https://en.wikipedia.org/wiki/Platform_as_a_service)). Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
+- **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows you to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS ([Software-as-a-Service](https://en.wikipedia.org/wiki/Software_as_a_service)) version of Strapi CMS and should rather be considered as a PaaS ([Platform-as-a-Service](https://en.wikipedia.org/wiki/Platform_as_a_service)). Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
 
 - **Strapi Cloud Pricing Plans** <br/> As a Strapi Cloud user you have the choice between 3 plans: Starter, Pro, and Business. Depending on the plan, you have access to different functionalities, support and customization options (see [Pricing page](https://strapi.io/pricing-cloud) for more details). In this Strapi Cloud documentation, the  and  badges can be displayed below a section's title to indicate that the feature is only available starting from the corresponding plan. If no badge is shown, the feature is available on the Starter plan. Only Pro and Business badges are used in Cloud docs because Starter is the baseline plan; the  component exists for consistency with other Strapi documentation but is not displayed on Cloud pages.
 
@@ -2006,7 +2006,7 @@ The  *General* tab for the project-level settings enables you to check and updat
   - the project's metadata, including the Production app internal name and the Subscription ID, which can be useful for debugging & support purposes.
 - *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
 
-- *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows you to enable/disable the "deploy on push" option.
 - *Danger zone*, with:
   - *Transfer ownership*: for the project owner to transfer the ownership of the Cloud project to an already existing maintainer (see [Transferring project ownership](#transferring-project-ownership)).
   - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-a-strapi-cloud-project)).
@@ -2103,7 +2103,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 ### Environments {#environments}
 
-The  *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
+The  *Environments* tab allows you to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 :::note
 The billing cycle of additional environments you purchase will match the billing cycle of your plan.
@@ -2242,7 +2242,7 @@ The  *Configuration* tab for the environment-level settings enables you to check
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
-- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows you to enable/disable the "deploy on push" option.
 - *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)) or to remove all data and assets from the current environment while keeping its settings (see [Clearing an environment](#clearing-an-environment)).
 - *Danger zone*: to permanently delete an additional environment (see [Deleting an environment](#deleting-an-environment)).
 
@@ -4172,6 +4172,8 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open s
 
 - [Strapi MCP server](/cms/features/strapi-mcp-server): Connect AI clients to your Strapi instance to manage content through natural language.
 - [Docs MCP server](/cms/ai/docs-mcp-server): Connect the Strapi documentation to your IDE for up-to-date, reliable information.
+
+Beyond the content tools generated from your schema, the Strapi MCP server also exposes 10 tools for the Media Library, covering assets and folders (see [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools)).
 
 ### Tips for better results with the Docs MCP server {#tips}
 
@@ -23192,6 +23194,8 @@ Strapi's session management system supports both admin panel authentication and 
 - Device-specific sessions for targeted logout
 - Configurable token lifespans for different security requirements
 
+An expired access token does not end the admin session. With Strapi  a tab left idle past `accessTokenLifespan` stays open, keeps any unsaved work, and the next request renews the token without the user noticing. What ends a session is the refresh window: `idleSessionLifespan` and `maxSessionLifespan` below, or a session revoked from the Sessions page. The admin panel warns about unsaved changes only in those cases, and when the user logs out.
+
 To configure session lifespans and behavior, use the following parameters:
 
 | Parameter                                 | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
@@ -25033,13 +25037,13 @@ Source: https://docs.strapi.io/cms/configurations/features
 
 Future flags in `/config/features` toggle experimental Strapi features, allowing early testing at your own risk.
 
-The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**.
+The `config/features.js|ts` file is used to enable feature flags. It holds 2 kinds of flags: **future flags**, nested in a `future` object, which enable experimental features, and **stable flags**, at the top level of the file, which switch the behaviour of features that have already shipped.
 
 Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback on these new features or changes. With these experimental features, developers have the flexibility to choose and integrate new features and changes into their Strapi applications as they become available in the current major version as well as assist us in shaping these new features.
 
 Such experimental features are indicated by a  badge throughout the documentation, where the name of the feature flag to use is included in the badge (e.g., ). Enabling these features requires enabling the corresponding future flags. Future flags differ from features that are in alpha in that future flags are disabled by default.
 
-:::danger
+:::warning
 Enable future flags at your own risk. Experimental features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.
 :::
 
@@ -25104,12 +25108,32 @@ Developers can use the following APIs to interact with future flags:
 
 - `strapi.features.future` returns the `isEnabled()` that can be used to determine if a future flag is enabled, using the following method: `strapi.features.future.isEnabled('featureName')`.
 
+- `strapi.features.isEnabled('flagName')` does the same for a stable flag.
+
 ## Available future flags
 
 | Property name | Related feature | Suggested environment variable name | Maturity |
 | ------------- | --------------- | ---------------------------------- | -------- |
-| `betaMediaLibrary` | [Media Library](/cms/features/media-library) | `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` | The feature works end to end, and its property name, route and menu entry are already the ones it will ship with. It may still change before it becomes generally available. |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` | The feature works, but its design is still being validated against real usage. |
+
+## Available stable flags
+
+Stable flags are permanent configuration options declared at the top level of `config/features.js|ts`, outside the `future` object. Unlike future flags they carry no removal promise and no  badge: they switch a supported feature rather than opting into a preview.
+
+| Property name | Related feature | Suggested environment variable name | Description |
+| ------------- | --------------- | ---------------------------------- | ----------- |
+| `useLegacyMediaLibrary` | [Media Library](/cms/features/media-library#use-legacy-media-library) | `USE_LEGACY_MEDIA_LIBRARY` | Restores the previous Media Library interface. Defaults to `false`, so the redesigned interface is the one you get. |
+
+```js title="/config/features.js"
+module.exports = ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+```ts title="/config/features.ts"
+
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
 
 
 
@@ -33497,7 +33521,7 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 
 #### Filtering entries {#filtering-entries}
 
-Right above the list view table, on the left side of the interface, a  **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
+Right above the list view table, on the left side of the interface, a  **Filters** button is displayed. It allows you to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
 To set a new filter:
 
@@ -33659,7 +33683,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text (Markdown) | Write your textual content in the editor, in Markdown. Some basic formatting options (titles, bold, italics, underline) are available in the top bar of the editor to apply to selected text. A **Preview mode/Markdown mode** button to switch between modes is also available. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview. |
 | Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon  on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <!-- <br /><br /> 💡 Type `/` in the editor to have access to the list of all available options and select one. --> <br /><br /> 💡 You can use text formatting keyboard shortcuts in the Blocks editor (e.g. bold, italics, underline, and pasting link). |
-| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
+| Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow you to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation. |
 | Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/cms/features/media-library) or from a [folder](/cms/features/media-library#organizing-assets-with-folders) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
 | Relation    | Choose an entry from the drop-down list. See [relational fields](#relational-fields) for more information.                                                                                                                                                                                                          |
@@ -33756,7 +33780,7 @@ In the Content Manager, from the edit view of my Restaurant entries, I can manag
 
 The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.-->
 
-Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
+Many-to-one, one-to-one, and one-way types of relation only allow you to choose one entry per relational field.
 
 To select the only relevant relational field's entry:
 
@@ -33765,7 +33789,7 @@ To select the only relevant relational field's entry:
 
 To remove the entry selected in the drop-down list, click on the delete button .
 
-Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
+Many-to-many, one-to-many, and many-ways types of relation allow you to choose several entries per relational field.
 
 To select the relevant relational field's entries:
 
@@ -35396,6 +35420,20 @@ The following documentation details the available options to customize your data
 
 Each folder contains one or more `.jsonl` files where each line represents a single record. The format allows you to edit or transform data before re‑importing it.
 
+### Asset metadata validation
+
+Every file under `assets/uploads` ships with a metadata sidecar under `assets/metadata`. Before touching the destination, `strapi import` checks the following:
+
+- every upload under `assets/uploads` has a matching sidecar under `assets/metadata`
+- every sidecar contains valid JSON
+- every sidecar describes a JSON object, rather than a list, a string, or `null`
+- every sidecar declares the fields that asset restore requires
+- the filename recorded in each sidecar matches the name of the upload that sidecar accompanies
+
+An archive that fails any of these checks is rejected before the existing data is backed up or deleted, so the destination is left exactly as it was and the fix is to produce a new export. This is a preflight check, not a repair: Strapi does not reconstruct missing metadata or match assets by filename or hash.
+
+The check is skipped when assets are excluded from the import, either with `--exclude files` or with an `--only` list that leaves them out.
+
 To prepare an archive for manual review or modification:
 
 ```bash
@@ -35905,7 +35943,7 @@ Source: https://docs.strapi.io/cms/features/draft-and-publish
 
 Draft & Publish separates drafts from live entries, allowing editors to stage content before release. This documentation shows how to enable it per content type and manage publish or unpublish actions.
 
-The Draft & Publish feature allows to manage drafts for your content.
+The Draft & Publish feature allows you to manage drafts for your content.
 
 **Plan**
 
@@ -36454,7 +36492,7 @@ Source: https://docs.strapi.io/cms/features/internationalization
 
 Internationalization manages content in multiple locales directly from the admin panel. This documentation explains how to add locales, translate entries, and control locale-specific permissions.
 
-The Internationalization feature allows to manage content in different languages, called "locales".
+The Internationalization feature allows you to manage content in different languages, called "locales".
 
 **Plan**
 
@@ -36525,7 +36563,7 @@ A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configuratio
 
 **Path to use the feature:**  Content Manager, edit view of your content type
 
-In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows to switch locales.
+In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows you to switch locales.
 
 :::info
 The selected locale persists when navigating between content types. For instance, if you select the Spanish locale while editing a content-type, switching to another content type will keep the Spanish locale selected, even if that content type does not have Internationalization enabled. This makes it easier to work in a specific locale across your content.
@@ -36615,48 +36653,13 @@ Available and activated by default
 
 Available in both Development & Production environment
 
-:::strapi New Media Library available in 
-Strapi has completely reworked the Media Library UI. It is available as a beta feature  for the next few weeks, before it becomes the default UI. Enable it by setting the `future.betaMediaLibrary` property to `true` in the `config/features` file:
-
-```js title="/config/features.js"
-module.exports = () => ({
-  future: {
-    // highlight-next-line
-    betaMediaLibrary: true,
-  },
-});
-```
-```ts title="/config/features.ts"
-
-  future: {
-    // highlight-next-line
-    betaMediaLibrary: true,
-  },
-});
-```
-
-Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to go back to the previous UI: no asset, folder or setting is lost when you switch either way.
-
-The [Usage](#usage) section of this page describes the UI that is enabled by default, and the guided tour above shows it too. While new UI is in beta, it is documented on its own page, [Media Library beta](/cms/features/media-library-beta). The [Configuration](#configuration) section applies to both.
-
-The flag changes the  Media Library page of the admin panel, and adds the upload dialog described in [following upload progress](/cms/features/media-library-beta#upload-progress) to the whole admin panel. The following are not affected and still behave as documented:
-
-- the media field of the  Content Manager, which still opens the previous asset picker,
-- the  _Settings > Global Settings > Media Library_ page,
-- the [Upload REST API](/cms/api/rest/upload).
-
-The Media Library page displays a notice reminding you that this is a beta and that some features are still in progress. Read the [features configuration](/cms/configurations/features) documentation before enabling the flag, where the `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` environment variable is also documented.
-
-You can [read more about the beta here](https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f) and report any issue you run into on the [strapi/strapi repository](https://github.com/strapi/strapi/issues).
-:::
-
 ## Configuration
 
 Some configuration options for the Media Library are available in the admin panel, and some are handled via your Strapi project's code.
 
 ### Admin panel configuration
 
-In the admin panel, some Media Library settings are available via the Global Settings to manage the format, file size, and orientation of uploaded assets. It is also possible, directly via the Media Library to configure the view.
+In the admin panel, some Media Library settings are available via the Global Settings to manage the format, file size, and orientation of uploaded assets. <!-- It is also possible, directly via the Media Library to configure the view. -->
 
 #### Configuring settings
 
@@ -36674,22 +36677,22 @@ In the admin panel, some Media Library settings are available via the Global Set
 2. Click on the **Save** button.
 
 :::tip
-When images in your library lack a caption or an alternative text, the AI metadata setting reports how many, and offers a **Generate metadata** button to generate the missing metadata in the background. Review the result: AI can make mistakes.
+When images in your library lack a caption or an alternative text, the AI metadata setting reports how many, and offers a **Generate metadata** button to generate the missing metadata in the background. Please review the results, AI can make mistakes.
 :::
 
-#### Configuring the view
+<!-- #### Configuring the view
 
 **Path to configure the feature:**  Media Library
 
-:::caution With the beta Media Library enabled
-The  button and the view configuration page described below are not available while the `betaMediaLibrary` future flag is enabled, because the beta Media Library replaces both settings:
+:::caution
+The  button and the view configuration page described below are not available in the  Media Library, which replaces both settings:
 
 - assets load as you scroll instead of being paginated, so there is no page size to define,
-- the sort order is chosen from the toolbar and stored in the page URL (see [sorting assets](/cms/features/media-library-beta#sorting-assets)).
+- the sort order is chosen from the toolbar and stored in the page URL (see [sorting assets](#sorting-assets)).
 
-A bookmarked link to `/admin/plugins/upload/configuration` displays a blank page rather than an error while the flag is enabled.
+A bookmarked link to `/admin/plugins/upload/configuration` displays a blank page rather than an error.
 
-Both settings still apply to the media field of the  Content Manager. To change them, set the flag back to `false` temporarily.
+Both settings still apply to the media field of the  Content Manager. To change them, set the `useLegacyMediaLibrary` property to `true` temporarily.
 :::
 
 1. Click on the  button just above the list of folders and assets, on the right side of the interface.
@@ -36700,14 +36703,37 @@ Both settings still apply to the media field of the  Content Manager. To change 
     | Default sort order        | Use the dropdown to define the default order in which assets are displayed. This can be overriden when sorting assets in the Media Library. |
 
 :::note
-With the beta Media Library disabled, both settings are used as the defaults in the Media Library and in the Content Manager's media upload modal. These settings are global across the entire Strapi project for all users.
+Both settings are used as the defaults in the Content Manager's media upload modal. These settings are global across the entire Strapi project for all users.
 :::
+
+ -->
 
 ### Code-based configuration
 
 The Media Library is powered in the backend server by the Upload package, which can be configured and extended through providers.
 
+#### Restoring the previous Media Library {#use-legacy-media-library}
+
+The Media Library described on this page is the default UI since Strapi v5.54.0. To restore the previous interface, set the `useLegacyMediaLibrary` property to `true` in the [`config/features` file](/cms/configurations/features):
+
+```js title="/config/features.js"
+module.exports = ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+```ts title="/config/features.ts"
+
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+
+:::tip
+From server code, read this configuration setting with `strapi.features.isEnabled('useLegacyMediaLibrary')`.
+:::
+
 #### Providers
+
+The Media Library supports providers to add upload support from various third parties.
 
 The providers maintained by Strapi are the following. Clicking on a card will redirect you to a docs page with a configuration example:
 
@@ -36731,18 +36757,16 @@ When using the default upload provider, the following specific configuration opt
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | `providerOptions.localServer`        | Options that will be passed to [koa-static](https://github.com/koajs/static) upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `1000000000`<br/><br/>(1 GB in bytes) |
-| `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
+| `breakpoints`             | Allows you to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures [sharp](https://sharp.pixelplumbing.com/) image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security (see [security](#security)) | Object | - |
 | `concurrentUploadRequests` | Number of files the admin panel uploads to the server in parallel (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
 | `concurrentUploadSize` | Number of files the server processes in parallel within a single upload request (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
 
-:::note
-The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
-:::
+:::note Notes
 
-:::note
-If you wish to override the image function to generate custom file names, please refer to the [Plugins extension](/cms/plugins-development/plugins-extension#within-the-extensions-folder) documentation.
+* The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin, but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
+* If you wish to override the image function to generate custom file names, please refer to the [Plugins extension](/cms/plugins-development/plugins-extension#within-the-extensions-folder) documentation.
 :::
 
 #### Example custom configuration
@@ -36926,67 +36950,10 @@ Only files matching the defined security rules are uploaded.
 
 The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
 
-:::tip New projects
 Apps scaffolded with `create-strapi-app` include a pre-configured `security` block in the generated `config/plugins.*` file. See the *Security defaults generated by `create-strapi-app`* details block below for the full lists.
-:::
-
-##### SVG uploads
-
-Since Strapi , `image/svg+xml` is part of the `deniedTypes` generated by `create-strapi-app`, so SVG uploads are refused even though they match the `image/*` wildcard in `allowedTypes`. An explicit `deniedTypes` entry always takes precedence over a wildcard in `allowedTypes`.
-
-SVG files can embed browser-active content such as scripts and event handlers, which is why they are denied by default. This affects newly generated projects only: existing projects keep their current configuration unless you add the same entry yourself.
-
-To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config/plugins.*` file. Serve the resulting files from a domain that does not share cookies or local storage with your application, or with a `Content-Disposition: attachment` header, so an uploaded SVG cannot run scripts in the context of your site.
-
-:::note
-You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
-:::
-
-##### File type detection for ambiguous MIME types
-
-When browsers report generic MIME types for files (such as `application/octet-stream`), Strapi's Media Library performs file-type detection by examining the file's actual content bytes. This ensures accurate file classification and filtering, particularly for formats like `.mov` files on Windows systems, which are often reported with generic MIME types by the browser.
-
-The file type detection is used for:
-
-- Classifying media in the Media Library preview and grid
-- Validating media field constraints (e.g., `allowedTypes: ['video/*']`) in the Content Manager
-
-:::note
-The server remains the security boundary. While the admin panel performs client-side file type detection for better UX, the backend validates the file's MIME type before storage. This means that even if the browser initially misidentifies a file type, the correct MIME type is detected and stored on the server.
-:::
-
-You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
-
-```js title="/config/plugins.js"
-module.exports = {
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
-
-```ts title="/config/plugins.ts"
-
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
 
 <details>
-<summary>Security defaults generated by <code>create-strapi-app</code></summary>
+<summary>Security defaults generated by <code>create-strapi-app</code>:</summary>
 
 New projects declare the 2 lists as separate variables and pass them to the `upload` plugin, alongside the other generated plugin configuration:
 
@@ -37068,6 +37035,61 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
 
 </details>
 
+##### SVG uploads
+
+Since Strapi , `image/svg+xml` is part of the `deniedTypes` generated by `create-strapi-app`, so SVG uploads are refused even though they match the `image/*` wildcard in `allowedTypes`. An explicit `deniedTypes` entry always takes precedence over a wildcard in `allowedTypes`.
+
+SVG files can embed browser-active content such as scripts and event handlers, which is why they are denied by default. This affects newly generated projects only. Existing projects keep their current configuration unless you add the same entry yourself.
+
+To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config/plugins.*` file (see [security](#security)). Serve the resulting files from a domain that does not share cookies or local storage with your application, or with a `Content-Disposition: attachment` header, so an uploaded SVG cannot run scripts in the context of your site.
+
+:::note
+You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
+:::
+
+##### File type detection for ambiguous MIME types
+
+When browsers report generic MIME types for files (such as `application/octet-stream`), Strapi's Media Library performs file-type detection by examining the file's actual content bytes. This ensures accurate file classification and filtering, particularly for formats like `.mov` files on Windows systems, which are often reported with generic MIME types by the browser.
+
+The file type detection is used for:
+
+- Classifying media in the Media Library preview and grid
+- Validating media field constraints (e.g., `allowedTypes: ['video/*']`) in the Content Manager
+
+:::note
+The server remains the security boundary. While the admin panel performs client-side file type detection for better UX, the backend validates the file's MIME type before storage. This means that even if the browser initially misidentifies a file type, the correct MIME type is detected and stored on the server.
+:::
+
+You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
+
+```js title="/config/plugins.js"
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
+```
+
+```ts title="/config/plugins.ts"
+
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
+```
+
 #### Upload request timeout
 
 By default, the value of `strapi.server.httpServer.requestTimeout` is set to 330 seconds. This includes uploads.
@@ -37140,7 +37162,7 @@ Both values must be integers greater than or equal to 1. Any other value, `0` in
 :::
 
 :::note
-`concurrentUploadRequests` is only read by the beta Media Library. With the `betaMediaLibrary` future flag disabled the option has no effect: the previous UI sends one request per asset and starts them all at the same time. `concurrentUploadSize` applies in both cases, because the server enforces it.
+`concurrentUploadRequests` is only read by the Media Library. `concurrentUploadSize` applies to every upload, because the server enforces it.
 :::
 
 #### Responsive Images
@@ -37228,257 +37250,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-## Usage
-
-**Path to use the feature:**  Media Library
-
-:::info
-Strapi supports uploading images from the admin panel or programmatically. From the API, you can send a multipart/form-data request to `/api/upload` with the image file and optional `fileInfo` metadata for captions and alt text (see [REST API documentation](/cms/api/rest/upload#upload-files) for more information).
-:::
-
-The Media Library displays all assets uploaded in the application, either via the  Media Library itself or via the  Content Manager when managing a media field.
-
-Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).
-
-From the Media Library, it is possible to:
-
-- upload a new asset (see [adding assets](/cms/features/media-library#adding-assets)) or create a new folder (see [organizing assets with folders](/cms/features/media-library#organizing-assets-with-folders)) ,
-- sort the assets and folders or set filters  to find assets and folders more easily,
-- toggle between the list view  and the grid view  to display assets, access settings  to [configure the view](#configuring-the-view), and make a textual search   to find a specific asset or folder,
-- and view, navigate through, and manage folders .
-
-:::tip
-Click the search icon  on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
-:::
-
-<!--
-### Filtering assets
-
-Right above the list of folders and assets, on the left side of the interface, a ! **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
-
-To set a new filter:
-
-1. Click on the ! **Filters** button.
-2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
-3. Click on the 2nd drop-down list to choose the type of condition to apply.
-4. For conditions based on the type of asset to filter, click on the 3rd drop-down list and choose a file type to include or exclude. For conditions based on date and time (i.e. _createdAt_ or _updatedAt_ fields), click on the left field to select a date and click on the right field to select a time.
-5. Click on the **Add filter** button.
-
-:::note
-When active, filters are displayed next to the ! **Filters** button. They can be removed by clicking on the delete icon .
-:::
--->
-
-<!--
-### Sorting assets
-
-Just above the list of folders and assets and next to the ! **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
--->
-
-### Adding assets
-
-<details>
-<summary>List of media types and extensions supported by the Media Library</summary>
-
-| Media type | Supported extensions                                            |
-| ---------- | --------------------------------------------------------------- |
-| Image      | - JPEG<br />- PNG<br />- GIF<br />- SVG<br />- TIFF<br />- ICO<br />- DVU   |
-| Video      | - MPEG<br />- MP4<br />- MOV (Quicktime)<br />- WMV<br />- AVI<br />- FLV |
-| Audio      | - MP3<br />- WAV<br />- OGG                                         |
-| File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
-<br/>
-
-SVG files are denied by default in projects generated with Strapi  and later, even though they match the supported image types (see [SVG uploads](#svg-uploads)).
-
-</details>
-
-1. Click the **Add new assets** button in the upper right corner of the Media Library.
-2. Choose whether you want to upload the new asset from your computer or from an URL:
-    - from the computer, either drag & drop the asset directly or browse files on your system,
-    - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
-3. (optional) Click the edit button  to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-assets)).
-4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
-5. Click on **Upload assets to the library**.
-
-#### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
-
-[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates alternative text and captions for images uploaded to the Media Library, helping you improve content accessibility and SEO. A modal window displays the AI-generated alternative text and caption, allowing you to review the metadata and modify it if needed:
-
-AI metadata generation only works with images, not files or videos. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
-
-The [Media Library settings](#configuring-settings) also allow generating metadata for existing images that lack alternative text or captions. This feature is currently in .
-
-:::note Strapi AI credits
-
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans.
-
-Lightweight actions use fewer credits, while more complex ones use more.
-
-You can check your credit usage in the [Settings Overview](http://localhost:1337/admin/settings/application-infos) of the admin panel.
-Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthly allowance. Overages apply.
-
-Credits are shared across all users within the same project instance.
-
-When your credits run out, you can keep using Strapi AI, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
-
-:::
-
-### Managing individual assets {#managing-assets}
-
-The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
-
-#### Editing assets
-
-Click on the edit  button of an asset to open up the "Details" window, where all the available asset management options are available.
-
-- On the left, above the preview of the asset, control buttons  allow performing various actions:
-  - click on the delete button  to delete the asset,
-  - click on the download button  to download the asset,
-  - click on the copy link button  to copy the asset's link to the clipboard,
-  - optionally, click on the crop button  to enter cropping mode for the image (see [Cropping images](#cropping-images)).
-  - optionally, click on the pin button  to enter focal point mode for the image (see [Adding a focal point](#adding-a-focal-point)).
-- On the right, meta data for the asset is displayed at the top of the window  and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [Organizing assets with folders](#organizing-assets-with-folders)) for the asset .
-- At the bottom, the **Replace Media** button  can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
-
-#### Moving assets
-
-1. Click on the edit  button for the asset to be moved.
-2. In the window that pops up, click the _Location_ field and choose a different folder from the drop-down list.
-3. Click **Save** to confirm.
-
-:::note
-Assets can also be moved to other folders from the main view of the Media Library (see [Organizing assets with folders](#organizing-assets-with-folders)). This includes the ability to move several assets simultaneously.
-:::
-
-#### Cropping images
-
-1. Click on the edit  button for the asset to be cropped.
-2. In the window that pops up, click the crop button  to enter cropping mode.
-3. Crop the image using handles in the corners to resize the frame. The frame can also be moved by drag & drop.
-4. Click the crop  button to validate the new dimensions, and choose either to **crop the original asset** or to **duplicate & crop the asset** (i.e. to create a copy with the new dimensions while keeping the original asset untouched). Alternatively, click the stop cropping  button to cancel and quit cropping mode.
-<!-- TODO: ask devs because there seems to be a bug/unintuitive behavior:  choosing crop the original asset does not quit cropping mode 😅  -->
-5. Click **Finish** to save changes to the file.
-
-#### Adding a focal point
-
-A focal point ensures the most important part of an image remains visible when the image is cropped or resized in different contexts.
-
-To add a focal point to an image:
-
-1. Click on the edit  button.
-2. In the window that pops up, click on the pin  button to enter focal point mode.
-3. Move the crosshair to the desired location and click to set the focal point.
-4. Click the check  button to validate the new focal point. Alternatively, click the cancel  button to abandon changes and exit focal point mode.
-5. Click the reset  button to reset the focal point to the center of the image.
-6. Click **Finish** to save changes to the file.
-
-#### Deleting assets
-
-1. Click on the edit  button for the asset to be deleted.
-2. In the window that pops up, click the delete button  in the control buttons bar above the asset's preview.
-3. Click **Confirm**.
-
-:::tip
-Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon  at the top of the window, below the filters and sorting options.
-:::
-
-### Organizing assets with folders
-
-Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/cms/features/content-manager).
-
-From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
-
-:::note
-Folders follow the permission system of assets (see [Users & Permissions feature](/cms/features/users-permissions)). It is not yet possible to define specific permissions for a folder.
-:::
-
-By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
-
-- the folder title and breadcrumbs to navigate to a parent folder 
-- the subfolders  the current folder contains
-- all assets  from this folder
-
-From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library.
-
-To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
-
-:::tip
-The breadcrumb navigation can also be used to go back to a parent folder: click on a folder name to directly jump to it or click on the 3 dots `/img.` and select a parent folder from the drop-down list.
-:::
-
-#### Adding folders
-
-1. Click on **Add new folder** in the upper right of the Media Library interface.
-2. In the window that pops up, type a name for the new folder in the _Name_ field.
-3. (optional) In the _Location_ drop-down list, choose a location for the new folder. The default location is the active folder.
-4. Click **Create**.
-
-:::note
-There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the  on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
-:::
-
-#### Moving assets to a folder
-
-Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
-
-1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
-2. Click the  **Move** button at the top of the interface.
-3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
-4. Click **Move**.
-
-#### Editing folders
-
-Once created, a folder can be renamed, moved or deleted.
-
-1. In the Folders part of the Media library, hover the folder to be edited and click its edit button .
-2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
-3. Click **Save**.
-
-#### Deleting folders
-
-Deleting a folder can be done either from the list of folders of the Media Library, or when editing a single folder.
-
-1. Click the checkbox on the left of the folder name. Multiple folders can be selected.
-2. Click the  **Delete** button above the Folders list.
-3. In the _Confirmation_ dialog, click **Confirm**.
-
-:::note
-A single folder can also be deleted when editing it: hover the folder, click on its edit icon , and in the window that pops up, click the **Delete folder** button and confirm the deletion.
-:::
-
-### Usage with the REST API
-
-The Media Library feature has some endpoints that can accessed through Strapi's REST API:
-
-- [Upload with the REST API](/cms/api/rest/upload): Learn how to use the Strapi
-
-### Use public assets in your code {#public-assets}
-
-Public assets are static files (e.g., images, video, CSS files, etc.) that you want to make accessible to the outside world.
-
-Because an API may need to serve static assets, every new Strapi project includes by default a folder named `/public`. Any file located in this directory is accessible if the request's path doesn't match any other defined route and if it matches a public file name (e.g. an image named `company-logo.png` in `/public/` is accessible through `/company-logo.png` URL).
-
-:::tip
-`index.html` files are served if the request corresponds to a folder name (`/pictures` url will try to serve `public/pictures/index.html` file).
-:::
-
-:::caution
-The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
-:::
-
-
-
-# Media Library beta
-Source: https://docs.strapi.io/cms/features/media-library-beta
-
-# Media Library beta
-
-Strapi has completely reworked the  Media Library UI. This page describes the reworked UI, which is available as a beta feature  behind the `betaMediaLibrary` future flag, before it becomes the default UI.
-
-Read the [Media Library](/cms/features/media-library) page for how to enable the flag, and for every configuration option, which the flag does not change.
-
-## Usage  {#usage}
+## Usage {#usage}
 
 **Path to use the feature:**  Media Library
 
@@ -37500,20 +37272,20 @@ The Media Library is organized in the following areas:
 - The toolbar  spans the row above the list. Use it to filter, search and sort the list (see [finding assets](#finding-assets)), and to switch between the grid view and the table view (see [switching views](#switching-views)).
 - The list  displays the folders and assets of the current location. More assets load as you scroll.
 
-A _Beta_ notice sits above the list and reminds you that some features are still in progress. Click **Close** to dismiss it: it stays dismissed in that browser.
-
 Each folder and asset in the list has a checkbox to select it (see [selecting items](#selecting-items)) and a  button (see [using the item actions menu](#item-actions)). The Media Library calls a folder or an asset an _item_, and several controls use that word.
 
 <details>
-<summary>What changed from the previous Media Library</summary>
+<summary>What changed from the previous Media Library:</summary>
 
-| In the previous UI | In the Media Library beta |
+Strapi v5.54.0 introduces a revamped Media Library. The following table highlights the main changes in the UI:
+
+| In the previous UI | In the new Media Library  |
 | --- | --- |
 | **Add new assets** and **Add new folder** buttons | A single **New** button that does both (see [adding assets](#adding-assets)) |
 | Breadcrumbs above the list | A folder tree on the left (see [navigating folders](#navigating-folders)) |
 | Folder cards displaying how many items they hold | Folder names only. To know how many assets a folder holds directly, open it and read the page title |
 | Pagination, with an _Entries per page_ setting | No pagination: more assets load as you scroll |
-| A  button to configure the view | No view configuration (see [configuring the view](/cms/features/media-library#configuring-the-view)) |
+| A  button to configure the view | No view configuration |
 | A  button opening a search field | A search field always displayed in the toolbar (see [searching assets](#searching-assets)) |
 | A _Details_ window that covers the library | A details panel that leaves the list usable (see [managing individual assets](#managing-assets)) |
 | A crop mode and a focal point mode, opened separately | A single _Crop & Focus area_ editor (see [cropping images and setting a focus area](#cropping-images)) |
@@ -37556,7 +37328,7 @@ On an asset, the menu offers:
 -  **Move to folder**
 -  **Delete**
 
-On a folder, it offers:
+On a folder, the menu offers:
 
 -  **Copy link to folder**
 -  **Rename folder**
@@ -37581,28 +37353,21 @@ The menu requires the _Create_ permission of the Upload plugin. Without it, righ
 
 ### Adding assets
 
-<details>
-<summary>Media types the Media Library previews</summary>
-
-| Media type | Extensions |
-| ---------- | --------------------------------------------------------------- |
-| Image      | - JPEG<br />- PNG<br />- GIF<br />- SVG<br />- TIFF<br />- ICO<br />- DVU   |
-| Video      | - MPEG<br />- MP4<br />- MOV (Quicktime)<br />- WMV<br />- AVI<br />- FLV |
-| Audio      | - MP3<br />- WAV<br />- OGG                                         |
-| File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
-<br/>
-
-The Media Library itself does not restrict file types. Which files are accepted is decided by the `security.allowedTypes` and `security.deniedTypes` options (see [security](/cms/features/media-library#security)) and by the maximum file size (see [max file size](/cms/features/media-library#max-file-size)). SVG files are denied by default in projects generated with Strapi  and later (see [SVG uploads](/cms/features/media-library#svg-uploads)).
-
-</details>
-
 Assets are always uploaded to the location you are currently browsing. Navigate to the target folder before uploading, or move the assets afterwards (see [moving assets and folders](#moving-assets)).
 
 In an empty folder, and in a new project, the list is replaced by a _No assets yet_ message with an **Add assets** button that opens the same file browser as **New** > **File upload**.
 
-There are 3 ways to add assets.
+:::note Supported files
+The Media Library itself does not restrict file types. Which files are accepted is decided by the `security.allowedTypes` and `security.deniedTypes` options (see [security](#security)) and by the maximum file size (see [max file size](#max-file-size)). SVG files are denied by default in projects generated with Strapi  and later (see [SVG uploads](#svg-uploads)).
+:::
 
-#### Uploading files from your computer
+:::info File previews
+Zip, xls, csv, and json files are not previewed. Images, video, and audio files are previewed.
+:::
+
+There are 3 ways to add assets: by uploading from your computer, by dragging and dropping into the Media Library UI, or from a URL.
+
+#### Uploading files from your computer with the New button
 
 1. Click the **New** button in the upper right corner of the Media Library.
 2. Click  **File upload**.
@@ -37610,7 +37375,7 @@ There are 3 ways to add assets.
 
 The upload starts immediately and its progress is reported in the upload dialog (see [following upload progress](#upload-progress)).
 
-#### Uploading files by drag and drop
+#### Uploading files from your computer by drag and drop
 
 1. Drag one or several files from your computer onto the Media Library.
 2. Check the destination folder named in the _Drop here to upload to_ overlay.
@@ -37627,7 +37392,11 @@ Files dropped from your computer always land in the folder you are currently bro
 3. In the _URL(s)_ field of the _Import from URL_ dialog, type or paste up to 20 URLs, one per line.
 4. Click **Upload**.
 
-Strapi downloads each file server-side and adds it to the current folder. The server reports no incremental byte count for this flow, so the upload dialog displays a moving progress bar without a percentage.
+Strapi downloads each file server-side and adds it to the current folder. The upload dialog reports byte-level progress as the server fetches each file: the progress bar advances in real time during the fetch phase, then hands off to the upload step and completes. 
+
+:::note
+When the remote server does not include a `Content-Length` response header, the total size is unknown. The progress bar stays indeterminate for that file until the fetch completes, then completes normally.
+:::
 
 :::caution
 URLs must use the `http` or `https` protocol, and must resolve to a publicly reachable address. URLs that resolve to a private or internal address, such as `localhost` or an address on your own network, are rejected to prevent server-side request forgery.
@@ -37643,15 +37412,15 @@ The dialog can be minimized to a summary line and maximized again. It offers a *
 **Retry** is only displayed after a cancellation, and it only restarts cancelled files. A file that failed on its own cannot be retried from the dialog: read the reason on its row, fix the cause, and upload it again.
 :::
 
-By default, files are uploaded one at a time. Increase [`concurrentUploadRequests`](/cms/features/media-library#concurrent-file-uploads) to upload several files in parallel.
+By default, files are uploaded one at a time. Increase [`concurrentUploadRequests`](#concurrent-file-uploads) to upload several files in parallel.
 
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
-AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](/cms/features/media-library#configuring-settings) if needed.
+AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
-Metadata can also be generated for images that already exist in the library, either from the [Media Library settings](/cms/features/media-library#configuring-settings) for every image that lacks one, or with the **Create metadata** bulk action for a specific selection (see [generating metadata in bulk](#bulk-metadata)).
+Metadata can also be generated for images that already exist in the library, either from the [Media Library settings](#configuring-settings) for every image that lacks one, or with the **Create metadata** bulk action for a specific selection (see [generating metadata in bulk](#bulk-metadata)).
 
 :::note Strapi AI credits
 
@@ -37679,7 +37448,7 @@ Type in the toolbar's _Search_ field to find assets and folders by name.
 
 The search covers the whole library, not only the folder you are browsing, and it returns both folders and assets. The page title becomes _Search results for "your term"_ followed by the number of folders and assets found.
 
-To leave the search, click the  **Clear** button inside the search field, or navigate to a folder in the folder tree.
+To leave the search, click the  **Clear** button inside the search field, press the `Esc` key while still in the search field, or navigate to a folder in the folder tree.
 
 When a search returns nothing, the list is replaced by a _No results found_ message with a  **Clear search** button.
 
@@ -37690,8 +37459,7 @@ When a search returns nothing, the list is replaced by a _No results found_ mess
 | Filter field | Values | Conditions |
 | --- | --- | --- |
 | _Type_ | Folder, Picture, Audio, Video, Document | is, is not |
-| _Creation date_ | A relative preset, from 1 day ago to 1 year ago | is exactly, within the last, not within the last |
-| _Creation date_ | A custom date range | is, is not |
+| _Creation date_ | A relative preset, from 1 day ago to 1 year ago, or a custom range | <ul><li>For presets: is exactly, within the last, not within the last</li><li>For custom date ranges: is, is not</li></ul> |
 | _Last modified_ | A relative preset, from 1 day ago to 1 year ago | is exactly, within the last, not within the last |
 
 To filter the list:
@@ -37757,7 +37525,7 @@ One editor handles both cropping and the focus area. The focus area, also called
 1. Click an image in the list to open its details panel.
 2. Click the  **Crop** button on the preview. The _Crop & Focus area_ editor opens.
 3. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
-4. (optional) Click the  **Lock aspect ratio** button to resize both dimensions together.
+4. (optional) Click the  button to lock aspect ratio, so it resizes both dimensions together.
 5. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
 6. Save your changes:
     - Click **Apply** to crop the original asset. The asset keeps its ID, so content already using it is updated.
@@ -37765,12 +37533,9 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 To leave the editor without changing anything, click **Cancel**.
 
-:::note
-The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
-:::
-
-:::note
-The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
+:::info
+* The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
+* The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
 :::
 
 #### Replacing an asset file
@@ -37791,7 +37556,7 @@ The previous file is permanently replaced and cannot be recovered. If [AI metada
 1. Click the asset in the list to open its details panel.
 2. Click the  **Download** button to save the file to your computer, or the  **Copy link** button to copy its URL to the clipboard.
 
-Both actions are also available from the asset's  actions menu, as **Download media** and **Copy link to media**.
+Both actions are also available from the asset's  actions menu, as **Copy link to media** and **Download media**.
 
 :::note
 **Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's  actions menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
@@ -37832,7 +37597,7 @@ In the table view, a **Select all** checkbox in the header row selects every ite
 
 Selecting an item displays the bulk actions bar at the bottom of the interface. The bar reports how many items are selected and offers the bulk actions. Click  **Clear selection** to empty the selection.
 
-In the grid view as well as the table view, the bar also offers a **Select all** button  that selects every folder and asset currently displayed. Only the items already loaded are selected: scroll further down the list, then click **Select all** again to add the newly loaded items. Unlike the checkbox of the table view header, the button does not empty the selection when everything is already selected.
+In the grid view as well as the table view, the bar also offers a **Select all** button that selects every folder and asset currently displayed. Only the items already loaded are selected: scroll further down the list, then click **Select all** again to add the newly loaded items. Unlike the checkbox of the table view header, the button does not empty the selection when everything is already selected.
 
 :::note
 The selection survives switching between the grid and the table view, but it is emptied when you navigate to another folder or change the search, the filters or the sort order.
@@ -37877,7 +37642,7 @@ Folders follow the permission system of assets (see [Users & Permissions feature
 :::
 
 :::caution
-In this beta, **Rename folder**, **Move to folder** and **Delete folder** are displayed to every user who can see the folder, including users without the _Update_ permission on assets. The action is then refused by the server.
+**Rename folder**, **Move to folder** and **Delete folder** are displayed to every user who can see the folder, including users without the _Update_ permission on assets. The action is then refused by the server.
 :::
 
 #### Adding folders
@@ -37930,6 +37695,10 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 :::
 
 Folders can also be deleted in bulk, together with assets (see [deleting items in bulk](#bulk-delete)).
+
+### Usage with the MCP server
+
+AI clients connected to the [Strapi MCP server](/cms/features/strapi-mcp-server) can browse and manage the Media Library through dedicated tools: 3 read-only tools that list assets, return a single asset and return the folder tree, and 7 write tools that update asset metadata, move and delete assets, and create, rename, move and delete folders (see [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools)).
 
 ### Usage with the REST API
 
@@ -38478,9 +38247,7 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 :::caution Experimental feature
 This feature is currently experimental. Feel free to share [feedback](https://feedback.strapi.io/) or [issues](https://github.com/strapi/strapi/issues) with the Strapi team.
 
-The current version of Live Preview comes with the following limitations:
-* Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
-* Fields in dynamic zones are not handled.
+The current version of Live Preview comes with one limitation: fields in dynamic zones are not handled.
 :::
 
 
@@ -38548,7 +38315,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 ### Editing a role
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application.
+The role edition interface allows you to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application.
 
 It is accessible from *Administration panel > Roles* either after clicking on the edit button  on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
@@ -38558,7 +38325,7 @@ It isn't possible to edit the permissions of the Super Admin role. All configura
 
 #### Editing role's details
 
-The details area of an administrator role editing interface allow to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
+The details area of an administrator role editing interface allows you to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
 
 | Role details  | Instructions   |
 | ------------- | -------------- |
@@ -38571,7 +38338,7 @@ In the top right corner, you can see a counter indicating how many administrator
 
 #### Configuring role's permissions
 
-The permissions area of an administrator role editing interface allows to configure in detail what actions an administrator can do for any part of the Strapi application.
+The permissions area of an administrator role editing interface allows you to configure in detail what actions an administrator can do for any part of the Strapi application.
 
 It is displayed as a table, split into 4 categories: [Collection types](#collection-and-single-types), [Single types](#collection-and-single-types), [Plugins](#plugins-and-settings) and [Settings](#plugins-and-settings).
 
@@ -38600,35 +38367,35 @@ The Plugins and Settings categories both display a sub-category per available pl
 
 <TabItem value="plugins" label="Plugins">
 
-By default, packages permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users & Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions feature allowing to manage end users). Each package has its own specific set of permissions.
+By default, packages permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users & Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions feature allowing you to manage end users). Each package has its own specific set of permissions.
 
 | Package name          | Permissions |
 | -------------------- | ----------- |
-| Content-Releases <br /> *(Releases)* | <ul><li>General</li><ul><li>"Read" - gives access to the Releases feature</li><li>"Create" - allows to create releases</li><li>"Edit" - allows to edit releases</li><li>"Delete" - allows to delete releases</li><li>"Publish" - allows to publish releases</li><li>"Remove an entry from a release"</li><li>"Add an entry to a release"</li></ul></ul> |
-| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
+| Content-Releases <br /> *(Releases)* | <ul><li>General</li><ul><li>"Read" - gives access to the Releases feature</li><li>"Create" - allows you to create releases</li><li>"Edit" - allows you to edit releases</li><li>"Delete" - allows you to delete releases</li><li>"Publish" - allows you to publish releases</li><li>"Remove an entry from a release"</li><li>"Add an entry to a release"</li></ul></ul> |
+| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows you to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows you to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows you to configure the layout of a component</li></ul></ul> |
 | Content-Type-Builder | <ul><li>General</li><ul><li>"Read" - gives access to the Content-type Builder plugin in read-only mode</li></ul></ul> |
-| Upload <br /> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li><li>"Configure view" - allows to configure the view of the Media Library</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows to upload media files</li> <li>"Update (crop, details, replace) + delete" - allows to edit uploaded media files</li><li>"Download" - allows to download uploaded media files</li><li>"Copy link" - allows to copy the link of an uploaded media file</li></ul></ul> |
-| Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows to create end-user roles</li><li>"Read" - allows to see created end-user roles</li><li>"Update" - allows to edit end-user roles</li><li>"Delete" - allows to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows to see providers</li><li>"Edit" - allows to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows to access the email templates</li><li>"Edit" - allows to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br />*General > Settings > Users & Permissions plugin* |
+| Upload <br /> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li><li>"Configure view" - allows you to configure the view of the Media Library</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows you to upload media files</li> <li>"Update (crop, details, replace) + delete" - allows you to edit uploaded media files</li><li>"Download" - allows you to download uploaded media files</li><li>"Copy link" - allows you to copy the link of an uploaded media file</li></ul></ul> |
+| Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows you to create end-user roles</li><li>"Read" - allows you to see created end-user roles</li><li>"Update" - allows you to edit end-user roles</li><li>"Delete" - allows you to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows you to see providers</li><li>"Edit" - allows you to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows you to access the email templates</li><li>"Edit" - allows you to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows you to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows you to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br />*General > Settings > Users & Permissions plugin* |
 
 <TabItem value="settings" label="Settings">
 
-Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel. They also allow to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
+Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel. They also allow you to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
 
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
-| Content Releases | <ul><li>Options</li><ul><li>"Read" - allows to access the Releases settings</li><li>"Edit" - allows to edit the Releases settings</li></ul></ul> 👉 Path reminder to the Releases settings: <br />*General > Settings > Global Settings - Releases* |
+| Content Releases | <ul><li>Options</li><ul><li>"Read" - allows you to access the Releases settings</li><li>"Edit" - allows you to edit the Releases settings</li></ul></ul> 👉 Path reminder to the Releases settings: <br />*General > Settings > Global Settings - Releases* |
 | Email | <ul><li>General</li><ul><li>"Access the Email settings page" - gives access to Email settings</li></ul></ul> 👉 Path reminder to Email settings: <br /> *General > Settings > Users & Permissions plugin - Email templates* |
 | Media Library | <ul><li>General</li><ul><li>"Access the Media Library settings page" - gives access to Media Library settings</li></ul></ul> 👉 Path reminder to Media Library settings: <br /> *General > Settings > Global Settings - Media Library* |
-| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows to create new locales</li><li>"Read" - allows to see available locales</li><li>"Update" - allows to edit available locales</li><li>"Delete" - allows to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
-| Review Workflows | <ul><li>"Create" - allows to create workflows</li><li>"Read" - allows to see created workflows</li><li>"Update" - allows to edit workflows</li><li>"Delete" - allows to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
-| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows to access the SSO settings</li><li>"Update" - allows to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
-| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
+| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows you to create new locales</li><li>"Read" - allows you to see available locales</li><li>"Update" - allows you to edit available locales</li><li>"Delete" - allows you to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
+| Review Workflows | <ul><li>"Create" - allows you to create workflows</li><li>"Read" - allows you to see created workflows</li><li>"Update" - allows you to edit workflows</li><li>"Delete" - allows you to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
+| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows you to access the SSO settings</li><li>"Update" - allows you to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
+| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul> |
-| Webhooks | <ul><li>General</li><ul><li>"Create" - allows to create webhooks</li><li>"Read" - allows to see created webhooks</li><li>"Update" - allows to edit webhooks</li><li>"Delete" - allows to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
-| Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows to create administrator accounts</li><li>"Read" - allows to see existing administrator accounts</li><li>"Update" - allows to edit administrator accounts</li><li>"Delete" - allows to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows to create administrator roles</li><li>"Read" - allows to see created administrator roles</li><li>"Update" - allows to edit administrator roles</li><li>"Delete" - allows to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
+| Webhooks | <ul><li>General</li><ul><li>"Create" - allows you to create webhooks</li><li>"Read" - allows you to see created webhooks</li><li>"Update" - allows you to edit webhooks</li><li>"Delete" - allows you to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
+| Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
 | API Tokens |  <ul><li>API tokens</li><ul><li>"Access the API tokens settings page" - toggles access to the API tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br /> *General > Settings > Global Settings - API Tokens* |
 | Admin Tokens | <ul><li>Admin tokens</li><ul><li>"Access the Admin tokens settings page" - toggles access to the Admin Tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Admin tokens</li><li>"Read" - allows you to see created Admin tokens</li><li>"Update" - allows editing of Admin tokens</li><li>"Delete (revoke)" - allows deletion of Admin tokens</li><li>"Regenerate" - allows regeneration of Admin tokens</li></ul></ul> 👉 Path reminder to Admin Tokens settings: <br /> *General > Settings > Administration Panel - Admin Tokens*  |
-| Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
+| Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows you to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
 | Transfer Tokens | <ul><li>Transfer tokens</li><ul><li>"Access the Transfer tokens settings page" - toggles access to the Transfer tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Transfer tokens</li><li>"Read" - allows you to see created Transfer tokens (disabling this permission will disable access to the *Global Settings - Transfer Tokens* settings)</li><li>"Update" - allows editing of Transfer tokens</li><li>"Delete (revoke)" - allows deletion of Transfer tokens</li> <li> "Regenerate" - allows regeneration of the Transfer token</li></ul></ul> 👉 Path reminder to Transfer Tokens settings: <br /> *General > Settings > Global Settings - Transfer Tokens* |
 
 4. Click on the **Save** button on the top right corner.
@@ -38639,7 +38406,7 @@ To create admin permissions for your custom plugin, please refer to our [dedicat
 
 #### Setting custom conditions for permissions
 
-For each permission of each category, a  **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission.
+For each permission of each category, a  **Settings** button is displayed. It allows you to push the permission configuration further by defining additional conditions for the administrators to be granted the permission.
 
 There are 2 default additional conditions:
 - the administrator must be the creator,
@@ -39311,7 +39078,7 @@ The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible c
 
 ### Available tools
 
-The MCP server exposes 2 categories of tools: content management tools generated from your schema, and built-in utility tools.
+The MCP server exposes 3 categories of tools: content management tools generated from your schema, Media Library tools, and built-in utility tools.
 
 #### Content management tools
 
@@ -39342,6 +39109,50 @@ The tools generated differ depending on whether the content type is a collection
 | `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
 
 The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
+
+#### Media Library tools {#media-library-tools}
+
+Strapi registers 10 tools for the [Media Library](/cms/features/media-library): 3 for reading and 7 for writing. Unlike content management tools they are not generated from your schema, so the same set is always registered. Each tool is exposed only if the Admin token grants the permission listed below: a tool the token cannot use does not appear in `tools/list`, and calling it returns a permission error.
+
+| Tool | Permission required | Description |
+|------|--------------------|-------------|
+| `media_list_assets` | `plugin::upload.read` | Lists assets, with pagination and optional filters |
+| `media_get_asset` | `plugin::upload.read` | Returns a single asset by its numeric `id` |
+| `media_list_folders` | `plugin::upload.read` | Returns the complete folder tree as a nested structure |
+| `media_update_asset` | `plugin::upload.assets.update` | Updates `name`, `alternativeText` or `caption` |
+| `media_move_assets` | `plugin::upload.assets.update` | Moves assets into another folder, in bulk |
+| `media_delete_assets` | `plugin::upload.assets.update` | Permanently deletes assets, in bulk |
+| `media_create_folder` | `plugin::upload.assets.create` | Creates a folder, optionally inside a parent folder |
+| `media_rename_folder` | `plugin::upload.assets.update` | Renames a folder |
+| `media_move_folder` | `plugin::upload.assets.update` | Moves a folder into another parent folder |
+| `media_delete_folder` | `plugin::upload.assets.update` | Deletes folders and everything they contain |
+
+Tool responses include a fixed allowlist of fields: `id`, `name`, `alternativeText`, `caption`, `url`, `mime`, `size`, `width`, `height`, `ext`, `folder`, and timestamps. Fields that could expose storage provider credentials or internal paths (`provider`, `provider_metadata`, `hash`, `formats`, `folderPath`) are never returned, even if the content type is extended later.
+
+Assets and folders are identified by numeric ids rather than document IDs, and the two are independent sequences: the same number can name both an asset and a folder. Take asset ids from `media_list_assets` or `media_get_asset`, and folder ids from `media_list_folders`.
+
+**Reading.** The `media_list_assets` tool accepts the following optional parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `page` | Number | Page number, 1-indexed (default: 1). |
+| `pageSize` | Number | Number of assets per page (default: 25, max: 100). |
+| `folderId` | Number or null | Numeric folder ID to list assets from a specific folder, or `null` for root-level assets only. Omit to list all assets regardless of folder. |
+| `mime` | String | MIME type filter. A value without a slash is matched as a prefix (`"image"` matches every `image/*` type), a full type is matched exactly and case-insensitively (`"image/png"`). |
+| `name` | String | Partial asset name filter (case-insensitive substring match). |
+| `sort` | String | Sort order (default: `createdAt:DESC`). Only 6 values are accepted: `createdAt:ASC`, `createdAt:DESC`, `name:ASC`, `name:DESC`, `updatedAt:ASC`, and `updatedAt:DESC`. The direction is uppercase and any other value is rejected. |
+
+The `media_get_asset` tool requires 1 parameter: `id`, the numeric asset ID. Document ID strings are not accepted. The `media_list_folders` tool accepts no parameters and returns the full folder hierarchy.
+
+**Writing.** `media_update_asset` writes metadata only. The file itself, its URL, its MIME type and its size belong to the [upload provider](/cms/configurations/media-library-providers) and cannot be changed over MCP. Use `media_move_assets` to change which folder an asset sits in, and `media_rename_folder` rather than `media_move_folder` to change a folder name.
+
+`media_move_assets` and `media_move_folder` both accept `null` as the destination, meaning the Media Library root. A folder cannot be moved into itself or into one of its own descendants.
+
+:::warning Deletions are permanent
+`media_delete_assets` and `media_delete_folder` remove files from the database and from the storage provider, together with every generated thumbnail and size variant. There is no trash and no undo, and deleting a folder cascades to every subfolder and file inside it. Neither tool can tell whether an asset is referenced by an entry, so a successful deletion is not evidence that nothing was using it.
+
+Both accept a `dryRun` parameter, which reports what would be removed without removing anything. They differ on partial failure: `media_delete_assets` keeps the deletions that succeeded and reports the rest, while `media_delete_folder` rejects the whole call if any id does not resolve to a folder.
+:::
 
 #### Built-in utility tools
 
@@ -39463,6 +39274,27 @@ The MCP server has the following limitations:
 - **Media upload**: Media fields accept existing media asset references but the MCP server cannot upload new files. Use Strapi's media library or upload API to add files first, then reference them in MCP tool calls.
 - **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
 - **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
+
+### Compatibility and schema changes
+
+Starting with the version noted above, the built-in MCP server uses MCP TypeScript SDK v2. This brings two changes that affect clients and capability authors.
+
+#### JSON Schema 2020-12
+
+Tool `inputSchema` and `outputSchema` documents are now serialized as JSON Schema 2020-12 instead of the draft-07 dialect used in earlier versions. The key formatting differences are:
+
+- Positional tuples use `prefixItems` instead of the draft-07 `items` array form.
+- Recursive schemas (including the `list_*` filter parameters for content types) reference shared definitions via `$defs` instead of `definitions`.
+
+A strict MCP client that validates advertised schemas against JSON Schema 2020-12 now retains every tool Strapi advertises. Before this change, those clients rejected the draft-07 schemas and silently dropped tools from the usable list, which appeared as a missing-permissions problem with no server-side error logged. This is the failure described in [strapi/strapi#27395](https://github.com/strapi/strapi/issues/27395). Clients that do not validate the schema dialect at all are not affected.
+
+#### Handler context and capability result types
+
+Capability handlers still receive `{ args, extra }`. The `extra` value is now a Strapi-owned, all-optional handler context. The field names you already use in capability handlers are unchanged: cancellation, request and session identity, token information, request metadata, and originating HTTP request details.
+
+Tool, prompt, and resource results are Strapi-owned types exported from `@strapi/types` (`McpToolResult`, `McpPromptResult`, `McpResourceReadResult`, `McpResourceListingMetadata`, `McpContentBlock`). Existing constructions remain valid, including all five content variants, resource text and blob contents, and extension fields. `@strapi/types` no longer depends on the MCP SDK directly; core retains the SDK dependency for transport only.
+
+Empty capability categories now enumerate as an empty list instead of returning an unknown-method error.
 
 ### Plugin API
 

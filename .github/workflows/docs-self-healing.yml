@@ -252,7 +252,26 @@ jobs:
           for NUMBER in $(jq -r '.[].number' /tmp/new-prs.json); do
             echo "Fetching body and diff for PR #$NUMBER..."
             gh api "repos/strapi/strapi/pulls/$NUMBER" --jq '.body' > "/tmp/pr-${NUMBER}-body.txt" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}-body.txt"
-            gh api "repos/strapi/strapi/pulls/$NUMBER.diff" > "/tmp/pr-${NUMBER}.diff" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}.diff"
+            # The diff needs the media type in an Accept header. A `.diff`
+            # suffix on the path looks like it does the same job and does not:
+            # `gh api repos/.../pulls/27593.diff` silently returns the pull
+            # request as JSON. That was the shape of this line from 2026-04-16
+            # (#3062) to 2026-09-17, so every diff written here was metadata,
+            # `wc -l` was always 0, the oversize guard below could never fire,
+            # and Triage, Router and Drafter all routed on the PR title and
+            # body alone for five months.
+            gh api "repos/strapi/strapi/pulls/$NUMBER" \
+              --header "Accept: application/vnd.github.v3.diff" \
+              > "/tmp/pr-${NUMBER}.diff" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}.diff"
+
+            # Whatever comes back must look like a diff. A non-empty file that
+            # does not is the failure above repeating itself under another
+            # cause, and handing an agent JSON it was told is a diff is worse
+            # than handing it nothing: it cannot tell that context is missing.
+            if [ -s "/tmp/pr-${NUMBER}.diff" ] && ! head -1 "/tmp/pr-${NUMBER}.diff" | grep -q '^diff --git'; then
+              echo "::warning::PR #$NUMBER diff fetch returned non-diff content, blanking it. Agents will route on the PR body alone."
+              : > "/tmp/pr-${NUMBER}.diff"
+            fi
 
             DIFF_LINES=$(wc -l < "/tmp/pr-${NUMBER}.diff")
             echo "  PR #$NUMBER: body $(wc -c < "/tmp/pr-${NUMBER}-body.txt") bytes, diff $DIFF_LINES lines"
@@ -480,12 +499,49 @@ jobs:
         id: check-router
         run: |
           RESULTS_FILE="/tmp/router-results.json"
+
+          # ── The Router ran and wrote nothing ──
+          #
+          # This is not "no PR needed documentation". The candidates reached the
+          # Router and came back unexamined, and the 24-hour lookback means the
+          # next run will never see them again.
+          #
+          # Haiku produces it by answering the prompt instead of executing it:
+          # one turn, zero tool calls, `subtype: success`, so the action reports
+          # a perfectly clean run and this step used to `exit 0` in silence.
+          #
+          # The Router prompt is now imperative, which is what fixed the
+          # identical failure in Triage (commit 7065d1c9). `router_failed` is the
+          # backstop: whatever the cause, a Router that produces no file must
+          # never again read as an empty run.
           if [ ! -f "$RESULTS_FILE" ]; then
+            echo "::warning::Router produced no results file. The candidates were never examined and fall out of the 24-hour window."
             echo "Router did not produce results file"
             echo "has_targets=false" >> $GITHUB_OUTPUT
             echo "micro_prs=0" >> $GITHUB_OUTPUT
+            echo "router_failed=true" >> $GITHUB_OUTPUT
+
+            {
+              echo "### ⚠️ Router produced no results"
+              echo ""
+              echo "The Router step finished without writing \`/tmp/router-results.json\`, so"
+              echo "these candidates were never examined:"
+              echo ""
+            } >> $GITHUB_STEP_SUMMARY
+
+            jq -r '.[] | "- [strapi/strapi#\(.number): \(.title)](https://github.com/strapi/strapi/pull/\(.number))"' \
+              /tmp/triaged-prs.json >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            {
+              echo ""
+              echo "They are **not** added to the ignore list, so a rerun within 24 hours still catches them."
+              echo ""
+            } >> $GITHUB_STEP_SUMMARY
+
             exit 0
           fi
+
+          echo "router_failed=false" >> $GITHUB_OUTPUT
 
           # ── Correct the Router's own classification before trusting it ──
           #
@@ -767,6 +823,13 @@ jobs:
         if: steps.check-router.outputs.has_targets == 'true'
         id: load-drafter-prompt
         run: |
+          # Seed the summary here rather than trusting the Drafter to create it.
+          # The prompt appends one entry per PR as it goes, so a run that dies
+          # on its turn cap still reports what it delivered. Writing the file
+          # only at the end is what made 2026-09-17 report zero doc PRs while
+          # PR #3495 was open.
+          echo '{"processed": [], "errors": []}' > /tmp/self-healing-summary.json
+
           echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
           cat .github/prompts/docs-self-healing-drafter.md >> $GITHUB_OUTPUT
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
@@ -779,12 +842,58 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-drafter-prompt.outputs.prompt }}
-          claude_args: '--model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          # 150, not 50. On 2026-09-17 the Drafter spent all 50 turns on the
+          # first of three routed PRs and died seven seconds after opening it.
+          # The Router allows up to 5 PRs per run, so the cap has to clear that
+          # maximum with room, not the single PR 50 turns actually bought.
+          claude_args: '--model claude-sonnet-5 --max-turns 150 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           ROUTER_RESULTS: ${{ steps.check-router.outputs.router_results }}
+
+      # Runs even when the Drafter failed, which is the whole point: a turn cap
+      # leaves some PRs drafted and some not, and the natural response is to
+      # rerun. Without this, that rerun re-routes the PRs already handled and
+      # opens a second doc PR for each. Sending them to the ignore list here is
+      # the same move the pre-Drafter step makes for `skip` decisions: the work
+      # is done, a second look can only duplicate it.
+      - name: Record drafted PRs in the ignore list
+        if: always() && steps.check-router.outputs.has_targets == 'true' && inputs.dry_run != true
+        run: |
+          IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
+          SUMMARY_FILE="/tmp/self-healing-summary.json"
+          TODAY=$(date -u '+%Y-%m-%d')
+          ADDED=0
+
+          if [ ! -f "$SUMMARY_FILE" ]; then
+            echo "No summary file, nothing to record"
+            exit 0
+          fi
+
+          while IFS= read -r ROW; do
+            NUM=$(echo "$ROW" | jq -r '.number')
+            TITLE=$(echo "$ROW" | jq -r '.title')
+            DOC_PR=$(echo "$ROW" | jq -r '.doc_pr')
+            if jq -e --argjson n "$NUM" '.ignored_prs | map(.number) | index($n)' "$IGNORE_FILE" > /dev/null 2>&1; then
+              continue
+            fi
+            jq --argjson n "$NUM" --arg r "Drafted: $DOC_PR" --arg d "$TODAY" \
+              '.ignored_prs += [{"number": $n, "reason": $r, "added": $d}]' \
+              "$IGNORE_FILE" > /tmp/ignore-drafted.json && mv /tmp/ignore-drafted.json "$IGNORE_FILE"
+            echo "Added #$NUM ($TITLE) to ignore list (doc PR drafted: $DOC_PR)"
+            ADDED=$((ADDED + 1))
+          done < <(jq -c '.processed[] | select((.doc_pr // "") != "")' "$SUMMARY_FILE")
+
+          if [ "$ADDED" -gt 0 ]; then
+            echo "Recorded $ADDED drafted PRs, a rerun will not redraft them"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .github/self-healing-ignore.json
+            git commit -m "Auto-ignore $ADDED PRs already drafted by self-healing"
+            git push
+          fi
 
       - name: Summary
         if: always() && inputs.audit_only != true
@@ -825,7 +934,9 @@ jobs:
           # Case 3: Sonnet was NOT invoked. That is only an empty run if the
           # Router did not create micro PRs of its own.
           if [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
-            if [ "$MICRO_PRS" -eq 0 ]; then
+            if [ "${{ steps.check-router.outputs.router_failed }}" == "true" ]; then
+              echo "**Result:** Router (Haiku) produced no results file, so the candidates were never examined. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
+            elif [ "$MICRO_PRS" -eq 0 ]; then
               echo "**Result:** Router (Haiku) found no documentation targets. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
             else
               echo "**Result:** All targets were micro-edits, handled by the Router. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
@@ -960,6 +1071,14 @@ jobs:
           # Build the main message (short summary)
           if [ "$JOB_STATUS" == "failure" ]; then
             MAIN=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
+
+            # A failed run is not an empty one. The Drafter opens each PR before
+            # it can hit its turn cap, so the work already delivered has to be
+            # named here or it is invisible: on 2026-09-17 Slack announced a
+            # bare FAILED while PR #3495 had just been created.
+            if [ "$TOTAL_PRS" -gt 0 ]; then
+              MAIN="${MAIN}\n\n:white_check_mark: *Delivered before the failure (${TOTAL_PRS}):*\n${PR_LIST}"
+            fi
           elif [ "$TOTAL_PRS" -gt 0 ]; then
             # Any run that produced a doc PR reports it, whichever model opened it.
             MAIN=":noted: *Docs Self-Healing* ($DATE)\n*${TOTAL_PRS} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
@@ -976,7 +1095,13 @@ jobs:
             # A dropped target is not "found nothing" — the Router found targets
             # and failed to act on them. Saying otherwise is how 2026-06-20 went
             # unnoticed.
-            if [ "$DROPPED" -gt 0 ]; then
+            if [ "${{ steps.check-router.outputs.router_failed }}" == "true" ]; then
+              # The Router never examined the candidates. Saying "found no
+              # documentation targets" here is what hid 2026-09-11, 09-16 and
+              # 09-17: three runs in a row, green, and nobody looked.
+              CANDIDATES=$(jq -r '.[] | "• <https://github.com/strapi/strapi/pull/\(.number)|strapi/strapi#\(.number): \(.title)>"' /tmp/triaged-prs.json 2>/dev/null || true)
+              MAIN=":pepe_alarm: *Docs Self-Healing* ($DATE)\nRouter (Haiku) produced no results file, so these candidates were never examined:\n${CANDIDATES}\nRerun within 24h to catch them.\n<${RUN_URL}|View run>"
+            elif [ "$DROPPED" -gt 0 ]; then
               MAIN=":pepe_alarm: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found targets but produced no doc PR.\n<${RUN_URL}|View run>"
             else
               MAIN=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
@@ -1051,6 +1176,13 @@ jobs:
             fi
           elif [ "$JOB_STATUS" == "failure" ]; then
             ERROR_MSG="Job failed (likely: max turns reached or SDK error)"
+          fi
+
+          # A Router that wrote no results file is an incident, not an empty
+          # run. Without this the Notion row is indistinguishable from a day
+          # where nothing needed documenting.
+          if [ "${{ steps.check-router.outputs.router_failed }}" == "true" ]; then
+            ERROR_MSG="Router produced no results file; candidates were never examined"
           fi
 
           # Micro-edit PRs handled directly by Haiku (Router) and recorded in

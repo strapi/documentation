@@ -19711,6 +19711,30 @@ File path: /features.js
 ```
 
 
+## Available stable flags
+Description: | Property name | Related feature | Suggested environment variable name | Description | | ------------- | --------------- | ---------------------------------- | ----------- | | useLegacyMediaLibrary | Media Library | USELEGACYMEDIA_LIBRARY | Restores the previous Media Library interface.
+(Source: https://docs.strapi.io/cms/configurations/features#available-stable-flags)
+
+Language: JavaScript
+File path: /config/features.js
+
+```js
+module.exports = ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+
+---
+Language: TypeScript
+File path: /config/features.ts
+
+```ts
+export default ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
+});
+```
+
+
 
 # Lifecycle functions
 Source: https://docs.strapi.io/cms/configurations/functions
@@ -26034,9 +26058,9 @@ npm run strapi export -- --no-encrypt --exclude media-library
 # Data import
 Source: https://docs.strapi.io/cms/features/data-management/import
 
-## Understand the import archive
+## Asset metadata validation
 Description: To prepare an archive for manual review or modification:
-(Source: https://docs.strapi.io/cms/features/data-management/import#understand-the-import-archive)
+(Source: https://docs.strapi.io/cms/features/data-management/import#asset-metadata-validation)
 
 Language: JavaScript
 File path: N/A
@@ -26781,19 +26805,16 @@ export default {
 # Media Library
 Source: https://docs.strapi.io/cms/features/media-library
 
-## Media Library
-Description: :::strapi New Media Library available in Strapi has completely reworked the Media Library UI.
-(Source: https://docs.strapi.io/cms/features/media-library#media-library)
+## Restoring the previous Media Library
+Description: The Media Library described on this page is the default UI since Strapi v5.54.0.
+(Source: https://docs.strapi.io/cms/features/media-library#use-legacy-media-library)
 
 Language: JavaScript
 File path: /config/features.js
 
 ```js
-module.exports = () => ({
-  future: {
-    // highlight-next-line
-    betaMediaLibrary: true,
-  },
+module.exports = ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
 });
 ```
 
@@ -26802,11 +26823,8 @@ Language: TypeScript
 File path: /config/features.ts
 
 ```ts
-export default () => ({
-  future: {
-    // highlight-next-line
-    betaMediaLibrary: true,
-  },
+export default ({ env }) => ({
+  useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
 });
 ```
 
@@ -27002,44 +27020,9 @@ export default {
 ```
 
 
-## File type detection for ambiguous MIME types
-Description: You can provide them by creating or editing the /config/plugins file.
-(Source: https://docs.strapi.io/cms/features/media-library#file-type-detection-for-ambiguous-mime-types)
-
-Language: JavaScript
-File path: /config/plugins.js
-
-```js
-module.exports = {
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
-
----
-Language: TypeScript
-File path: /config/plugins.ts
-
-```ts
-export default {
-  // ...
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'application/*'],
-        deniedTypes: ['application/x-sh', 'application/x-dosexec']
-      },
-    }
-  }
-};
-```
+## Security
+Description: New projects declare the 2 lists as separate variables and pass them to the upload plugin, alongside the other generated plugin configuration:
+(Source: https://docs.strapi.io/cms/features/media-library#security)
 
 Language: JavaScript
 File path: /config/plugins.js
@@ -27124,6 +27107,46 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
 });
 
 export default config;
+```
+
+
+## File type detection for ambiguous MIME types
+Description: You can provide them by creating or editing the /config/plugins file.
+(Source: https://docs.strapi.io/cms/features/media-library#file-type-detection-for-ambiguous-mime-types)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
 ```
 
 

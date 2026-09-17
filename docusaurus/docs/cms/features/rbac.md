@@ -1,6 +1,6 @@
 ---
 title: Role-Based Access Control (RBAC)
-description: Learn to use the RBAC feature which allows to manage the users of the admin panel.
+description: Learn to use the RBAC feature which allows you to manage the users of the admin panel.
 toc_max_heading_level: 5
 tags:
 - admin panel
@@ -82,7 +82,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
   }}
 />
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application.
+The role edition interface allows you to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application.
 
 It is accessible from *Administration panel > Roles* either after clicking on the edit button <Icon name="pencil-simple" /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
@@ -92,7 +92,7 @@ It isn't possible to edit the permissions of the Super Admin role. All configura
 
 #### Editing role's details
 
-The details area of an administrator role editing interface allow to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
+The details area of an administrator role editing interface allows you to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
 
 | Role details  | Instructions   |
 | ------------- | -------------- |
@@ -105,7 +105,7 @@ In the top right corner, you can see a counter indicating how many administrator
 
 #### Configuring role's permissions
 
-The permissions area of an administrator role editing interface allows to configure in detail what actions an administrator can do for any part of the Strapi application.
+The permissions area of an administrator role editing interface allows you to configure in detail what actions an administrator can do for any part of the Strapi application.
 
 It is displayed as a table, split into 4 categories: [Collection types](#collection-and-single-types), [Single types](#collection-and-single-types), [Plugins](#plugins-and-settings) and [Settings](#plugins-and-settings).
 
@@ -134,37 +134,37 @@ The Plugins and Settings categories both display a sub-category per available pl
 
 <TabItem value="plugins" label="Plugins">
 
-By default, packages permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users & Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions feature allowing to manage end users). Each package has its own specific set of permissions.
+By default, packages permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users & Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions feature allowing you to manage end users). Each package has its own specific set of permissions.
 
 | Package name          | Permissions |
 | -------------------- | ----------- |
-| Content-Releases <br /> *(Releases)* | <ul><li>General</li><ul><li>"Read" - gives access to the Releases feature</li><li>"Create" - allows to create releases</li><li>"Edit" - allows to edit releases</li><li>"Delete" - allows to delete releases</li><li>"Publish" - allows to publish releases</li><li>"Remove an entry from a release"</li><li>"Add an entry to a release"</li></ul></ul> |
-| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
+| Content-Releases <br /> *(Releases)* | <ul><li>General</li><ul><li>"Read" - gives access to the Releases feature</li><li>"Create" - allows you to create releases</li><li>"Edit" - allows you to edit releases</li><li>"Delete" - allows you to delete releases</li><li>"Publish" - allows you to publish releases</li><li>"Remove an entry from a release"</li><li>"Add an entry to a release"</li></ul></ul> |
+| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows you to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows you to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows you to configure the layout of a component</li></ul></ul> |
 | Content-Type-Builder | <ul><li>General</li><ul><li>"Read" - gives access to the Content-type Builder plugin in read-only mode</li></ul></ul> |
-| Upload <br /> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li><li>"Configure view" - allows to configure the view of the Media Library</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows to upload media files</li> <li>"Update (crop, details, replace) + delete" - allows to edit uploaded media files</li><li>"Download" - allows to download uploaded media files</li><li>"Copy link" - allows to copy the link of an uploaded media file</li></ul></ul> |
-| Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows to create end-user roles</li><li>"Read" - allows to see created end-user roles</li><li>"Update" - allows to edit end-user roles</li><li>"Delete" - allows to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows to see providers</li><li>"Edit" - allows to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows to access the email templates</li><li>"Edit" - allows to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br />*General > Settings > Users & Permissions plugin* |
+| Upload <br /> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li><li>"Configure view" - allows you to configure the view of the Media Library</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows you to upload media files</li> <li>"Update (crop, details, replace) + delete" - allows you to edit uploaded media files</li><li>"Download" - allows you to download uploaded media files</li><li>"Copy link" - allows you to copy the link of an uploaded media file</li></ul></ul> |
+| Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows you to create end-user roles</li><li>"Read" - allows you to see created end-user roles</li><li>"Update" - allows you to edit end-user roles</li><li>"Delete" - allows you to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows you to see providers</li><li>"Edit" - allows you to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows you to access the email templates</li><li>"Edit" - allows you to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows you to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows you to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br />*General > Settings > Users & Permissions plugin* |
 
 </TabItem>
 
 <TabItem value="settings" label="Settings">
 
-Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel. They also allow to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
+Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel. They also allow you to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
 
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
-| Content Releases | <ul><li>Options</li><ul><li>"Read" - allows to access the Releases settings</li><li>"Edit" - allows to edit the Releases settings</li></ul></ul> 👉 Path reminder to the Releases settings: <br />*General > Settings > Global Settings - Releases* |
+| Content Releases | <ul><li>Options</li><ul><li>"Read" - allows you to access the Releases settings</li><li>"Edit" - allows you to edit the Releases settings</li></ul></ul> 👉 Path reminder to the Releases settings: <br />*General > Settings > Global Settings - Releases* |
 | Email | <ul><li>General</li><ul><li>"Access the Email settings page" - gives access to Email settings</li></ul></ul> 👉 Path reminder to Email settings: <br /> *General > Settings > Users & Permissions plugin - Email templates* |
 | Media Library | <ul><li>General</li><ul><li>"Access the Media Library settings page" - gives access to Media Library settings</li></ul></ul> 👉 Path reminder to Media Library settings: <br /> *General > Settings > Global Settings - Media Library* |
-| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows to create new locales</li><li>"Read" - allows to see available locales</li><li>"Update" - allows to edit available locales</li><li>"Delete" - allows to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
-| Review Workflows | <ul><li>"Create" - allows to create workflows</li><li>"Read" - allows to see created workflows</li><li>"Update" - allows to edit workflows</li><li>"Delete" - allows to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
-| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows to access the SSO settings</li><li>"Update" - allows to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
-| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
+| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows you to create new locales</li><li>"Read" - allows you to see available locales</li><li>"Update" - allows you to edit available locales</li><li>"Delete" - allows you to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
+| Review Workflows | <ul><li>"Create" - allows you to create workflows</li><li>"Read" - allows you to see created workflows</li><li>"Update" - allows you to edit workflows</li><li>"Delete" - allows you to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
+| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows you to access the SSO settings</li><li>"Update" - allows you to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
+| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul> |
-| Webhooks | <ul><li>General</li><ul><li>"Create" - allows to create webhooks</li><li>"Read" - allows to see created webhooks</li><li>"Update" - allows to edit webhooks</li><li>"Delete" - allows to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
-| Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows to create administrator accounts</li><li>"Read" - allows to see existing administrator accounts</li><li>"Update" - allows to edit administrator accounts</li><li>"Delete" - allows to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows to create administrator roles</li><li>"Read" - allows to see created administrator roles</li><li>"Update" - allows to edit administrator roles</li><li>"Delete" - allows to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
+| Webhooks | <ul><li>General</li><ul><li>"Create" - allows you to create webhooks</li><li>"Read" - allows you to see created webhooks</li><li>"Update" - allows you to edit webhooks</li><li>"Delete" - allows you to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
+| Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
 | API Tokens |  <ul><li>API tokens</li><ul><li>"Access the API tokens settings page" - toggles access to the API tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br /> *General > Settings > Global Settings - API Tokens* |
 | Admin Tokens | <ul><li>Admin tokens</li><ul><li>"Access the Admin tokens settings page" - toggles access to the Admin Tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Admin tokens</li><li>"Read" - allows you to see created Admin tokens</li><li>"Update" - allows editing of Admin tokens</li><li>"Delete (revoke)" - allows deletion of Admin tokens</li><li>"Regenerate" - allows regeneration of Admin tokens</li></ul></ul> 👉 Path reminder to Admin Tokens settings: <br /> *General > Settings > Administration Panel - Admin Tokens*  |
-| Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
+| Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows you to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
 | Transfer Tokens | <ul><li>Transfer tokens</li><ul><li>"Access the Transfer tokens settings page" - toggles access to the Transfer tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Transfer tokens</li><li>"Read" - allows you to see created Transfer tokens (disabling this permission will disable access to the *Global Settings - Transfer Tokens* settings)</li><li>"Update" - allows editing of Transfer tokens</li><li>"Delete (revoke)" - allows deletion of Transfer tokens</li> <li> "Regenerate" - allows regeneration of the Transfer token</li></ul></ul> 👉 Path reminder to Transfer Tokens settings: <br /> *General > Settings > Global Settings - Transfer Tokens* |
 
 </TabItem>
@@ -179,7 +179,7 @@ To create admin permissions for your custom plugin, please refer to our [dedicat
 
 #### Setting custom conditions for permissions
 
-For each permission of each category, a <Icon name="gear-six" /> **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission.
+For each permission of each category, a <Icon name="gear-six" /> **Settings** button is displayed. It allows you to push the permission configuration further by defining additional conditions for the administrators to be granted the permission.
 
 There are 2 default additional conditions:
 - the administrator must be the creator,

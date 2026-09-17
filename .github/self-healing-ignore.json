@@ -1266,6 +1266,36 @@
       "added": "2026-09-11"
     },
     {
+      "number": 27583,
+      "reason": "Triage: Internal release process and CI/CD tooling hardening",
+      "added": "2026-09-16"
+    },
+    {
+      "number": 27679,
+      "reason": "Triage: release merge-back is an internal operation",
+      "added": "2026-09-17"
+    },
+    {
+      "number": 27380,
+      "reason": "Triage: TypeScript type definition fix without runtime behavior change",
+      "added": "2026-09-17"
+    },
+    {
+      "number": 27592,
+      "reason": "Router: Internal plugin fix for documentation plugin's Swagger schema generation. The fix ensures relations are correctly expanded in generated schemas. This is a code fix that improves documentation generation quality but does not require user-facing documentation updates.",
+      "added": "2026-09-17"
+    },
+    {
+      "number": 27525,
+      "reason": "Router: Client-side fix that gates AI endpoint requests on availability. This prevents 404s when AI is disabled. It's a performance/security fix that does not change user-facing behavior or require documentation updates.",
+      "added": "2026-09-17"
+    },
+    {
+      "number": 27462,
+      "reason": "Router: Internal GraphQL plugin bug fix. This resolves a bug where custom resolvers returning Document Service results were incorrectly filtering out draft-and-publish relations. The fix modifies how the plugin identifies built-in query fields, not any public API or developer-facing behavior. No documentation updates needed.",
+      "added": "2026-09-17"
+    },
+    {
       "number": 27626,
       "reason": "Triage: internal build tooling/CI fix",
       "added": "2026-09-15"

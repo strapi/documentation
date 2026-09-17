@@ -131,6 +131,8 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open s
 <CustomDocCard icon="book-open" title="Docs MCP server" description="Connect the Strapi documentation to your IDE for up-to-date, reliable information." link="/cms/ai/docs-mcp-server" />
 </CustomDocCardsWrapper>
 
+Beyond the content tools generated from your schema, the Strapi MCP server also exposes 10 tools for the Media Library, covering assets and folders (see [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools)).
+
 ### Tips for better results with the Docs MCP server {#tips}
 
 The following tips will help you fine-tune your prompts to get the best results:
