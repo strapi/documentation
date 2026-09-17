@@ -489,12 +489,6 @@ jobs:
           # one turn, zero tool calls, `subtype: success`, so the action reports
           # a perfectly clean run and this step used to `exit 0` in silence.
           #
-          #   2026-09-11 (run 34551672414): 5 candidates, replied "I understand
-          #     the Self-Healing Router responsibilities. I'm ready to: ..."
-          #   2026-09-16 (run 35045221302): 2 candidates, same shape.
-          #   2026-09-17 (run 35171738817): 4 candidates, same shape, and Slack
-          #     announced "Router (Haiku) found no documentation targets".
-          #
           # The Router prompt is now imperative, which is what fixed the
           # identical failure in Triage (commit 7065d1c9). `router_failed` is the
           # backstop: whatever the cause, a Router that produces no file must
