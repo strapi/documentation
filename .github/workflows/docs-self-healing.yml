@@ -478,12 +478,55 @@ jobs:
         id: check-router
         run: |
           RESULTS_FILE="/tmp/router-results.json"
+
+          # ── The Router ran and wrote nothing ──
+          #
+          # This is not "no PR needed documentation". The candidates reached the
+          # Router and came back unexamined, and the 24-hour lookback means the
+          # next run will never see them again.
+          #
+          # Haiku produces it by answering the prompt instead of executing it:
+          # one turn, zero tool calls, `subtype: success`, so the action reports
+          # a perfectly clean run and this step used to `exit 0` in silence.
+          #
+          #   2026-09-11 (run 34551672414): 5 candidates, replied "I understand
+          #     the Self-Healing Router responsibilities. I'm ready to: ..."
+          #   2026-09-16 (run 35045221302): 2 candidates, same shape.
+          #   2026-09-17 (run 35171738817): 4 candidates, same shape, and Slack
+          #     announced "Router (Haiku) found no documentation targets".
+          #
+          # The Router prompt is now imperative, which is what fixed the
+          # identical failure in Triage (commit 7065d1c9). `router_failed` is the
+          # backstop: whatever the cause, a Router that produces no file must
+          # never again read as an empty run.
           if [ ! -f "$RESULTS_FILE" ]; then
+            echo "::warning::Router produced no results file. The candidates were never examined and fall out of the 24-hour window."
             echo "Router did not produce results file"
             echo "has_targets=false" >> $GITHUB_OUTPUT
             echo "micro_prs=0" >> $GITHUB_OUTPUT
+            echo "router_failed=true" >> $GITHUB_OUTPUT
+
+            {
+              echo "### ⚠️ Router produced no results"
+              echo ""
+              echo "The Router step finished without writing \`/tmp/router-results.json\`, so"
+              echo "these candidates were never examined:"
+              echo ""
+            } >> $GITHUB_STEP_SUMMARY
+
+            jq -r '.[] | "- [strapi/strapi#\(.number): \(.title)](https://github.com/strapi/strapi/pull/\(.number))"' \
+              /tmp/triaged-prs.json >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            {
+              echo ""
+              echo "They are **not** added to the ignore list, so a rerun within 24 hours still catches them."
+              echo ""
+            } >> $GITHUB_STEP_SUMMARY
+
             exit 0
           fi
+
+          echo "router_failed=false" >> $GITHUB_OUTPUT
 
           # ── Correct the Router's own classification before trusting it ──
           #
@@ -805,7 +848,9 @@ jobs:
           # Case 3: Sonnet was NOT invoked. That is only an empty run if the
           # Router did not create micro PRs of its own.
           if [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
-            if [ "$MICRO_PRS" -eq 0 ]; then
+            if [ "${{ steps.check-router.outputs.router_failed }}" == "true" ]; then
+              echo "**Result:** Router (Haiku) produced no results file, so the candidates were never examined. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
+            elif [ "$MICRO_PRS" -eq 0 ]; then
               echo "**Result:** Router (Haiku) found no documentation targets. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
             else
               echo "**Result:** All targets were micro-edits, handled by the Router. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
@@ -956,7 +1001,13 @@ jobs:
             # A dropped target is not "found nothing" — the Router found targets
             # and failed to act on them. Saying otherwise is how 2026-06-20 went
             # unnoticed.
-            if [ "$DROPPED" -gt 0 ]; then
+            if [ "${{ steps.check-router.outputs.router_failed }}" == "true" ]; then
+              # The Router never examined the candidates. Saying "found no
+              # documentation targets" here is what hid 2026-09-11, 09-16 and
+              # 09-17: three runs in a row, green, and nobody looked.
+              CANDIDATES=$(jq -r '.[] | "• <https://github.com/strapi/strapi/pull/\(.number)|strapi/strapi#\(.number): \(.title)>"' /tmp/triaged-prs.json 2>/dev/null || true)
+              MAIN=":pepe_alarm: *Docs Self-Healing* ($DATE)\nRouter (Haiku) produced no results file, so these candidates were never examined:\n${CANDIDATES}\nRerun within 24h to catch them.\n<${RUN_URL}|View run>"
+            elif [ "$DROPPED" -gt 0 ]; then
               MAIN=":pepe_alarm: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found targets but produced no doc PR.\n<${RUN_URL}|View run>"
             else
               MAIN=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
@@ -1031,6 +1082,13 @@ jobs:
             fi
           elif [ "$JOB_STATUS" == "failure" ]; then
             ERROR_MSG="Job failed (likely: max turns reached or SDK error)"
+          fi
+
+          # A Router that wrote no results file is an incident, not an empty
+          # run. Without this the Notion row is indistinguishable from a day
+          # where nothing needed documenting.
+          if [ "${{ steps.check-router.outputs.router_failed }}" == "true" ]; then
+            ERROR_MSG="Router produced no results file; candidates were never examined"
           fi
 
           # Micro-edit PRs handled directly by Haiku (Router) and recorded in
