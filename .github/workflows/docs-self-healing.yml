@@ -804,6 +804,13 @@ jobs:
         if: steps.check-router.outputs.has_targets == 'true'
         id: load-drafter-prompt
         run: |
+          # Seed the summary here rather than trusting the Drafter to create it.
+          # The prompt appends one entry per PR as it goes, so a run that dies
+          # on its turn cap still reports what it delivered. Writing the file
+          # only at the end is what made 2026-09-17 report zero doc PRs while
+          # PR #3495 was open.
+          echo '{"processed": [], "errors": []}' > /tmp/self-healing-summary.json
+
           echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
           cat .github/prompts/docs-self-healing-drafter.md >> $GITHUB_OUTPUT
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
@@ -815,12 +822,58 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-drafter-prompt.outputs.prompt }}
-          claude_args: '--model claude-sonnet-5 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          # 150, not 50. On 2026-09-17 the Drafter spent all 50 turns on the
+          # first of three routed PRs and died seven seconds after opening it.
+          # The Router allows up to 5 PRs per run, so the cap has to clear that
+          # maximum with room, not the single PR 50 turns actually bought.
+          claude_args: '--model claude-sonnet-5 --max-turns 150 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           ROUTER_RESULTS: ${{ steps.check-router.outputs.router_results }}
+
+      # Runs even when the Drafter failed, which is the whole point: a turn cap
+      # leaves some PRs drafted and some not, and the natural response is to
+      # rerun. Without this, that rerun re-routes the PRs already handled and
+      # opens a second doc PR for each. Sending them to the ignore list here is
+      # the same move the pre-Drafter step makes for `skip` decisions: the work
+      # is done, a second look can only duplicate it.
+      - name: Record drafted PRs in the ignore list
+        if: always() && steps.check-router.outputs.has_targets == 'true' && inputs.dry_run != true
+        run: |
+          IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
+          SUMMARY_FILE="/tmp/self-healing-summary.json"
+          TODAY=$(date -u '+%Y-%m-%d')
+          ADDED=0
+
+          if [ ! -f "$SUMMARY_FILE" ]; then
+            echo "No summary file, nothing to record"
+            exit 0
+          fi
+
+          while IFS= read -r ROW; do
+            NUM=$(echo "$ROW" | jq -r '.number')
+            TITLE=$(echo "$ROW" | jq -r '.title')
+            DOC_PR=$(echo "$ROW" | jq -r '.doc_pr')
+            if jq -e --argjson n "$NUM" '.ignored_prs | map(.number) | index($n)' "$IGNORE_FILE" > /dev/null 2>&1; then
+              continue
+            fi
+            jq --argjson n "$NUM" --arg r "Drafted: $DOC_PR" --arg d "$TODAY" \
+              '.ignored_prs += [{"number": $n, "reason": $r, "added": $d}]' \
+              "$IGNORE_FILE" > /tmp/ignore-drafted.json && mv /tmp/ignore-drafted.json "$IGNORE_FILE"
+            echo "Added #$NUM ($TITLE) to ignore list (doc PR drafted: $DOC_PR)"
+            ADDED=$((ADDED + 1))
+          done < <(jq -c '.processed[] | select((.doc_pr // "") != "")' "$SUMMARY_FILE")
+
+          if [ "$ADDED" -gt 0 ]; then
+            echo "Recorded $ADDED drafted PRs, a rerun will not redraft them"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .github/self-healing-ignore.json
+            git commit -m "Auto-ignore $ADDED PRs already drafted by self-healing"
+            git push
+          fi
 
       - name: Summary
         if: always() && inputs.audit_only != true
@@ -998,6 +1051,14 @@ jobs:
           # Build the main message (short summary)
           if [ "$JOB_STATUS" == "failure" ]; then
             MAIN=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
+
+            # A failed run is not an empty one. The Drafter opens each PR before
+            # it can hit its turn cap, so the work already delivered has to be
+            # named here or it is invisible: on 2026-09-17 Slack announced a
+            # bare FAILED while PR #3495 had just been created.
+            if [ "$TOTAL_PRS" -gt 0 ]; then
+              MAIN="${MAIN}\n\n:white_check_mark: *Delivered before the failure (${TOTAL_PRS}):*\n${PR_LIST}"
+            fi
           elif [ "$TOTAL_PRS" -gt 0 ]; then
             # Any run that produced a doc PR reports it, whichever model opened it.
             MAIN=":noted: *Docs Self-Healing* ($DATE)\n*${TOTAL_PRS} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
