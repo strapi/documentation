@@ -1294,6 +1294,16 @@
       "number": 27462,
       "reason": "Router: Internal GraphQL plugin bug fix. This resolves a bug where custom resolvers returning Document Service results were incorrectly filtering out draft-and-publish relations. The fix modifies how the plugin identifies built-in query fields, not any public API or developer-facing behavior. No documentation updates needed.",
       "added": "2026-09-17"
+    },
+    {
+      "number": 27626,
+      "reason": "Triage: internal build tooling/CI fix",
+      "added": "2026-09-15"
+    },
+    {
+      "number": 27594,
+      "reason": "Triage: internal implementation fix for MCP tools",
+      "added": "2026-09-15"
     }
   ]
 }

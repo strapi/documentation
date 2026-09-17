@@ -290,8 +290,10 @@ jobs:
           # back empty, and the removal branch below can never be reached — a PR
           # that stopped being eligible would keep its label and still merge.
           # Listing the names and matching with grep sidesteps the limitation.
-          if gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels \
-            --jq '.labels[].name' | grep -Fxq "$ELIGIBLE_LABEL"; then
+          LABELS=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels --jq '.labels[].name') \
+            || { echo "::error title=Cannot read the labels of #$PR::the current label state is unknown, so it is left untouched"; exit 1; }
+
+          if echo "$LABELS" | grep -Fxq "$ELIGIBLE_LABEL"; then
             HAS_LABEL=true
           else
             HAS_LABEL=false
@@ -303,13 +305,15 @@ jobs:
           # demands the read:org scope, which PAT_TOKEN_PIWI does not carry.
           if [ "$ELIGIBLE" = "true" ] && [ "$HAS_LABEL" != "true" ]; then
             gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR/labels" \
-              -f "labels[]=$ELIGIBLE_LABEL" --silent
+              -f "labels[]=$ELIGIBLE_LABEL" --silent \
+              || { echo "::error title=Cannot label #$PR::the merge cron will never pick it up"; exit 1; }
             echo "Added '$ELIGIBLE_LABEL'"
             echo "- Label **added**: \`$ELIGIBLE_LABEL\`" >> "$GITHUB_STEP_SUMMARY"
             echo "newly_eligible=true" >> "$GITHUB_OUTPUT"
 
           elif [ "$ELIGIBLE" != "true" ] && [ "$HAS_LABEL" = "true" ]; then
-            gh api --method DELETE "repos/$GITHUB_REPOSITORY/issues/$PR/labels/$ENCODED" --silent
+            gh api --method DELETE "repos/$GITHUB_REPOSITORY/issues/$PR/labels/$ENCODED" --silent \
+              || { echo "::error title=Cannot unlabel #$PR::it is no longer eligible but still carries the label"; exit 1; }
             echo "Removed '$ELIGIBLE_LABEL'"
             echo "- Label **removed**: \`$ELIGIBLE_LABEL\` (the PR is no longer eligible)" >> "$GITHUB_STEP_SUMMARY"
             echo "newly_eligible=false" >> "$GITHUB_OUTPUT"

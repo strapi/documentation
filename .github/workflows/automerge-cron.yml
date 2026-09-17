@@ -126,11 +126,13 @@ jobs:
           # results merged on PR number.
           gh pr list --repo "$GITHUB_REPOSITORY" \
             --state open --label "$ELIGIBLE_LABEL" --limit 100 \
-            --json number,title,url,createdAt,isDraft > /tmp/by-label.json
+            --json number,title,url,createdAt,isDraft > /tmp/by-label.json \
+            || { echo "::error title=Cannot list the eligible PRs::gh failed, so this run proves nothing about what was merge-ready"; exit 1; }
 
           gh pr list --repo "$GITHUB_REPOSITORY" \
             --state open --label "$APPROVED_LABEL" --limit 100 \
-            --json number,title,url,createdAt,isDraft > /tmp/by-approval.json
+            --json number,title,url,createdAt,isDraft > /tmp/by-approval.json \
+            || { echo "::error title=Cannot list the approved PRs::gh failed, so this run proves nothing about what was merge-ready"; exit 1; }
 
           jq -s 'add | unique_by(.number)' /tmp/by-label.json /tmp/by-approval.json \
             > /tmp/eligible.json

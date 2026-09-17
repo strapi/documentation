@@ -472,7 +472,8 @@ jobs:
       # the deny-list below.
       - name: Run triage and act (Sonnet)
         if: steps.process-issue.outputs.kapa_succeeded == 'true'
-        uses: anthropics/claude-code-action@v1
+        # Pinned deliberately. Do not move back to @v1.
+        uses: anthropics/claude-code-action@0a8d3c9443bbff909ab973b6a17a340b913f229f # v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
