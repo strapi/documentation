@@ -1,0 +1,110 @@
+/** General (page-agnostic) feedback entry point, used on the home page. */
+@use '../../scss/_mixins.scss' as *;
+
+.generalFeedback {
+  // Sits after the last home page section, inside the same content column.
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.generalFeedback__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--strapi-fg-4);
+  font-family: var(--strapi-font-family-body);
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  span {
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &:hover {
+    color: var(--strapi-accent, #4945FF);
+
+    span {
+      text-decoration: underline;
+      text-decoration-color: currentColor;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--strapi-accent, #4945FF);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  i {
+    font-size: 18px;
+  }
+}
+
+.generalFeedback__card {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  border: 1px solid var(--strapi-border-strong);
+  border-radius: var(--strapi-radius-lg);
+  background: transparent;
+  box-shadow: var(--strapi-shadow-xs);
+  text-align: left;
+}
+
+.generalFeedback__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--strapi-fg-4);
+
+  i {
+    font-size: 18px;
+    color: var(--ifm-color-success, #00a854);
+  }
+}
+
+.generalFeedback__error {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--ifm-color-danger);
+}
+
+.generalFeedback__retryButton {
+  padding: 4px 12px;
+  border: 1px solid var(--ifm-color-danger);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ifm-color-danger);
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--ifm-color-danger);
+    color: #fff;
+  }
+}
+
+@media (max-width: 768px) {
+  .generalFeedback {
+    padding: 0 20px;
+  }
+
+  .generalFeedback__card {
+    padding: 20px;
+  }
+}
