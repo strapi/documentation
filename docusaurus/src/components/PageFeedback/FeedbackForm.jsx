@@ -8,13 +8,16 @@ export default function FeedbackForm({
   onCancel,
   isSubmitting,
   required,
+  label,
+  placeholder,
+  minLength = MIN_COMMENT_LENGTH,
 }) {
   const [comment, setComment] = useState('');
 
   const trimmed = comment.trim();
   const isTooLong = trimmed.length > MAX_COMMENT_LENGTH;
   const canSubmit = required
-    ? trimmed.length >= MIN_COMMENT_LENGTH && !isTooLong && !isSubmitting
+    ? trimmed.length >= minLength && !isTooLong && !isSubmitting
     : !isTooLong && !isSubmitting;
 
   function handleSubmit(e) {
@@ -24,21 +27,23 @@ export default function FeedbackForm({
     onSubmit(trimmed || null, hp);
   }
 
+  const resolvedLabel =
+    label ?? (required ? 'Please tell us more' : 'Want to add a comment? (optional)');
+  const resolvedPlaceholder =
+    placeholder ??
+    (required ? 'What was missing or confusing?' : 'What did you find helpful?');
+
   return (
     <form onSubmit={handleSubmit} className="pageFeedback__form">
       <label htmlFor="feedback-comment" className="pageFeedback__formLabel">
-        {required ? 'Please tell us more' : 'Want to add a comment? (optional)'}
+        {resolvedLabel}
       </label>
       <textarea
         id="feedback-comment"
         className="pageFeedback__textarea"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder={
-          required
-            ? 'What was missing or confusing?'
-            : 'What did you find helpful?'
-        }
+        placeholder={resolvedPlaceholder}
         rows={3}
         maxLength={MAX_COMMENT_LENGTH}
         disabled={isSubmitting}
@@ -55,8 +60,8 @@ export default function FeedbackForm({
       />
       <div className="pageFeedback__formActions">
         <span className="pageFeedback__charCount">
-          {required && trimmed.length < MIN_COMMENT_LENGTH
-            ? `At least ${MIN_COMMENT_LENGTH - trimmed.length} more character${MIN_COMMENT_LENGTH - trimmed.length === 1 ? '' : 's'}`
+          {required && trimmed.length < minLength
+            ? `At least ${minLength - trimmed.length} more character${minLength - trimmed.length === 1 ? '' : 's'}`
             : `${trimmed.length} / ${MAX_COMMENT_LENGTH}`}
         </span>
         <div className="pageFeedback__formButtons">
