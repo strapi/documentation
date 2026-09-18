@@ -47,6 +47,8 @@ The content-types use the following files:
 
 These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/cms/project-structure)).
 
+How content-types are stored does not depend on how they are displayed in the admin panel. Content-types can be grouped into folders, and these folders are described in a separate [content structure file](/cms/features/content-type-builder#code-based-configuration).
+
 :::note
 In [TypeScript](/cms/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command.
 :::
