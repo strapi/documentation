@@ -1294,6 +1294,11 @@
       "number": 27462,
       "reason": "Router: Internal GraphQL plugin bug fix. This resolves a bug where custom resolvers returning Document Service results were incorrectly filtering out draft-and-publish relations. The fix modifies how the plugin identifies built-in query fields, not any public API or developer-facing behavior. No documentation updates needed.",
       "added": "2026-09-17"
+    },
+    {
+      "number": 27687,
+      "reason": "Router: Bug fix for internal permission gating. The Media Library feature itself remains unchanged and is already documented. The fix makes the system work as originally intended (removing incorrect 403 errors for Editor/Author roles), but this is a bug fix with no new user-facing features, API changes, or configuration changes to document.",
+      "added": "2026-09-18"
     }
   ]
 }
