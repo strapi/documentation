@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import styles from './home.module.scss';
 import { HomepageAIButton } from '../../components';
 import ApiExplorer from '../../components/ApiExplorer/ApiExplorer';
+import GeneralFeedback from '../../components/GeneralFeedback';
 import content from './_home.content';
 
 /**
@@ -370,6 +371,11 @@ export default function PageHome() {
               </div>
             </a>
           </section>
+        </Reveal>
+
+        {/* ═══ 7. GENERAL FEEDBACK ═══ */}
+        <Reveal>
+          <GeneralFeedback />
         </Reveal>
       </main>
     </Layout>
