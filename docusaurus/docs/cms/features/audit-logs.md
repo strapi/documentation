@@ -101,6 +101,7 @@ The Audit Logs feature logs the following events:
 | Release settings | `update` |
 | Role / Permission | `create`, `update`, `delete` |
 | User | `create`, `update`, `delete` |
+| Token <VersionBadge version="5.54.0+" noTooltip /> | `create`, `update`, `delete`, `regenerate` |
 
 For each log item, the following information is displayed:
 
@@ -108,6 +109,8 @@ For each log item, the following information is displayed:
 - Date: date and time of the action.
 - User: user who performed the action.
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
+
+Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
 
 With Strapi <VersionBadge version="5.52.0+" noTooltip />  logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
 
