@@ -4940,7 +4940,6 @@ Update a document by documentId. If no locale parameter is passed, update() upda
 **Parameters:**
 - `documentId` (ID, required): Document id
 - `locale` (String or null): Locale of the document to update. Defaults to the default locale. See locale docs (/cms/api/document-service/locale#update).
-- `filters` (Object): Filters (/cms/api/document-service/filters) to use. Default: `null`.
 - `fields` (Object): Select fields (/cms/api/document-service/fields#update) to return. Defaults to all fields (except those not populated by default).
 - `status` (): If Draft & Publish (/cms/features/draft-and-publish) is enabled: can be set to `published` to automatically publish the draft version of a document while updating it. See status docs (/cms/api/document-service/status#update).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
@@ -4975,7 +4974,7 @@ It's not recommended to update repeatable components by reusing published compon
 
 ### `delete()`
 
-Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 #### GET strapi.documents().delete() — delete()
 
@@ -5010,7 +5009,7 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 ### `publish()`
 
-Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 #### GET strapi.documents().publish() — publish()
 
@@ -5019,7 +5018,6 @@ Publish the draft version of a document. This method is only available if Draft 
 **Parameters:**
 - `documentId` (ID, required): Document id
 - `locale` (String, ): Locale of the documents to publish. Default: only the default locale. See locale docs (/cms/api/document-service/locale#publish).
-- `filters` (Object): Filters (/cms/api/document-service/filters) to use. Default: `null`.
 - `fields` (Object): Select fields (/cms/api/document-service/fields#publish) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
@@ -5045,7 +5043,7 @@ await strapi.documents('api::restaurant.restaurant').publish({
 
 ### `unpublish()`
 
-Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 #### GET strapi.documents().unpublish() — unpublish()
 
@@ -5080,7 +5078,7 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 ### `discardDraft()`
 
-Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 #### GET strapi.documents().discardDraft() — discardDraft()
 
@@ -5089,7 +5087,6 @@ Drop draft data and keep only the published version. This method is only availab
 **Parameters:**
 - `documentId` (ID, required): Document id
 - `locale` (String, ): Locale of the documents to discard. Default: only the default locale. See locale docs (/cms/api/document-service/locale#discard-draft).
-- `filters` (Object): Filters (/cms/api/document-service/filters) to use. Default: `null`.
 - `fields` (Object): Select fields (/cms/api/document-service/fields#discarddraft) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
@@ -25284,7 +25281,7 @@ module.exports = {
     });
   },
   bootstrap({ strapi }) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       strapi
         .documents('api::category.category')
         .findMany({ filters: { slug: 'general' }, pageSize: 1 })
@@ -25305,7 +25302,7 @@ module.exports = {
     });
   },
   destroy({ strapi }) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       strapi
         .documents('api::temporary-cache.temporary-cache')
         .findMany({ fields: ['documentId'] })
@@ -25501,9 +25498,11 @@ let cronJobKey: string | undefined;
 
     strapi.cron.add({
       [cronJobKey]: {
-        rule: '0 */6 * * *', // every 6 hours
-        job: async () => {
+        task: async ({ strapi }) => {
           strapi.log.info('Remember to review new content in the admin panel.');
+        },
+        options: {
+          rule: '0 */6 * * *', // every 6 hours
         },
       },
     });
