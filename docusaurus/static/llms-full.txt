@@ -26477,8 +26477,8 @@ baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_B
 
 :::
 
-:::caution Deprecated root-level credential format
-Older Strapi guides and blog posts show `accessKeyId` and `secretAccessKey` placed directly in `s3Options`. This root-level format still works but triggers a deprecation warning. Pass credentials inside a `credentials` object instead (as shown in the examples above).
+:::note Migrating S3 credentials from older Strapi versions
+The location of the S3 credentials has changed across Strapi versions: options must be nested under `s3Options`, and credentials should be wrapped in a `credentials` object (placing them at the root of `s3Options` still works but is deprecated). See [Amazon S3 provider credentials must be set under `s3Options`](/cms/migration/v4-to-v5/breaking-changes/amazon-s3-provider-credentials) for the full migration.
 :::
 
 :::info AWS credential provider functions
@@ -42950,6 +42950,7 @@ You can click on the description of any breaking change in the following tables 
 | [The `helper-plugin` is removed](/cms/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) | Yes | 👷 Partly |
 | [`injectContentManagerComponent()` is removed in favor of `getPlugin('content-manager').injectComponent()`](/cms/migration/v4-to-v5/breaking-changes/inject-content-manager-component) | Yes | No |
 | [Some Mailgun provider legacy variables are not supported](/cms/migration/v4-to-v5/breaking-changes/mailgun-provider-variables) | Yes | No |
+| [Amazon S3 provider credentials must be set under `s3Options`](/cms/migration/v4-to-v5/breaking-changes/amazon-s3-provider-credentials) | Yes | No |
 | [The `lockIcon` property has been replaced by `licenseOnly`](/cms/migration/v4-to-v5/breaking-changes/license-only) | Yes | No |
 | [The `ContentManagerAppState` redux is modified](/cms/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state) | Yes | No |
 | [The `EditViewLayout` and `ListViewLayout` have been refactored](/cms/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten) | Yes | No |
@@ -43038,6 +43039,73 @@ This section regroups useful notes and procedures about the introduced breaking 
 ### Manual migration
 
 Plugin developers that are hooking into the redux store to tweak RBAC permissions in Strapi v4 need to update their code according to the described changes.
+
+
+
+# Amazon S3 provider credentials must be set under s3Options
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/amazon-s3-provider-credentials
+
+# Amazon S3 provider credentials must be set under `s3Options`
+
+In Strapi 5, the Amazon S3 upload provider options must be nested under an `s3Options` object, and credentials should be passed inside a `credentials` object.
+
+In Strapi 5, the Amazon S3 provider (`@strapi/provider-upload-aws-s3`) uses AWS SDK v3, which changes where credentials and other client options are configured.
+
+This page is part of the [breaking changes database](/cms/migration/v4-to-v5/breaking-changes) and provides information about the breaking change and additional instructions to migrate from Strapi v4 to Strapi 5.
+
+- Is this breaking change affecting plugins? Yes
+- Is this breaking change automatically handled by a codemod? No
+
+## Breaking change description
+
+**In Strapi v4**
+
+Options such as `accessKeyId`, `secretAccessKey`, `region` and `params` could be passed directly under `providerOptions`, with no `s3Options` key.
+
+```js
+providerOptions: {
+  accessKeyId: env('AWS_ACCESS_KEY_ID'),
+  secretAccessKey: env('AWS_ACCESS_SECRET'),
+  region: env('AWS_REGION'),
+  params: {
+    Bucket: env('AWS_BUCKET'),
+  },
+},
+```
+
+**In Strapi 5**
+
+Those options must be nested inside an `s3Options` object, and credentials should be wrapped in a `credentials` object. Placing `accessKeyId`/`secretAccessKey` at the root of `s3Options` still works but triggers a deprecation warning.
+
+```js
+providerOptions: {
+  s3Options: {
+    credentials: {
+      accessKeyId: env('AWS_ACCESS_KEY_ID'),
+      secretAccessKey: env('AWS_ACCESS_SECRET'),
+    },
+    region: env('AWS_REGION'),
+    params: {
+      Bucket: env('AWS_BUCKET'),
+    },
+  },
+},
+```
+
+## Migration
+
+This section regroups useful notes and procedures about the introduced breaking change.
+
+### Notes
+
+- See the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) configuration documentation for complete examples.
+
+### Manual procedure
+
+If you are upgrading an Amazon S3 configuration from Strapi v4:
+
+1. Nest `accessKeyId`, `secretAccessKey`, `region`, `params` (and any other S3 client options) inside an `s3Options` object under `providerOptions`.
+2. Move `accessKeyId` and `secretAccessKey` into a `credentials` object within `s3Options`. Leaving them at the root of `s3Options` still works but is deprecated and triggers a warning.
 
 
 

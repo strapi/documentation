@@ -31335,6 +31335,47 @@ const canMain = allowedActions.canMain
 
 
 
+# Amazon S3 provider credentials must be set under s3Options
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/amazon-s3-provider-credentials
+
+## Breaking change description
+Description: Options such as accessKeyId, secretAccessKey, region and params could be passed directly under providerOptions, with no s3Options key.
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/amazon-s3-provider-credentials#breaking-change-description)
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerOptions: {
+  accessKeyId: env('AWS_ACCESS_KEY_ID'),
+  secretAccessKey: env('AWS_ACCESS_SECRET'),
+  region: env('AWS_REGION'),
+  params: {
+    Bucket: env('AWS_BUCKET'),
+  },
+},
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerOptions: {
+  s3Options: {
+    credentials: {
+      accessKeyId: env('AWS_ACCESS_KEY_ID'),
+      secretAccessKey: env('AWS_ACCESS_SECRET'),
+    },
+    region: env('AWS_REGION'),
+    params: {
+      Bucket: env('AWS_BUCKET'),
+    },
+  },
+},
+```
+
+
+
 # Components and dynamic zones do not return an id
 Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id
 
