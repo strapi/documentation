@@ -375,7 +375,6 @@ Syntax: `update(parameters: Params) => Promise<Document>`
   params={[
     { name: 'documentId', type: 'ID', required: true, description: 'Document id' },
     { name: 'locale', type: 'String or null', required: false, description: 'Locale of the document to update. Defaults to the default locale. <a href="/cms/api/document-service/locale#update">See locale docs</a>.' },
-    { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#update">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'status', type: "'published'", required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: can be set to <code>published</code> to automatically publish the draft version of a document while updating it. <a href="/cms/api/document-service/status#update">See status docs</a>.' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
@@ -426,7 +425,7 @@ It's not recommended to update repeatable components by reusing published compon
 
 ### `delete()`
 
-Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
@@ -479,7 +478,7 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 ### `publish()`
 
-Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
@@ -490,7 +489,6 @@ Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number 
   params={[
     { name: 'documentId', type: 'ID', required: true, description: 'Document id' },
     { name: 'locale', type: "String, '*', or null", required: false, description: 'Locale of the documents to publish. Default: only the default locale. <a href="/cms/api/document-service/locale#publish">See locale docs</a>.' },
-    { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#publish">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
@@ -532,7 +530,7 @@ await strapi.documents('api::restaurant.restaurant').publish({
 
 ### `unpublish()`
 
-Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
@@ -585,7 +583,7 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 ### `discardDraft()`
 
-Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
@@ -596,7 +594,6 @@ Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Nu
   params={[
     { name: 'documentId', type: 'ID', required: true, description: 'Document id' },
     { name: 'locale', type: "String, '*', or null", required: false, description: 'Locale of the documents to discard. Default: only the default locale. <a href="/cms/api/document-service/locale#discard-draft">See locale docs</a>.' },
-    { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#discarddraft">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
