@@ -2,15 +2,15 @@ import React from 'react';
 
 function buildGitHubIssueUrl({ pagePath, pageTitle, comment, selectionText }) {
   const title = `[Doc feedback] ${pageTitle}`;
+  const quotedSelection = selectionText
+    ? selectionText.split('\n').map((line) => `> ${line}`).join('\n')
+    : null;
   const body = [
     `**Page:** [${pageTitle}](https://docs.strapi.io${pagePath})`,
-    selectionText ? `\n**Selected text:**\n> ${selectionText}` : null,
-    '',
-    '**Feedback:**',
-    comment,
-    '',
+    quotedSelection ? `**Selected text:**\n${quotedSelection}` : null,
+    `**Feedback:**\n${comment}`,
     '<!-- This issue was opened from the docs feedback widget -->',
-  ].filter(Boolean).join('\n');
+  ].filter(Boolean).join('\n\n');
 
   const params = new URLSearchParams({
     template: 'doc-feedback.yml',
