@@ -426,7 +426,7 @@ It's not recommended to update repeatable components by reusing published compon
 
 ### `delete()`
 
-Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
@@ -479,7 +479,7 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 ### `publish()`
 
-Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
@@ -532,7 +532,7 @@ await strapi.documents('api::restaurant.restaurant').publish({
 
 ### `unpublish()`
 
-Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
@@ -585,7 +585,7 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 ### `discardDraft()`
 
-Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Document[] }>`
 
 <Endpoint
   kind="js"
