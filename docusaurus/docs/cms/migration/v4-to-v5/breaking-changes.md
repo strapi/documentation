@@ -83,6 +83,7 @@ You can click on the description of any breaking change in the following tables 
 | [The `helper-plugin` is removed](/cms/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) | Yes | 👷 Partly |
 | [`injectContentManagerComponent()` is removed in favor of `getPlugin('content-manager').injectComponent()`](/cms/migration/v4-to-v5/breaking-changes/inject-content-manager-component) | Yes | No |
 | [Some Mailgun provider legacy variables are not supported](/cms/migration/v4-to-v5/breaking-changes/mailgun-provider-variables) | Yes | No |
+| [Amazon S3 provider credentials must be set under `s3Options`](/cms/migration/v4-to-v5/breaking-changes/amazon-s3-provider-credentials) | Yes | No |
 | [The `lockIcon` property has been replaced by `licenseOnly`](/cms/migration/v4-to-v5/breaking-changes/license-only) | Yes | No |
 | [The `ContentManagerAppState` redux is modified](/cms/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state) | Yes | No |
 | [The `EditViewLayout` and `ListViewLayout` have been refactored](/cms/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten) | Yes | No |
