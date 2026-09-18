@@ -492,9 +492,11 @@ export default {
 
     strapi.cron.add({
       [cronJobKey]: {
-        rule: '0 */6 * * *', // every 6 hours
-        job: async () => {
+        task: async ({ strapi }) => {
           strapi.log.info('Remember to review new content in the admin panel.');
+        },
+        options: {
+          rule: '0 */6 * * *', // every 6 hours
         },
       },
     });
