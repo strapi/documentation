@@ -293,7 +293,7 @@ export default [
 
 This security middleware is about cross-origin resource sharing (CORS) and is based on <ExternalLink to="https://github.com/koajs/cors" text="@koa/cors"/>. It accepts the following options:
 
-| Option              | Type                                                      | Description          | Default value                                              |
+| Option              | Description                                                | Type                 | Default value                                              |
 |---------------------|-----------------------------------------------------------|----------------------|------------------------------------------------------------|
 | `origin`            | Configure the `Access-Control-Allow-Origin` header        | `String` or `Array` or `Function`  | `'*'`                                                      |
 | `maxAge`            | Configure the `Access-Control-Max-Age` header, in seconds | `String` or `Number` | `31536000`                                                 |
