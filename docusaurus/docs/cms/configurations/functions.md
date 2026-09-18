@@ -233,7 +233,7 @@ export default {
     });
   },
   bootstrap({ strapi }) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       strapi
         .documents('api::category.category')
         .findMany({ filters: { slug: 'general' }, pageSize: 1 })
@@ -254,7 +254,7 @@ export default {
     });
   },
   destroy({ strapi }) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       strapi
         .documents('api::temporary-cache.temporary-cache')
         .findMany({ fields: ['documentId'] })
