@@ -100,18 +100,24 @@ module.exports = {
     strapi.log.info('Async register finished after a short delay');
   },
   async bootstrap({ strapi }) {
-    const { results: articles } = await strapi
+    const articles = await strapi
       .documents('api::article.article')
       .findMany({
-        filters: { publishedAt: { $notNull: true } },
-        fields: ['id'],
+        status: 'published',
+        fields: ['documentId'],
       });
     strapi.log.info(`Indexed ${articles.length} published articles`);
   },
   async destroy({ strapi }) {
-    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
-      filters: {},
-    });
+    const cachedEntries = await strapi
+      .documents('api::temporary-cache.temporary-cache')
+      .findMany({ fields: ['documentId'] });
+
+    for (const { documentId } of cachedEntries) {
+      await strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .delete({ documentId });
+    }
   }
 };
 ```
@@ -127,18 +133,24 @@ export default {
     strapi.log.info('Async register finished after a short delay');
   },
   async bootstrap({ strapi }) {
-    const { results: articles } = await strapi
+    const articles = await strapi
       .documents('api::article.article')
       .findMany({
-        filters: { publishedAt: { $notNull: true } },
-        fields: ['id'],
+        status: 'published',
+        fields: ['documentId'],
       });
     strapi.log.info(`Indexed ${articles.length} published articles`);
   },
   async destroy({ strapi }) {
-    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
-      filters: {},
-    });
+    const cachedEntries = await strapi
+      .documents('api::temporary-cache.temporary-cache')
+      .findMany({ fields: ['documentId'] });
+
+    for (const { documentId } of cachedEntries) {
+      await strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .delete({ documentId });
+    }
   }
 };
 ```
@@ -168,14 +180,14 @@ module.exports = {
       strapi
         .documents('api::category.category')
         .findMany({ filters: { slug: 'general' }, pageSize: 1 })
-        .then(({ results }) => {
-          if (results.length === 0) {
+        .then((categories) => {
+          if (categories.length === 0) {
             return strapi.documents('api::category.category').create({
               data: { name: 'General', slug: 'general' },
             });
           }
 
-          return results[0];
+          return categories[0];
         })
         .then(() => {
           strapi.log.info('Ensured default category exists');
@@ -188,7 +200,16 @@ module.exports = {
     return new Promise((resolve, reject) => {
       strapi
         .documents('api::temporary-cache.temporary-cache')
-        .deleteMany({ filters: {} })
+        .findMany({ fields: ['documentId'] })
+        .then((cachedEntries) =>
+          Promise.all(
+            cachedEntries.map(({ documentId }) =>
+              strapi
+                .documents('api::temporary-cache.temporary-cache')
+                .delete({ documentId })
+            )
+          )
+        )
         .then(() => {
           strapi.log.info('Cleared temporary cache before shutdown');
           resolve();
@@ -216,14 +237,14 @@ export default {
       strapi
         .documents('api::category.category')
         .findMany({ filters: { slug: 'general' }, pageSize: 1 })
-        .then(({ results }) => {
-          if (results.length === 0) {
+        .then((categories) => {
+          if (categories.length === 0) {
             return strapi.documents('api::category.category').create({
               data: { name: 'General', slug: 'general' },
             });
           }
 
-          return results[0];
+          return categories[0];
         })
         .then(() => {
           strapi.log.info('Ensured default category exists');
@@ -236,7 +257,16 @@ export default {
     return new Promise((resolve, reject) => {
       strapi
         .documents('api::temporary-cache.temporary-cache')
-        .deleteMany({ filters: {} })
+        .findMany({ fields: ['documentId'] })
+        .then((cachedEntries) =>
+          Promise.all(
+            cachedEntries.map(({ documentId }) =>
+              strapi
+                .documents('api::temporary-cache.temporary-cache')
+                .delete({ documentId })
+            )
+          )
+        )
         .then(() => {
           strapi.log.info('Cleared temporary cache before shutdown');
           resolve();
@@ -336,11 +366,11 @@ You can run `yarn strapi console` (or `npm run strapi console`) in the terminal 
 ```js
 module.exports = {
   async bootstrap({ strapi }) {
-    const { results } = await strapi
+    const categories = await strapi
       .documents('api::category.category')
       .findMany({ filters: { slug: 'general' }, pageSize: 1 });
 
-    if (results.length === 0) {
+    if (categories.length === 0) {
       await strapi.documents('api::category.category').create({
         data: { name: 'General', slug: 'general' },
       });
@@ -357,11 +387,11 @@ module.exports = {
 ```ts
 export default {
   async bootstrap({ strapi }) {
-    const { results } = await strapi
+    const categories = await strapi
       .documents('api::category.category')
       .findMany({ filters: { slug: 'general' }, pageSize: 1 });
 
-    if (results.length === 0) {
+    if (categories.length === 0) {
       await strapi.documents('api::category.category').create({
         data: { name: 'General', slug: 'general' },
       });

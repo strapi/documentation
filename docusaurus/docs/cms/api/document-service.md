@@ -85,7 +85,6 @@ Each section below documents the parameters and examples for a specific method:
 | [`create()`](#create) | Create a document, optionally targeting a locale. |
 | [`update()`](#update) | Update a document by `documentId`. |
 | [`delete()`](#delete) | Delete a document or a specific locale version. |
-| [`deleteMany()`](#deletemany) | Delete multiple documents matching filters and relation parameters. |
 | [`publish()`](#publish) | Publish the draft version of a document. |
 | [`unpublish()`](#unpublish) | Move a published document back to draft. |
 | [`discardDraft()`](#discarddraft) | Drop draft data and keep only the published version. |
@@ -470,57 +469,6 @@ await strapi.documents('api::restaurant.restaurant').delete({
       "locale": "en"
     }
   ]
-}
-```
-
-</ResponseTab>
-</Responses>
-
-</Endpoint>
-
-### `deleteMany()`
-
-Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
-
-<Endpoint
-  kind="js"
-  path="strapi.documents().deleteMany()"
-  title="deleteMany()"
-  description="Delete multiple documents matching filters and relation parameters."
-  paramTitle="Parameters"
-  params={[
-    { name: 'locale', type: "String, '*', or null", required: false, description: 'Locale version of documents to delete. Default: only the default locale. <a href="/cms/api/document-service/locale#delete">See locale docs</a>.' },
-    { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
-    { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#delete">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
-    { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
-  ]}
->
-
-<Tabs>
-<TabItem value="request" label="Request">
-
-```js
-await strapi.documents('api::restaurant.restaurant').deleteMany({
-  filters: {
-    city: {
-      name: {
-        $eq: 'New York'
-      }
-    }
-  }
-});
-```
-
-</TabItem>
-</Tabs>
-
-<Responses>
-<ResponseTab status={200} statusText="OK">
-
-```json
-{
-  "documentId": "multiple_documents",
-  "entries": 3
 }
 ```
 
