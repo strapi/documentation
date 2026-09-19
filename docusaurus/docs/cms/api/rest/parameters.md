@@ -30,6 +30,7 @@ The following API parameters are available:
 | Operator           | Type          | Description                                           |
 | ------------------ | ------------- | ----------------------------------------------------- |
 | `filters`          | Object        | [Filter the response](/cms/api/rest/filters) |
+| `_q`               | String        | Search for entries matching a string across the content-type's fields |
 | `locale`           | String        | [Select a locale](/cms/api/rest/locale) |
 | `status`           | String        | [Select the Draft & Publish status](/cms/api/rest/status) |
 | `publicationFilter` | String       | [Select documents by how their draft and published versions relate](/cms/api/rest/publication-filter) |
