@@ -1299,6 +1299,16 @@
       "number": 27687,
       "reason": "Router: Bug fix for internal permission gating. The Media Library feature itself remains unchanged and is already documented. The fix makes the system work as originally intended (removing incorrect 403 errors for Editor/Author roles), but this is a bug fix with no new user-facing features, API changes, or configuration changes to document.",
       "added": "2026-09-18"
+    },
+    {
+      "number": 27700,
+      "reason": "Triage: Internal utility fix for stream buffering infrastructure",
+      "added": "2026-09-19"
+    },
+    {
+      "number": 27711,
+      "reason": "Router: Internal admin UI improvement to Media Library grid responsiveness. This change improves the visual layout on wider screens but does not introduce new user-facing features, APIs, or behavior changes that require documentation.",
+      "added": "2026-09-19"
     }
   ]
 }
