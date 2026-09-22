@@ -1309,6 +1309,11 @@
       "number": 27711,
       "reason": "Router: Internal admin UI improvement to Media Library grid responsiveness. This change improves the visual layout on wider screens but does not introduce new user-facing features, APIs, or behavior changes that require documentation.",
       "added": "2026-09-19"
+    },
+    {
+      "number": 27685,
+      "reason": "Router: Internal admin UI bug fix. Removes a redundant placeholder prop that was causing duplicate text rendering. This is a visual/display bug fix with no API, configuration, or feature changes. Users still see the same 'Choose here' placeholder; it just displays once instead of twice. No documentation needed.",
+      "added": "2026-09-22"
     }
   ]
 }
