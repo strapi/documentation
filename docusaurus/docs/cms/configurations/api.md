@@ -29,12 +29,11 @@ General settings for API calls can be set in the `./config/api.js` (or `./config
 | `documents`                   | Document Service configuration                                                                                                                                                                                                                        | Object       | -       |
 | `documents.strictParams`      | When `true`, Document Service methods reject parameters with unrecognized root-level keys (e.g., invalid `status`, `locale`). When `false` or unset, unknown parameters are ignored. See [Document Service API](/cms/api/document-service#configuration). | Boolean      | -       |
 
-:::note 
-If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLimit` will be the limit used.
-:::
-
 :::note
-Setting `rest.defaultLimit` to `-1` removes the limit for requests that don't explicitly pass a `pagination` parameter: every matching entry is returned in a single response, and `rest.maxLimit` does not cap it. This differs from explicitly passing `pagination[limit]=-1` on a request, which is still capped by `rest.maxLimit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)).
+`rest.defaultLimit` and `rest.maxLimit` interact in 2 ways:
+
+- If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLimit` will be the limit used.
+- Setting `rest.defaultLimit` to `-1` removes the limit for requests that don't explicitly pass a `pagination` parameter: every matching entry is returned in a single response, and `rest.maxLimit` does not cap it. This differs from explicitly passing `pagination[limit]=-1` on a request, which is still capped by `rest.maxLimit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)).
 :::
 
 :::tip
