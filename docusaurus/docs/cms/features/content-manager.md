@@ -56,6 +56,14 @@ If content-types have been organized into folders from the [Content-type Builder
 
 Click on a folder to open or close it. Folders are read-only from the <Icon name="feather" /> Content Manager, and each administrator keeps their own folders open or closed from one visit to another.
 
+<ThemedImage
+  alt="Folders in the Content Manager sub navigation"
+  sources={{
+    light: '/img/assets/content-manager/content-manager-folders.png',
+    dark: '/img/assets/content-manager/content-manager-folders_DARK.png',
+  }}
+/>
+
 :::tip
 Click the search icons <Icon name="magnifying-glass" classes="ph-bold" /> to use a text search and find one of your content-types and/or entries more quickly!
 

@@ -103,14 +103,18 @@ The following properties are available:
 | Property | Description |
 | -------- | ----------- |
 | `version` | Version of the file format. The only supported value is `1`. |
-| `id` | Identifier of the folder. Starts with `grp_`, followed by 4 to 32 lowercase letters or digits. |
-| `name` | Name of the folder, from 1 to 255 characters, without leading or trailing spaces. 2 folders that share the same parent must have different names. |
+| `id` | Identifier of the folder: any non-empty string, unique across both sections. The Content-type Builder generates identifiers prefixed with `grp_`, and hand-written identifiers such as `products` are valid. |
+| `name` | Name of the folder, from 1 to 255 characters, without leading or trailing spaces. 2 folders that share the same parent must have different names, whatever their case. |
 | `parent` | Identifier of the parent folder, or `null` for a folder at the root of its section. |
 | `children` | Ordered list of the content-types and folders the folder contains. A content-type is referenced by its `uid`, a folder by its `id`. |
 
 Folders can be nested up to 3 levels deep, and a content-type can only belong to one folder.
 
-The file can be edited by hand, and Strapi reads it when the server starts. Entries that cannot be used are repaired or ignored, and a message prefixed with `[content-structure]` is logged.
+At build time, the file is compiled to `dist/src/content-structure/groups.json`, and this built version is the one Strapi reads when the server starts.
+
+Edit the source file, never the one in `dist`, which is replaced by the next build. A file edited by hand is taken into account once the application has been rebuilt and restarted.
+
+Entries that cannot be used are repaired or ignored at startup, and a message prefixed with `[content-structure]` is logged.
 
 For instance:
 
@@ -118,6 +122,10 @@ For instance:
 - a folder whose parent is missing is moved back to the root of its section.
 
 If the file itself cannot be read, the server starts without any folder.
+
+Saving from the Content-type Builder is stricter than reading the file at startup: a structure that breaks one of the rules above is rejected instead of being repaired.
+
+Make sure a hand-written file follows these rules before building and deploying it.
 
 :::note
 Components are not part of the content structure file, and cannot be organized into folders.
@@ -942,11 +950,19 @@ Deleting a content-type only deletes what was created and available from the Con
   }}
 />
 
-### Organizing content-types with folders {#organizing-content-types-with-folders}
+### Organizing content-types with folders <NewBadge /> {#organizing-content-types-with-folders}
 
 Collection types and single types can be grouped into folders, and folders can be nested up to 3 levels deep. Folders are displayed in the <Icon name="layout" /> Content-type Builder sub navigation.
 
 They are also displayed in the [Content Manager](/cms/features/content-manager), where they help content managers find content-types more quickly.
+
+<ThemedImage
+  alt="Folders in the Content-type Builder sub navigation"
+  sources={{
+    light: '/img/assets/content-type-builder/content-type-folders.png',
+    dark: '/img/assets/content-type-builder/content-type-folders_DARK.png',
+  }}
+/>
 
 Folders are stored in the [content structure file](#code-based-configuration) of your project. As for any other change made in the Content-type Builder, folder changes are applied only after clicking **Save**.
 
@@ -973,6 +989,14 @@ A content-type can only belong to one folder at a time, and the nesting of folde
 Once the content-types and folders are organized as you want, click on the **Save** button.
 
 #### Renaming folders
+
+<ThemedImage
+  alt="Actions menu of a folder in the Content-type Builder"
+  sources={{
+    light: '/img/assets/content-type-builder/content-type-folders-actions.png',
+    dark: '/img/assets/content-type-builder/content-type-folders-actions_DARK.png',
+  }}
+/>
 
 1. In the <Icon name="layout" /> Content-type Builder sub navigation, click on the <Icon name="dots-three" classes="ph-bold" /> button of the folder to rename.
 2. Click on <Icon name="pencil-simple" /> **Rename**.
