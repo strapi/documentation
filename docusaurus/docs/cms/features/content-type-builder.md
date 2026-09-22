@@ -41,9 +41,7 @@ The <Icon name="layout" /> Content-type Builder allows the creation and manageme
 
 All 3 are displayed as categories in the sub navigation of the <Icon name="layout" /> Content-type Builder. In each category are listed all content-types and components that have already been created.
 
-Collection types and single types can also be grouped into folders, to keep the sub navigation organized as a project grows.
-
-Folders are covered in the [Organizing content-types with folders](#organizing-content-types-with-folders) section.
+Collection types and single types can also be [grouped into folders](#organizing-content-types-with-folders), to keep the sub navigation organized as a project grows.
 
 :::tip
 Click the search icon <Icon name="magnifying-glass" classes="ph-bold" /> in the <Icon name="layout" /> Content-type Builder sub navigation to find a specific collection type, single type, or component.
@@ -69,7 +67,7 @@ The folders displayed in the Content-type Builder sub navigation are stored in t
 
 The file is versioned with the rest of your project, so the organization defined locally is shared with your team and deployed with your application.
 
-Folders are called groups in the file, and are listed per section, `collectionTypes` and `singleTypes`. Each group has an identifier, a name, a parent, and a list of children:
+Folders are called `groups` in the file, and are listed per section, `collectionTypes` and `singleTypes`. Each group has an identifier, a name, a parent, and a list of children:
 
 ```json title="/src/content-structure/groups.json"
 {
@@ -110,22 +108,23 @@ The following properties are available:
 
 Folders can be nested up to 3 levels deep, and a content-type can only belong to one folder.
 
+<details>
+<summary>Editing the file by hand: what Strapi reads, and what it does with an invalid file</summary>
+
 At build time, the file is compiled to `dist/src/content-structure/groups.json`, and this built version is the one Strapi reads when the server starts.
 
 Edit the source file, never the one in `dist`, which is replaced by the next build. A file edited by hand is taken into account once the application has been rebuilt and restarted.
 
-Entries that cannot be used are repaired or ignored at startup, and a message prefixed with `[content-structure]` is logged.
-
-For instance:
+Entries that cannot be used are repaired or ignored at startup, and a message prefixed with `[content-structure]` is logged. For instance:
 
 - a reference to a content-type that no longer exists is dropped from its folder,
 - a folder whose parent is missing is moved back to the root of its section.
 
 If the file itself cannot be read, the server starts without any folder.
 
-Saving from the Content-type Builder is stricter than reading the file at startup: a structure that breaks one of the rules above is rejected instead of being repaired.
+Saving from the Content-type Builder is stricter than reading the file at startup: a structure that breaks one of the rules above is rejected instead of being repaired. Make sure a hand-written file follows these rules before building and deploying it.
 
-Make sure a hand-written file follows these rules before building and deploying it.
+</details>
 
 :::note
 Components are not part of the content structure file, and cannot be organized into folders.
@@ -958,6 +957,7 @@ They are also displayed in the [Content Manager](/cms/features/content-manager),
 
 <ThemedImage
   alt="Folders in the Content-type Builder sub navigation"
+  width="50%"
   sources={{
     light: '/img/assets/content-type-builder/content-type-folders.png',
     dark: '/img/assets/content-type-builder/content-type-folders_DARK.png',
@@ -992,6 +992,7 @@ Once the content-types and folders are organized as you want, click on the **Sav
 
 <ThemedImage
   alt="Actions menu of a folder in the Content-type Builder"
+  width="50%"
   sources={{
     light: '/img/assets/content-type-builder/content-type-folders-actions.png',
     dark: '/img/assets/content-type-builder/content-type-folders-actions_DARK.png',
