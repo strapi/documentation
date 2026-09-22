@@ -97,7 +97,7 @@ Bucket each PR:
 
 ### Description non-compliance reasons
 
-Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness, **missing the trailing "Direct preview link 👉 [here](...)" line** (see Step 5 for the construction logic).
+Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness, **missing the trailing "Direct preview link 👉 [here](...)" line when the PR changes a page under `docusaurus/docs/`** (see Step 5, which also covers the PRs that must not have one).
 
 ## Step 4: Apply rewrites
 
@@ -181,7 +181,15 @@ Branch:
 
 ## Step 5: Vercel preview link handling (description action only)
 
-The proposed description MUST end with a Vercel preview link line. If the original description has one as its last line, preserve it. If it does not, build one and append it.
+A description that documents a page change MUST end with a Vercel preview link
+line. If the original description has one as its last line, preserve it. If it
+does not, build one and append it.
+
+**A PR that changes no page under `docusaurus/docs/` gets no preview line at
+all.** A `repo/` PR touching config, tooling or agent prompts has nothing to
+preview, and a link to the preview root shows the reader a page the PR did not
+change. Omit the line, do not fall back to the root, and do not classify a
+description as non-compliant for lacking one.
 
 ### How to build the Vercel preview link
 
@@ -212,7 +220,7 @@ Do NOT naively build the host from the branch name. Vercel truncates long branch
    - Filter to `.md`/`.mdx` files under `docusaurus/docs/`.
    - Prefer the **newly added** page (a file added by the PR). If several added pages exist, take the first. If none were added, pick the most representative modified page; if several are equally central, prefer the hub/parent page (e.g., `cms/features/users-permissions.md` over its sub-pages).
    - Strip the `docusaurus/docs/` prefix and the `.md`/`.mdx` extension: `docusaurus/docs/cms/features/users-permissions.md` → `/cms/features/users-permissions`.
-   - If no `.md`/`.mdx` files are touched (rare for a docs PR), fall back to the root path (empty string).
+   - If no `.md`/`.mdx` files under `docusaurus/docs/` are touched, there is no page to preview: omit the preview line and skip the rest of this step.
 
 #### Assemble and verify
 
