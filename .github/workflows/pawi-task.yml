@@ -45,10 +45,20 @@ jobs:
           token: ${{ secrets.PAT_TOKEN_PIWI }}
           fetch-depth: 50
 
-      - name: Load the pAwI task prompt
+      # The brief is written to a file rather than handed to the run as an
+      # environment variable. The deny-list below forbids `env` and `printenv`,
+      # so a run cannot dump its own secrets, and that ban applies just as much
+      # to reading its own input: the first attempt at this spent two turns
+      # being refused permission to read the request it was sent to act on.
+      # Interpolating client_payload into a shell line would be an injection, so
+      # it goes through the step environment and printf writes it out verbatim.
+      - name: Load the pAwI task prompt and brief
         id: load-prompt
+        env:
+          PAWI_BRIEF: ${{ github.event.client_payload.brief }}
         run: |
           echo '{"status": "not_started"}' > /tmp/pawi-result.json
+          printf '%s' "$PAWI_BRIEF" > /tmp/pawi-brief.txt
           echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
           cat .github/prompts/pawi-task.md >> $GITHUB_OUTPUT
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
@@ -74,9 +84,6 @@ jobs:
         env:
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
-          PAWI_BRIEF: ${{ github.event.client_payload.brief }}
-          PAWI_SLACK_CHANNEL: ${{ github.event.client_payload.slack_channel }}
-          PAWI_SLACK_THREAD_TS: ${{ github.event.client_payload.slack_thread_ts }}
 
       # Runs whatever happened above. A run that dies silently is the failure
       # mode that leaves someone waiting in a Slack thread for an answer that is
@@ -91,17 +98,24 @@ jobs:
         run: |
           STATUS=$(jq -r '.status // "failed"' /tmp/pawi-result.json 2>/dev/null || echo failed)
           PR_URL=$(jq -r '.pr_url // ""' /tmp/pawi-result.json 2>/dev/null || echo "")
+          PAGE_URL=$(jq -r '.page_url // ""' /tmp/pawi-result.json 2>/dev/null || echo "")
           REASON=$(jq -r '.reason // ""' /tmp/pawi-result.json 2>/dev/null || echo "")
 
           case "$STATUS" in
             opened)
               TEXT="PR is up: ${PR_URL}. Piwi reviews and merges it."
               ;;
+            # Finding the answer already written is a good outcome and a common
+            # one. Reported as a failure it reads as a bug, and the reader loses
+            # both the link and the fact that someone checked.
+            already_documented)
+              TEXT="That is already documented: ${PAGE_URL}. ${REASON} So there is nothing for me to change."
+              ;;
             too_vague)
               TEXT="I had a go but the request is too open for me to act on safely: ${REASON} Piwi will pick it up."
               ;;
             *)
-              TEXT="That one did not work out on my side, so it is back to a human. <${RUN_URL}|the run> has the details."
+              TEXT="That one did not work out on my side, so it is back to a human. ${REASON} <${RUN_URL}|the run> has the details."
               ;;
           esac
 

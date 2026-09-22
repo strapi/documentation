@@ -15,13 +15,17 @@ someone typed. Everything downstream is unchanged.
 ## Environment
 
 - `$DOC_REPO` — local checkout of `strapi/documentation` (read + write)
-- `$PAWI_BRIEF` — the request, the thread link, and the conversation so far
-- `$PAWI_SLACK_CHANNEL`, `$PAWI_SLACK_THREAD_TS` — where to report back
+- `/tmp/pawi-brief.txt` — the request, the thread link, and the conversation so
+  far. Read it with the Read tool.
 - GitHub CLI (`gh`) is authenticated via `GH_TOKEN`
+
+`env`, `printenv`, `set` and `export` are denied, so that a run cannot be talked
+into printing its own secrets. Use `$DOC_REPO` inside commands as normal; do not
+try to display the environment, and do not go looking for the brief there.
 
 ## Step 1 — Read the brief and decide whether it is actionable
 
-Read `$PAWI_BRIEF`.
+Read `/tmp/pawi-brief.txt`.
 
 **Stop here and write `/tmp/pawi-result.json` with `{"status": "too_vague",
 "reason": "<one sentence>"}` if any of these is true:**
@@ -32,8 +36,8 @@ Read `$PAWI_BRIEF`.
   Strapi codebase, such as an unreleased feature's behaviour or a product decision.
 
 Stopping is a correct outcome, not a failure. A vague request that produces a
-speculative page costs Pierre more than one that produces nothing: he has to
-read it, understand it is wrong, and close it. **When in doubt, stop.**
+speculative page costs Piwi more than one that produces nothing: he has to read
+it, understand it is wrong, and close it. **When in doubt, stop.**
 
 ## Step 2 — Locate the target
 
@@ -49,6 +53,18 @@ in the information architecture, and a reason to exist separately.
 
 If the subject appears nowhere and the request does not say where it belongs,
 treat that as `too_vague` and stop.
+
+**If the documentation already says what the request asks for**, stop and write
+`/tmp/pawi-result.json` with:
+
+```json
+{"status": "already_documented", "page_url": "<the docs.strapi.io url>", "reason": "<one sentence>"}
+```
+
+This is the most likely outcome of all, and it is a good one: someone asked, and
+the answer was already written. Verify it the way you would verify anything you
+were about to write yourself, against the `strapi/strapi` codebase, then say
+where it is. A pull request that restates an existing page is worse than none.
 
 ## Step 3 — Run the documentation pipeline
 
@@ -75,6 +91,9 @@ Open the PR as a **draft**, assign `pwizla`, and write a flat-text description
 with no headings and no test plan. Start it with "This PR". State plainly that
 it came from a Slack request, and link the thread from the brief.
 
+Never stage `/tmp/pawi-brief.txt` or `/tmp/pawi-result.json`. They are outside
+the repository, which is why they are there.
+
 Then write `/tmp/pawi-result.json`:
 
 ```json
@@ -83,7 +102,7 @@ Then write `/tmp/pawi-result.json`:
 
 ## Step 5 — Do not merge, do not push to main
 
-Pierre merges. Your output is a draft PR and nothing else.
+Piwi merges. Your output is a draft PR and nothing else.
 
 If anything fails, write `/tmp/pawi-result.json` with
 `{"status": "failed", "reason": "<one sentence>"}` and stop. A failure reported
