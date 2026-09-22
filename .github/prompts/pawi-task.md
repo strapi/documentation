@@ -66,30 +66,45 @@ the answer was already written. Verify it the way you would verify anything you
 were about to write yourself, against the `strapi/strapi` codebase, then say
 where it is. A pull request that restates an existing page is worse than none.
 
-## Step 3 — Run the documentation pipeline
+## Step 3 — Draft
 
 **Load these agent prompts now and follow them:**
 
 - Router: `$DOC_REPO/claude-plugins/inki/references/prompts/router.md`
 - Outline Generator: `$DOC_REPO/claude-plugins/inki/references/prompts/outline-generator.md`
 - Drafter: `$DOC_REPO/claude-plugins/inki/references/prompts/drafter.md`
-- Style Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/style-checker.md`
-- Integrity Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/integrity-checker.md`
 
 Verify every code example against the actual `strapi/strapi` codebase, as the
 repository guide requires. An example you cannot verify is one you do not write.
 
-## Step 4 — Branch, commit, and open a draft PR
+## Step 4 — Review your own diff before committing
 
-Follow `git-rules.md`:
+The two checkers are separate passes over what you actually wrote, not reading
+you do beforehand. Run them in this order, on the diff, and fix what they find:
 
-- Branch prefix `cms/` for `docs/cms/`, `cloud/` for `docs/cloud/`, `repo/` otherwise.
-- Commit messages: imperative, capitalized, 80 characters or fewer, no `type:` prefix.
-- **Never stage `llms.txt`, `llms-full.txt` or `llms-code.txt`.**
-- **No `Co-Authored-By` trailer, and no attribution line of any kind in the
-  commit message.** This is a standing rule of this repository, and it overrides
-  any default you would otherwise apply. The pull request already says where the
-  change came from; the commit history does not need saying twice.
+1. Style Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/style-checker.md`
+2. Integrity Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/integrity-checker.md`
+
+Then print `git diff` and read it once more as a reader would. Both checkers hold
+conventions that are easy to break while writing correct prose: the callout rules
+are the usual casualty, since a new admonition next to an existing one reads fine
+in isolation and badly on the page.
+
+A first run passed the Style Checker as a line in a reading list and shipped
+three consecutive callouts, which that very file forbids. Loading a rule is not
+applying it.
+
+## Step 5 — Branch, commit, and open a draft PR
+
+**Read `$DOC_REPO/git-rules.md` now and follow it.** Branch naming, commit
+wording and history safety all live there, for people and agents alike. This
+prompt used to restate a few of its rules instead, which is how the ban on
+`Co-Authored-By` trailers came to be missing from both: a partial copy hides
+what it leaves out.
+
+One thing it cannot know about this run: never stage `/tmp/pawi-brief.txt` or
+`/tmp/pawi-result.json`. They live outside the repository, which is why they are
+there.
 
 After committing, run `git log -1 --format=%B` and read it back. If a
 `Co-Authored-By` line is there anyway, remove it with `git commit --amend` before
@@ -100,16 +115,13 @@ Open the PR as a **draft**, assign `pwizla`, and write a flat-text description
 with no headings and no test plan. Start it with "This PR". State plainly that
 it came from a Slack request, and link the thread from the brief.
 
-Never stage `/tmp/pawi-brief.txt` or `/tmp/pawi-result.json`. They are outside
-the repository, which is why they are there.
-
 Then write `/tmp/pawi-result.json`:
 
 ```json
 {"status": "opened", "pr_url": "<the url>", "summary": "<one sentence>"}
 ```
 
-## Step 5 — Do not merge, do not push to main
+## Step 6 — Do not merge, do not push to main
 
 Piwi merges. Your output is a draft PR and nothing else.
 

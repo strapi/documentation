@@ -10,6 +10,10 @@ Commit Messages
 - Do not prefix with "feat:", "chore:", "fix:", or similar tags.
 - Do not use PR-style phrasing (never start with "This PR …").
 - Prefer specificity over vagueness (name the area/file/feature touched).
+- No `Co-Authored-By` trailer, and no attribution or generation notice of any
+  kind. This applies to agents as much as to people, and it overrides whatever
+  an agent would otherwise add by default: the pull request already records
+  where a change came from.
 
 Examples (good)
 - Add initial AGENTS.md for repo and cms/cloud/snippets
@@ -81,6 +85,11 @@ Anti-examples (and why)
 - /docs/new-feature — `/docs` is not a valid prefix; use `/cms` or `/cloud`
 - /feat/add-page — `/feat` is not a valid prefix; use the area-based prefix
 - update-middlewares — missing prefix entirely
+
+Files Never Staged
+- `docusaurus/static/llms.txt`, `llms-full.txt` and `llms-code.txt` are generated
+  by the build and regenerated on merge. Committing them produces conflicts and
+  reviews full of noise. Never stage them, whatever `git status` shows.
 
 Pushing and PRs
 - When pushing a new branch, set upstream: `git push -u origin <branch>` (this does not create a PR).
