@@ -56,8 +56,8 @@ To view and save a license key:
 
 1. Click **View license** on the subscription card.
 2. In the *License key* dialog, use one of the following options:
-   - Click the copy icon to copy the complete license key.
-   - Click the download icon to save the complete license key as `license.txt`.
+   - Click the <Icon name="copy" /> copy icon to copy the complete license key.
+   - Click the <Icon name="download-simple" /> download icon to save the complete license key as `license.txt`.
 3. Add the license to the root of your Strapi project as a `LICENSE.TXT` file, or set the `STRAPI_LICENSE` environment variable to the license key.
 
 :::caution
