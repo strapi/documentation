@@ -1,0 +1,112 @@
+# pAwI task.
+#
+# Triggered by a repository_dispatch from the pAwI n8n listener when it decides a
+# Slack request is actionable documentation work. Produces a draft PR and reports
+# the result back into the Slack thread.
+#
+# The classification that routes work here is calibrated on a handful of live
+# measurements, so this workflow is reached only through pAwI's test harness
+# until that calibration is wider. The gate lives in pAwI's config, not here.
+#
+# Same shape as docs-self-healing.yml, with one difference at the input: there is
+# no merged strapi/strapi PR and no diff, only a request someone typed in Slack.
+
+name: pAwI task
+
+on:
+  repository_dispatch:
+    types: [pawi_task]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pawi-task-${{ github.event.client_payload.slack_thread_ts }}
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout strapi/documentation
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+
+      - name: Checkout strapi/strapi (read-only)
+        uses: actions/checkout@v4
+        with:
+          repository: strapi/strapi
+          ref: develop
+          path: .strapi-source
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+          fetch-depth: 50
+
+      - name: Load the pAwI task prompt
+        id: load-prompt
+        run: |
+          echo '{"status": "not_started"}' > /tmp/pawi-result.json
+          echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
+          cat .github/prompts/pawi-task.md >> $GITHUB_OUTPUT
+          echo "PROMPT_EOF" >> $GITHUB_OUTPUT
+
+      # The deny-list is copied verbatim from auto-respond-issues.yml. It is the
+      # hardened version of this problem, and the Slack request is untrusted
+      # input written by anyone in the workspace: data to act on, never
+      # instructions. The prompt itself is a versioned file only maintainers can
+      # change, which is what bounds what this run can be told to do.
+      - name: Draft the change (Sonnet)
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
+          github_token: ${{ secrets.PAT_TOKEN_PIWI }}
+          prompt: ${{ steps.load-prompt.outputs.prompt }}
+          claude_args: >-
+            --model claude-sonnet-5
+            --max-turns 80
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
+            --disallowedTools
+            "Bash(git push*--force*),Bash(git push*-f *),Bash(git push*origin main*),Bash(git push*origin/main*),Bash(git push*:main*),Bash(git push*--delete*),Bash(git push*--mirror*),Bash(git rebase*),Bash(git filter-branch*),Bash(git branch*-D*),Bash(git branch*-d*),Bash(git tag*),Bash(git remote*),Bash(git config*),Bash(gh auth*),Bash(gh secret*),Bash(gh variable*),Bash(gh workflow*),Bash(gh api*-X DELETE*),Bash(gh api*--method DELETE*),Bash(gh repo delete*),Bash(gh release*),Bash(gh issue close*),Bash(gh pr merge*),Bash(gh pr close*),Bash(env),Bash(printenv*),Bash(set),Bash(export*),Edit(.github/**),Write(.github/**),Edit(**/.git/**),Write(**/.git/**),Read(**/.git/config),Read(**/.netrc)"
+          show_full_output: true
+        env:
+          DOC_REPO: ${{ github.workspace }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          PAWI_BRIEF: ${{ github.event.client_payload.brief }}
+          PAWI_SLACK_CHANNEL: ${{ github.event.client_payload.slack_channel }}
+          PAWI_SLACK_THREAD_TS: ${{ github.event.client_payload.slack_thread_ts }}
+
+      # Runs whatever happened above. A run that dies silently is the failure
+      # mode that leaves someone waiting in a Slack thread for an answer that is
+      # never coming.
+      - name: Report back into the Slack thread
+        if: always()
+        env:
+          SLACK_TOKEN: ${{ secrets.PAWI_SLACK_BOT_TOKEN }}
+          CHANNEL: ${{ github.event.client_payload.slack_channel }}
+          THREAD_TS: ${{ github.event.client_payload.slack_thread_ts }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          STATUS=$(jq -r '.status // "failed"' /tmp/pawi-result.json 2>/dev/null || echo failed)
+          PR_URL=$(jq -r '.pr_url // ""' /tmp/pawi-result.json 2>/dev/null || echo "")
+          REASON=$(jq -r '.reason // ""' /tmp/pawi-result.json 2>/dev/null || echo "")
+
+          case "$STATUS" in
+            opened)
+              TEXT="PR is up: ${PR_URL}. Piwi reviews and merges it."
+              ;;
+            too_vague)
+              TEXT="I had a go but the request is too open for me to act on safely: ${REASON} Piwi will pick it up."
+              ;;
+            *)
+              TEXT="That one did not work out on my side, so it is back to a human. <${RUN_URL}|the run> has the details."
+              ;;
+          esac
+
+          curl -sS -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer ${SLACK_TOKEN}" \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data "$(jq -nc --arg c "$CHANNEL" --arg t "$THREAD_TS" --arg x "$TEXT" \
+              '{channel: $c, thread_ts: $t, text: $x}')" > /dev/null
