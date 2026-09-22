@@ -86,6 +86,15 @@ Follow `git-rules.md`:
 - Branch prefix `cms/` for `docs/cms/`, `cloud/` for `docs/cloud/`, `repo/` otherwise.
 - Commit messages: imperative, capitalized, 80 characters or fewer, no `type:` prefix.
 - **Never stage `llms.txt`, `llms-full.txt` or `llms-code.txt`.**
+- **No `Co-Authored-By` trailer, and no attribution line of any kind in the
+  commit message.** This is a standing rule of this repository, and it overrides
+  any default you would otherwise apply. The pull request already says where the
+  change came from; the commit history does not need saying twice.
+
+After committing, run `git log -1 --format=%B` and read it back. If a
+`Co-Authored-By` line is there anyway, remove it with `git commit --amend` before
+pushing. Adding that trailer is habitual enough to survive being told not to,
+which is why this step exists rather than the instruction alone.
 
 Open the PR as a **draft**, assign `pwizla`, and write a flat-text description
 with no headings and no test plan. Start it with "This PR". State plainly that
