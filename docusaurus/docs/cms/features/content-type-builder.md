@@ -957,7 +957,7 @@ They are also displayed in the [Content Manager](/cms/features/content-manager),
 
 <ThemedImage
   alt="Folders in the Content-type Builder sub navigation"
-  width="50%"
+  width="25%"
   sources={{
     light: '/img/assets/content-type-builder/content-type-folders.png',
     dark: '/img/assets/content-type-builder/content-type-folders_DARK.png',
@@ -989,15 +989,6 @@ A content-type can only belong to one folder at a time, and the nesting of folde
 Once the content-types and folders are organized as you want, click on the **Save** button.
 
 #### Renaming folders
-
-<ThemedImage
-  alt="Actions menu of a folder in the Content-type Builder"
-  width="50%"
-  sources={{
-    light: '/img/assets/content-type-builder/content-type-folders-actions.png',
-    dark: '/img/assets/content-type-builder/content-type-folders-actions_DARK.png',
-  }}
-/>
 
 1. In the <Icon name="layout" /> Content-type Builder sub navigation, click on the <Icon name="dots-three" classes="ph-bold" /> button of the folder to rename.
 2. Click on <Icon name="pencil-simple" /> **Rename**.
