@@ -22,7 +22,7 @@ General settings for API calls can be set in the `./config/api.js` (or `./config
 | `responses.privateAttributes` | Set of globally defined attributes to be treated as private.                                                                                                                                                                                         | String array | `[]`    |
 | `rest`                        | REST API configuration                                                                                                                                                                                                                               | Object       | -       |
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
-| `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset))                                                                      | Integer      | `25`    |
+| `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). Setting it to `-1` removes the limit (see note below).                                                                     | Integer      | `25`    |
 | `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
 | `rest.withCount`              | Whether list responses include the total number of entries and pages in `meta.pagination` by default. Can be overridden per request with the [`pagination[withCount]`](/cms/api/rest/sort-pagination#pagination-by-offset) parameter. | Boolean      | `true`  |
 | `rest.strictParams`           | When `true`, only allowed query and body parameters are accepted on Content API routes; unknown top-level keys are rejected. Add allowed parameters via [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters) in `register`. | Boolean      | -       |
@@ -31,6 +31,10 @@ General settings for API calls can be set in the `./config/api.js` (or `./config
 
 :::note 
 If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLimit` will be the limit used.
+:::
+
+:::note
+Setting `rest.defaultLimit` to `-1` removes the limit for requests that don't explicitly pass a `pagination` parameter: every matching entry is returned in a single response, and `rest.maxLimit` does not cap it. This differs from explicitly passing `pagination[limit]=-1` on a request, which is still capped by `rest.maxLimit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)).
 :::
 
 :::tip
