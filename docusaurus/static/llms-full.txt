@@ -21863,9 +21863,9 @@ Source: https://docs.strapi.io/cms/billing-portal
 
 # Billing portal
 
-The Strapi billing portal is where you can view all Strapi subscriptions and manage payment methods, billing details, and invoices. Only Growth subscriptions can be managed in the portal; Cloud and Enterprise subscriptions are view-only.
+The Strapi billing portal is where you can view all Strapi subscriptions, retrieve your CMS license keys, and manage payment methods, billing details, and invoices. Only Growth subscriptions can be managed in the portal; Cloud and Enterprise subscriptions are view-only.
 
-The [Strapi billing portal](https://billing.strapi.io) is where you view and manage billing for your Strapi subscriptions. For all subscriptions, you can update payment methods, edit billing details, and download invoices.
+The [Strapi billing portal](https://billing.strapi.io) is where you view and manage billing for your Strapi subscriptions. For all subscriptions, you can update payment methods, edit billing details, and download invoices. You can also view license keys for eligible CMS subscriptions.
 
 While you can view all subscriptions in the portal, only Growth subscriptions can be managed directly there. Cloud subscriptions are managed in the [Strapi Cloud dashboard](/cloud/projects/settings#plans). To make changes to your Enterprise plan, [contact sales](mailto:sales@strapi.io).
 
@@ -21889,6 +21889,22 @@ Subscriptions are grouped into the following sections:
 - **Canceled**: Fully canceled subscriptions.
 
 Each subscription card shows the plan name, product family, status, price, billing period (monthly or yearly), renewal or trial end date, and subscription ID. Next to the subscription ID, Cloud subscriptions show the Cloud project name and Growth subscriptions show the CMS project ID linked to the license.
+
+### Viewing and saving a CMS license key
+
+The **View license** action is available for active and in-trial Growth and Enterprise subscriptions.
+
+To view and save a license key:
+
+1. Click **View license** on the subscription card.
+2. In the *License key* dialog, use one of the following options:
+   - Click the  copy button to copy the complete license key.
+   - Click the  download button to save the complete license key as `license.txt`.
+3. Add the license to the root of your Strapi project as a `LICENSE.TXT` file, or set the `STRAPI_LICENSE` environment variable to the license key.
+
+:::caution
+Treat the license key as a credential. Do not commit the license file or environment variable to source control.
+:::
 
 ### Activating an in-trial Growth subscription
 
