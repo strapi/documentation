@@ -33319,6 +33319,7 @@ The Audit Logs feature logs the following events:
 | Release settings | `update` |
 | Role / Permission | `create`, `update`, `delete` |
 | User | `create`, `update`, `delete` |
+| Token  | `create`, `update`, `delete`, `regenerate` |
 
 For each log item, the following information is displayed:
 
@@ -33326,6 +33327,8 @@ For each log item, the following information is displayed:
 - Date: date and time of the action.
 - User: user who performed the action.
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
+
+Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
 
 With Strapi   logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
 
@@ -36923,6 +36926,17 @@ If you need to install other providers or create your own, please refer to the f
 
 :::info
 Code-based configuration instructions on the present page detail options for the default upload provider. If using another provider, please refer to the available configuration parameters in that provider's documentation.
+:::
+
+#### Private storage providers
+
+<!-- source: packages/core/upload/server/src/services/extensions/utils.ts, packages/core/upload/server/src/services/extensions/index.ts, packages/core/upload/server/src/migrations/unsign-richtext-and-blocks-urls.ts -->
+When the configured provider is private (for example, an S3 bucket with `ACL: 'private'`), every file URL Strapi returns is a signed URL that expires after `signedUrlExpires`. Media fields are re-signed on every read, but richtext and blocks fields embed the URL directly in their value.
+
+Strapi stores the unsigned URL for richtext and blocks fields in the database, and signs it again each time the entry is read, in the admin panel and through the REST and Document Service APIs. This also applies to richtext and blocks attributes nested in components and dynamic zones. Rows written before this behavior was introduced, which still hold a signed URL, are rewritten automatically the next time the application starts.
+
+:::caution
+A file uploaded with a per-file `path` provider option cannot be re-signed from a richtext or blocks field: the URL is recognized as belonging to the provider, but its storage key cannot be rebuilt from the URL alone, and the signed link returns a `403` error. Media fields have the same limitation.
 :::
 
 #### Available options
