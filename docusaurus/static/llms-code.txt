@@ -25238,6 +25238,41 @@ export default ({ env }) => ({
 # Content-type Builder
 Source: https://docs.strapi.io/cms/features/content-type-builder
 
+## Code-based configuration
+Description: Folder organization therefore travels with your project's code: deploy the file to move it from one environment to another.
+(Source: https://docs.strapi.io/cms/features/content-type-builder#code-based-configuration)
+
+Language: JSON
+File path: /src/content-structure/groups.json
+
+```json
+{
+  "version": 1,
+  "sections": {
+    "collectionTypes": {
+      "groups": [
+        {
+          "id": "grp_x8k2m4p7q1",
+          "name": "Restaurants",
+          "parent": null,
+          "children": [{ "type": "group", "id": "grp_c3v9n5t2w6" }]
+        },
+        {
+          "id": "grp_c3v9n5t2w6",
+          "name": "Menus",
+          "parent": "grp_x8k2m4p7q1",
+          "children": [{ "type": "contentType", "uid": "api::menu.menu" }]
+        }
+      ]
+    },
+    "singleTypes": {
+      "groups": []
+    }
+  }
+}
+```
+
+
 ## Relation
 Description: Example
 (Source: https://docs.strapi.io/cms/features/content-type-builder#relation)
