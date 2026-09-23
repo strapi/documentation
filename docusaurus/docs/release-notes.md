@@ -27,7 +27,62 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.54.0](https://github.com/strapi/strapi/releases/tag/v5.54.0)._
+
+
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.55.0](https://github.com/strapi/strapi/releases/tag/v5.55.0)._
+
+## 7.3.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add a general documentation feedback form to the home page](https://github.com/strapi/documentation/pull/3507)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document license viewing in the billing portal](https://github.com/strapi/documentation/pull/3514)
+- [Add an Amazon S3 provider credentials breaking-change page](https://github.com/strapi/documentation/pull/3500)
+- [Content-type folders in the Content-type Builder](https://github.com/strapi/documentation/pull/3497)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Merge the two limit notes on the API configuration page](https://github.com/strapi/documentation/pull/3521)
+- [Document defaultLimit -1 behaviour in API configuration](https://github.com/strapi/documentation/pull/3519)
+- [Add the rest.withCount API config option](https://github.com/strapi/documentation/pull/3501)
+- [Document unsigned URL storage for private providers in Media Library](https://github.com/strapi/documentation/pull/3495)
+- [Document token events in the audit logs](https://github.com/strapi/documentation/pull/3484)
+
+#### Repository
+- [Omit the preview link on PRs that change no documentation page](https://github.com/strapi/documentation/pull/3522)
+- [Align code block action buttons to the right on narrow viewports](https://github.com/strapi/documentation/pull/3515)
+- [Fetch real diffs in self-healing and make the Drafter stage recoverable](https://github.com/strapi/documentation/pull/3496)
+- [Fix the self-healing Router no-op and stop it passing for an empty run](https://github.com/strapi/documentation/pull/3493)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/yfwmaniish" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/116950854?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="yfwmaniish"/>
+</a>
+</div>
+<br/>
+<br/>
+
 
 ## 7.2.0
 
