@@ -56,6 +56,10 @@ Content can be created, managed and published from the 2 categories displayed in
 If content-types have been organized into folders from the [Content-type Builder](/cms/features/content-type-builder#organizing-content-types-with-folders), both categories display these folders.
 
 Click on a folder to open or close it. Folders are read-only from the <Icon name="feather" /> Content Manager, and each administrator keeps their own folders open or closed from one visit to another.
+
+Only the folders that contain at least one content-type the administrator is allowed to see are displayed.
+
+A folder is not displayed if it is empty, or if all the content-types it contains are hidden by [permissions](/cms/features/rbac).
 :::
 
 :::tip

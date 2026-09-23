@@ -67,6 +67,10 @@ The folders displayed in the Content-type Builder sub navigation are stored in t
 
 The file is versioned with the rest of your project, so the organization defined locally is shared with your team and deployed with your application.
 
+Folder organization therefore travels with your project's code: deploy the file to move it from one environment to another.
+
+[Data Transfer](/cms/features/data-management) does not include the content structure file in exports, imports or transfers.
+
 Folders are called `groups` in the file, and are listed per section, `collectionTypes` and `singleTypes`. Each group has an identifier, a name, a parent, and a list of children:
 
 ```json title="/src/content-structure/groups.json"
@@ -1004,7 +1008,15 @@ Once the content-types and folders are organized as you want, click on the **Sav
 3. In the confirmation window, which indicates how many content-types and folders are affected, click on **Yes, delete**.
 4. Click on the **Save** button.
 
+**Delete folder** is unavailable when moving the subfolders out of the folder would give 2 folders the same name in their destination, whatever their case.
+
+The confirmation window then lists the conflicting names, and **Yes, delete** stays disabled until one of these folders is renamed.
+
 :::caution
-**Delete folder and contents** deletes the content-types of the folder and of its subfolders, with the same consequences as deleting them one by one (see [Deleting content-types](#deleting-content-types)). To only remove the folder and keep its content-types, use **Delete folder**.
+**Delete folder and contents** deletes the folder, its subfolders, and the content-types created for your application, with the same consequences as deleting these content-types one by one (see [Deleting content-types](#deleting-content-types)).
+
+Content-types that the Content-type Builder does not manage, such as the ones coming from plugins, are kept and moved out of the folders, and the confirmation window indicates how many of them are preserved.
+
+To keep all the content-types, use **Delete folder** instead.
 :::
 
