@@ -744,11 +744,12 @@ pre.prism-code {
     }
   }
 
-  // Align buttons to the left on mobile
+  // Keep the buttons on the right, where the title already reserves room for
+  // them. Aligning them left made them sit on top of the file path.
   [class*="buttonGroup"],
   .ai-button-group {
-    right: auto;
-    left: 16px;
+    left: auto;
+    right: 16px;
   }
 
   [class*="codeBlockTitle"] {
