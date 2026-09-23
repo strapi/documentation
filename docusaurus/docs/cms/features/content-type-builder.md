@@ -6,6 +6,7 @@ tags:
 - admin panel
 - content type builder
 - content types
+- content type folders
 - component
 - dynamic zone
 - custom field
@@ -40,6 +41,8 @@ The <Icon name="layout" /> Content-type Builder allows the creation and manageme
 
 All 3 are displayed as categories in the sub navigation of the <Icon name="layout" /> Content-type Builder. In each category are listed all content-types and components that have already been created.
 
+Collection types and single types can also be [grouped into folders](#organizing-content-types-with-folders), to keep the sub navigation organized as a project grows.
+
 :::tip
 Click the search icon <Icon name="magnifying-glass" classes="ph-bold" /> in the <Icon name="layout" /> Content-type Builder sub navigation to find a specific collection type, single type, or component.
 :::
@@ -52,6 +55,83 @@ In the Content-type Builder's sub navigation is also displayed a centralised **S
 
 :::note
 Clicking on the **...** button next to **Save** gives access to other options, such as **Undo/Redo last change** and **Discard all changes**. These options are also centralised, meaning that they apply to the last action(s) that was/were done on all content-types, components and fields since the last time you saved.
+:::
+
+## Configuration
+
+The Content-type Builder requires no configuration to be used. The folders used to organize content-types are however stored in a dedicated file, which can be edited directly.
+
+### Code-based configuration
+
+The folders displayed in the Content-type Builder sub navigation are stored in the `src/content-structure/groups.json` file.
+
+The file is versioned with the rest of your project, so the organization defined locally is shared with your team and deployed with your application.
+
+Folder organization therefore travels with your project's code: deploy the file to move it from one environment to another.
+:::caution
+[Data Transfer](/cms/features/data-management) does not include the content structure file in exports, imports or transfers.
+:::
+Folders are called `groups` in the file, and are listed per section, `collectionTypes` and `singleTypes`. Each group has an identifier, a name, a parent, and a list of children:
+
+```json title="/src/content-structure/groups.json"
+{
+  "version": 1,
+  "sections": {
+    "collectionTypes": {
+      "groups": [
+        {
+          "id": "grp_x8k2m4p7q1",
+          "name": "Restaurants",
+          "parent": null,
+          "children": [{ "type": "group", "id": "grp_c3v9n5t2w6" }]
+        },
+        {
+          "id": "grp_c3v9n5t2w6",
+          "name": "Menus",
+          "parent": "grp_x8k2m4p7q1",
+          "children": [{ "type": "contentType", "uid": "api::menu.menu" }]
+        }
+      ]
+    },
+    "singleTypes": {
+      "groups": []
+    }
+  }
+}
+```
+
+The following properties are available:
+
+| Property | Description |
+| -------- | ----------- |
+| `version` | Version of the file format. The only supported value is `1`. |
+| `id` | Identifier of the folder: any non-empty string, unique across both sections. The Content-type Builder generates identifiers prefixed with `grp_`, and hand-written identifiers such as `products` are valid. |
+| `name` | Name of the folder, from 1 to 255 characters, without leading or trailing spaces. 2 folders that share the same parent must have different names, whatever their case. |
+| `parent` | Identifier of the parent folder, or `null` for a folder at the root of its section. |
+| `children` | Ordered list of the content-types and folders the folder contains. A content-type is referenced by its `uid`, a folder by its `id`. |
+
+Folders can be nested up to 3 levels deep, and a content-type can only belong to one folder.
+
+<details>
+<summary>Editing the file by hand: what Strapi reads, and what it does with an invalid file</summary>
+
+At build time, the file is compiled to `dist/src/content-structure/groups.json`, and this built version is the one Strapi reads when the server starts.
+
+Edit the source file, never the one in `dist`, which is replaced by the next build. A file edited by hand is taken into account once the application has been rebuilt and restarted.
+
+Entries that cannot be used are repaired or ignored at startup, and a message prefixed with `[content-structure]` is logged. For instance:
+
+- a reference to a content-type that no longer exists is dropped from its folder,
+- a folder whose parent is missing is moved back to the root of its section.
+
+If the file itself cannot be read, the server starts without any folder.
+
+Saving from the Content-type Builder is stricter than reading the file at startup: a structure that breaks one of the rules above is rejected instead of being repaired. Make sure a hand-written file follows these rules before building and deploying it.
+
+</details>
+
+:::note
+Components are not part of the content structure file, and cannot be organized into folders.
 :::
 
 ## Usage
@@ -103,14 +183,15 @@ The more precise your prompts, the more accurate your created schemas are likely
 2. In the <Icon name="layout" /> Content-type Builder's category of the content-type you want to create, click on **Create new collection/single type**.
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
 4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows you to fix any pluralization mistake.
-5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
+5. (optional) In the *Select a folder or enter a value to create a new one* field, select the folder in which the content-type should be displayed, or type a name to create a new folder (see [Organizing content-types with folders](#organizing-content-types-with-folders)).
+6. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
       | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Draft & Publish](/cms/features/draft-and-publish)). |
       | Internationalization | Tick the checkbox to allow entries of the content-type to be translated into other locales. |
-6. Click on the **Continue** button.
-7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](#configuring-fields-content-type)).
-8. Click on the **Save** button.
+7. Click on the **Continue** button.
+8. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](#configuring-fields-content-type)).
+9. Click on the **Save** button.
 
 :::caution
 New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-type Builder, and cannot be used in the [Content Manager](/cms/features/content-manager).
@@ -871,3 +952,71 @@ Deleting a content-type only deletes what was created and available from the Con
     dark: '/img/assets/content-type-builder/new_CTB_deletion_DARK.png',
   }}
 />
+
+### Organizing content-types with folders <NewBadge /> {#organizing-content-types-with-folders}
+
+Collection types and single types can be grouped into folders, and folders can be nested up to 3 levels deep. Folders are displayed in the <Icon name="layout" /> Content-type Builder sub navigation.
+
+They are also displayed in the [Content Manager](/cms/features/content-manager), where they help content managers find content-types more quickly.
+
+<ThemedImage
+  alt="Folders in the Content-type Builder sub navigation"
+  width="25%"
+  sources={{
+    light: '/img/assets/content-type-builder/content-type-folders.png',
+    dark: '/img/assets/content-type-builder/content-type-folders_DARK.png',
+  }}
+/>
+
+Folders are stored in the [content structure file](#code-based-configuration) of your project. As for any other change made in the Content-type Builder, folder changes are applied only after clicking **Save**.
+
+#### Creating folders
+
+1. In the <Icon name="layout" /> Content-type Builder sub navigation, open the creation menu of the *Collection types* or *Single types* category and click on **New folder**.
+2. Write the name of the folder and press `Enter`.
+3. Click on the **Save** button.
+
+Folders are created at the root of their category, and can then be moved into another folder.
+
+:::note
+2 folders that share the same parent folder cannot have the same name.
+:::
+
+#### Moving content-types and folders {#moving-content-types-and-folders}
+
+Content-types and folders are moved by drag and drop in the <Icon name="layout" /> Content-type Builder sub navigation.
+
+Drag an item onto a folder to put it inside, drag it out of a folder to take it back to the root of its category, or drag it up and down to reorder it.
+
+A content-type can only belong to one folder at a time, and the nesting of folders is limited to 3 levels.
+
+Once the content-types and folders are organized as you want, click on the **Save** button.
+
+#### Renaming folders
+
+1. In the <Icon name="layout" /> Content-type Builder sub navigation, click on the <Icon name="dots-three" classes="ph-bold" /> button of the folder to rename.
+2. Click on <Icon name="pencil-simple" /> **Rename**.
+3. Write the new name of the folder and press `Enter`.
+4. Click on the **Save** button.
+
+#### Deleting folders
+
+1. In the <Icon name="layout" /> Content-type Builder sub navigation, click on the <Icon name="dots-three" classes="ph-bold" /> button of the folder to delete.
+2. Click on one of the following options:
+   - <Icon name="trash" /> **Delete folder** to only delete the folder. The content-types and folders it contains are moved to the parent folder, or to the root of the category if the folder was not nested.
+   - <Icon name="trash" /> **Delete folder and contents** to delete the folder along with the content-types and folders it contains. This option is only available if the folder is not empty.
+3. In the confirmation window, which indicates how many content-types and folders are affected, click on **Yes, delete**.
+4. Click on the **Save** button.
+
+**Delete folder** is unavailable when moving the subfolders out of the folder would give 2 folders the same name in their destination, whatever their case.
+
+The confirmation window then lists the conflicting names, and **Yes, delete** stays disabled until one of these folders is renamed.
+
+:::caution
+**Delete folder and contents** deletes the folder, its subfolders, and the content-types created for your application, with the same consequences as deleting these content-types one by one (see [Deleting content-types](#deleting-content-types)).
+
+Content-types that the Content-type Builder does not manage, such as the ones coming from plugins, are kept and moved out of the folders, and the confirmation window indicates how many of them are preserved.
+
+To keep all the content-types, use **Delete folder** instead.
+:::
+

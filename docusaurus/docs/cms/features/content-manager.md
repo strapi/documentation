@@ -52,6 +52,16 @@ Content can be created, managed and published from the 2 categories displayed in
 
 - *Single types*, which lists available content-types with only one entry. Unlike collection types, which have multiple entries, single types are not created for multiple uses. In other words, there can only be one default entry per available single type. There is therefore no list view in the Single types category.
 
+:::note Content-Type Folders
+If content-types have been organized into folders from the [Content-type Builder](/cms/features/content-type-builder#organizing-content-types-with-folders), both categories display these folders.
+
+Click on a folder to open or close it. Folders are read-only from the <Icon name="feather" /> Content Manager, and each administrator keeps their own folders open or closed from one visit to another.
+
+Only the folders that contain at least one content-type the administrator is allowed to see are displayed.
+
+A folder is not displayed if it is empty, or if all the content-types it contains are hidden by [permissions](/cms/features/rbac).
+:::
+
 :::tip
 Click the search icons <Icon name="magnifying-glass" classes="ph-bold" /> to use a text search and find one of your content-types and/or entries more quickly!
 

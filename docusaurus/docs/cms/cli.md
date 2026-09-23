@@ -639,6 +639,17 @@ Creates a content type schema with optional API files.
 | Content type only  | `content-types/[name]/schema.json`                                                                                                                       |
 | With API bootstrap | <ul><li>`content-types/[name]/schema.json`</li><li>`controllers/[name].js\|ts`</li><li>`services/[name].js\|ts`</li><li>`routes/[name].js\|ts`</li></ul> |
 
+##### Folder assignment
+
+The generator also asks whether the content type should be added to a folder, to organize it in the admin panel (see [Organizing content-types with folders](/cms/features/content-type-builder#organizing-content-types-with-folders)):
+
+1. Answer yes to the *Add this content type to a folder?* question.
+2. Select an existing folder, or select *Create a new folder* and write the name of the new folder.
+
+The assignment is written to the [content structure file](/cms/features/content-type-builder#code-based-configuration) of the project, and the folders that already exist are left untouched.
+
+New folders are created at the root of the *Collection types* or *Single types* category, depending on the kind of the generated content type. Content types generated for a plugin are not added to folders.
+
 #### Controller generator
 
 Creates a [controller](/cms/backend-customization/controllers) file with basic action structure.

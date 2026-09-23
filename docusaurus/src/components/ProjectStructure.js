@@ -57,6 +57,8 @@ export default function InteractiveProjectStructure() {
           │     │     └──── (category-name)<br/>
           │     │           ├ (componentA).json<br/>
           │     │           └ (componentB).json<br/>
+          │     ├──── content-structure <span className="token comment"># folders used to organize content-types</span><br/>
+          │     │     └ <a href="/cms/features/content-type-builder#code-based-configuration">groups.json</a><br/>
           │     ├──── <a href="/cms/plugins-development/plugins-extension">extensions</a> <span className="token comment"># files to extend installed plugins</span><br/>
           │     │     └──── (plugin-to-be-extended)<br/>
           │     │           ├──── content-types<br/>
@@ -145,6 +147,8 @@ export default function InteractiveProjectStructure() {
         │     │     └──── (category-name)<br/>
         │     │           ├ (componentA).json<br/>
         │     │           └ (componentB).json<br/>
+        │     ├──── content-structure <span className="token comment"># folders used to organize content-types</span><br/>
+        │     │     └ <a href="/cms/features/content-type-builder#code-based-configuration">groups.json</a><br/>
         │     ├──── <a href="/cms/plugins-development/plugins-extension">extensions</a> <span className="token comment"># files to extend installed plugins</span><br/>
         │     │     └──── (plugin-to-be-extended)<br/>
         │     │           ├──── content-types<br/>
