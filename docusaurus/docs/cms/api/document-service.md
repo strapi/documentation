@@ -474,6 +474,10 @@ await strapi.documents('api::restaurant.restaurant').delete({
 </ResponseTab>
 </Responses>
 
+:::note No `deleteMany()` method
+The Document Service API does not provide a `deleteMany()` method: `delete()` always requires a `documentId` and only deletes the locale versions of a single document. To delete multiple documents at once based on filters, use [`deleteMany()`](/cms/api/query-engine/bulk-operations#deletemany) from the [Query Engine API](/cms/api/query-engine) instead, keeping in mind it bypasses Document Service features such as Draft & Publish and internationalization.
+:::
+
 </Endpoint>
 
 ### `publish()`
