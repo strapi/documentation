@@ -1314,6 +1314,11 @@
       "number": 27685,
       "reason": "Router: Internal admin UI bug fix. Removes a redundant placeholder prop that was causing duplicate text rendering. This is a visual/display bug fix with no API, configuration, or feature changes. Users still see the same 'Choose here' placeholder; it just displays once instead of twice. No documentation needed.",
       "added": "2026-09-22"
+    },
+    {
+      "number": 27602,
+      "reason": "Router: Internal bug fix in the Content Manager's relation picker logic. The fix corrects how draft vs published relations are filtered when picking available relations to connect. This is implementation-level behavior restoration with no user-facing documentation needs — the picker still appears and functions the same way from a user perspective, just now correctly.",
+      "added": "2026-09-23"
     }
   ]
 }
