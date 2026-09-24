@@ -1344,6 +1344,11 @@
       "number": 27683,
       "reason": "Router: Internal refactoring of how window.strapi is built in admin panel. No change to public API or user-facing behavior.",
       "added": "2026-09-24"
+    },
+    {
+      "number": 27684,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3525",
+      "added": "2026-09-24"
     }
   ]
 }
