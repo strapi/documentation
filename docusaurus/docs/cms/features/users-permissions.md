@@ -311,6 +311,29 @@ export default ({ env }) => ({
 
 </Tabs>
 
+The following options can be set in the `sessions` object when `jwtManagement` is set to `refresh`:
+
+| Parameter | Description | Type | Default |
+|-----------|-------------|------|---------|
+| `sessions.accessTokenLifespan` | Access token lifespan in seconds | number | `600` (10 minutes) |
+| `sessions.maxRefreshTokenLifespan` | Maximum refresh token lifespan in seconds | number | `2592000` (30 days) |
+| `sessions.idleRefreshTokenLifespan` | Idle refresh token timeout in seconds | number | `1209600` (14 days) |
+| `sessions.maxSessionLifespan` | Maximum session duration in seconds | number | `86400` (1 day) |
+| `sessions.idleSessionLifespan` | Session idle timeout in seconds | number | `7200` (2 hours) |
+| `sessions.httpOnly` | When `true`, the refresh token is sent as an HTTP-only cookie instead of in the response body | boolean | `false` |
+| `sessions.cookie.name` | Name of the refresh token cookie | string | `'strapi_up_refresh'` |
+| `sessions.cookie.sameSite` | `SameSite` attribute of the refresh token cookie | string | `'lax'` |
+| `sessions.cookie.path` | `Path` attribute of the refresh token cookie | string | `'/'` |
+| `sessions.cookie.domain` | `Domain` attribute of the refresh token cookie | string | `undefined` |
+| `sessions.cookie.secure` | `Secure` attribute of the refresh token cookie | boolean | `true` in production, `false` otherwise |
+| `sessions.cookie.maxAge` | Lifetime of the refresh token cookie in milliseconds. When unset, the cookie is a session cookie | number | `undefined` |
+
+The `sessions.cookie` options only apply when the refresh token is sent as a cookie.
+
+:::tip
+Clients can also request the HTTP-only refresh token cookie for a single request by sending the `x-strapi-refresh-cookie: httpOnly` header, even when `sessions.httpOnly` is `false`.
+:::
+
 In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API.
 
 ### Registration configuration
