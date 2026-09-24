@@ -1319,6 +1319,31 @@
       "number": 27602,
       "reason": "Router: Internal bug fix in the Content Manager's relation picker logic. The fix corrects how draft vs published relations are filtered when picking available relations to connect. This is implementation-level behavior restoration with no user-facing documentation needs — the picker still appears and functions the same way from a user perspective, just now correctly.",
       "added": "2026-09-23"
+    },
+    {
+      "number": 27754,
+      "reason": "Triage: test infrastructure fix for test reliability",
+      "added": "2026-09-24"
+    },
+    {
+      "number": 27751,
+      "reason": "Triage: e2e test infrastructure fix for retry logic",
+      "added": "2026-09-24"
+    },
+    {
+      "number": 27777,
+      "reason": "Router: Internal admin UI layout fix. No user-facing behavior change, only repositions a button from fixed positioning to normal document flow.",
+      "added": "2026-09-24"
+    },
+    {
+      "number": 27717,
+      "reason": "Router: Bug fix preventing invalid runtime behavior. Documentation about relations and single types already covers correct behavior; this ensures the system enforces it.",
+      "added": "2026-09-24"
+    },
+    {
+      "number": 27683,
+      "reason": "Router: Internal refactoring of how window.strapi is built in admin panel. No change to public API or user-facing behavior.",
+      "added": "2026-09-24"
     }
   ]
 }
