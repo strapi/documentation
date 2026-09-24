@@ -58,7 +58,7 @@ The following documentation details the available options to customize your data
 - `schemas/`: schema definitions
 - `metadata.json`: metadata about the export
 
-Each folder contains one or more `.jsonl` files where each line represents a single record. The format allows you to edit or transform data before re‑importing it.
+Each folder contains one or more `.jsonl` (<ExternalLink to="https://jsonlines.org/" text="JSON lines" />) files where each line represents a single record. The format allows you to edit or transform data before re‑importing it.
 
 ### Asset metadata validation
 
