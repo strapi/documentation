@@ -27896,6 +27896,18 @@ claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authori
 ```
 
 
+## Connecting Codex
+Description: Run the following command, replacing YOURADMINTOKEN with the name of the environment variable holding the Admin token value copied from the Strapi admin panel configuration:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-codex)
+
+Language: JavaScript
+File path: /Claude/claude_desktop_config.js
+
+```js
+codex mcp add strapi-mcp --url http://localhost:1337/mcp --bearer-token-env-var YOUR_ADMIN_TOKEN
+```
+
+
 ## Connecting Cursor
 Description: Add the server to your .cursor/mcp.json file:
 (Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-cursor)
