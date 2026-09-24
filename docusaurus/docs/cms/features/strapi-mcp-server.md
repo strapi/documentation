@@ -20,7 +20,7 @@ Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextpr
 
 </Tldr>
 
-The MCP server exposes a set of content management tools to AI clients such as Claude Desktop, Claude Code, Cursor, or any MCP-compatible tool. An AI client connected to the MCP server can, for example, create a blog article, list recent entries, or publish a page. Which tools are available depends on the permissions granted to the Admin token used for authentication.
+The MCP server exposes a set of content management tools to AI clients such as Claude Desktop, Claude Code, Codex, Cursor, or any MCP-compatible tool. An AI client connected to the MCP server can, for example, create a blog article, list recent entries, or publish a page. Which tools are available depends on the permissions granted to the Admin token used for authentication.
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
@@ -161,7 +161,16 @@ Run the following command, replacing `YOUR_ADMIN_TOKEN` with the Admin token val
 claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
 ```
 
-Restart Claude Code, then run `/mcp` to confirm `strapi-mcp` reports as connected.
+#### Connecting Codex
+
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the name of the environment variable holding the Admin token value copied from the [Strapi admin panel configuration](#strapi-admin-panel-configuration):
+
+```bash
+codex mcp add strapi-mcp --url http://localhost:1337/mcp --bearer-token-env-var YOUR_ADMIN_TOKEN
+```
+
+Then, set the environment variable before launching `codex` or add it to your shell.
+Run `/mcp` to confirm `strapi-mcp` reports as connected.
 
 #### Connecting Cursor
 
