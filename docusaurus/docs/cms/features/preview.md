@@ -474,6 +474,10 @@ Live Preview is able to identify the parts of your frontend that correspond to f
 
 Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
 
+:::caution
+Content source maps are only added to REST API responses. If your front end fetches content through the [GraphQL API](/cms/api/graphql), double-click editing is not available.
+:::
+
 For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
 
 ```typescript {20-23}
@@ -568,5 +572,7 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 :::caution Experimental feature
 This feature is currently experimental. Feel free to share <ExternalLink to="https://feedback.strapi.io/" text="feedback"/> or <ExternalLink to="https://github.com/strapi/strapi/issues" text="issues" /> with the Strapi team.
 
-The current version of Live Preview comes with one limitation: fields in dynamic zones are not handled.
+The current version of Live Preview comes with the following limitations:
+- Fields in dynamic zones are not handled.
+- [Double-click editing does not work when the front end fetches content through the GraphQL API](#content-source-maps).
 :::
