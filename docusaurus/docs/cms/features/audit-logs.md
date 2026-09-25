@@ -100,7 +100,7 @@ The Audit Logs feature logs the following events:
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
 | Role / Permission | `create`, `update`, `delete` |
-| User | `create`, `update`, `delete` |
+| User <VersionBadge version="5.56.0+" noTooltip /> | `create`, `update`, `delete`, `password.update`, `password-reset.create`, `password-reset.confirm`, `invite.accept` |
 | Token <VersionBadge version="5.54.0+" noTooltip /> | `create`, `update`, `delete`, `regenerate` |
 
 For each log item, the following information is displayed:
@@ -111,6 +111,12 @@ For each log item, the following information is displayed:
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
 Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
+
+User events cover admin accounts, recorded as `admin-user.*`. An update records only the fields that changed, among first name, last name, email, username, preferred language, active status, and roles. No row is written when nothing changed.
+
+Password events cover a password set from the profile or by an admin on another account (`password.update`), a password reset requested and confirmed from the public login page (`password-reset.create` and `password-reset.confirm`), and an invitation accepted (`invite.accept`). The password, its hash, and reset or registration tokens are never recorded. These password reset and invitation actions happen with no admin session, so their User column shows `-`.
+
+The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
 
 With Strapi <VersionBadge version="5.52.0+" noTooltip />  logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
 
