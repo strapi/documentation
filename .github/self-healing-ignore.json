@@ -1359,6 +1359,11 @@
       "number": 27674,
       "reason": "Router: Internal Content Manager bug fix for modal state management. Fixes UI bugs in the existing relation-on-the-fly modal without changing user-facing API or documented behavior.",
       "added": "2026-09-25"
+    },
+    {
+      "number": 27748,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3529",
+      "added": "2026-09-25"
     }
   ]
 }
