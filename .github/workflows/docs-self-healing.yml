@@ -26,14 +26,14 @@ jobs:
 
     steps:
       - name: Checkout strapi/documentation
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT_TOKEN_PIWI }}
 
       - name: Checkout strapi/strapi (read-only)
         if: inputs.audit_only != true
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           repository: strapi/strapi
           ref: develop
@@ -293,7 +293,7 @@ jobs:
 
       - name: Run Triage (Haiku)
         if: steps.check-prs.outputs.has_prs == 'true'
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
@@ -480,7 +480,7 @@ jobs:
       - name: Run Router (Haiku)
         if: steps.check-triage.outputs.has_candidates == 'true'
         id: router
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
@@ -817,7 +817,7 @@ jobs:
 
       - name: Run Drafter (Sonnet)
         if: steps.check-router.outputs.has_targets == 'true'
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}

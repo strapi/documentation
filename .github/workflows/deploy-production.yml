@@ -14,13 +14,13 @@ jobs:
       files-changed: ${{ steps.check-changes.outputs.changed }}
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           token: ${{ secrets.PAT_AUTO_MERGE_LLMS_TXT_TOKEN }}
           fetch-depth: 0
       
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '20'
       
@@ -64,7 +64,7 @@ jobs:
     steps:
       - name: Get Vercel deployment URL
         id: get-url-prod
-        uses: derrickmehaffy/vercel-preview-url@main
+        uses: derrickmehaffy/vercel-preview-url@4d1fb4790e582a10faae07874120d4c76eba708d # main
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
@@ -74,7 +74,7 @@ jobs:
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
       
       - name: Wait for Vercel deploy to complete
-        uses: UnlyEd/github-action-await-vercel@v1.2.14
+        uses: UnlyEd/github-action-await-vercel@7c1f26ee3515963905d2b359b9c4ca8474f7c523 # v1.2.14
         id: await-vercel-prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -86,7 +86,7 @@ jobs:
         run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
       
       - name: Invalidate CloudFront Cache
-        uses: chetan/invalidate-cloudfront-action@v2
+        uses: chetan/invalidate-cloudfront-action@6adb1f613f4102ad81cd08a7ba83b8abe490cb8d # v2.4.2
         id: invalid-cloudfront-prod
         env:
           DISTRIBUTION: ${{ secrets.PROD_DISTRIBUTION }}
