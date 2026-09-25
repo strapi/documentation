@@ -1349,6 +1349,16 @@
       "number": 27684,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3525",
       "added": "2026-09-24"
+    },
+    {
+      "number": 27464,
+      "reason": "Triage: CI/CD and PR process tooling only, no product behavior change",
+      "added": "2026-09-25"
+    },
+    {
+      "number": 27674,
+      "reason": "Router: Internal Content Manager bug fix for modal state management. Fixes UI bugs in the existing relation-on-the-fly modal without changing user-facing API or documented behavior.",
+      "added": "2026-09-25"
     }
   ]
 }
