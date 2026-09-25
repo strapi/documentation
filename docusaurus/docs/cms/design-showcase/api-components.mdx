@@ -1,0 +1,172 @@
+---
+title: API components showcase
+description: A visual reference of the API-related MDX components (Endpoint, Responses) used in the Strapi documentation, for the design team.
+displayed_sidebar: cmsSidebar
+pagination_next: null
+pagination_prev: null
+tags:
+- design
+- components
+- showcase
+- API
+---
+
+# API components showcase
+
+This page demonstrates the **API-specific components** used across the Strapi documentation. For general-purpose components (admonitions, tabs, cards, badges…), see the [components showcase](/cms/design-showcase/components).
+
+<Tldr>
+This is a demo page for designers. It renders the Endpoint layout for both HTTP and JavaScript API calls, with parameters, request examples, and responses.
+</Tldr>
+
+## 1. Endpoint (HTTP)
+
+The Endpoint layout for an HTTP request, with parameters, a request example, and responses.
+
+The parameters and the code examples display **side by side in two columns only in the wide and max width view modes**. In the default (centered) view mode, the layout collapses to a single column, with the parameters stacked above the code. Use the width toggle at the top of the page to switch between view modes and compare.
+
+<Endpoint
+  method="GET"
+  path="/api/:pluralApiId"
+  title="Get documents"
+  description="Returns a list of documents matching the query parameters."
+  params={[
+    { name: 'locale', type: 'String', required: false, description: 'Locale to fetch documents for.' },
+    { name: 'sort', type: 'String', required: false, description: 'Sort the results.' },
+    { name: 'pagination[page]', type: 'Integer', required: false, description: 'Page number.' },
+  ]}
+>
+  <Tabs>
+    <TabItem value="curl" label="cURL">
+
+```bash
+curl http://localhost:1337/api/restaurants?locale=en
+```
+
+    </TabItem>
+    <TabItem value="js" label="JavaScript">
+
+```js
+const res = await fetch('http://localhost:1337/api/restaurants?locale=en');
+const { data } = await res.json();
+```
+
+    </TabItem>
+  </Tabs>
+  <Responses>
+    <ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
+    { "id": 1, "documentId": "abc123", "name": "Biscotte Restaurant" }
+  ],
+  "meta": { "pagination": { "page": 1, "pageCount": 1, "total": 1 } }
+}
+```
+
+    </ResponseTab>
+    <ResponseTab status={404} statusText="Not Found" collapsible>
+
+```json
+{
+  "data": null,
+  "error": { "status": 404, "name": "NotFoundError", "message": "Not Found" }
+}
+```
+
+    </ResponseTab>
+  </Responses>
+</Endpoint>
+
+## 2. Endpoint (JavaScript / Document Service API)
+
+The `kind="js"` variant is for **internal back-end APIs**, such as the Document Service API, that are called from server code rather than over HTTP. For these, HTTP methods like `GET` or `POST` do not apply, so the endpoint shows the JavaScript method signature instead of a method pill and a URL path.
+
+It follows the same two-column behavior: side by side in the wide and max width view modes, single column otherwise.
+
+<Endpoint
+  kind="js"
+  path="strapi.documents('api::article.article').findOne()"
+  title="findOne()"
+  description="Find a single document by its documentId."
+  params={[
+    { name: 'documentId', type: 'String', required: true, description: 'The documentId of the document.' },
+    { name: 'populate', type: 'Object | String', required: false, description: 'Relations, media, and components to populate.' },
+  ]}
+>
+
+```js
+const article = await strapi.documents('api::article.article').findOne({
+  documentId: 'abc123',
+  populate: '*',
+});
+```
+
+  <Responses>
+    <ResponseTab status={200} statusText="OK">
+
+```json
+{ "documentId": "abc123", "title": "Hello world" }
+```
+
+    </ResponseTab>
+  </Responses>
+</Endpoint>
+
+## 3. Endpoint (GraphQL)
+
+GraphQL is an HTTP API: every query and mutation is a `POST` request to the single `/graphql` endpoint. The request body carries the GraphQL query or mutation, so the Endpoint uses the HTTP layout with the GraphQL document shown in the request tabs.
+
+<Endpoint
+  method="POST"
+  path="/graphql"
+  title="Query and mutate documents"
+  description="Send a GraphQL query or mutation as the request body to the single /graphql endpoint."
+  params={[
+    { name: 'query', type: 'String', required: true, description: 'The GraphQL query or mutation document.' },
+    { name: 'variables', type: 'Object', required: false, description: 'Values for the variables used in the document.' },
+  ]}
+>
+  <Tabs>
+    <TabItem value="query" label="Query">
+
+```graphql
+query Restaurants {
+  restaurants {
+    documentId
+    name
+  }
+}
+```
+
+    </TabItem>
+    <TabItem value="mutation" label="Mutation">
+
+```graphql
+mutation CreateRestaurant {
+  createRestaurant(data: { name: "Biscotte Restaurant" }) {
+    documentId
+    name
+  }
+}
+```
+
+    </TabItem>
+  </Tabs>
+  <Responses>
+    <ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "restaurants": [
+      { "documentId": "abc123", "name": "Biscotte Restaurant" }
+    ]
+  }
+}
+```
+
+    </ResponseTab>
+  </Responses>
+</Endpoint>
