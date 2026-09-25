@@ -261,6 +261,7 @@ The [Audit Logs](/cms/features/audit-logs) feature can be configured with the fo
 | `auditLogs.enabled`               | Enable or disable the Audit Logs feature                                                                                                                         | boolean       | `true`                                                                                                                              |
 | `auditLogs.retentionDays`         | How long Audit Logs are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers, see the note under the table._               | integer       | 90                                                                                                                                  |
 | `auditLogs.exportMaxRows`         | Maximum number of entries included in a single CSV export <VersionBadge version="5.53+" noTooltip />                                                           | integer       | `1000000`                                                                                                                           |
+| `auditLogs.exportPartRows`        | Number of entries fetched per request when exporting Audit Logs to CSV. Values above `100000` are capped at `100000`. <VersionBadge version="5.53+" noTooltip /> | integer       | `50000`                                                                                                                             |
 
 :::note Retention days for self-hosted vs. Strapi Cloud users
 For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
@@ -284,8 +285,8 @@ To configure basic authentication, use the following parameters:
 | `auth.secret`                     | Secret used to encode JWT tokens. Required when [`serveAdminPanel`](#admin-panel-behavior) is `true` (the default). API-only deployments running with `serveAdminPanel: false` can omit it.                                                                                                                                                                   | string        | `undefined`                                                                                                                         |
 | `auth.domain`                     | Domain used within the cookie for SSO authentication <EnterpriseBadge /> <SsoBadge />)                                                                                                                             | string        | `undefined`                                                                                                                         |
 | `auth.providers`                  | List of authentication providers used for SSO                                                                                           | array(object) | -                                                                                                                                   |
-| `auth.options`                    | Options object passed to jsonwebtoken                                                                                                                | object        | -                                                                                                                                   |
-| `auth.options.expiresIn`          | JWT expire time used in jsonwebtoken                                                                                                                 | object        | `30d`                                                                                                                               |
+| `auth.options`                    | Options object passed to jsonwebtoken.<br /><br />Deprecated: use [`auth.sessions.options`](#session-management) instead.                            | object        | -                                                                                                                                   |
+| `auth.options.expiresIn`          | Deprecated. Does not set the access token lifetime (see `auth.sessions.accessTokenLifespan`). Only used as the fallback value of `auth.sessions.maxRefreshTokenLifespan` and `auth.sessions.maxSessionLifespan` when these are not set, in which case Strapi logs a deprecation warning at startup. | string \| number | `30d`                                                                                                                               |
 | `auth.events`                     | Record of all the events subscribers registered for the authentication                                                                                                                             | object        | `{}`                                                                                                                                |
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                 | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                     | function      | `undefined`                                                                                                                         |
@@ -321,6 +322,10 @@ To configure session lifespans and behavior, use the following parameters:
 | `auth.sessions.idleRefreshTokenLifespan`  | Idle refresh token timeout in seconds                                                                                                                                                              | number        | `604800` (7 days)                                                                                                                   |
 | `auth.sessions.maxSessionLifespan`        | Maximum session duration in seconds                                                                                                                                                                | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
 | `auth.sessions.idleSessionLifespan`       | Session idle timeout in seconds                                                                                                                                                                    | number        | `3600` (1 hour)                                                                                                                     |
+| `auth.sessions.options`                   | Options passed to jsonwebtoken to sign and verify admin tokens. Merged on top of the deprecated `auth.options`. `expiresIn` is ignored: token lifetimes are set by the lifespan parameters above.  | object        | `{}`                                                                                                                                |
+| `auth.sessions.options.algorithm`         | Algorithm used to sign admin tokens (e.g., `HS256`, `RS256`, `ES256`). Symmetric `HS*` algorithms use `auth.secret` as the key.                                                                    | string        | `HS256`                                                                                                                             |
+| `auth.sessions.options.privateKey`        | Private key used to sign tokens. Required for asymmetric algorithms (`RS*`, `ES*`, `PS*`).                                                                                                         | string        | -                                                                                                                                   |
+| `auth.sessions.options.publicKey`         | Public key used to verify tokens. Required for asymmetric algorithms (`RS*`, `ES*`, `PS*`).                                                                                                        | string        | -                                                                                                                                   |
 
 :::note Notes
 Apps scaffolded with `create-strapi-app` have `jwtManagement: 'refresh'` and `sessions.httpOnly: true` set by default for the Users & Permissions feature in the generated `config/plugins.*` file. This enables refresh-token-based authentication with HTTP-only session cookies for Content API users out of the box.
@@ -503,9 +508,6 @@ module.exports = ({ env }) => ({
         console.error(e.error, e.provider);
       },
     },
-    options: {
-      expiresIn: '7d',
-    },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
       accessTokenLifespan: 1800, // 30 minutes
@@ -578,9 +580,6 @@ export default ({ env }) => ({
       onConnectionError(e) {
         console.error(e.error, e.provider);
       },
-    },
-    options: {
-      expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
