@@ -38,7 +38,7 @@ The `/config/server.js` file can include the following parameters:
 | `port`<br/><br/>❗️ _Mandatory_     | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer                                                                                           | `1337`              |
 | `app.keys`<br/><br/>❗️ _Mandatory_ | Declare session keys (based on <ExternalLink to="https://github.com/koajs/session/blob/master/Readme.md" text="Koa session"/>), which is used by the `session` middleware for the Users & Permissions plugin and the Documentation plugin.                                                                                                                                                           | array of strings                                                                                  | `undefined`         |
 | `socket`                            | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g <ExternalLink to="https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode" text="Heroku nginx buildpack"/>) | string \| integer                                                                                 | `/tmp/nginx.socket` |
-| `emitErrors`                        | Enable errors to be emitted to `koa` when they happen in order to attach custom logic or use error reporting services.                                                                                                                                                                                                                                                      | boolean                                                                                           | `false`             |
+| `emitErrors`                        | Deprecated: this option is not read by Strapi 5 and has no effect.                                                                                                                                                                        | boolean                                                                                           | `false`             |
 | `url`                               | Public url of the server. Required for many different features (ex: reset password, third login providers etc.), and the address absolute URLs are built from when Strapi runs behind a proxy such as Apache or Nginx, example: `https://mywebsite.com/api`. Trusting the headers that proxy adds is a separate setting, `proxy.koa`. The url can be relative, if so, it is used with `http://${host}:${port}` as the base url. An absolute url is however recommended.                                | string                                                                                            | `''`                |
 | `proxy`                             | Proxy configuration                                                                                                                                                                                                                                                                                                                                                         | object                                                                                            |                     |
 | `proxy.global`                      | Defines the proxy agent for all external requests. To be used if the Strapi project is behind a forward proxy.                                                                                                                                                                                                                                                              | string                                                                                            |                     |
@@ -56,7 +56,7 @@ The `/config/server.js` file can include the following parameters:
 | `http`                              | Configuration of the http server used by Strapi                                                                                                                                                                                                                                                                                                                             | object                                                                                            |                     |
 | `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | <ExternalLink to="https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener" text="http.serverOptions"/>    | {}                  |
 | `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/cms/features/data-management/transfer)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
-| `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
+| `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | `300000` (5 minutes)                                             |
 | `logger.startup.enabled`            | Toggle the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
 | `openapi`                            | [OpenAPI](/cms/api/openapi) endpoint configuration. Both endpoints use `access: 'disabled'` by default and are not registered.                                                                                                                                                                                                                                                                                 | object                                                                                            |                     |
@@ -149,7 +149,6 @@ module.exports = ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -163,9 +162,6 @@ module.exports = ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
@@ -197,7 +193,6 @@ export default ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -211,9 +206,6 @@ export default ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
