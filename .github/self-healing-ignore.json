@@ -1364,6 +1364,11 @@
       "number": 27748,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3529",
       "added": "2026-09-25"
+    },
+    {
+      "number": 27770,
+      "reason": "Router: Internal admin panel UI bug fix in FormModal component. No user-facing API, parameter, or behavior change. Fixes form state management to clear stale folder field data when switching between content type edit modals.",
+      "added": "2026-09-26"
     }
   ]
 }
