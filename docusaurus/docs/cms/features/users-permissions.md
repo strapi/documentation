@@ -322,10 +322,10 @@ The following options can be set in the `sessions` object when `jwtManagement` i
 | `sessions.cookie.secure` | `Secure` attribute of the refresh token cookie | boolean | `true` in production, `false` otherwise |
 | `sessions.cookie.maxAge` | Lifetime of the refresh token cookie in milliseconds. When unset, the cookie is a session cookie | number | `undefined` |
 
-The `sessions.cookie` options only apply when the refresh token is sent as a cookie.
+The `sessions.cookie` options only apply when the refresh token is sent as a cookie. This happens when `sessions.httpOnly` is `true`, or when a client requests it for a single request.
 
 :::tip
-Clients can also request the HTTP-only refresh token cookie for a single request by sending the `x-strapi-refresh-cookie: httpOnly` header, even when `sessions.httpOnly` is `false`.
+Clients can also request the HTTP-only refresh token cookie for a single request. To do so, send the `x-strapi-refresh-cookie: httpOnly` header. This works even when `sessions.httpOnly` is `false`.
 :::
 
 In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API.
