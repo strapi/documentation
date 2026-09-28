@@ -63,6 +63,10 @@ For each locale, the table displays the default ISO code of the locale, its opti
 - Click on the edit button <Icon name="pencil-simple" /> to edit a locale
 - Click on the delete button <Icon name="trash" /> to delete a locale
 
+:::warning
+Deleting a locale also deletes all the content saved in that locale, for every content-type. This cannot be undone: export your content or back up your database before deleting a locale.
+:::
+
 #### Adding a new locale
 
 Administrators can add and manage as many locales as they want. There can however only be one locale set as the default one for the whole Strapi application.
