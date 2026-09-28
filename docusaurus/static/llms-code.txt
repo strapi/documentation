@@ -18131,9 +18131,6 @@ module.exports = ({ env }) => ({
         console.error(e.error, e.provider);
       },
     },
-    options: {
-      expiresIn: '7d',
-    },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
       accessTokenLifespan: 1800, // 30 minutes
@@ -18205,9 +18202,6 @@ export default ({ env }) => ({
       onConnectionError(e) {
         console.error(e.error, e.provider);
       },
-    },
-    options: {
-      expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
