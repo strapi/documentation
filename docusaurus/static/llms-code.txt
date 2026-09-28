@@ -22358,7 +22358,6 @@ module.exports = ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -22372,9 +22371,6 @@ module.exports = ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
@@ -22406,7 +22402,6 @@ export default ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -22420,9 +22415,6 @@ export default ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
