@@ -314,7 +314,7 @@ The following options can be set in the `sessions` object when `jwtManagement` i
 | `sessions.accessTokenLifespan` | Access token lifespan in seconds | number | `600` (10 minutes) |
 | `sessions.maxRefreshTokenLifespan` | Maximum refresh token lifespan in seconds | number | `2592000` (30 days) |
 | `sessions.idleRefreshTokenLifespan` | Idle refresh token timeout in seconds | number | `1209600` (14 days) |
-| `sessions.httpOnly` | When `true`, the refresh token is sent as an HTTP-only cookie instead of in the response body | boolean | `false` |
+| `sessions.httpOnly` | When `true`, the refresh token is sent as an HTTP-only cookie instead of in the response body | boolean | `false`, but `true` in projects created with `create-strapi-app` |
 | `sessions.cookie.name` | Name of the refresh token cookie | string | `'strapi_up_refresh'` |
 | `sessions.cookie.sameSite` | `SameSite` attribute of the refresh token cookie | string | `'lax'` |
 | `sessions.cookie.path` | `Path` attribute of the refresh token cookie | string | `'/'` |
