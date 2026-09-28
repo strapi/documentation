@@ -31,14 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           # PAT so the triage stage can push a branch and open a PR attributed
           # to the maintainer (same approach as docs-self-healing.yml).
           token: ${{ secrets.PAT_TOKEN_PIWI }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '18'
 
@@ -48,7 +48,7 @@ jobs:
 
       - name: Process issue and generate response
         id: process-issue
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           script: |
             const axios = require('axios');
@@ -472,7 +472,7 @@ jobs:
       # the deny-list below.
       - name: Run triage and act (Sonnet)
         if: steps.process-issue.outputs.kapa_succeeded == 'true'
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
