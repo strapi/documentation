@@ -260,8 +260,6 @@ module.exports = ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -291,8 +289,6 @@ export default ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -318,8 +314,6 @@ The following options can be set in the `sessions` object when `jwtManagement` i
 | `sessions.accessTokenLifespan` | Access token lifespan in seconds | number | `600` (10 minutes) |
 | `sessions.maxRefreshTokenLifespan` | Maximum refresh token lifespan in seconds | number | `2592000` (30 days) |
 | `sessions.idleRefreshTokenLifespan` | Idle refresh token timeout in seconds | number | `1209600` (14 days) |
-| `sessions.maxSessionLifespan` | Maximum session duration in seconds | number | `86400` (1 day) |
-| `sessions.idleSessionLifespan` | Session idle timeout in seconds | number | `7200` (2 hours) |
 | `sessions.httpOnly` | When `true`, the refresh token is sent as an HTTP-only cookie instead of in the response body | boolean | `false` |
 | `sessions.cookie.name` | Name of the refresh token cookie | string | `'strapi_up_refresh'` |
 | `sessions.cookie.sameSite` | `SameSite` attribute of the refresh token cookie | string | `'lax'` |
