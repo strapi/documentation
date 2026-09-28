@@ -64,7 +64,7 @@ jobs:
     steps:
       - name: Get Vercel deployment URL
         id: get-url-prod
-        uses: derrickmehaffy/vercel-preview-url@main
+        uses: zentered/vercel-preview-url@fba568fc6d882ae788a9724d7e28dee618728771 # v1.4.0
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
