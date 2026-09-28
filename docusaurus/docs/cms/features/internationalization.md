@@ -64,7 +64,7 @@ For each locale, the table displays the default ISO code of the locale, its opti
 - Click on the delete button <Icon name="trash" /> to delete a locale
 
 :::warning
-Deleting a locale removes all content stored under that locale code. If the same locale code appears more than once in the list, do not delete what looks like a duplicate row to clean up the list: removing any row for a locale code deletes every entry saved under that code, even when another row for the same code remains. Export content for that locale and verify the backup before attempting any cleanup.
+Deleting a locale also deletes all the content saved in that locale, for every content-type. This cannot be undone: export your content or back up your database before deleting a locale.
 :::
 
 #### Adding a new locale
