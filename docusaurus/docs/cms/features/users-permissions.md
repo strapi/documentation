@@ -216,7 +216,7 @@ Defining which mode is used is done by setting the `jwtManagement` property of t
 | Mode | Description | Use case |
 |------|-------------|----------|
 | `legacy-support` | (default) Issues long-lived JWTs using traditional configuration | Existing applications, simple authentication |
-| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements<br />(see [admin panel configuration](/cms/configurations/admin-panel#session-management)) |
+| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements |
 
 For backwards compatibility, the Users & Permissions feature defaults to legacy mode:
 
@@ -307,7 +307,7 @@ export default ({ env }) => ({
 
 </Tabs>
 
-The following options can be set in the `sessions` object when `jwtManagement` is set to `refresh`:
+The following options can be set in the `sessions` object when `jwtManagement` is set to `refresh`. They only cover Content API sessions. The admin panel has its own [session options](/cms/configurations/admin-panel#session-management), set under `auth.sessions`, with different default values.
 
 | Parameter | Description | Type | Default |
 |-----------|-------------|------|---------|
