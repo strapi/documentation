@@ -1369,6 +1369,11 @@
       "number": 27770,
       "reason": "Router: Internal admin panel UI bug fix in FormModal component. No user-facing API, parameter, or behavior change. Fixes form state management to clear stale folder field data when switching between content type edit modals.",
       "added": "2026-09-26"
+    },
+    {
+      "number": 27818,
+      "reason": "Router: Internal admin UI component refactor/bugfix. Scopes MediaLibraryBanner to Media Library pages only and fixes banner stacking. No new user-facing features, APIs, or configuration changes requiring documentation.",
+      "added": "2026-09-29"
     }
   ]
 }
