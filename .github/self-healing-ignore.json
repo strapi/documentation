@@ -1374,6 +1374,21 @@
       "number": 27818,
       "reason": "Router: Internal admin UI component refactor/bugfix. Scopes MediaLibraryBanner to Media Library pages only and fixes banner stacking. No new user-facing features, APIs, or configuration changes requiring documentation.",
       "added": "2026-09-29"
+    },
+    {
+      "number": 27796,
+      "reason": "Router: Internal fix to prevent the preview script from being injected multiple times. This is a technical implementation detail that does not change the user-facing Preview feature behavior or API. The documented preview functionality remains unchanged.",
+      "added": "2026-09-30"
+    },
+    {
+      "number": 27766,
+      "reason": "Router: Internal validation fix that strips empty documentId values from create/update requests before database persistence. This prevents data integrity issues but does not change the documented API behavior. Empty documentId values were never valid, and this fix only prevents an edge case bug.",
+      "added": "2026-09-30"
+    },
+    {
+      "number": 27472,
+      "reason": "Router: Internal defensive fix to the RelativeTime component that prevents crashes when handling invalid dates. This is a stability fix to admin UI components and does not change any documented user-facing features or APIs.",
+      "added": "2026-09-30"
     }
   ]
 }
