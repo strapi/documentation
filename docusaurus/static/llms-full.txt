@@ -7528,6 +7528,7 @@ Use the `status` parameter with the Document Service API to retrieve published o
 By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:
 
 - return the published version of a document,
+- return the draft or published version of populated relations,
 - count documents depending on their status,
 - and directly publish a document while creating it or updating it.
 
@@ -7605,6 +7606,50 @@ const documents = await strapi.documents("api::restaurant.restaurant").findMany(
     name: "Biscotte Restaurant",
     publishedAt: "2024-03-14T15:40:45.330Z",
     locale: "en", // default locale
+    // …
+  }
+  // …
+]
+```
+
+## Populate draft or published relations {#populate}
+
+The `status` parameter also applies to [populated](/cms/api/document-service/populate) relations. Populated relations return the same version as the queried documents when their content-type has Draft & Publish enabled.
+
+:::caution
+`status` is only accepted at the root of the query. Adding it inside a `populate` object, such as `populate: { categories: { status: 'draft' } }`, throws a `ValidationError` with a message such as `Invalid key status at categories`.
+:::
+
+The [`publicationFilter`](/cms/api/document-service/publication-filter) parameter follows the same rules. It is only accepted at the root of the query, and Strapi filters populated relations with the same value.
+
+The following example returns the published versions of restaurants and of their categories:
+
+#### GET strapi.documents().findMany() — findMany() with status: 
+
+Return the published versions of all matching documents and of their populated relations.
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'published',
+  populate: ['categories'],
+});
+```
+
+```json
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: "2024-03-14T15:40:45.330Z",
+    locale: "en", // default locale
+    categories: [
+      {
+        documentId: "z0y2x4w6v8u1t3s5r7q9onm",
+        name: "French cuisine",
+        publishedAt: "2024-03-14T15:38:12.004Z",
+        // …
+      }
+    ],
     // …
   }
   // …
@@ -14234,6 +14279,8 @@ To build complex queries with multiple-level population, use the [interactive qu
 
 You can combine the `populate` operator with other operators such as [field selection](/cms/api/rest/populate-select#field-selection), [filters](/cms/api/rest/filters), and [sort](/cms/api/rest/sort-pagination) in the population queries.
 
+The [`status`](/cms/api/rest/status) parameter is the exception: it is only accepted at the root of the query, and populated relations follow its value. Adding `status` inside a `populate` object returns a `400` error (see [Populate draft or published relations](/cms/api/rest/status#populate)).
+
 :::note
 Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSize]`) work alongside `populate` to paginate the main query results. However, you cannot apply pagination parameters directly to populated relations to limit the number of related entries returned within each result (nested pagination on relations is not supported in the REST API).
 :::
@@ -14929,6 +14976,8 @@ await request(`/api/restaurants?${query}`);
 ## Combine with other parameters {#combine}
 
 `publicationFilter` can be combined with [`filters`](/cms/api/rest/filters), [`locale`](/cms/api/rest/locale), [`populate`](/cms/api/rest/populate-select), and other [REST parameters](/cms/api/rest/parameters). All conditions are applied together.
+
+When populating relations to content-types with [Draft & Publish](/cms/features/draft-and-publish) enabled, Strapi filters the populated relations with the same `publicationFilter` value. For instance, `status=draft&publicationFilter=never-published&populate=categories` only returns categories that were never published. `publicationFilter` is only accepted at the root of the query: adding it inside a `populate` object returns a `400` error.
 
 
 
@@ -15686,6 +15735,80 @@ await request(`/api/restaurants?${query}`);
 
 The query URL above was built using [the `qs` library](https://github.com/ljharb/qs).
 `qs` can be run locally on your machine, as shown in the following code example, or you can use our **[interactive query builder](/cms/api/rest/interactive-query-builder)** online tool.
+
+## Populate draft or published relations {#populate}
+
+The `status` parameter applies to the whole request, including [populated](/cms/api/rest/populate-select#population) relations. Populated relations return the version requested with `status` when their content-type has [Draft & Publish](/cms/features/draft-and-publish) enabled:
+
+- Without `status`, or with `status=published`, populated relations return their published versions. Related documents that were never published are left out.
+- With `status=draft`, populated relations return their draft versions, including related documents that were never published.
+
+The same rule applies at every population level, including relations populated inside components and dynamic zones. Populated relations follow `status` even when the queried content-type has Draft & Publish disabled.
+
+:::caution
+`status` is only accepted at the root of the query. Adding it inside a `populate` object, such as `populate[categories][status]=draft`, returns a `400` error with a message such as `Invalid key status at categories`.
+:::
+
+Because `status` applies to the whole request, a single request cannot return published documents with draft relations, or the opposite. Filtering populated relations on `publishedAt` does not change this: it only narrows down the versions selected by the root `status`. Send 1 request per status instead.
+
+The [`publicationFilter`](/cms/api/rest/publication-filter) parameter follows the same rules. It is only accepted at the root of the query, and Strapi filters populated relations with the same value.
+
+In the following example, the restaurant and its category are both returned as drafts, so `publishedAt` is `null` for both:
+
+#### GET /api/restaurants?status=draft&populate=categories — Get draft versions of restaurants and their categories
+
+Returns draft versions of documents and the draft versions of their populated relations by passing the status=draft query parameter.
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&populate=categories' \
+  -H 'Authorization: Bearer <token>'
+```
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    populate: 'categories',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en",
+      "categories": [
+        {
+          "id": 8,
+          "documentId": "z0y2x4w6v8u1t3s5r7q9onm",
+          "name": "French cuisine",
+          "createdAt": "2024-03-06T13:40:12.004Z",
+          "updatedAt": "2024-03-06T13:40:12.004Z",
+          "publishedAt": null,
+          "locale": "en"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
 
 ## Create or update as a draft or as published {#create-update}
 
@@ -45543,6 +45666,7 @@ This section regroups useful notes and procedures about the introduced breaking 
 ### Notes
 
 * There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
+* `status` is only accepted at the root of a query, and it also applies to populated relations. Adding `status` inside a `populate` object is not supported: the REST API returns a `400` error, and the Document Service API throws a `ValidationError`. For details, see [REST API: `status`](/cms/api/rest/status#populate) and [Document Service API: `status`](/cms/api/document-service/status#populate).
 * Additional information about how to use the new `status` parameter can be found in the [REST API](/cms/api/rest/status), [GraphQL API](/cms/api/graphql#status), and [Document Service API](/cms/api/document-service/status) documentation.
 
 ### Migration procedure
