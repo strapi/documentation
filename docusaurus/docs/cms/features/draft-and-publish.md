@@ -153,6 +153,18 @@ If the draft version of the document contains content different from the publish
   }}
 />
 
+### Discarding changes
+
+**Path:** <Icon name="feather" /> Content Manager, edit view of your content type
+
+To discard all changes made to a draft, click on <Icon name="dots-three-outline" /> in the _Entry_ box on the right side of the interface and choose <Icon name="x-circle" /> **Discard changes**.
+
+Discarding changes reverts the draft to match the published version. If your draft has relations to unpublished entries, a warning will appear in the confirmation dialog, informing you that these relations will be removed since unpublished entries are not part of the published version.
+
+:::tip Content History
+If you need to restore a previous draft version instead of reverting to the published version, you can use the [Content History](/cms/features/content-history) feature to browse and restore earlier saved states.
+:::
+
 ### Bulk actions
 
 **Path:** <Icon name="feather" /> Content Manager, list view of your content type
