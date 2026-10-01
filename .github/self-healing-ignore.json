@@ -1359,6 +1359,61 @@
       "number": 27674,
       "reason": "Router: Internal Content Manager bug fix for modal state management. Fixes UI bugs in the existing relation-on-the-fly modal without changing user-facing API or documented behavior.",
       "added": "2026-09-25"
+    },
+    {
+      "number": 27748,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3529",
+      "added": "2026-09-25"
+    },
+    {
+      "number": 27770,
+      "reason": "Router: Internal admin panel UI bug fix in FormModal component. No user-facing API, parameter, or behavior change. Fixes form state management to clear stale folder field data when switching between content type edit modals.",
+      "added": "2026-09-26"
+    },
+    {
+      "number": 27818,
+      "reason": "Router: Internal admin UI component refactor/bugfix. Scopes MediaLibraryBanner to Media Library pages only and fixes banner stacking. No new user-facing features, APIs, or configuration changes requiring documentation.",
+      "added": "2026-09-29"
+    },
+    {
+      "number": 27796,
+      "reason": "Router: Internal fix to prevent the preview script from being injected multiple times. This is a technical implementation detail that does not change the user-facing Preview feature behavior or API. The documented preview functionality remains unchanged.",
+      "added": "2026-09-30"
+    },
+    {
+      "number": 27766,
+      "reason": "Router: Internal validation fix that strips empty documentId values from create/update requests before database persistence. This prevents data integrity issues but does not change the documented API behavior. Empty documentId values were never valid, and this fix only prevents an edge case bug.",
+      "added": "2026-09-30"
+    },
+    {
+      "number": 27472,
+      "reason": "Router: Internal defensive fix to the RelativeTime component that prevents crashes when handling invalid dates. This is a stability fix to admin UI components and does not change any documented user-facing features or APIs.",
+      "added": "2026-09-30"
+    },
+    {
+      "number": 27863,
+      "reason": "Triage: internal tooling fix for linting configuration",
+      "added": "2026-10-01"
+    },
+    {
+      "number": 27831,
+      "reason": "Router: Internal bug fix to content-manager Relations field behavior. Fixes shared cache issue when document opened in modal; no public API or user-facing behavior changes.",
+      "added": "2026-10-01"
+    },
+    {
+      "number": 27785,
+      "reason": "Router: Internal admin UI bug fix. Fixes placeholder appearing twice in EnumerationInput; no public API or user-facing feature changes.",
+      "added": "2026-10-01"
+    },
+    {
+      "number": 27780,
+      "reason": "Router: Internal performance fix to the documentation plugin's OpenAPI schema generation. Optimizes memory usage; no user-facing behavior or API changes.",
+      "added": "2026-10-01"
+    },
+    {
+      "number": 27682,
+      "reason": "Router: Internal UI fix to content-manager Relations field. Removes full-page loader component behavior; no public API or user-facing feature changes.",
+      "added": "2026-10-01"
     }
   ]
 }

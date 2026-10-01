@@ -806,3 +806,5 @@ await request(`/api/restaurants?${query}`);
 ## Combine with other parameters {#combine}
 
 `publicationFilter` can be combined with [`filters`](/cms/api/rest/filters), [`locale`](/cms/api/rest/locale), [`populate`](/cms/api/rest/populate-select), and other [REST parameters](/cms/api/rest/parameters). All conditions are applied together.
+
+When populating relations to content-types with [Draft & Publish](/cms/features/draft-and-publish) enabled, Strapi filters the populated relations with the same `publicationFilter` value. For instance, `status=draft&publicationFilter=never-published&populate=categories` only returns categories that were never published. `publicationFilter` is only accepted at the root of the query: adding it inside a `populate` object returns a `400` error.

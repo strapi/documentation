@@ -137,6 +137,101 @@ await request(`/api/restaurants?${query}`);
 
 <QsForQueryBody />
 
+## Populate draft or published relations {#populate}
+
+The `status` parameter applies to the whole request, including [populated](/cms/api/rest/populate-select#population) relations. Populated relations return the version requested with `status` when their content-type has [Draft & Publish](/cms/features/draft-and-publish) enabled:
+
+- Without `status`, or with `status=published`, populated relations return their published versions. Related documents that were never published are left out.
+- With `status=draft`, populated relations return their draft versions, including related documents that were never published.
+
+The same rule applies at every population level, including relations populated inside components and dynamic zones. Populated relations follow `status` even when the queried content-type has Draft & Publish disabled.
+
+:::caution
+`status` is only accepted at the root of the query. Adding it inside a `populate` object, such as `populate[categories][status]=draft`, returns a `400` error with a message such as `Invalid key status at categories`.
+:::
+
+Because `status` applies to the whole request, a single request cannot return published documents with draft relations, or the opposite. Filtering populated relations on `publishedAt` does not change this: it only narrows down the versions selected by the root `status`. Send 1 request per status instead.
+
+The [`publicationFilter`](/cms/api/rest/publication-filter) parameter follows the same rules. It is only accepted at the root of the query, and Strapi filters populated relations with the same value.
+
+In the following example, the restaurant and its category are both returned as drafts, so `publishedAt` is `null` for both:
+
+<Endpoint
+  id="get-draft-versions-with-relations"
+  method="GET"
+  path="/api/restaurants?status=draft&populate=categories"
+  title="Get draft versions of restaurants and their categories"
+  description="Returns draft versions of documents and the draft versions of their populated relations by passing the status=draft query parameter.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&populate=categories' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    populate: 'categories',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en",
+      "categories": [
+        {
+          "id": 8,
+          "documentId": "z0y2x4w6v8u1t3s5r7q9onm",
+          "name": "French cuisine",
+          "createdAt": "2024-03-06T13:40:12.004Z",
+          "updatedAt": "2024-03-06T13:40:12.004Z",
+          "publishedAt": null,
+          "locale": "en"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
+
 ## Create or update as a draft or as published {#create-update}
 
 The `status` parameter also applies to `POST` and `PUT` requests, where it determines whether the document is left as a draft or published right away:

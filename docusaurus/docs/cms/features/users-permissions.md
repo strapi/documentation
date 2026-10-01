@@ -216,7 +216,7 @@ Defining which mode is used is done by setting the `jwtManagement` property of t
 | Mode | Description | Use case |
 |------|-------------|----------|
 | `legacy-support` | (default) Issues long-lived JWTs using traditional configuration | Existing applications, simple authentication |
-| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements<br />(see [admin panel configuration](/cms/configurations/admin-panel#session-management)) |
+| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements |
 
 For backwards compatibility, the Users & Permissions feature defaults to legacy mode:
 
@@ -260,8 +260,6 @@ module.exports = ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -291,8 +289,6 @@ export default ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -310,6 +306,27 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
+
+The following options can be set in the `sessions` object when `jwtManagement` is set to `refresh`. They only cover Content API sessions. The admin panel has its own [session options](/cms/configurations/admin-panel#session-management), set under `auth.sessions`, with different default values.
+
+| Parameter | Description | Type | Default |
+|-----------|-------------|------|---------|
+| `sessions.accessTokenLifespan` | Access token lifespan in seconds | number | `600` (10 minutes) |
+| `sessions.maxRefreshTokenLifespan` | Maximum refresh token lifespan in seconds | number | `2592000` (30 days) |
+| `sessions.idleRefreshTokenLifespan` | Idle refresh token timeout in seconds | number | `1209600` (14 days) |
+| `sessions.httpOnly` | When `true`, the refresh token is sent as an HTTP-only cookie instead of in the response body | boolean | `false`, but `true` in projects created with `create-strapi-app` |
+| `sessions.cookie.name` | Name of the refresh token cookie | string | `'strapi_up_refresh'` |
+| `sessions.cookie.sameSite` | `SameSite` attribute of the refresh token cookie | string | `'lax'` |
+| `sessions.cookie.path` | `Path` attribute of the refresh token cookie | string | `'/'` |
+| `sessions.cookie.domain` | `Domain` attribute of the refresh token cookie | string | `undefined` |
+| `sessions.cookie.secure` | `Secure` attribute of the refresh token cookie | boolean | `true` in production, `false` otherwise |
+| `sessions.cookie.maxAge` | Lifetime of the refresh token cookie in milliseconds. When unset, the cookie is a session cookie | number | `undefined` |
+
+The `sessions.cookie` options only apply when the refresh token is sent as a cookie. This happens when `sessions.httpOnly` is `true`, or when a client requests it for a single request.
+
+:::tip
+Clients can also request the HTTP-only refresh token cookie for a single request. To do so, send the `x-strapi-refresh-cookie: httpOnly` header. This works even when `sessions.httpOnly` is `false`.
+:::
 
 In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API.
 

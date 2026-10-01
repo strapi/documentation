@@ -7528,6 +7528,7 @@ Use the `status` parameter with the Document Service API to retrieve published o
 By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:
 
 - return the published version of a document,
+- return the draft or published version of populated relations,
 - count documents depending on their status,
 - and directly publish a document while creating it or updating it.
 
@@ -7605,6 +7606,50 @@ const documents = await strapi.documents("api::restaurant.restaurant").findMany(
     name: "Biscotte Restaurant",
     publishedAt: "2024-03-14T15:40:45.330Z",
     locale: "en", // default locale
+    // …
+  }
+  // …
+]
+```
+
+## Populate draft or published relations {#populate}
+
+The `status` parameter also applies to [populated](/cms/api/document-service/populate) relations. Populated relations return the same version as the queried documents when their content-type has Draft & Publish enabled.
+
+:::caution
+`status` is only accepted at the root of the query. Adding it inside a `populate` object, such as `populate: { categories: { status: 'draft' } }`, throws a `ValidationError` with a message such as `Invalid key status at categories`.
+:::
+
+The [`publicationFilter`](/cms/api/document-service/publication-filter) parameter follows the same rules. It is only accepted at the root of the query, and Strapi filters populated relations with the same value.
+
+The following example returns the published versions of restaurants and of their categories:
+
+#### GET strapi.documents().findMany() — findMany() with status: 
+
+Return the published versions of all matching documents and of their populated relations.
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'published',
+  populate: ['categories'],
+});
+```
+
+```json
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: "2024-03-14T15:40:45.330Z",
+    locale: "en", // default locale
+    categories: [
+      {
+        documentId: "z0y2x4w6v8u1t3s5r7q9onm",
+        name: "French cuisine",
+        publishedAt: "2024-03-14T15:38:12.004Z",
+        // …
+      }
+    ],
     // …
   }
   // …
@@ -14084,6 +14129,7 @@ The following API parameters are available:
 | Operator           | Type          | Description                                           |
 | ------------------ | ------------- | ----------------------------------------------------- |
 | `filters`          | Object        | [Filter the response](/cms/api/rest/filters) |
+| `_q`               | String        | Search for entries matching a string across the content-type's fields |
 | `locale`           | String        | [Select a locale](/cms/api/rest/locale) |
 | `status`           | String        | [Select the Draft & Publish status](/cms/api/rest/status) |
 | `publicationFilter` | String       | [Select documents by how their draft and published versions relate](/cms/api/rest/publication-filter) |
@@ -14232,6 +14278,8 @@ To build complex queries with multiple-level population, use the [interactive qu
 ### Combining population with other operators
 
 You can combine the `populate` operator with other operators such as [field selection](/cms/api/rest/populate-select#field-selection), [filters](/cms/api/rest/filters), and [sort](/cms/api/rest/sort-pagination) in the population queries.
+
+The [`status`](/cms/api/rest/status) parameter is the exception: it is only accepted at the root of the query, and populated relations follow its value. Adding `status` inside a `populate` object returns a `400` error (see [Populate draft or published relations](/cms/api/rest/status#populate)).
 
 :::note
 Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSize]`) work alongside `populate` to paginate the main query results. However, you cannot apply pagination parameters directly to populated relations to limit the number of related entries returned within each result (nested pagination on relations is not supported in the REST API).
@@ -14928,6 +14976,8 @@ await request(`/api/restaurants?${query}`);
 ## Combine with other parameters {#combine}
 
 `publicationFilter` can be combined with [`filters`](/cms/api/rest/filters), [`locale`](/cms/api/rest/locale), [`populate`](/cms/api/rest/populate-select), and other [REST parameters](/cms/api/rest/parameters). All conditions are applied together.
+
+When populating relations to content-types with [Draft & Publish](/cms/features/draft-and-publish) enabled, Strapi filters the populated relations with the same `publicationFilter` value. For instance, `status=draft&publicationFilter=never-published&populate=categories` only returns categories that were never published. `publicationFilter` is only accepted at the root of the query: adding it inside a `populate` object returns a `400` error.
 
 
 
@@ -15685,6 +15735,80 @@ await request(`/api/restaurants?${query}`);
 
 The query URL above was built using [the `qs` library](https://github.com/ljharb/qs).
 `qs` can be run locally on your machine, as shown in the following code example, or you can use our **[interactive query builder](/cms/api/rest/interactive-query-builder)** online tool.
+
+## Populate draft or published relations {#populate}
+
+The `status` parameter applies to the whole request, including [populated](/cms/api/rest/populate-select#population) relations. Populated relations return the version requested with `status` when their content-type has [Draft & Publish](/cms/features/draft-and-publish) enabled:
+
+- Without `status`, or with `status=published`, populated relations return their published versions. Related documents that were never published are left out.
+- With `status=draft`, populated relations return their draft versions, including related documents that were never published.
+
+The same rule applies at every population level, including relations populated inside components and dynamic zones. Populated relations follow `status` even when the queried content-type has Draft & Publish disabled.
+
+:::caution
+`status` is only accepted at the root of the query. Adding it inside a `populate` object, such as `populate[categories][status]=draft`, returns a `400` error with a message such as `Invalid key status at categories`.
+:::
+
+Because `status` applies to the whole request, a single request cannot return published documents with draft relations, or the opposite. Filtering populated relations on `publishedAt` does not change this: it only narrows down the versions selected by the root `status`. Send 1 request per status instead.
+
+The [`publicationFilter`](/cms/api/rest/publication-filter) parameter follows the same rules. It is only accepted at the root of the query, and Strapi filters populated relations with the same value.
+
+In the following example, the restaurant and its category are both returned as drafts, so `publishedAt` is `null` for both:
+
+#### GET /api/restaurants?status=draft&populate=categories — Get draft versions of restaurants and their categories
+
+Returns draft versions of documents and the draft versions of their populated relations by passing the status=draft query parameter.
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&populate=categories' \
+  -H 'Authorization: Bearer <token>'
+```
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    populate: 'categories',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en",
+      "categories": [
+        {
+          "id": 8,
+          "documentId": "z0y2x4w6v8u1t3s5r7q9onm",
+          "name": "French cuisine",
+          "createdAt": "2024-03-06T13:40:12.004Z",
+          "updatedAt": "2024-03-06T13:40:12.004Z",
+          "publishedAt": null,
+          "locale": "en"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
 
 ## Create or update as a draft or as published {#create-update}
 
@@ -23138,6 +23262,7 @@ The [Audit Logs](/cms/features/audit-logs) feature can be configured with the fo
 | `auditLogs.enabled`               | Enable or disable the Audit Logs feature                                                                                                                         | boolean       | `true`                                                                                                                              |
 | `auditLogs.retentionDays`         | How long Audit Logs are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers, see the note under the table._               | integer       | 90                                                                                                                                  |
 | `auditLogs.exportMaxRows`         | Maximum number of entries included in a single CSV export                                                            | integer       | `1000000`                                                                                                                           |
+| `auditLogs.exportPartRows`        | Number of entries fetched per request when exporting Audit Logs to CSV. Values above `100000` are capped at `100000`.  | integer       | `50000`                                                                                                                             |
 
 :::note Retention days for self-hosted vs. Strapi Cloud users
 For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
@@ -23161,8 +23286,8 @@ To configure basic authentication, use the following parameters:
 | `auth.secret`                     | Secret used to encode JWT tokens. Required when [`serveAdminPanel`](#admin-panel-behavior) is `true` (the default). API-only deployments running with `serveAdminPanel: false` can omit it.                                                                                                                                                                   | string        | `undefined`                                                                                                                         |
 | `auth.domain`                     | Domain used within the cookie for SSO authentication  )                                                                                                                             | string        | `undefined`                                                                                                                         |
 | `auth.providers`                  | List of authentication providers used for SSO                                                                                           | array(object) | -                                                                                                                                   |
-| `auth.options`                    | Options object passed to jsonwebtoken                                                                                                                | object        | -                                                                                                                                   |
-| `auth.options.expiresIn`          | JWT expire time used in jsonwebtoken                                                                                                                 | object        | `30d`                                                                                                                               |
+| `auth.options`                    | Options object passed to jsonwebtoken.<br /><br />Deprecated: use [`auth.sessions.options`](#session-management) instead.                            | object        | -                                                                                                                                   |
+| `auth.options.expiresIn`          | Deprecated. Does not set the access token lifetime (see `auth.sessions.accessTokenLifespan`). Only used as the fallback value of `auth.sessions.maxRefreshTokenLifespan` and `auth.sessions.maxSessionLifespan` when these are not set, in which case Strapi logs a deprecation warning at startup. | string \| number | `30d`                                                                                                                               |
 | `auth.events`                     | Record of all the events subscribers registered for the authentication                                                                                                                             | object        | `{}`                                                                                                                                |
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                 | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                     | function      | `undefined`                                                                                                                         |
@@ -23198,6 +23323,10 @@ To configure session lifespans and behavior, use the following parameters:
 | `auth.sessions.idleRefreshTokenLifespan`  | Idle refresh token timeout in seconds                                                                                                                                                              | number        | `604800` (7 days)                                                                                                                   |
 | `auth.sessions.maxSessionLifespan`        | Maximum session duration in seconds                                                                                                                                                                | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
 | `auth.sessions.idleSessionLifespan`       | Session idle timeout in seconds                                                                                                                                                                    | number        | `3600` (1 hour)                                                                                                                     |
+| `auth.sessions.options`                   | Options passed to jsonwebtoken to sign and verify admin tokens. Merged on top of the deprecated `auth.options`. `expiresIn` is stripped before tokens are signed, so it never sets a token lifetime, but it is still read as the fallback value of `maxRefreshTokenLifespan` and `maxSessionLifespan` when these are not set.  | object        | `{}`                                                                                                                                |
+| `auth.sessions.options.algorithm`         | Algorithm used to sign admin tokens (e.g., `HS256`, `RS256`, `ES256`). Symmetric `HS*` algorithms use `auth.secret` as the key.                                                                    | string        | `HS256`                                                                                                                             |
+| `auth.sessions.options.privateKey`        | Private key used to sign tokens. Required for asymmetric algorithms (`RS*`, `ES*`, `PS*`): tokens cannot be signed without it, and the resulting error names the legacy `admin.auth.options.privateKey` path.  | string        | -                                                                                                                                   |
+| `auth.sessions.options.publicKey`         | Public key used to verify tokens. Required for asymmetric algorithms (`RS*`, `ES*`, `PS*`): tokens cannot be verified without it, and the resulting error names the legacy `admin.auth.options.publicKey` path.  | string        | -                                                                                                                                   |
 
 :::note Notes
 Apps scaffolded with `create-strapi-app` have `jwtManagement: 'refresh'` and `sessions.httpOnly: true` set by default for the Users & Permissions feature in the generated `config/plugins.*` file. This enables refresh-token-based authentication with HTTP-only session cookies for Content API users out of the box.
@@ -23214,6 +23343,7 @@ To configure HTTP cookies for admin authentication, use the following parameters
 | `auth.cookie.domain`              | Cookie domain (inherits from server if not set)                                                                                                                                                   | string        | `undefined`                                                                                                                         |
 | `auth.cookie.path`                | Cookie path                                                                                                                                                                                        | string        | `'/admin'`                                                                                                                          |
 | `auth.cookie.sameSite`            | [SameSite cookie attribute](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value)                                                                                                                                                                          | string        | `'lax'`                                                                                                                             |
+| `auth.cookie.secure`              | Whether the `Secure` attribute is set on the admin authentication cookie. When unset, it is enabled automatically in production over HTTPS; setting it to `false` in production logs a warning.       | boolean       | `undefined`                                                                                                                         |
 
 ## Content history
 
@@ -23236,6 +23366,7 @@ The feature flags can be configured with the following parameters:
 | `flags`                           | Settings to turn certain features or elements of the admin on or off                                                                                                                               | object        | {}                                                                                                                                  |
 | `flags.nps`                       | Enable/Disable the Net Promoter Score popup                                                                                                                                                        | boolean       | `true`                                                                                                                              |
 | `flags.promoteEE`                 | Enable/Disable the promotion of Strapi Enterprise features                                                                                                                                         | boolean       | `true`                                                                                                                              |
+| `flags.docLinks`                  | Enable/Disable the documentation links displayed in the admin panel                                                                                                                                | boolean       | `true`                                                                                                                              |
 
 ## Forgot password
 
@@ -23355,9 +23486,6 @@ module.exports = ({ env }) => ({
         console.error(e.error, e.provider);
       },
     },
-    options: {
-      expiresIn: '7d',
-    },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
       accessTokenLifespan: 1800, // 30 minutes
@@ -23425,9 +23553,6 @@ module.exports = ({ env }) => ({
       onConnectionError(e) {
         console.error(e.error, e.provider);
       },
-    },
-    options: {
-      expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
@@ -27449,7 +27574,7 @@ module.exports = [
 
 This security middleware is about cross-origin resource sharing (CORS) and is based on [@koa/cors](https://github.com/koajs/cors). It accepts the following options:
 
-| Option              | Type                                                      | Description          | Default value                                              |
+| Option              | Description                                                | Type                 | Default value                                              |
 |---------------------|-----------------------------------------------------------|----------------------|------------------------------------------------------------|
 | `origin`            | Configure the `Access-Control-Allow-Origin` header        | `String` or `Array` or `Function`  | `'*'`                                                      |
 | `maxAge`            | Configure the `Access-Control-Max-Age` header, in seconds | `String` or `Number` | `31536000`                                                 |
@@ -28102,7 +28227,7 @@ The `/config/server.js` file can include the following parameters:
 | `port`<br/><br/>❗️ _Mandatory_     | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer                                                                                           | `1337`              |
 | `app.keys`<br/><br/>❗️ _Mandatory_ | Declare session keys (based on [Koa session](https://github.com/koajs/session/blob/master/Readme.md)), which is used by the `session` middleware for the Users & Permissions plugin and the Documentation plugin.                                                                                                                                                           | array of strings                                                                                  | `undefined`         |
 | `socket`                            | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g [Heroku nginx buildpack](https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode)) | string \| integer                                                                                 | `/tmp/nginx.socket` |
-| `emitErrors`                        | Enable errors to be emitted to `koa` when they happen in order to attach custom logic or use error reporting services.                                                                                                                                                                                                                                                      | boolean                                                                                           | `false`             |
+| `emitErrors`                        | (**Removed in Strapi 5**)<br/>Formerly enabled errors to be emitted to `koa` so you could attach custom logic or use error reporting services. The option is no longer read and has no effect, so you can safely delete it from `/config/server`. See [Error handling](/cms/error-handling) for the supported approach. | boolean                                                                                           |                     |
 | `url`                               | Public url of the server. Required for many different features (ex: reset password, third login providers etc.), and the address absolute URLs are built from when Strapi runs behind a proxy such as Apache or Nginx, example: `https://mywebsite.com/api`. Trusting the headers that proxy adds is a separate setting, `proxy.koa`. The url can be relative, if so, it is used with `http://${host}:${port}` as the base url. An absolute url is however recommended.                                | string                                                                                            | `''`                |
 | `proxy`                             | Proxy configuration                                                                                                                                                                                                                                                                                                                                                         | object                                                                                            |                     |
 | `proxy.global`                      | Defines the proxy agent for all external requests. To be used if the Strapi project is behind a forward proxy.                                                                                                                                                                                                                                                              | string                                                                                            |                     |
@@ -28120,7 +28245,7 @@ The `/config/server.js` file can include the following parameters:
 | `http`                              | Configuration of the http server used by Strapi                                                                                                                                                                                                                                                                                                                             | object                                                                                            |                     |
 | `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | [http.serverOptions](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener)    | {}                  |
 | `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/cms/features/data-management/transfer)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
-| `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
+| `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | `300000` (5 minutes)                                             |
 | `logger.startup.enabled`            | Toggle the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
 | `openapi`                            | [OpenAPI](/cms/api/openapi) endpoint configuration. Both endpoints use `access: 'disabled'` by default and are not registered.                                                                                                                                                                                                                                                                                 | object                                                                                            |                     |
@@ -28134,6 +28259,8 @@ The `/config/server.js` file can include the following parameters:
 | `openapi.admin.cache.enabled`       | Enable file-based caching of the generated specification.                                                                                                                                                                                                                                                                                                                   | boolean                                                                                           | `true`              |
 | `openapi.admin.cache.maxAgeMs`      | Cache validity in milliseconds.                                                                                                                                                                                                                                                                                                                                             | integer                                                                                           | `60000`             |
 | `openapi.admin.cache.filePath`      | File path for the cached specification. Relative paths resolve from the application root.                                                                                                                                                                                                                                                                                   | string                                                                                            | `.strapi/openapi/admin.json` |
+| `webhooks.defaultHeaders`           | Default headers sent with every webhook request. Headers set on an individual webhook take precedence. See [Webhooks](/cms/backend-customization/webhooks). | object                                                                                            | `{}`                |
+| `webhooks.populateRelations`        | (**Removed in Strapi 5**)<br/>The option is no longer read and has no effect. If the key is still present in your `/config/server` file, you can safely delete it. See [The `webhooks.populateRelations` server configuration is removed](/cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations). | boolean                                                                                           |                     |
 
 :::note
 There is no Strapi-specific keep alive configuration option, because Strapi uses Node's default one for incoming HTTP requests, keeping connections alive by default. 
@@ -28193,7 +28320,6 @@ module.exports = ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -28207,9 +28333,6 @@ module.exports = ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
@@ -28237,7 +28360,6 @@ module.exports = ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -28251,9 +28373,6 @@ module.exports = ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
@@ -33320,6 +33439,7 @@ The Audit Logs feature logs the following events:
 | Role / Permission | `create`, `update`, `delete` |
 | User | `create`, `update`, `delete` |
 | Token  | `create`, `update`, `delete`, `regenerate` |
+| Webhook | `create`, `update`, `delete` |
 
 For each log item, the following information is displayed:
 
@@ -33329,6 +33449,8 @@ For each log item, the following information is displayed:
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
 Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
+
+Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
 
 With Strapi   logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
 
@@ -36229,6 +36351,18 @@ If the draft version of the document contains content different from the publish
     - **Unpublish and replace last draft** to discard any existing content in the _Draft_ tab and replace it with the content of all fields from the _Published_ tab
 3. Click **Confirm**. The desired changes will be applied to both the _Draft_ and _Published_ tabs and the new status of the entry will also be reflected below the entry title.
 
+### Discarding changes
+
+**Path:**  Content Manager, edit view of your content type
+
+To discard all changes made to a draft, click on  in the _Entry_ box on the right side of the interface and choose  **Discard changes**.
+
+Discarding changes reverts the draft to match the published version. If your draft has relations to unpublished entries, a warning will appear in the confirmation dialog, informing you that these relations will be removed since unpublished entries are not part of the published version.
+
+:::tip Content History
+If you need to restore a previous draft version instead of reverting to the published version, you can use the [Content History](/cms/features/content-history) feature to browse and restore earlier saved states.
+:::
+
 ### Bulk actions
 
 **Path:**  Content Manager, list view of your content type
@@ -36713,6 +36847,10 @@ For each locale, the table displays the default ISO code of the locale, its opti
 
 - Click on the edit button  to edit a locale
 - Click on the delete button  to delete a locale
+
+:::warning
+Deleting a locale also deletes all the content saved in that locale, for every content-type. This cannot be undone: export your content or back up your database before deleting a locale.
+:::
 
 #### Adding a new locale
 
@@ -39682,7 +39820,7 @@ Defining which mode is used is done by setting the `jwtManagement` property of t
 | Mode | Description | Use case |
 |------|-------------|----------|
 | `legacy-support` | (default) Issues long-lived JWTs using traditional configuration | Existing applications, simple authentication |
-| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements<br />(see [admin panel configuration](/cms/configurations/admin-panel#session-management)) |
+| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements |
 
 For backwards compatibility, the Users & Permissions feature defaults to legacy mode:
 
@@ -39722,8 +39860,6 @@ module.exports = ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -39748,8 +39884,6 @@ module.exports = ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -39763,6 +39897,27 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
+The following options can be set in the `sessions` object when `jwtManagement` is set to `refresh`. They only cover Content API sessions. The admin panel has its own [session options](/cms/configurations/admin-panel#session-management), set under `auth.sessions`, with different default values.
+
+| Parameter | Description | Type | Default |
+|-----------|-------------|------|---------|
+| `sessions.accessTokenLifespan` | Access token lifespan in seconds | number | `600` (10 minutes) |
+| `sessions.maxRefreshTokenLifespan` | Maximum refresh token lifespan in seconds | number | `2592000` (30 days) |
+| `sessions.idleRefreshTokenLifespan` | Idle refresh token timeout in seconds | number | `1209600` (14 days) |
+| `sessions.httpOnly` | When `true`, the refresh token is sent as an HTTP-only cookie instead of in the response body | boolean | `false`, but `true` in projects created with `create-strapi-app` |
+| `sessions.cookie.name` | Name of the refresh token cookie | string | `'strapi_up_refresh'` |
+| `sessions.cookie.sameSite` | `SameSite` attribute of the refresh token cookie | string | `'lax'` |
+| `sessions.cookie.path` | `Path` attribute of the refresh token cookie | string | `'/'` |
+| `sessions.cookie.domain` | `Domain` attribute of the refresh token cookie | string | `undefined` |
+| `sessions.cookie.secure` | `Secure` attribute of the refresh token cookie | boolean | `true` in production, `false` otherwise |
+| `sessions.cookie.maxAge` | Lifetime of the refresh token cookie in milliseconds. When unset, the cookie is a session cookie | number | `undefined` |
+
+The `sessions.cookie` options only apply when the refresh token is sent as a cookie. This happens when `sessions.httpOnly` is `true`, or when a client requests it for a single request.
+
+:::tip
+Clients can also request the HTTP-only refresh token cookie for a single request. To do so, send the `x-strapi-refresh-cookie: httpOnly` header. This works even when `sessions.httpOnly` is `false`.
+:::
 
 In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API.
 
@@ -45511,6 +45666,7 @@ This section regroups useful notes and procedures about the introduced breaking 
 ### Notes
 
 * There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
+* `status` is only accepted at the root of a query, and it also applies to populated relations. Adding `status` inside a `populate` object is not supported: the REST API returns a `400` error, and the Document Service API throws a `ValidationError`. For details, see [REST API: `status`](/cms/api/rest/status#populate) and [Document Service API: `status`](/cms/api/document-service/status#populate).
 * Additional information about how to use the new `status` parameter can be found in the [REST API](/cms/api/rest/status), [GraphQL API](/cms/api/graphql#status), and [Document Service API](/cms/api/document-service/status) documentation.
 
 ### Migration procedure

@@ -5264,6 +5264,45 @@ File path: N/A
 ```
 
 
+## Populate draft or published relations
+Description: Code example from "Populate draft or published relations"
+(Source: https://docs.strapi.io/cms/api/document-service/status#populate)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'published',
+  populate: ['categories'],
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: "2024-03-14T15:40:45.330Z",
+    locale: "en", // default locale
+    categories: [
+      {
+        documentId: "z0y2x4w6v8u1t3s5r7q9onm",
+        name: "French cuisine",
+        publishedAt: "2024-03-14T15:38:12.004Z",
+        // …
+      }
+    ],
+    // …
+  }
+  // …
+]
+```
+
+
 ## count() only draft or published versions
 Description: To take into account only draft or published versions of documents while counting documents with the Document Service API, pass the corresponding status parameter:
 (Source: https://docs.strapi.io/cms/api/document-service/status#count)
@@ -12314,6 +12353,73 @@ File path: N/A
 ```
 
 
+## Populate draft or published relations
+Description: id="get-draft-versions-with-relations" method="GET" path="/api/restaurants?status=draft&populate=categories" title="Get draft versions of restaurants and their categories" description="Returns draft versions of documents and the draft versions of their populated relations by passing the status=draft query parameter.">
+(Source: https://docs.strapi.io/cms/api/rest/status#populate)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&populate=categories' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    populate: 'categories',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en",
+      "categories": [
+        {
+          "id": 8,
+          "documentId": "z0y2x4w6v8u1t3s5r7q9onm",
+          "name": "French cuisine",
+          "createdAt": "2024-03-06T13:40:12.004Z",
+          "updatedAt": "2024-03-06T13:40:12.004Z",
+          "publishedAt": null,
+          "locale": "en"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+
 ## Create a draft
 Description: id="create-draft-endpoint" method="POST" path="/api/restaurants?status=draft" title="Create a draft document" description="Creates a new document and leaves it as a draft by passing the status=draft query parameter.">
 (Source: https://docs.strapi.io/cms/api/rest/status#create-draft)
@@ -18131,9 +18237,6 @@ module.exports = ({ env }) => ({
         console.error(e.error, e.provider);
       },
     },
-    options: {
-      expiresIn: '7d',
-    },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
       accessTokenLifespan: 1800, // 30 minutes
@@ -18205,9 +18308,6 @@ export default ({ env }) => ({
       onConnectionError(e) {
         console.error(e.error, e.provider);
       },
-    },
-    options: {
-      expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     sessions: {
@@ -22358,7 +22458,6 @@ module.exports = ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -22372,9 +22471,6 @@ module.exports = ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
@@ -22406,7 +22502,6 @@ export default ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
-  emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
   proxy: {
     koa: env.bool('IS_PROXIED', true),
@@ -22420,9 +22515,6 @@ export default ({ env }) => ({
     remote: {
       enabled: false,
     },
-  },
-  webhooks: {
-    populateRelations: false,
   },
   logger: {
     updates: {
@@ -27973,8 +28065,6 @@ module.exports = ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -28004,8 +28094,6 @@ export default ({ env }) => ({
         accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days (default)
         idleRefreshTokenLifespan: 1209600, // 14 days (default)
-        maxSessionLifespan: 86400, // 1 day (default)
-        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',

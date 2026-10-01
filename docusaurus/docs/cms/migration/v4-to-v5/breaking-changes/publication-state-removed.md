@@ -69,6 +69,7 @@ In Strapi 5, the [Draft & Publish feature](/cms/features/draft-and-publish) has 
 ### Notes
 
 * There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
+* `status` is only accepted at the root of a query, and it also applies to populated relations. Adding `status` inside a `populate` object is not supported: the REST API returns a `400` error, and the Document Service API throws a `ValidationError`. For details, see [REST API: `status`](/cms/api/rest/status#populate) and [Document Service API: `status`](/cms/api/document-service/status#populate).
 * Additional information about how to use the new `status` parameter can be found in the [REST API](/cms/api/rest/status), [GraphQL API](/cms/api/graphql#status), and [Document Service API](/cms/api/document-service/status) documentation.
 
 ### Migration procedure

@@ -31,13 +31,13 @@ jobs:
 
     steps:
       - name: Checkout strapi/documentation
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT_TOKEN_PIWI }}
 
       - name: Checkout strapi/strapi (read-only)
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           repository: strapi/strapi
           ref: develop
@@ -69,7 +69,7 @@ jobs:
       # instructions. The prompt itself is a versioned file only maintainers can
       # change, which is what bounds what this run can be told to do.
       - name: Draft the change (Sonnet)
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}

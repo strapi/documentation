@@ -29,6 +29,7 @@ Use the `status` parameter with the Document Service API to retrieve published o
 By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:
 
 - return the published version of a document,
+- return the draft or published version of populated relations,
 - count documents depending on their status,
 - and directly publish a document while creating it or updating it.
 
@@ -149,6 +150,66 @@ const documents = await strapi.documents("api::restaurant.restaurant").findMany(
     name: "Biscotte Restaurant",
     publishedAt: "2024-03-14T15:40:45.330Z",
     locale: "en", // default locale
+    // …
+  }
+  // …
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
+
+## Populate draft or published relations {#populate}
+
+The `status` parameter also applies to [populated](/cms/api/document-service/populate) relations. Populated relations return the same version as the queried documents when their content-type has Draft & Publish enabled.
+
+:::caution
+`status` is only accepted at the root of the query. Adding it inside a `populate` object, such as `populate: { categories: { status: 'draft' } }`, throws a `ValidationError` with a message such as `Invalid key status at categories`.
+:::
+
+The [`publicationFilter`](/cms/api/document-service/publication-filter) parameter follows the same rules. It is only accepted at the root of the query, and Strapi filters populated relations with the same value.
+
+The following example returns the published versions of restaurants and of their categories:
+
+<Endpoint
+  kind="js"
+  path="strapi.documents().findMany()"
+  title="findMany() with status: 'published' and populate"
+  description="Return the published versions of all matching documents and of their populated relations.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'published',
+  populate: ['categories'],
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: "2024-03-14T15:40:45.330Z",
+    locale: "en", // default locale
+    categories: [
+      {
+        documentId: "z0y2x4w6v8u1t3s5r7q9onm",
+        name: "French cuisine",
+        publishedAt: "2024-03-14T15:38:12.004Z",
+        // …
+      }
+    ],
     // …
   }
   // …

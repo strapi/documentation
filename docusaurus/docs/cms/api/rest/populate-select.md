@@ -163,6 +163,8 @@ To build complex queries with multiple-level population, use the [interactive qu
 
 You can combine the `populate` operator with other operators such as [field selection](/cms/api/rest/populate-select#field-selection), [filters](/cms/api/rest/filters), and [sort](/cms/api/rest/sort-pagination) in the population queries.
 
+The [`status`](/cms/api/rest/status) parameter is the exception: it is only accepted at the root of the query, and populated relations follow its value. Adding `status` inside a `populate` object returns a `400` error (see [Populate draft or published relations](/cms/api/rest/status#populate)).
+
 :::note
 Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSize]`) work alongside `populate` to paginate the main query results. However, you cannot apply pagination parameters directly to populated relations to limit the number of related entries returned within each result (nested pagination on relations is not supported in the REST API).
 :::
