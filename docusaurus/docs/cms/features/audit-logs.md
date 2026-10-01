@@ -95,12 +95,12 @@ The Audit Logs feature logs the following events:
 | Content Type | `create`, `update`, `delete` |
 | Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
 | Entry assignee <VersionBadge version="5.56.1+" noTooltip /> | `update` |
+| Entry review stage <VersionBadge version="5.56.1+" noTooltip /> | `updateEntryStage` |
 | Media | `create`, `update`, `delete` |
 | Login / Logout | `success`, `fail` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
-| Review Workflows <VersionBadge version="5.56.1+" noTooltip /> | `updateEntryStage` |
 | Role / Permission | `create`, `update`, `delete` |
 | User <VersionBadge version="5.56.0+" noTooltip /> | `create`, `update`, `delete`, `password.update`, `password-reset.create`, `password-reset.confirm`, `invite.accept` |
 | Token <VersionBadge version="5.54.0+" noTooltip /> | `create`, `update`, `delete`, `regenerate` |
