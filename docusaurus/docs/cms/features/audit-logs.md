@@ -124,6 +124,8 @@ Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/f
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
 
+Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
+
 With Strapi <VersionBadge version="5.52.0+" noTooltip />  logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
 
 
