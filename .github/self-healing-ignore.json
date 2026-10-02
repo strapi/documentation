@@ -1414,6 +1414,11 @@
       "number": 27682,
       "reason": "Router: Internal UI fix to content-manager Relations field. Removes full-page loader component behavior; no public API or user-facing feature changes.",
       "added": "2026-10-01"
+    },
+    {
+      "number": 27885,
+      "reason": "Triage: dependency/security update, internal infrastructure change",
+      "added": "2026-10-02"
     }
   ]
 }
