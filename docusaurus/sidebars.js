@@ -140,6 +140,11 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              label: 'Bring Your Own Key',
+              id: 'cms/plugins/ai-byok',
+            },
+            {
+              type: 'doc',
               label: 'Documentation',
               id: 'cms/plugins/documentation',
             },
