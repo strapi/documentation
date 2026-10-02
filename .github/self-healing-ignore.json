@@ -1419,6 +1419,16 @@
       "number": 27885,
       "reason": "Triage: dependency/security update, internal infrastructure change",
       "added": "2026-10-02"
+    },
+    {
+      "number": 27834,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3540",
+      "added": "2026-10-02"
+    },
+    {
+      "number": 27714,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3541",
+      "added": "2026-10-02"
     }
   ]
 }
