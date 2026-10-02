@@ -147,6 +147,10 @@ When using pagination by offset, the `meta.pagination` object returns `start` an
 
 When `pagination[withCount]` is `false`, the count query is skipped and `total` and `pageCount` are omitted from the response.
 
+## Identify a file by id or documentId
+
+`GET /api/upload/files/:id`, `DELETE /api/upload/files/:id`, and `POST /api/upload?id=x` (see [Update fileInfo](#update-fileinfo)) accept either the file's numeric `id` or its `documentId`. Files have no draft and publish, so each file has exactly one `documentId`. An unknown `id` or `documentId` returns the same `404` error.
+
 ## Upload files
 
 Upload one or more files to your application.
