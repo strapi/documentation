@@ -1130,10 +1130,11 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 1. Click an image in the list to open its details panel.
 2. Click the <Icon name="crop" classes="ph-bold" /> **Crop** button on the preview. The _Crop & Focus area_ editor opens.
-3. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
-4. (optional) Click the <Icon name="link" classes="ph-bold" /> button to lock aspect ratio, so it resizes both dimensions together.
-5. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
-6. Save your changes:
+3. (optional) Click the <Icon name="arrow-clockwise" classes="ph-bold" /> button, at the top right of the editor, to rotate the image 90° clockwise. Click it again to keep rotating. The crop and focus areas turn with the image, and the width and height fields swap on a quarter turn.
+4. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
+5. (optional) Click the <Icon name="link" classes="ph-bold" /> button to lock aspect ratio, so it resizes both dimensions together.
+6. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
+7. Save your changes:
     - Click **Apply** to crop the original asset. The asset keeps its ID, so content already using it is updated.
     - Click **Save as copy** to keep the original untouched and create a new asset in the same folder. The copy inherits the caption and the alternative text of the original.
 
