@@ -397,7 +397,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 
 ## Strapi AI <NewBadge /> {#strapi-ai}
 
-Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation) with <GrowthBadge /> plans, can be enabled or disabled:
+Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation) with <GrowthBadge /> plans, can be enabled or disabled. The same setting applies to the AI features that the [Bring Your Own Key plugin](/cms/plugins/ai-byok) runs on the CMS Enterprise plan:
 
 | Parameter    | Description                              | Type     | Default         |
 | ------------ | ---------------------------------------- | -------- | --------------- |
