@@ -519,6 +519,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'cms/plugins/installing-enterprise-plugins',
+          label: 'Enterprise plugins',
+        },
+        {
+          type: 'doc',
           label: 'Developing plugins',
           id: 'cms/plugins-development/developing-plugins',
         },
