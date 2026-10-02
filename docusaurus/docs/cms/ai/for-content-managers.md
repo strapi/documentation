@@ -11,6 +11,8 @@ tags:
 - Internationalization (i18n)
 - Media Library
 - Growth plan
+- Enterprise feature
+- Bring Your Own Key
 toc_max_heading_level: 3
 ---
 
@@ -20,7 +22,7 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 <Tldr>
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the CMS Enterprise plan, translations and asset metadata can use your own AI provider instead. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 </Tldr>
 
@@ -56,21 +58,31 @@ module.exports = {
 
 ### Available features {#features}
 
-| Feature | Description |
-|---------|-------------|
-| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. |
-| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. |
-| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. |
+| Feature | Description | With your own AI provider (CMS Enterprise plan) |
+|---------|-------------|-------------------------------------------------|
+| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Not available |
+| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available |
+| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. | Available |
 
 ### Credits and data handling {#credits}
 
-Strapi AI features consume AI credits.
+Strapi AI features consume AI credits. Features that use your own AI provider don't.
 
 <StrapiAiCredits />
 
-All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
+Strapi AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
 
  <Icon name="arrow-fat-right" /> See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
+
+## Using your own AI provider {#byok}
+
+<EnterpriseBadge /> <VersionBadge version="5.57+" />
+
+Strapi AI is not available on the CMS Enterprise plan. Instead, the [Bring Your Own Key plugin](/cms/plugins/ai-byok) runs AI Translations and AI-powered metadata generation with your own AI provider, API key, and models. With the plugin:
+
+- Requests go to your provider and don't use Strapi AI credits.
+- Your provider's data handling terms apply, instead of the [Strapi AI ones](#credits).
+- The global `ai.enabled` setting still applies: setting it to `false` also turns off the plugin's features.
 
 ## Strapi MCP server
 
