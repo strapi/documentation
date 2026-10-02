@@ -1014,6 +1014,12 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
+:::note Custom AI providers
+A plugin can register a custom AI provider in place of Strapi AI. See [server-side registration](/cms/plugins-development/server-api#ai-metadata-provider).
+
+When a project uses one, this page works the same way, but the caption and text come from that provider instead of Strapi AI.
+:::
+
 Metadata can also be generated for images that already exist in the library, either from the [Media Library settings](#configuring-settings) for every image that lacks one, or with the **Create metadata** bulk action for a specific selection (see [generating metadata in bulk](#bulk-metadata)).
 
 <ThemedImage

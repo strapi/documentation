@@ -20,6 +20,8 @@ tags:
   - services
   - policies
   - middlewares
+  - AI
+  - media library
 ---
 
 import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prerequisite.md'
@@ -156,4 +158,81 @@ The following cards link directly to each dedicated page:
 
 :::strapi Backend customization
 Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace automatically (see [server content types](/cms/plugins-development/server-content-types#uids-and-naming-conventions) for details on UIDs and naming conventions).
+:::
+
+## Registering a custom AI metadata provider {#ai-metadata-provider}
+
+<GrowthBadge />
+
+Plugins can register a custom provider through the Upload plugin's `aiMetadataProvider` service (see [AI metadata generation](/cms/features/media-library#ai-powered-metadata-generation)).
+
+A custom provider replaces Strapi AI as the source of the generated caption and alternative text.
+
+Registering a custom provider requires the `cms-byok-ai` feature of an Enterprise license.
+
+Without it, `registerProvider()` is silently ignored and the Media Library keeps using Strapi AI, if enabled.
+
+Register the provider from the plugin's [`register()`](/cms/plugins-development/server-lifecycle#register) lifecycle phase.
+
+Doing so keeps it in place before the Upload plugin's `bootstrap()` runs and considers registering the Strapi-managed provider:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="src/plugins/my-plugin/strapi-server.js"
+module.exports = {
+  register({ strapi }) {
+    strapi.plugin('upload').service('aiMetadataProvider').registerProvider({
+      provider: {
+        name: 'my-custom-provider',
+        async generateMetadata({ images }) {
+          // `images` holds one Blob per file to describe.
+          // Return exactly one result per image, in the same order.
+          return {
+            results: images.map(() => ({
+              altText: 'Generated alt text',
+              caption: 'Generated caption',
+            })),
+          };
+        },
+      },
+    });
+  },
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="src/plugins/my-plugin/strapi-server.ts"
+export default {
+  register({ strapi }) {
+    strapi.plugin('upload').service('aiMetadataProvider').registerProvider({
+      provider: {
+        name: 'my-custom-provider',
+        async generateMetadata({ images }) {
+          // `images` holds one Blob per file to describe.
+          // Return exactly one result per image, in the same order.
+          return {
+            results: images.map(() => ({
+              altText: 'Generated alt text',
+              caption: 'Generated caption',
+            })),
+          };
+        },
+      },
+    });
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+`generateMetadata()` must resolve with exactly one result per image, each with a non-empty `altText` and `caption`.
+
+:::caution
+Only one AI metadata provider can be registered at a time. Registering a second one throws, naming the provider already in place.
+
+A license with both `cms-ai` and `cms-byok-ai` is unsupported: which provider wins is undefined, since it depends on the plugins' bootstrap order.
 :::
