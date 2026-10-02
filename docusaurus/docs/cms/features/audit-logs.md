@@ -94,6 +94,8 @@ The Audit Logs feature logs the following events:
 | --- | --- |
 | Content Type | `create`, `update`, `delete` |
 | Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
+| Entry assignee <VersionBadge version="5.56.1+" noTooltip /> | `update` |
+| Entry review stage <VersionBadge version="5.56.1+" noTooltip /> | `updateEntryStage` |
 | Media | `create`, `update`, `delete` |
 | Login / Logout | `success`, `fail` |
 | Releases | `create`, `update`, `delete`, `trigger` |
@@ -103,6 +105,7 @@ The Audit Logs feature logs the following events:
 | User <VersionBadge version="5.56.0+" noTooltip /> | `create`, `update`, `delete`, `password.update`, `password-reset.create`, `password-reset.confirm`, `invite.accept` |
 | Token <VersionBadge version="5.54.0+" noTooltip /> | `create`, `update`, `delete`, `regenerate` |
 | Webhook | `create`, `update`, `delete` |
+| Workflow <VersionBadge version="5.56.1+" noTooltip /> | `create`, `update`, `delete` |
 
 For each log item, the following information is displayed:
 
@@ -120,6 +123,8 @@ The Action filter also matches the legacy `user.create`, `user.update` and `user
 Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
+
+Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
 
 With Strapi <VersionBadge version="5.52.0+" noTooltip />  logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
 
