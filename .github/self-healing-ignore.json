@@ -1429,6 +1429,11 @@
       "number": 27714,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3541",
       "added": "2026-10-02"
+    },
+    {
+      "number": 27860,
+      "reason": "Router: Internal toolchain upgrade for security fix. Vite is a build-time dependency (admin bundler), not user-facing. No public API changes, no user-facing features affected.",
+      "added": "2026-10-03"
     }
   ]
 }
