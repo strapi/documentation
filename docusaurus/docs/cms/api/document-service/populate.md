@@ -33,6 +33,10 @@ You can also use the `fields` parameter to return only specific fields with the 
 If the Users & Permissions feature is enabled, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
 :::
 
+:::info
+The `status`, `publicationFilter`, and `hasPublishedVersion` parameters are root-level only and apply to the entire query. They cannot be used inside nested `populate` objects and will return a validation error if attempted.
+:::
+
 <!-- TODO: add link to populate guides (even if REST API, the same logic still applies) -->
 
 ## Relations and media fields
