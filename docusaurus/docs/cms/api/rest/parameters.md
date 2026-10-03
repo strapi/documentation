@@ -43,6 +43,10 @@ The following API parameters are available:
 Long bracket-encoded lists in a parameter (for example `populate` or `fields`) are limited by [`arrayLimit` on `strapi::query`](/cms/configurations/middlewares#query). See [Population](/cms/api/rest/populate-select#population).
 :::
 
+:::info
+The `status`, `publicationFilter`, and `hasPublishedVersion` parameters are root-level only. They cannot be used inside nested `populate` arrays and will return a validation error if attempted.
+:::
+
 Query parameters use the <ExternalLink to="https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets" text="LHS bracket syntax"/> (i.e. they are encoded using square brackets `[]`).
 
 :::tip
