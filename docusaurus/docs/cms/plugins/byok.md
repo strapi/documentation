@@ -33,7 +33,11 @@ With the Bring your own AI key plugin, Strapi AI features send their requests to
 
 ## Installation
 
-Install the plugin with the `strapi enterprise install` command, from the root folder of your Strapi application:
+The plugin installs from the Strapi package registry. The `strapi enterprise install` command does the setup for you, or you can do it manually.
+
+### With the command
+
+From the root folder of your Strapi application, run:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
@@ -52,7 +56,31 @@ npm run strapi enterprise install plugin-byok
 </TabItem>
 </Tabs>
 
-See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for license and registry details.
+The command finds your license, sets up access to the registry, and installs a version that supports the Strapi version of your application. See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for details.
+
+### Manually
+
+1. Set up access to the registry, as described in [Setting up access manually](/cms/plugins/installing-enterprise-plugins#setting-up-access-manually).
+2. From the root folder of your Strapi application, install the package, saving the exact version:
+
+  <Tabs groupId="yarn-npm">
+  <TabItem value="yarn" label="Yarn">
+
+  ```bash
+  yarn add --exact @strapi-enterprise/plugin-byok
+  ```
+
+  </TabItem>
+  <TabItem value="npm" label="NPM">
+
+  ```bash
+  npm install --save-exact @strapi-enterprise/plugin-byok
+  ```
+
+  </TabItem>
+  </Tabs>
+
+Unlike the command, a manual install does not check that the version supports the Strapi version of your application. Check the plugin's `@strapi/strapi` peer dependency, which your package manager also warns about.
 
 :::caution
 Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. With the configuration below, the plugin then stays off until `STRAPI_BYOK_ENABLED` is `true`.
