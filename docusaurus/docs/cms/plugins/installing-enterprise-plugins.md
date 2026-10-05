@@ -67,14 +67,14 @@ Pass one or more plugin names to install them without the list. The `@strapi-ent
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn strapi enterprise install plugin-ai-byok
+yarn strapi enterprise install plugin-byok
 ```
 
 </TabItem>
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm run strapi enterprise install plugin-ai-byok
+npm run strapi enterprise install plugin-byok
 ```
 
 </TabItem>
@@ -84,9 +84,9 @@ The command picks the newest stable version, up to the one tagged `latest`, that
 
 To install another version, add it to the name:
 
-- An exact version, including a prerelease, for instance `plugin-ai-byok@1.2.0`.
-- A tag, for instance `plugin-ai-byok@next`.
-- A range, for instance `plugin-ai-byok@^1.2.0`. The command installs the highest version in it that supports the Strapi version of your application, or the version tagged `latest` if it qualifies.
+- An exact version, including a prerelease, for instance `plugin-byok@1.2.0`.
+- A tag, for instance `plugin-byok@next`.
+- A range, for instance `plugin-byok@^1.2.0`. The command installs the highest version in it that supports the Strapi version of your application, or the version tagged `latest` if it qualifies.
 
 If the version you name, or every version in the range, requires a newer Strapi version, the command warns you but still installs it.
 
@@ -95,7 +95,7 @@ The command saves the exact version it installs in `package.json`. A later depen
 :::
 
 :::caution
-Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See each plugin's page, for instance [Bring Your Own Key](/cms/plugins/ai-byok#configuration), for how to configure it.
+Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See each plugin's page, for instance [Bring your own AI key](/cms/plugins/byok#configuration), for how to configure it.
 :::
 
 ## Registry access

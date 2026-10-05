@@ -1,26 +1,26 @@
 ---
-title: Bring Your Own Key plugin
+title: Bring your own AI key plugin
 displayed_sidebar: cmsSidebar
 description: Run Strapi AI features with your own AI provider, API key, and models.
 tags:
 - plugins
 - Enterprise feature
 - AI
-- Bring Your Own Key
+- Bring your own AI key
 ---
 
-# Bring Your Own Key plugin
+# Bring your own AI key plugin
 <EnterpriseBadge />
 
 <Tldr>
-The Bring Your Own Key (BYOK) plugin runs Strapi AI features: AI Translations and AI-powered metadata generation in the Media Library, with your own AI provider.
+The Bring your own AI key (BYOK) plugin runs Strapi AI features: AI Translations and AI-powered metadata generation in the Media Library, with your own AI provider.
 </Tldr>
 
-With the Bring Your Own Key plugin, Strapi AI features send their requests to the provider of your choice. You set the API key and pick the model for each feature.
+With the Bring your own AI key plugin, Strapi AI features send their requests to the provider of your choice. You set the API key and pick the model for each feature.
 
 <IdentityCard isPlugin>
   <IdentityCardItem icon="navigation-arrow" title="Location">Configured in `/config/plugins`. Used through the Strapi AI features of the admin panel.</IdentityCardItem>
-  <IdentityCardItem icon="package" title="Package name">`@strapi-enterprise/plugin-ai-byok`</IdentityCardItem>
+  <IdentityCardItem icon="package" title="Package name">`@strapi-enterprise/plugin-byok`</IdentityCardItem>
   <IdentityCardItem icon="plus-square" title="Additional resources">[Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins)</IdentityCardItem>
 </IdentityCard>
 
@@ -39,14 +39,14 @@ Install the plugin with the `strapi enterprise install` command, from the root f
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn strapi enterprise install plugin-ai-byok
+yarn strapi enterprise install plugin-byok
 ```
 
 </TabItem>
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm run strapi enterprise install plugin-ai-byok
+npm run strapi enterprise install plugin-byok
 ```
 
 </TabItem>
@@ -55,7 +55,7 @@ npm run strapi enterprise install plugin-ai-byok
 See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for license and registry details.
 
 :::caution
-Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. With the configuration below, the plugin then stays off until `STRAPI_AI_BYOK_ENABLED` is `true`.
+Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. With the configuration below, the plugin then stays off until `STRAPI_BYOK_ENABLED` is `true`.
 :::
 
 ## Configuration
@@ -70,16 +70,16 @@ The plugin is configured in the plugins configuration file, with environment var
   ```js title="/config/plugins.js"
   module.exports = ({ env }) => ({
     // …
-    'ai-byok': {
-      enabled: env.bool('STRAPI_AI_BYOK_ENABLED', false),
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
       config: {
         connection: {
-          apiKey: env('STRAPI_AI_PROVIDER_API_KEY'),
-          baseURL: env('STRAPI_AI_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
         },
         models: {
-          translations: env('STRAPI_AI_TRANSLATIONS_MODEL'),
-          mediaMetadata: env('STRAPI_AI_MEDIA_METADATA_MODEL'),
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
         },
       },
     },
@@ -92,16 +92,16 @@ The plugin is configured in the plugins configuration file, with environment var
   ```ts title="/config/plugins.ts"
   export default ({ env }) => ({
     // …
-    'ai-byok': {
-      enabled: env.bool('STRAPI_AI_BYOK_ENABLED', false),
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
       config: {
         connection: {
-          apiKey: env('STRAPI_AI_PROVIDER_API_KEY'),
-          baseURL: env('STRAPI_AI_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
         },
         models: {
-          translations: env('STRAPI_AI_TRANSLATIONS_MODEL'),
-          mediaMetadata: env('STRAPI_AI_MEDIA_METADATA_MODEL'),
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
         },
       },
     },
@@ -114,11 +114,11 @@ The plugin is configured in the plugins configuration file, with environment var
 2. Set the environment variables in the `.env` file. See [Configuration options](#configuration-options) for the expected value of each one:
 
   ```bash title="/.env"
-  STRAPI_AI_BYOK_ENABLED=true
-  STRAPI_AI_PROVIDER_BASE_URL=
-  STRAPI_AI_PROVIDER_API_KEY=
-  STRAPI_AI_TRANSLATIONS_MODEL=
-  STRAPI_AI_MEDIA_METADATA_MODEL=
+  STRAPI_BYOK_ENABLED=true
+  STRAPI_BYOK_PROVIDER_BASE_URL=
+  STRAPI_BYOK_PROVIDER_API_KEY=
+  STRAPI_BYOK_TRANSLATIONS_MODEL=
+  STRAPI_BYOK_MEDIA_METADATA_MODEL=
   ```
 
 3. Restart Strapi.
@@ -129,14 +129,14 @@ All `connection` and `models` options are required when the plugin is enabled. I
 
 | Option | Environment variable | Description |
 |---|---|---|
-| `enabled` | `STRAPI_AI_BYOK_ENABLED` | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_AI_BYOK_ENABLED` is `true`. |
-| `connection.baseURL` | `STRAPI_AI_PROVIDER_BASE_URL` | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
-| `connection.apiKey` | `STRAPI_AI_PROVIDER_API_KEY` | API key for your provider. Keep it in the server environment only. |
-| `models.translations` | `STRAPI_AI_TRANSLATIONS_MODEL` | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
-| `models.mediaMetadata` | `STRAPI_AI_MEDIA_METADATA_MODEL` | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
+| `enabled` | `STRAPI_BYOK_ENABLED` | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
+| `connection.baseURL` | `STRAPI_BYOK_PROVIDER_BASE_URL` | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
+| `connection.apiKey` | `STRAPI_BYOK_PROVIDER_API_KEY` | API key for your provider. Keep it in the server environment only. |
+| `models.translations` | `STRAPI_BYOK_TRANSLATIONS_MODEL` | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
+| `models.mediaMetadata` | `STRAPI_BYOK_MEDIA_METADATA_MODEL` | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
 
 :::tip
-Use `STRAPI_AI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
+Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
 :::
 
 ## Usage
@@ -153,7 +153,7 @@ Requests don't use Strapi AI credits. The [Content-Type Builder AI assistant](/c
 When Strapi starts, the server logs list the features that use your provider, for instance:
 
 ```
-AI BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
+BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
 ```
 
 ## Troubleshooting
@@ -169,25 +169,25 @@ AI BYOK is ready for AI Translation, AI Media Library. Requests go to your confi
 ## Uninstallation
 
 1. Stop Strapi.
-2. Remove the `'ai-byok'` entry from the plugins configuration file.
+2. Remove the `byok` entry from the plugins configuration file.
 3. Remove the package:
 
   <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
 
   ```bash
-  yarn remove @strapi-enterprise/plugin-ai-byok
+  yarn remove @strapi-enterprise/plugin-byok
   ```
 
   </TabItem>
   <TabItem value="npm" label="NPM">
 
   ```bash
-  npm uninstall @strapi-enterprise/plugin-ai-byok
+  npm uninstall @strapi-enterprise/plugin-byok
   ```
 
   </TabItem>
   </Tabs>
 
-4. Remove the `STRAPI_AI_*` variables from the `.env` file.
+4. Remove the `STRAPI_BYOK_*` variables from the `.env` file.
 5. Start Strapi again.

@@ -12,7 +12,7 @@ tags:
 - Media Library
 - Growth plan
 - Enterprise feature
-- Bring Your Own Key
+- Bring your own AI key
 toc_max_heading_level: 3
 ---
 
@@ -78,7 +78,7 @@ Strapi AI requests are processed through Strapi-managed infrastructure. Content 
 
 <EnterpriseBadge /> <VersionBadge version="5.57+" />
 
-Strapi AI is not available on the CMS Enterprise plan. Instead, the [Bring Your Own Key plugin](/cms/plugins/ai-byok) runs AI Translations and AI-powered metadata generation with your own AI provider, API key, and models. With the plugin:
+Strapi AI is not available on the CMS Enterprise plan. Instead, the [Bring your own AI key plugin](/cms/plugins/byok) runs AI Translations and AI-powered metadata generation with your own AI provider, API key, and models. With the plugin:
 
 - Requests go to your provider and don't use Strapi AI credits.
 - Your provider's data handling terms apply, instead of the [Strapi AI ones](#credits).
