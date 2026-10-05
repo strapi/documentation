@@ -22,7 +22,7 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 <Tldr>
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the CMS Enterprise plan, translations and asset metadata can use your own AI provider instead. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the <EnterpriseBadge /> plan, translations and asset metadata can use your own AI provider instead. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 </Tldr>
 
@@ -58,7 +58,7 @@ module.exports = {
 
 ### Available features {#features}
 
-| Feature | Description | With your own AI provider (CMS Enterprise plan) |
+| Feature | Description | With your own AI provider (<EnterpriseBadge /> plan) |
 |---------|-------------|-------------------------------------------------|
 | [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Not available |
 | [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available |

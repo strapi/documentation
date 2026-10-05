@@ -1,4 +1,4 @@
-Strapi AI includes 1,000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the CMS Enterprise plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
+Strapi AI includes 1,000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the <EnterpriseBadge noTooltip /> plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 

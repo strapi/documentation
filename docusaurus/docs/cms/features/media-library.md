@@ -1010,7 +1010,7 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 <GrowthBadge /> <EnterpriseBadge />
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the CMS Enterprise plan, metadata generation requires the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider instead of Strapi AI. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the <EnterpriseBadge /> plan, metadata generation requires the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider instead of Strapi AI. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
