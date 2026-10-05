@@ -111,7 +111,9 @@ module.exports = ({ env }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/config/admin.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   host: "my-host.com",
   port: 3000,
   // Additionally you can define another path instead of the default /admin one 👇
@@ -213,7 +215,9 @@ module.exports = ({ env }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/config/server.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
   url: "http://yourbackend.com",
@@ -221,7 +225,9 @@ export default ({ env }) => ({
 ```
 
 ```ts title="/config/admin.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   /**
    * Note: The administration will be accessible from the root of the domain 
    * (ex: http://yourfrontend.com/)
@@ -453,8 +459,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/admin.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
@@ -557,8 +564,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/admin.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
     secrets: {

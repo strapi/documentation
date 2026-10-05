@@ -332,8 +332,9 @@ module.exports = ({ env }) => ({
 
 ```ts title="./config/server.ts"
 import cronTasks from "./cron-tasks";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
   cron: {

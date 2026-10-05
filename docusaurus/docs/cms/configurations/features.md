@@ -63,7 +63,8 @@ To enable a future flag:
   <TabItem value="ts" label="TypeScript">
 
   ```ts title="/config/features.ts"
-  export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+  export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Features => ({
     future: {
       experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
@@ -136,7 +137,9 @@ module.exports = ({ env }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/config/features.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Features => ({
   useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
 });
 ```
