@@ -145,8 +145,6 @@ The file now holds your license, so restrict it to your user, for instance with 
 
 The command only configures the computer it runs on. Any other environment that installs your application's dependencies also needs access to the registry, such as a CI pipeline, a deployment build, or a teammate's computer. Otherwise, installing dependencies fails with an authentication error (401) or a not found error (404).
 
-Choose one of the following options.
-
 ### Committing a project-level configuration file
 
 Add a configuration file to your project that reads the license from the `STRAPI_LICENSE` environment variable. Then set `STRAPI_LICENSE` as a secret in every environment that installs dependencies:
@@ -176,33 +174,7 @@ If the project already has a `.yarnrc.yml`, add these lines to it, under its exi
 </Tabs>
 
 :::caution
-With this option, `STRAPI_LICENSE` must be set in the shell of everyone who installs dependencies. npm, pnpm, and Yarn do not read the application's `.env` file.
-:::
-
-### Configuring the CI or deployment environment
-
-Leave the project unchanged, and add the registry setup to the environment before dependencies are installed. For instance, in a GitHub Actions workflow with npm:
-
-```yaml title=".github/workflows/ci.yml"
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      # Available to every step, including the install
-      STRAPI_LICENSE: ${{ secrets.STRAPI_LICENSE }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up access to the Strapi package registry
-        run: |
-          echo "@strapi-enterprise:registry=https://packages.strapi.io/" >> ~/.npmrc
-          echo '//packages.strapi.io/:_authToken=${STRAPI_LICENSE}' >> ~/.npmrc
-      - run: npm ci
-```
-
-With Yarn 2 and later, add the `.yarnrc.yml` lines from the previous section to `~/.yarnrc.yml` instead. Yarn 2 and later do not read `.npmrc`.
-
-:::tip
-When `strapi enterprise install` runs with the `CI` environment variable set and the license in the `STRAPI_LICENSE` environment variable, it writes a reference to the variable in the configuration file instead of the license itself.
+`STRAPI_LICENSE` must then be set in the shell of everyone who installs dependencies. npm, pnpm, and Yarn do not read the application's `.env` file.
 :::
 
 ## Troubleshooting
