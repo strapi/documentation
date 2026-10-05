@@ -519,11 +519,6 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'cms/plugins/installing-enterprise-plugins',
-          label: 'Enterprise plugins',
-        },
-        {
-          type: 'doc',
           label: 'Developing plugins',
           id: 'cms/plugins-development/developing-plugins',
         },
@@ -585,6 +580,11 @@ const sidebars = {
           ],
         },
         'cms/plugins-development/plugins-extension',
+        {
+          type: 'doc',
+          id: 'cms/plugins/installing-enterprise-plugins',
+          label: 'Enterprise plugins',
+        },
       ],
     },
     { // Upgrades
