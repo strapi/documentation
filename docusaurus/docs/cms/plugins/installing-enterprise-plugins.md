@@ -111,6 +111,36 @@ The first time it runs on a computer, the command adds the registry setup at the
 If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
 :::
 
+### Setting up access manually {#setting-up-access-manually}
+
+The command is optional. To set up access yourself, add these lines to your user-level configuration file, with your license in place of `<your license>`:
+
+<Tabs groupId="npm-yarn-config">
+<TabItem value="npmrc" label="npm, pnpm, Yarn 1 (~/.npmrc)">
+
+```ini title="~/.npmrc"
+@strapi-enterprise:registry=https://packages.strapi.io/
+//packages.strapi.io/:_authToken=<your license>
+```
+
+</TabItem>
+<TabItem value="yarnrc" label="Yarn 2 and later (~/.yarnrc.yml)">
+
+```yaml title="~/.yarnrc.yml"
+npmScopes:
+  strapi-enterprise:
+    npmRegistryServer: 'https://packages.strapi.io/'
+    npmAlwaysAuth: true
+    npmAuthToken: '<your license>'
+```
+
+If the file already has an `npmScopes` key, add the `strapi-enterprise` entry under it.
+
+</TabItem>
+</Tabs>
+
+The file now holds your license, so restrict it to your user, for instance with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version, for instance `npm install --save-exact @strapi-enterprise/<plugin-name>`.
+
 ## Setting up access for CI and deployments
 
 The command only configures the computer it runs on. Any other environment that installs your application's dependencies also needs access to the registry, such as a CI pipeline, a deployment build, or a teammate's computer. Otherwise, installing dependencies fails with an authentication error (401) or a not found error (404).
