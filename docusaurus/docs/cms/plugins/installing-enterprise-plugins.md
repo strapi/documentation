@@ -95,10 +95,11 @@ The command saves the exact version it installs in `package.json`. A later depen
 :::
 
 :::caution
-Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See each plugin's page, for instance [Bring your own AI key](/cms/plugins/byok#configuration), for how to configure it.
+* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See each plugin's page, for instance [Bring your own AI key](/cms/plugins/byok#configuration), for how to configure it.
+* If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
 :::
 
-## Registry access
+:::info Registry access
 
 The first time it runs on a computer, the command adds the registry setup at the end of your user-level configuration file, and restricts the file to your user:
 
@@ -107,8 +108,6 @@ The first time it runs on a computer, the command adds the registry setup at the
 | npm, pnpm, Yarn 1 | `~/.npmrc` |
 | Yarn 2 and later | `~/.yarnrc.yml` |
 
-:::caution
-If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
 :::
 
 ### Setting up access manually {#setting-up-access-manually}
