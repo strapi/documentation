@@ -1429,6 +1429,31 @@
       "number": 27714,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3541",
       "added": "2026-10-02"
+    },
+    {
+      "number": 27870,
+      "reason": "Triage: dependency update with no behavior change",
+      "added": "2026-10-06"
+    },
+    {
+      "number": 27922,
+      "reason": "Router: Internal telemetry tracking enhancement. Adds version property to admin telemetry events for analytics purposes. No user-facing behavior changes and no public API/documentation impact.",
+      "added": "2026-10-06"
+    },
+    {
+      "number": 27910,
+      "reason": "Router: Performance optimization for CLI startup time. Lazy-loads admin build dependencies instead of loading them on every command. Internal implementation change with no user-facing behavior or API changes.",
+      "added": "2026-10-06"
+    },
+    {
+      "number": 27900,
+      "reason": "Router: Internal Media Library telemetry tracking fix. Adds mediaLibraryVersion property to events to distinguish between v1 (legacy) and v2 (current) library versions in analytics. No public API changes or user-facing documentation needed.",
+      "added": "2026-10-06"
+    },
+    {
+      "number": 26749,
+      "reason": "Router: Diff too large (14522 lines > 3000 limit). This PR adds a significant feature for preserving data when renaming attributes, including CLI commands (strapi rename:field, strapi rename:component) and configuration options, which would require documentation updates. Mark for next routing run.",
+      "added": "2026-10-06"
     }
   ]
 }
