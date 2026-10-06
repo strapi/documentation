@@ -17,7 +17,7 @@ import Link from '@docusaurus/Link';
 import {translate} from '@docusaurus/Translate';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import DocSidebarItems from '@theme/DocSidebarItems';
-import { NewBadge, UpdatedBadge, EnterpriseBadge, GrowthBadge, SIDEBAR_PLAN_TOOLTIPS } from '../../../components/Badge';
+import { NewBadge, UpdatedBadge, EnterpriseBadge, GrowthBadge, AiBadge, SIDEBAR_PLAN_TOOLTIPS } from '../../../components/Badge';
 import Icon from '@site/src/components/Icon'
 // If we navigate to a category and it becomes active, it should automatically
 // expand itself
@@ -172,6 +172,7 @@ export default function DocSidebarItemCategory({
           ) : customProps?.enterprise ? (
             <EnterpriseBadge iconOnly tooltip={SIDEBAR_PLAN_TOOLTIPS.enterprise} />
           ) : null}
+          {customProps?.ai && <AiBadge iconOnly />}
           {customProps?.new && <NewBadge iconOnly />}
           {customProps?.updated && <UpdatedBadge iconOnly />}
           {customProps?.tooltip && (

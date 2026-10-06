@@ -62,6 +62,12 @@ export default function Badge({
             </>
           ) : (
             <>
+              {icon && (
+                <Icon
+                  name={icon}
+                  {...(iconClasses ? { classes: iconClasses } : {})}
+                />
+              )}
               {!iconOnly && variant}
               {!noTooltip && tooltip && <span className="badge__tooltip">{tooltip}</span>}
             </>
@@ -182,6 +188,21 @@ export function CloudStarterBadge(props) {
       link="https://strapi.io/pricing-cloud"
       icon="cloud"
       tooltip="This feature is available with a Strapi Cloud Starter plan."
+      {...props}
+    />
+  );
+}
+
+/**
+ * Flags a feature that works without AI but gains from it. It is not a plan
+ * badge: it can sit next to one, and it carries no pricing link.
+ */
+export function AiBadge(props) {
+  return (
+    <Badge
+      variant="AI-enhanced"
+      icon="sparkle"
+      tooltip="This feature can optionally be enhanced with AI."
       {...props}
     />
   );

@@ -177,6 +177,16 @@
     }
   }
 
+  // Not a plan badge: it flags a feature that works without AI and gains from
+  // it, so it can sit next to a plan badge and carries no pricing link.
+  &--aienhanced {
+    --custom-badge-background-color: var(--strapi-alternative-600);
+    --custom-badge-color: var(--strapi-neutral-0);
+    --custom-badge-border-color: var(--strapi-alternative-600);
+    --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
+    --custom-badge-tooltip-color: var(--strapi-alternative-600);
+  }
+
   &--growth a,
   &--enterprise a {
     color: white !important;
@@ -317,6 +327,7 @@ main .badge--pro,
 main .badge--enterprise,
 main .badge--growth,
 main .badge--sso,
+main .badge--aienhanced,
 main .badge--version {
   .badge__tooltip {
     @include badge-tooltip();

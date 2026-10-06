@@ -20,7 +20,7 @@ import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import ExpandableDocCardsWrapper from '../components/ExpandableDocCardsWrapper';
 import ExpandableContent from '../components/ExpandableContent.js';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
-import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, GrowthBadge, SsoBadge, CloudStarterBadge, CloudProBadge, CloudBusinessBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
+import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, GrowthBadge, SsoBadge, AiBadge, CloudStarterBadge, CloudProBadge, CloudBusinessBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
 import { Tldr } from '../components/Tldr.jsx';
@@ -69,6 +69,7 @@ export default {
   EnterpriseBadge,
   GrowthBadge,
   SsoBadge,
+  AiBadge,
   NewBadge,
   UpdatedBadge,
   CloudStarterBadge,
