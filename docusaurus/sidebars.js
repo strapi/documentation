@@ -155,14 +155,15 @@ const sidebars = {
           type: 'doc',
           id: 'cms/plugins/installing-plugins-via-marketplace',
           label: 'Marketplace',
-          customProps: {
-            enterprise: true
-          }
         },
         {
           type: 'doc',
           id: 'cms/plugins/installing-enterprise-plugins',
           label: 'Enterprise plugins',
+          customProps: {
+            enterprise: true,
+            new: true
+          }
         },
         {
           type: 'doc',
