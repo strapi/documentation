@@ -377,15 +377,6 @@ main .badge--content:has(+ img) {
   position: relative;
   top: 12px;
 }
-.theme-doc-sidebar-item-category-level-2 .menu__link .badge--content {
-  position: absolute;
-  right: 30px;
-  padding-left: 0;
-
-  .strapi-icons {
-    margin-left: 4px;
-  }
-}
 /**
  * Adjustments for code blocks as we can't rely on child elements positioning
  */
@@ -412,39 +403,104 @@ main .badge--content:has(+ table) {
 }
 
 /**
- * New/updated badges in TOC (sidebar)
+ * Icon-only badges in the sidebar (plan badges, new/updated)
+ *
+ * The pill shrinks to its icon and sits right after the entry label. The label
+ * the pill would have carried moves into the tooltip, which drops below the row:
+ * the sidebar rail is 280px wide and hides horizontal overflow, so the badge's
+ * own centered-above tooltip would be clipped. Setting the badge to position
+ * static makes the tooltip resolve against .menu__link__content, which is
+ * already relative and spans the row.
  */
-.menu .badge--content {
-  > span {
-    position: relative;
-    top: -3px;
-  }
-  .badge__text {
-    font-size: var(--strapi-font-size-xxs);
-    font-weight: 600;
-    position: relative;
-    right: 2px;
-  }
-  .badge--new {
-    min-width: 57px;
-  }
-  .badge--updated {
-    min-width: 84px;
-  }
-  .strapi-icons {
-    left: 1px;
-  }
-  .badge__tooltip {
-    display: none;
-  }
-}
-.menu__link:has(.badge--content) {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+// Doubled class: sidebar.scss sets .menu .badge { margin-left: auto }, which
+// parks every badge at the end of the row. These sit against the label.
+.menu .badge.badge--icon-only {
+  position: static;
+  flex: 0 0 auto;
+  margin: 0 0 0 6px;
+  line-height: 0;
+  // Every icon-only badge is the same square whatever it carries. Two reasons
+  // to pin it rather than let content decide: .badge--content sizes New and
+  // Updated for their text (min-width: 52px) outside main, and those two have a
+  // real 1px border where the plan badges resolve theirs to an invalid custom
+  // property and paint none, which otherwise leaves them 2px apart.
+  box-sizing: border-box;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0;
 
-  .badge--content {
-    margin-left: auto;
+  // New and Updated put their tooltip as a direct child span, next to the icon
+  // wrapper, so it has to be excluded here or it inherits the pill's 20px box.
+  .badge__link,
+  > span:not(.badge__tooltip) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  // sidebar.scss gives every .menu__link__content .strapi-icons a 8px left
+  // margin for the info icon; inside the pill that offsets the glyph and
+  // widens the badge, so it is reset here.
+  .strapi-icons {
+    margin: 0;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+    line-height: 1;
+    // same rule sets cursor: help for the info icon; the badge is either a
+    // link or part of the row, so it follows whatever it sits in
+    cursor: inherit;
+  }
+
+  // Every tooltip rule in this file is scoped to main, so the sidebar gets none
+  // of it: the look has to be declared here in full rather than overridden.
+  .badge__tooltip {
+    visibility: hidden;
+    position: absolute;
+    top: calc(100% + 6px);
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    margin-left: 0;
+    z-index: 99999;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: var(--custom-badge-tooltip-background-color);
+    color: var(--custom-badge-tooltip-color);
+    font-size: var(--strapi-font-size-ssm);
+    font-weight: 400;
+    line-height: var(--strapi-line-height-sm);
+    letter-spacing: normal;
+    text-align: left;
+    text-transform: initial;
+    white-space: normal;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  &:hover .badge__tooltip {
+    visibility: visible;
+  }
+
+  // New and Updated carry their tooltip palette under main too
+  &.badge--updated .badge__tooltip {
+    --custom-badge-tooltip-background-color: var(--strapi-secondary-100);
+    --custom-badge-tooltip-color: var(--strapi-secondary-600);
+  }
+
+  &.badge--new .badge__tooltip {
+    --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
+    --custom-badge-tooltip-color: var(--strapi-alternative-600);
+  }
+
+  // Tighter gap when an entry carries two plan badges (Growth + Enterprise)
+  & + .badge--icon-only {
+    margin-left: 4px;
   }
 }
 
