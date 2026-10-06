@@ -65,11 +65,17 @@ const sidebars = {
           type: 'doc',
           label: 'Audit Logs',
           id: 'cms/features/audit-logs',
+          customProps: {
+            enterprise: true
+          }
         },
         {
           type: 'doc',
           label: 'Content History',
           id: 'cms/features/content-history',
+          customProps: {
+            growth: true
+          }
         },
         'cms/features/custom-fields',
         {
@@ -116,11 +122,17 @@ const sidebars = {
           type: 'doc',
           label: 'Releases',
           id: 'cms/features/releases',
+          customProps: {
+            growth: true
+          }
         },
         {
           type: 'doc',
           label: 'Review Workflows',
           id: 'cms/features/review-workflows',
+          customProps: {
+            enterprise: true
+          }
         },
         {
           type: 'doc',
@@ -146,6 +158,9 @@ const sidebars = {
           type: 'doc',
           id: 'cms/plugins/installing-plugins-via-marketplace',
           label: 'Marketplace',
+          customProps: {
+            enterprise: true
+          }
         },
         {
           type: 'doc',
@@ -171,6 +186,10 @@ const sidebars = {
           type: 'doc',
           label: 'Bring your own AI key',
           id: 'cms/plugins/byok',
+          customProps: {
+            enterprise: true,
+            updated: true
+          }
         },
       ],
     },
