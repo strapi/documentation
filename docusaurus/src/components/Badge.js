@@ -202,7 +202,7 @@ export function AiBadge(props) {
     <Badge
       variant="AI-enhanced"
       icon="sparkle"
-      tooltip="This feature can optionally be enhanced with AI."
+      tooltip="Can optionally be enhanced with AI."
       {...props}
     />
   );
