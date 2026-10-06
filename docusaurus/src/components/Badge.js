@@ -118,7 +118,7 @@ export function EnterpriseBadge(props) {
   return (
     <Badge
       variant="Enterprise"
-      link="https://strapi.io/pricing-self-hosted"
+      link="https://strapi.io/contact-sales"
       icon="feather"
       tooltip="This feature is available with an Enterprise plan."
       {...props}
