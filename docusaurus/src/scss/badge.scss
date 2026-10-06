@@ -430,8 +430,10 @@ main .badge--content:has(+ table) {
   height: 20px;
   padding: 0;
 
+  // New and Updated put their tooltip as a direct child span, next to the icon
+  // wrapper, so it has to be excluded here or it inherits the pill's 20px box.
   .badge__link,
-  > span {
+  > span:not(.badge__tooltip) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
