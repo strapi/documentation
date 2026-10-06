@@ -4008,7 +4008,7 @@ Source: https://docs.strapi.io/cms/ai/for-content-managers
 
 # AI for content managers
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the  plan, translations and asset metadata can use your own AI provider instead. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 This page covers the AI-powered capabilities available to content managers in Strapi: the Strapi AI features built into the admin panel, and the MCP server that lets AI clients manage your content.
 
@@ -4039,17 +4039,17 @@ module.exports = {
 
 ### Available features {#features}
 
-| Feature | Description |
-|---------|-------------|
-| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. |
-| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. |
-| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. |
+| Feature | Description | With your own AI provider ( plan) |
+|---------|-------------|-------------------------------------------------|
+| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Not available |
+| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available |
+| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. | Available |
 
 ### Credits and data handling {#credits}
 
-Strapi AI features consume AI credits.
+Strapi AI features consume AI credits. Features that use your own AI provider don't.
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans.
+Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -4061,9 +4061,17 @@ Credits are shared across all users within the same project instance.
 When your credits run out, you can keep using Strapi AI, with overages billed monthly.
 For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
-All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
+Strapi AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
 
   See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
+
+## Using your own AI provider {#byok}
+
+Strapi AI is not available on the CMS Enterprise plan. Instead, the [Bring your own AI key plugin](/cms/plugins/byok) runs AI Translations and AI-powered metadata generation with your own AI provider, API key, and models. With the plugin:
+
+- Requests go to your provider and don't use Strapi AI credits.
+- Your provider's data handling terms apply, instead of the [Strapi AI ones](#credits).
+- The global `ai.enabled` setting still applies: setting it to `false` also turns off the plugin's features.
 
 ## Strapi MCP server
 
@@ -22153,6 +22161,7 @@ Strapi CLI commands on the present page are grouped by category:
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
 | [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
 | [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types` |
+| [Enterprise](#enterprise) | `enterprise install` |
 | [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
 
 :::caution
@@ -22890,6 +22899,52 @@ strapi ts:generate-types
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
 
+## Enterprise
+
+These commands install and upgrade Strapi Enterprise plugins from the Strapi package registry.
+
+### `strapi enterprise install`
+
+Install or upgrade [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install, which needs an interactive terminal. To upgrade installed plugins, run the command again.
+
+```bash
+strapi enterprise install [packages...]
+```
+
+| Argument | Description |
+|---|---|
+| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.2.0` or `plugin-byok@^1.2.0`. |
+
+The command:
+
+1. Reads your license or asks for it.
+2. On first run, sets up access to the registry in your user-level `~/.npmrc` or `~/.yarnrc.yml` file.
+3. Installs the version you name or, by default, the newest stable version compatible with the application's Strapi version, with npm, pnpm, or Yarn.
+4. Shares the setup guide for each installed plugin.
+
+#### Examples
+
+```bash
+# Choose plugins from a list
+yarn strapi enterprise install
+
+# Install a plugin by name
+yarn strapi enterprise install plugin-byok
+
+# Install a specific version
+yarn strapi enterprise install plugin-byok@1.2.0
+```
+```bash
+# Choose plugins from a list
+npm run strapi enterprise install
+
+# Install a plugin by name
+npm run strapi enterprise install plugin-byok
+
+# Install a specific version
+npm run strapi enterprise install plugin-byok@1.2.0
+```
+
 ## Listing
 
 These commands list registered elements in your Strapi project.
@@ -23398,7 +23453,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 
 ## Strapi AI  {#strapi-ai}
 
-Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation) with  plans, can be enabled or disabled:
+Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation) with  plans, can be enabled or disabled. The same setting applies to the AI features that the [Bring your own AI key plugin](/cms/plugins/byok) runs on the  plan:
 
 | Parameter    | Description                              | Type     | Default         |
 | ------------ | ---------------------------------------- | -------- | --------------- |
@@ -25012,7 +25067,7 @@ Strapi provides the following environment variables:
 | `STRAPI_TELEMETRY_DISABLED`                                | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                     | `Boolean` | `false`         |
 | `ADMIN_PATH` | Path the admin panel is served under. Defaults to the pathname of [`admin.url`](/cms/configurations/admin-panel#admin-panel-server) and is also injected into the admin JS bundle at build time so the front end knows where it is mounted. | `String` | `'/admin'` |
 | `STRAPI_ADMIN_BACKEND_URL` | URL the admin panel uses to reach the back-end server. When the back end and the admin panel share the same origin, the value resolves to the pathname of [`server.url`](/cms/configurations/server) (typically `'/'`); otherwise it resolves to the full back-end URL. The value is injected into the admin JS bundle at build time, so override it before running `strapi build` if you need to pin a specific URL. | `String` | `auto-derived` |
-| `STRAPI_LICENSE`                                           | The license key to activate the Enterprise Edition                                                                                                                                                                                                                            | `String`  | `undefined`     |
+| `STRAPI_LICENSE`                                           | The license key to activate the Enterprise Edition. Also read by [`strapi enterprise install`](/cms/plugins/installing-enterprise-plugins).                                                                                                                                   | `String`  | `undefined`     |
 | `NODE_ENV` | Type of environment where the application is running.<br/><br/>`production` enables specific behaviors (see [Node.js documentation](https://nodejs.org/en/learn/getting-started/nodejs-the-difference-between-development-and-production) for details) | `String` | `'development'` |
 | `BROWSER`                                                  | Open the admin panel in the browser after startup                                                                                                                                                                                                                             | `Boolean` | `true`          |
 | `ENV_PATH`                                                 | Path to the file that contains your environment variables                                                                                                                                                                                                                     | `String`  | `'./.env'`      |
@@ -34139,7 +34194,7 @@ The more precise your prompts, the more accurate your created schemas are likely
 
 :::note Strapi AI credits
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans.
+Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -36902,7 +36957,9 @@ Click on the  *Fill in from another locale* button, in the top right corner, for
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
 
-Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. Using this feature consumes Strapi AI credits.
+Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi AI, using this feature consumes Strapi AI credits.
+
+On the  plan, AI-powered internationalization requires the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider instead of Strapi AI.
 
 :::caution
 AI-powered internationalization only works one way, keeping the default locale content as the unique source of truth. Consequently, once the feature is enabled:
@@ -36912,7 +36969,7 @@ AI-powered internationalization only works one way, keeping the default locale c
 
 :::note Strapi AI credits
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans.
+Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -36980,7 +37037,7 @@ In the admin panel, some Media Library settings are available via the Global Set
 
     | Setting name   | Instructions   | Default value |
     | -------------------------- | ----------------------- |---------------|
-    | Generate AI captions and alt texts automatically on upload! | Enabling this option will turn on [AI&#8209;powered metadata generation](#ai-powered-metadata-generation)  | Enabled |
+    | Generate AI captions and alt texts automatically on upload! | Enabling this option will turn on [AI&#8209;powered metadata generation](#ai-powered-metadata-generation)   | Enabled |
     Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
     | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
     | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
@@ -37738,7 +37795,7 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the  plan, metadata generation requires the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider instead of Strapi AI. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
@@ -37746,7 +37803,7 @@ Metadata can also be generated for images that already exist in the library, eit
 
 :::note Strapi AI credits
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans.
+Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -37948,7 +38005,7 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 
 #### Generating metadata in bulk {#bulk-metadata}
 
-When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, a  **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
+When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) or the [Bring your own AI key plugin](/cms/plugins/byok) is enabled, a  **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
 
 1. Select the images to describe.
 2. Click the  **Create metadata** button in the bulk actions bar.
@@ -53554,6 +53611,186 @@ For configuration examples including policies, public routes, dynamic URL parame
 
 
 
+# Bring your own AI key plugin
+Source: https://docs.strapi.io/cms/plugins/byok
+
+# Bring your own AI key plugin
+
+The Bring your own AI key (BYOK) plugin runs AI Translations and AI-powered metadata generation with your own AI provider, instead of Strapi AI.
+
+With the Bring your own AI key plugin, AI Translations and AI-powered metadata generation in the Media Library send their requests to the provider of your choice. You set the API key and pick the model for each feature.
+
+**Location**
+
+Configured in `/config/plugins`. Used through the AI features of the admin panel.
+
+**Package name**
+
+`@strapi-enterprise/plugin-byok`
+
+**Additional resources**
+
+[Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins)
+
+:::prerequisites
+- A license for the CMS Enterprise plan.
+- Strapi 5.57.0 or later.
+- An API key for a provider with an OpenAI-compatible API.
+- For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
+:::
+
+## Installation
+
+The plugin installs from the Strapi package registry. The `strapi enterprise install` command does the setup for you, or you can do it manually.
+
+### With the command
+
+From the root folder of your Strapi application, run:
+
+```bash
+yarn strapi enterprise install plugin-byok
+```
+```bash
+npm run strapi enterprise install plugin-byok
+```
+
+The command finds your license, sets up access to the registry, and installs a version that supports the Strapi version of your application. See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for details.
+
+### Manually
+
+1. Set up access to the registry, as described in [Setting up access manually](/cms/plugins/installing-enterprise-plugins#setting-up-access-manually).
+2. From the root folder of your Strapi application, install the package, saving the exact version:
+
+  ```bash
+  yarn add --exact @strapi-enterprise/plugin-byok
+  ```
+  ```bash
+  npm install --save-exact @strapi-enterprise/plugin-byok
+  ```
+
+Unlike the command, a manual install does not check that the version supports the Strapi version of your application. Check the plugin's `@strapi/strapi` peer dependency, which your package manager also warns about.
+
+:::caution
+Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. See [Configuration](#configuration).
+:::
+
+## Configuration
+
+The plugin is configured in the plugins configuration file, with environment variables for the provider connection and the models.
+
+1. Add the plugin to the plugins configuration file:
+
+  ```js title="/config/plugins.js"
+  module.exports = ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+  ```
+  ```ts title="/config/plugins.ts"
+  export default ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+  ```
+
+2. Set the environment variables in the `.env` file. See [Configuration options](#configuration-options) for the expected value of each one:
+
+  ```bash title="/.env"
+  STRAPI_BYOK_ENABLED=true
+  STRAPI_BYOK_PROVIDER_BASE_URL=
+  STRAPI_BYOK_PROVIDER_API_KEY=
+  STRAPI_BYOK_TRANSLATIONS_MODEL=
+  STRAPI_BYOK_MEDIA_METADATA_MODEL=
+  ```
+
+3. Restart Strapi.
+
+### Configuration options
+
+All `connection` and `models` options are required when the plugin is enabled. If one is missing, Strapi does not start and logs the first missing option.
+
+| Option | Environment variable | Description |
+|---|---|---|
+| `enabled` | `STRAPI_BYOK_ENABLED` | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
+| `connection.baseURL` | `STRAPI_BYOK_PROVIDER_BASE_URL` | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
+| `connection.apiKey` | `STRAPI_BYOK_PROVIDER_API_KEY` | API key for your provider. Keep it in the server environment only. |
+| `models.translations` | `STRAPI_BYOK_TRANSLATIONS_MODEL` | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
+| `models.mediaMetadata` | `STRAPI_BYOK_MEDIA_METADATA_MODEL` | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
+
+:::tip
+Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
+:::
+
+## Usage
+
+Once the plugin is configured, each AI feature works as described in its own documentation, including how to turn it on. It sends its requests to your provider:
+
+- [AI Translations](/cms/features/internationalization#enabling-ai-powered-internationalization) (AI-powered internationalization)
+- [AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation), including [generating metadata in bulk](/cms/features/media-library#bulk-metadata)
+
+Requests don't use Strapi AI credits. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not available with the plugin. Setting [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false` also turns off the plugin's features.
+
+### Checking that the plugin is active
+
+When Strapi starts, the server logs list the features that use your provider, for instance:
+
+```
+BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
+```
+
+## Troubleshooting
+
+| Symptom | What to do |
+|---|---|
+| Strapi does not start and logs an option that `is required` | Set that option. See [Configuration options](#configuration-options). |
+| A warning says your Strapi license does not include the feature | Check your license. Until it includes the feature, all AI features are turned off, including Strapi AI. |
+| A warning says the i18n plugin is not installed | AI Translations stays off until the [Internationalization](/cms/features/internationalization) feature is enabled. The Media Library feature still uses your provider. |
+| No `BYOK is ready` line in the logs at startup | Check that `STRAPI_BYOK_ENABLED` is `true` and that [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) is not `false`. |
+| `The AI provider rejected the request (HTTP 401)` or `(HTTP 403)` | Check `connection.apiKey`. |
+| `The AI provider rejected the request (HTTP 404)` | Check that `connection.baseURL` includes the API version path, such as `/v1`, and that your provider offers the model you set. |
+
+## Uninstallation
+
+1. Stop Strapi.
+2. Remove the `byok` entry from the plugins configuration file.
+3. Remove the package:
+
+  ```bash
+  yarn remove @strapi-enterprise/plugin-byok
+  ```
+  ```bash
+  npm uninstall @strapi-enterprise/plugin-byok
+  ```
+
+4. Remove the `STRAPI_BYOK_ENABLED`, `STRAPI_BYOK_PROVIDER_BASE_URL`, `STRAPI_BYOK_PROVIDER_API_KEY`, `STRAPI_BYOK_TRANSLATIONS_MODEL` and `STRAPI_BYOK_MEDIA_METADATA_MODEL` variables from the `.env` file.
+5. Start Strapi again.
+
+
+
 # Documentation plugin
 Source: https://docs.strapi.io/cms/plugins/documentation
 
@@ -54863,6 +55100,158 @@ Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
 The GraphQL plugin adds a GraphQL endpoint that can accessed through Strapi's GraphQL API:
 
 - [GraphQL API](/cms/api/graphql): Learn how to use the Strapi
+
+
+
+# Installing Enterprise plugins
+Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins
+
+# Installing Enterprise plugins
+
+Enterprise plugins are distributed from the Strapi package registry to the licenses that include them. The `strapi enterprise install` command finds your license, sets up access to the registry, and installs a version compatible with your Strapi application.
+
+Enterprise plugins are not published on the public npm registry. They are installed like any other dependency, and the Strapi package registry only serves the plugins your Strapi license includes. The `strapi enterprise install` command sets up the registry for you, so npm or Yarn configuration files don't need to be edited by hand.
+
+:::prerequisites
+- A Strapi 5.57.0 or later application, with its dependencies installed.
+- A license for the CMS Enterprise plan. The license key is available in the [Strapi billing portal](/cms/billing-portal#viewing-and-saving-a-cms-license-key).
+- npm, pnpm, or Yarn (1 or 2 and later).
+:::
+
+## Installing a plugin
+
+Run the command from the root folder of your Strapi application.
+
+### Choosing plugins from a list
+
+Without a plugin name, the command lists the Enterprise plugins your license includes:
+
+```bash
+yarn strapi enterprise install
+```
+```bash
+npm run strapi enterprise install
+```
+
+The list works as follows:
+
+- Plugins with a newer compatible version are selected for upgrade. A major upgrade, which may include breaking changes, is shown with `[major upgrade]` and isn't selected.
+- Plugins that can't be installed show the reason, for instance a newer Strapi version they require.
+- Packages that are not plugins, such as providers, show their kind, for instance `[provider]`.
+- Unselecting an installed plugin does not uninstall it.
+
+1. Use the arrow keys to move through the list, and press <kbd>Space</kbd> to select a plugin.
+2. Press <kbd>Enter</kbd> to install the selected plugins.
+
+### Installing a plugin by name
+
+Pass one or more plugin names to install them without the list. The `@strapi-enterprise/` prefix is optional:
+
+```bash
+yarn strapi enterprise install plugin-byok
+```
+```bash
+npm run strapi enterprise install plugin-byok
+```
+
+The command picks the newest stable version, up to the one tagged `latest`, that supports the Strapi version of your application. It warns you before a major upgrade.
+
+To install another version, add it to the name:
+
+- An exact version, including a prerelease, for instance `plugin-byok@1.2.0`.
+- A tag, for instance `plugin-byok@next`.
+- A range, for instance `plugin-byok@^1.2.0`. The command installs the highest version in it that supports the Strapi version of your application, or the version tagged `latest` if it qualifies.
+
+If the version you name, or every version in the range, requires a newer Strapi version, the command warns you but still installs it.
+
+:::note
+The command saves the exact version it installs in `package.json`. A later dependency update then can't move the plugin to a version your Strapi application doesn't support. To upgrade, run `strapi enterprise install` again.
+:::
+
+:::caution
+Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See each plugin's page, for instance [Bring your own AI key](/cms/plugins/byok#configuration), for how to configure it.
+:::
+
+## Registry access
+
+The first time it runs on a computer, the command adds the registry setup at the end of your user-level configuration file, and restricts the file to your user:
+
+| Package manager | File |
+|---|---|
+| npm, pnpm, Yarn 1 | `~/.npmrc` |
+| Yarn 2 and later | `~/.yarnrc.yml` |
+
+:::caution
+If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
+:::
+
+### Setting up access manually {#setting-up-access-manually}
+
+The command is optional. To set up access yourself, add these lines to your user-level configuration file, with your license in place of `<your license>`:
+
+```ini title="~/.npmrc"
+@strapi-enterprise:registry=https://packages.strapi.io/
+//packages.strapi.io/:_authToken=<your license>
+```
+```yaml title="~/.yarnrc.yml"
+npmScopes:
+  strapi-enterprise:
+    npmRegistryServer: 'https://packages.strapi.io/'
+    npmAlwaysAuth: true
+    npmAuthToken: '<your license>'
+```
+
+If the file already has an `npmScopes` key, add the `strapi-enterprise` entry under it.
+
+The file now holds your license, so restrict it to your user, for instance with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version, for instance `npm install --save-exact @strapi-enterprise/<plugin-name>`.
+
+## Setting up access for CI and deployments
+
+The command only configures the computer it runs on. Any other environment that installs your application's dependencies also needs access to the registry, such as a CI pipeline, a deployment build, or a teammate's computer. Otherwise, installing dependencies fails with an authentication error (401) or a not found error (404).
+
+### Committing a project-level configuration file
+
+Add a configuration file to your project that reads the license from the `STRAPI_LICENSE` environment variable. Then set `STRAPI_LICENSE` as a secret in every environment that installs dependencies:
+
+```ini title="./.npmrc"
+@strapi-enterprise:registry=https://packages.strapi.io/
+//packages.strapi.io/:_authToken=${STRAPI_LICENSE}
+```
+```yaml title="./.yarnrc.yml"
+npmScopes:
+  strapi-enterprise:
+    npmRegistryServer: 'https://packages.strapi.io/'
+    npmAlwaysAuth: true
+    npmAuthToken: '${STRAPI_LICENSE:-}'
+```
+
+If the project already has a `.yarnrc.yml`, add these lines to it, under its existing `npmScopes` key if it has one.
+
+:::caution
+`STRAPI_LICENSE` must then be set in the shell of everyone who installs dependencies. npm, pnpm, and Yarn do not read the application's `.env` file.
+:::
+
+## Troubleshooting
+
+| Message | What to do |
+|---|---|
+| `No Strapi license found…` | Set `STRAPI_LICENSE`, or run the command in a terminal to paste the license. |
+| `This Strapi license is not valid…` | Copy the whole license again from the billing portal. |
+| `This Strapi license expired on…` | Renew your license. |
+| `…rejected this Strapi license…` | Check that the license is still active in the billing portal. |
+| `Your license does not include…` | Check the plugin name. If the name is correct, contact your account manager. |
+| `No Enterprise package named…` | Check the plugin name. |
+| `… has no stable release yet…` | Add the prerelease version to the name, for instance `plugin-name@<version>`. |
+| `… has no version or tag …` | Check the version you added to the plugin name. |
+| `… requires Strapi … and this app uses …` | Upgrade Strapi first. |
+| `Could not reach https://packages.strapi.io…` | Check your network connection, proxy, and firewall. |
+| `Could not tell which package manager this app uses…` | Install your application's dependencies first, or set `packageManager` in `package.json`. |
+| `… already sets up packages.strapi.io with another license…` | Replace those lines with the ones in the message. |
+| `… sets another license for packages.strapi.io and takes precedence…` | Update or remove that line in the named file. |
+| `… could not be updated automatically…` | Add the lines from the message to the named file, then run the command again. |
+| `Could not search packages.strapi.io…` | Try again later, or pass the plugin name. |
+| `Pass package names, or run the command in an interactive terminal.` | Run the command in a terminal, or pass the plugin names, for instance in CI. |
+| Installing dependencies fails with a 401 or 404 error | See [Registry access](#registry-access) and [Setting up access for CI and deployments](#setting-up-access-for-ci-and-deployments). |
 
 
 
@@ -58150,6 +58539,8 @@ If you have any questions or concerns regarding data collection, please contact 
 ## Strapi AI data handling {#strapi-ai-data-handling}
 
 [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
+
+With the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan, AI requests go to your own AI provider instead, and that provider's data handling terms apply.
 
 Strapi AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
 

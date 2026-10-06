@@ -132,37 +132,49 @@ const sidebars = {
           label: 'Users & Permissions',
           id: 'cms/features/users-permissions',
         },
+
+      ],
+    },
+    { // Plugins
+      type: 'category',
+      label: 'Plugins',
+      collapsible: false,
+      className: 'category-cms-plugins',
+      link: { type: 'generated-index', slug: '/cms/plugins' },
+      items: [
         {
-          type: 'category',
-          label: 'Strapi plugins',
-          collapsed: true,
-          link: { type: 'generated-index', slug: '/cms/plugins' },
-          items: [
-            {
-              type: 'doc',
-              label: 'Bring your own AI key',
-              id: 'cms/plugins/byok',
-            },
-            {
-              type: 'doc',
-              label: 'Documentation',
-              id: 'cms/plugins/documentation',
-            },
-            {
-              type: 'doc',
-              label: 'GraphQL',
-              id: 'cms/plugins/graphql',
-            },
-            {
-              type: 'doc',
-              label: 'Sentry',
-              id: 'cms/plugins/sentry',
-            },
-          ],
+          type: 'doc',
+          id: 'cms/plugins/installing-plugins-via-marketplace',
+          label: 'Marketplace',
+        },
+        {
+          type: 'doc',
+          id: 'cms/plugins/installing-enterprise-plugins',
+          label: 'Enterprise plugins',
+        },
+        {
+          type: 'doc',
+          label: 'Documentation',
+          id: 'cms/plugins/documentation',
+        },
+        {
+          type: 'doc',
+          label: 'GraphQL',
+          id: 'cms/plugins/graphql',
+        },
+        {
+          type: 'doc',
+          label: 'Sentry',
+          id: 'cms/plugins/sentry',
+        },
+        {
+          type: 'doc',
+          label: 'Bring your own AI key',
+          id: 'cms/plugins/byok',
         },
       ],
     },
-        { // Strapi AI
+    { // Strapi AI
       type: 'category',
       label: 'AI',
       collapsible: false,
@@ -496,30 +508,19 @@ const sidebars = {
         },
       ],
     },
-    { // Command Line Interface
-      type: 'category',
-      label: 'Command Line Interface',
-      className: 'category-cms-cli',
-      collapsed: false,
-      collapsible: false,
-      items: ['cms/cli'],
-    },
-    { // Plugins
+
+    { // Plugins development
       type: 'category',
       label: 'Plugins development',
-      className: 'category-cms-plugins',
+      className: 'category-cms-plugins-development',
       link: { type: 'generated-index', slug: '/cms/plugins-development' },
       collapsible: false,
       collapsed: false,
       items: [
+
         {
           type: 'doc',
-          id: 'cms/plugins/installing-plugins-via-marketplace',
-          label: 'Marketplace',
-        },
-        {
-          type: 'doc',
-          label: 'Developing plugins',
+          label: 'Introduction',
           id: 'cms/plugins-development/developing-plugins',
         },
         {
@@ -580,12 +581,16 @@ const sidebars = {
           ],
         },
         'cms/plugins-development/plugins-extension',
-        {
-          type: 'doc',
-          id: 'cms/plugins/installing-enterprise-plugins',
-          label: 'Enterprise plugins',
-        },
+
       ],
+    },
+    { // Command Line Interface
+      type: 'category',
+      label: 'Command Line Interface',
+      className: 'category-cms-cli',
+      collapsed: false,
+      collapsible: false,
+      items: ['cms/cli'],
     },
     { // Upgrades
       type: 'category',

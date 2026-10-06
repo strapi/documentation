@@ -305,6 +305,11 @@ html[data-sidebar-collapsed='true'] {
           content: '\E922'
         }
       }
+      .theme-doc-sidebar-item-category-level-1.category-cms-plugins > .menu__list-item-collapsible a {
+        &::before {
+          content: '\E946'
+        }
+      }
       .theme-doc-sidebar-item-category-level-1.category-cms-configurations > .menu__list-item-collapsible a {
         &::before {
           content: '\E87C'
@@ -320,7 +325,7 @@ html[data-sidebar-collapsed='true'] {
           content: '\EB26'
         }
       }
-      .theme-doc-sidebar-item-category-level-1.category-cms-plugins > .menu__list-item-collapsible a {
+      .theme-doc-sidebar-item-category-level-1.category-cms-plugins-development > .menu__list-item-collapsible a {
         &::before {
           content: '\E596'
         }
