@@ -1,7 +1,6 @@
 ---
 title: AI for developers
 description: Use AI-powered tools on the Strapi documentation site. Chatbot, Copy Markdown, LLMs.txt files, Open with LLM, and MCP server for IDE integration.
-sidebar_label: AI for developers
 displayed_sidebar: cmsSidebar
 tags:
 - ai
@@ -11,7 +10,7 @@ tags:
 toc_max_heading_level: 3
 ---
 
-# AI for developers
+# AI for developers and documentation readers
 
 <Tldr>
 
@@ -124,26 +123,17 @@ To leave AI mode, switch back to **Elegant mode** or **Markdown mode** with the 
 
 ## MCP servers {#mcp}
 
-The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that lets AI tools interact with external services. 2 MCP servers are available for Strapi:
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that lets AI tools interact with external services. 2 MCP servers are available for Strapi. Click on any of the following cards to learn more:
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="feather" title="Strapi MCP server" description="Connect AI clients to your Strapi instance to manage content through natural language." link="/cms/features/strapi-mcp-server" />
 <CustomDocCard icon="book-open" title="Docs MCP server" description="Connect the Strapi documentation to your IDE for up-to-date, reliable information." link="/cms/ai/docs-mcp-server" />
 </CustomDocCardsWrapper>
 
-Beyond the content tools generated from your schema, the Strapi MCP server also exposes 10 tools for the Media Library, covering assets and folders (see [Media Library tools](/cms/features/strapi-mcp-server#media-library-tools)).
-
-### Tips for better results with the Docs MCP server {#tips}
-
-The following tips will help you fine-tune your prompts to get the best results:
-- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, prefix your prompt with `Use the strapi-docs MCP server to answer:` so the tool queries docs.strapi.io instead of using potentially outdated training data.
-- Include the page URL so the assistant grounds its answer in the right context.
-- Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
-- Pair code examples with their source page when sharing snippets from `llms-code.txt`.
-- Prefer documented APIs over private internals when asking for code generation.
+<br/>
 
 ## Inki {#inki}
 
-[Inki](https://github.com/strapi/documentation/tree/main/claude-plugins/inki) is a Claude Code plugin that makes contributing to the Strapi documentation easier. It bundles the skills, prompts, templates, and editorial rules the docs team uses to research where new content belongs, draft it from the right template, review it against the style guide and verify its code examples, then open a pull request. You can install it from this repository's marketplace and run the whole workflow, or any single step, from Claude Code.
+[Inki](https://github.com/strapi/documentation/tree/main/claude-plugins/inki) is a custom Claude Code plugin that makes contributing to the Strapi documentation easier. It bundles the skills, prompts, templates, and editorial rules the docs team uses to research where new content belongs, draft it from the right template, review it against the style guide and verify its code examples, then open a pull request. You can install it from this repository's marketplace and run the whole workflow, or any single step, from Claude Code.
 
 If you don't use Claude Code, you can still benefit from Inki: its prompts and authoring guides are LLM-agnostic, so you can point any AI agent (Cursor, GitHub Copilot, Cline, Windsurf, and others) at the plugin's folder and reuse its prompts, templates, authoring guides, and editorial rules. Most of these live under `references/`, and the skill and agent definitions are readable Markdown too.

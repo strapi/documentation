@@ -221,13 +221,8 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'AI for developers and docs',
+          label: 'AI for developers and docs readers',
           id: 'cms/ai/for-developers',
-        },
-        {
-          type: 'doc',
-          label: 'Docs MCP server',
-          id: 'cms/ai/docs-mcp-server',
         },
       ],
     },
