@@ -453,6 +453,15 @@ main .badge--content:has(+ table) {
   height: 20px;
   padding: 0;
 
+  // The AI badge carries no link, so it has no .badge__link wrapper for the rule
+  // below to turn into a centring box: its icon is a direct child of the pill.
+  // Scoped to this variant so no other badge's geometry moves.
+  &.badge--aienhanced {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   // New and Updated put their tooltip as a direct child span, next to the icon
   // wrapper, so it has to be excluded here or it inherits the pill's 20px box.
   .badge__link,
