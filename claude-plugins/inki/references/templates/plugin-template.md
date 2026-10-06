@@ -29,3 +29,14 @@ module.exports = {
 
 ## Usage
 Explain how to use it post-setup; add API sub-sections if relevant. For API sub-sections, use the `<Endpoint>` component (`kind="http"` for REST, `kind="js"` for the Document Service), not the deprecated `<ApiCall>`/`<Request>`/`<Response>` trio. See `components/endpoint.md`.
+
+<!-- Optional. Keep it when installation depends on something outside the project,
+     such as registry access or a provider API key. One H3 per symptom, or a table
+     when the cases are short. -->
+## Troubleshooting
+Symptom, then cause, then fix.
+
+<!-- Optional. Keep it when removing the plugin takes more than deleting the
+     package, for instance leftover configuration keys or data. -->
+## Uninstallation
+Steps to remove the plugin and anything it leaves behind.

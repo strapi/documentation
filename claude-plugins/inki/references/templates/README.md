@@ -20,7 +20,7 @@ How to use
 | Template | Target path | Purpose | Authoring guide |
 |----------|-------------|---------|-----------------|
 | `feature-template.md` | `docusaurus/docs/cms/features/` | Feature pages: TL;DR, intro, identity card, configuration, usage | `claude-plugins/inki/references/authoring/AGENTS.cms.features.md` |
-| `plugin-template.md` | `docusaurus/docs/cms/plugins/` | Plugin pages: identity details, install steps, configuration (admin UI and code), usage tasks | `claude-plugins/inki/references/authoring/AGENTS.cms.plugins.md` |
+| `plugin-template.md` | `docusaurus/docs/cms/plugins/`, one page per plugin | Plugin pages: identity details, install steps, configuration (admin UI and code), usage tasks, optional troubleshooting and uninstallation. Not for the `installing-*.md` how-to pages in the same directory, which use `guide-template.md` | `claude-plugins/inki/references/authoring/AGENTS.cms.plugins.md` |
 | `configuration-template.md` | `docusaurus/docs/cms/configurations/` | Configuration pages: file location, available options, env variables, per‑environment overrides | `claude-plugins/inki/references/authoring/AGENTS.cms.configurations.md` |
 | `guide-template.md` | `docusaurus/docs/cms/` (varies) | How‑to guides: prerequisites, numbered steps, validation, troubleshooting | `claude-plugins/inki/references/authoring/AGENTS.cms.guides.md` |
 | `api-template.md` | `docusaurus/docs/cms/api/` | API reference pages: endpoints, auth, parameters, and the `<Endpoint>` 2‑column API block (HTTP request on one side, response/JS client on the other) | `claude-plugins/inki/references/authoring/AGENTS.cms.api.md` |

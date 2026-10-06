@@ -1,7 +1,8 @@
 # AGENTS.md (Plugins pages)
 
 Scope
-- Applies to all plugin pages under `docusaurus/docs/cms/plugins/`.
+- Applies to pages under `docusaurus/docs/cms/plugins/` that document a single plugin: `documentation.md`, `graphql.md`, `sentry.md`, `byok.md`.
+- Does NOT apply to the how-to pages that sit in the same directory and the same Plugins sidebar category but explain how to install plugins rather than documenting one: `installing-plugins-via-marketplace.md` and `installing-enterprise-plugins.md`. Those follow `claude-plugins/inki/references/authoring/AGENTS.cms.guides.md` and the guide template. They carry no identity card and no package name, and flagging them for it is a false positive.
 - Reuse repo‑wide rules for TL;DR, callouts, and code snippets; this guide encodes structure/headings specific to plugins.
 
 Purpose
@@ -43,6 +44,13 @@ Tabs reminder (canonical rules: `claude-plugins/inki/references/templates/compon
    - Explain how to use the plugin after configuration; split into H3 tasks (e.g., “Regenerating documentation”, “GraphQL API”).
    - Add API‑specific sub‑sections when relevant (REST/GraphQL endpoints, admin UI tools).
    - Document REST endpoints with the modern `<Endpoint>` component (`kind="http"`) and Document Service methods with `<Endpoint kind="js">`. See `claude-plugins/inki/references/templates/components/endpoint.md`. The legacy `<ApiCall>`/`<Request>`/`<Response>` trio is deprecated and allowed only on the not‑yet‑migrated `docs/cms/plugins/graphql.md` page.
+
+7) Troubleshooting (H2, optional)
+   - Symptom then cause then fix, one H3 per symptom or a table when the cases are short.
+   - Worth adding whenever installation depends on something outside the project, such as registry access or a provider API key.
+
+8) Uninstallation (H2, optional)
+   - Add it when removing the plugin takes more than deleting the package, for instance leftover configuration keys or data.
 
 Optional Elements
 - Screenshots or ThemedImage blocks for UIs (playgrounds, marketplaces).

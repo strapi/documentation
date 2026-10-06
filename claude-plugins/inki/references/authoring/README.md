@@ -20,7 +20,7 @@ These guides are the reference that writers follow when creating or editing page
 | `AGENTS.cms.configurations.md` | Configuration pages under `docusaurus/docs/cms/configurations/` | `claude-plugins/inki/references/templates/configuration-template.md` |
 | `AGENTS.cms.features.md` | Feature pages under `docusaurus/docs/cms/features/` | `claude-plugins/inki/references/templates/feature-template.md` |
 | `AGENTS.cms.guides.md` | How-to guides across CMS docs | `claude-plugins/inki/references/templates/guide-template.md` |
-| `AGENTS.cms.plugins.md` | Plugin pages under `docusaurus/docs/cms/plugins/` | `claude-plugins/inki/references/templates/plugin-template.md` |
+| `AGENTS.cms.plugins.md` | Pages documenting a single plugin under `docusaurus/docs/cms/plugins/`. The how-to pages in that same directory (`installing-plugins-via-marketplace.md`, `installing-enterprise-plugins.md`) follow `AGENTS.cms.guides.md` instead | `claude-plugins/inki/references/templates/plugin-template.md` |
 | `AGENTS.cloud.md` | Cloud documentation under `docusaurus/docs/cloud/` | — |
 | `AGENTS.snippets.md` | Shared snippets under `docusaurus/docs/snippets/` | — |
 

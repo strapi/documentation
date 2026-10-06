@@ -53,7 +53,8 @@ The Outline Checker determines the document type using this priority:
 | Path pattern | Document type | Template path |
 |--------------|---------------|---------------|
 | `cms/features/*` | Feature | `claude-plugins/inki/references/templates/feature-template.md` |
-| `cms/plugins/*` (not plugins-development) | Plugin | `claude-plugins/inki/references/templates/plugin-template.md` |
+| `cms/plugins/*` (not plugins-development), one page per plugin | Plugin | `claude-plugins/inki/references/templates/plugin-template.md` |
+| `cms/plugins/installing-*.md` | Guide | `claude-plugins/inki/references/templates/guide-template.md` |
 | `cms/configurations/*` | Configuration | `claude-plugins/inki/references/templates/configuration-template.md` |
 | `cms/api/*` | API | `claude-plugins/inki/references/templates/api-template.md` |
 | `cms/migration/**/breaking-changes/*.md` | Breaking Change | `claude-plugins/inki/references/templates/breaking-change-template.md` |
@@ -216,7 +217,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 ---
 
-#### Plugin Pages (`cms/plugins/*`)
+#### Plugin Pages (`cms/plugins/*`, one page per plugin)
 
 **Template (SSOT):** `claude-plugins/inki/references/templates/plugin-template.md`
 
@@ -224,7 +225,9 @@ A strong signal that an off-scope section should be its own page: other pages de
 - `<Tldr>` — Required
 - `<IdentityCard isPlugin>` — Required (note the `isPlugin` prop)
 
-**Fallback — Expected sections:** TL;DR → IdentityCard → Installation → Configuration → Usage
+**Fallback — Expected sections:** TL;DR → IdentityCard → Installation → Configuration → Usage → Troubleshooting (optional) → Uninstallation (optional)
+
+**Not plugin pages:** the Plugins category also holds how-to pages that explain how to install plugins rather than documenting one (`installing-plugins-via-marketplace.md` and `installing-enterprise-plugins.md`). Check those against the guide template, not this one: they carry no `<IdentityCard isPlugin>` and no package name.
 
 ---
 
