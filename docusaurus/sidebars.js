@@ -99,9 +99,6 @@ const sidebars = {
           type: 'doc',
           label: 'Media Library',
           id: 'cms/features/media-library',
-          customProps: {
-            updated: true
-          }
         },
         {
           type: 'doc',
@@ -188,7 +185,7 @@ const sidebars = {
           id: 'cms/plugins/byok',
           customProps: {
             enterprise: true,
-            updated: true
+            new: true
           }
         },
       ],
