@@ -1076,7 +1076,7 @@ This command automatically opens a browser window to first ask you to confirm th
 
 If the browser window doesn't automatically open, the terminal will display a clickable link as well as the code to enter manually.
 
-## strapi link  {#strapi-link}
+## strapi link {#strapi-link}
 
 **Alias:** `strapi cloud:link`
 
@@ -1109,7 +1109,7 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 - Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since, unless you have [connected a git repository to your Strapi Cloud project](/cloud/getting-started/deployment-cli#automatically-deploying-subsequent-changes).
 :::
 
-## strapi projects 
+## strapi projects
 
 **Alias:** `strapi cloud:projects`
 
@@ -4449,7 +4449,7 @@ const updatedFile = await client.files.update(1, {
 });
 ```
 
-#### `upload`  {#upload}
+#### `upload` {#upload}
 
 The Strapi Client provides media file upload functionality through the `FilesManager`, accessible through the  `strapi.client.files.upload()` method. The method allows you to upload media files (such as images, videos, or documents) to your Strapi backend.
 
@@ -23456,7 +23456,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 | `rateLimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                              | array(string) | `[]`                                                                                                                                |
 | `rateLimit.store`                 | Rate limiting storage location (Memory, Sequelize, or Redis). For more information see the koa2-ratelimit documentation               | object        | `MemoryStore`                                                                                                                       |
 
-## Strapi AI  {#strapi-ai}
+## Strapi AI {#strapi-ai}
 
 Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation), can be enabled or disabled. The setting applies whether Strapi AI is Strapi-managed, on  plans, or powered by the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan:
 
@@ -34183,7 +34183,7 @@ Components are not part of the content structure file, and cannot be organized i
 
 The Content-type Builder allows you to create new content-types: single and collection types, but also components.
 
-#### Creating content-types with Strapi AI  {#strapi-ai}  
+#### Creating content-types with Strapi AI {#strapi-ai}  
 
 [When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language. The assistant is only available with Strapi-managed AI: the [Bring your own AI key plugin](/cms/plugins/byok) does not power it.
 
@@ -34704,7 +34704,7 @@ Content types and components can be deleted through the Content-type Builder. De
 Deleting a content-type only deletes what was created and available from the Content-type Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database. For more information, please refer to the related [GitHub issue](https://github.com/strapi/strapi/issues/1114).
 :::
 
-### Organizing content-types with folders  {#organizing-content-types-with-folders}
+### Organizing content-types with folders {#organizing-content-types-with-folders}
 
 Collection types and single types can be grouped into folders, and folders can be nested up to 3 levels deep. Folders are displayed in the  Content-type Builder sub navigation.
 

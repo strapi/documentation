@@ -10,7 +10,7 @@ tags:
 ---
 
 # Installing Enterprise plugins
-<EnterpriseBadge />
+<EnterpriseBadge tooltip="This is available with an Enterprise plan."/> <VersionBadge version="5.57.0" />
 
 <Tldr>
 Enterprise plugins are distributed from the Strapi package registry to the licenses that include them. The `strapi enterprise install` command finds your license, sets up access to the registry, and installs a version compatible with your Strapi application.
