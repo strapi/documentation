@@ -4008,7 +4008,7 @@ Source: https://docs.strapi.io/cms/ai/for-content-managers
 
 # AI for content managers
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the  plan, translations and asset metadata can use your own AI provider instead. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. It is Strapi-managed on the  plan. On the  plan, it is powered by your own AI key, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 This page covers the AI-powered capabilities available to content managers in Strapi: the Strapi AI features built into the admin panel, and the MCP server that lets AI clients manage your content.
 
@@ -4016,15 +4016,28 @@ This page covers the AI-powered capabilities available to content managers in St
 
 Some Strapi CMS features can be enhanced with Strapi AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata, all from the admin panel.
 
+Strapi AI is powered in one of 2 ways, depending on your plan:
+
+| | Strapi-managed | Bring your own AI key |
+|---|---|---|
+| Plan |  |  |
+| Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
+| Strapi version | 5.30 or later | 5.57 or later |
+| AI requests go to | Strapi-managed infrastructure | Your own AI provider, with your API key and models |
+| Billing | [AI credits](#credits) | Your AI provider's pricing |
+| Data handling | [Strapi-managed](/cms/usage-information#strapi-ai-data-handling) | Your provider's terms |
+
 ### Activation and configuration {#activation}
 
-Strapi AI is available for Growth plan users since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
+With Strapi-managed AI, Strapi AI works with both Strapi Cloud and self-hosted deployments. To get started:
 
 1. Upgrade to Strapi v5.30+. AI features are not available on earlier versions.
 2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
-3. Access AI features from the Content-Type Builder, Media Library, or Content Manager; they are enabled by default.
+3. Access AI features from the Content-Type Builder, Media Library, or Content Manager. The Content-Type Builder assistant and AI metadata generation are enabled by default. AI Translations must be [enabled in the Internationalization settings](/cms/features/internationalization#enabling-ai-powered-internationalization).
 
-All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+To power Strapi AI with your own AI key, on the Enterprise plan, install and configure the [Bring your own AI key plugin](/cms/plugins/byok).
+
+All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they are Strapi-managed or powered by your own AI key:
 
 ```js title="/config/admin.js|ts"
 module.exports = {
@@ -4039,17 +4052,17 @@ module.exports = {
 
 ### Available features {#features}
 
-| Feature | Description | With your own AI provider ( plan) |
-|---------|-------------|-------------------------------------------------|
-| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Not available |
-| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available |
-| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. | Available |
+| Feature | Description | Strapi-managed | Bring your own AI key |
+|---------|-------------|----------------|-----------------------|
+| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Available | Not available |
+| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available | Available |
+| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text and captions for uploaded images. | Available | Available |
 
 ### Credits and data handling {#credits}
 
-Strapi AI features consume AI credits. Features that use your own AI provider don't.
+Strapi-managed AI consumes AI credits.
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
+Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -4058,20 +4071,12 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi AI, with overages billed monthly.
+When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
 For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
-Strapi AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
+Strapi-managed AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi-managed AI follows the same GDPR-aligned framework as Strapi Cloud. With your own AI key, your provider's data handling terms apply.
 
   See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
-
-## Using your own AI provider {#byok}
-
-Strapi AI is not available on the CMS Enterprise plan. Instead, the [Bring your own AI key plugin](/cms/plugins/byok) runs AI Translations and AI-powered metadata generation with your own AI provider, API key, and models. With the plugin:
-
-- Requests go to your provider and don't use Strapi AI credits.
-- Your provider's data handling terms apply, instead of the [Strapi AI ones](#credits).
-- The global `ai.enabled` setting still applies: setting it to `false` also turns off the plugin's features.
 
 ## Strapi MCP server
 
@@ -23453,7 +23458,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 
 ## Strapi AI  {#strapi-ai}
 
-Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation) with  plans, can be enabled or disabled. The same setting applies to the AI features that the [Bring your own AI key plugin](/cms/plugins/byok) runs on the  plan:
+Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation), can be enabled or disabled. The setting applies whether Strapi AI is Strapi-managed, on  plans, or powered by the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan:
 
 | Parameter    | Description                              | Type     | Default         |
 | ------------ | ---------------------------------------- | -------- | --------------- |
@@ -34180,7 +34185,7 @@ The Content-type Builder allows you to create new content-types: single and coll
 
 #### Creating content-types with Strapi AI  {#strapi-ai}  
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language. The assistant is only available with Strapi-managed AI: the [Bring your own AI key plugin](/cms/plugins/byok) does not power it.
 
 To use Strapi AI with the Content-Type Builder, click on the  button in the bottom right corner of the admin panel, and describe what you need:
 
@@ -34192,9 +34197,9 @@ The more precise your prompts, the more accurate your created schemas are likely
   For example, the following prompt example works well when creating relations: `Could you please generate a collection of dogs then also generate an owner collection and add relationship to dogs? An owner can have multiple dogs, but a dog can only have one owner.`
 :::
 
-:::note Strapi AI credits
+:::note AI credits
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
+Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -34203,7 +34208,7 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi AI, with overages billed monthly.
+When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
 For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
 :::
@@ -36957,9 +36962,9 @@ Click on the  *Fill in from another locale* button, in the top right corner, for
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
 
-Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi AI, using this feature consumes Strapi AI credits.
+Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi-managed AI, using this feature consumes AI credits.
 
-On the  plan, AI-powered internationalization requires the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider instead of Strapi AI.
+On the  plan, Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok): translations use your own AI provider.
 
 :::caution
 AI-powered internationalization only works one way, keeping the default locale content as the unique source of truth. Consequently, once the feature is enabled:
@@ -36967,9 +36972,9 @@ AI-powered internationalization only works one way, keeping the default locale c
 - When editing the content for the default locale, the manual modifications made to other locales will be overwritten.
 :::
 
-:::note Strapi AI credits
+:::note AI credits
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
+Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -36978,7 +36983,7 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi AI, with overages billed monthly.
+When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
 For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
 :::
@@ -37795,15 +37800,15 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the  plan, metadata generation requires the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider instead of Strapi AI. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi AI](/cms/ai/for-content-managers#strapi-ai) automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the  plan, Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
 Metadata can also be generated for images that already exist in the library, either from the [Media Library settings](#configuring-settings) for every image that lacks one, or with the **Create metadata** bulk action for a specific selection (see [generating metadata in bulk](#bulk-metadata)).
 
-:::note Strapi AI credits
+:::note AI credits
 
-Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans. On the  plan, AI Translations and AI-powered metadata generation can use your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok) instead, without Strapi AI credits.
+Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -37812,7 +37817,7 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi AI, with overages billed monthly.
+When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
 For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
 :::
@@ -38005,7 +38010,7 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 
 #### Generating metadata in bulk {#bulk-metadata}
 
-When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) or the [Bring your own AI key plugin](/cms/plugins/byok) is enabled, a  **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
+When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, Strapi-managed or powered by the [Bring your own AI key plugin](/cms/plugins/byok), a  **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
 
 1. Select the images to describe.
 2. Click the  **Create metadata** button in the bulk actions bar.
@@ -53616,13 +53621,13 @@ Source: https://docs.strapi.io/cms/plugins/byok
 
 # Bring your own AI key plugin
 
-The Bring your own AI key (BYOK) plugin runs AI Translations and AI-powered metadata generation with your own AI provider, instead of Strapi AI.
+The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
 
-With the Bring your own AI key plugin, AI Translations and AI-powered metadata generation in the Media Library send their requests to the provider of your choice. You set the API key and pick the model for each feature.
+With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature, and your provider bills the requests. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi-managed AI.
 
 **Location**
 
-Configured in `/config/plugins`. Used through the AI features of the admin panel.
+Configured in `/config/plugins`. Used through the Strapi AI features of the admin panel.
 
 **Package name**
 
@@ -53747,12 +53752,12 @@ Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an AP
 
 ## Usage
 
-Once the plugin is configured, each AI feature works as described in its own documentation, including how to turn it on. It sends its requests to your provider:
+Once the plugin is configured, each AI feature works as described in its own documentation, including how to turn it on. Its requests go to your provider:
 
 - [AI Translations](/cms/features/internationalization#enabling-ai-powered-internationalization) (AI-powered internationalization)
 - [AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation), including [generating metadata in bulk](/cms/features/media-library#bulk-metadata)
 
-Requests don't use Strapi AI credits. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not available with the plugin. Setting [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false` also turns off the plugin's features.
+To turn off all Strapi AI features, including the ones the plugin powers, set [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false`.
 
 ### Checking that the plugin is active
 
@@ -53767,7 +53772,7 @@ BYOK is ready for AI Translation, AI Media Library. Requests go to your configur
 | Symptom | What to do |
 |---|---|
 | Strapi does not start and logs an option that `is required` | Set that option. See [Configuration options](#configuration-options). |
-| A warning says your Strapi license does not include the feature | Check your license. Until it includes the feature, all AI features are turned off, including Strapi AI. |
+| A warning says your Strapi license does not include the feature | Check your license. Until it includes the feature, Strapi AI features stay off. |
 | A warning says the i18n plugin is not installed | AI Translations stays off until the [Internationalization](/cms/features/internationalization) feature is enabled. The Media Library feature still uses your provider. |
 | No `BYOK is ready` line in the logs at startup | Check that `STRAPI_BYOK_ENABLED` is `true` and that [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) is not `false`. |
 | `The AI provider rejected the request (HTTP 401)` or `(HTTP 403)` | Check `connection.apiKey`. |
@@ -58538,11 +58543,11 @@ If you have any questions or concerns regarding data collection, please contact 
 
 ## Strapi AI data handling {#strapi-ai-data-handling}
 
-[Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
+With Strapi-managed AI, on the  plan, [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
 
-With the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan, AI requests go to your own AI provider instead, and that provider's data handling terms apply.
+With the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan, Strapi AI requests go to your own AI provider instead, and that provider's data handling terms apply.
 
-Strapi AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
+Strapi-managed AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
 
 For more information, refer to Strapi's [Privacy Policy](https://strapi.io/privacy).
 

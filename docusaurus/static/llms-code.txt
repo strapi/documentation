@@ -2143,7 +2143,7 @@ File path: ~/.codeium/windsurf/mcp_config.json
 Source: https://docs.strapi.io/cms/ai/for-content-managers
 
 ## Activation and configuration
-Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they are Strapi-managed or powered by your own AI key:
 (Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
 
 Language: JavaScript
