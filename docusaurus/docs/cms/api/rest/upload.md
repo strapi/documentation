@@ -32,6 +32,7 @@ The [Media Library feature](/cms/features/media-library) is powered in the back-
 :::note Notes
 - [Folders](/cms/features/media-library#organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
 - The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
+- `GET /api/upload/files/:id`, `DELETE /api/upload/files/:id`, and `POST /api/upload?id=x`, and [update `fileInfo`](#update-fileinfo)) accept either the file's numeric `id` or its `documentId`. Files have no draft and publish, so each file has exactly one `documentId`. An unknown `id` or `documentId` returns the same `404` error.
 :::
 
 ## Get a list of files
@@ -147,9 +148,6 @@ When using pagination by offset, the `meta.pagination` object returns `start` an
 
 When `pagination[withCount]` is `false`, the count query is skipped and `total` and `pageCount` are omitted from the response.
 
-## Identify a file by id or documentId
-
-`GET /api/upload/files/:id`, `DELETE /api/upload/files/:id`, and `POST /api/upload?id=x` (see [Update fileInfo](#update-fileinfo)) accept either the file's numeric `id` or its `documentId`. Files have no draft and publish, so each file has exactly one `documentId`. An unknown `id` or `documentId` returns the same `404` error.
 
 ## Upload files
 
