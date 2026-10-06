@@ -412,6 +412,18 @@ main .badge--content:has(+ table) {
  * static makes the tooltip resolve against .menu__link__content, which is
  * already relative and spans the row.
  */
+// The badge tooltip spans the whole row. .menu__link__content is inset by the
+// link's horizontal padding, so anchoring the tooltip there leaves it narrower
+// than the highlighted row on both sides. Making the link itself the containing
+// block keeps the two aligned whatever that padding becomes.
+.menu__link:has(.badge--icon-only) {
+  position: relative;
+
+  > .menu__link__content {
+    position: static;
+  }
+}
+
 // Doubled class: sidebar.scss sets .menu .badge { margin-left: auto }, which
 // parks every badge at the end of the row. These sit against the label.
 .menu .badge.badge--icon-only {
