@@ -22,7 +22,7 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 <Tldr>
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. It is Strapi-managed on the <GrowthBadge /> plan, and powered by your own AI key on the <EnterpriseBadge /> plan. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. It is Strapi-managed on the <GrowthBadge /> plan. On the <EnterpriseBadge /> plan, it is powered by your own AI key, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 </Tldr>
 
@@ -40,6 +40,7 @@ Strapi AI is powered in one of 2 ways, depending on your plan:
 | | Strapi-managed | Bring your own AI key |
 |---|---|---|
 | Plan | <GrowthBadge /> | <EnterpriseBadge /> |
+| Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
 | Strapi version | 5.30 or later | 5.57 or later |
 | AI requests go to | Strapi-managed infrastructure | Your own AI provider, with your API key and models |
 | Billing | [AI credits](#credits) | Your AI provider's pricing |
@@ -51,7 +52,7 @@ With Strapi-managed AI, Strapi AI works with both Strapi Cloud and self-hosted d
 
 1. Upgrade to Strapi v5.30+. AI features are not available on earlier versions.
 2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
-3. Access AI features from the Content-Type Builder, Media Library, or Content Manager; they are enabled by default.
+3. Access AI features from the Content-Type Builder, Media Library, or Content Manager. The Content-Type Builder assistant and AI metadata generation are enabled by default. AI Translations must be [enabled in the Internationalization settings](/cms/features/internationalization#enabling-ai-powered-internationalization).
 
 To power Strapi AI with your own AI key, on the Enterprise plan, install and configure the [Bring your own AI key plugin](/cms/plugins/byok).
 
@@ -74,7 +75,7 @@ module.exports = {
 |---------|-------------|----------------|-----------------------|
 | [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Available | Not available |
 | [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available | Available |
-| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. | Available | Available |
+| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text and captions for uploaded images. | Available | Available |
 
 ### Credits and data handling {#credits}
 
