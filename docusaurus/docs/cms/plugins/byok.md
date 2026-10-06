@@ -1,7 +1,7 @@
 ---
 title: Bring your own AI key plugin
 displayed_sidebar: cmsSidebar
-description: Run AI Translations and AI-powered metadata generation with your own AI provider, API key, and models.
+description: Power Strapi AI with your own AI provider, API key, and models.
 tags:
 - plugins
 - Enterprise feature
@@ -13,13 +13,13 @@ tags:
 <EnterpriseBadge />
 
 <Tldr>
-The Bring your own AI key (BYOK) plugin runs AI Translations and AI-powered metadata generation with your own AI provider, instead of Strapi AI.
+The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
 </Tldr>
 
-With the Bring your own AI key plugin, AI Translations and AI-powered metadata generation in the Media Library send their requests to the provider of your choice. You set the API key and pick the model for each feature.
+With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature.
 
 <IdentityCard isPlugin>
-  <IdentityCardItem icon="navigation-arrow" title="Location">Configured in `/config/plugins`. Used through the AI features of the admin panel.</IdentityCardItem>
+  <IdentityCardItem icon="navigation-arrow" title="Location">Configured in `/config/plugins`. Used through the Strapi AI features of the admin panel.</IdentityCardItem>
   <IdentityCardItem icon="package" title="Package name">`@strapi-enterprise/plugin-byok`</IdentityCardItem>
   <IdentityCardItem icon="plus-square" title="Additional resources">[Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins)</IdentityCardItem>
 </IdentityCard>
@@ -174,7 +174,7 @@ Once the plugin is configured, each AI feature works as described in its own doc
 - [AI Translations](/cms/features/internationalization#enabling-ai-powered-internationalization) (AI-powered internationalization)
 - [AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation), including [generating metadata in bulk](/cms/features/media-library#bulk-metadata)
 
-Requests don't use Strapi AI credits. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not available with the plugin. Setting [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false` also turns off the plugin's features.
+The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is only available with Strapi-managed AI, not with the plugin. Setting [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false` turns off all Strapi AI features, including the ones the plugin powers.
 
 ### Checking that the plugin is active
 
@@ -189,7 +189,7 @@ BYOK is ready for AI Translation, AI Media Library. Requests go to your configur
 | Symptom | What to do |
 |---|---|
 | Strapi does not start and logs an option that `is required` | Set that option. See [Configuration options](#configuration-options). |
-| A warning says your Strapi license does not include the feature | Check your license. Until it includes the feature, all AI features are turned off, including Strapi AI. |
+| A warning says your Strapi license does not include the feature | Check your license. Until it includes the feature, Strapi AI features stay off. |
 | A warning says the i18n plugin is not installed | AI Translations stays off until the [Internationalization](/cms/features/internationalization) feature is enabled. The Media Library feature still uses your provider. |
 | No `BYOK is ready` line in the logs at startup | Check that `STRAPI_BYOK_ENABLED` is `true` and that [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) is not `false`. |
 | `The AI provider rejected the request (HTTP 401)` or `(HTTP 403)` | Check `connection.apiKey`. |

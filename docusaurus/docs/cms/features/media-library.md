@@ -1010,7 +1010,7 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 <GrowthBadge /> <EnterpriseBadge />
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi](/cms/ai/for-content-managers#strapi-ai) AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the <EnterpriseBadge /> plan, metadata generation requires the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider instead of Strapi AI. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi AI](/cms/ai/for-content-managers#strapi-ai) automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the <EnterpriseBadge /> plan, Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
@@ -1024,7 +1024,7 @@ Metadata can also be generated for images that already exist in the library, eit
   }}
 />
 
-:::note Strapi AI credits
+:::note AI credits
 <StrapiAiCredits />
 :::
 
@@ -1241,7 +1241,7 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 #### Generating metadata in bulk {#bulk-metadata}
 <GrowthBadge /> <EnterpriseBadge />
 
-When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) or the [Bring your own AI key plugin](/cms/plugins/byok) is enabled, a <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
+When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, Strapi-managed or powered by the [Bring your own AI key plugin](/cms/plugins/byok), a <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
 
 1. Select the images to describe.
 2. Click the <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar.
