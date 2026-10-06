@@ -45,7 +45,14 @@ const sidebars = {
           label: 'Content Type Builder',
         },
         'cms/deployment',
-        'cms/billing-portal',
+        {
+          type: 'doc',
+          id: 'cms/billing-portal',
+          label: 'Billing portal',
+          customProps: {
+            updated: true
+          }
+        }
       ],
     },
     { // Features

@@ -1,7 +1,7 @@
 ---
 title: Billing portal
 displayed_sidebar: cmsSidebar
-description: "Use the Strapi billing portal to view license keys and manage subscriptions, payment methods, invoices, cancellation, and reactivation."
+description: "Use the Strapi billing portal to view license keys and manage subscriptions, payment methods, invoices, cancellation, and reactivation across one or several billing accounts."
 tags:
 - billing
 - Growth subscription
@@ -25,7 +25,6 @@ To sign in to the [billing portal](https://billing.strapi.io):
 
 1. Enter the email address you used at purchase or for CLI authentication.
 2. Enter the 6-digit code sent to your inbox.
-3. If your email is linked to multiple billing accounts, select the account you want to manage.
 
 ## Subscriptions
 
@@ -39,14 +38,20 @@ sources={{
 }}
 />
 
-Subscriptions are grouped into the following sections:
+By default, subscriptions are displayed as cards and grouped by status into the following sections:
 
 - **In trial**: Trial subscriptions that have not yet converted to paid.
 - **Active**: Active subscriptions.
 - **Scheduled for cancellation**: Subscriptions scheduled to be canceled at the end of the current billing period.
 - **Canceled**: Fully canceled subscriptions.
 
-Each subscription card shows the plan name, product family, status, price, billing period (monthly or yearly), renewal or trial end date, and subscription ID. Next to the subscription ID, Cloud subscriptions show the Cloud project name and Growth subscriptions show the CMS project ID linked to the license.
+Each subscription card shows the plan name, product family, status, billing account name, price, billing period (monthly or yearly), renewal or trial end date, and subscription ID. Next to the subscription ID, Cloud subscriptions show the Cloud project name and Growth subscriptions show the CMS project ID linked to the license.
+
+You can change how subscriptions are displayed with the following controls:
+
+- _Filter by billing account_: If your email is linked to several billing accounts, use the filter to show only subscriptions from the selected accounts. Clear the selection to show all accounts again.
+- _Group by_: Group subscriptions by **Status**, **Account**, **Plan**, or **None**. The **Account** grouping option is only available if your email is linked to several billing accounts.
+- <Icon name="squares-four"/> **Cards** / <Icon name="list"/> **List**: Switch between the card view (default) and a compact list view.
 
 ### Viewing and saving a CMS license key
 
@@ -66,7 +71,7 @@ Treat the license key as a credential. Do not commit the license file or environ
 
 ### Activating an in-trial Growth subscription
 
-Before you activate, make sure to add a payment method in the [Payment methods](#payment-methods) tab and complete your [Billing details](#billing-details) profile.
+Before you activate, make sure to add a payment method in the [Payment methods](#payment-methods) tab and complete your [Billing details](#billing-details) profile for the relevant billing account.
 
 To activate a subscription:
 
@@ -111,6 +116,8 @@ You can also reactivate a canceled subscription even after the cancellation has 
 
 The *Payment methods* tab lets you manage the payment cards used for your subscriptions.
 
+If your email is linked to several billing accounts, select an account in the _Filter by billing account_ dropdown to display its payment cards. Cards you add, edit, or remove only apply to the selected billing account.
+
 <ThemedImage
 alt="Billing portal screenshot: payment methods"
 sources={{
@@ -154,6 +161,8 @@ You cannot remove your default card. In cases where a secondary card is attached
 
 The *Billing details* tab lets you view and edit account billing information. Required fields in this section must be completed to activate a trial subscription.
 
+If your email is linked to several billing accounts, select an account in the _Filter by billing account_ dropdown to display its billing details. Changes you save only apply to the selected account.
+
 <ThemedImage
 alt="Billing portal screenshot: billing details"
 sources={{
@@ -172,6 +181,11 @@ Taxes may be added to your invoice based on your billing address:
 ## Invoices
 
 The *Invoices* tab displays all invoices for your Strapi subscriptions and their status.
+
+If your email is linked to several billing accounts, invoices from all accounts are displayed by default. You can:
+
+- Select one or more accounts in the _Filter by billing account_ dropdown to narrow the list.
+- Use the _Group by_ control to group invoices by **Account**, or display them as a single list with **None** (default).
 
 <ThemedImage
 alt="Billing portal screenshot: invoices"
