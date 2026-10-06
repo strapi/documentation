@@ -16,7 +16,7 @@ tags:
 The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
 </Tldr>
 
-With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature.
+With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature, and your provider bills the requests. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi-managed AI.
 
 <IdentityCard isPlugin>
   <IdentityCardItem icon="navigation-arrow" title="Location">Configured in `/config/plugins`. Used through the Strapi AI features of the admin panel.</IdentityCardItem>
@@ -169,12 +169,12 @@ Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an AP
 
 ## Usage
 
-Once the plugin is configured, each AI feature works as described in its own documentation, including how to turn it on. It sends its requests to your provider:
+Once the plugin is configured, each AI feature works as described in its own documentation, including how to turn it on. Its requests go to your provider:
 
 - [AI Translations](/cms/features/internationalization#enabling-ai-powered-internationalization) (AI-powered internationalization)
 - [AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation), including [generating metadata in bulk](/cms/features/media-library#bulk-metadata)
 
-The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is only available with Strapi-managed AI, not with the plugin. Setting [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false` turns off all Strapi AI features, including the ones the plugin powers.
+To turn off all Strapi AI features, including the ones the plugin powers, set [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false`.
 
 ### Checking that the plugin is active
 
