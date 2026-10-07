@@ -135,3 +135,27 @@ Entries of a review workflow content type can be assigned to any admin user in S
 :::tip
 You can filter entries in the Content Manager list view by **Assignee** and **Review Stage** to quickly find entries assigned to specific users or in specific review stages. Open the filters menu in the list view to access these filtering options.
 :::
+
+### Audit logging of review workflow actions
+
+<VersionBadge version="5.56.1+" noTooltip />
+
+Review workflow actions are automatically captured in [Audit Logs](/cms/features/audit-logs). Changes to a workflow, to the review stage of an entry, and to the assignee of an entry each produce a log entry.
+
+The following actions are recorded:
+
+| Action | What is logged |
+| --- | --- |
+| Create workflow | The content types the workflow applies to, its stages, and the stage required to publish. |
+| Update workflow | The fields that changed, among the name, content types, stages, and stage required to publish, with their previous and new values. No entry is created if nothing changed. |
+| Delete workflow | The name and identifier of the deleted workflow. |
+| Change entry review stage | The locale, the workflow the entry belongs to, and the previous and new stage. |
+| Change entry assignee | The locale, and the previous and new assignee. An entry with no assignee is recorded as empty. No entry is created if the assignee did not change. |
+
+Stages are recorded by name, with their color and the roles allowed to move content from and to them. Content types and roles are sorted before comparison, so reordering them alone is not recorded as a change. Assignees are recorded as admin user identifiers, not as user names.
+
+To view these log entries, go to <Icon name="gear-six" /> **Settings > Audit Logs** and filter by action.
+
+:::note
+The audit log entry for a stage change shares its name with the [`review-workflows.updateEntryStage` webhook event](/cms/backend-customization/webhooks). Their payloads are different.
+:::
