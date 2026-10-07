@@ -89,7 +89,9 @@ The command picks the newest stable version, up to the one tagged `latest`, that
 To install another version, add it to the name in the usual NPM format, for instance `plugin-byok@0.1.0`.
 
 :::note
-The command saves the exact version it installs in `package.json`. A later dependency update then can't move the plugin to a version your Strapi application doesn't support. To upgrade, run `strapi enterprise install` again.
+The command saves the exact version it installs in `package.json`, so a later dependency update can't move the plugin to a version your Strapi application doesn't support.
+
+It does not replace your package manager. Once the registry is set up, you keep installing, upgrading, and removing Enterprise plugins with your usual tools. To upgrade a plugin, run `npm install @strapi-enterprise/plugin-byok@latest`, or its equivalent for your package manager.
 :::
 
 :::caution
