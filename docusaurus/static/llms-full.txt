@@ -16124,6 +16124,7 @@ The [Media Library feature](/cms/features/media-library) is powered in the back-
 :::note Notes
 - [Folders](/cms/features/media-library#organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
 - The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
+- `GET /api/upload/files/:id`, `DELETE /api/upload/files/:id`, and `POST /api/upload?id=x`, and [update `fileInfo`](#update-fileinfo)) accept either the file's numeric `id` or its `documentId`. Files have no draft and publish, so each file has exactly one `documentId`. An unknown `id` or `documentId` returns the same `404` error.
 :::
 
 ## Get a list of files
@@ -37877,10 +37878,11 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 1. Click an image in the list to open its details panel.
 2. Click the  **Crop** button on the preview. The _Crop & Focus area_ editor opens.
-3. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
-4. (optional) Click the  button to lock aspect ratio, so it resizes both dimensions together.
-5. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
-6. Save your changes:
+3. (optional) Click the  button, at the top right of the editor, to rotate the image 90° clockwise. Click it again to keep rotating. The crop and focus areas turn with the image, and the width and height fields swap on a quarter turn.
+4. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
+5. (optional) Click the  button to lock aspect ratio, so it resizes both dimensions together.
+6. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
+7. Save your changes:
     - Click **Apply** to crop the original asset. The asset keeps its ID, so content already using it is updated.
     - Click **Save as copy** to keep the original untouched and create a new asset in the same folder. The copy inherits the caption and the alternative text of the original.
 
