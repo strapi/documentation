@@ -111,3 +111,12 @@ Once connected, your AI coding assistant can query the Strapi documentation dire
 :::tip
 For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of returning answers based on its training data, which can be outdated.
 :::
+
+### Tips for better results
+
+The following tips will help you fine-tune your prompts to get the best results:
+- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, prefix your prompt with `Use the strapi-docs MCP server to answer:` so the tool queries docs.strapi.io instead of using potentially outdated training data.
+- Include the page URL so the assistant grounds its answer in the right context.
+- Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
+- Pair code examples with their source page when sharing snippets from `llms-code.txt`.
+- Prefer documented APIs over private internals when asking for code generation.
