@@ -29,7 +29,84 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.55.0](https://github.com/strapi/strapi/releases/tag/v5.55.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.57.0](https://github.com/strapi/strapi/releases/tag/v5.57.0)._
+
+## 7.4.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add "AI-enhanced" sidebar badges](https://github.com/strapi/documentation/pull/3547)
+
+#### Repository
+- [Document Enterprise plugins, Bring Your Own Key, and AI features per plan](https://github.com/strapi/documentation/pull/3542)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document multi-account filter and new views in billing portal](https://github.com/strapi/documentation/pull/3545)
+- [Document status and publicationFilter behavior in nested populate queries](https://github.com/strapi/documentation/pull/3534)
+- [Add a reference table for Users & Permissions session options](https://github.com/strapi/documentation/pull/3526)
+- [Add Codex setup instructions to the Strapi MCP server documentation](https://github.com/strapi/documentation/pull/3523)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Correct outdated database, Entity Service, v4, and Docs MCP claims](https://github.com/strapi/documentation/pull/3549)
+- [AI docs reorganization](https://github.com/strapi/documentation/pull/3548)
+- [Add section about Discard changes warning when draft has unpublished relations](https://github.com/strapi/documentation/pull/3539)
+- [Document audit log events for Review Workflows and entry assignees](https://github.com/strapi/documentation/pull/3537)
+- [Add section about Discard changes warning when draft has unpublished relations](https://github.com/strapi/documentation/pull/3536)
+- [Add webhook audit events to Audit Logs documentation](https://github.com/strapi/documentation/pull/3535)
+- [Fix server configuration: assetIdleTimeoutMs default, emitErrors, and removed options in examples](https://github.com/strapi/documentation/pull/3532)
+- [Document admin JWT session options and the audit logs export part size](https://github.com/strapi/documentation/pull/3531)
+- [Document GraphQL limitation for Live Preview](https://github.com/strapi/documentation/pull/3528)
+- [Add link to JSON lines format in Data Management > Import](https://github.com/strapi/documentation/pull/3527)
+- [Document the _q search parameter in the REST API parameters reference](https://github.com/strapi/documentation/pull/3511)
+- [Fix swapped Type/Description column headers in the cors middleware options table](https://github.com/strapi/documentation/pull/3509)
+- [Document the auth.cookie.secure and flags.docLinks admin options](https://github.com/strapi/documentation/pull/3508)
+- [Add caution about duplicate locale deletion in Internationalization](https://github.com/strapi/documentation/pull/3498)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/butcherZ" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8189028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="butcherZ"/>
+</a>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/kevin-easygo" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/195714644?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kevin-easygo"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+<a href="https://github.com/yfwmaniish" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/116950854?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="yfwmaniish"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.3.0
 
