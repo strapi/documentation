@@ -845,6 +845,20 @@ npm run strapi enterprise install plugin-byok@1.2.0
 ```
 
 </TabItem>
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+# Choose plugins from a list
+pnpm strapi enterprise install
+
+# Install a plugin by name
+pnpm strapi enterprise install plugin-byok
+
+# Install a specific version
+pnpm strapi enterprise install plugin-byok@1.2.0
+```
+
+</TabItem>
 </Tabs>
 
 ## Listing

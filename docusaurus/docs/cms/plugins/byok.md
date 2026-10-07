@@ -54,6 +54,13 @@ npm run strapi enterprise install plugin-byok
 ```
 
 </TabItem>
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm strapi enterprise install plugin-byok
+```
+
+</TabItem>
 </Tabs>
 
 The command finds your license, sets up access to the registry, and installs a version that supports the Strapi version of your application. See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for details.
@@ -75,6 +82,13 @@ The command finds your license, sets up access to the registry, and installs a v
 
   ```bash
   npm install --save-exact @strapi-enterprise/plugin-byok
+  ```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+  ```bash
+  pnpm add --save-exact @strapi-enterprise/plugin-byok
   ```
 
   </TabItem>
@@ -213,6 +227,13 @@ BYOK is ready for AI Translation, AI Media Library. Requests go to your configur
 
   ```bash
   npm uninstall @strapi-enterprise/plugin-byok
+  ```
+
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+  ```bash
+  pnpm remove @strapi-enterprise/plugin-byok
   ```
 
   </TabItem>

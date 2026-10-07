@@ -16,7 +16,7 @@ tags:
 Enterprise plugins are distributed from the Strapi package registry to the licenses that include them. The `strapi enterprise install` command finds your license, sets up access to the registry, and installs a version compatible with your Strapi application.
 </Tldr>
 
-Enterprise plugins are not published on the public npm registry. They are installed like any other dependency, and the Strapi package registry only serves the plugins your Strapi license includes. The `strapi enterprise install` command sets up the registry for you, so npm or Yarn configuration files don't need to be edited by hand.
+Enterprise plugins are not published on the public npm registry. They are installed like any other dependency, and the Strapi package registry only serves the plugins your Strapi license includes. The `strapi enterprise install` command sets up the registry for you, so package manager configuration files don't need to be edited by hand.
 
 :::prerequisites
 - A Strapi 5.57.0 or later application, with its dependencies installed.
@@ -47,6 +47,13 @@ npm run strapi enterprise install
 ```
 
 </TabItem>
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm strapi enterprise install
+```
+
+</TabItem>
 </Tabs>
 
 ### Installing a plugin by name
@@ -65,6 +72,13 @@ yarn strapi enterprise install plugin-byok
 
 ```bash
 npm run strapi enterprise install plugin-byok
+```
+
+</TabItem>
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm strapi enterprise install plugin-byok
 ```
 
 </TabItem>
