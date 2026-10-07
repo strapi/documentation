@@ -790,13 +790,13 @@ Strapi requires the project types to be generated in the `types` directory for t
 
 ## Enterprise
 
-These commands install and upgrade Strapi Enterprise plugins from the Strapi package registry.
+These commands install Strapi Enterprise plugins from the Strapi package registry.
 
 ### `strapi enterprise install`
 
 <EnterpriseBadge />
 
-Install or upgrade [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install, which needs an interactive terminal. To upgrade installed plugins, run the command again.
+Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
 
 ```bash
 strapi enterprise install [packages...]
@@ -804,7 +804,7 @@ strapi enterprise install [packages...]
 
 | Argument | Description |
 |---|---|
-| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.2.0` or `plugin-byok@^1.2.0`. |
+| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@0.1.0` or `plugin-byok@^0.1.0`. |
 
 The command:
 
@@ -827,7 +827,7 @@ yarn strapi enterprise install
 yarn strapi enterprise install plugin-byok
 
 # Install a specific version
-yarn strapi enterprise install plugin-byok@1.2.0
+yarn strapi enterprise install plugin-byok@0.1.0
 ```
 
 </TabItem>
@@ -841,7 +841,7 @@ npm run strapi enterprise install
 npm run strapi enterprise install plugin-byok
 
 # Install a specific version
-npm run strapi enterprise install plugin-byok@1.2.0
+npm run strapi enterprise install plugin-byok@0.1.0
 ```
 
 </TabItem>
