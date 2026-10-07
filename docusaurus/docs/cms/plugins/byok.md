@@ -94,8 +94,6 @@ The command finds your license, sets up access to the registry, and installs a v
   </TabItem>
   </Tabs>
 
-Unlike the command, a manual install does not check that the version supports the Strapi version of your application. Check the plugin's `@strapi/strapi` peer dependency, which your package manager also warns about.
-
 :::caution
 Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. See [Configuration](#configuration).
 :::
