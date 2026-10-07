@@ -48,7 +48,7 @@ yarn strapi enterprise install plugin-byok
 <!-- Installing plugins by name, specifying a version:
 
 ```bash
-yarn strapi enterprise install plugin-byok@0.1.0
+yarn strapi enterprise install plugin-byok@1.0.0
 ``` -->
 
 <br/>
@@ -70,7 +70,7 @@ npm run strapi enterprise install plugin-byok
 <!-- Installing plugins by name, specifying a version:
 
 ```bash
-npm run strapi enterprise install plugin-byok@0.1.0
+npm run strapi enterprise install plugin-byok@1.0.0
 ``` -->
 
 <br/>
@@ -92,7 +92,7 @@ pnpm strapi enterprise install plugin-byok
 Installing plugins by name, specifying a version:
 
 ```bash
-pnpm strapi enterprise install plugin-byok@0.1.0
+pnpm strapi enterprise install plugin-byok@1.0.0
 ``` -->
 
 <br/>

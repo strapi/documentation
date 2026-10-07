@@ -804,7 +804,7 @@ strapi enterprise install [packages...]
 
 | Argument | Description |
 |---|---|
-| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@0.1.0` or `plugin-byok@^0.1.0`. |
+| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.0.0` or `plugin-byok@^1.0.0`. |
 
 The command:
 
@@ -827,7 +827,7 @@ yarn strapi enterprise install
 yarn strapi enterprise install plugin-byok
 
 # Install a specific version
-yarn strapi enterprise install plugin-byok@0.1.0
+yarn strapi enterprise install plugin-byok@1.0.0
 ```
 
 </TabItem>
@@ -841,7 +841,7 @@ npm run strapi enterprise install
 npm run strapi enterprise install plugin-byok
 
 # Install a specific version
-npm run strapi enterprise install plugin-byok@0.1.0
+npm run strapi enterprise install plugin-byok@1.0.0
 ```
 
 </TabItem>
@@ -855,7 +855,7 @@ pnpm strapi enterprise install
 pnpm strapi enterprise install plugin-byok
 
 # Install a specific version
-pnpm strapi enterprise install plugin-byok@1.2.0
+pnpm strapi enterprise install plugin-byok@1.0.0
 ```
 
 </TabItem>
