@@ -2,6 +2,16 @@ import React from 'react';
 import clsx from 'clsx';
 import Icon from '../components/Icon'
 
+/**
+ * Sidebar wording for the plan badges. Every Growth feature is also in
+ * Enterprise, so a sidebar entry carries one badge naming the minimum plan,
+ * where a page can still list each plan it belongs to.
+ */
+export const SIDEBAR_PLAN_TOOLTIPS = {
+  growth: 'Available in the Growth and Enterprise plans.',
+  enterprise: 'Requires an Enterprise plan.',
+};
+
 export default function Badge({
   children,
   className,
@@ -15,6 +25,7 @@ export default function Badge({
   tooltip,
   inline = false,
   noTooltip = false,
+  iconOnly = false,
   ...rest
 }) {
   const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
@@ -30,8 +41,10 @@ export default function Badge({
         ((variant === "Updated" || variant === "New") && `badge--content`),
         (inline && 'badge--inline'), 
         className,
-        (noTooltip && 'badge--no-tooltip')
+        (noTooltip && 'badge--no-tooltip'),
+        (iconOnly && 'badge--icon-only')
       )}
+      {...(iconOnly && tooltip ? { 'aria-label': tooltip } : {})}
       {...rest}
     >
       {(noLink || !link) ? (
@@ -43,13 +56,13 @@ export default function Badge({
                   name={icon}
                   {...(iconClasses ? { classes: iconClasses } : {})}
                 />
-                <span className="badge__text">{variant}</span>
+                {!iconOnly && <span className="badge__text">{variant}</span>}
               </span>
               {!noTooltip && tooltip && <span className="badge__tooltip">{tooltip}</span>}
             </>
           ) : (
             <>
-              {variant}
+              {!iconOnly && variant}
               {!noTooltip && tooltip && <span className="badge__tooltip">{tooltip}</span>}
             </>
           )}
@@ -62,7 +75,7 @@ export default function Badge({
               {...(iconClasses ? { classes: iconClasses } : {})}
             />
           )}
-          {variant}
+          {!iconOnly && variant}
           {!noTooltip && tooltip && <span className="badge__tooltip">{tooltip}</span>}
         </a>
       )}
@@ -105,7 +118,7 @@ export function EnterpriseBadge(props) {
   return (
     <Badge
       variant="Enterprise"
-      link="https://strapi.io/pricing-self-hosted"
+      link="https://strapi.io/contact-sales"
       icon="feather"
       tooltip="This feature is available with an Enterprise plan."
       {...props}

@@ -2143,7 +2143,7 @@ File path: ~/.codeium/windsurf/mcp_config.json
 Source: https://docs.strapi.io/cms/ai/for-content-managers
 
 ## Activation and configuration
-Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they are Strapi-managed or powered by your own AI key:
 (Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
 
 Language: JavaScript
@@ -17887,6 +17887,35 @@ npm run strapi openapi generate
 npm run strapi openapi generate -- --output ./docs/api-spec.json
 ```
 
+Language: Bash
+File path: /.yarnrc.yml
+
+```bash
+# Choose plugins from a list
+yarn strapi enterprise install
+
+# Install a plugin by name
+yarn strapi enterprise install plugin-byok
+
+# Install a specific version
+yarn strapi enterprise install plugin-byok@1.2.0
+```
+
+---
+Language: Bash
+File path: /.yarnrc.yml
+
+```bash
+# Choose plugins from a list
+npm run strapi enterprise install
+
+# Install a plugin by name
+npm run strapi enterprise install plugin-byok
+
+# Install a specific version
+npm run strapi enterprise install plugin-byok@1.2.0
+```
+
 
 ## strapi templates:generate
 Description: Create a template from the current Strapi project.
@@ -17912,12 +17941,24 @@ strapi ts:generate-types
 ```
 
 
+## strapi enterprise install
+Description: Install or upgrade Strapi Enterprise plugins from the Strapi package registry.
+(Source: https://docs.strapi.io/cms/cli#strapi-enterprise-install)
+
+Language: Bash
+File path: ./openapi-spec.js
+
+```bash
+strapi enterprise install [packages...]
+```
+
+
 ## strapi routes:list
 Description: Display a list of all the available routes.
 (Source: https://docs.strapi.io/cms/cli#strapi-routes-list)
 
 Language: Bash
-File path: ./openapi-spec.js
+File path: /.yarnrc.yml
 
 ```bash
 strapi routes:list
@@ -17929,7 +17970,7 @@ Description: Display a list of all the registered policies.
 (Source: https://docs.strapi.io/cms/cli#strapi-policies-list)
 
 Language: Bash
-File path: ./openapi-spec.js
+File path: /.yarnrc.yml
 
 ```bash
 strapi policies:list
@@ -17941,7 +17982,7 @@ Description: Display a list of all the registered middlewares.
 (Source: https://docs.strapi.io/cms/cli#strapi-middlewares-list)
 
 Language: Bash
-File path: N/A
+File path: /.yarnrc.yml
 
 ```bash
 strapi middlewares:list
@@ -17953,7 +17994,7 @@ Description: Display a list of all the existing content-types.
 (Source: https://docs.strapi.io/cms/cli#strapi-content-types-list)
 
 Language: Bash
-File path: N/A
+File path: /.yarnrc.yml
 
 ```bash
 strapi content-types:list
@@ -17965,7 +18006,7 @@ Description: Display a list of all the available hooks.
 (Source: https://docs.strapi.io/cms/cli#strapi-hooks-list)
 
 Language: Bash
-File path: N/A
+File path: /.yarnrc.yml
 
 ```bash
 strapi hooks:list
@@ -17977,7 +18018,7 @@ Description: Display a list of all the registered controllers.
 (Source: https://docs.strapi.io/cms/cli#strapi-controllers-list)
 
 Language: Bash
-File path: N/A
+File path: /.yarnrc.yml
 
 ```bash
 strapi controllers:list
@@ -17989,7 +18030,7 @@ Description: Display a list of all the registered services.
 (Source: https://docs.strapi.io/cms/cli#strapi-services-list)
 
 Language: Bash
-File path: N/A
+File path: /.yarnrc.yml
 
 ```bash
 strapi services:list
@@ -38676,6 +38717,143 @@ export default {
 
 
 
+# Bring your own AI key plugin
+Source: https://docs.strapi.io/cms/plugins/byok
+
+## With the command
+Description: From the root folder of your Strapi application, run:
+(Source: https://docs.strapi.io/cms/plugins/byok#with-the-command)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi enterprise install plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi enterprise install plugin-byok
+```
+
+
+## Manually
+Description: Set up access to the registry, as described in Setting up access manually.
+(Source: https://docs.strapi.io/cms/plugins/byok#manually)
+
+Language: Bash
+File path: N/A
+
+```bash
+  yarn add --exact @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  npm install --save-exact @strapi-enterprise/plugin-byok
+```
+
+
+## Configuration
+Description: Add the plugin to the plugins configuration file:
+(Source: https://docs.strapi.io/cms/plugins/byok#configuration)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+  module.exports = ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+  export default ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+```
+
+Language: DOTENV
+File path: /.env
+
+```dotenv
+  STRAPI_BYOK_ENABLED=true
+  STRAPI_BYOK_PROVIDER_BASE_URL=
+  STRAPI_BYOK_PROVIDER_API_KEY=
+  STRAPI_BYOK_TRANSLATIONS_MODEL=
+  STRAPI_BYOK_MEDIA_METADATA_MODEL=
+```
+
+
+## Checking that the plugin is active
+Description: When Strapi starts, the server logs list the features that use your provider, for instance:
+(Source: https://docs.strapi.io/cms/plugins/byok#checking-that-the-plugin-is-active)
+
+Language: JavaScript
+File path: N/A
+
+```
+BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
+```
+
+
+## Uninstallation
+Description: Stop Strapi.
+(Source: https://docs.strapi.io/cms/plugins/byok#uninstallation)
+
+Language: Bash
+File path: N/A
+
+```bash
+  yarn remove @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  npm uninstall @strapi-enterprise/plugin-byok
+```
+
+
+
 # Documentation plugin
 Source: https://docs.strapi.io/cms/plugins/documentation
 
@@ -39734,6 +39912,100 @@ File path: N/A
 {
   "Authorization" : "Bearer <TOKEN>"
 }
+```
+
+
+
+# Installing Enterprise plugins
+Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins
+
+## Choosing plugins from a list
+Description: Without a plugin name, the command lists the Enterprise plugins your license includes:
+(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#choosing-plugins-from-a-list)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi enterprise install
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi enterprise install
+```
+
+
+## Installing a plugin by name
+Description: Pass one or more plugin names to install them without the list.
+(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#installing-a-plugin-by-name)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi enterprise install plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi enterprise install plugin-byok
+```
+
+
+## Setting up access manually
+Description: The command is optional.
+(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#setting-up-access-manually)
+
+Language: INI
+File path: ~/.npmrc
+
+```ini
+@strapi-enterprise:registry=https://packages.strapi.io/
+//packages.strapi.io/:_authToken=<your license>
+```
+
+---
+Language: YAML
+File path: ~/.yarnrc.yml
+
+```yaml
+npmScopes:
+  strapi-enterprise:
+    npmRegistryServer: 'https://packages.strapi.io/'
+    npmAlwaysAuth: true
+    npmAuthToken: '<your license>'
+```
+
+
+## Committing a project-level configuration file
+Description: Add a configuration file to your project that reads the license from the STRAPILICENSE environment variable.
+(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#committing-a-project-level-configuration-file)
+
+Language: INI
+File path: ./.npmrc
+
+```ini
+@strapi-enterprise:registry=https://packages.strapi.io/
+//packages.strapi.io/:_authToken=${STRAPI_LICENSE}
+```
+
+---
+Language: YAML
+File path: ./.yarnrc.yml
+
+```yaml
+npmScopes:
+  strapi-enterprise:
+    npmRegistryServer: 'https://packages.strapi.io/'
+    npmAlwaysAuth: true
+    npmAuthToken: '${STRAPI_LICENSE:-}'
 ```
 
 

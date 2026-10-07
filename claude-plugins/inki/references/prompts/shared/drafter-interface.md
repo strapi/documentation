@@ -29,7 +29,7 @@ These fields are always present, regardless of mode:
 # From the Router
 doc_type: feature | plugin | configuration | guide | api | ...
 template: claude-plugins/inki/references/templates/feature-template.md    # or null
-guide: agents/cms/features/AGENTS.md               # or null
+guide: claude-plugins/inki/references/authoring/AGENTS.cms.features.md   # or null
 key_topics: [topic1, topic2]
 
 # Target being processed

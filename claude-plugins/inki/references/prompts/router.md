@@ -304,15 +304,15 @@ Set `ask_user` (as a top-level YAML field or as the placement decision) when:
 
 | Type | Path patterns | Template | Authoring guide |
 |------|--------------|----------|-----------------|
-| **Feature** | `cms/features/*` | `claude-plugins/inki/references/templates/feature-template.md` | `agents/cms/features/AGENTS.md` |
-| **Plugin** | `cms/plugins/*` (not `plugins-development`) | `claude-plugins/inki/references/templates/plugin-template.md` | `agents/cms/plugins/AGENTS.md` |
-| **Configuration** | `cms/configurations/*` | `claude-plugins/inki/references/templates/configuration-template.md` | `agents/cms/configurations/AGENTS.md` |
-| **Guide** | `**/guides/*` or task-oriented "How to…" | `claude-plugins/inki/references/templates/guide-template.md` | `agents/cms/AGENTS.guides.md` |
-| **API** | `cms/api/*` | `claude-plugins/inki/references/templates/api-template.md` | `agents/cms/api/AGENTS.md` |
-| **Breaking Change** | `cms/migration/**/breaking-changes/*.md` | `claude-plugins/inki/references/templates/breaking-change-template.md` | `agents/cms/migration/AGENTS.md` |
-| **Concept** | Introductions, overviews, conceptual pages | None | `agents/cms/AGENTS.concepts.md` |
-| **Cloud** | `cloud/*` | None | `agents/cloud/AGENTS.md` |
-| **Snippet** | `snippets/*` | None | `agents/snippets/AGENTS.md` |
+| **Feature** | `cms/features/*` | `claude-plugins/inki/references/templates/feature-template.md` | `claude-plugins/inki/references/authoring/AGENTS.cms.features.md` |
+| **Plugin** | `cms/plugins/*` (not `plugins-development`), one page per plugin | `claude-plugins/inki/references/templates/plugin-template.md` | `claude-plugins/inki/references/authoring/AGENTS.cms.plugins.md` |
+| **Configuration** | `cms/configurations/*` | `claude-plugins/inki/references/templates/configuration-template.md` | `claude-plugins/inki/references/authoring/AGENTS.cms.configurations.md` |
+| **Guide** | `**/guides/*`, task-oriented "How to…", and the plugin how-to pages (`installing-plugins-via-marketplace.md` and `installing-enterprise-plugins.md`) | `claude-plugins/inki/references/templates/guide-template.md` | `claude-plugins/inki/references/authoring/AGENTS.cms.guides.md` |
+| **API** | `cms/api/*` | `claude-plugins/inki/references/templates/api-template.md` | `claude-plugins/inki/references/authoring/AGENTS.cms.api.md` |
+| **Breaking Change** | `cms/migration/**/breaking-changes/*.md` | `claude-plugins/inki/references/templates/breaking-change-template.md` | `claude-plugins/inki/references/authoring/AGENTS.cms.breaking-changes.md` |
+| **Concept** | Introductions, overviews, conceptual pages | None | `claude-plugins/inki/references/authoring/AGENTS.cms.md` |
+| **Cloud** | `cloud/*` | None | `claude-plugins/inki/references/authoring/AGENTS.cloud.md` |
+| **Snippet** | `snippets/*` | None | `claude-plugins/inki/references/authoring/AGENTS.snippets.md` |
 | **Unknown** | No match found | None | None — apply 12 Rules of Technical Writing |
 
 ### Type Detection Priority

@@ -90,7 +90,7 @@ It is not possible to create custom locales. Locales can only be created based o
 />
 
 #### Enabling AI-powered internationalization
-<GrowthBadge /> 
+<GrowthBadge /> <EnterpriseBadge />
 
 AI-Powered Internationalization enables automatic translations for all the locales in a project when the content in the default locale is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
 
@@ -145,11 +145,13 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 :::
 
 ### AI-powered internationalization
-<GrowthBadge /> 
+<GrowthBadge /> <EnterpriseBadge />
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
 
-Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. Using this feature consumes Strapi AI credits.
+Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi-managed AI, using this feature consumes AI credits.
+
+On the <EnterpriseBadge /> plan, Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok): translations use your own AI provider.
 
 <ThemedImage
   alt="Managing locales with AI-powered i18n"
@@ -165,7 +167,7 @@ AI-powered internationalization only works one way, keeping the default locale c
 - When editing the content for the default locale, the manual modifications made to other locales will be overwritten.
 :::
 
-:::note Strapi AI credits
+:::note AI credits
 <StrapiAiCredits />
 :::
 

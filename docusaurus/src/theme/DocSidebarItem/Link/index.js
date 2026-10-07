@@ -6,7 +6,7 @@ import {isActiveSidebarItem} from '@docusaurus/plugin-content-docs/client';
 import Link from '@docusaurus/Link';
 import isInternalUrl from '@docusaurus/isInternalUrl';
 import IconExternalLink from '@theme/Icon/ExternalLink';
-import { NewBadge, UpdatedBadge } from '../../../components/Badge';
+import { NewBadge, UpdatedBadge, EnterpriseBadge, GrowthBadge, SIDEBAR_PLAN_TOOLTIPS } from '../../../components/Badge';
 import styles from './styles.module.css';
 import Icon from '@site/src/components/Icon'
 
@@ -48,6 +48,13 @@ export default function DocSidebarItemLink({
         {...props}>
         <span className="menu__link__content">
           {label}
+          {customProps?.growth ? (
+            <GrowthBadge iconOnly tooltip={SIDEBAR_PLAN_TOOLTIPS.growth} />
+          ) : customProps?.enterprise ? (
+            <EnterpriseBadge iconOnly tooltip={SIDEBAR_PLAN_TOOLTIPS.enterprise} />
+          ) : null}
+          {customProps?.new && <NewBadge iconOnly />}
+          {customProps?.updated && <UpdatedBadge iconOnly />}
           {customProps?.tooltip && (
             <Icon name="info" />
           )}
@@ -59,8 +66,6 @@ export default function DocSidebarItemLink({
           )} 
         </span>
         {!isInternalLink && <IconExternalLink />}
-        {customProps?.new && <NewBadge />}
-        {customProps?.updated && <UpdatedBadge />}
       </Link>
     </li>
   );

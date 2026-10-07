@@ -13,6 +13,7 @@ tags:
   - strapi import
   - strapi transfer
   - strapi report
+  - strapi enterprise install
 ---
 
 # Command Line Interface (CLI)
@@ -34,6 +35,7 @@ Strapi CLI commands on the present page are grouped by category:
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
 | [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
 | [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types` |
+| [Enterprise](#enterprise) | `enterprise install` |
 | [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
 
 :::caution
@@ -785,6 +787,79 @@ strapi ts:generate-types
 :::caution
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
+
+## Enterprise
+
+These commands install Strapi Enterprise plugins from the Strapi package registry.
+
+### `strapi enterprise install`
+
+<EnterpriseBadge />
+
+Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
+
+```bash
+strapi enterprise install [packages...]
+```
+
+| Argument | Description |
+|---|---|
+| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.0.0` or `plugin-byok@^1.0.0`. |
+
+The command:
+
+1. Reads your license or asks for it.
+2. On first run, sets up access to the registry in your user-level `~/.npmrc` or `~/.yarnrc.yml` file.
+3. Installs the version you name or, by default, the newest stable version compatible with the application's Strapi version, with npm, pnpm, or Yarn.
+4. Shares the setup guide for each installed plugin.
+
+#### Examples
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+# Choose plugins from a list
+yarn strapi enterprise install
+
+# Install a plugin by name
+yarn strapi enterprise install plugin-byok
+
+# Install a specific version
+yarn strapi enterprise install plugin-byok@1.0.0
+```
+
+</TabItem>
+<TabItem value="npm" label="NPM">
+
+```bash
+# Choose plugins from a list
+npm run strapi enterprise install
+
+# Install a plugin by name
+npm run strapi enterprise install plugin-byok
+
+# Install a specific version
+npm run strapi enterprise install plugin-byok@1.0.0
+```
+
+</TabItem>
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+# Choose plugins from a list
+pnpm strapi enterprise install
+
+# Install a plugin by name
+pnpm strapi enterprise install plugin-byok
+
+# Install a specific version
+pnpm strapi enterprise install plugin-byok@1.0.0
+```
+
+</TabItem>
+</Tabs>
 
 ## Listing
 
