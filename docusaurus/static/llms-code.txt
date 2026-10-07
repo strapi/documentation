@@ -17898,7 +17898,7 @@ yarn strapi enterprise install
 yarn strapi enterprise install plugin-byok
 
 # Install a specific version
-yarn strapi enterprise install plugin-byok@1.2.0
+yarn strapi enterprise install plugin-byok@1.0.0
 ```
 
 ---
@@ -17913,7 +17913,22 @@ npm run strapi enterprise install
 npm run strapi enterprise install plugin-byok
 
 # Install a specific version
-npm run strapi enterprise install plugin-byok@1.2.0
+npm run strapi enterprise install plugin-byok@1.0.0
+```
+
+---
+Language: Bash
+File path: /.yarnrc.yml
+
+```bash
+# Choose plugins from a list
+pnpm strapi enterprise install
+
+# Install a plugin by name
+pnpm strapi enterprise install plugin-byok
+
+# Install a specific version
+pnpm strapi enterprise install plugin-byok@1.0.0
 ```
 
 
@@ -17942,7 +17957,7 @@ strapi ts:generate-types
 
 
 ## strapi enterprise install
-Description: Install or upgrade Strapi Enterprise plugins from the Strapi package registry.
+Description: Install Strapi Enterprise plugins from the Strapi package registry.
 (Source: https://docs.strapi.io/cms/cli#strapi-enterprise-install)
 
 Language: Bash
@@ -18030,7 +18045,7 @@ Description: Display a list of all the registered services.
 (Source: https://docs.strapi.io/cms/cli#strapi-services-list)
 
 Language: Bash
-File path: /.yarnrc.yml
+File path: N/A
 
 ```bash
 strapi services:list
@@ -38739,6 +38754,14 @@ File path: N/A
 npm run strapi enterprise install plugin-byok
 ```
 
+---
+Language: Bash
+File path: N/A
+
+```bash
+pnpm strapi enterprise install plugin-byok
+```
+
 
 ## Manually
 Description: Set up access to the registry, as described in Setting up access manually.
@@ -38757,6 +38780,14 @@ File path: N/A
 
 ```bash
   npm install --save-exact @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  pnpm add --save-exact @strapi-enterprise/plugin-byok
 ```
 
 
@@ -38850,6 +38881,14 @@ File path: N/A
 
 ```bash
   npm uninstall @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  pnpm remove @strapi-enterprise/plugin-byok
 ```
 
 
@@ -39919,9 +39958,9 @@ File path: N/A
 # Installing Enterprise plugins
 Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins
 
-## Choosing plugins from a list
-Description: Without a plugin name, the command lists the Enterprise plugins your license includes:
-(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#choosing-plugins-from-a-list)
+## Installing a plugin
+Description: Listing available plugins to install or upgrade:
+(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#installing-a-plugin)
 
 Language: Bash
 File path: N/A
@@ -39935,18 +39974,6 @@ Language: Bash
 File path: N/A
 
 ```bash
-npm run strapi enterprise install
-```
-
-
-## Installing a plugin by name
-Description: Pass one or more plugin names to install them without the list.
-(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#installing-a-plugin-by-name)
-
-Language: Bash
-File path: N/A
-
-```bash
 yarn strapi enterprise install plugin-byok
 ```
 
@@ -39955,7 +39982,55 @@ Language: Bash
 File path: N/A
 
 ```bash
+yarn strapi enterprise install plugin-byok@1.0.0
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi enterprise install
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
 npm run strapi enterprise install plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi enterprise install plugin-byok@1.0.0
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+pnpm strapi enterprise install
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+pnpm strapi enterprise install plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+pnpm strapi enterprise install plugin-byok@1.0.0
 ```
 
 
@@ -39981,31 +40056,6 @@ npmScopes:
     npmRegistryServer: 'https://packages.strapi.io/'
     npmAlwaysAuth: true
     npmAuthToken: '<your license>'
-```
-
-
-## Committing a project-level configuration file
-Description: Add a configuration file to your project that reads the license from the STRAPILICENSE environment variable.
-(Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins#committing-a-project-level-configuration-file)
-
-Language: INI
-File path: ./.npmrc
-
-```ini
-@strapi-enterprise:registry=https://packages.strapi.io/
-//packages.strapi.io/:_authToken=${STRAPI_LICENSE}
-```
-
----
-Language: YAML
-File path: ./.yarnrc.yml
-
-```yaml
-npmScopes:
-  strapi-enterprise:
-    npmRegistryServer: 'https://packages.strapi.io/'
-    npmAlwaysAuth: true
-    npmAuthToken: '${STRAPI_LICENSE:-}'
 ```
 
 

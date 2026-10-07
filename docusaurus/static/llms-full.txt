@@ -1076,7 +1076,7 @@ This command automatically opens a browser window to first ask you to confirm th
 
 If the browser window doesn't automatically open, the terminal will display a clickable link as well as the code to enter manually.
 
-## strapi link {#strapi-link}
+## strapi link  {#strapi-link}
 
 **Alias:** `strapi cloud:link`
 
@@ -1109,7 +1109,7 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 - Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since, unless you have [connected a git repository to your Strapi Cloud project](/cloud/getting-started/deployment-cli#automatically-deploying-subsequent-changes).
 :::
 
-## strapi projects
+## strapi projects 
 
 **Alias:** `strapi cloud:projects`
 
@@ -4449,7 +4449,7 @@ const updatedFile = await client.files.update(1, {
 });
 ```
 
-#### `upload` {#upload}
+#### `upload`  {#upload}
 
 The Strapi Client provides media file upload functionality through the `FilesManager`, accessible through the  `strapi.client.files.upload()` method. The method allows you to upload media files (such as images, videos, or documents) to your Strapi backend.
 
@@ -22929,11 +22929,11 @@ Strapi requires the project types to be generated in the `types` directory for t
 
 ## Enterprise
 
-These commands install and upgrade Strapi Enterprise plugins from the Strapi package registry.
+These commands install Strapi Enterprise plugins from the Strapi package registry.
 
 ### `strapi enterprise install`
 
-Install or upgrade [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install, which needs an interactive terminal. To upgrade installed plugins, run the command again.
+Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
 
 ```bash
 strapi enterprise install [packages...]
@@ -22941,7 +22941,7 @@ strapi enterprise install [packages...]
 
 | Argument | Description |
 |---|---|
-| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.2.0` or `plugin-byok@^1.2.0`. |
+| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.0.0` or `plugin-byok@^1.0.0`. |
 
 The command:
 
@@ -22960,7 +22960,7 @@ yarn strapi enterprise install
 yarn strapi enterprise install plugin-byok
 
 # Install a specific version
-yarn strapi enterprise install plugin-byok@1.2.0
+yarn strapi enterprise install plugin-byok@1.0.0
 ```
 ```bash
 # Choose plugins from a list
@@ -22970,7 +22970,17 @@ npm run strapi enterprise install
 npm run strapi enterprise install plugin-byok
 
 # Install a specific version
-npm run strapi enterprise install plugin-byok@1.2.0
+npm run strapi enterprise install plugin-byok@1.0.0
+```
+```bash
+# Choose plugins from a list
+pnpm strapi enterprise install
+
+# Install a plugin by name
+pnpm strapi enterprise install plugin-byok
+
+# Install a specific version
+pnpm strapi enterprise install plugin-byok@1.0.0
 ```
 
 ## Listing
@@ -23479,7 +23489,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 | `rateLimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                              | array(string) | `[]`                                                                                                                                |
 | `rateLimit.store`                 | Rate limiting storage location (Memory, Sequelize, or Redis). For more information see the koa2-ratelimit documentation               | object        | `MemoryStore`                                                                                                                       |
 
-## Strapi AI {#strapi-ai}
+## Strapi AI  {#strapi-ai}
 
 Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation), can be enabled or disabled. The setting applies whether Strapi AI is Strapi-managed, on  plans, or powered by the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan:
 
@@ -34211,7 +34221,7 @@ Components are not part of the content structure file, and cannot be organized i
 
 The Content-type Builder allows you to create new content-types: single and collection types, but also components.
 
-#### Creating content-types with Strapi AI {#strapi-ai}  
+#### Creating content-types with Strapi AI  {#strapi-ai}  
 
 [When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language. The assistant is only available with Strapi-managed AI: the [Bring your own AI key plugin](/cms/plugins/byok) does not power it.
 
@@ -34732,7 +34742,7 @@ Content types and components can be deleted through the Content-type Builder. De
 Deleting a content-type only deletes what was created and available from the Content-type Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database. For more information, please refer to the related [GitHub issue](https://github.com/strapi/strapi/issues/1114).
 :::
 
-### Organizing content-types with folders {#organizing-content-types-with-folders}
+### Organizing content-types with folders  {#organizing-content-types-with-folders}
 
 Collection types and single types can be grouped into folders, and folders can be nested up to 3 levels deep. Folders are displayed in the  Content-type Builder sub navigation.
 
@@ -53686,7 +53696,7 @@ Source: https://docs.strapi.io/cms/plugins/byok
 
 The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
 
-With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature, and your provider bills the requests. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi-managed AI.
+With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi-managed AI.
 
 **Location**
 
@@ -53721,6 +53731,9 @@ yarn strapi enterprise install plugin-byok
 ```bash
 npm run strapi enterprise install plugin-byok
 ```
+```bash
+pnpm strapi enterprise install plugin-byok
+```
 
 The command finds your license, sets up access to the registry, and installs a version that supports the Strapi version of your application. See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for details.
 
@@ -53735,8 +53748,9 @@ The command finds your license, sets up access to the registry, and installs a v
   ```bash
   npm install --save-exact @strapi-enterprise/plugin-byok
   ```
-
-Unlike the command, a manual install does not check that the version supports the Strapi version of your application. Check the plugin's `@strapi/strapi` peer dependency, which your package manager also warns about.
+  ```bash
+  pnpm add --save-exact @strapi-enterprise/plugin-byok
+  ```
 
 :::caution
 Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. See [Configuration](#configuration).
@@ -53799,15 +53813,15 @@ The plugin is configured in the plugins configuration file, with environment var
 
 ### Configuration options
 
-All `connection` and `models` options are required when the plugin is enabled. If one is missing, Strapi does not start and logs the first missing option.
+If a required option is missing while the plugin is enabled, Strapi does not start and logs the first missing option.
 
-| Option | Environment variable | Description |
-|---|---|---|
-| `enabled` | `STRAPI_BYOK_ENABLED` | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
-| `connection.baseURL` | `STRAPI_BYOK_PROVIDER_BASE_URL` | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
-| `connection.apiKey` | `STRAPI_BYOK_PROVIDER_API_KEY` | API key for your provider. Keep it in the server environment only. |
-| `models.translations` | `STRAPI_BYOK_TRANSLATIONS_MODEL` | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
-| `models.mediaMetadata` | `STRAPI_BYOK_MEDIA_METADATA_MODEL` | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `enabled` | Boolean | No | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
+| `connection.baseURL` | String | Yes | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
+| `connection.apiKey` | String | Yes | API key for your provider. Keep it in the server environment only. |
+| `models.translations` | String | Yes | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
+| `models.mediaMetadata` | String | Yes | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
 
 :::tip
 Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
@@ -53852,6 +53866,9 @@ BYOK is ready for AI Translation, AI Media Library. Requests go to your configur
   ```
   ```bash
   npm uninstall @strapi-enterprise/plugin-byok
+  ```
+  ```bash
+  pnpm remove @strapi-enterprise/plugin-byok
   ```
 
 4. Remove the `STRAPI_BYOK_ENABLED`, `STRAPI_BYOK_PROVIDER_BASE_URL`, `STRAPI_BYOK_PROVIDER_API_KEY`, `STRAPI_BYOK_TRANSLATIONS_MODEL` and `STRAPI_BYOK_MEDIA_METADATA_MODEL` variables from the `.env` file.
@@ -55178,7 +55195,7 @@ Source: https://docs.strapi.io/cms/plugins/installing-enterprise-plugins
 
 Enterprise plugins are distributed from the Strapi package registry to the licenses that include them. The `strapi enterprise install` command finds your license, sets up access to the registry, and installs a version compatible with your Strapi application.
 
-Enterprise plugins are not published on the public npm registry. They are installed like any other dependency, and the Strapi package registry only serves the plugins your Strapi license includes. The `strapi enterprise install` command sets up the registry for you, so npm or Yarn configuration files don't need to be edited by hand.
+Enterprise plugins are not published on the public npm registry. They are installed like any other dependency, and the Strapi package registry only serves the plugins your Strapi license includes. The `strapi enterprise install` command sets up the registry for you, so package manager configuration files don't need to be edited by hand.
 
 :::prerequisites
 - A Strapi 5.57.0 or later application, with its dependencies installed.
@@ -55188,56 +55205,77 @@ Enterprise plugins are not published on the public npm registry. They are instal
 
 ## Installing a plugin
 
-Run the command from the root folder of your Strapi application.
+To install Enterprise plugins, run the `strapi enterprise install` command from the root folder of your Strapi application:
 
-### Choosing plugins from a list
+- Without any argument, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade.
+- When passing one or more plugin name(s) as arguments, the command installs them directly. The `@strapi-enterprise/` prefix is optional.
 
-Without a plugin name, the command lists the Enterprise plugins your license includes:
+Listing available plugins to install or upgrade:
 
 ```bash
 yarn strapi enterprise install
 ```
-```bash
-npm run strapi enterprise install
-```
 
-The list works as follows:
-
-- Plugins with a newer compatible version are selected for upgrade. A major upgrade, which may include breaking changes, is shown with `[major upgrade]` and isn't selected.
-- Plugins that can't be installed show the reason, for instance a newer Strapi version they require.
-- Packages that are not plugins, such as providers, show their kind, for instance `[provider]`.
-- Unselecting an installed plugin does not uninstall it.
-
-1. Use the arrow keys to move through the list, and press <kbd>Space</kbd> to select a plugin.
-2. Press <kbd>Enter</kbd> to install the selected plugins.
-
-### Installing a plugin by name
-
-Pass one or more plugin names to install them without the list. The `@strapi-enterprise/` prefix is optional:
+Installing plugins by name:
 
 ```bash
 yarn strapi enterprise install plugin-byok
 ```
+
+<!-- Installing plugins by name, specifying a version:
+
+```bash
+yarn strapi enterprise install plugin-byok@1.0.0
+``` -->
+
+<br/>
+Listing available plugins to install or upgrade:
+
+```bash
+npm run strapi enterprise install
+```
+
+Installing plugins by name:
+
 ```bash
 npm run strapi enterprise install plugin-byok
 ```
 
-The command picks the newest stable version, up to the one tagged `latest`, that supports the Strapi version of your application. It warns you before a major upgrade.
+<!-- Installing plugins by name, specifying a version:
 
-To install another version, add it to the name:
+```bash
+npm run strapi enterprise install plugin-byok@1.0.0
+``` -->
 
-- An exact version, including a prerelease, for instance `plugin-byok@1.2.0`.
-- A tag, for instance `plugin-byok@next`.
-- A range, for instance `plugin-byok@^1.2.0`. The command installs the highest version in it that supports the Strapi version of your application, or the version tagged `latest` if it qualifies.
+<br/>
+Listing available plugins to install or upgrade:
 
-If the version you name, or every version in the range, requires a newer Strapi version, the command warns you but still installs it.
+```bash
+pnpm strapi enterprise install
+```
 
-:::note
-The command saves the exact version it installs in `package.json`. A later dependency update then can't move the plugin to a version your Strapi application doesn't support. To upgrade, run `strapi enterprise install` again.
+Installing plugins by name:
+
+```bash
+pnpm strapi enterprise install plugin-byok
+```
+<!-- 
+Installing plugins by name, specifying a version:
+
+```bash
+pnpm strapi enterprise install plugin-byok@1.0.0
+``` -->
+
+<br/>
+
+<!-- :::note
+The command saves the exact version it installs in `package.json`, so a later dependency update can't move the plugin to a version your Strapi application doesn't support.
+
+It does not replace your package manager. Once the registry is set up, you keep installing, upgrading, and removing Enterprise plugins with your usual tools. To upgrade a plugin, run `npm install @strapi-enterprise/plugin-byok@latest`, or its equivalent for your package manager.
 :::
 
 :::caution
-* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See each plugin's page, for instance [Bring your own AI key](/cms/plugins/byok#configuration), for how to configure it.
+* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See the plugin's own page for how to configure it, such as [Bring your own AI key](/cms/plugins/byok#configuration).
 * If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
 :::
 
@@ -55250,7 +55288,7 @@ The first time it runs on a computer, the command adds the registry setup at the
 | npm, pnpm, Yarn 1 | `~/.npmrc` |
 | Yarn 2 and later | `~/.yarnrc.yml` |
 
-:::
+::: -->
 
 ### Setting up access manually {#setting-up-access-manually}
 
@@ -55270,33 +55308,7 @@ npmScopes:
 
 If the file already has an `npmScopes` key, add the `strapi-enterprise` entry under it.
 
-The file now holds your license, so restrict it to your user, for instance with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version, for instance `npm install --save-exact @strapi-enterprise/<plugin-name>`.
-
-## Setting up access for CI and deployments
-
-The command only configures the computer it runs on. Any other environment that installs your application's dependencies also needs access to the registry, such as a CI pipeline, a deployment build, or a teammate's computer. Otherwise, installing dependencies fails with an authentication error (401) or a not found error (404).
-
-### Committing a project-level configuration file
-
-Add a configuration file to your project that reads the license from the `STRAPI_LICENSE` environment variable. Then set `STRAPI_LICENSE` as a secret in every environment that installs dependencies:
-
-```ini title="./.npmrc"
-@strapi-enterprise:registry=https://packages.strapi.io/
-//packages.strapi.io/:_authToken=${STRAPI_LICENSE}
-```
-```yaml title="./.yarnrc.yml"
-npmScopes:
-  strapi-enterprise:
-    npmRegistryServer: 'https://packages.strapi.io/'
-    npmAlwaysAuth: true
-    npmAuthToken: '${STRAPI_LICENSE:-}'
-```
-
-If the project already has a `.yarnrc.yml`, add these lines to it, under its existing `npmScopes` key if it has one.
-
-:::caution
-`STRAPI_LICENSE` must then be set in the shell of everyone who installs dependencies. npm, pnpm, and Yarn do not read the application's `.env` file.
-:::
+The file now holds your license, so restrict it to your user with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version: `npm install --save-exact @strapi-enterprise/<plugin-name>`.
 
 ## Troubleshooting
 
@@ -55308,7 +55320,6 @@ If the project already has a `.yarnrc.yml`, add these lines to it, under its exi
 | `…rejected this Strapi license…` | Check that the license is still active in the billing portal. |
 | `Your license does not include…` | Check the plugin name. If the name is correct, contact your account manager. |
 | `No Enterprise package named…` | Check the plugin name. |
-| `… has no stable release yet…` | Add the prerelease version to the name, for instance `plugin-name@<version>`. |
 | `… has no version or tag …` | Check the version you added to the plugin name. |
 | `… requires Strapi … and this app uses …` | Upgrade Strapi first. |
 | `Could not reach https://packages.strapi.io…` | Check your network connection, proxy, and firewall. |
@@ -55317,8 +55328,8 @@ If the project already has a `.yarnrc.yml`, add these lines to it, under its exi
 | `… sets another license for packages.strapi.io and takes precedence…` | Update or remove that line in the named file. |
 | `… could not be updated automatically…` | Add the lines from the message to the named file, then run the command again. |
 | `Could not search packages.strapi.io…` | Try again later, or pass the plugin name. |
-| `Pass package names, or run the command in an interactive terminal.` | Run the command in a terminal, or pass the plugin names, for instance in CI. |
-| Installing dependencies fails with a 401 or 404 error | See [Registry access](#registry-access) and [Setting up access for CI and deployments](#setting-up-access-for-ci-and-deployments). |
+| `Pass package names, or run the command in an interactive terminal.` | Run the command in a terminal, or pass the plugin names, as in CI. |
+| Installing dependencies fails with a 401 or 404 error | See [Setting up access manually](#setting-up-access-manually). |
 
 
 
