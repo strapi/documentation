@@ -33445,6 +33445,8 @@ The Audit Logs feature logs the following events:
 | --- | --- |
 | Content Type | `create`, `update`, `delete` |
 | Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
+| Entry assignee  | `update` |
+| Entry review stage  | `updateEntryStage` |
 | Media | `create`, `update`, `delete` |
 | Login / Logout | `success`, `fail` |
 | Releases | `create`, `update`, `delete`, `trigger` |
@@ -33454,6 +33456,7 @@ The Audit Logs feature logs the following events:
 | User  | `create`, `update`, `delete`, `password.update`, `password-reset.create`, `password-reset.confirm`, `invite.accept` |
 | Token  | `create`, `update`, `delete`, `regenerate` |
 | Webhook | `create`, `update`, `delete` |
+| Workflow  | `create`, `update`, `delete` |
 
 For each log item, the following information is displayed:
 
@@ -33471,6 +33474,8 @@ The Action filter also matches the legacy `user.create`, `user.update` and `user
 Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
+
+Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
 
 With Strapi   logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
 
@@ -36371,6 +36376,18 @@ If the draft version of the document contains content different from the publish
     - **Unpublish and replace last draft** to discard any existing content in the _Draft_ tab and replace it with the content of all fields from the _Published_ tab
 3. Click **Confirm**. The desired changes will be applied to both the _Draft_ and _Published_ tabs and the new status of the entry will also be reflected below the entry title.
 
+### Discarding changes
+
+**Path:**  Content Manager, edit view of your content type
+
+To discard all changes made to a draft, click on  in the _Entry_ box on the right side of the interface and choose  **Discard changes**.
+
+Discarding changes reverts the draft to match the published version. If your draft has relations to unpublished entries, a warning will appear in the confirmation dialog, informing you that these relations will be removed since unpublished entries are not part of the published version.
+
+:::tip Content History
+If you need to restore a previous draft version instead of reverting to the published version, you can use the [Content History](/cms/features/content-history) feature to browse and restore earlier saved states.
+:::
+
 ### Bulk actions
 
 **Path:**  Content Manager, list view of your content type
@@ -39153,6 +39170,28 @@ Entries of a review workflow content type can be assigned to any admin user in S
 
 :::tip
 You can filter entries in the Content Manager list view by **Assignee** and **Review Stage** to quickly find entries assigned to specific users or in specific review stages. Open the filters menu in the list view to access these filtering options.
+:::
+
+### Audit logging of review workflow actions
+
+Review workflow actions are automatically captured in [Audit Logs](/cms/features/audit-logs). Changes to a workflow, to the review stage of an entry, and to the assignee of an entry each produce a log entry.
+
+The following actions are recorded:
+
+| Action | What is logged |
+| --- | --- |
+| Create workflow | The content types the workflow applies to, its stages, and the stage required to publish. |
+| Update workflow | The fields that changed, among the name, content types, stages, and stage required to publish, with their previous and new values. No entry is created if nothing changed. |
+| Delete workflow | The name and identifier of the deleted workflow. |
+| Change entry review stage | The locale, the workflow the entry belongs to, and the previous and new stage. |
+| Change entry assignee | The locale, and the previous and new assignee. An entry with no assignee is recorded as empty. No entry is created if the assignee did not change. |
+
+Stages are recorded by name, with their color and the roles allowed to move content from and to them. Content types and roles are sorted before comparison, so reordering them alone is not recorded as a change. Assignees are recorded as admin user identifiers, not as user names.
+
+To view these log entries, go to  **Settings > Audit Logs** and filter by action.
+
+:::note
+The audit log entry for a stage change shares its name with the [`review-workflows.updateEntryStage` webhook event](/cms/backend-customization/webhooks). Their payloads are different.
 :::
 
 
