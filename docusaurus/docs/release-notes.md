@@ -39,10 +39,10 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 <br />
 
 #### CMS
-- [Add "AI-enhanced" sidebar badges](https://github.com/strapi/documentation/pull/3547)
+- [Document Enterprise plugins, Bring Your Own Key, and AI features per plan](https://github.com/strapi/documentation/pull/3542)
 
 #### Repository
-- [Document Enterprise plugins, Bring Your Own Key, and AI features per plan](https://github.com/strapi/documentation/pull/3542)
+- [Add "AI-enhanced" sidebar badges](https://github.com/strapi/documentation/pull/3547)
 
 ### <Icon name='pen-nib' /> Updated content
 
