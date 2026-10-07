@@ -18,7 +18,7 @@ import SupportedDatabases from '/docs/snippets/supported-databases.md'
 # Database configuration
 
 <Tldr>
-`/config/database` defines connections, clients, and pooling for supported databases like SQLite, MySQL, and PostgreSQL.
+`/config/database` defines connections, clients, and pooling. Strapi v4 and v5 support SQLite, MySQL, MariaDB, and PostgreSQL. MongoDB and other NoSQL databases are not supported. NoSQL support existed in Strapi v3 only.
 </Tldr>
 
 The `/config/database.js|ts` file is used to define database connections that will be used to store the application content.
@@ -677,7 +677,7 @@ For deployed versions of your application the database environment variables sho
 
 ## Databases installation
 
-Strapi gives you the option to choose the most appropriate database for your project. Strapi supports PostgreSQL, SQLite, or MySQL.
+Strapi gives you the option to choose the most appropriate database for your project. Strapi supports MySQL, MariaDB, PostgreSQL, and SQLite.
 
 ### SQLite
 
