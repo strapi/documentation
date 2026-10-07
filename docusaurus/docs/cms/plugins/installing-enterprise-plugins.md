@@ -26,69 +26,81 @@ Enterprise plugins are not published on the public npm registry. They are instal
 
 ## Installing a plugin
 
-Run the command from the root folder of your Strapi application.
+To install Enterprise plugins, run the `strapi enterprise install` command from the root folder of your Strapi application:
 
-### Choosing plugins from a list
-
-Without a plugin name, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade:
+- Without any argument, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade.
+- When passing one or more plugin name(s) as arguments, the command installs them directly. The `@strapi-enterprise/` prefix is optional.
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
+Listing available plugins to install or upgrade:
 
 ```bash
 yarn strapi enterprise install
 ```
 
-</TabItem>
-<TabItem value="npm" label="NPM">
-
-```bash
-npm run strapi enterprise install
-```
-
-</TabItem>
-<TabItem value="pnpm" label="pnpm">
-
-```bash
-pnpm strapi enterprise install
-```
-
-</TabItem>
-</Tabs>
-
-### Installing a plugin by name
-
-Pass one or more plugin names to install them without the list. The `@strapi-enterprise/` prefix is optional:
-
-<Tabs groupId="yarn-npm">
-<TabItem value="yarn" label="Yarn">
+Installing plugins by name:
 
 ```bash
 yarn strapi enterprise install plugin-byok
 ```
 
+<!-- Installing plugins by name, specifying a version:
+
+```bash
+yarn strapi enterprise install plugin-byok@0.1.0
+``` -->
+
+<br/>
+
 </TabItem>
 <TabItem value="npm" label="NPM">
+Listing available plugins to install or upgrade:
+
+```bash
+npm run strapi enterprise install
+```
+
+Installing plugins by name:
 
 ```bash
 npm run strapi enterprise install plugin-byok
 ```
 
+<!-- Installing plugins by name, specifying a version:
+
+```bash
+npm run strapi enterprise install plugin-byok@0.1.0
+``` -->
+
+<br/>
+
 </TabItem>
 <TabItem value="pnpm" label="pnpm">
+Listing available plugins to install or upgrade:
+
+```bash
+pnpm strapi enterprise install
+```
+
+Installing plugins by name:
 
 ```bash
 pnpm strapi enterprise install plugin-byok
 ```
+<!-- 
+Installing plugins by name, specifying a version:
+
+```bash
+pnpm strapi enterprise install plugin-byok@0.1.0
+``` -->
+
+<br/>
 
 </TabItem>
 </Tabs>
 
-The command picks the newest stable version, up to the one tagged `latest`, that supports the Strapi version of your application. It warns you before a major upgrade.
-
-To install another version, add it to the name in the usual NPM format, for instance `plugin-byok@0.1.0`.
-
-:::note
+<!-- :::note
 The command saves the exact version it installs in `package.json`, so a later dependency update can't move the plugin to a version your Strapi application doesn't support.
 
 It does not replace your package manager. Once the registry is set up, you keep installing, upgrading, and removing Enterprise plugins with your usual tools. To upgrade a plugin, run `npm install @strapi-enterprise/plugin-byok@latest`, or its equivalent for your package manager.
@@ -108,7 +120,7 @@ The first time it runs on a computer, the command adds the registry setup at the
 | npm, pnpm, Yarn 1 | `~/.npmrc` |
 | Yarn 2 and later | `~/.yarnrc.yml` |
 
-:::
+::: -->
 
 ### Setting up access manually {#setting-up-access-manually}
 
@@ -140,9 +152,9 @@ If the file already has an `npmScopes` key, add the `strapi-enterprise` entry un
 
 The file now holds your license, so restrict it to your user with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version: `npm install --save-exact @strapi-enterprise/<plugin-name>`.
 
-## Setting up access for CI and deployments
-
+:::note Setting up access for CI and deployments
 The command only configures the computer it runs on. Any other environment that installs your application's dependencies also needs access to the registry, such as a CI pipeline, a deployment build, or a teammate's computer. Otherwise, installing dependencies fails with an authentication error (401) or a not found error (404).
+:::
 
 ### Committing a project-level configuration file
 
