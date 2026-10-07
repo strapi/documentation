@@ -17,7 +17,7 @@ Upgrading to Strapi 5 from v4 uses an upgrade tool with codemods to handle code 
 </Tldr>
 
 
-The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until April 2026.
+The latest major version of Strapi is Strapi 5. Strapi v4 reached end of life on April 30, 2026. Release 4.26.2 (June 9, 2026) is the final v4 release, and no further v4 updates are published. Strapi Cloud can still run existing v4 projects, but that may change in the future without warning.
 
 Whenever you feel ready to upgrade to Strapi 5, the present page will help you. It lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.
 
