@@ -86,13 +86,7 @@ pnpm strapi enterprise install plugin-byok
 
 The command picks the newest stable version, up to the one tagged `latest`, that supports the Strapi version of your application. It warns you before a major upgrade.
 
-To install another version, add it to the name:
-
-- An exact version, including a prerelease, for instance `plugin-byok@1.2.0`.
-- A tag, for instance `plugin-byok@next`.
-- A range, for instance `plugin-byok@^1.2.0`. The command installs the highest version in it that supports the Strapi version of your application, or the version tagged `latest` if it qualifies.
-
-If the version you name, or every version in the range, requires a newer Strapi version, the command warns you but still installs it.
+To install another version, add it to the name in the usual NPM format, for instance `plugin-byok@0.1.0`.
 
 :::note
 The command saves the exact version it installs in `package.json`. A later dependency update then can't move the plugin to a version your Strapi application doesn't support. To upgrade, run `strapi enterprise install` again.
