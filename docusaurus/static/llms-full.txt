@@ -3930,7 +3930,7 @@ Source: https://docs.strapi.io/cms/ai/docs-mcp-server
 
 # Docs MCP server
 
-A Docs MCP server exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment.
+A Docs MCP server exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment. The server at `https://strapi-docs.mcp.kapa.ai` requires OAuth. A request without a bearer token, including MCP `initialize`, returns 401. Protected-resource metadata is published at `https://strapi-docs.mcp.kapa.ai/.well-known/oauth-protected-resource`.
 
 The Docs [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server is powered by [Kapa](https://kapa.ai), the same service behind the **Ask AI** button on the documentation website. It draws from the full Strapi documentation, including guides, API references, and code examples. The Docs MCP server is part of the [AI tools for developers](/cms/ai/for-developers) that Strapi offers.
 
@@ -3994,6 +3994,12 @@ If manual MCP server configuration is required:
       }
     }
     ```
+
+### Authentication
+
+The Docs MCP server requires OAuth. A request without a bearer token, including the MCP `initialize` method, returns HTTP 401. OAuth protected-resource metadata is published at `https://strapi-docs.mcp.kapa.ai/.well-known/oauth-protected-resource`.
+
+That metadata names the authorization server `https://mcp.kapa.ai/auth/public`, the `openid` scope, and bearer tokens in the `Authorization` header.
 
 Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
 
@@ -7755,7 +7761,7 @@ Source: https://docs.strapi.io/cms/api/entity-service
 
 # Entity Service API
 
-The Entity Service API is a backend layer that handles complex content structures like components and dynamic zones, providing CRUD operations, filtering, populating relations, and pagination via `strapi.entityService`.
+In Strapi v5, the Document Service API (`strapi.documents`) replaced the Entity Service API. `strapi.entityService` is deprecated. In Strapi v4, the Entity Service API handled complex content structures such as components and dynamic zones, and provided CRUD operations, filtering, relation population, and pagination.
 
 :::caution
 The Entity Service API is deprecated in Strapi v5. Please consider using the [Document Service API](/cms/api/document-service) instead.
@@ -7771,7 +7777,7 @@ The Strapi backend provides an Entity Service API, built on top of the [Query En
 
 :::strapi Entity Service API vs. Query Engine API
 
-Strapi v4 offers several layers to interact with the backend and build your queries:
+Strapi offers several layers to interact with the backend and build your queries. In Strapi v5, the Document Service API (`strapi.documents`) replaced the Entity Service API from Strapi v4:
 
 * The Document Service API is the recommended API to interact with your application's database. The Document Service is the layer that handles Strapi's document model and the complex content structures like components and dynamic zones, which the lower-level layers are not aware of.
 * The Query Engine API interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but should be used only if the Document Service API does not cover your use case.
@@ -24079,7 +24085,7 @@ Source: https://docs.strapi.io/cms/configurations/database
 
 # Database configuration
 
-`/config/database` defines connections, clients, and pooling for supported databases like SQLite, MySQL, and PostgreSQL.
+`/config/database` defines connections, clients, and pooling. Strapi v4 and v5 support SQLite, MySQL, MariaDB, and PostgreSQL. MongoDB and other NoSQL databases are not supported. NoSQL support existed in Strapi v3 only.
 
 The `/config/database.js|ts` file is used to define database connections that will be used to store the application content.
 
@@ -24679,7 +24685,7 @@ For deployed versions of your application the database environment variables sho
 
 ## Databases installation
 
-Strapi gives you the option to choose the most appropriate database for your project. Strapi supports PostgreSQL, SQLite, or MySQL.
+Strapi gives you the option to choose the most appropriate database for your project. Strapi supports MySQL, MariaDB, PostgreSQL, and SQLite.
 
 ### SQLite
 
@@ -47000,7 +47006,7 @@ Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
 
 Upgrading to Strapi 5 from v4 uses an upgrade tool with codemods to handle code changes, while built-in data migration scripts automatically update the database on first startup.
 
-The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until April 2026.
+The latest major version of Strapi is Strapi 5. Strapi v4 reached end of life on April 30, 2026. Release 4.26.2 (June 9, 2026) is the final v4 release, and no further v4 updates are published. Strapi Cloud can still run existing v4 projects, but that may change in the future without warning.
 
 Whenever you feel ready to upgrade to Strapi 5, the present page will help you. It lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.
 
