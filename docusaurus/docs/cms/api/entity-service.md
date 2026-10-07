@@ -13,7 +13,7 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 <Tldr>
 
-The Entity Service API is a backend layer that handles complex content structures like components and dynamic zones, providing CRUD operations, filtering, populating relations, and pagination via `strapi.entityService`.
+In Strapi v5, the Document Service API (`strapi.documents`) replaced the Entity Service API. `strapi.entityService` is deprecated. In Strapi v4, the Entity Service API handled complex content structures such as components and dynamic zones, and provided CRUD operations, filtering, relation population, and pagination.
 
 </Tldr>
 

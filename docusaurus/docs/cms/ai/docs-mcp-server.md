@@ -17,7 +17,7 @@ import TabItem from '@theme/TabItem';
 
 <Tldr>
 
-A Docs MCP server exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment.
+A Docs MCP server exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment. The server at `https://strapi-docs.mcp.kapa.ai` requires OAuth. A request without a bearer token, including MCP `initialize`, returns 401. Protected-resource metadata is published at `https://strapi-docs.mcp.kapa.ai/.well-known/oauth-protected-resource`.
 
 </Tldr>
 
@@ -105,6 +105,12 @@ If manual MCP server configuration is required:
 
     </TabItem>
     </Tabs>
+
+### Authentication
+
+The Docs MCP server requires OAuth. A request without a bearer token, including the MCP `initialize` method, returns HTTP 401. OAuth protected-resource metadata is published at `https://strapi-docs.mcp.kapa.ai/.well-known/oauth-protected-resource`.
+
+That metadata names the authorization server `https://mcp.kapa.ai/auth/public`, the `openid` scope, and bearer tokens in the `Authorization` header.
 
 Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
 
