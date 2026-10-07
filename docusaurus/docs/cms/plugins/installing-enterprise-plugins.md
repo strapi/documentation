@@ -186,7 +186,6 @@ If the project already has a `.yarnrc.yml`, add these lines to it, under its exi
 | `…rejected this Strapi license…` | Check that the license is still active in the billing portal. |
 | `Your license does not include…` | Check the plugin name. If the name is correct, contact your account manager. |
 | `No Enterprise package named…` | Check the plugin name. |
-| `… has no stable release yet…` | Add the prerelease version to the name, for instance `plugin-name@<version>`. |
 | `… has no version or tag …` | Check the version you added to the plugin name. |
 | `… requires Strapi … and this app uses …` | Upgrade Strapi first. |
 | `Could not reach https://packages.strapi.io…` | Check your network connection, proxy, and firewall. |
