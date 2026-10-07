@@ -149,7 +149,7 @@ The command only configures the computer it runs on. Any other environment that 
 Add a configuration file to your project that reads the license from the `STRAPI_LICENSE` environment variable. Then set `STRAPI_LICENSE` as a secret in every environment that installs dependencies:
 
 <Tabs groupId="npm-yarn-config">
-<TabItem value="npmrc" label="npm, pnpm, Yarn 1 (.npmrc)">
+<TabItem value="npmrc" label="npm, Yarn 1 (.npmrc)">
 
 ```ini title="./.npmrc"
 @strapi-enterprise:registry=https://packages.strapi.io/
@@ -174,6 +174,8 @@ If the project already has a `.yarnrc.yml`, add these lines to it, under its exi
 
 :::caution
 `STRAPI_LICENSE` must then be set in the shell of everyone who installs dependencies. npm, pnpm, and Yarn do not read the application's `.env` file.
+
+This approach does not work with pnpm. Since pnpm 10.34.2 and 11.5.3, pnpm no longer expands environment variables in authentication settings that come from a file committed to the repository (see <ExternalLink to="https://pnpm.io/blog/2026/06/11/env-variables-in-repository-npmrc" text="the pnpm announcement"/>). With pnpm, keep the license out of the repository and set it where you control it instead, with `pnpm config set` or a user-level `~/.npmrc` provided by the environment.
 :::
 
 ## Troubleshooting
