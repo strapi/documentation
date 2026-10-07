@@ -30,7 +30,7 @@ Run the command from the root folder of your Strapi application.
 
 ### Choosing plugins from a list
 
-Without a plugin name, the command lists the Enterprise plugins your license includes:
+Without a plugin name, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
@@ -48,16 +48,6 @@ npm run strapi enterprise install
 
 </TabItem>
 </Tabs>
-
-The list works as follows:
-
-- Plugins with a newer compatible version are selected for upgrade. A major upgrade, which may include breaking changes, is shown with `[major upgrade]` and isn't selected.
-- Plugins that can't be installed show the reason, for instance a newer Strapi version they require.
-- Packages that are not plugins, such as providers, show their kind, for instance `[provider]`.
-- Unselecting an installed plugin does not uninstall it.
-
-1. Use the arrow keys to move through the list, and press <kbd>Space</kbd> to select a plugin.
-2. Press <kbd>Enter</kbd> to install the selected plugins.
 
 ### Installing a plugin by name
 
