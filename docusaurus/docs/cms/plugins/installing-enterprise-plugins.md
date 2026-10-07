@@ -95,7 +95,7 @@ It does not replace your package manager. Once the registry is set up, you keep 
 :::
 
 :::caution
-* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See each plugin's page, for instance [Bring your own AI key](/cms/plugins/byok#configuration), for how to configure it.
+* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See the plugin's own page for how to configure it, such as [Bring your own AI key](/cms/plugins/byok#configuration).
 * If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
 :::
 
@@ -138,7 +138,7 @@ If the file already has an `npmScopes` key, add the `strapi-enterprise` entry un
 </TabItem>
 </Tabs>
 
-The file now holds your license, so restrict it to your user, for instance with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version, for instance `npm install --save-exact @strapi-enterprise/<plugin-name>`.
+The file now holds your license, so restrict it to your user with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version: `npm install --save-exact @strapi-enterprise/<plugin-name>`.
 
 ## Setting up access for CI and deployments
 
@@ -195,5 +195,5 @@ If the project already has a `.yarnrc.yml`, add these lines to it, under its exi
 | `… sets another license for packages.strapi.io and takes precedence…` | Update or remove that line in the named file. |
 | `… could not be updated automatically…` | Add the lines from the message to the named file, then run the command again. |
 | `Could not search packages.strapi.io…` | Try again later, or pass the plugin name. |
-| `Pass package names, or run the command in an interactive terminal.` | Run the command in a terminal, or pass the plugin names, for instance in CI. |
+| `Pass package names, or run the command in an interactive terminal.` | Run the command in a terminal, or pass the plugin names, as in CI. |
 | Installing dependencies fails with a 401 or 404 error | See [Installing a plugin by name](#installing-a-plugin-by-name) and [Setting up access for CI and deployments](#setting-up-access-for-ci-and-deployments). |
