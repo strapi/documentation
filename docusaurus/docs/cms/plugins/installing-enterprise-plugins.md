@@ -152,44 +152,6 @@ If the file already has an `npmScopes` key, add the `strapi-enterprise` entry un
 
 The file now holds your license, so restrict it to your user with `chmod 600 ~/.npmrc`. Then install the plugin with your package manager, saving the exact version: `npm install --save-exact @strapi-enterprise/<plugin-name>`.
 
-:::note Setting up access for CI and deployments
-The command only configures the computer it runs on. Any other environment that installs your application's dependencies also needs access to the registry, such as a CI pipeline, a deployment build, or a teammate's computer. Otherwise, installing dependencies fails with an authentication error (401) or a not found error (404).
-:::
-
-### Committing a project-level configuration file
-
-Add a configuration file to your project that reads the license from the `STRAPI_LICENSE` environment variable. Then set `STRAPI_LICENSE` as a secret in every environment that installs dependencies:
-
-<Tabs groupId="npm-yarn-config">
-<TabItem value="npmrc" label="npm, Yarn 1 (.npmrc)">
-
-```ini title="./.npmrc"
-@strapi-enterprise:registry=https://packages.strapi.io/
-//packages.strapi.io/:_authToken=${STRAPI_LICENSE}
-```
-
-</TabItem>
-<TabItem value="yarnrc" label="Yarn 2 and later (.yarnrc.yml)">
-
-```yaml title="./.yarnrc.yml"
-npmScopes:
-  strapi-enterprise:
-    npmRegistryServer: 'https://packages.strapi.io/'
-    npmAlwaysAuth: true
-    npmAuthToken: '${STRAPI_LICENSE:-}'
-```
-
-If the project already has a `.yarnrc.yml`, add these lines to it, under its existing `npmScopes` key if it has one.
-
-</TabItem>
-</Tabs>
-
-:::caution
-`STRAPI_LICENSE` must then be set in the shell of everyone who installs dependencies. npm, pnpm, and Yarn do not read the application's `.env` file.
-
-This approach does not work with pnpm. Since pnpm 10.34.2 and 11.5.3, pnpm no longer expands environment variables in authentication settings that come from a file committed to the repository (see <ExternalLink to="https://pnpm.io/blog/2026/06/11/env-variables-in-repository-npmrc" text="the pnpm announcement"/>). With pnpm, keep the license out of the repository and set it where you control it instead, with `pnpm config set` or a user-level `~/.npmrc` provided by the environment.
-:::
-
 ## Troubleshooting
 
 | Message | What to do |
@@ -209,4 +171,4 @@ This approach does not work with pnpm. Since pnpm 10.34.2 and 11.5.3, pnpm no lo
 | `… could not be updated automatically…` | Add the lines from the message to the named file, then run the command again. |
 | `Could not search packages.strapi.io…` | Try again later, or pass the plugin name. |
 | `Pass package names, or run the command in an interactive terminal.` | Run the command in a terminal, or pass the plugin names, as in CI. |
-| Installing dependencies fails with a 401 or 404 error | See [Setting up access manually](#setting-up-access-manually) and [Committing a project-level configuration file](#committing-a-project-level-configuration-file). |
+| Installing dependencies fails with a 401 or 404 error | See [Setting up access manually](#setting-up-access-manually). |
