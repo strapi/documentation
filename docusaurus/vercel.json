@@ -96,6 +96,11 @@
       "permanent": true
     },
     {
+      "source": "/cms/plugins/ai-byok",
+      "destination": "/cms/plugins/byok",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/configurations/sso#setting-up-provider-configuration",
       "destination":"/cms/configurations/guides/configure-sso#setting-up-provider-configuration",
       "permanent": true
@@ -3586,7 +3591,7 @@
     },
     {
       "source": "/dev-docs/api/client",
-      "destination": "/cms/api/client", 
+      "destination": "/cms/api/client",
       "permanent": true
     },
     {
@@ -3666,7 +3671,7 @@
     },
     {
       "source": "/user-docs/media-library",
-      "destination": "/cms/features/media-library", 
+      "destination": "/cms/features/media-library",
       "permanent": true
     },
     {
