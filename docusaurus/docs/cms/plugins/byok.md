@@ -165,15 +165,15 @@ The plugin is configured in the plugins configuration file, with environment var
 
 ### Configuration options
 
-All `connection` and `models` options are required when the plugin is enabled. If one is missing, Strapi does not start and logs the first missing option.
+If a required option is missing while the plugin is enabled, Strapi does not start and logs the first missing option.
 
-| Option | Environment variable | Description |
-|---|---|---|
-| `enabled` | `STRAPI_BYOK_ENABLED` | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
-| `connection.baseURL` | `STRAPI_BYOK_PROVIDER_BASE_URL` | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
-| `connection.apiKey` | `STRAPI_BYOK_PROVIDER_API_KEY` | API key for your provider. Keep it in the server environment only. |
-| `models.translations` | `STRAPI_BYOK_TRANSLATIONS_MODEL` | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
-| `models.mediaMetadata` | `STRAPI_BYOK_MEDIA_METADATA_MODEL` | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `enabled` | Boolean | No | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
+| `connection.baseURL` | String | Yes | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
+| `connection.apiKey` | String | Yes | API key for your provider. Keep it in the server environment only. |
+| `models.translations` | String | Yes | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
+| `models.mediaMetadata` | String | Yes | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
 
 :::tip
 Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
