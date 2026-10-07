@@ -10,7 +10,7 @@ tags:
 ---
 
 # Bring your own AI key plugin
-<EnterpriseBadge tooltip="This plugin is available with an Enterprise plan."/>
+<EnterpriseBadge tooltip="This plugin is available with an Enterprise plan."/> <VersionBadge version="5.57.0" />
 
 <Tldr>
 The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
