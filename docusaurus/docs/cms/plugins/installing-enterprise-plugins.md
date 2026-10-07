@@ -209,4 +209,4 @@ This approach does not work with pnpm. Since pnpm 10.34.2 and 11.5.3, pnpm no lo
 | `… could not be updated automatically…` | Add the lines from the message to the named file, then run the command again. |
 | `Could not search packages.strapi.io…` | Try again later, or pass the plugin name. |
 | `Pass package names, or run the command in an interactive terminal.` | Run the command in a terminal, or pass the plugin names, as in CI. |
-| Installing dependencies fails with a 401 or 404 error | See [Installing a plugin by name](#installing-a-plugin-by-name) and [Setting up access for CI and deployments](#setting-up-access-for-ci-and-deployments). |
+| Installing dependencies fails with a 401 or 404 error | See [Setting up access manually](#setting-up-access-manually) and [Committing a project-level configuration file](#committing-a-project-level-configuration-file). |
