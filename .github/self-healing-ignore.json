@@ -1459,6 +1459,26 @@
       "number": 26749,
       "reason": "Router: Diff too large (14522 lines > 3000 limit). This PR adds a significant feature for preserving data when renaming attributes, including CLI commands (strapi rename:field, strapi rename:component) and configuration options, which would require documentation updates. Mark for next routing run.",
       "added": "2026-10-06"
+    },
+    {
+      "number": 27948,
+      "reason": "Triage: internal bug fix, mutation was unintended side-effect",
+      "added": "2026-10-08"
+    },
+    {
+      "number": 27879,
+      "reason": "Triage: contributor documentation restructuring, not product changes",
+      "added": "2026-10-08"
+    },
+    {
+      "number": 27750,
+      "reason": "Triage: test infrastructure change",
+      "added": "2026-10-08"
+    },
+    {
+      "number": 27741,
+      "reason": "Router: Internal bug fix in admin panel password reset validation. Fixes message formatting but introduces no user-facing behavior changes or new features.",
+      "added": "2026-10-08"
     }
   ]
 }
