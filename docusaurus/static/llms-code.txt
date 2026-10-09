@@ -18112,7 +18112,9 @@ Language: TypeScript
 File path: /config/admin.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   host: "my-host.com",
   port: 3000,
   // Additionally you can define another path instead of the default /admin one 👇
@@ -18192,7 +18194,9 @@ Language: TypeScript
 File path: /config/server.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
   url: "http://yourbackend.com",
@@ -18204,7 +18208,9 @@ Language: TypeScript
 File path: /config/admin.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   /**
    * Note: The administration will be accessible from the root of the domain 
    * (ex: http://yourfrontend.com/)
@@ -18246,8 +18252,9 @@ Language: TypeScript
 File path: /config/admin.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
@@ -18341,8 +18348,9 @@ Language: TypeScript
 File path: /config/admin.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
     secrets: {
@@ -18443,8 +18451,9 @@ Language: TypeScript
 File path: ./config/api.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Api => ({
   responses: {
     privateAttributes: ['_v', 'id', 'created_at'],
   },
@@ -18718,8 +18727,9 @@ File path: ./config/server.ts
 
 ```ts
 import cronTasks from "./cron-tasks";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
   cron: {
@@ -18849,8 +18859,9 @@ File path: ./config/database.ts
 
 ```ts
 import { Signer } from '@aws-sdk/rds-signer';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => {
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const signer = new Signer({
     hostname: env('DATABASE_HOST', 'localhost'),
     port: env.int('DATABASE_PORT', 5432),
@@ -18920,12 +18931,14 @@ module.exports = ({ env }) => ({
 ```
 
 ---
-Language: DOCKERFILE
+Language: TypeScript
 File path: ./config/database.ts
 
-```dockerfile
+```ts
 import path from 'path';
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => ({
   connection: {
     client: 'sqlite',
     connection: {
@@ -19030,8 +19043,9 @@ File path: ./config/database.ts
 
 ```ts
 import { Signer } from '@aws-sdk/rds-signer';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => {
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const signer = new Signer({
     hostname: env('DATABASE_HOST', '127.0.0.1'),
     port: env.int('DATABASE_PORT', 3306),
@@ -19148,8 +19162,9 @@ File path: ./config/database.js
 
 ```js
 import path from 'path';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => {
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -19323,8 +19338,9 @@ File path: ./config/database.ts
 
 ```ts
 import path from 'path';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => ({
   connection: {
     client: 'sqlite',
     connection: {
@@ -19449,7 +19465,9 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   email: {
     config: {
       provider: 'nodemailer',
@@ -19517,7 +19535,9 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   email: {
     config: {
       provider: 'nodemailer',
@@ -19586,7 +19606,9 @@ Language: DOCKERFILE
 File path: /config/plugins.ts
 
 ```dockerfile
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   email: {
     config: {
       provider: 'nodemailer',
@@ -19655,7 +19677,9 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   email: {
     config: {
       provider: 'nodemailer',
@@ -19747,8 +19771,9 @@ Language: TypeScript
 File path: ./config/server.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: '127.0.0.1',
 });
 ```
@@ -19758,16 +19783,29 @@ Language: TypeScript
 File path: ./config/env/production/server.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env('HOST', '0.0.0.0'),
 });
 ```
 
-Language: Bash
+Language: JavaScript
 File path: N/A
 
-```bash
+```js
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+});
+```
+
+Language: TypeScript
+File path: /config/typescript.ts
+
+```ts
 yarn start                                   # uses host 127.0.0.1
 NODE_ENV=production yarn start               # uses host defined in .env. If not defined, uses 0.0.0.0
 HOST=10.0.0.1 NODE_ENV=production yarn start # uses host 10.0.0.1
@@ -19806,7 +19844,9 @@ Language: TypeScript
 File path: /config/features.ts
 
 ```ts
-  export default ({ env }) => ({
+  import type { Core } from '@strapi/strapi';
+
+  export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Features => ({
     future: {
       experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
@@ -19855,7 +19895,9 @@ Language: TypeScript
 File path: /config/features.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Features => ({
   useLegacyMediaLibrary: env.bool('USE_LEGACY_MEDIA_LIBRARY', false),
 });
 ```
@@ -20312,8 +20354,9 @@ Language: TypeScript
 File path: ./config/database.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => ({
   connections: {
     default: {
       settings: {
@@ -20421,7 +20464,9 @@ Language: TypeScript
 File path: /config/server.ts
 
 ```ts
-  export default ({ env }) => {
+  import type { Core } from '@strapi/strapi';
+
+  export default ({ env }: Core.Config.Shared.ConfigParams) => {
     return {
       mySecret: env('MY_SECRET_KEY', 'defaultSecretValue'),
     };
@@ -20462,8 +20507,9 @@ Language: TypeScript
 File path: /config/admin.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   // ...
   auth: {
     providers: [], // The providers' configuration lives there
@@ -20575,7 +20621,9 @@ Language: TypeScript
 File path: /config/admin.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     domain: env("ADMIN_SSO_DOMAIN", ".test.example.com"),
     providers: [
@@ -21023,7 +21071,9 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   // ...
   upload: {
     config: {
@@ -21067,8 +21117,9 @@ File path: /config/plugins.ts
 
 ```ts
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   upload: {
     config: {
       provider: 'aws-s3',
@@ -21639,7 +21690,9 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   // ...
   upload: {
     config: {
@@ -21713,8 +21766,9 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   // ...
   upload: {
     config: {
@@ -22429,8 +22483,9 @@ Language: TypeScript
 File path: ./config/plugins.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   // enable a plugin that doesn't require any configuration
   i18n: true,
 
@@ -22494,7 +22549,9 @@ Language: TypeScript
 File path: ./config/server.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   app: {
@@ -22551,7 +22608,9 @@ Language: TypeScript
 File path: ./config/server.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   app: {
@@ -22665,9 +22724,10 @@ File path: /config/admin.ts
 ```ts
 
 import { Strategy as DiscordStrategy } from "passport-discord";
+import type { Core } from '@strapi/strapi';
 
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [
@@ -22772,8 +22832,9 @@ File path: /config/admin.ts
 ```ts
 
 import { Strategy as GithubStrategy } from "passport-github2";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [
@@ -22880,8 +22941,9 @@ File path: /config/admin.ts
 ```ts
 
 import {Strategy as GoogleStrategy } from "passport-google-oauth2";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [
@@ -22993,8 +23055,9 @@ File path: /config/admin.ts
 ```ts
 
 import { Strategy as KeyCloakStrategy } from "passport-keycloak-oauth2-oidc";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [
@@ -23110,8 +23173,9 @@ File path: /config/admin.ts
 
 import { Strategy as AzureAdOAuth2Strategy} from "passport-azure-ad-oauth2";
 import jwt from "jsonwebtoken";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [
@@ -23221,8 +23285,9 @@ File path: /config/admin.ts
 ```ts
 
 import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [
@@ -23276,7 +23341,9 @@ Language: TypeScript
 File path: ./config/typescript.ts
 
 ```ts
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.TypeScript => ({
   autogenerate: true,
 });
 ```

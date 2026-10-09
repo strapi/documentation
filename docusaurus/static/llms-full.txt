@@ -25228,11 +25228,35 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="./config/env/production/server.ts"
+```ts title="./config/env/production/server.ts"
 
   host: env('HOST', '0.0.0.0'),
 });
 ```
+
+:::note TypeScript configuration typing
+When a TypeScript configuration file uses the `({ env }) => ...` factory form, type the parameter with `Core.Config.Shared.ConfigParams` and set the matching return type for that file. Without these types, strict TypeScript reports `'env' implicitly has an 'any' type`.
+
+```ts
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+});
+```
+
+| Configuration file | Return type |
+| --- | --- |
+| `/config/server.ts` | `Core.Config.Server` |
+| `/config/database.ts` | `Core.Config.Database` |
+| `/config/admin.ts` | `Core.Config.Admin` |
+| `/config/api.ts` | `Core.Config.Api` |
+| `/config/plugins.ts` | `Core.Config.Plugin` |
+| `/config/middlewares.ts` | `Core.Config.Middlewares` |
+| `/config/features.ts` | `Core.Config.Features` |
+| `/config/typescript.ts` | `Core.Config.TypeScript` |
+
+This pattern matches the official `create-strapi-app` TypeScript templates.
+:::
 
 With these configuration files the server will start on various ports depending on the environment variables passed:
 
@@ -25296,7 +25320,9 @@ To enable a future flag:
   If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
 
   ```ts title="/config/features.ts"
-  export default ({ env }) => ({
+  import type { Core } from '@strapi/strapi';
+
+  export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Features => ({
     future: {
       experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
@@ -25821,7 +25847,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="./config/database.ts"
+```ts title="./config/database.ts"
 
   connections: {
     default: {
@@ -25933,7 +25959,9 @@ When using a `.js` or `.ts` file, the configuration can be exported:
   ```
 
   ```ts
-  export default ({ env }) => {
+  import type { Core } from '@strapi/strapi';
+
+  export default ({ env }: Core.Config.Shared.ConfigParams) => {
     return {
       mySecret: env('MY_SECRET_KEY', 'defaultSecretValue'),
     };
@@ -28451,7 +28479,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
