@@ -18,6 +18,7 @@ on:
 
 jobs:
   docs-self-healing:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     permissions:
       contents: write

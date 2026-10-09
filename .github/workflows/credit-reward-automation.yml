@@ -7,8 +7,9 @@ on:
 jobs:
   call-webhook:
     if: >
+      github.repository == 'strapi/documentation' && (
       github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.labels.*.name, 'contribution')
+      contains(github.event.pull_request.labels.*.name, 'contribution'))
     runs-on: ubuntu-latest
     steps:
       - name: Debug context

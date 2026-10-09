@@ -51,6 +51,7 @@ env:
 
 jobs:
   merge:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
 
     steps:
