@@ -1479,6 +1479,11 @@
       "number": 27741,
       "reason": "Router: Internal bug fix in admin panel password reset validation. Fixes message formatting but introduces no user-facing behavior changes or new features.",
       "added": "2026-10-08"
+    },
+    {
+      "number": 27896,
+      "reason": "Router: Internal admin panel bug fix. The cancel button in the media library upload UI now properly aborts in-flight requests. This is a fix to internal hook behavior with no changes to public APIs, user-facing features, configuration options, or documented functionality.",
+      "added": "2026-10-09"
     }
   ]
 }
