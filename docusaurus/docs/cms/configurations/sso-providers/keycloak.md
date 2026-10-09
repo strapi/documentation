@@ -101,8 +101,9 @@ module.exports = ({ env }) => ({
 ```ts title="/config/admin.ts"
 
 import { Strategy as KeyCloakStrategy } from "passport-keycloak-oauth2-oidc";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [

@@ -105,7 +105,9 @@ When using a `.js` or `.ts` file, the configuration can be exported:
   <TabItem value="ts" label="TypeScript">
 
   ```ts
-  export default ({ env }) => {
+  import type { Core } from '@strapi/strapi';
+
+  export default ({ env }: Core.Config.Shared.ConfigParams) => {
     return {
       mySecret: env('MY_SECRET_KEY', 'defaultSecretValue'),
     };

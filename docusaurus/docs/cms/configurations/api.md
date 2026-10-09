@@ -71,8 +71,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/api.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Api => ({
   responses: {
     privateAttributes: ['_v', 'id', 'created_at'],
   },

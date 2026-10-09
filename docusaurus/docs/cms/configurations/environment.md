@@ -118,15 +118,17 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/server.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: '127.0.0.1',
 });
 ```
 
-```js title="./config/env/production/server.ts"
+```ts title="./config/env/production/server.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env('HOST', '0.0.0.0'),
 });
 ```
@@ -134,6 +136,32 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
+
+:::note TypeScript configuration typing
+When a TypeScript configuration file uses the `({ env }) => ...` factory form, type the parameter with `Core.Config.Shared.ConfigParams` and set the matching return type for that file. Without these types, strict TypeScript reports `'env' implicitly has an 'any' type`.
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+});
+```
+
+| Configuration file | Return type |
+| --- | --- |
+| `/config/server.ts` | `Core.Config.Server` |
+| `/config/database.ts` | `Core.Config.Database` |
+| `/config/admin.ts` | `Core.Config.Admin` |
+| `/config/api.ts` | `Core.Config.Api` |
+| `/config/plugins.ts` | `Core.Config.Plugin` |
+| `/config/middlewares.ts` | `Core.Config.Middlewares` |
+| `/config/features.ts` | `Core.Config.Features` |
+| `/config/typescript.ts` | `Core.Config.TypeScript` |
+
+This pattern matches the official `create-strapi-app` TypeScript templates.
+:::
 
 With these configuration files the server will start on various ports depending on the environment variables passed:
 
