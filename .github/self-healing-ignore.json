@@ -1484,6 +1484,16 @@
       "number": 27896,
       "reason": "Router: Internal admin panel bug fix. The cancel button in the media library upload UI now properly aborts in-flight requests. This is a fix to internal hook behavior with no changes to public APIs, user-facing features, configuration options, or documented functionality.",
       "added": "2026-10-09"
+    },
+    {
+      "number": 27953,
+      "reason": "Router: Internal admin panel bug fix to Content-Type Builder field conditions. No user-facing behavior or public API change requiring documentation.",
+      "added": "2026-10-09"
+    },
+    {
+      "number": 27732,
+      "reason": "Router: Internal admin panel bug fix to Content Manager relation field caching. No user-facing behavior or public API change requiring documentation.",
+      "added": "2026-10-09"
     }
   ]
 }
