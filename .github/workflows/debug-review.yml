@@ -10,6 +10,7 @@ on:
 
 jobs:
   debug-validation:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

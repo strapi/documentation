@@ -60,6 +60,7 @@ env:
 
 jobs:
   evaluate:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
 
     steps:

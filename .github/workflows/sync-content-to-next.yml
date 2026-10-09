@@ -17,6 +17,7 @@ env:
 jobs:
   # Job for debugging purposes
   debug-event:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     steps:
       - name: Debug event
@@ -35,9 +36,10 @@ jobs:
   # Job: Create PR to next when a PR is labeled
   create-pr-for-labeled:
     if: >-
+      github.repository == 'strapi/documentation' && (
       github.event_name == 'pull_request' &&
       github.event.action == 'labeled' &&
-      github.event.label.name == 'temp - port to docs-next'
+      github.event.label.name == 'temp - port to docs-next')
     needs: debug-event
     runs-on: ubuntu-latest
     steps:
@@ -188,10 +190,11 @@ jobs:
   # Job for syncing merged PRs more intelligently
   sync-merged-pr:
     if: >-
+      github.repository == 'strapi/documentation' && (
       github.event_name == 'pull_request' &&
       github.event.action == 'closed' &&
       github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.labels.*.name, 'temp - port to docs-next')
+      contains(github.event.pull_request.labels.*.name, 'temp - port to docs-next'))
     needs: debug-event
     runs-on: ubuntu-latest
     steps:
@@ -372,7 +375,7 @@ jobs:
 
   # Job for automatic syncing of pushed commits
   cherry-pick-from-push:
-    if: github.event_name == 'push'
+    if: github.repository == 'strapi/documentation' && github.event_name == 'push'
     needs: debug-event
     runs-on: ubuntu-latest
     steps:
