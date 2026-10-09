@@ -504,6 +504,10 @@ jobs:
           show_full_output: true
         env:
           ANTHROPIC_BASE_URL: https://api.openlux.ai/v1 # validation-only
+          ANTHROPIC_DEFAULT_HAIKU_MODEL: claude-sonnet-4-6 # validation-only
+          ANTHROPIC_DEFAULT_SONNET_MODEL: claude-sonnet-4-6 # validation-only
+          ANTHROPIC_DEFAULT_OPUS_MODEL: claude-sonnet-4-6 # validation-only
+          ANTHROPIC_SMALL_FAST_MODEL: claude-sonnet-4-6 # validation-only
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           ISSUE_NUMBER: ${{ steps.process-issue.outputs.issue_number }}
