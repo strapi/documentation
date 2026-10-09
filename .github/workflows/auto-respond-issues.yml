@@ -503,7 +503,7 @@ jobs:
             "Bash(git push*--force*),Bash(git push*-f *),Bash(git push*origin main*),Bash(git push*origin/main*),Bash(git push*:main*),Bash(git push*--delete*),Bash(git push*--mirror*),Bash(git rebase*),Bash(git filter-branch*),Bash(git branch*-D*),Bash(git branch*-d*),Bash(git tag*),Bash(git remote*),Bash(git config*),Bash(gh auth*),Bash(gh secret*),Bash(gh variable*),Bash(gh workflow*),Bash(gh api*-X DELETE*),Bash(gh api*--method DELETE*),Bash(gh repo delete*),Bash(gh release*),Bash(gh issue close*),Bash(gh pr merge*),Bash(gh pr close*),Bash(env),Bash(printenv*),Bash(set),Bash(export*),Edit(.github/**),Write(.github/**),Edit(**/.git/**),Write(**/.git/**),Read(**/.git/config),Read(**/.netrc)"
           show_full_output: true
         env:
-          ANTHROPIC_BASE_URL: https://api.openlux.ai/v1 # validation-only
+          ANTHROPIC_BASE_URL: https://api.openlux.ai # validation-only (CLI appends /v1 itself)
           ANTHROPIC_DEFAULT_HAIKU_MODEL: claude-sonnet-4-6 # validation-only
           ANTHROPIC_DEFAULT_SONNET_MODEL: claude-sonnet-4-6 # validation-only
           ANTHROPIC_DEFAULT_OPUS_MODEL: claude-sonnet-4-6 # validation-only
