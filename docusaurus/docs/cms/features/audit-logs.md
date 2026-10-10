@@ -97,7 +97,7 @@ The Audit Logs feature logs the following events:
 | Entry assignee <VersionBadge version="5.56.1+" noTooltip /> | `update` |
 | Entry review stage <VersionBadge version="5.56.1+" noTooltip /> | `updateEntryStage` |
 | Media | `create`, `update`, `delete` |
-| Login / Logout | `success`, `fail` |
+| Admin Login / Logout | `success`, `error`, `autoRegistration` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
@@ -115,6 +115,8 @@ For each log item, the following information is displayed:
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
 User events cover admin accounts, recorded as `admin-user.*`. An update records only the fields that changed, among first name, last name, email, username, preferred language, active status, and roles. No row is written when nothing changed.
+
+Admin login events record successful logins (`admin.auth.success`), failed login attempts (`admin.auth.error`), and new accounts created via SSO auto-registration (`admin.auth.autoRegistration`). The `admin.auth.error` action captures the reason for failure (for example: `invalid_credentials`, `account_inactive`, `sso_connection_error`) and the authentication provider used. The `admin.auth.autoRegistration` action records when an SSO login creates a new admin account. Both failed login and auto-registration events are recorded with an unknown actor to protect privacy.
 
 Password events cover a password set from the profile or by an admin on another account (`password.update`), a password reset requested and confirmed from the public login page (`password-reset.create` and `password-reset.confirm`), and an invitation accepted (`invite.accept`). The password, its hash, and reset or registration tokens are never recorded. These password reset and invitation actions happen with no admin session, so their User column shows `-`.
 
