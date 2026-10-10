@@ -39,6 +39,10 @@ module.exports = ({ env }) => ({
 });
 ```
 
+:::note Rebuild required
+After changing `admin.url`, rebuild the admin panel before starting Strapi, as this value is inlined into the admin bundle at build time.
+:::
+
 <AdminUrlCookiePath />
 
 Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin.[ts|js]` file should work if you left the `host` and `port` property values untouched in the [server configuration](/cms/configurations/server) file, which should be as follows:
