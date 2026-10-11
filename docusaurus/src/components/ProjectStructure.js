@@ -23,10 +23,10 @@ export default function InteractiveProjectStructure() {
           │     ├ <a href="/cms/configurations/admin-panel">admin.ts</a><br/>
           │     ├ <a href="/cms/configurations/api">api.ts</a><br/>
           │     ├ <a href="/cms/configurations/cron">cron-tasks.ts</a> <span className="token comment"># optional, only if you created CRON tasks</span><br/>
-          │     ├ <a href="/cms/configurations/database#database-configuration">database.ts</a><br/>
+          │     ├ <a href="/cms/configurations/database">database.ts</a><br/>
           │     ├ <a href="/cms/configurations/middlewares">middlewares.ts</a><br/>
           │     ├ <a href="/cms/configurations/plugins">plugins.ts</a><br/>
-          │     └ <a href="/cms/configurations/server#server-configuration">server.ts</a><br/>
+          │     └ <a href="/cms/configurations/server">server.ts</a><br/>
           ├──── database<br/>
           │     └──── migrations<br/>
           ├──── dist <span className="token comment"># build of the backend</span><br/>
@@ -37,9 +37,9 @@ export default function InteractiveProjectStructure() {
           │     └ robots.txt<br/>
           ├──── src<br/>
           │     ├──── admin <span className="token comment"># admin customization files</span><br/>
-          │     │     ├──── <a href="/cms/admin-panel-customization#extension">extensions</a> <span className="token comment"># optional, files to extend the admin panel</span><br/>
+          │     │     ├──── <a href="/cms/admin-panel-customization/extension">extensions</a> <span className="token comment"># optional, files to extend the admin panel</span><br/>
           │     │     ├──── <a href="/cms/admin-panel-customization#available-customizations">app.example.tsx</a><br/>
-          │     │     ├──── <a href="/cms/admin-panel-customization#webpack-configuration">webpack.config.example.js</a><br/>
+          │     │     ├──── <a href="/cms/admin-panel-customization/bundlers#webpack">webpack.config.example.js</a><br/>
           |     |     ├──── tsconfig.json<br/>
           │     ├──── api <span className="token comment"># business logic of the project split into subfolders per API</span><br/>
           │     │     └──── (api-name)<br/>
@@ -76,9 +76,9 @@ export default function InteractiveProjectStructure() {
           │     │           │           └ <a href="/cms/plugins/admin-panel-api">index.tsx</a><br/>
           │     │           │           └ pluginId.ts<br/>
           │     │           ├──── <a href="/cms/plugins/server-api">server</a><br/>
-          │     │           │     ├──── <a href="/cms/plugins/server-api#content-types">content-types</a><br/>
-          │     │           │     ├──── <a href="/cms/ns/server-api#controllers">controllers</a><br/>
-          │     │           │     └──── <a href="/cms/plugins/server-api#policies">policies</a><br/>
+          │     │           │     ├──── <a href="/cms/plugins-development/server-content-types">content-types</a><br/>
+          │     │           │     ├──── <a href="/cms/plugins-development/server-controllers-services#controllers">controllers</a><br/>
+          │     │           │     └──── <a href="/cms/plugins-development/server-policies-middlewares#policies">policies</a><br/>
           │     │           ├ package.json<br/>
           │     │           ├ <a href="/cms/plugins/admin-panel-api">strapi-admin.js</a><br/>
           │     │           └ <a href="/cms/plugins/server-api">strapi-server.js</a><br/>
@@ -90,7 +90,7 @@ export default function InteractiveProjectStructure() {
           │           └ contentTypes.d.ts <span className="token comment"># generated types for content-types</span><br/>
           ├ .env<br/>
           ├ .strapi-updater.json <span className="token comment"># used to track if users need to update their application</span><br/>
-          ├ <a href="/cms/admin-panel-customization#favicon">favicon.png</a><br/>
+          ├ <a href="/cms/admin-panel-customization/favicon">favicon.png</a><br/>
           ├ package.json<br/>
           └ tsconfig.json<br/>
 
@@ -112,15 +112,15 @@ export default function InteractiveProjectStructure() {
         │           ├ index.html <br/>
         │           └ app.js <br/>
         ├──── .tmp<br/>
-        ├──── <a href="/cms/admin-panel-customization#build">build</a> <span className="token comment"># build of the admin panel</span><br/>
+        ├──── <a href="/cms/admin-panel-customization">build</a> <span className="token comment"># build of the admin panel</span><br/>
         ├──── config <span className="token comment"># API configurations</span><br/>
-        │     ├ <a href="/cms/gurations/admin-panel">admin.js</a><br/>
+        │     ├ <a href="/cms/configurations/admin-panel">admin.js</a><br/>
         │     ├ <a href="/cms/configurations/api">api.js</a><br/>
-        │     ├ <a href="/cms/gurations/cron">cron-tasks.ts</a> <span className="token comment"># optional, only if you created CRON tasks</span><br/>
-        │     ├ <a href="/cms/configurations/database#database-configuration">database.js</a><br/>
+        │     ├ <a href="/cms/configurations/cron">cron-tasks.ts</a> <span className="token comment"># optional, only if you created CRON tasks</span><br/>
+        │     ├ <a href="/cms/configurations/database">database.js</a><br/>
         │     ├ <a href="/cms/configurations/middlewares">middlewares.js</a><br/>
         │     ├ <a href="/cms/configurations/plugins">plugins.js</a><br/>
-        │     └ <a href="/cms/configurations/server#server-configuration">server.js</a><br/>
+        │     └ <a href="/cms/configurations/server">server.js</a><br/>
         ├──── database<br/>
         │     └──── migrations<br/>
         ├──── node_modules <span className="token comment"># npm packages used by the project</span><br/>
@@ -128,9 +128,9 @@ export default function InteractiveProjectStructure() {
         │     └──── uploads<br/>
         ├──── src<br/>
         │     ├──── admin <span className="token comment"># admin customization files</span><br/>
-        │           ├──── <a href="/cms/admin-panel-customization#extension">extensions</a> <span className="token comment"># optional, files to extend the admin panel</span><br/>
+        │           ├──── <a href="/cms/admin-panel-customization/extension">extensions</a> <span className="token comment"># optional, files to extend the admin panel</span><br/>
         │     │     ├ <a href="/cms/admin-panel-customization#available-customizations">app.js</a><br/>
-        │     │     └ <a href="/cms/admin-panel-customization#webpack-configuration">webpack.config.js</a><br/>
+        │     │     └ <a href="/cms/admin-panel-customization/bundlers#webpack">webpack.config.js</a><br/>
         │     ├──── api <span className="token comment"># business logic of the project split into subfolders per API</span><br/>
         │     │     └──── (api-name)<br/>
         │     │           ├──── <a href="/cms/backend-customization/models">content-types</a><br/>
@@ -163,16 +163,16 @@ export default function InteractiveProjectStructure() {
         │     │           │     └──── src<br/>
         │     │           │           └ <a href="/cms/plugins/admin-panel-api">index.js</a><br/>
         │     │           ├──── <a href="/cms/plugins/server-api">server</a><br/>
-        │     │           │     ├──── <a href="/cms/plugins/server-api#content-types">content-types</a><br/>
-        │     │           │     ├──── <a href="/cms/plugins/server-api#controllers">controllers</a><br/>
-        │     │           │     └──── <a href="/cms/plugins/server-api#policies">policies</a><br/>
+        │     │           │     ├──── <a href="/cms/plugins-development/server-content-types">content-types</a><br/>
+        │     │           │     ├──── <a href="/cms/plugins-development/server-controllers-services#controllers">controllers</a><br/>
+        │     │           │     └──── <a href="/cms/plugins-development/server-policies-middlewares#policies">policies</a><br/>
         │     │           ├ package.json<br/>
         │     │           ├ <a href="/cms/plugins/admin-panel-api">strapi-admin.js</a><br/>
         │     │           └ <a href="/cms/plugins/server-api">strapi-server.js</a><br/>
         │     ├─── <a href="/cms/backend-customization/policies">policies</a><br/>
         │     └ <a href="/cms/configurations/functions">index.js</a> <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
         ├ <a href="/cms/configurations/environment">.env</a><br/>
-        ├ <a href="/cms/admin-panel-customization#favicon">favicon.png</a><br/>
+        ├ <a href="/cms/admin-panel-customization/favicon">favicon.png</a><br/>
         └ package.json<br/>
           </code>
         </pre>

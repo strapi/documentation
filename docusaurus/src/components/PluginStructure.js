@@ -34,26 +34,26 @@ export default function InteractivePluginStructure() {
           ├── node_modules<br />
           ├── <a href="/cms/plugins/server-api">server</a> <span className="token comment"># Back-end part of your plugin</span><br/>
           │   ├── src<br />
-          │   │   ├── <a href="/cms/plugins/server-api#configuration">config</a><br/>
+          │   │   ├── <a href="/cms/plugins-development/server-configuration">config</a><br/>
           │   │   │   └── index.ts <span className="token comment"># Contains the default server configuration</span><br/>
-          │   │   ├── <a href="/cms/plugins/server-api#content-types">content-types</a> <span className="token comment"># Content-types specific to your plugin</span><br/>
+          │   │   ├── <a href="/cms/plugins-development/server-content-types">content-types</a> <span className="token comment"># Content-types specific to your plugin</span><br/>
           │   │   │   └── index.ts <span className="token comment"># Loads all the plugin's content-types</span><br />
-          │   │   ├── <a href="/cms/plugins/server-api#controllers">controllers</a> <span className="token comment"># Controllers specific to your plugin</span><br />
+          │   │   ├── <a href="/cms/plugins-development/server-controllers-services#controllers">controllers</a> <span className="token comment"># Controllers specific to your plugin</span><br />
           │   │   │   ├── index.ts <span className="token comment"># Loads all the plugin's controllers</span><br/>
           │   │   │   └── controller.ts <span className="token comment"># Custom controller example. You can rename it or delete it.</span><br/>
-          │   │   ├── <a href="/cms/plugins/server-api#middlewares">middlewares</a> <span className="token comment"># Middlewares specific to your plugin</span><br/>
+          │   │   ├── <a href="/cms/plugins-development/server-policies-middlewares#middlewares">middlewares</a> <span className="token comment"># Middlewares specific to your plugin</span><br/>
           │   │   │   └── index.ts <span className="token comment"># Loads all the plugin's middlewares</span><br />
-          │   │   ├── <a href="/cms/plugins/server-api#policies">policies</a> <span className="token comment"># Policies specific to your plugin</span><br />
+          │   │   ├── <a href="/cms/plugins-development/server-policies-middlewares#policies">policies</a> <span className="token comment"># Policies specific to your plugin</span><br />
           │   │   │   └── index.ts <span className="token comment"># Loads all the plugin's policies</span><br />
-          │   │   ├── <a href="/cms/plugins/server-api#routes">routes</a> <span className="token comment"># Routes specific to your plugin</span><br/>
+          │   │   ├── <a href="/cms/plugins-development/server-routes">routes</a> <span className="token comment"># Routes specific to your plugin</span><br/>
           │   │   │   └── index.ts <span className="token comment"># Contains an example route for the my-controller custom controller example</span><br/>
-          │   │   ├── <a href="/cms/plugins/server-api#services">services</a> <span className="token comment"># Services specific to your plugin</span> <br/>
+          │   │   ├── <a href="/cms/plugins-development/server-controllers-services#services">services</a> <span className="token comment"># Services specific to your plugin</span> <br/>
           │   │   │   ├── index.ts <span className="token comment"># Loads all the plugin's services</span><br/>
           │   │   │   └── service.ts <span className="token comment"># Custom service example. You can rename it or delete it.</span><br/>
-          │   │   ├── <a href="/cms/plugins/server-api#bootstrap">bootstrap.ts</a> <span className="token comment"># Function that is called right after the plugin has registered</span><br/>
-          │   │   ├── <a href="/cms/plugins/server-api#register">destroy.ts</a> <span className="token comment"># Function that is called to clean up the plugin after Strapi instance is destroyed</span><br/>
+          │   │   ├── <a href="/cms/plugins-development/server-lifecycle#bootstrap">bootstrap.ts</a> <span className="token comment"># Function that is called right after the plugin has registered</span><br/>
+          │   │   ├── <a href="/cms/plugins-development/server-lifecycle#destroy">destroy.ts</a> <span className="token comment"># Function that is called to clean up the plugin after Strapi instance is destroyed</span><br/>
           │   │   ├── <a href="/cms/plugins/server-api">index.ts</a> <span className="token comment"># Entrypoint for the server (back end)</span> <br />
-          │   │   └── <a href="/cms/plugins/server-api#register">register.ts</a> <span className="token comment"># Function that is called to load the plugin, before bootstrap.</span><br/>
+          │   │   └── <a href="/cms/plugins-development/server-lifecycle#register">register.ts</a> <span className="token comment"># Function that is called to load the plugin, before bootstrap.</span><br/>
           │   ├── tsconfig.build.json <span className="token comment"></span><br />
           │   └── tsconfig.json <span className="token comment"># TypeScript compiler options for the server part</span><br />
           ├── .editorconfig<br />
@@ -95,26 +95,26 @@ export default function InteractivePluginStructure() {
             ├── node_modules<br />
             ├── <a href="/cms/plugins/server-api">server</a> <span className="token comment"># Back-end part of your plugin</span><br/>
             │   ├── src<br />
-            │   │   ├── <a href="/cms/plugins/server-api#configuration">config</a><br/>
+            │   │   ├── <a href="/cms/plugins-development/server-configuration">config</a><br/>
             │   │   │   └── index.js <span className="token comment"># Contains the default server configuration</span><br/>
-            │   │   ├── <a href="/cms/plugins/server-api#content-types">content-types</a> <span className="token comment"># Content-types specific to your plugin</span><br/>
+            │   │   ├── <a href="/cms/plugins-development/server-content-types">content-types</a> <span className="token comment"># Content-types specific to your plugin</span><br/>
             │   │   │   └── index.js <span className="token comment"># Loads all the plugin's content-types</span><br />
-            │   │   ├── <a href="/cms/plugins/server-api#controllers">controllers</a> <span className="token comment"># Controllers specific to your plugin</span><br />
+            │   │   ├── <a href="/cms/plugins-development/server-controllers-services#controllers">controllers</a> <span className="token comment"># Controllers specific to your plugin</span><br />
             │   │   │   ├── index.js <span className="token comment"># Loads all the plugin's controllers</span><br/>
             │   │   │   └── controller.js <span className="token comment"># Custom controller example. You can rename it or delete it.</span><br/>
-            │   │   ├── <a href="/cms/plugins/server-api#middlewares">middlewares</a> <span className="token comment"># Middlewares specific to your plugin</span><br/>
+            │   │   ├── <a href="/cms/plugins-development/server-policies-middlewares#middlewares">middlewares</a> <span className="token comment"># Middlewares specific to your plugin</span><br/>
             │   │   │   └── index.js <span className="token comment"># Loads all the plugin's middlewares</span><br />
-            │   │   ├── <a href="/cms/plugins/server-api#policies">policies</a> <span className="token comment"># Policies specific to your plugin</span><br />
+            │   │   ├── <a href="/cms/plugins-development/server-policies-middlewares#policies">policies</a> <span className="token comment"># Policies specific to your plugin</span><br />
             │   │   │   └── index.js <span className="token comment"># Loads all the plugin's policies</span><br />
-            │   │   ├── <a href="/cms/plugins/server-api#routes">routes</a> <span className="token comment"># Routes specific to your plugin</span><br/>
+            │   │   ├── <a href="/cms/plugins-development/server-routes">routes</a> <span className="token comment"># Routes specific to your plugin</span><br/>
             │   │   │   └── index.js <span className="token comment"># Contains an example route for the my-controller custom controller example</span><br/>
-            │   │   ├── <a href="/cms/plugins/server-api#services">services</a> <span className="token comment"># Services specific to your plugin</span> <br/>
+            │   │   ├── <a href="/cms/plugins-development/server-controllers-services#services">services</a> <span className="token comment"># Services specific to your plugin</span> <br/>
             │   │   │   ├── index.js <span className="token comment"># Loads all the plugin's services</span><br/>
             │   │   │   └── service.js <span className="token comment"># Custom service example. You can rename it or delete it.</span><br/>
-            │   │   ├── <a href="/cms/plugins/server-api#bootstrap">bootstrap.js</a> <span className="token comment"># Function that is called right after the plugin has registered</span><br/>
-            │   │   ├── <a href="/cms/plugins/server-api#register">destroy.js</a> <span className="token comment"># Function that is called to clean up the plugin after Strapi instance is destroyed</span><br/>
+            │   │   ├── <a href="/cms/plugins-development/server-lifecycle#bootstrap">bootstrap.js</a> <span className="token comment"># Function that is called right after the plugin has registered</span><br/>
+            │   │   ├── <a href="/cms/plugins-development/server-lifecycle#destroy">destroy.js</a> <span className="token comment"># Function that is called to clean up the plugin after Strapi instance is destroyed</span><br/>
             │   │   ├── <a href="/cms/plugins/server-api">index.js</a> <span className="token comment"># Entrypoint for the server (back end)</span> <br />
-            │   │   └── <a href="/cms/plugins/server-api#register">register.js</a> <span className="token comment"># Function that is called to load the plugin, before bootstrap.</span><br/>
+            │   │   └── <a href="/cms/plugins-development/server-lifecycle#register">register.js</a> <span className="token comment"># Function that is called to load the plugin, before bootstrap.</span><br/>
             ├── .editorconfig<br />
             ├── .eslintignore<br />
             ├── .gitignore<br />
