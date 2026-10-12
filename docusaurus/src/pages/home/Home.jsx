@@ -143,10 +143,10 @@ const POWERFUL_FEATURES = [
     to: '/cms/features/preview',
   },
   {
-    icon: 'ph-clock-counter-clockwise',
-    title: 'Content History',
-    desc: 'Track every change to your content and restore any previous version in one click.',
-    to: '/cms/features/content-history',
+    icon: 'ph-kanban',
+    title: 'Review Workflows',
+    desc: 'Move content through review stages and choose the stage required to publish.',
+    to: '/cms/features/review-workflows',
   },
   {
     icon: 'ph-clipboard-text',
