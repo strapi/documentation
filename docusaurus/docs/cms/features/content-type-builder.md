@@ -68,9 +68,11 @@ The folders displayed in the Content-type Builder sub navigation are stored in t
 The file is versioned with the rest of your project, so the organization defined locally is shared with your team and deployed with your application.
 
 Folder organization therefore travels with your project's code: deploy the file to move it from one environment to another.
+
 :::caution
-[Data Transfer](/cms/features/data-management) does not include the content structure file in exports, imports or transfers.
+[Data Transfer](/cms/features/data-management) exports, imports and transfers database content and media, not project source files, so it never carries `groups.json`. After a transfer, the destination project keeps the folders defined in its own `groups.json`. To get the same folders on both sides, deploy the file with your code.
 :::
+
 Folders are called `groups` in the file, and are listed per section, `collectionTypes` and `singleTypes`. Each group has an identifier, a name, a parent, and a list of children:
 
 ```json title="/src/content-structure/groups.json"
