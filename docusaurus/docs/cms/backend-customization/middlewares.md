@@ -156,7 +156,7 @@ Proper implementation largely depends on your project's needs and custom code, b
 3. Give the middleware a name, for instance `isOwner`.
 4. Choose `Add middleware to an existing API` from the list.
 5. Select which API you want the middleware to apply.
-6. Replace the code in the `/src/api/[your-api-name]/middlewares/isOwner.js` file with the following, replacing `api::restaurant.restaurant` in line 22 with the identifier corresponding to the API you choose at step 5 (e.g., `api::blog-post.blog-post` if your API name is `blog-post`):
+6. Replace the code in the `/src/api/[your-api-name]/middlewares/isOwner.js` file with the following, replacing `api::restaurant.restaurant` in line 20 with the identifier corresponding to the API you choose at step 5 (e.g., `api::blog-post.blog-post` if your API name is `blog-post`):
 
   ```js showLineNumbers title="src/api/blog-post/middlewares/isOwner.js"
     "use strict";
