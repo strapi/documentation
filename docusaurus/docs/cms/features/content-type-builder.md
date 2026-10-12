@@ -63,7 +63,7 @@ The Content-type Builder requires no configuration to be used. The folders used 
 
 ### Code-based configuration
 
-The folders displayed in the Content-type Builder sub navigation are stored in the `src/content-structure/groups.json` file.
+The folders displayed in the Content-type Builder sub navigation (see [Organizing content-types with folders](#organizing-content-types-with-folders)) are stored in the `src/content-structure/groups.json` file.
 
 The file is versioned with the rest of your project, so the organization defined locally is shared with your team and deployed with your application.
 
