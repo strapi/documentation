@@ -25454,7 +25454,7 @@ export default ({ env }) => ({
 Source: https://docs.strapi.io/cms/features/content-type-builder
 
 ## Code-based configuration
-Description: Folder organization therefore travels with your project's code: deploy the file to move it from one environment to another.
+Description: Folders are called groups in the file, and are listed per section, collectionTypes and singleTypes.
 (Source: https://docs.strapi.io/cms/features/content-type-builder#code-based-configuration)
 
 Language: JSON
