@@ -63,7 +63,7 @@ const sidebars = {
       label: 'Features',
       collapsible: false,
       className: 'category-cms-features',
-      link: { type: 'generated-index', slug: '/cms/features' },
+      link: { type: 'doc', id: 'cms/features' },
       items: [
         {
           type: 'doc',
