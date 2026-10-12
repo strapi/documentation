@@ -33,29 +33,29 @@ The CMS plan and the hosting of a project are 2 separate choices. A project with
 
 ## Features by plan
 
-Core features, such as the [admin panel](/cms/features/admin-panel), the [Content Manager](/cms/features/content-manager), and the [Content-Type Builder](/cms/features/content-type-builder), are available on all plans. The following table lists the other features:
+Core features, such as the [admin panel](/cms/features/admin-panel), the [Content Manager](/cms/features/content-manager), and the [Content-Type Builder](/cms/features/content-type-builder), are available on all plans. The following table lists the other features, starting with the features available on all plans and ending with the features that require a plan:
 
 | Feature | Community | Growth | Enterprise |
 | --- | --- | --- | --- |
 | [Admin tokens](/cms/features/admin-tokens) | ✅ | ✅ | ✅ |
 | [API Tokens](/cms/features/api-tokens) | ✅ | ✅ | ✅ |
-| [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
-| [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
 | [Custom Fields](/cms/features/custom-fields) | ✅ | ✅ | ✅ |
 | [Data Management](/cms/features/data-management) | ✅ | ✅ | ✅ |
 | [Draft & Publish](/cms/features/draft-and-publish) | ✅ | ✅ | ✅ |
 | [Email](/cms/features/email) | ✅ | ✅ | ✅ |
-| [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
 | [Internationalization (i18n)](/cms/features/internationalization) | ✅ | ✅ | ✅ |
 | [MCP server](/cms/features/strapi-mcp-server) | ✅ | ✅ | ✅ |
 | [Media Library](/cms/features/media-library) | ✅ | ✅ | ✅ |
-| [Preview](/cms/features/preview) | ✅ | ✅, with Live Preview | ✅, with Live Preview |
-| [Releases](/cms/features/releases) | - | ✅ | ✅ |
-| [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
 | [Role-Based Access Control (RBAC)](/cms/features/rbac) | ✅ | ✅ | ✅ |
-| [Single Sign-On (SSO)](/cms/features/sso) | - | Add-on | ✅ |
-| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | With your own AI key, through the [Bring your own AI key plugin](/cms/plugins/byok) |
 | [Users & Permissions](/cms/features/users-permissions) | ✅ | ✅ | ✅ |
+| [Preview](/cms/features/preview) | ✅ | ✅, with Live Preview | ✅, with Live Preview |
+| [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
+| [Releases](/cms/features/releases) | - | ✅ | ✅ |
+| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | With your own AI key, through the [Bring your own AI key plugin](/cms/plugins/byok) |
+| [Single Sign-On (SSO)](/cms/features/sso) | - | Add-on | ✅ |
+| [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
+| [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
+| [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
 
 Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi-managed AI, on the Growth plan.
 
