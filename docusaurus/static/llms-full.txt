@@ -33503,7 +33503,7 @@ CMS Enterprise plan
 
 **Role & permission**
 
-Super Admin role in the project's admin panel
+Minimum "Read" permission in Roles > Settings - Audit Logs
 
 **Activation**
 
@@ -33515,8 +33515,6 @@ Available in both Development & Production environment
 
 ## Configuration
 
-The only configurable aspect is how long logs are kept before they are deleted.
-
 Audit Logs are not a permanent archive. Logs older than the retention period are deleted automatically. The retention period defaults to 90 days.
 
 :::caution
@@ -33527,7 +33525,7 @@ Logs deleted at the end of the retention period cannot be recovered from the Aud
 
 The retention period is set with the [`auditLogs.retentionDays`](/cms/configurations/admin-panel#audit-logs) parameter of the `/config/admin` file.
 
-For Strapi Cloud projects, the value stored in the license information applies, unless a _smaller_ value is defined in the configuration file.
+If the license defines a retention period, the license value applies, unless a _smaller_ value is defined in the configuration file.
 
 ```js title="/config/admin.js"
 module.exports = ({ env }) => ({
@@ -33548,6 +33546,8 @@ module.exports = ({ env }) => ({
 
 There is no equivalent setting in the admin panel: the retention period can only be configured from the `/config/admin` file.
 
+The `/config/admin` file also accepts `auditLogs.enabled`, which turns off Audit Logs when set to `false`, and `auditLogs.exportMaxRows`, which limits [exports](#exporting-audit-logs). See the [admin panel configuration](/cms/configurations/admin-panel#audit-logs) for all available parameters.
+
 ## Usage
 
 **Path to use the feature:**  Settings > Administration Panel - Audit Logs
@@ -33556,11 +33556,15 @@ The Audit Logs feature logs the following events:
 
 | Event | Actions |
 | --- | --- |
+| Audit log  | `export` |
+| Component | `create`, `update`, `delete` |
 | Content Type | `create`, `update`, `delete` |
 | Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
 | Entry assignee  | `update` |
 | Entry review stage  | `updateEntryStage` |
+| Locale  | `create`, `update`, `delete`, `default.update` |
 | Media | `create`, `update`, `delete` |
+| Media folder | `create`, `update`, `delete` |
 | Login / Logout | `success`, `fail` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
@@ -33588,6 +33592,8 @@ Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/f
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
 
+Locale events come from [Internationalization](/cms/features/internationalization) settings. Setting a locale as the default records a separate `locale.default.update` event, in addition to the `locale.create` or `locale.update` event.
+
 Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
 
 With Strapi   logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
@@ -33604,7 +33610,13 @@ By default, all logs are displayed in reverse chronological order. You can filte
 
 For any log item, click the  icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
 
-With Strapi , in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
+With Strapi , in the payload, the `origin` key indicates where the action came from:
+
+- `admin-panel` for the admin panel,
+- `mcp` for the [MCP server](/cms/features/strapi-mcp-server),
+- `scheduler`  for actions run automatically by Strapi, such as publishing a [scheduled release](/cms/features/releases#scheduling-a-release).
+
+Actions with the `scheduler` origin have no user, so their User column shows `-`. The audit log entry recorded when the release was scheduled identifies who scheduled it.
 
 ### Exporting audit logs
 
@@ -33613,7 +33625,7 @@ Users with the `export` permission for Audit Logs can export the current filtere
 To export audit logs:
 
 1. (Optional) Apply filters to select the entries to export.
-2. Click **Export** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
+2. Click **Export as CSV** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
 3. Click **Download CSV** to save the exported file.
 
 Every export is itself recorded as an `audit-log.export` event. This event is included in the exported CSV file.
@@ -39195,7 +39207,7 @@ CMS Enterprise Plan
 
 **Role & permission**
 
-Super Admin role in project's admin panel
+Minimum "Read" permission in Roles > Settings - Review Workflows
 
 **Activation**
 
@@ -39211,9 +39223,11 @@ Available in both Development & Production environment
 
 For the review workflows to be usable in the [Content Manager](/cms/features/content-manager), the default one should be configured or a new one should be created.
 
-The default workflow is configured to have 4 stages: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
+The default workflow is configured to have 4 stages, in this order: To do, Ready to review, In progress, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
 
-### Creating a new workflow
+### Admin panel settings
+
+#### Creating a new workflow
 
 1. Click on the **Create new workflow** button or on the edit button  of a workflow.
 2. In the workflow edit interface, configure the new workflow:
@@ -39222,15 +39236,28 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
     | Workflow name  | Write a unique name for the workflow.                                    |
     | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
+    | Required stage for publishing | (optional) Select the stage entries must be at to be published (see [Requiring a stage for publishing](#requiring-a-stage-for-publishing)). |
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
 
 :::note
-The maximum number of [workflows and stages per workflow is limited](https://strapi.io/pricing-cloud).
+A Strapi project can have up to 200 workflows, and each workflow up to 200 stages.
 :::
 
-### Editing a workflow
+#### Requiring a stage for publishing
 
-#### Adding a new stage
+The *Required stage for publishing* setting of a workflow prevents entries from being published if they are not at the selected stage. It applies to every content-type associated to the workflow.
+
+1. In the workflow edit interface, click the *Required stage for publishing* drop-down list.
+2. Select a stage of the workflow, or *Any stage* to allow publishing from any stage.
+3. Click on the **Save** button.
+
+An entry must be exactly at the selected stage to be published: an entry at a later stage cannot be published either. Choosing the last stage of the workflow as the required stage avoids this situation.
+
+When the setting is defined, publishing an entry that is not at the required stage returns an error. In [Releases](/cms/features/releases), entries that are not at the required stage are flagged as not ready to be published.
+
+#### Editing a workflow
+
+##### Adding a new stage
 
 1. Click on the **Add new stage** button.
 2. Write the *Stage name*.
@@ -39245,20 +39272,19 @@ By default new stages are appended, but they can be reordered anytime using the 
 Each permission field has its own "Apply to all stages" option, which copies that field's role selection to every other stage in the workflow. Alternatively, use "Duplicate stage" from the stage context menu to copy the entire stage configuration including both permission types.
 :::
 
-#### Duplicating a stage
+##### Duplicating a stage
 
 1. Click **Duplicate Stage** in the context menu of the stage.
 2. Change the name of the duplicated stage.
 2. Click on the **Save** button.
 
-#### Deleting a stage
+##### Deleting a stage
 
 To delete a stage, click  in the context menu of the stage, then **Delete**.
 
-If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow. Every workflow needs to
-contain at least one stage and therefore it is not possible to delete the last stage.
+If you delete a stage that entries are at, these entries are moved to the closest previous stage in the workflow. If the deleted stage was the first one, the entries are moved to the next stage instead. Every workflow needs to contain at least one stage and therefore it is not possible to delete the last stage.
 
-### Deleting a workflow
+#### Deleting a workflow
 
 To delete a workflow click on the delete button  of a workflow in the list view.
 
@@ -39357,10 +39383,10 @@ General settings for SSO are available in the admin panel, and additional SSO pr
 
 2. Click the **Save** button.
 
-:::danger
-Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely. A fix will be provided soon.
+:::warning
+Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely.
 
-In the meantime, the only way to get in if the Super Admin can't log in is to temporarily disable the SSO feature entirely, log in with username and password to remove the _Super Admin_ role from the _Local authentication lock-out_ list, and then re-enable SSO.
+If this happens, the only way to get in if the Super Admin can't log in is to temporarily disable the SSO feature entirely, log in with username and password to remove the _Super Admin_ role from the _Local authentication lock-out_ list, and then re-enable SSO.
 :::
 
 ### Code-based configuration

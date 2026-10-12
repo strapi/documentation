@@ -25386,7 +25386,7 @@ export default ({ env }) => ({
 Source: https://docs.strapi.io/cms/features/audit-logs
 
 ## Code-based configuration
-Description: For Strapi Cloud projects, the value stored in the license information applies, unless a smaller value is defined in the configuration file.
+Description: If the license defines a retention period, the license value applies, unless a smaller value is defined in the configuration file.
 (Source: https://docs.strapi.io/cms/features/audit-logs#code-based-configuration)
 
 Language: JavaScript
