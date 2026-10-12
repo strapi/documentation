@@ -53,17 +53,6 @@ The default workflow is configured to have 4 stages, in this order: To do, Ready
 A Strapi project can have up to 200 workflows, and each workflow up to 200 stages.
 :::
 
-#### Requiring a stage for publishing
-
-The *Required stage for publishing* setting of a workflow prevents entries from being published if they are not at the selected stage. It applies to every content-type associated to the workflow.
-
-1. In the workflow edit interface, click the *Required stage for publishing* drop-down list.
-2. Select a stage of the workflow, or *Any stage* to allow publishing from any stage.
-3. Click on the **Save** button.
-
-An entry must be exactly at the selected stage to be published: an entry at a later stage cannot be published either. Choosing the last stage of the workflow as the required stage avoids this situation.
-
-When the setting is defined, publishing an entry that is not at the required stage returns an error. In [Releases](/cms/features/releases), entries that are not at the required stage are flagged as not ready to be published.
 
 #### Editing a workflow
 
@@ -94,7 +83,19 @@ Each permission field has its own "Apply to all stages" option, which copies tha
 
 1. Click **Duplicate Stage** in the context menu of the stage.
 2. Change the name of the duplicated stage.
-2. Click on the **Save** button.
+3. Click on the **Save** button.
+
+##### Requiring a stage for publishing
+
+The *Required stage for publishing* setting of a workflow prevents entries from being published if they are not at the selected stage. It applies to every content-type associated to the workflow.
+
+1. In the workflow edit interface, click the *Required stage for publishing* drop-down list.
+2. Select a stage of the workflow, or *Any stage* to allow publishing from any stage.
+3. Click on the **Save** button.
+
+An entry must be exactly at the selected stage to be published: an entry at a later stage cannot be published either. Choosing the last stage of the workflow as the required stage avoids this situation.
+
+When the setting is defined, publishing an entry that is not at the required stage returns an error. In [Releases](/cms/features/releases), entries that are not at the required stage are flagged as not ready to be published.
 
 ##### Deleting a stage
 
