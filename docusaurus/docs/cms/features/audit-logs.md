@@ -26,7 +26,7 @@ The Audit Logs feature provides a searchable and filterable display of all activ
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">CMS Enterprise plan</IdentityCardItem>
-  <IdentityCardItem icon="user" title="Role & permission">Super Admin role in the project's admin panel</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Minimum "Read" permission in Roles > Settings - Audit Logs</IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">Available by default, if required plan</IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
@@ -41,8 +41,6 @@ The Audit Logs feature provides a searchable and filterable display of all activ
 
 ## Configuration
 
-The only configurable aspect is how long logs are kept before they are deleted.
-
 Audit Logs are not a permanent archive. Logs older than the retention period are deleted automatically. The retention period defaults to 90 days.
 
 :::caution
@@ -53,7 +51,7 @@ Logs deleted at the end of the retention period cannot be recovered from the Aud
 
 The retention period is set with the [`auditLogs.retentionDays`](/cms/configurations/admin-panel#audit-logs) parameter of the `/config/admin` file.
 
-For Strapi Cloud projects, the value stored in the license information applies, unless a _smaller_ value is defined in the configuration file.
+If the license defines a retention period, the license value applies, unless a _smaller_ value is defined in the configuration file.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -84,6 +82,8 @@ export default ({ env }) => ({
 
 There is no equivalent setting in the admin panel: the retention period can only be configured from the `/config/admin` file.
 
+The `/config/admin` file also accepts `auditLogs.enabled`, which turns off Audit Logs when set to `false`, and `auditLogs.exportMaxRows`, which limits [exports](#exporting-audit-logs). See the [admin panel configuration](/cms/configurations/admin-panel#audit-logs) for all available parameters.
+
 ## Usage
 
 **Path to use the feature:** <Icon name="gear-six" /> Settings > Administration Panel - Audit Logs
@@ -92,11 +92,15 @@ The Audit Logs feature logs the following events:
 
 | Event | Actions |
 | --- | --- |
+| Audit log <VersionBadge version="5.53.0+" noTooltip /> | `export` |
+| Component | `create`, `update`, `delete` |
 | Content Type | `create`, `update`, `delete` |
 | Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
 | Entry assignee <VersionBadge version="5.56.1+" noTooltip /> | `update` |
 | Entry review stage <VersionBadge version="5.56.1+" noTooltip /> | `updateEntryStage` |
+| Locale <VersionBadge version="5.54.0+" noTooltip /> | `create`, `update`, `delete`, `default.update` |
 | Media | `create`, `update`, `delete` |
+| Media folder | `create`, `update`, `delete` |
 | Login / Logout | `success`, `fail` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
@@ -123,6 +127,8 @@ The Action filter also matches the legacy `user.create`, `user.update` and `user
 Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
+
+Locale events come from [Internationalization](/cms/features/internationalization) settings. Setting a locale as the default records a separate `locale.default.update` event, in addition to the `locale.create` or `locale.update` event.
 
 Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
 
@@ -157,7 +163,13 @@ For any log item, click the <Icon name="eye" /> icon to access a modal with more
   }}
 />
 
-With Strapi <VersionBadge version="5.52.0" noTooltip />, in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
+With Strapi <VersionBadge version="5.52.0+" noTooltip />, in the payload, the `origin` key indicates where the action came from:
+
+- `admin-panel` for the admin panel,
+- `mcp` for the [MCP server](/cms/features/strapi-mcp-server),
+- `scheduler` <VersionBadge version="5.53.0+" noTooltip /> for actions run automatically by Strapi, such as publishing a [scheduled release](/cms/features/releases#scheduling-a-release).
+
+Actions with the `scheduler` origin have no user, so their User column shows `-`. The audit log entry recorded when the release was scheduled identifies who scheduled it.
 
 ### Exporting audit logs
 
@@ -168,7 +180,7 @@ Users with the `export` permission for Audit Logs can export the current filtere
 To export audit logs:
 
 1. (Optional) Apply filters to select the entries to export.
-2. Click **Export** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
+2. Click **Export as CSV** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
 3. Click **Download CSV** to save the exported file.
 
 Every export is itself recorded as an `audit-log.export` event. This event is included in the exported CSV file.
