@@ -19,17 +19,15 @@ Strapi CMS features are available on 3 plans: Community, Growth, and Enterprise.
 Strapi CMS comes with 3 plans:
 
 - Community: the free and open-source core of Strapi, under the MIT license.
-- <GrowthBadge noTooltip />: adds Strapi AI, Live Preview, Releases, and Content History.
-- <EnterpriseBadge noTooltip />: includes everything in Growth, plus Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins.
-
-In the sidebar, a badge next to a feature shows the plan it requires. Hover over the badge to see details.
+- Growth <GrowthBadge noTooltip />: Adds Strapi AI, Live Preview, Releases, and Content History.
+- Enterprise <EnterpriseBadge noTooltip />: Includes everything in Growth, plus Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins.
 
 ## Self-hosted and Strapi Cloud projects
 
 The CMS plan and the hosting of a project are 2 separate choices. A project without a CMS license key uses the Community plan, whether it is self-hosted or hosted on Strapi Cloud.
 
-- A self-hosted project uses the plan of its CMS license key. Growth and Enterprise license keys are available in the [billing portal](/cms/billing-portal#viewing-and-saving-a-cms-license-key).
-- A Strapi Cloud project has a hosting plan (Starter, Pro, or Business) that defines resources such as API requests, asset storage, and backups (see [Usage & billing](/cloud/getting-started/usage-billing)). The hosting plan does not include Growth or Enterprise features: these features require a CMS license key added to the Cloud project (see [Adding a CMS license key](/cloud/projects/settings#adding-cms-license-key)).
+- A self-hosted project uses the plan of its CMS license key. Growth and Enterprise license keys are available in the [billing portal](/cms/billing-portal).
+- A Strapi Cloud project has a hosting plan (Starter, Pro, or Business) that defines resources such as API requests, asset storage, and backups (see [Cloud usage & billing](/cloud/getting-started/usage-billing)). The hosting plan does not include Growth or Enterprise features: these features require a CMS license key added to the Cloud project (see [Adding a CMS license key](/cloud/projects/settings#adding-cms-license-key)).
 
 ## Features by plan
 
@@ -48,11 +46,11 @@ Core features, such as the [admin panel](/cms/features/admin-panel), the [Conten
 | [Media Library](/cms/features/media-library) | ✅ | ✅ | ✅ |
 | [Role-Based Access Control (RBAC)](/cms/features/rbac) | ✅ | ✅ | ✅ |
 | [Users & Permissions](/cms/features/users-permissions) | ✅ | ✅ | ✅ |
-| [Preview](/cms/features/preview) | ✅ | ✅, with Live Preview | ✅, with Live Preview |
+| [Preview](/cms/features/preview) | ✅ | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) |
 | [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
 | [Releases](/cms/features/releases) | - | ✅ | ✅ |
 | [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | With your own AI key, through the [Bring your own AI key plugin](/cms/plugins/byok) |
-| [Single Sign-On (SSO)](/cms/features/sso) | - | Add-on | ✅ |
+| [Single Sign-On (SSO)](/cms/features/sso) | - | Available as an add-on | ✅ |
 | [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
 | [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
 | [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
