@@ -281,8 +281,14 @@ From the table that lists the fields of your content-type, you can:
 - Click on the <Icon name="dots-six-vertical" classes="ph-bold"/> button and drag and drop any field to reorder the content-type's fields
 - Click on the <Icon name="trash" /> button to delete a field
 
+:::note
+Since <VersionBadge version="5.57.0" tooltip="Renaming a field preserves its data since Strapi 5.57.0." />, editing a field allows renaming it without losing its data: when you save your changes, Strapi asks you to confirm the rename and then preserves the field's existing data by renaming the underlying database column instead of recreating it.
+:::
+
 :::caution
-Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
+Data cannot be preserved when a field is renamed and its type, relation, or component is changed at the same time: the field is recreated empty, as before.
+
+Renaming a content-type or a component, that is, editing its *API ID*, is not covered yet: as before, this creates a new database table, and the data associated with the former table is not accessible from the admin panel of your application anymore.
 :::
 
 ### Configuring content-types fields {#configuring-fields-content-type}
