@@ -35,6 +35,7 @@
     "@kapaai/react-sdk": "^0.9.9",
     "@mdx-js/react": "^3.0.0",
     "@octokit/rest": "^22.0.0",
+    "@senthor-io/vercel": "^1.2.0",
     "axios": "1.13.5",
     "classnames": "^2.5.1",
     "clsx": "^1.2.1",
