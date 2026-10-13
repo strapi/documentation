@@ -288,7 +288,7 @@ Since <VersionBadge version="5.57.0" noTooltip />, editing a field allows renami
 :::caution
 Data cannot be preserved when a field is renamed and its type, relation, or component is changed at the same time: the field is recreated empty, as before.
 
-Renaming a content-type or a component, that is, editing its *API ID*, is not covered yet: as before, this creates a new database table, and the data associated with the former table is not accessible from the admin panel of your application anymore.
+Renaming a content-type or a component, that is, editing its API ID, is not covered yet: as before, this creates a new database table, and the data associated with the former table is not accessible from the admin panel of your application anymore.
 :::
 
 ### Configuring content-types fields {#configuring-fields-content-type}
