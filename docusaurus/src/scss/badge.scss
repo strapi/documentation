@@ -530,6 +530,28 @@ main .badge--content:has(+ table) {
     --custom-badge-tooltip-color: var(--strapi-alternative-600);
   }
 
+  // No pill in the sidebar: the glyph alone carries the badge colour, so the
+  // badges flag an entry without outweighing its label. Plan and AI badges
+  // paint their pill in the strong colour, New and Updated their glyph.
+  --custom-badge-glyph-color: var(--custom-badge-background-color);
+
+  &.badge--new,
+  &.badge--updated {
+    --custom-badge-glyph-color: var(--custom-badge-color);
+  }
+
+  background-color: transparent;
+  border-color: transparent;
+
+  .badge__link,
+  .strapi-icons {
+    color: var(--custom-badge-glyph-color) !important;
+  }
+
+  .strapi-icons {
+    font-size: 14px;
+  }
+
   // Tighter gap when an entry carries two plan badges (Growth + Enterprise)
   & + .badge--icon-only {
     margin-left: 4px;
