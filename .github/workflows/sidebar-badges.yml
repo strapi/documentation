@@ -1,0 +1,122 @@
+name: 'Sidebar badges: refresh for a release'
+
+# Rebuilds the "New" and "Updated" badges in the documentation sidebar from a
+# milestone, and opens one pull request with the result.
+#
+# Strapi Docs ships by milestone, so the badges are rebuilt per milestone and
+# never accumulate: every run clears the badges the previous release left
+# behind before applying the ones this release earns. A badge therefore lives
+# exactly one release, which is what it promises the reader.
+#
+# What earns a badge is decided from signals that already exist on the pull
+# requests — the `pr: chore` label and the size of each page's diff — so this
+# workflow introduces no new judgment of its own. The thresholds and the
+# reasoning behind them live in scripts/badges/update-sidebar-badges.js.
+#
+# It never pushes to main. The result is a pull request, because deciding that
+# a page is worth pointing a reader at stays a human call.
+
+on:
+  workflow_dispatch:
+    inputs:
+      milestone:
+        description: 'Milestone to build the badges from (for example 7.5.0)'
+        required: true
+        type: string
+      dry_run:
+        description: 'Report what would change without opening a pull request'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  refresh:
+    if: github.repository == 'strapi/documentation'
+    runs-on: ubuntu-latest
+
+    steps:
+      # A full checkout of this repository carries ~865 MB of history, mostly
+      # images under static/. Only sidebars.js and the badge scripts are needed,
+      # and the blob filter is what brings the transfer down from hundreds of
+      # megabytes to under a megabyte. The same pair of settings is used by
+      # unflag-released-prs.yml, for the same reason.
+      - name: Checkout the sidebar and the badge scripts
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+          sparse-checkout: |
+            docusaurus/sidebars.js
+            docusaurus/scripts/badges
+          sparse-checkout-cone-mode: false
+          fetch-depth: 0
+          filter: blob:none
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+
+      # The editor rewrites sidebars.js as text, so its round-trip proof runs
+      # before it is allowed near the real file: every sidebar entry is badged,
+      # reloaded, compared, and reset back to the byte. A release is a bad
+      # moment to discover that the file no longer parses.
+      - name: Prove the editor round-trips
+        working-directory: ./docusaurus
+        run: node --test 'scripts/badges/*.test.js'
+
+      - name: Refresh the badges
+        id: refresh
+        working-directory: ./docusaurus
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          set -euo pipefail
+
+          node scripts/badges/update-sidebar-badges.js \
+            --milestone "${{ inputs.milestone }}" | tee /tmp/badges.log
+
+          {
+            echo '### Sidebar badges for ${{ inputs.milestone }}'
+            echo ''
+            echo '```'
+            cat /tmp/badges.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if git diff --quiet -- sidebars.js; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open the pull request
+        if: steps.refresh.outputs.changed == 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          MILESTONE: ${{ inputs.milestone }}
+        run: |
+          set -euo pipefail
+
+          BRANCH="repo/sidebar-badges-${MILESTONE}"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b "$BRANCH"
+          git add docusaurus/sidebars.js
+          git commit -m "Refresh the sidebar badges for the ${MILESTONE} release"
+          git push -u origin "$BRANCH" --force-with-lease
+
+          # The log is the reviewer's whole job here: it says which page earned
+          # which badge, from which pull request, and which pull requests were
+          # left out and why.
+          BODY=$(printf 'Rebuilds the New and Updated sidebar badges from milestone %s. Every badge the previous release left behind is removed first, so no badge outlives the release it belongs to.\n\nA page is badged New when the milestone added its file, and Updated when the milestone changed more than 30 lines of it. Pull requests labelled pr: chore are left out, and so is any pull request touching more than five pages, which is a maintenance sweep rather than something to point readers at.\n\n%s\n' "$MILESTONE" "$(cat /tmp/badges.log)")
+
+          gh pr create \
+            --base main --head "$BRANCH" \
+            --title "Refresh the sidebar badges for the ${MILESTONE} release" \
+            --body "$BODY" \
+            --assignee pwizla
