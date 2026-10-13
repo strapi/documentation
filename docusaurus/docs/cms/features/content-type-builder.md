@@ -282,7 +282,7 @@ From the table that lists the fields of your content-type, you can:
 - Click on the <Icon name="trash" /> button to delete a field
 
 :::note
-Since <VersionBadge version="5.57.0" tooltip="Renaming a field preserves its data since Strapi 5.57.0." />, editing a field allows renaming it without losing its data: when you save your changes, Strapi asks you to confirm the rename and then preserves the field's existing data by renaming the underlying database column instead of recreating it.
+Since <VersionBadge version="5.57.0" noTooltip />, editing a field allows renaming it without losing its data: when you save your changes, Strapi asks you to confirm the rename and then preserves the field's existing data by renaming the underlying database column instead of recreating it.
 :::
 
 :::caution
