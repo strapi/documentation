@@ -1494,6 +1494,36 @@
       "number": 27732,
       "reason": "Router: Internal admin panel bug fix to Content Manager relation field caching. No user-facing behavior or public API change requiring documentation.",
       "added": "2026-10-09"
+    },
+    {
+      "number": 28008,
+      "reason": "Triage: dependency/security update, no user-facing behavior change",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 27720,
+      "reason": "Triage: documentation only",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 26937,
+      "reason": "Triage: CI/workflow infrastructure",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 28014,
+      "reason": "Router: Internal admin UI bug fix with no public API or documented behavior change. Only affects display of unset boolean fields in the admin form, not any documented feature or API.",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 28006,
+      "reason": "Router: Internal Content Manager UI bug fix. Fixes dropdown behavior and error display for relation fields, but does not introduce new documented features or API changes.",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 27892,
+      "reason": "Router: Bug fix in Document Service API relation mapping. Previously, documentIds starting with digits were incorrectly treated as numeric IDs. Fix corrects this behavior but does not introduce new documented API surface or features.",
+      "added": "2026-10-13"
     }
   ]
 }
