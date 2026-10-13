@@ -52,9 +52,6 @@ const sidebars = {
           type: 'doc',
           id: 'cms/billing-portal',
           label: 'Billing portal',
-          customProps: {
-            updated: true
-          }
         }
       ],
     },
@@ -144,6 +141,7 @@ const sidebars = {
           label: 'Review Workflows',
           id: 'cms/features/review-workflows',
           customProps: {
+            updated: true,
             enterprise: true
           }
         },
@@ -159,6 +157,9 @@ const sidebars = {
         },
 
       ],
+      customProps: {
+        new: true
+      }
     },
     { // Plugins
       type: 'category',
@@ -177,8 +178,7 @@ const sidebars = {
           id: 'cms/plugins/installing-enterprise-plugins',
           label: 'Enterprise plugins',
           customProps: {
-            enterprise: true,
-            new: true
+            enterprise: true
           }
         },
         {
@@ -201,8 +201,7 @@ const sidebars = {
           label: 'Bring your own AI key',
           id: 'cms/plugins/byok',
           customProps: {
-            enterprise: true,
-            new: true
+            enterprise: true
           }
         },
       ],
@@ -373,10 +372,7 @@ const sidebars = {
           ],
         },
         'cms/configurations/api',
-        {
-          type: 'doc',
-          id: 'cms/configurations/cron',
-        },
+        'cms/configurations/cron',
         {
           type: 'category',
           collapsed: true,
@@ -661,24 +657,12 @@ const sidebars = {
           type: 'category',
           label: 'Project deployment',
           items: [
-            {
-              type: 'doc',
-              id: 'cloud/getting-started/deployment-options',
-            },
-            {
-              type: 'doc',
-              id: 'cloud/getting-started/deployment',
-            },
-            {
-              type: 'doc',
-              id: 'cloud/getting-started/deployment-cli',
-            },
+            'cloud/getting-started/deployment-options',
+            'cloud/getting-started/deployment',
+            'cloud/getting-started/deployment-cli',
           ],
         },
-        {
-          type: 'doc',
-          id: 'cloud/getting-started/usage-billing',
-        },
+        'cloud/getting-started/usage-billing',
         // 'cloud/getting-started/caching',
         {
           type: 'doc',
