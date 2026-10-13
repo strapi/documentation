@@ -3,6 +3,7 @@
   "version": "7.4.0",
   "private": true,
   "scripts": {
+    "test:badges": "node --test 'scripts/badges/*.test.js'",
     "docusaurus": "docusaurus",
     "dev": "yarn generate-llms && node scripts/llms/generate-llms-code.js --anchors --all --output static/llms-code.txt && node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root .. && docusaurus start --port 8080 --no-open",
     "build": "yarn generate-llms && node scripts/llms/generate-llms-code.js --anchors --all --output static/llms-code.txt && node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root .. && docusaurus build",
