@@ -292,6 +292,12 @@ jobs:
           cat .github/prompts/docs-self-healing-triage.md >> $GITHUB_OUTPUT
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
 
+      # `Task` is denied in all three stages. A subagent started in the
+      # background has no way to report back into a run like this one: nothing
+      # notifies the main loop, so it ends its turn waiting, the step exits
+      # green, and the stage writes no result file. It cost the pAwI task run
+      # 38366812795 a PR that was already halfway written. None of these three
+      # prompts asks for a subagent, so the flag only closes the door.
       - name: Run Triage (Haiku)
         if: steps.check-prs.outputs.has_prs == 'true'
         uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
@@ -299,7 +305,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-triage-prompt.outputs.prompt }}
-          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 20 --allowedTools "Bash,Read"'
+          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 20 --allowedTools "Bash,Read" --disallowedTools "Task"'
           show_full_output: true
         env:
           FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
@@ -486,7 +492,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-router-prompt.outputs.prompt }}
-          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "Task"'
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}
@@ -827,7 +833,7 @@ jobs:
           # first of three routed PRs and died seven seconds after opening it.
           # The Router allows up to 5 PRs per run, so the cap has to clear that
           # maximum with room, not the single PR 50 turns actually bought.
-          claude_args: '--model claude-sonnet-5 --max-turns 150 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          claude_args: '--model claude-sonnet-5 --max-turns 150 --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "Task"'
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}

@@ -69,6 +69,15 @@ jobs:
       # input written by anyone in the workspace: data to act on, never
       # instructions. The prompt itself is a versioned file only maintainers can
       # change, which is what bounds what this run can be told to do.
+      #
+      # `Task` is denied for a different reason than everything else on that
+      # list: not danger, but silence. A subagent started in the background
+      # cannot report back here. There is no user to notify and nothing to
+      # resume the loop, so the run ends its turn waiting for a result that
+      # never arrives, exits green, and leaves /tmp/pawi-result.json untouched.
+      # Run 38366812795 died exactly there, 19 turns into 80, with the target
+      # page already found. `allowedTools` does not help: it grants permissions,
+      # it does not remove tools from the session.
       - name: Draft the change (Sonnet)
         uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
         with:
@@ -80,7 +89,7 @@ jobs:
             --max-turns 80
             --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
             --disallowedTools
-            "Bash(git push*--force*),Bash(git push*-f *),Bash(git push*origin main*),Bash(git push*origin/main*),Bash(git push*:main*),Bash(git push*--delete*),Bash(git push*--mirror*),Bash(git rebase*),Bash(git filter-branch*),Bash(git branch*-D*),Bash(git branch*-d*),Bash(git tag*),Bash(git remote*),Bash(git config*),Bash(gh auth*),Bash(gh secret*),Bash(gh variable*),Bash(gh workflow*),Bash(gh api*-X DELETE*),Bash(gh api*--method DELETE*),Bash(gh repo delete*),Bash(gh release*),Bash(gh issue close*),Bash(gh pr merge*),Bash(gh pr close*),Bash(env),Bash(printenv*),Bash(set),Bash(export*),Edit(.github/**),Write(.github/**),Edit(**/.git/**),Write(**/.git/**),Read(**/.git/config),Read(**/.netrc)"
+            "Bash(git push*--force*),Bash(git push*-f *),Bash(git push*origin main*),Bash(git push*origin/main*),Bash(git push*:main*),Bash(git push*--delete*),Bash(git push*--mirror*),Bash(git rebase*),Bash(git filter-branch*),Bash(git branch*-D*),Bash(git branch*-d*),Bash(git tag*),Bash(git remote*),Bash(git config*),Bash(gh auth*),Bash(gh secret*),Bash(gh variable*),Bash(gh workflow*),Bash(gh api*-X DELETE*),Bash(gh api*--method DELETE*),Bash(gh repo delete*),Bash(gh release*),Bash(gh issue close*),Bash(gh pr merge*),Bash(gh pr close*),Bash(env),Bash(printenv*),Bash(set),Bash(export*),Edit(.github/**),Write(.github/**),Edit(**/.git/**),Write(**/.git/**),Read(**/.git/config),Read(**/.netrc),Task"
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}
@@ -115,8 +124,21 @@ jobs:
             too_vague)
               TEXT="I had a go but the request is too open for me to act on safely: ${REASON} Piwi will pick it up."
               ;;
+            # Still the value written before the run started. The run stopped
+            # before it reached a verdict, rather than reaching the verdict
+            # that it had failed. Different facts, and the thread is owed the
+            # one that happened.
+            not_started)
+              TEXT="I stopped before reaching a result on that one, so it is back to a human. <${RUN_URL}|The run> has the details."
+              ;;
+            # REASON is only there when the run wrote one. Interpolating it
+            # blind is how the message came out with a hole in the middle.
             *)
-              TEXT="That one did not work out on my side, so it is back to a human. ${REASON} <${RUN_URL}|the run> has the details."
+              if [ -n "$REASON" ]; then
+                TEXT="That one did not work out on my side, so it is back to a human. ${REASON} <${RUN_URL}|the run> has the details."
+              else
+                TEXT="That one did not work out on my side, so it is back to a human. <${RUN_URL}|the run> has the details."
+              fi
               ;;
           esac
 
