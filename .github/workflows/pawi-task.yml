@@ -124,8 +124,21 @@ jobs:
             too_vague)
               TEXT="I had a go but the request is too open for me to act on safely: ${REASON} Piwi will pick it up."
               ;;
+            # Still the value written before the run started. The run stopped
+            # before it reached a verdict, rather than reaching the verdict
+            # that it had failed. Different facts, and the thread is owed the
+            # one that happened.
+            not_started)
+              TEXT="I stopped before reaching a result on that one, so it is back to a human. <${RUN_URL}|The run> has the details."
+              ;;
+            # REASON is only there when the run wrote one. Interpolating it
+            # blind is how the message came out with a hole in the middle.
             *)
-              TEXT="That one did not work out on my side, so it is back to a human. ${REASON} <${RUN_URL}|the run> has the details."
+              if [ -n "$REASON" ]; then
+                TEXT="That one did not work out on my side, so it is back to a human. ${REASON} <${RUN_URL}|the run> has the details."
+              else
+                TEXT="That one did not work out on my side, so it is back to a human. <${RUN_URL}|the run> has the details."
+              fi
               ;;
           esac
 
