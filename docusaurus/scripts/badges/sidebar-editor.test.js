@@ -124,11 +124,17 @@ test('reset touches no line that has nothing to do with a badge', () => {
 });
 
 test('reset removes every badge and nothing else', () => {
-  const { source, removed } = resetBadges(ORIGINAL);
-  assert.ok(removed > 0, 'expected the file to carry hand-placed badges today');
+  // Built from a file that is known to carry a badge, rather than asserting
+  // that the real sidebar happens to carry one. A release whose sidebar
+  // started clean would otherwise fail this suite, and the release script
+  // skips the badge step when the suite fails: the badges would quietly stop
+  // being applied, on exactly the release that needed them most.
+  const badged = setBadge(ORIGINAL, DOC_IDS[0], 'updated').source;
+  const { source, removed } = resetBadges(badged);
+  assert.ok(removed > 0, 'reset removed nothing from a file carrying a badge');
   assert.equal(resetBadges(source).removed, 0, 'reset is not idempotent');
   // Structure is unchanged apart from the badge keys themselves.
-  const before = tree(ORIGINAL);
+  const before = tree(badged);
   const after = tree(source);
   const strip = (node) => {
     if (Array.isArray(node)) return node.map(strip);

@@ -115,8 +115,21 @@ jobs:
           # left out and why.
           BODY=$(printf 'Rebuilds the New and Updated sidebar badges from milestone %s. Every badge the previous release left behind is removed first, so no badge outlives the release it belongs to.\n\nA page is badged New when the milestone added its file, and Updated when the milestone changed more than 30 lines of it. Pull requests labelled pr: chore are left out, and so is any pull request touching more than five pages, which is a maintenance sweep rather than something to point readers at.\n\n%s\n' "$MILESTONE" "$(cat /tmp/badges.log)")
 
-          gh pr create \
-            --base main --head "$BRANCH" \
-            --title "Refresh the sidebar badges for the ${MILESTONE} release" \
-            --body "$BODY" \
-            --assignee pwizla
+          # Re-running for the same milestone is the normal case: a release gets
+          # one more pull request merged into it, and the badges are rebuilt.
+          # The branch is force-pushed above, so here the open pull request is
+          # updated rather than opened a second time, which `gh pr create`
+          # would refuse.
+          EXISTING=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" \
+            --state open --json number --jq '.[0].number // empty')
+
+          if [ -n "$EXISTING" ]; then
+            gh pr edit "$EXISTING" --repo "$GITHUB_REPOSITORY" --body "$BODY"
+            echo "Updated the existing pull request #$EXISTING"
+          else
+            gh pr create \
+              --base main --head "$BRANCH" \
+              --title "Refresh the sidebar badges for the ${MILESTONE} release" \
+              --body "$BODY" \
+              --assignee pwizla
+          fi

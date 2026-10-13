@@ -450,6 +450,64 @@ update_cms_version_link() {
     fi
 }
 
+# Function to refresh the New/Updated sidebar badges for this release
+refresh_sidebar_badges() {
+    echo -e "${BLUE}🏷️  Refreshing the sidebar badges...${NC}"
+
+    local script="scripts/badges/update-sidebar-badges.js"
+
+    if [ ! -f "$script" ]; then
+        echo -e "${YELLOW}⚠️  $script not found, skipping the badges${NC}"
+        return 0
+    fi
+
+    if [ "${SKIP_BADGES:-}" = "1" ]; then
+        echo -e "${YELLOW}⚠️  SKIP_BADGES=1, leaving the badges as they are${NC}"
+        return 0
+    fi
+
+    # The badge step must never take the release down with it. A release that
+    # ships without a badge is a small loss; a release that stops halfway
+    # through because of one is a much bigger one. Every failure below warns
+    # and returns, and sidebars.js is restored before it does.
+    if ! command -v node >/dev/null 2>&1; then
+        echo -e "${YELLOW}⚠️  node not found, skipping the badges${NC}"
+        return 0
+    fi
+
+    # The editor rewrites sidebars.js as text, so its round-trip proof runs
+    # first: every sidebar entry is badged, reloaded, compared and reset back
+    # to the byte. A release is a bad moment to find out the file no longer
+    # parses.
+    if ! node --test 'scripts/badges/*.test.js' >/dev/null 2>&1; then
+        echo -e "${YELLOW}⚠️  The badge editor tests fail, skipping the badges${NC}"
+        echo -e "${BLUE}Run 'yarn test:badges' to see why.${NC}"
+        return 0
+    fi
+
+    cp sidebars.js "$TEMP_DIR/sidebars.js.before"
+
+    # `gh` reads GH_TOKEN, and an empty one is worse than none: it overrides
+    # the credentials gh already holds. Only pass it when there is one.
+    local -a env_prefix=()
+    [ -n "${GITHUB_TOKEN:-}" ] && env_prefix=(env "GH_TOKEN=$GITHUB_TOKEN")
+
+    if ! "${env_prefix[@]}" node "$script" --milestone "$MILESTONE_TITLE"; then
+        echo -e "${YELLOW}⚠️  The badge refresh failed, restoring sidebars.js${NC}"
+        cp "$TEMP_DIR/sidebars.js.before" sidebars.js
+        return 0
+    fi
+
+    # Compared against the copy taken above, not against HEAD: HEAD is the
+    # previous release, so a file that came back to its committed state would
+    # otherwise be reported as untouched.
+    if cmp -s "$TEMP_DIR/sidebars.js.before" sidebars.js; then
+        echo -e "${GREEN}✅ The badges were already up to date${NC}"
+    else
+        echo -e "${GREEN}✅ sidebars.js updated for v$MILESTONE_TITLE${NC}"
+    fi
+}
+
 # Function to commit and push changes
 commit_and_push() {
     echo -e "${BLUE}💾 Committing and pushing changes...${NC}"
@@ -468,7 +526,12 @@ commit_and_push() {
     
     # Check if there are changes
     if ! git diff --quiet; then
+        # sidebars.js carries the New/Updated badges this release earns, so it
+        # ships in the release commit rather than in a pull request of its own.
         git add "$PACKAGE_JSON_FILE" "$RELEASE_NOTES_FILE"
+        if ! git diff --quiet -- sidebars.js || ! git diff --cached --quiet -- sidebars.js; then
+            git add sidebars.js
+        fi
         git commit -m "v$MILESTONE_TITLE"
         
         echo -e "${BLUE}Pushing to main branch...${NC}"
@@ -636,6 +699,7 @@ main() {
     fi
     
     check_pending_prs
+    refresh_sidebar_badges
     update_package_version
     generate_release_notes
     integrate_release_notes
