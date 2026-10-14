@@ -11,7 +11,7 @@ tags:
 ---
 
 # Releases
-<GrowthBadge/>
+<GrowthBadge/> <EnterpriseBadge />
 
 <Tldr>
 Releases group entries into publishable batches to trigger simultaneous publish or unpublish actions across content types and locales. Instructions in this documentation detail creating releases, adding entries, and understanding plan limitations.
