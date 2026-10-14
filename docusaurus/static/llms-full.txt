@@ -33872,10 +33872,10 @@ From the list view, it is possible to:
 - configure the fields displayed in the table of the list view ,
 - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, see the status of each entry ,
 - perform actions on a specific entry by clicking on   at the end of the row:
-  - edit  (see [Writing content](/cms/features/content-manager/writing-content.md)), duplicate , or delete  (see [Deleting content](/cms/features/draft-and-publish#deleting-content)) the entry,
+  - edit  (see [Writing content](/cms/features/content-manager/writing-content.md)), duplicate , or delete  (see [Deleting content](#deleting-content)) the entry,
   - if [Draft & Publish](/cms/features/draft-and-publish) is enabled,  unpublish the entry,  or discard its changes,
   - if [Internationalization (i18n)](/cms/features/internationalization) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
-- select multiple entries to simultaneously [publish, unpublish](/cms/features/draft-and-publish#bulk-publishing-and-unpublishing), or [delete](/cms/features/draft-and-publish#deleting-content).
+- select multiple entries to simultaneously [publish, unpublish](/cms/features/draft-and-publish#bulk-actions), or [delete](#deleting-content).
 
 :::tip
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
