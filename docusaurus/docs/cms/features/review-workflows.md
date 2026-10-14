@@ -153,7 +153,7 @@ You can filter entries in the Content Manager list view by **Assignee** and **Re
 
 ### Audit logging of review workflow actions
 
-<VersionBadge version="5.56.1+" noTooltip />
+<VersionBadge version="5.56.1" />
 
 Review workflow actions are automatically captured in [Audit Logs](/cms/features/audit-logs). Changes to a workflow, to the review stage of an entry, and to the assignee of an entry each produce a log entry.
 
