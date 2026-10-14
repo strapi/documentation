@@ -91,10 +91,10 @@ From the list view, it is possible to:
 - configure the fields displayed in the table of the list view <ScreenshotNumberReference number="5" />,
 - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, see the status of each entry <ScreenshotNumberReference number="6" />,
 - perform actions on a specific entry by clicking on <Icon name="dots-three-outline" /> <ScreenshotNumberReference number="7" /> at the end of the row:
-  - edit <Icon name="pencil-simple" /> (see [Writing content](/cms/features/content-manager/writing-content.md)), duplicate <Icon name="copy" />, or delete <Icon name="trash"/> (see [Deleting content](/cms/features/draft-and-publish#deleting-content)) the entry,
+  - edit <Icon name="pencil-simple" /> (see [Writing content](/cms/features/content-manager/writing-content.md)), duplicate <Icon name="copy" />, or delete <Icon name="trash"/> (see [Deleting content](#deleting-content)) the entry,
   - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, <Icon name="x-circle" /> unpublish the entry, <Icon name="x-circle" /> or discard its changes,
   - if [Internationalization (i18n)](/cms/features/internationalization) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
-- select multiple entries to simultaneously [publish, unpublish](/cms/features/draft-and-publish#bulk-publishing-and-unpublishing), or [delete](/cms/features/draft-and-publish#deleting-content).
+- select multiple entries to simultaneously [publish, unpublish](/cms/features/draft-and-publish#bulk-actions), or [delete](#deleting-content).
 
 :::tip
 Sorting can be enabled for most fields displayed in the list view table (see <ExternalLink to="../content-manager/configuring-view-of-content-type.md" text="Configuring the views of a content-type"/>). Click on a field name, in the header of the table, to sort on that field.
