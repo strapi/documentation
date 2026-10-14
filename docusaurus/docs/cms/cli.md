@@ -34,7 +34,7 @@ Strapi CLI commands on the present page are grouped by category:
 | [Project information](#project-information) | `report`, `telemetry:disable`, `telemetry:enable`, `version`, `help` |
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
 | [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
-| [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types` |
+| [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types`, `rename:field` |
 | [Enterprise](#enterprise) | `enterprise install` |
 | [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
 
@@ -787,6 +787,45 @@ strapi ts:generate-types
 :::caution
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
+
+### `strapi rename:field`
+<VersionBadge version="5.57.0" />
+
+Rename a field of a content-type or a component and generate the [database migration](/cms/database-migrations) that preserves its data.
+
+```bash
+strapi rename:field <uid> <oldName> <newName>
+```
+
+| Argument    | Description                                                                       |
+| ----------- | --------------------------------------------------------------------------------- |
+| `<uid>`     | Unique identifier of the content-type or component (e.g., `api::article.article`) |
+| `<oldName>` | Current name of the field                                                         |
+| `<newName>` | New name of the field                                                             |
+
+The command updates the schema file and writes a migration file in the `./database/migrations` folder, then prints its path. The migration renames the underlying database column or table instead of recreating it, so the existing data is kept. It runs once, at the next startup of the application.
+
+This is the command-line equivalent of renaming a field in the [Content-type Builder](/cms/features/content-type-builder#fields). Since the command-line cannot ask for a confirmation, it refuses a rename it cannot migrate, for instance when the field is a polymorphic relation, and leaves the schema untouched.
+
+#### Examples
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi rename:field api::article.article title heading
+```
+
+</TabItem>
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi rename:field api::article.article title heading
+```
+
+</TabItem>
+</Tabs>
 
 ## Enterprise
 
