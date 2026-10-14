@@ -73,6 +73,7 @@ const sidebars = {
           label: 'Audit Logs',
           id: 'cms/features/audit-logs',
           customProps: {
+            updated: true,
             enterprise: true
           }
         },

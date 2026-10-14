@@ -29,7 +29,64 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.57.0](https://github.com/strapi/strapi/releases/tag/v5.57.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.58.0](https://github.com/strapi/strapi/releases/tag/v5.58.0)._
+
+## 7.5.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add Features and plans overview page as the Features category landing page](https://github.com/strapi/documentation/pull/3560)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Fix inaccuracies in Audit Logs, Review Workflows and SSO Enterprise pages](https://github.com/strapi/documentation/pull/3559)
+- [Add failed admin login and SSO auto-registration audit log events, and restructure Audit logs](https://github.com/strapi/documentation/pull/3550)
+- [Type env parameter in TypeScript configuration examples](https://github.com/strapi/documentation/pull/3546)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix Content Manager links to Draft & Publish anchors](https://github.com/strapi/documentation/pull/3561)
+- [Explain why Data Transfer does not carry the content structure file](https://github.com/strapi/documentation/pull/3557)
+- [Fix broken links in project and plugin structure trees](https://github.com/strapi/documentation/pull/3556)
+- [Fix incorrect line number in middlewares isOwner example](https://github.com/strapi/documentation/pull/3555)
+
+#### Repository
+- [Feature Releases instead of Live Preview on the homepage](https://github.com/strapi/documentation/pull/3569)
+- [Refresh the sidebar badges from the automated release script](https://github.com/strapi/documentation/pull/3568)
+- [Automate the New and Updated sidebar badges for each release milestone](https://github.com/strapi/documentation/pull/3566)
+- [Add the Senthor AI-traffic middleware to the Vercel deployment](https://github.com/strapi/documentation/pull/3565)
+- [Feature Review Workflows instead of Content History on the homepage](https://github.com/strapi/documentation/pull/3562)
+- [Skip GitHub workflows when they run on a fork of strapi/documentation](https://github.com/strapi/documentation/pull/3552)
+- [Make the self-healing Router route by diff path, not by method name](https://github.com/strapi/documentation/pull/3551)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/SatvikMishra08" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/89024979?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="SatvikMishra08"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.4.0
 
