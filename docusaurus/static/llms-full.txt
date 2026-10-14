@@ -33608,6 +33608,7 @@ The Audit Logs feature logs the following events:
 
 | Event | Actions |
 | --- | --- |
+| Admin Login / Logout | `success`, `error`, `autoRegistration` |
 | Audit log  | `export` |
 | Component | `create`, `update`, `delete` |
 | Content Type | `create`, `update`, `delete` |
@@ -33617,7 +33618,6 @@ The Audit Logs feature logs the following events:
 | Locale  | `create`, `update`, `delete`, `default.update` |
 | Media | `create`, `update`, `delete` |
 | Media folder | `create`, `update`, `delete` |
-| Login / Logout | `success`, `fail` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
@@ -33634,21 +33634,60 @@ For each log item, the following information is displayed:
 - User: user who performed the action.
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
+:::note Actions logged by the MCP server
+
+With Strapi 5.52.0 or later, logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
+:::
+
+### Understanding log details
+
+Each type of log return different details, as explained in the following sections.
+
+#### User events
+
 User events cover admin accounts, recorded as `admin-user.*`. An update records only the fields that changed, among first name, last name, email, username, preferred language, active status, and roles. No row is written when nothing changed.
 
-Password events cover a password set from the profile or by an admin on another account (`password.update`), a password reset requested and confirmed from the public login page (`password-reset.create` and `password-reset.confirm`), and an invitation accepted (`invite.accept`). The password, its hash, and reset or registration tokens are never recorded. These password reset and invitation actions happen with no admin session, so their User column shows `-`.
+#### Admin log events
 
-The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
+Admin login events record:
 
-Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
+- successful logins (`admin.auth.success`),
+- failed login attempts (`admin.auth.error`), which captures the reason for failure (e.g., `invalid_credentials`, `account_inactive`, `sso_connection_error`) and the authentication provider used
+- and new accounts created via SSO auto-registration (`admin.auth.autoRegistration`), which records when an SSO login creates a new admin account.
+
+Both failed login and auto-registration events are recorded with an unknown actor to protect privacy.
+
+#### Password events
+
+Password events cover:
+
+- a password set from the profile or by an admin on another account (`password.update`),
+- a password reset requested and confirmed from the public login page (`password-reset.create` and `password-reset.confirm`),
+- and an invitation accepted (`invite.accept`).
+
+The password, its hash, and reset or registration tokens are never recorded. These password reset and invitation actions happen with no admin session, so their User column shows `-`.
+
+#### Token events
+
+Token events cover:
+
+- [API tokens](/cms/features/api-tokens),
+- [admin tokens](/cms/features/admin-tokens)
+- and transfer tokens.
+
+Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
+
+#### Webhook events
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
 
+#### Locale events
+
 Locale events come from [Internationalization](/cms/features/internationalization) settings. Setting a locale as the default records a separate `locale.default.update` event, in addition to the `locale.create` or `locale.update` event.
 
-Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
+#### Review workflows events
 
-With Strapi   logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
+Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
 
 ### Filtering logs
 
@@ -33657,6 +33696,10 @@ By default, all logs are displayed in reverse chronological order. You can filte
 - Action: select the type of action to filter by (e.g `create` or `update`).
 - User: select the user to filter by.
 - Date: select a date (range) and time to filter by.
+
+:::info
+The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
+:::
 
 ### Accessing log details {#log-details}
 
