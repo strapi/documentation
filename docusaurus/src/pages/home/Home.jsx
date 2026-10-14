@@ -137,10 +137,10 @@ const EXPLORE_SECTIONS = [
  */
 const POWERFUL_FEATURES = [
   {
-    icon: 'ph-eye',
-    title: 'Live Preview',
-    desc: 'See your content changes in real time on your front end before publishing.',
-    to: '/cms/features/preview',
+    icon: 'ph-calendar-check',
+    title: 'Releases',
+    desc: 'Group entries from any content type and locale, then publish them all at once.',
+    to: '/cms/features/releases',
   },
   {
     icon: 'ph-kanban',
