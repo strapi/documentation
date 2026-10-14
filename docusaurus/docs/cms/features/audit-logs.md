@@ -177,26 +177,6 @@ Locale events come from [Internationalization](/cms/features/internationalizatio
 
 Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
 
-### Filtering logs
-
-By default, all logs are displayed in reverse chronological order. You can filter the logs by:
-
-- Action: select the type of action to filter by (e.g `create` or `update`).
-- User: select the user to filter by.
-- Date: select a date (range) and time to filter by.
-
-<ThemedImage
-  alt="Audit Logs filters"
-  sources={{
-    light: '/img/assets/settings/settings_audit-logs-filters.png',
-    dark: '/img/assets/settings/settings_audit-logs-filters_DARK.png',
-  }}
-/>
-
-:::info
-The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
-:::
-
 ### Accessing log details {#log-details}
 
 For any log item, click the <Icon name="eye" /> icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
@@ -216,6 +196,26 @@ With Strapi <VersionBadge version="5.52.0+" noTooltip />, in the payload, the `o
 - `scheduler` <VersionBadge version="5.53.0+" noTooltip /> for actions run automatically by Strapi, such as publishing a [scheduled release](/cms/features/releases#scheduling-a-release).
 
 Actions with the `scheduler` origin have no user, so their User column shows `-`. The audit log entry recorded when the release was scheduled identifies who scheduled it.
+
+### Filtering logs
+
+By default, all logs are displayed in reverse chronological order. You can filter the logs by:
+
+- Action: select the type of action to filter by (e.g `create` or `update`).
+- User: select the user to filter by.
+- Date: select a date (range) and time to filter by.
+
+<ThemedImage
+  alt="Audit Logs filters"
+  sources={{
+    light: '/img/assets/settings/settings_audit-logs-filters.png',
+    dark: '/img/assets/settings/settings_audit-logs-filters_DARK.png',
+  }}
+/>
+
+:::info
+The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
+:::
 
 ### Exporting audit logs
 
