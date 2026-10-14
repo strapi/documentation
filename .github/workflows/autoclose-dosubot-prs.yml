@@ -16,8 +16,9 @@ jobs:
   autoclose:
     runs-on: ubuntu-latest
     if: >-
+      github.repository == 'strapi/documentation' && (
       github.event.pull_request.user.login == 'dosubot' ||
-      github.event.pull_request.user.login == 'dosubot[bot]'
+      github.event.pull_request.user.login == 'dosubot[bot]')
     steps:
       - name: Comment and close
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0

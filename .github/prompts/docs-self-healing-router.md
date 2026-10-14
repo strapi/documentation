@@ -47,6 +47,30 @@ into them and every routing decision was made on the title and body alone, so an
 now means the fetch failed rather than that the PR is empty. Route on the body in that case
 and say so in `reason`. Do not fetch the diff yourself.
 
+### Map the diff path to the API surface before you route
+
+A method name in a diff does not tell you which documented API exposes it. Several Strapi
+APIs share method names, so pick the target from the **path**, never from the name alone:
+
+| Diff path | Documented surface | Never route here |
+| --- | --- | --- |
+| `packages/core/database/src/` | Query Engine API (`/cms/api/query-engine/*`), database lifecycle hooks (`/cms/backend-customization/models`) | Document Service API |
+| `packages/core/core/src/services/document-service/` | Document Service API (`/cms/api/document-service*`) | Query Engine API |
+| `packages/core/content-manager/server/src/` | Content Manager feature pages | any backend API reference |
+
+`packages/core/database/src/entity-manager/` is what `strapi.db.query()` returns, so it is the
+Query Engine, not the Document Service. Before routing a method to an API reference page, confirm
+that API actually exposes it: grep the surface's own service or type definitions, not the diff.
+
+On 2026-05-27 strapi/strapi#25420 fixed `deleteMany` in
+`packages/core/database/src/entity-manager/`, which backs `strapi.db.query()`. This Router sent
+it to the Document Service API page, and the micro-edit opened PR #3206, which invented a
+`deleteMany()` section there with a signature, a parameters table and a JSON response. It was
+merged on 2026-06-02 and stayed in the docs for three months, until a Kapa agent reading them
+through MCP reported that the method did not exist, on 2026-09-17. The Document Service has
+never had a `deleteMany`. If the surface you are about to edit does not expose the method, the
+decision is `skipped`, not a new section.
+
 ## Step 4 — Write the routing result
 
 Write it to `/tmp/router-results.json` using Bash (`cat <<'EOF' > /tmp/router-results.json`). Do NOT use the Write tool — it may be denied. Use this exact schema:
@@ -266,6 +290,7 @@ Update `/tmp/router-results.json` to include a `doc_pr` field for micro PRs you 
 - **Do NOT read any agent prompts except `router.md`**
 - **For micro-edits only:** you may read and modify documentation files and create branches/PRs
 - **For full complexity:** do NOT modify files or create PRs — leave that for Sonnet
+- **Route by diff path, not by method name.** See the API surface table in Step 3. A method that exists on one Strapi API is not automatically on another, and a reference page only documents the methods its own surface exposes.
 - **Never draft a section.** A micro-edit is a link, a mention, or a tip. If the change needs a new section, a rewritten section, a new page, or a new category, it is `full` and you stop at the routing decision.
 - **ONLY read diffs, the Router prompt, sidebars.js, llms.txt, and write the result file** (plus doc files for micro-edits)
 - **Max 5 PRs per run.** Log extras to stdout for the next run.

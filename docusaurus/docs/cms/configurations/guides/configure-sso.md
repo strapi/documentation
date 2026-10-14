@@ -63,8 +63,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/admin.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   // ...
   auth: {
     providers: [], // The providers' configuration lives there
@@ -207,7 +208,9 @@ module.exports = ({ env }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/config/admin.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     domain: env("ADMIN_SSO_DOMAIN", ".test.example.com"),
     providers: [

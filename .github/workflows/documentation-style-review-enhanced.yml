@@ -32,6 +32,7 @@ on:
 
 jobs:
   validate-documentation:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     permissions:
       contents: read

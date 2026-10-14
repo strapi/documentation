@@ -1459,6 +1459,71 @@
       "number": 26749,
       "reason": "Router: Diff too large (14522 lines > 3000 limit). This PR adds a significant feature for preserving data when renaming attributes, including CLI commands (strapi rename:field, strapi rename:component) and configuration options, which would require documentation updates. Mark for next routing run.",
       "added": "2026-10-06"
+    },
+    {
+      "number": 27948,
+      "reason": "Triage: internal bug fix, mutation was unintended side-effect",
+      "added": "2026-10-08"
+    },
+    {
+      "number": 27879,
+      "reason": "Triage: contributor documentation restructuring, not product changes",
+      "added": "2026-10-08"
+    },
+    {
+      "number": 27750,
+      "reason": "Triage: test infrastructure change",
+      "added": "2026-10-08"
+    },
+    {
+      "number": 27741,
+      "reason": "Router: Internal bug fix in admin panel password reset validation. Fixes message formatting but introduces no user-facing behavior changes or new features.",
+      "added": "2026-10-08"
+    },
+    {
+      "number": 27896,
+      "reason": "Router: Internal admin panel bug fix. The cancel button in the media library upload UI now properly aborts in-flight requests. This is a fix to internal hook behavior with no changes to public APIs, user-facing features, configuration options, or documented functionality.",
+      "added": "2026-10-09"
+    },
+    {
+      "number": 27953,
+      "reason": "Router: Internal admin panel bug fix to Content-Type Builder field conditions. No user-facing behavior or public API change requiring documentation.",
+      "added": "2026-10-09"
+    },
+    {
+      "number": 27732,
+      "reason": "Router: Internal admin panel bug fix to Content Manager relation field caching. No user-facing behavior or public API change requiring documentation.",
+      "added": "2026-10-09"
+    },
+    {
+      "number": 28008,
+      "reason": "Triage: dependency/security update, no user-facing behavior change",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 27720,
+      "reason": "Triage: documentation only",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 26937,
+      "reason": "Triage: CI/workflow infrastructure",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 28014,
+      "reason": "Router: Internal admin UI bug fix with no public API or documented behavior change. Only affects display of unset boolean fields in the admin form, not any documented feature or API.",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 28006,
+      "reason": "Router: Internal Content Manager UI bug fix. Fixes dropdown behavior and error display for relation fields, but does not introduce new documented features or API changes.",
+      "added": "2026-10-13"
+    },
+    {
+      "number": 27892,
+      "reason": "Router: Bug fix in Document Service API relation mapping. Previously, documentIds starting with digits were incorrectly treated as numeric IDs. Fix corrects this behavior but does not introduce new documented API surface or features.",
+      "added": "2026-10-13"
     }
   ]
 }

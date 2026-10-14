@@ -30,6 +30,7 @@ env:
 
 jobs:
   close-stale:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     steps:
       - name: Close issues labeled not-docs for more than the grace period

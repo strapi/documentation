@@ -85,7 +85,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/plugins.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   // ...
   upload: {
     config: {

@@ -62,9 +62,10 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```js title="./config/database.ts"
+```ts title="./config/database.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => ({
   connections: {
     default: {
       settings: {

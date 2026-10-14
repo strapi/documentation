@@ -122,7 +122,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/server.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   app: {
@@ -187,8 +189,10 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```js title="./config/server.ts"
-export default ({ env }) => ({
+```ts title="./config/server.ts"
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   app: {

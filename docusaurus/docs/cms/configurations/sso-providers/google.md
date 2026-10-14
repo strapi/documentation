@@ -100,8 +100,9 @@ module.exports = ({ env }) => ({
 ```ts title="/config/admin.ts"
 
 import {Strategy as GoogleStrategy } from "passport-google-oauth2";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [

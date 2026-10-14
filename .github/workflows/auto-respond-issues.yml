@@ -28,6 +28,7 @@ permissions:
 
 jobs:
   auto-respond:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

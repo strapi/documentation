@@ -4,6 +4,7 @@ description: Learn to use the SSO feature which manages authentication through a
 toc_max_heading_level: 6
 tags:
 - admin panel
+- Enterprise feature
 - SSO
 - single sign-on
 - features
@@ -51,10 +52,10 @@ General settings for SSO are available in the admin panel, and additional SSO pr
 
 2. Click the **Save** button.
 
-:::danger
-Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely. A fix will be provided soon.
+:::warning
+Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely.
 
-In the meantime, the only way to get in if the Super Admin can't log in is to temporarily disable the SSO feature entirely, log in with username and password to remove the _Super Admin_ role from the _Local authentication lock-out_ list, and then re-enable SSO.
+If this happens, the only way to get in if the Super Admin can't log in is to temporarily disable the SSO feature entirely, log in with username and password to remove the _Super Admin_ role from the _Local authentication lock-out_ list, and then re-enable SSO.
 :::
 
 <ThemedImage

@@ -104,8 +104,9 @@ module.exports = ({ env }) => ({
 
 import { Strategy as AzureAdOAuth2Strategy} from "passport-azure-ad-oauth2";
 import jwt from "jsonwebtoken";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [

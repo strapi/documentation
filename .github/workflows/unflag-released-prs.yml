@@ -28,6 +28,7 @@ permissions:
 
 jobs:
   unflag:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
 
     steps:

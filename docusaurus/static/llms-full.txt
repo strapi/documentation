@@ -18904,7 +18904,7 @@ Proper implementation largely depends on your project's needs and custom code, b
 3. Give the middleware a name, for instance `isOwner`.
 4. Choose `Add middleware to an existing API` from the list.
 5. Select which API you want the middleware to apply.
-6. Replace the code in the `/src/api/[your-api-name]/middlewares/isOwner.js` file with the following, replacing `api::restaurant.restaurant` in line 22 with the identifier corresponding to the API you choose at step 5 (e.g., `api::blog-post.blog-post` if your API name is `blog-post`):
+6. Replace the code in the `/src/api/[your-api-name]/middlewares/isOwner.js` file with the following, replacing `api::restaurant.restaurant` in line 20 with the identifier corresponding to the API you choose at step 5 (e.g., `api::blog-post.blog-post` if your API name is `blog-post`):
 
   ```js showLineNumbers title="src/api/blog-post/middlewares/isOwner.js"
     "use strict";
@@ -25228,11 +25228,35 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="./config/env/production/server.ts"
+```ts title="./config/env/production/server.ts"
 
   host: env('HOST', '0.0.0.0'),
 });
 ```
+
+:::note TypeScript configuration typing
+When a TypeScript configuration file uses the `({ env }) => ...` factory form, type the parameter with `Core.Config.Shared.ConfigParams` and set the matching return type for that file. Without these types, strict TypeScript reports `'env' implicitly has an 'any' type`.
+
+```ts
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+});
+```
+
+| Configuration file | Return type |
+| --- | --- |
+| `/config/server.ts` | `Core.Config.Server` |
+| `/config/database.ts` | `Core.Config.Database` |
+| `/config/admin.ts` | `Core.Config.Admin` |
+| `/config/api.ts` | `Core.Config.Api` |
+| `/config/plugins.ts` | `Core.Config.Plugin` |
+| `/config/middlewares.ts` | `Core.Config.Middlewares` |
+| `/config/features.ts` | `Core.Config.Features` |
+| `/config/typescript.ts` | `Core.Config.TypeScript` |
+
+This pattern matches the official `create-strapi-app` TypeScript templates.
+:::
 
 With these configuration files the server will start on various ports depending on the environment variables passed:
 
@@ -25296,7 +25320,9 @@ To enable a future flag:
   If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
 
   ```ts title="/config/features.ts"
-  export default ({ env }) => ({
+  import type { Core } from '@strapi/strapi';
+
+  export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Features => ({
     future: {
       experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
@@ -25821,7 +25847,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="./config/database.ts"
+```ts title="./config/database.ts"
 
   connections: {
     default: {
@@ -25933,7 +25959,9 @@ When using a `.js` or `.ts` file, the configuration can be exported:
   ```
 
   ```ts
-  export default ({ env }) => {
+  import type { Core } from '@strapi/strapi';
+
+  export default ({ env }: Core.Config.Shared.ConfigParams) => {
     return {
       mySecret: env('MY_SECRET_KEY', 'defaultSecretValue'),
     };
@@ -28451,7 +28479,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -33091,6 +33119,58 @@ A separate [Docs MCP server](/cms/ai/docs-mcp-server) is also available for quer
 
 
 
+# Features and plans
+Source: https://docs.strapi.io/cms/features
+
+# Features and plans
+
+Strapi CMS features are available on 3 plans: Community, Growth, and Enterprise. The plan comes from a CMS license key and works the same way on self-hosted and Strapi Cloud projects. The table on this page lists every feature and the plans that include it.
+
+Strapi CMS comes with 3 plans:
+
+- Community: the free and open-source core of Strapi, under the MIT license.
+- Growth : Adds Strapi AI, Live Preview, Releases, and Content History.
+- Enterprise : Includes everything in Growth, plus Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins.
+
+## Self-hosted and Strapi Cloud projects
+
+The CMS plan and the hosting of a project are 2 separate choices. A project without a CMS license key uses the Community plan, whether it is self-hosted or hosted on Strapi Cloud.
+
+- A self-hosted project uses the plan of its CMS license key. Growth and Enterprise license keys are available in the [billing portal](/cms/billing-portal).
+- A Strapi Cloud project has a hosting plan (Starter, Pro, or Business) that defines resources such as API requests, asset storage, and backups (see [Cloud usage & billing](/cloud/getting-started/usage-billing)). The hosting plan does not include Growth or Enterprise features: these features require a CMS license key added to the Cloud project (see [Adding a CMS license key](/cloud/projects/settings#adding-cms-license-key)).
+
+## Features by plan
+
+Core features, such as the [admin panel](/cms/features/admin-panel), the [Content Manager](/cms/features/content-manager), and the [Content-Type Builder](/cms/features/content-type-builder), are available on all plans. The following table lists the other features, starting with the features available on all plans and ending with the features that require a plan:
+
+| Feature | Community | Growth | Enterprise |
+| --- | --- | --- | --- |
+| [Admin tokens](/cms/features/admin-tokens) | ✅ | ✅ | ✅ |
+| [API Tokens](/cms/features/api-tokens) | ✅ | ✅ | ✅ |
+| [Custom Fields](/cms/features/custom-fields) | ✅ | ✅ | ✅ |
+| [Data Management](/cms/features/data-management) | ✅ | ✅ | ✅ |
+| [Draft & Publish](/cms/features/draft-and-publish) | ✅ | ✅ | ✅ |
+| [Email](/cms/features/email) | ✅ | ✅ | ✅ |
+| [Internationalization (i18n)](/cms/features/internationalization) | ✅ | ✅ | ✅ |
+| [MCP server](/cms/features/strapi-mcp-server) | ✅ | ✅ | ✅ |
+| [Media Library](/cms/features/media-library) | ✅ | ✅ | ✅ |
+| [Role-Based Access Control (RBAC)](/cms/features/rbac) | ✅ | ✅ | ✅ |
+| [Users & Permissions](/cms/features/users-permissions) | ✅ | ✅ | ✅ |
+| [Preview](/cms/features/preview) | ✅ | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) |
+| [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
+| [Releases](/cms/features/releases) | - | ✅ | ✅ |
+| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | With your own AI key, through the [Bring your own AI key plugin](/cms/plugins/byok) |
+| [Single Sign-On (SSO)](/cms/features/sso) | - | Available as an add-on | ✅ |
+| [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
+| [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
+| [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
+
+Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi-managed AI, on the Growth plan.
+
+For prices, support levels, and compliance documents such as the SOC 2 report, see the [Strapi pricing page](https://strapi.io/pricing-cms). Enterprise plans are available through the [Strapi sales team](https://strapi.io/contact-sales).
+
+
+
 # Admin panel
 Source: https://docs.strapi.io/cms/features/admin-panel
 
@@ -33475,7 +33555,7 @@ CMS Enterprise plan
 
 **Role & permission**
 
-Super Admin role in the project's admin panel
+Minimum "Read" permission in Roles > Settings - Audit Logs
 
 **Activation**
 
@@ -33487,8 +33567,6 @@ Available in both Development & Production environment
 
 ## Configuration
 
-The only configurable aspect is how long logs are kept before they are deleted.
-
 Audit Logs are not a permanent archive. Logs older than the retention period are deleted automatically. The retention period defaults to 90 days.
 
 :::caution
@@ -33499,7 +33577,7 @@ Logs deleted at the end of the retention period cannot be recovered from the Aud
 
 The retention period is set with the [`auditLogs.retentionDays`](/cms/configurations/admin-panel#audit-logs) parameter of the `/config/admin` file.
 
-For Strapi Cloud projects, the value stored in the license information applies, unless a _smaller_ value is defined in the configuration file.
+If the license defines a retention period, the license value applies, unless a _smaller_ value is defined in the configuration file.
 
 ```js title="/config/admin.js"
 module.exports = ({ env }) => ({
@@ -33520,6 +33598,8 @@ module.exports = ({ env }) => ({
 
 There is no equivalent setting in the admin panel: the retention period can only be configured from the `/config/admin` file.
 
+The `/config/admin` file also accepts `auditLogs.enabled`, which turns off Audit Logs when set to `false`, and `auditLogs.exportMaxRows`, which limits [exports](#exporting-audit-logs). See the [admin panel configuration](/cms/configurations/admin-panel#audit-logs) for all available parameters.
+
 ## Usage
 
 **Path to use the feature:**  Settings > Administration Panel - Audit Logs
@@ -33528,12 +33608,16 @@ The Audit Logs feature logs the following events:
 
 | Event | Actions |
 | --- | --- |
+| Audit log  | `export` |
+| Component | `create`, `update`, `delete` |
 | Content Type | `create`, `update`, `delete` |
 | Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
 | Entry assignee  | `update` |
 | Entry review stage  | `updateEntryStage` |
+| Locale  | `create`, `update`, `delete`, `default.update` |
 | Media | `create`, `update`, `delete` |
-| Admin Login / Logout | `success`, `error`, `autoRegistration` |
+| Media folder | `create`, `update`, `delete` |
+| Login / Logout | `success`, `fail` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
@@ -33552,8 +33636,6 @@ For each log item, the following information is displayed:
 
 User events cover admin accounts, recorded as `admin-user.*`. An update records only the fields that changed, among first name, last name, email, username, preferred language, active status, and roles. No row is written when nothing changed.
 
-Admin login events record successful logins (`admin.auth.success`), failed login attempts (`admin.auth.error`), and new accounts created via SSO auto-registration (`admin.auth.autoRegistration`). The `admin.auth.error` action captures the reason for failure (for example: `invalid_credentials`, `account_inactive`, `sso_connection_error`) and the authentication provider used. The `admin.auth.autoRegistration` action records when an SSO login creates a new admin account. Both failed login and auto-registration events are recorded with an unknown actor to protect privacy.
-
 Password events cover a password set from the profile or by an admin on another account (`password.update`), a password reset requested and confirmed from the public login page (`password-reset.create` and `password-reset.confirm`), and an invitation accepted (`invite.accept`). The password, its hash, and reset or registration tokens are never recorded. These password reset and invitation actions happen with no admin session, so their User column shows `-`.
 
 The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
@@ -33561,6 +33643,8 @@ The Action filter also matches the legacy `user.create`, `user.update` and `user
 Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
+
+Locale events come from [Internationalization](/cms/features/internationalization) settings. Setting a locale as the default records a separate `locale.default.update` event, in addition to the `locale.create` or `locale.update` event.
 
 Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
 
@@ -33578,7 +33662,13 @@ By default, all logs are displayed in reverse chronological order. You can filte
 
 For any log item, click the  icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
 
-With Strapi , in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
+With Strapi , in the payload, the `origin` key indicates where the action came from:
+
+- `admin-panel` for the admin panel,
+- `mcp` for the [MCP server](/cms/features/strapi-mcp-server),
+- `scheduler`  for actions run automatically by Strapi, such as publishing a [scheduled release](/cms/features/releases#scheduling-a-release).
+
+Actions with the `scheduler` origin have no user, so their User column shows `-`. The audit log entry recorded when the release was scheduled identifies who scheduled it.
 
 ### Exporting audit logs
 
@@ -33587,7 +33677,7 @@ Users with the `export` permission for Audit Logs can export the current filtere
 To export audit logs:
 
 1. (Optional) Apply filters to select the entries to export.
-2. Click **Export** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
+2. Click **Export as CSV** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
 3. Click **Download CSV** to save the exported file.
 
 Every export is itself recorded as an `audit-log.export` event. This event is included in the exported CSV file.
@@ -34150,14 +34240,16 @@ The Content-type Builder requires no configuration to be used. The folders used 
 
 ### Code-based configuration
 
-The folders displayed in the Content-type Builder sub navigation are stored in the `src/content-structure/groups.json` file.
+The folders displayed in the Content-type Builder sub navigation (see [Organizing content-types with folders](#organizing-content-types-with-folders)) are stored in the `src/content-structure/groups.json` file.
 
 The file is versioned with the rest of your project, so the organization defined locally is shared with your team and deployed with your application.
 
 Folder organization therefore travels with your project's code: deploy the file to move it from one environment to another.
-:::caution
-[Data Transfer](/cms/features/data-management) does not include the content structure file in exports, imports or transfers.
+
+:::note
+[Data Transfer](/cms/features/data-management) exports, imports and transfers database content and media, not project source files, so it never carries `groups.json`. After a transfer, the destination project keeps the folders defined in its own `groups.json`. To get the same folders on both sides, deploy the file with your code.
 :::
+
 Folders are called `groups` in the file, and are listed per section, `collectionTypes` and `singleTypes`. Each group has an identifier, a name, a parent, and a list of children:
 
 ```json title="/src/content-structure/groups.json"
@@ -34317,8 +34409,14 @@ From the table that lists the fields of your content-type, you can:
 - Click on the  button and drag and drop any field to reorder the content-type's fields
 - Click on the  button to delete a field
 
+:::note
+Since , editing a field allows renaming it without losing its data: when you save your changes, Strapi asks you to confirm the rename and then preserves the field's existing data by renaming the underlying database column instead of recreating it.
+:::
+
 :::caution
-Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
+Data cannot be preserved when a field is renamed and its type, relation, or component is changed at the same time: the field is recreated empty, as before.
+
+Renaming a content-type or a component, that is, editing its API ID, is not covered yet: as before, this creates a new database table, and the data associated with the former table is not accessible from the admin panel of your application anymore.
 :::
 
 ### Configuring content-types fields {#configuring-fields-content-type}
@@ -39167,7 +39265,7 @@ CMS Enterprise Plan
 
 **Role & permission**
 
-Super Admin role in project's admin panel
+Minimum "Read" permission in Roles > Settings - Review Workflows
 
 **Activation**
 
@@ -39183,9 +39281,11 @@ Available in both Development & Production environment
 
 For the review workflows to be usable in the [Content Manager](/cms/features/content-manager), the default one should be configured or a new one should be created.
 
-The default workflow is configured to have 4 stages: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
+The default workflow is configured to have 4 stages, in this order: To do, Ready to review, In progress, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
 
-### Creating a new workflow
+### Admin panel settings
+
+#### Creating a new workflow
 
 1. Click on the **Create new workflow** button or on the edit button  of a workflow.
 2. In the workflow edit interface, configure the new workflow:
@@ -39194,15 +39294,16 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
     | Workflow name  | Write a unique name for the workflow.                                    |
     | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
+    | Required stage for publishing | (optional) Select the stage entries must be at to be published (see [Requiring a stage for publishing](#requiring-a-stage-for-publishing)). |
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
 
 :::note
-The maximum number of [workflows and stages per workflow is limited](https://strapi.io/pricing-cloud).
+A Strapi project can have up to 200 workflows, and each workflow up to 200 stages.
 :::
 
-### Editing a workflow
+#### Editing a workflow
 
-#### Adding a new stage
+##### Adding a new stage
 
 1. Click on the **Add new stage** button.
 2. Write the *Stage name*.
@@ -39217,20 +39318,31 @@ By default new stages are appended, but they can be reordered anytime using the 
 Each permission field has its own "Apply to all stages" option, which copies that field's role selection to every other stage in the workflow. Alternatively, use "Duplicate stage" from the stage context menu to copy the entire stage configuration including both permission types.
 :::
 
-#### Duplicating a stage
+##### Duplicating a stage
 
 1. Click **Duplicate Stage** in the context menu of the stage.
 2. Change the name of the duplicated stage.
-2. Click on the **Save** button.
+3. Click on the **Save** button.
 
-#### Deleting a stage
+##### Requiring a stage for publishing
+
+The *Required stage for publishing* setting of a workflow prevents entries from being published if they are not at the selected stage. It applies to every content-type associated to the workflow.
+
+1. In the workflow edit interface, click the *Required stage for publishing* drop-down list.
+2. Select a stage of the workflow, or *Any stage* to allow publishing from any stage.
+3. Click on the **Save** button.
+
+An entry must be exactly at the selected stage to be published: an entry at a later stage cannot be published either. Choosing the last stage of the workflow as the required stage avoids this situation.
+
+When the setting is defined, publishing an entry that is not at the required stage returns an error. In [Releases](/cms/features/releases), entries that are not at the required stage are flagged as not ready to be published.
+
+##### Deleting a stage
 
 To delete a stage, click  in the context menu of the stage, then **Delete**.
 
-If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow. Every workflow needs to
-contain at least one stage and therefore it is not possible to delete the last stage.
+If you delete a stage that entries are at, these entries are moved to the closest previous stage in the workflow. If the deleted stage was the first one, the entries are moved to the next stage instead. Every workflow needs to contain at least one stage and therefore it is not possible to delete the last stage.
 
-### Deleting a workflow
+#### Deleting a workflow
 
 To delete a workflow click on the delete button  of a workflow in the list view.
 
@@ -39329,10 +39441,10 @@ General settings for SSO are available in the admin panel, and additional SSO pr
 
 2. Click the **Save** button.
 
-:::danger
-Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely. A fix will be provided soon.
+:::warning
+Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely.
 
-In the meantime, the only way to get in if the Super Admin can't log in is to temporarily disable the SSO feature entirely, log in with username and password to remove the _Super Admin_ role from the _Local authentication lock-out_ list, and then re-enable SSO.
+If this happens, the only way to get in if the Super Admin can't log in is to temporarily disable the SSO feature entirely, log in with username and password to remove the _Super Admin_ role from the _Local authentication lock-out_ list, and then re-enable SSO.
 :::
 
 ### Code-based configuration

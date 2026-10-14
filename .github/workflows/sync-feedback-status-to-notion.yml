@@ -25,6 +25,7 @@ concurrency:
 
 jobs:
   sync:
+    if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     permissions:
       contents: read

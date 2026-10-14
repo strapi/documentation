@@ -101,8 +101,9 @@ module.exports = ({ env }) => ({
 ```ts title="/config/admin.ts"
 
 import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20";
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => ({
   auth: {
     // ...
     providers: [

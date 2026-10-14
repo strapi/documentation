@@ -187,8 +187,9 @@ Knex supports short-lived credentials by letting you provide `connection.connect
 
 ```ts title="./config/database.ts"
 import { Signer } from '@aws-sdk/rds-signer';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => {
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const signer = new Signer({
     hostname: env('DATABASE_HOST', 'localhost'),
     port: env.int('DATABASE_PORT', 5432),
@@ -276,7 +277,9 @@ Strapi's default SQLite database lives at `.tmp/data.db` at the root of the proj
 
 ```ts title="./config/database.ts"
 import path from 'path';
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => ({
   connection: {
     client: 'sqlite',
     connection: {
@@ -394,8 +397,9 @@ module.exports = ({ env }) => {
 
 ```ts title="./config/database.ts"
 import { Signer } from '@aws-sdk/rds-signer';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => {
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const signer = new Signer({
     hostname: env('DATABASE_HOST', '127.0.0.1'),
     port: env.int('DATABASE_PORT', 3306),
@@ -518,8 +522,9 @@ module.exports = ({ env }) => {
 
 ```ts
 import path from 'path';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => {
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -757,8 +762,9 @@ module.exports = ({ env }) => ({
 
 ```ts title="./config/database.ts"
 import path from 'path';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => ({
   connection: {
     client: 'sqlite',
     connection: {

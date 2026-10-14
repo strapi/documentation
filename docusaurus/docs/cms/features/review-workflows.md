@@ -20,7 +20,7 @@ The Review Workflows feature allows you to create and manage workflows for your 
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">CMS Enterprise Plan</IdentityCardItem>
-  <IdentityCardItem icon="user" title="Role & permission">Super Admin role in project's admin panel</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Minimum "Read" permission in Roles > Settings - Review Workflows</IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">Available by default, if required plan</IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
@@ -33,9 +33,11 @@ The Review Workflows feature allows you to create and manage workflows for your 
 
 For the review workflows to be usable in the [Content Manager](/cms/features/content-manager), the default one should be configured or a new one should be created.
 
-The default workflow is configured to have 4 stages: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
+The default workflow is configured to have 4 stages, in this order: To do, Ready to review, In progress, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
 
-### Creating a new workflow
+### Admin panel settings
+
+#### Creating a new workflow
 
 1. Click on the **Create new workflow** button or on the edit button <Icon name="pencil-simple" /> of a workflow.
 2. In the workflow edit interface, configure the new workflow:
@@ -44,13 +46,15 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
     | Workflow name  | Write a unique name for the workflow.                                    |
     | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
+    | Required stage for publishing | (optional) Select the stage entries must be at to be published (see [Requiring a stage for publishing](#requiring-a-stage-for-publishing)). |
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
 
 :::note
-The maximum number of <ExternalLink to="https://strapi.io/pricing-cloud" text="workflows and stages per workflow is limited"/>.
+A Strapi project can have up to 200 workflows, and each workflow up to 200 stages.
 :::
 
-### Editing a workflow
+
+#### Editing a workflow
 
 <ThemedImage
   alt="Workflow edit view"
@@ -60,7 +64,7 @@ The maximum number of <ExternalLink to="https://strapi.io/pricing-cloud" text="w
   }}
 />
 
-#### Adding a new stage
+##### Adding a new stage
 
 1. Click on the **Add new stage** button.
 2. Write the *Stage name*.
@@ -75,20 +79,31 @@ By default new stages are appended, but they can be reordered anytime using the 
 Each permission field has its own "Apply to all stages" option, which copies that field's role selection to every other stage in the workflow. Alternatively, use "Duplicate stage" from the stage context menu to copy the entire stage configuration including both permission types.
 :::
 
-#### Duplicating a stage
+##### Duplicating a stage
 
 1. Click **Duplicate Stage** in the context menu of the stage.
 2. Change the name of the duplicated stage.
-2. Click on the **Save** button.
+3. Click on the **Save** button.
 
-#### Deleting a stage
+##### Requiring a stage for publishing
+
+The *Required stage for publishing* setting of a workflow prevents entries from being published if they are not at the selected stage. It applies to every content-type associated to the workflow.
+
+1. In the workflow edit interface, click the *Required stage for publishing* drop-down list.
+2. Select a stage of the workflow, or *Any stage* to allow publishing from any stage.
+3. Click on the **Save** button.
+
+An entry must be exactly at the selected stage to be published: an entry at a later stage cannot be published either. Choosing the last stage of the workflow as the required stage avoids this situation.
+
+When the setting is defined, publishing an entry that is not at the required stage returns an error. In [Releases](/cms/features/releases), entries that are not at the required stage are flagged as not ready to be published.
+
+##### Deleting a stage
 
 To delete a stage, click <Icon name="dots-three-outline" /> in the context menu of the stage, then **Delete**.
 
-If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow. Every workflow needs to
-contain at least one stage and therefore it is not possible to delete the last stage.
+If you delete a stage that entries are at, these entries are moved to the closest previous stage in the workflow. If the deleted stage was the first one, the entries are moved to the next stage instead. Every workflow needs to contain at least one stage and therefore it is not possible to delete the last stage.
 
-### Deleting a workflow
+#### Deleting a workflow
 
 To delete a workflow click on the delete button <Icon name="trash" /> of a workflow in the list view.
 

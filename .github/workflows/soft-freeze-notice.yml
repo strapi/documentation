@@ -17,8 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     # Skip PRs from the maintainer or from Claude.
     if: >-
+      github.repository == 'strapi/documentation' && (
       github.event.pull_request.user.login != 'pwizla' &&
-      github.event.pull_request.user.login != 'claude'
+      github.event.pull_request.user.login != 'claude')
     steps:
       - name: Post soft-freeze notice
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0

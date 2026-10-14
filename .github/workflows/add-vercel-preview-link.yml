@@ -31,9 +31,10 @@ jobs:
     # deployment payload, so it bypasses that check and resolves the deployment
     # from the pull request instead.
     if: >
+      github.repository == 'strapi/documentation' && (
       github.event_name == 'workflow_dispatch' ||
       (github.event.deployment_status.state == 'success' &&
-       github.event.deployment.environment == 'Preview')
+       github.event.deployment.environment == 'Preview'))
     runs-on: ubuntu-latest
 
     steps:

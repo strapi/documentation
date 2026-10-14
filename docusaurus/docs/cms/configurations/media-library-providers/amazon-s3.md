@@ -98,7 +98,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/plugins.ts"
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   // ...
   upload: {
     config: {
@@ -154,8 +156,9 @@ Instead of a static `credentials` object, you can pass an AWS credential provide
 
 ```ts title="/config/plugins.ts"
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   upload: {
     config: {
       provider: 'aws-s3',
