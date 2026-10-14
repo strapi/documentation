@@ -127,14 +127,6 @@ With Strapi 5.52.0 or later, logged actions can come from the admin panel or fro
 
 Each type of log return different details, as explained in the following sections.
 
-With Strapi <VersionBadge version="5.52.0+" noTooltip />, in the payload, the `origin` key indicates where the action came from:
-
-- `admin-panel` for the admin panel,
-- `mcp` for the [MCP server](/cms/features/strapi-mcp-server),
-- `scheduler` <VersionBadge version="5.53.0+" noTooltip /> for actions run automatically by Strapi, such as publishing a [scheduled release](/cms/features/releases#scheduling-a-release).
-
-Actions with the `scheduler` origin have no user, so their User column shows `-`. The audit log entry recorded when the release was scheduled identifies who scheduled it.
-
 #### User events
 <VersionBadge version="5.56.0"/>
 
@@ -204,6 +196,26 @@ By default, all logs are displayed in reverse chronological order. You can filte
 :::info
 The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
 :::
+
+### Accessing log details {#log-details}
+
+For any log item, click the <Icon name="eye" /> icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
+
+<ThemedImage
+  alt="Log details modal"
+  sources={{
+    light: '/img/assets/settings/settings_log-details.png',
+    dark: '/img/assets/settings/settings_log-details_DARK.png',
+  }}
+/>
+
+With Strapi <VersionBadge version="5.52.0+" noTooltip />, in the payload, the `origin` key indicates where the action came from:
+
+- `admin-panel` for the admin panel,
+- `mcp` for the [MCP server](/cms/features/strapi-mcp-server),
+- `scheduler` <VersionBadge version="5.53.0+" noTooltip /> for actions run automatically by Strapi, such as publishing a [scheduled release](/cms/features/releases#scheduling-a-release).
+
+Actions with the `scheduler` origin have no user, so their User column shows `-`. The audit log entry recorded when the release was scheduled identifies who scheduled it.
 
 ### Exporting audit logs
 
