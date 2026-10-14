@@ -1524,6 +1524,26 @@
       "number": 27892,
       "reason": "Router: Bug fix in Document Service API relation mapping. Previously, documentIds starting with digits were incorrectly treated as numeric IDs. Fix corrects this behavior but does not introduce new documented API surface or features.",
       "added": "2026-10-13"
+    },
+    {
+      "number": 28002,
+      "reason": "Router: Internal admin validation fix for role name/description length limits. No user-facing API changes or feature additions that require documentation updates.",
+      "added": "2026-10-14"
+    },
+    {
+      "number": 27938,
+      "reason": "Router: Internal admin UI bug fix in list view filter component. Fixes boolean filter handling without changing public API or user-facing behavior that needs documentation.",
+      "added": "2026-10-14"
+    },
+    {
+      "number": 27923,
+      "reason": "Router: Follow-up to data-preserving field renames (PR #26749). Bug fix in Content Type Builder internal behavior where uid fields now correctly track renamed target fields. No new public API or user-facing feature requiring documentation.",
+      "added": "2026-10-14"
+    },
+    {
+      "number": 26970,
+      "reason": "Router: Internal Document Service API implementation fix handling edge cases in clone operations for nested relations, useJoinTable:false, and morphToOne. Fixes behavior without changing documented API surface.",
+      "added": "2026-10-14"
     }
   ]
 }
