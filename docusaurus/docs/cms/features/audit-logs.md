@@ -114,22 +114,59 @@ For each log item, the following information is displayed:
 - User: user who performed the action.
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
+:::note Actions logged by the MCP server
+<VersionBadge version="5.52.0"/>
+With Strapi 5.52.0 or later, logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
+:::
+
+### Understanding log details
+
+Each type of log return different details, as explained in the following sections.
+
+#### User events
+<VersionBadge version="5.56.0"/>
+
 User events cover admin accounts, recorded as `admin-user.*`. An update records only the fields that changed, among first name, last name, email, username, preferred language, active status, and roles. No row is written when nothing changed.
 
-Admin login events record successful logins (`admin.auth.success`), failed login attempts (`admin.auth.error`), and new accounts created via SSO auto-registration (`admin.auth.autoRegistration`). The `admin.auth.error` action captures the reason for failure (for example: `invalid_credentials`, `account_inactive`, `sso_connection_error`) and the authentication provider used. The `admin.auth.autoRegistration` action records when an SSO login creates a new admin account. Both failed login and auto-registration events are recorded with an unknown actor to protect privacy.
+#### Admin log events
 
-Password events cover a password set from the profile or by an admin on another account (`password.update`), a password reset requested and confirmed from the public login page (`password-reset.create` and `password-reset.confirm`), and an invitation accepted (`invite.accept`). The password, its hash, and reset or registration tokens are never recorded. These password reset and invitation actions happen with no admin session, so their User column shows `-`.
+Admin login events record:
 
-The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
+- successful logins (`admin.auth.success`),
+- failed login attempts (`admin.auth.error`), which captures the reason for failure (e.g., `invalid_credentials`, `account_inactive`, `sso_connection_error`) and the authentication provider used
+- and new accounts created via SSO auto-registration (`admin.auth.autoRegistration`), which records when an SSO login creates a new admin account.
 
-Token events cover [API tokens](/cms/features/api-tokens), [admin tokens](/cms/features/admin-tokens) and transfer tokens. Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
+Both failed login and auto-registration events are recorded with an unknown actor to protect privacy.
+
+#### Password events
+
+Password events cover:
+
+- a password set from the profile or by an admin on another account (`password.update`),
+- a password reset requested and confirmed from the public login page (`password-reset.create` and `password-reset.confirm`),
+- and an invitation accepted (`invite.accept`).
+
+The password, its hash, and reset or registration tokens are never recorded. These password reset and invitation actions happen with no admin session, so their User column shows `-`.
+
+#### Token events
+<VersionBadge version="5.54.0" />
+
+Token events cover:
+
+- [API tokens](/cms/features/api-tokens),
+- [admin tokens](/cms/features/admin-tokens)
+- and transfer tokens.
+
+Each log identifies which kind it was, and an update records the fields that changed, among the token name, its description, its type and its permissions. Access keys are never recorded, including on `regenerate`.
+
+#### Webhook events
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
 
+#### Review workflows events
+<VersionBadge version="5.56.1"/>
+
 Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
-
-With Strapi <VersionBadge version="5.52.0+" noTooltip />  logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
-
 
 ### Filtering logs
 
@@ -147,23 +184,14 @@ By default, all logs are displayed in reverse chronological order. You can filte
   }}
 />
 
-### Accessing log details {#log-details}
+:::info
+The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
+:::
 
-For any log item, click the <Icon name="eye" /> icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
-
-<ThemedImage
-  alt="Log details modal"
-  sources={{
-    light: '/img/assets/settings/settings_log-details.png',
-    dark: '/img/assets/settings/settings_log-details_DARK.png',
-  }}
-/>
-
-With Strapi <VersionBadge version="5.52.0" noTooltip />, in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
 
 ### Exporting audit logs
 
-<VersionBadge version="5.53+" noTooltip />
+<VersionBadge version="5.53.0" />
 
 Users with the `export` permission for Audit Logs can export the current filtered set of entries as a CSV file. To access this feature, the user's role must have both the **Read** and **Export** permissions under **Settings > Administration Panel > Roles > Audit Logs** (see [admin panel configuration](/cms/configurations/admin-panel#audit-logs)).
 
