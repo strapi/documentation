@@ -9,6 +9,13 @@ import senthor from "@senthor-io/vercel";
  * keeps the infrastructure headers added by CloudFront and Vercel on our
  * edge, including the `cloudfront-viewer-*` geolocation ones, and bounds
  * what leaves the request to the signals a bot detector actually reads.
+ *
+ * Senthor confirmed this list covers their detection. The two `payment`
+ * headers are not read by the detector: they carry the x402 settlement their
+ * monetization flow needs, and without them a paying bot cannot be charged.
+ * `x-forwarded-host` is deliberately absent: Senthor identifies the site from
+ * `x-forwarded-host` or `host`, and the host registered on their side is
+ * `docs-vercel-v5.strapi.io`, which is what Vercel actually receives.
  */
 const FORWARDED_HEADERS = [
   "host",
@@ -27,6 +34,8 @@ const FORWARDED_HEADERS = [
   "sec-fetch-user",
   "x-forwarded-for",
   "x-real-ip",
+  "x-payment",
+  "payment-signature",
 ];
 
 export default function middleware(request: Request) {
