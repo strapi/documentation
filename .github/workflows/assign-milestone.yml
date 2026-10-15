@@ -14,9 +14,14 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
+      all_without_milestone:
+        description: 'Run on every open PR without a milestone (ignores the PR number)'
+        required: false
+        type: boolean
+        default: false
       pr_number:
         description: 'PR number to assign a milestone to'
-        required: true
+        required: false
         type: string
       dry_run:
         description: 'Log the decision without writing anything'
@@ -26,7 +31,7 @@ on:
 
 # One run at a time per PR, so "opened" and "labeled" never race on a rename.
 concurrency:
-  group: assign-milestone-${{ github.event.pull_request.number || inputs.pr_number }}
+  group: assign-milestone-${{ github.event.pull_request.number || (inputs.all_without_milestone && 'all') || inputs.pr_number }}
   cancel-in-progress: false
 
 jobs:
@@ -53,6 +58,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+          ALL_WITHOUT_MILESTONE: ${{ inputs.all_without_milestone }}
           DRY_RUN: ${{ inputs.dry_run }}
           WAIT_FOR_LABEL: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
         run: node .github/scripts/assign-milestone.mjs

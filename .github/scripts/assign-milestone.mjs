@@ -25,6 +25,8 @@
  * where v4 and v5 releases interleave).
  *
  * Usage: PR_NUMBER=3573 GH_TOKEN=... [DRY_RUN=true] [WAIT_FOR_LABEL=true] node assign-milestone.mjs
+ *        ALL_WITHOUT_MILESTONE=true GH_TOKEN=... [DRY_RUN=true] node assign-milestone.mjs
+ *        (every open PR without a milestone; PR_NUMBER is then ignored)
  */
 
 import { pathToFileURL } from 'node:url';
@@ -36,6 +38,7 @@ const GH_TOKEN = process.env.GH_TOKEN;
 const PR_NUMBER = process.env.PR_NUMBER;
 const DRY_RUN = process.env.DRY_RUN === 'true';
 const WAIT_FOR_LABEL = process.env.WAIT_FOR_LABEL === 'true';
+const ALL_WITHOUT_MILESTONE = process.env.ALL_WITHOUT_MILESTONE === 'true';
 // Minutes to wait before each new check for the "pr:" label.
 const LABEL_CHECK_DELAYS = [1, 1, 1, 1, 1, 30];
 
@@ -167,17 +170,17 @@ async function strapiShipDate(body) {
 }
 
 /** Re-read the PR on the LABEL_CHECK_DELAYS schedule until it has a "pr:" type label. */
-async function waitForTypeLabel(pr) {
+async function waitForTypeLabel(pr, prNumber) {
   const hasTypeLabel = (p) => p.labels.some((l) => l.name.startsWith('pr:'));
   for (const delay of LABEL_CHECK_DELAYS) {
     if (hasTypeLabel(pr)) return pr;
     console.log(`No "pr:" label yet, checking again in ${delay} minute${delay > 1 ? 's' : ''}`);
     await new Promise((resolve) => setTimeout(resolve, delay * 60_000));
-    pr = await gh(`repos/${DOCS_REPO}/issues/${PR_NUMBER}`);
+    pr = await gh(`repos/${DOCS_REPO}/issues/${prNumber}`);
   }
   if (!hasTypeLabel(pr)) {
     const total = LABEL_CHECK_DELAYS.reduce((a, b) => a + b, 0);
-    console.log(`::warning::PR #${PR_NUMBER} still has no "pr:" label after ${total} minutes`);
+    console.log(`::warning::PR #${prNumber} still has no "pr:" label after ${total} minutes`);
   }
   return pr;
 }
@@ -201,15 +204,13 @@ async function promoteToMinor(milestone, docsMilestones) {
   });
 }
 
-async function main() {
-  if (!GH_TOKEN || !PR_NUMBER) throw new Error('GH_TOKEN and PR_NUMBER are required');
-
-  let pr = await gh(`repos/${DOCS_REPO}/issues/${PR_NUMBER}`);
-  if (WAIT_FOR_LABEL && !pr.milestone) pr = await waitForTypeLabel(pr);
+async function assignMilestone(prNumber) {
+  let pr = await gh(`repos/${DOCS_REPO}/issues/${prNumber}`);
+  if (WAIT_FOR_LABEL && !pr.milestone) pr = await waitForTypeLabel(pr, prNumber);
   const isNewContent = pr.labels.some((l) => l.name === NEW_CONTENT_LABEL);
 
   if (pr.milestone && !isNewContent) {
-    console.log(`PR #${PR_NUMBER} already has milestone ${pr.milestone.title}, nothing to do`);
+    console.log(`PR #${prNumber} already has milestone ${pr.milestone.title}, nothing to do`);
     return;
   }
 
@@ -226,7 +227,7 @@ async function main() {
 
   let milestone;
   if (decision.action === 'none') {
-    console.log(`::warning::No milestone assigned to PR #${PR_NUMBER}: ${decision.reason}`);
+    console.log(`::warning::No milestone assigned to PR #${prNumber}: ${decision.reason}`);
     return;
   }
   if (decision.action === 'create') {
@@ -244,13 +245,43 @@ async function main() {
 
   if (isNewContent) milestone = await promoteToMinor(milestone, docsMilestones);
 
-  console.log(`${DRY_RUN ? '[dry run] Would assign' : 'Assigning'} milestone ${milestone.title} to PR #${PR_NUMBER}`);
+  console.log(`${DRY_RUN ? '[dry run] Would assign' : 'Assigning'} milestone ${milestone.title} to PR #${prNumber}`);
   if (!DRY_RUN) {
-    await gh(`repos/${DOCS_REPO}/issues/${PR_NUMBER}`, {
+    await gh(`repos/${DOCS_REPO}/issues/${prNumber}`, {
       method: 'PATCH',
       body: JSON.stringify({ milestone: milestone.number }),
     });
   }
+}
+
+/** Numbers of the open PRs that have no milestone. */
+async function openPrsWithoutMilestone() {
+  const query = encodeURIComponent(`repo:${DOCS_REPO} is:pr is:open no:milestone`);
+  const { items } = await gh(`search/issues?q=${query}&per_page=100`);
+  return items.map((item) => item.number);
+}
+
+async function main() {
+  if (!GH_TOKEN) throw new Error('GH_TOKEN is required');
+  if (!ALL_WITHOUT_MILESTONE) {
+    if (!PR_NUMBER) throw new Error('PR_NUMBER is required unless ALL_WITHOUT_MILESTONE=true');
+    await assignMilestone(PR_NUMBER);
+    return;
+  }
+
+  const numbers = await openPrsWithoutMilestone();
+  console.log(`${numbers.length} open PRs without a milestone: ${numbers.map((n) => `#${n}`).join(', ')}`);
+  let failures = 0;
+  for (const number of numbers) {
+    console.log(`\n--- PR #${number}`);
+    try {
+      await assignMilestone(number);
+    } catch (error) {
+      failures++;
+      console.log(`::error::PR #${number}: ${error.message}`);
+    }
+  }
+  if (failures) throw new Error(`${failures} PRs failed`);
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
