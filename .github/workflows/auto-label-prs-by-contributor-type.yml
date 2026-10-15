@@ -1,7 +1,10 @@
 name: Auto-label PRs by contributor type
 
 on:
-  pull_request:
+  # pull_request_target runs from the base branch with a write token, so PRs
+  # from forks get labeled without waiting for a maintainer's approval.
+  # Safe because the job never checks out or runs the PR's code.
+  pull_request_target:
     types: [opened]
     branches: [main, next, v4]
   workflow_dispatch:
@@ -46,7 +49,7 @@ jobs:
             // Handle both automatic (PR event) and manual (workflow_dispatch) triggers
             let prToProcess;
             
-            if (context.eventName === 'pull_request') {
+            if (context.eventName === 'pull_request_target') {
               // Automatic trigger: process the current PR
               prToProcess = context.payload.pull_request;
             } else if (context.eventName === 'workflow_dispatch') {
