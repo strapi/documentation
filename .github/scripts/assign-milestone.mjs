@@ -3,7 +3,7 @@
  * Assign a milestone to a strapi/documentation pull request.
  *
  * Rules:
- *   - A PR that already has a milestone is left alone.
+ *   - A PR that already has a milestone keeps it.
  *   - By default, the PR gets the next docs milestone: the open milestone with
  *     the earliest date.
  *   - If the PR body references a strapi/strapi PR whose milestone is not
@@ -11,13 +11,20 @@
  *     the PR gets the open docs milestone on that date. If none exists, one is
  *     created: the next milestone's version with the patch number bumped
  *     (7.5.1 -> 7.5.2), due on the strapi/strapi milestone's date.
+ *   - If the PR has the "pr: new content" label, its milestone becomes a minor
+ *     version: a patch milestone is renamed (7.5.1 -> 7.6.0), so every PR in
+ *     that release follows. This also runs when the label is added later.
+ *
+ * Labels: the "pr:" type label is set by another workflow that starts at the
+ * same time. With WAIT_FOR_LABEL=true, the script checks for it once a minute
+ * for up to LABEL_WAIT_MINUTES, then goes on without it.
  *
  * Dates: docs and strapi/strapi milestones always ship on a Wednesday. A
  * milestone without a due date is assumed to ship on the first Wednesday after
  * the latest published release of its repository (same major for strapi/strapi,
  * where v4 and v5 releases interleave).
  *
- * Usage: PR_NUMBER=3573 GH_TOKEN=... [DRY_RUN=true] node assign-milestone.mjs
+ * Usage: PR_NUMBER=3573 GH_TOKEN=... [DRY_RUN=true] [WAIT_FOR_LABEL=true] node assign-milestone.mjs
  */
 
 import { pathToFileURL } from 'node:url';
@@ -28,6 +35,10 @@ const STRAPI_REPO = 'strapi/strapi';
 const GH_TOKEN = process.env.GH_TOKEN;
 const PR_NUMBER = process.env.PR_NUMBER;
 const DRY_RUN = process.env.DRY_RUN === 'true';
+const WAIT_FOR_LABEL = process.env.WAIT_FOR_LABEL === 'true';
+const LABEL_WAIT_MINUTES = 3;
+
+const NEW_CONTENT_LABEL = 'pr: new content';
 
 const STRAPI_PR_REF = /(?:github\.com\/strapi\/strapi\/pull\/|strapi\/strapi#)(\d+)/g;
 
@@ -59,6 +70,12 @@ export function nextWednesdayAfter(isoDate) {
 export function milestoneDate(milestone, latestReleaseDate) {
   if (milestone.due_on) return milestone.due_on.slice(0, 10);
   return latestReleaseDate ? nextWednesdayAfter(latestReleaseDate) : null;
+}
+
+/** The minor version a patch milestone becomes (7.5.1 -> 7.6.0), or null if already a minor. */
+export function minorTitle(title) {
+  const [major, minor, patch] = parseVersion(title);
+  return patch === 0 ? null : `${major}.${minor + 1}.0`;
 }
 
 export function extractStrapiPrNumbers(body) {
@@ -148,11 +165,47 @@ async function strapiShipDate(body) {
   return null;
 }
 
+/** Re-read the PR once a minute until it has a "pr:" type label, or the wait runs out. */
+async function waitForTypeLabel(pr) {
+  for (let minute = 0; minute < LABEL_WAIT_MINUTES; minute++) {
+    if (pr.labels.some((l) => l.name.startsWith('pr:'))) return pr;
+    console.log('No "pr:" label yet, checking again in a minute');
+    await new Promise((resolve) => setTimeout(resolve, 60_000));
+    pr = await gh(`repos/${DOCS_REPO}/issues/${PR_NUMBER}`);
+  }
+  if (!pr.labels.some((l) => l.name.startsWith('pr:'))) {
+    console.log(`::warning::PR #${PR_NUMBER} still has no "pr:" label after ${LABEL_WAIT_MINUTES} minutes`);
+  }
+  return pr;
+}
+
+/** Rename a patch milestone to the next minor version, unless that title is taken. */
+async function promoteToMinor(milestone, docsMilestones) {
+  const title = minorTitle(milestone.title);
+  if (!title || milestone.state === 'closed') {
+    console.log(`Milestone ${milestone.title} is ${title ? 'closed' : 'already a minor version'}, not renamed`);
+    return milestone;
+  }
+  if (docsMilestones.some((m) => m.title.trim() === title)) {
+    console.log(`::warning::Cannot rename milestone ${milestone.title} to ${title}: that milestone already exists`);
+    return milestone;
+  }
+  console.log(`${DRY_RUN ? '[dry run] Would rename' : 'Renaming'} milestone ${milestone.title} to ${title} (new content)`);
+  if (DRY_RUN) return { ...milestone, title };
+  return gh(`repos/${DOCS_REPO}/milestones/${milestone.number}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ title }),
+  });
+}
+
 async function main() {
   if (!GH_TOKEN || !PR_NUMBER) throw new Error('GH_TOKEN and PR_NUMBER are required');
 
-  const pr = await gh(`repos/${DOCS_REPO}/issues/${PR_NUMBER}`);
-  if (pr.milestone) {
+  let pr = await gh(`repos/${DOCS_REPO}/issues/${PR_NUMBER}`);
+  if (WAIT_FOR_LABEL && !pr.milestone) pr = await waitForTypeLabel(pr);
+  const isNewContent = pr.labels.some((l) => l.name === NEW_CONTENT_LABEL);
+
+  if (pr.milestone && !isNewContent) {
     console.log(`PR #${PR_NUMBER} already has milestone ${pr.milestone.title}, nothing to do`);
     return;
   }
@@ -160,6 +213,11 @@ async function main() {
   const docsReleaseDate = await latestReleaseDate(DOCS_REPO);
   const docsMilestones = (await gh(`repos/${DOCS_REPO}/milestones?state=all&per_page=100`))
     .map((m) => ({ ...m, date: milestoneDate(m, docsReleaseDate) }));
+
+  if (pr.milestone) {
+    await promoteToMinor(pr.milestone, docsMilestones);
+    return;
+  }
 
   const decision = decideMilestone(docsMilestones, await strapiShipDate(pr.body));
 
@@ -176,9 +234,12 @@ async function main() {
         method: 'POST',
         body: JSON.stringify({ title: decision.title, due_on: `${decision.date}T00:00:00Z` }),
       });
+    docsMilestones.push(milestone);
   } else {
     milestone = decision.milestone;
   }
+
+  if (isNewContent) milestone = await promoteToMinor(milestone, docsMilestones);
 
   console.log(`${DRY_RUN ? '[dry run] Would assign' : 'Assigning'} milestone ${milestone.title} to PR #${PR_NUMBER}`);
   if (!DRY_RUN) {
