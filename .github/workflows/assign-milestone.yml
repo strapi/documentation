@@ -1,0 +1,58 @@
+name: Assign milestone to PRs
+
+# pull_request_target so PRs from forks also get a token that can write
+# milestones. The job checks out the base branch only and never runs PR code:
+# the PR body is read as data through the API.
+#
+# "labeled" catches a "pr: new content" label added by hand after the PR got
+# its milestone. Labels set by the auto-label workflow do not fire this event
+# (GitHub does not trigger workflows from GITHUB_TOKEN actions), which is why
+# the opened run waits for the label instead (up to 35 minutes).
+on:
+  pull_request_target:
+    types: [opened, reopened, labeled]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to assign a milestone to'
+        required: true
+        type: string
+      dry_run:
+        description: 'Log the decision without writing anything'
+        required: false
+        type: boolean
+        default: false
+
+# One run at a time per PR, so "opened" and "labeled" never race on a rename.
+concurrency:
+  group: assign-milestone-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: false
+
+jobs:
+  assign-milestone:
+    if: >-
+      github.repository == 'strapi/documentation' &&
+      (github.event.action != 'labeled' || github.event.label.name == 'pr: new content')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+
+      - name: Assign milestone
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          WAIT_FOR_LABEL: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
+        run: node .github/scripts/assign-milestone.mjs
