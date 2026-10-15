@@ -1,8 +1,15 @@
 name: Credit Reward Automation
 
+# pull_request_target so merged community PRs are credited without waiting for
+# a maintainer's approval. The job never runs the PR's code: it only reads its
+# commits with git. Every PR-controlled value (title, branch name) goes through
+# env vars, never through ${{ }} inside a script, to prevent shell injection.
 on:
-  pull_request:
+  pull_request_target:
     types: [closed]
+
+permissions:
+  contents: read
 
 jobs:
   call-webhook:
@@ -13,12 +20,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debug context
+        env:
+          MERGED: ${{ github.event.pull_request.merged }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
         run: |
-          echo "merged=${{ github.event.pull_request.merged }}"
-          echo "labels=${{ join(github.event.pull_request.labels.*.name, ',') }}"
-          echo "base=${{ github.event.pull_request.base.ref }}"
-          echo "head=${{ github.event.pull_request.head.ref }}"
-          echo "merge_commit_sha=${{ github.event.pull_request.merge_commit_sha }}"
+          echo "merged=$MERGED"
+          echo "labels=$LABELS"
+          echo "base=$BASE_REF"
+          echo "head=$HEAD_REF"
+          echo "merge_commit_sha=$MERGE_SHA"
 
       - name: Checkout repo (full history)
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
@@ -55,9 +68,12 @@ jobs:
           echo "email=${email}" >> "$GITHUB_OUTPUT"
 
       - name: Debug email extraction
+        env:
+          FIRST_SHA: ${{ steps.first_commit.outputs.sha }}
+          EMAIL: ${{ steps.first_commit.outputs.email }}
         run: |
-          echo "First commit SHA: ${{ steps.first_commit.outputs.sha }}"
-          echo "Extracted email: ${{ steps.first_commit.outputs.email }}"
+          echo "First commit SHA: $FIRST_SHA"
+          echo "Extracted email: $EMAIL"
 
       - name: Compute PR diff stats (files/lines)
         id: pr_stats
@@ -93,19 +109,33 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Call webhook
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          TITLE: ${{ github.event.pull_request.title }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          LOGIN: ${{ github.event.pull_request.user.login }}
+          EMAIL: ${{ steps.first_commit.outputs.email }}
+          FILES_CHANGED: ${{ steps.pr_stats.outputs.files_changed }}
+          FILES_ADDED: ${{ steps.pr_stats.outputs.files_added }}
+          FILES_DELETED: ${{ steps.pr_stats.outputs.files_deleted }}
+          LINES_ADDED: ${{ steps.pr_stats.outputs.lines_added }}
+          LINES_DELETED: ${{ steps.pr_stats.outputs.lines_deleted }}
+          LINES_CHANGED: ${{ steps.pr_stats.outputs.lines_changed }}
         run: |
-          curl -X POST "https://hooks.zapier.com/hooks/catch/1615118/uh44k4y/" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "pr_number": "${{ github.event.pull_request.number }}",
-              "title": "${{ github.event.pull_request.title }}",
-              "base_branch": "${{ github.event.pull_request.base.ref }}",
-              "contributor_login": "${{ github.event.pull_request.user.login }}",
-              "contributor_email": "${{ steps.first_commit.outputs.email }}",
-              "files_changed": "${{ steps.pr_stats.outputs.files_changed }}",
-              "files_added": "${{ steps.pr_stats.outputs.files_added }}",
-              "files_deleted": "${{ steps.pr_stats.outputs.files_deleted }}",
-              "lines_added": "${{ steps.pr_stats.outputs.lines_added }}",
-              "lines_deleted": "${{ steps.pr_stats.outputs.lines_deleted }}",
-              "lines_changed": "${{ steps.pr_stats.outputs.lines_changed }}"
-            }'
+          # jq builds the JSON so quotes or newlines in the title stay data.
+          jq -n \
+            --arg pr_number "$PR_NUMBER" \
+            --arg title "$TITLE" \
+            --arg base_branch "$BASE_REF" \
+            --arg contributor_login "$LOGIN" \
+            --arg contributor_email "$EMAIL" \
+            --arg files_changed "$FILES_CHANGED" \
+            --arg files_added "$FILES_ADDED" \
+            --arg files_deleted "$FILES_DELETED" \
+            --arg lines_added "$LINES_ADDED" \
+            --arg lines_deleted "$LINES_DELETED" \
+            --arg lines_changed "$LINES_CHANGED" \
+            '$ARGS.named' \
+          | curl -X POST "https://hooks.zapier.com/hooks/catch/1615118/uh44k4y/" \
+              -H "Content-Type: application/json" \
+              --data-binary @-
