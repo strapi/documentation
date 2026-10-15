@@ -137,6 +137,7 @@ const config = {
       'data-modal-y-offset': '3vh',            // Default is 10vh
       'data-modal-inner-max-width': '100%',
       'data-user-satisfaction-feedback-enabled': 'false',
+      'data-exit-feedback-enabled': 'false',
       /* 
        * MCP config *
       */
