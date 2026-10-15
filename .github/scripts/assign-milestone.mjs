@@ -17,7 +17,7 @@
  *
  * Labels: the "pr:" type label is set by another workflow that starts at the
  * same time. With WAIT_FOR_LABEL=true, the script checks for it once a minute
- * for up to LABEL_WAIT_MINUTES, then goes on without it.
+ * for 5 minutes, then once more 30 minutes later, then goes on without it.
  *
  * Dates: docs and strapi/strapi milestones always ship on a Wednesday. A
  * milestone without a due date is assumed to ship on the first Wednesday after
@@ -36,7 +36,8 @@ const GH_TOKEN = process.env.GH_TOKEN;
 const PR_NUMBER = process.env.PR_NUMBER;
 const DRY_RUN = process.env.DRY_RUN === 'true';
 const WAIT_FOR_LABEL = process.env.WAIT_FOR_LABEL === 'true';
-const LABEL_WAIT_MINUTES = 3;
+// Minutes to wait before each new check for the "pr:" label.
+const LABEL_CHECK_DELAYS = [1, 1, 1, 1, 1, 30];
 
 const NEW_CONTENT_LABEL = 'pr: new content';
 
@@ -165,16 +166,18 @@ async function strapiShipDate(body) {
   return null;
 }
 
-/** Re-read the PR once a minute until it has a "pr:" type label, or the wait runs out. */
+/** Re-read the PR on the LABEL_CHECK_DELAYS schedule until it has a "pr:" type label. */
 async function waitForTypeLabel(pr) {
-  for (let minute = 0; minute < LABEL_WAIT_MINUTES; minute++) {
-    if (pr.labels.some((l) => l.name.startsWith('pr:'))) return pr;
-    console.log('No "pr:" label yet, checking again in a minute');
-    await new Promise((resolve) => setTimeout(resolve, 60_000));
+  const hasTypeLabel = (p) => p.labels.some((l) => l.name.startsWith('pr:'));
+  for (const delay of LABEL_CHECK_DELAYS) {
+    if (hasTypeLabel(pr)) return pr;
+    console.log(`No "pr:" label yet, checking again in ${delay} minute${delay > 1 ? 's' : ''}`);
+    await new Promise((resolve) => setTimeout(resolve, delay * 60_000));
     pr = await gh(`repos/${DOCS_REPO}/issues/${PR_NUMBER}`);
   }
-  if (!pr.labels.some((l) => l.name.startsWith('pr:'))) {
-    console.log(`::warning::PR #${PR_NUMBER} still has no "pr:" label after ${LABEL_WAIT_MINUTES} minutes`);
+  if (!hasTypeLabel(pr)) {
+    const total = LABEL_CHECK_DELAYS.reduce((a, b) => a + b, 0);
+    console.log(`::warning::PR #${PR_NUMBER} still has no "pr:" label after ${total} minutes`);
   }
   return pr;
 }

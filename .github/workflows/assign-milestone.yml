@@ -7,7 +7,7 @@ name: Assign milestone to PRs
 # "labeled" catches a "pr: new content" label added by hand after the PR got
 # its milestone. Labels set by the auto-label workflow do not fire this event
 # (GitHub does not trigger workflows from GITHUB_TOKEN actions), which is why
-# the opened run waits for the label instead.
+# the opened run waits for the label instead (up to 35 minutes).
 on:
   pull_request_target:
     types: [opened, reopened, labeled]
