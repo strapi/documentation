@@ -227,6 +227,15 @@ lint_file() {
       has_errors=1
     fi
 
+    # Tables are Markdown tables only. An HTML `<table>` is reported once, on its
+    # opening tag; code blocks and inline code are already stripped, so a table
+    # shown as an example in a fence is not flagged. Case-sensitive on purpose:
+    # HTML tags are lowercase, while `<Table>` is a React component in JSX examples.
+    if echo "$line" | grep -qE '<table([[:space:]>]|$)'; then
+      echo "error:${line_num}:html-table:HTML table -- use a Markdown table (repeat a value instead of rowSpan/colSpan, or split the table)"
+      has_errors=1
+    fi
+
     # Multi-action steps: numbered list items with joining words
     if echo "$line" | grep -qE '^[[:space:]]*[0-9]+\.[[:space:]]'; then
       if echo "$line" | grep -qEi "(,?[[:space:]]*${word_boundary_start}then${word_boundary_end}|${word_boundary_start}and then${word_boundary_end}|${word_boundary_start}and also${word_boundary_end}|,?[[:space:]]*${word_boundary_start}next${word_boundary_end})"; then

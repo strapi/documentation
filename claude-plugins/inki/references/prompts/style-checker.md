@@ -168,6 +168,7 @@ For each of the 12 rules, here is how to detect violations and what severity to 
 - **Detect:** Inline enumerations with more than 3 items that should be bullet lists; bullet lists where items have multiple attributes that would be clearer as a table
 - **Severity:** suggestion
 - **Note:** Docusaurus does not support merged/nested table cells. Using `<ul><li>` inside table cells is acceptable and should NOT be flagged as a violation.
+- **Strapi-specific (Markdown tables only):** Tables must be Markdown tables. Flag any HTML `<table>` as an **error**, including one written to get merged cells with `rowSpan` or `colSpan`. Fix: convert it to a Markdown table, repeating the value in each row instead of merging cells, or split it into several tables. The style-lint script reports it as `html-table`.
 
 ### Rule 9: Avoid ambiguous pronouns and abbreviations
 - **Detect:** Pronouns ("it", "this", "that", "they") without a clear antecedent in the same or previous sentence; abbreviations used without being defined on first use
