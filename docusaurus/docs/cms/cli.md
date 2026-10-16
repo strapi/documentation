@@ -35,8 +35,8 @@ Strapi CLI commands on the present page are grouped by category:
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
 | [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
 | [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types` |
-| [Enterprise](#enterprise) | `enterprise install` |
 | [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
+| [Enterprise](#enterprise) | `enterprise install` |
 
 :::caution
 Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. Please consider using the `yarn` package manager.
@@ -788,6 +788,66 @@ strapi ts:generate-types
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
 
+## Listing
+
+These commands list registered elements in your Strapi project.
+
+### `strapi routes:list`
+
+Display a list of all the available [routes](/cms/backend-customization/routes).
+
+```bash
+strapi routes:list
+```
+
+### `strapi policies:list`
+
+Display a list of all the registered [policies](/cms/backend-customization/policies).
+
+```bash
+strapi policies:list
+```
+
+### `strapi middlewares:list`
+
+Display a list of all the registered [middlewares](/cms/backend-customization/middlewares).
+
+```bash
+strapi middlewares:list
+```
+
+### `strapi content-types:list`
+
+Display a list of all the existing [content-types](/cms/backend-customization/models).
+
+```bash
+strapi content-types:list
+```
+
+### `strapi hooks:list`
+
+Display a list of all the available hooks.
+
+```bash
+strapi hooks:list
+```
+
+### `strapi controllers:list`
+
+Display a list of all the registered [controllers](/cms/backend-customization/controllers).
+
+```bash
+strapi controllers:list
+```
+
+### `strapi services:list`
+
+Display a list of all the registered [services](/cms/backend-customization/services).
+
+```bash
+strapi services:list
+```
+
 ## Enterprise
 
 These commands install Strapi Enterprise plugins from the Strapi package registry.
@@ -860,63 +920,3 @@ pnpm strapi enterprise install plugin-byok@1.0.0
 
 </TabItem>
 </Tabs>
-
-## Listing
-
-These commands list registered elements in your Strapi project.
-
-### `strapi routes:list`
-
-Display a list of all the available [routes](/cms/backend-customization/routes).
-
-```bash
-strapi routes:list
-```
-
-### `strapi policies:list`
-
-Display a list of all the registered [policies](/cms/backend-customization/policies).
-
-```bash
-strapi policies:list
-```
-
-### `strapi middlewares:list`
-
-Display a list of all the registered [middlewares](/cms/backend-customization/middlewares).
-
-```bash
-strapi middlewares:list
-```
-
-### `strapi content-types:list`
-
-Display a list of all the existing [content-types](/cms/backend-customization/models).
-
-```bash
-strapi content-types:list
-```
-
-### `strapi hooks:list`
-
-Display a list of all the available hooks.
-
-```bash
-strapi hooks:list
-```
-
-### `strapi controllers:list`
-
-Display a list of all the registered [controllers](/cms/backend-customization/controllers).
-
-```bash
-strapi controllers:list
-```
-
-### `strapi services:list`
-
-Display a list of all the registered [services](/cms/backend-customization/services).
-
-```bash
-strapi services:list
-```
