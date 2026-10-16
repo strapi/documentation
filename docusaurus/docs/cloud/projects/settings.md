@@ -342,7 +342,7 @@ The package manager version is not set in the project settings. During the build
 #### Transferring data between environments <BetaBadge /> {#transferring-data-between-environments}
 <CloudProBadge /> <CloudBusinessBadge />
 
-The data transfer feature allows you to transfer the entire CMS content (database and assets) from one environment to another within the same Strapi Cloud project. This is useful for testing changes in a secondary environment with up-to-date production data, or for preparing and staging content in a secondary environment before taking it to production.
+The data transfer feature allows you to transfer the entire CMS content (database and assets) from one environment to another within the same Strapi Cloud project. This is useful for testing changes in a secondary environment with up-to-date production data.
 
 Transferring data between environments currently comes with the following limitations:
 
