@@ -76,29 +76,29 @@ Before you activate, make sure to add a payment method in the [Payment methods](
 To activate a subscription:
 
 1. Click **Activate subscription** in the *In trial* section.
-2. In the *Manage subscription* modal, set the desired seat count and choose if the plan should include the SSO add-on.
+2. In the *Manage subscription* modal, set the desired number of users and choose if the plan should include the SSO add-on.
 3. Click **Continue** to review the charge summary.
 4. Click **Activate now** to confirm.
 
 :::note
-Growth subscriptions must include a minimum of 3 seats.
+Growth subscriptions must include a minimum of 3 users. A user is one email address per project, whatever the environment: a person who accesses the development, staging, and production environments of the same project with the same email address counts as 1 user.
 :::
 
-### Changing seats and add-ons on a Growth subscription
+### Changing users and add-ons on a Growth subscription
 
-To update the seat count or add-ons of an active Growth subscription:
+To update the number of users or add-ons of an active Growth subscription:
 
 1. Click **Manage subscription**.
-2. In the *Manage subscription* modal, adjust the seat count and included add-ons as needed.
+2. In the *Manage subscription* modal, adjust the number of users and included add-ons as needed.
 3. Click **Continue** to review the charge summary.
 4. Click **Confirm** to apply the changes.
  
 :::note
-When you add seats or enable the SSO add-on, you are charged a prorated amount immediately. However, your Strapi CMS instance checks for license updates on startup and every 12 hours, so new seats may take up to 12 hours to appear in the admin panel. To apply the change sooner, restart your Strapi instance.
+When you add users or enable the SSO add-on, you are charged a prorated amount immediately. However, your Strapi CMS instance checks for license updates on startup and every 12 hours, so the new number of users may take up to 12 hours to apply in the admin panel. To apply the change sooner, restart your Strapi instance.
 
-When you remove seats or disable the SSO add-on, the change takes effect at the next renewal. Your current seat count and add-ons stay active until then.
+When you remove users or disable the SSO add-on, the change takes effect at the next renewal. Your current number of users and add-ons stay active until then.
 
-If you add seats and disable SSO in the same change, the seat increase is charged immediately. SSO removal is still deferred to the next renewal.
+If you add users and disable SSO in the same change, the user increase is charged immediately. SSO removal is still deferred to the next renewal.
 :::
 
 ### Canceling a Growth subscription
