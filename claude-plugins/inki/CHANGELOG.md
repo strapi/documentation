@@ -1,5 +1,13 @@
 # Inki Changelog
 
+## Unversioned (since 2026-10-16)
+
+### Changed
+
+- Inki no longer declares a `version` in `plugin.json`. Claude Code now derives the version from the commit of the plugin directory, so every merged change to Inki reaches installed copies without a manual bump. The pinned `0.2.3` had held every install at its June state for 13 later commits.
+- The `strapi-documentation` marketplace now has `"autoUpdate": true` in the repository's `.claude/settings.json`. Claude Code refreshes it after the first message of a session and offers `/reload-plugins` when Inki changed. This applies once the repository folder is trusted.
+- Entries below this one keep their version numbers for history. New changes are listed by date.
+
 ## v0.2.3 (2026-06-17)
 
 ### Changed
