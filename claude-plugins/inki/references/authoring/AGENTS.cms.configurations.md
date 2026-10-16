@@ -37,7 +37,7 @@ Scaling Patterns
 Building Blocks
 Use these recurring patterns within H2 sections as applicable:
 
-- **Parameter tables**: Columns `Parameter`, `Description`, `Type`, `Default`. Use a single table for flat option lists; use H3 subsections for nested objects.
+- **Parameter tables**: Columns `Parameter`, `Description`, `Type`, `Required`, `Default`. `Type` and `Required` are mandatory (see `claude-plugins/inki/references/templates/components/options-table.md`). Use a single table for flat option lists; use H3 subsections for nested objects.
 - **Environment variable tables**: Columns `Variable`, `Purpose`, `Type`, `Default`. Include a sample `.env` block when relevant.
 - **Code examples**: Always include a file path in the code fence title (e.g., `title="/config/server.js"`). Use `<Tabs groupId="js-ts">` for JavaScript/TypeScript variants.
 - **Per-environment overrides**: Show `/config/env/{environment}/...` files when the configuration supports environment-specific values.
@@ -57,7 +57,7 @@ Quality Checklist (before commit)
 - TL;DR present and precise about file paths and scope.
 - Intro paragraph states where the configuration lives (paths) and what it controls.
 - H2 sections are thematic and appropriate for the page's complexity (not too many for small configurations, not too few for large ones).
-- Parameter tables use the standard column pattern and document all options.
+- Parameter tables use the standard column pattern, including `Type` and `Required`, and document all options.
 - Code examples include file path titles and are runnable.
 - JS/TS variants use `<Tabs groupId="js-ts">` consistently.
 - Per-environment overrides documented when applicable.

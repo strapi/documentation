@@ -57,9 +57,9 @@ The `/config/<area>.(js|ts)` file is used to define [what it configures] for a S
 
 <!-- PATTERN A: Small configuration (no H2s needed) -->
 
-| Parameter     | Description                          | Type     | Default   |
-| ---           | ---                                  | ---      | ---       |
-| `optionName`  | What it controls and caveats         | `String` | `'value'` |
+| Parameter     | Description                          | Type     | Required | Default   |
+| ---           | ---                                  | ---      | ---      | ---       |
+| `optionName`  | What it controls and caveats         | `String` | No       | `'value'` |
 
 **Example:**
 
@@ -92,9 +92,9 @@ export default ({ env }) => ({
 <!--
 ## Available options
 
-| Parameter     | Description                          | Type     | Default   |
-| ---           | ---                                  | ---      | ---       |
-| `optionName`  | What it controls                     | `String` | `'value'` |
+| Parameter     | Description                          | Type     | Required | Default   |
+| ---           | ---                                  | ---      | ---      | ---       |
+| `optionName`  | What it controls                     | `String` | No       | `'value'` |
 
 ## Configurations
 
@@ -117,9 +117,9 @@ Provide minimal and/or full configuration examples with file paths.
 
 Description of this sub-domain.
 
-| Parameter     | Description                          | Type     | Default   |
-| ---           | ---                                  | ---      | ---       |
-| `optionName`  | What it controls                     | `String` | `'value'` |
+| Parameter     | Description                          | Type     | Required | Default   |
+| ---           | ---                                  | ---      | ---      | ---       |
+| `optionName`  | What it controls                     | `String` | No       | `'value'` |
 
 ## [Sub-domain 2 name]
 

@@ -35,6 +35,7 @@ Required Section Order
      - “Admin panel settings” — numbered steps, UI paths.
      - “Code-based configuration” — show `config/plugins.(js|ts)` (and other files) with code fences and file paths.
    - Include environment notes (e.g., disable in non‑production) under dedicated H3s when applicable.
+   - Document the options in a table with mandatory `Type` and `Required` columns: `Option | Type | Required | Description`. See `claude-plugins/inki/references/templates/components/options-table.md`.
 
 Tabs reminder (canonical rules: `claude-plugins/inki/references/templates/components/tabs.md`)
 - Installation: if both package managers are shown, use Tabs with `groupId="yarn-npm"` and values `yarn`/`npm` (labels `Yarn`/`NPM`).

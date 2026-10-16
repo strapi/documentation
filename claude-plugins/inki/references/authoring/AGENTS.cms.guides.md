@@ -33,6 +33,7 @@ Content Conventions (procedural specifics)
 - For repeated variants (e.g., REST/GraphQL/Client), keep a single "Step" and present each variant under the step (no duplicate headings per language) with <Tabs> and <TabItem> components (see `templates/components/tabs.md` for guidance).
 - Include concrete UI paths (e.g., Settings → Single Sign‑On) and explicit file locations.
 - Troubleshooting (optional, after Validation): heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list with the symptom in bold, then the cause, then the fix. See `claude-plugins/inki/references/templates/components/troubleshooting.md`.
+- Tables of options use mandatory `Type` and `Required` columns. See `claude-plugins/inki/references/templates/components/options-table.md`.
 
 Cross‑linking
 - Link to the feature being configured and relevant API references; prefer relative links under `/cms/`.
