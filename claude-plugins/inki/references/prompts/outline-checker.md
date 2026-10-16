@@ -242,6 +242,8 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 **Key rule:** Steps MUST be numbered lists with one action per step.
 
+**Troubleshooting format (all page types):** a Troubleshooting section MUST use the heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list where each entry gives the symptom in bold, then the cause, then the fix. Flag as [warning] a missing icon, a missing introductory sentence, one H3 per symptom, a table, or bold run-in paragraphs without bullets. Rules: `claude-plugins/inki/references/templates/components/troubleshooting.md`.
+
 ---
 
 #### Configuration Pages (`cms/configurations/*`)
