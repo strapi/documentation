@@ -1,5 +1,12 @@
 # Inki Changelog
 
+## 2026-10-16
+
+### Added
+
+- `templates/components/troubleshooting.md`: every Troubleshooting section uses the heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list with the symptom in bold, then the cause, then the fix. The guide and plugin templates, their authoring guides, and the outline checker now apply it, and the style checker no longer flags the bold symptom lead-in.
+- `templates/components/options-table.md`: any table of configuration options or parameters must include a `Type` column and a `Required` column. The configuration and plugin templates, their authoring guides, and the outline checker now apply it.
+
 ## v0.2.3 (2026-06-17)
 
 ### Changed
