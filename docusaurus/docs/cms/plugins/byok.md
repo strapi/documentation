@@ -170,14 +170,93 @@ If a required option is missing while the plugin is enabled, Strapi does not sta
 | Option | Type | Required | Description |
 |---|---|---|---|
 | `enabled` | Boolean | No | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
-| `connection.baseURL` | String | Yes | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
+| `connection.baseURL` | String | Yes | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic (see [Tested providers and models](#tested-providers-and-models) for the URL of each tested provider). |
 | `connection.apiKey` | String | Yes | API key for your provider. Keep it in the server environment only. |
-| `models.translations` | String | Yes | Model used for AI Translations, for instance `gpt-4.1-mini` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
-| `models.mediaMetadata` | String | Yes | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4.1` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
+| `models.translations` | String | Yes | Model used for AI Translations, for instance `gpt-4o` (OpenAI) or `claude-haiku-4-5` (Anthropic), or another model from [Tested providers and models](#tested-providers-and-models). |
+| `models.mediaMetadata` | String | Yes | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4o` (OpenAI) or `claude-sonnet-5-5` (Anthropic), or another model from [Tested providers and models](#tested-providers-and-models). |
 
 :::tip
 Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
 :::
+
+### Tested providers and models
+
+The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the providers and models below. For each feature, `>=` means: use this model or a later one.
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>`connection.baseURL`</th>
+      <th>Model family</th>
+      <th>AI Translations (`models.translations`)</th>
+      <th>AI-powered metadata generation (`models.mediaMetadata`)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan={4}>Anthropic</td>
+      <td rowSpan={4}>`https://api.anthropic.com/v1`</td>
+      <td>Claude Haiku</td>
+      <td>`>=claude-haiku-4-5`</td>
+      <td>`>=claude-haiku-4-5`</td>
+    </tr>
+    <tr>
+      <td>Claude Sonnet</td>
+      <td>`>=claude-sonnet-4-5`</td>
+      <td>`>=claude-sonnet-4-5`</td>
+    </tr>
+    <tr>
+      <td>Claude Opus</td>
+      <td>`>=claude-opus-4-5`</td>
+      <td>`>=claude-opus-4-8`</td>
+    </tr>
+    <tr>
+      <td>Claude Fable</td>
+      <td>`>=claude-fable-5`</td>
+      <td>`>=claude-fable-5`</td>
+    </tr>
+    <tr>
+      <td rowSpan={2}>OpenAI</td>
+      <td rowSpan={2}>`https://api.openai.com/v1`</td>
+      <td>GPT</td>
+      <td>`>=gpt-4`</td>
+      <td>`>=gpt-4o`</td>
+    </tr>
+    <tr>
+      <td>o-series</td>
+      <td>`>=o3`</td>
+      <td>`>=o3`</td>
+    </tr>
+    <tr>
+      <td>Google</td>
+      <td>`https://generativelanguage.googleapis.com/v1beta/openai`</td>
+      <td>Gemini</td>
+      <td>`>=gemini-3`</td>
+      <td>`>=gemini-3`</td>
+    </tr>
+    <tr>
+      <td>OpenRouter</td>
+      <td>`https://openrouter.ai/api/v1`</td>
+      <td colSpan={3}>Same models as above, with their OpenRouter IDs, for instance `anthropic/claude-haiku-4.5`.</td>
+    </tr>
+    <tr>
+      <td>LiteLLM</td>
+      <td>URL of your LiteLLM proxy, for instance `http://localhost:4000/v1`</td>
+      <td colSpan={3}>Same models as above, with the model names of your LiteLLM configuration.</td>
+    </tr>
+  </tbody>
+</table>
+
+:::note
+Strapi tested these models in October 2026, with version 1.0.0 of the plugin. AI models don't always reply the same way to the same request. So a model from this table can still fail now and then. If that happens, retry the request, or try a more recent model.
+:::
+
+Servers that run models on your own infrastructure, such as Ollama or vLLM, also offer an OpenAI-compatible API, so the plugin can use them. Strapi did not test them. If you use one:
+
+- For `models.mediaMetadata`, pick a model that accepts image input.
+- Pick a model that replies with a single JSON object every time: the plugin reads the reply as JSON. Small models often fail to do so.
+- If your server does not need an API key, set `connection.apiKey` to any value: the option is required.
 
 ## Usage
 
@@ -205,7 +284,9 @@ BYOK is ready for AI Translation, AI Media Library. Requests go to your configur
 | A warning says the i18n plugin is not installed | AI Translations stays off until the [Internationalization](/cms/features/internationalization) feature is enabled. The Media Library feature still uses your provider. |
 | No `BYOK is ready` line in the logs at startup | Check that `STRAPI_BYOK_ENABLED` is `true` and that [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) is not `false`. |
 | `The AI provider rejected the request (HTTP 401)` or `(HTTP 403)` | Check `connection.apiKey`. |
-| `The AI provider rejected the request (HTTP 404)` | Check that `connection.baseURL` includes the API version path, such as `/v1`, and that your provider offers the model you set. |
+| `The AI provider rejected the request (HTTP 402)` with OpenRouter | Raise or remove the credit limit of your OpenRouter API key. The plugin does not limit the length of the reply, so OpenRouter reserves credits for the longest reply the model can send. |
+| `The AI provider rejected the request (HTTP 404)` | Check that `connection.baseURL` includes the API version path, such as `/v1`, and that your provider still offers the model you set: a retired model also returns a 404 error. Some providers also return a 404 error when your account cannot use the model, for instance a model that requires a verified OpenAI organization. In that case, verify your account or pick another model. |
+| `The AI provider did not return valid JSON` | Retry. If the error happens often, try a more recent model from [Tested providers and models](#tested-providers-and-models). With a server that runs models on your own infrastructure, such as Ollama, try a larger model. |
 
 ## Uninstallation
 
