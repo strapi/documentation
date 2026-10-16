@@ -29,5 +29,9 @@ State the goal, prerequisites, and expected outcome.
 ## Validation
 Describe how to confirm it worked (UI, API response, logs).
 
-## Troubleshooting
-Common issues and quick fixes.
+<!-- Optional. Format rules: templates/components/troubleshooting.md -->
+## <Icon name="bug" /> Troubleshooting
+
+One sentence that introduces the list. The symptom is in bold, followed by what causes it and what to change:
+
+- **Symptom the reader observes.** Cause. Fix.

@@ -190,6 +190,7 @@ For each of the 12 rules, here is how to detect violations and what severity to 
   - Bold inside table cells (e.g. `| **Timestamp** | ... |`). Table cell labels must be plain text. **Severity:** warning.
   - Bold used for emphasis on regular prose words, field values, or log levels. **Severity:** warning.
   - Do NOT flag a bold span that is an actual UI button name (it should additionally carry an `<Icon>` prefix, see "UI element formatting" below).
+  - Do NOT flag the bold symptom that starts each entry of a Troubleshooting list. That lead-in is the required format (see `claude-plugins/inki/references/templates/components/troubleshooting.md`).
 
 ## Additional Style Checks
 

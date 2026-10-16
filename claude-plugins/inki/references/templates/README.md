@@ -49,6 +49,8 @@ How to use
 - Endpoint (2‑column API block, `kind` `http`/`js`) rules: `claude-plugins/inki/references/templates/components/endpoint.md`
 - StepDetails (tutorial step) rules: `claude-plugins/inki/references/templates/components/step-details.md`
 - NextSteps ("What's next?" block) rules: `claude-plugins/inki/references/templates/components/next-steps.md`
+- Troubleshooting section format (bug icon heading, intro sentence, bold symptom list) rules: `claude-plugins/inki/references/templates/components/troubleshooting.md`
+- Options table columns (mandatory `Type` and `Required`) rules: `claude-plugins/inki/references/templates/components/options-table.md`
 - ExternalLink (outbound link with trailing icon) rules: `claude-plugins/inki/references/templates/components/external-link.md`
 - Icon (inline Phosphor icons in prose) rules: `claude-plugins/inki/references/templates/components/icon.md`
 - Badge (plan / status / version flags via named aliases like `<GrowthBadge>`, `<NewBadge>`) rules: `claude-plugins/inki/references/templates/components/badge.md`

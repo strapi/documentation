@@ -35,6 +35,7 @@ Required Section Order
      - “Admin panel settings” — numbered steps, UI paths.
      - “Code-based configuration” — show `config/plugins.(js|ts)` (and other files) with code fences and file paths.
    - Include environment notes (e.g., disable in non‑production) under dedicated H3s when applicable.
+   - Document the options in a table with mandatory `Type` and `Required` columns: `Option | Type | Required | Description`. See `claude-plugins/inki/references/templates/components/options-table.md`.
 
 Tabs reminder (canonical rules: `claude-plugins/inki/references/templates/components/tabs.md`)
 - Installation: if both package managers are shown, use Tabs with `groupId="yarn-npm"` and values `yarn`/`npm` (labels `Yarn`/`NPM`).
@@ -46,7 +47,7 @@ Tabs reminder (canonical rules: `claude-plugins/inki/references/templates/compon
    - Document REST endpoints with the modern `<Endpoint>` component (`kind="http"`) and Document Service methods with `<Endpoint kind="js">`. See `claude-plugins/inki/references/templates/components/endpoint.md`. The legacy `<ApiCall>`/`<Request>`/`<Response>` trio is deprecated and allowed only on the not‑yet‑migrated `docs/cms/plugins/graphql.md` page.
 
 7) Troubleshooting (H2, optional)
-   - Symptom then cause then fix, one H3 per symptom or a table when the cases are short.
+   - Heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list: the symptom in bold, then the cause, then the fix. No H3 per symptom, no table. See `claude-plugins/inki/references/templates/components/troubleshooting.md`.
    - Worth adding whenever installation depends on something outside the project, such as registry access or a provider API key.
 
 8) Uninstallation (H2, optional)
