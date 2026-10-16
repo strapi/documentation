@@ -1,7 +1,10 @@
 name: Block PRs with specific labels
 
 on:
-  pull_request:
+  # pull_request_target so PRs from forks are checked without waiting for a
+  # maintainer's approval. Safe: the job only reads labels through the API and
+  # never checks out the PR's code.
+  pull_request_target:
     types: [opened, labeled, unlabeled, synchronize]
     branches:
       - main

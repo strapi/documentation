@@ -1544,6 +1544,61 @@
       "number": 26970,
       "reason": "Router: Internal Document Service API implementation fix handling edge cases in clone operations for nested relations, useJoinTable:false, and morphToOne. Fixes behavior without changing documented API surface.",
       "added": "2026-10-14"
+    },
+    {
+      "number": 27866,
+      "reason": "Triage: internal telemetry fix with no user-facing behavior change",
+      "added": "2026-10-15"
+    },
+    {
+      "number": 28020,
+      "reason": "Router: Internal admin bug fix. Fixes a regression where RBAC conditions registered with custom categories were not persisting in the role editor. The RBAC feature itself is already documented. This is a bug fix with no new public API or user-facing behavior.",
+      "added": "2026-10-15"
+    },
+    {
+      "number": 28009,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3574",
+      "added": "2026-10-15"
+    },
+    {
+      "number": 28063,
+      "reason": "Triage: test infrastructure change",
+      "added": "2026-10-16"
+    },
+    {
+      "number": 28017,
+      "reason": "Triage: internal error handling fix",
+      "added": "2026-10-16"
+    },
+    {
+      "number": 27947,
+      "reason": "Triage: internal performance optimization",
+      "added": "2026-10-16"
+    },
+    {
+      "number": 27893,
+      "reason": "Triage: internal async error handling",
+      "added": "2026-10-16"
+    },
+    {
+      "number": 28076,
+      "reason": "Router: Internal CLI implementation change that removes license expiration validation. No user-facing behavior or documented API changes.",
+      "added": "2026-10-16"
+    },
+    {
+      "number": 28073,
+      "reason": "Router: UI link change in Application Info page. Points upgrade link to docs instead of GitHub releases. No new feature or documented behavior change.",
+      "added": "2026-10-16"
+    },
+    {
+      "number": 28036,
+      "reason": "Router: Bug fix that preserves user experience when renaming content-type attributes. No new feature or capability to document.",
+      "added": "2026-10-16"
+    },
+    {
+      "number": 27906,
+      "reason": "Router: CLI output formatting improvement. Simplifies post-install messages for better accessibility. No new commands or capabilities introduced.",
+      "added": "2026-10-16"
     }
   ]
 }

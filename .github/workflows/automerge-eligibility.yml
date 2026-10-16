@@ -11,8 +11,11 @@ name: 'Auto-merge: check eligibility'
 # It does not merge anything. `automerge-cron.yml` does that, and only for PRs
 # carrying the label this workflow sets.
 
+# pull_request_target so PRs from forks do not sit waiting for a maintainer's
+# approval. They are out of scope anyway (no `auto-doc-healing` label), and the
+# job only checks out .github/scripts from main, never the PR's code.
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, labeled, unlabeled]
     branches: [main]
   workflow_dispatch:
