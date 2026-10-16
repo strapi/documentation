@@ -1,11 +1,20 @@
 # Inki Changelog
 
+
 ## 2026-10-16
 
 ### Added
 
 - `templates/components/troubleshooting.md`: every Troubleshooting section uses the heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list with the symptom in bold, then the cause, then the fix. The guide and plugin templates, their authoring guides, and the outline checker now apply it, and the style checker no longer flags the bold symptom lead-in.
 - `templates/components/options-table.md`: any table of configuration options or parameters must include a `Type` column and a `Required` column. The configuration and plugin templates, their authoring guides, and the outline checker now apply it.
+
+## Unversioned (since 2026-10-16)
+
+### Changed
+
+- Inki no longer declares a `version` in `plugin.json`. Claude Code now derives the version from the commit of the plugin directory, so every merged change to Inki reaches installed copies without a manual bump. The pinned `0.2.3` had held every install at its June state for 13 later commits.
+- The `strapi-documentation` marketplace now has `"autoUpdate": true` in the repository's `.claude/settings.json`. Claude Code refreshes it after the first message of a session and offers `/reload-plugins` when Inki changed. This applies once the repository folder is trusted.
+- Entries below this one keep their version numbers for history. New changes are listed by date.
 
 ## v0.2.3 (2026-06-17)
 
