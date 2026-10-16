@@ -22,6 +22,7 @@ MDX and code blocks
 - Use MDX Tabs for language variants (JS/TS) under the same example.
 - Always specify code fence language. Use `title="<file path>"` (e.g., `title="/config/server.js"`) to show the file path in the code block header. Never prefix the path with `path:` inside the title.
 - Never place a code block, table, or other structured element immediately after a heading or another block without an introductory sentence. Every block must be preceded by a complete sentence (subject + verb) that tells the reader what the block contains or demonstrates. End the sentence with a colon when it directly introduces the block. Examples: "The function accepts the following parameters:", "The following example shows how to configure the server:".
+- Write tables as Markdown tables only, never as HTML `<table>`. When cells would need merging (`rowSpan`, `colSpan`), repeat the value in each row or split the table.
 
 Annotations
 - Use the `<Annotation>` component for inline glossary tooltips. See `claude-plugins/inki/references/templates/components/annotation.md` for full rules, props, and canonical examples.
