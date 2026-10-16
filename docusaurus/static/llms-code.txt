@@ -17888,21 +17888,6 @@ npm run strapi openapi generate -- --output ./docs/api-spec.json
 ```
 
 Language: Bash
-File path: N/A
-
-```bash
-yarn strapi rename:field api::article.article title heading
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi rename:field api::article.article title heading
-```
-
-Language: Bash
 File path: /.yarnrc.yml
 
 ```bash
@@ -17971,36 +17956,12 @@ strapi ts:generate-types
 ```
 
 
-## strapi rename:field
-Description: Rename a field of a content-type or a component and generate the database migration that preserves its data.
-(Source: https://docs.strapi.io/cms/cli#strapi-rename-field)
-
-Language: Bash
-File path: ./openapi-spec.js
-
-```bash
-strapi rename:field <uid> <oldName> <newName>
-```
-
-
-## strapi enterprise install
-Description: Install Strapi Enterprise plugins from the Strapi package registry.
-(Source: https://docs.strapi.io/cms/cli#strapi-enterprise-install)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi enterprise install [packages...]
-```
-
-
 ## strapi routes:list
 Description: Display a list of all the available routes.
 (Source: https://docs.strapi.io/cms/cli#strapi-routes-list)
 
 Language: Bash
-File path: /.yarnrc.yml
+File path: ./openapi-spec.js
 
 ```bash
 strapi routes:list
@@ -18012,7 +17973,7 @@ Description: Display a list of all the registered policies.
 (Source: https://docs.strapi.io/cms/cli#strapi-policies-list)
 
 Language: Bash
-File path: /.yarnrc.yml
+File path: ./openapi-spec.js
 
 ```bash
 strapi policies:list
@@ -18024,7 +17985,7 @@ Description: Display a list of all the registered middlewares.
 (Source: https://docs.strapi.io/cms/cli#strapi-middlewares-list)
 
 Language: Bash
-File path: /.yarnrc.yml
+File path: N/A
 
 ```bash
 strapi middlewares:list
@@ -18036,7 +17997,7 @@ Description: Display a list of all the existing content-types.
 (Source: https://docs.strapi.io/cms/cli#strapi-content-types-list)
 
 Language: Bash
-File path: /.yarnrc.yml
+File path: N/A
 
 ```bash
 strapi content-types:list
@@ -18048,7 +18009,7 @@ Description: Display a list of all the available hooks.
 (Source: https://docs.strapi.io/cms/cli#strapi-hooks-list)
 
 Language: Bash
-File path: /.yarnrc.yml
+File path: N/A
 
 ```bash
 strapi hooks:list
@@ -18060,7 +18021,7 @@ Description: Display a list of all the registered controllers.
 (Source: https://docs.strapi.io/cms/cli#strapi-controllers-list)
 
 Language: Bash
-File path: /.yarnrc.yml
+File path: N/A
 
 ```bash
 strapi controllers:list
@@ -18076,6 +18037,18 @@ File path: N/A
 
 ```bash
 strapi services:list
+```
+
+
+## strapi enterprise install
+Description: Install Strapi Enterprise plugins from the Strapi package registry.
+(Source: https://docs.strapi.io/cms/cli#strapi-enterprise-install)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi enterprise install [packages...]
 ```
 
 

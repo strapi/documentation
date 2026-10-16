@@ -22194,9 +22194,9 @@ Strapi CLI commands on the present page are grouped by category:
 | [Project information](#project-information) | `report`, `telemetry:disable`, `telemetry:enable`, `version`, `help` |
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
 | [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
-| [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types`, `rename:field` |
-| [Enterprise](#enterprise) | `enterprise install` |
+| [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types` |
 | [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
+| [Enterprise](#enterprise) | `enterprise install` |
 
 :::caution
 Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. Please consider using the `yarn` package manager.
@@ -22933,89 +22933,6 @@ strapi ts:generate-types
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
 
-### `strapi rename:field`
-
-Rename a field of a content-type or a component and generate the [database migration](/cms/database-migrations) that preserves its data.
-
-```bash
-strapi rename:field <uid> <oldName> <newName>
-```
-
-| Argument    | Description                                                                       |
-| ----------- | --------------------------------------------------------------------------------- |
-| `<uid>`     | Unique identifier of the content-type or component (e.g., `api::article.article`) |
-| `<oldName>` | Current name of the field                                                         |
-| `<newName>` | New name of the field                                                             |
-
-The command updates the schema file and writes a migration file in the `./database/migrations` folder, then prints its path. The migration renames the underlying database column or table instead of recreating it, so the existing data is kept. It runs once, at the next startup of the application.
-
-This is the command-line equivalent of renaming a field in the [Content-type Builder](/cms/features/content-type-builder#fields). Since the command-line cannot ask for a confirmation, it refuses a rename it cannot migrate, for instance when the field is a polymorphic relation, and leaves the schema untouched.
-
-#### Examples
-
-```bash
-yarn strapi rename:field api::article.article title heading
-```
-```bash
-npm run strapi rename:field api::article.article title heading
-```
-
-## Enterprise
-
-These commands install Strapi Enterprise plugins from the Strapi package registry.
-
-### `strapi enterprise install`
-
-Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
-
-```bash
-strapi enterprise install [packages...]
-```
-
-| Argument | Description |
-|---|---|
-| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.0.0` or `plugin-byok@^1.0.0`. |
-
-The command:
-
-1. Reads your license or asks for it.
-2. On first run, sets up access to the registry in your user-level `~/.npmrc` or `~/.yarnrc.yml` file.
-3. Installs the version you name or, by default, the newest stable version compatible with the application's Strapi version, with npm, pnpm, or Yarn.
-4. Shares the setup guide for each installed plugin.
-
-#### Examples
-
-```bash
-# Choose plugins from a list
-yarn strapi enterprise install
-
-# Install a plugin by name
-yarn strapi enterprise install plugin-byok
-
-# Install a specific version
-yarn strapi enterprise install plugin-byok@1.0.0
-```
-```bash
-# Choose plugins from a list
-npm run strapi enterprise install
-
-# Install a plugin by name
-npm run strapi enterprise install plugin-byok
-
-# Install a specific version
-npm run strapi enterprise install plugin-byok@1.0.0
-```
-```bash
-# Choose plugins from a list
-pnpm strapi enterprise install
-
-# Install a plugin by name
-pnpm strapi enterprise install plugin-byok
-
-# Install a specific version
-pnpm strapi enterprise install plugin-byok@1.0.0
-```
-
 ## Listing
 
 These commands list registered elements in your Strapi project.
@@ -23074,6 +22991,62 @@ Display a list of all the registered [services](/cms/backend-customization/servi
 
 ```bash
 strapi services:list
+```
+
+## Enterprise
+
+These commands install Strapi Enterprise plugins from the Strapi package registry.
+
+### `strapi enterprise install`
+
+Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
+
+```bash
+strapi enterprise install [packages...]
+```
+
+| Argument | Description |
+|---|---|
+| `packages` | Optional. One or more plugin names, with or without the `@strapi-enterprise/` prefix, and optionally a version, tag, or range, for instance `plugin-byok@1.0.0` or `plugin-byok@^1.0.0`. |
+
+The command:
+
+1. Reads your license or asks for it.
+2. On first run, sets up access to the registry in your user-level `~/.npmrc` or `~/.yarnrc.yml` file.
+3. Installs the version you name or, by default, the newest stable version compatible with the application's Strapi version, with npm, pnpm, or Yarn.
+4. Shares the setup guide for each installed plugin.
+
+#### Examples
+
+```bash
+# Choose plugins from a list
+yarn strapi enterprise install
+
+# Install a plugin by name
+yarn strapi enterprise install plugin-byok
+
+# Install a specific version
+yarn strapi enterprise install plugin-byok@1.0.0
+```
+```bash
+# Choose plugins from a list
+npm run strapi enterprise install
+
+# Install a plugin by name
+npm run strapi enterprise install plugin-byok
+
+# Install a specific version
+npm run strapi enterprise install plugin-byok@1.0.0
+```
+```bash
+# Choose plugins from a list
+pnpm strapi enterprise install
+
+# Install a plugin by name
+pnpm strapi enterprise install plugin-byok
+
+# Install a specific version
+pnpm strapi enterprise install plugin-byok@1.0.0
 ```
 
 
