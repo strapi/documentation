@@ -4,7 +4,8 @@
       "source": {
         "source": "github",
         "repo": "strapi/documentation"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
