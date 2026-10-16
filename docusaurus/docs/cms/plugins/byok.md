@@ -284,7 +284,9 @@ BYOK is ready for AI Translation, AI Media Library. Requests go to your configur
 | A warning says the i18n plugin is not installed | AI Translations stays off until the [Internationalization](/cms/features/internationalization) feature is enabled. The Media Library feature still uses your provider. |
 | No `BYOK is ready` line in the logs at startup | Check that `STRAPI_BYOK_ENABLED` is `true` and that [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) is not `false`. |
 | `The AI provider rejected the request (HTTP 401)` or `(HTTP 403)` | Check `connection.apiKey`. |
-| `The AI provider rejected the request (HTTP 404)` | Check that `connection.baseURL` includes the API version path, such as `/v1`, and that your provider offers the model you set. |
+| `The AI provider rejected the request (HTTP 402)` with OpenRouter | Raise or remove the credit limit of your OpenRouter API key. The plugin does not limit the length of the reply, so OpenRouter reserves credits for the longest reply the model can send. |
+| `The AI provider rejected the request (HTTP 404)` | Check that `connection.baseURL` includes the API version path, such as `/v1`, and that your provider still offers the model you set: a retired model also returns a 404 error. Some providers also return a 404 error when your account cannot use the model, for instance a model that requires a verified OpenAI organization. In that case, verify your account or pick another model. |
+| `The AI provider did not return valid JSON` | Retry. If the error happens often, try a more recent model from [Tested providers and models](#tested-providers-and-models). With a server that runs models on your own infrastructure, such as Ollama, try a larger model. |
 
 ## Uninstallation
 
