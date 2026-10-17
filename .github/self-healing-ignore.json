@@ -1599,6 +1599,36 @@
       "number": 27906,
       "reason": "Router: CLI output formatting improvement. Simplifies post-install messages for better accessibility. No new commands or capabilities introduced.",
       "added": "2026-10-16"
+    },
+    {
+      "number": 27979,
+      "reason": "Triage: internal pool connection leak fix, no API behavior changes",
+      "added": "2026-10-17"
+    },
+    {
+      "number": 27942,
+      "reason": "Triage: performance optimization of internal query execution, behavior unchanged",
+      "added": "2026-10-17"
+    },
+    {
+      "number": 27644,
+      "reason": "Triage: internal deprecation warning fix, no behavior change",
+      "added": "2026-10-17"
+    },
+    {
+      "number": 27233,
+      "reason": "Triage: performance optimization of internal traversal, behavior unchanged",
+      "added": "2026-10-17"
+    },
+    {
+      "number": 28004,
+      "reason": "Router: Internal validation improvement for admin tokens. No public API or feature changes. Validation errors are already handled by existing admin UI.",
+      "added": "2026-10-17"
+    },
+    {
+      "number": 27822,
+      "reason": "Router: Internal email provider fix for RFC 2047 decoding. No user-facing API or feature changes.",
+      "added": "2026-10-17"
     }
   ]
 }
