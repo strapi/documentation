@@ -298,9 +298,10 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 | `origin`            | Configure the `Access-Control-Allow-Origin` header        | `String` or `Array` or `Function`  | `'*'`                                                      |
 | `maxAge`            | Configure the `Access-Control-Max-Age` header, in seconds | `String` or `Number` | `31536000`                                                 |
 | `credentials`       | Configure the `Access-Control-Allow-Credentials` header   | `Boolean`            | `true`                                                     |
-| `methods`           | Configure the `Access-Control-Allow-Methods` header       | `Array` or `String`  | `['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS']`      |
-| `headers`           | Configure the `Access-Control-Allow-Headers` header       | `Array` or `String`  | Request headers passed in `Access-Control-Request-Headers` |
-| `keepHeaderOnError` | Add set headers to `err.header` if an error is thrown     | `Boolean`            | `false`                                                    |
+| `methods`           | Configure the `Access-Control-Allow-Methods` header       | `Array` or `String`  | `['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']` |
+| `headers`           | Configure the `Access-Control-Allow-Headers` header       | `Array` or `String`  | `['Content-Type', 'Authorization', 'Origin', 'Accept']`    |
+| `expose`            | Configure the `Access-Control-Expose-Headers` header      | `Array` or `String`  | -                                                          |
+| `keepHeadersOnError` | Add set headers to `err.header` if an error is thrown    | `Boolean`            | `false`                                                    |
 
 <details>
 <summary> Example: Custom configuration for the cors middleware</summary>
@@ -319,7 +320,7 @@ module.exports = [
       origin: ['https://example.com', 'https://subdomain.example.com', 'https://someotherwebsite.org'],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
-      keepHeaderOnError: true,
+      keepHeadersOnError: true,
     },
   },
   // ...
@@ -340,7 +341,7 @@ export default [
       origin: ['https://example.com', 'https://subdomain.example.com', 'https://someotherwebsite.org'],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
-      keepHeaderOnError: true,
+      keepHeadersOnError: true,
     },
   },
   // ...
