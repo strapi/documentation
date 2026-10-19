@@ -181,9 +181,9 @@ Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an AP
 
 ### Tested providers and models
 
-The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the following models:
+The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the following models.
 
-| Model family | AI Translations (`models.translations`) | AI-powered metadata generation (`models.mediaMetadata`) |
+| Provider and model family | AI Translations (`models.translations`) | AI-powered metadata generation (`models.mediaMetadata`) |
 |---|---|---|
 | Anthropic Claude Haiku | `>=claude-haiku-4-5` | `>=claude-haiku-4-5` |
 | Anthropic Claude Sonnet | `>=claude-sonnet-4-5` | `>=claude-sonnet-4-5` |
@@ -193,8 +193,8 @@ The plugin works with providers that offer an OpenAI-compatible API. Strapi test
 | OpenAI GPT mini | `>=gpt-5.4-mini` | `>=gpt-4o-mini` |
 | OpenAI o-series | `>=o3` | `>=o3` |
 | Google Gemini | `>=gemini-3` | `>=gemini-3` |
-
-The same models also work through OpenRouter, with their OpenRouter IDs (e.g., `anthropic/claude-haiku-4.5`), and through a LiteLLM proxy, with the model names of your LiteLLM configuration.
+| OpenRouter | Same as above, with OpenRouter IDs (e.g., `anthropic/claude-haiku-4.5`) | Same as above, with OpenRouter IDs |
+| LiteLLM | Same as above, with your LiteLLM model names | Same as above, with your LiteLLM model names |
 
 :::note
 Strapi tested these models, but AI models don't always reply the same way to the same request. So a model from this table can still fail now and then. If that happens, retry the request, or try a more recent model.
