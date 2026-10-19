@@ -181,66 +181,19 @@ Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an AP
 
 ### Tested providers and models
 
-The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the providers and models below.
+The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the following models:
 
-<table>
-  <thead>
-    <tr>
-      <th>Provider</th>
-      <th>Model family</th>
-      <th>AI Translations (`models.translations`)</th>
-      <th>AI-powered metadata generation (`models.mediaMetadata`)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowSpan={4}>Anthropic</td>
-      <td>Claude Haiku</td>
-      <td>`>=claude-haiku-4-5`</td>
-      <td>`>=claude-haiku-4-5`</td>
-    </tr>
-    <tr>
-      <td>Claude Sonnet</td>
-      <td>`>=claude-sonnet-4-5`</td>
-      <td>`>=claude-sonnet-4-5`</td>
-    </tr>
-    <tr>
-      <td>Claude Opus</td>
-      <td>`>=claude-opus-4-5`</td>
-      <td>`>=claude-opus-4-8`</td>
-    </tr>
-    <tr>
-      <td>Claude Fable</td>
-      <td>`>=claude-fable-5`</td>
-      <td>`>=claude-fable-5`</td>
-    </tr>
-    <tr>
-      <td rowSpan={2}>OpenAI</td>
-      <td>GPT</td>
-      <td>`>=gpt-4`</td>
-      <td>`>=gpt-4o`</td>
-    </tr>
-    <tr>
-      <td>o-series</td>
-      <td>`>=o3`</td>
-      <td>`>=o3`</td>
-    </tr>
-    <tr>
-      <td>Google</td>
-      <td>Gemini</td>
-      <td>`>=gemini-3`</td>
-      <td>`>=gemini-3`</td>
-    </tr>
-    <tr>
-      <td>OpenRouter</td>
-      <td colSpan={3}>Same models as above, with their OpenRouter IDs (e.g., `anthropic/claude-haiku-4.5`).</td>
-    </tr>
-    <tr>
-      <td>LiteLLM</td>
-      <td colSpan={3}>Same models as above, with the model names of your LiteLLM configuration.</td>
-    </tr>
-  </tbody>
-</table>
+| Model family | AI Translations (`models.translations`) | AI-powered metadata generation (`models.mediaMetadata`) |
+|---|---|---|
+| Anthropic Claude Haiku | `>=claude-haiku-4-5` | `>=claude-haiku-4-5` |
+| Anthropic Claude Sonnet | `>=claude-sonnet-4-5` | `>=claude-sonnet-4-5` |
+| Anthropic Claude Opus | `>=claude-opus-4-5` | `>=claude-opus-4-8` |
+| Anthropic Claude Fable | `>=claude-fable-5` | `>=claude-fable-5` |
+| OpenAI GPT | `>=gpt-4` | `>=gpt-4o` |
+| OpenAI o-series | `>=o3` | `>=o3` |
+| Google Gemini | `>=gemini-3` | `>=gemini-3` |
+
+The same models also work through OpenRouter, with their OpenRouter IDs (e.g., `anthropic/claude-haiku-4.5`), and through a LiteLLM proxy, with the model names of your LiteLLM configuration.
 
 :::note
 Strapi tested these models but AI models don't always reply the same way to the same request. So a model from this table can still fail now and then. If that happens, retry the request, or try a more recent model.
