@@ -181,7 +181,7 @@ Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an AP
 
 ### Tested providers and models
 
-The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the following models.
+The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the following models. For the `connection.baseURL` value, see the documentation of your provider: [Anthropic](https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk), [OpenAI](https://developers.openai.com/api/reference/overview), [Google Gemini](https://ai.google.dev/gemini-api/docs/openai), [OpenRouter](https://openrouter.ai/docs/quickstart), or [LiteLLM](https://docs.litellm.ai/docs/proxy/user_keys).
 
 | Provider and model family | AI Translations (`models.translations`) | AI-powered metadata generation (`models.mediaMetadata`) |
 |---|---|---|
