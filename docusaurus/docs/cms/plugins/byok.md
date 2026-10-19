@@ -197,7 +197,9 @@ The plugin works with providers that offer an OpenAI-compatible API. Strapi test
 | LiteLLM | Same as above, with your LiteLLM model names | Same as above, with your LiteLLM model names |
 
 :::note
-Strapi tested these models, but AI models don't always reply the same way to the same request. So a model from this table can still fail now and then. If that happens, retry the request, or try a more recent model.
+Strapi only tested the models above, but in theory any other OpenAI-compatible API should work. For AI-powered metadata generation, ensure that you use a model that accepts image input.
+
+AI models don't always reply the same way to the same request, so even a tested model can fail now and then. If that happens, retry the request.
 :::
 
 ## Usage
