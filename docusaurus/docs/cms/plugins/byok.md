@@ -190,6 +190,7 @@ The plugin works with providers that offer an OpenAI-compatible API. Strapi test
 | Anthropic Claude Opus | `>=claude-opus-4-5` | `>=claude-opus-4-8` |
 | Anthropic Claude Fable | `>=claude-fable-5` | `>=claude-fable-5` |
 | OpenAI GPT | `>=gpt-4` | `>=gpt-4o` |
+| OpenAI GPT mini | `>=gpt-5.4-mini` | `>=gpt-4o-mini` |
 | OpenAI o-series | `>=o3` | `>=o3` |
 | Google Gemini | `>=gemini-3` | `>=gemini-3` |
 
