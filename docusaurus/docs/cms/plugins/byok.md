@@ -196,7 +196,7 @@ The plugin works with providers that offer an OpenAI-compatible API. Strapi test
 The same models also work through OpenRouter, with their OpenRouter IDs (e.g., `anthropic/claude-haiku-4.5`), and through a LiteLLM proxy, with the model names of your LiteLLM configuration.
 
 :::note
-Strapi tested these models but AI models don't always reply the same way to the same request. So a model from this table can still fail now and then. If that happens, retry the request, or try a more recent model.
+Strapi tested these models, but AI models don't always reply the same way to the same request. So a model from this table can still fail now and then. If that happens, retry the request, or try a more recent model.
 :::
 
 ## Usage
