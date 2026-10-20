@@ -1629,6 +1629,16 @@
       "number": 27822,
       "reason": "Router: Internal email provider fix for RFC 2047 decoding. No user-facing API or feature changes.",
       "added": "2026-10-17"
+    },
+    {
+      "number": 28121,
+      "reason": "Router: Internal implementation fix for content-releases package. The null check for oldContentTypes is an internal guard condition with no user-facing API or behavior change.",
+      "added": "2026-10-20"
+    },
+    {
+      "number": 28051,
+      "reason": "Router: Bug fix for event hub listener removal. While this affects documented behavior, the fix corrects the implementation to match the intended API contract. No configuration or new capabilities are exposed. Documentation may already be updated in the source repository.",
+      "added": "2026-10-20"
     }
   ]
 }
