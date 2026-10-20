@@ -1639,6 +1639,11 @@
       "number": 28051,
       "reason": "Router: Bug fix for event hub listener removal. While this affects documented behavior, the fix corrects the implementation to match the intended API contract. No configuration or new capabilities are exposed. Documentation may already be updated in the source repository.",
       "added": "2026-10-20"
+    },
+    {
+      "number": 28000,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3588",
+      "added": "2026-10-20"
     }
   ]
 }
