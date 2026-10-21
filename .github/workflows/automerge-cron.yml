@@ -13,6 +13,8 @@ on:
     # is around to notice it went wrong — a Saturday merge sits unwatched until
     # Monday either way, so the delay costs nothing and buys supervision.
     - cron: '0 8 * * 1-5' # 08:00 UTC, weekdays
+  # Also dispatched by `unflag-released-prs.yml` as soon as a Strapi release
+  # unflags a PR, so a release-gated PR does not wait for the next morning.
   workflow_dispatch:
     inputs:
       dry_run:
@@ -203,12 +205,28 @@ jobs:
 
             # Required checks, re-read now. CI can go green after the label was
             # set, or break later from an unrelated change on main.
+            #
+            # Only the most recent run of each check counts. A PR can carry
+            # several runs of the same check, and `gh pr checks` lists them in no
+            # useful order: on 2026-10-21 #3574 showed a `check-labels` failure
+            # from 2026-10-15 above the pass that followed the unflag, and
+            # reading the first line held a PR that was green.
             BLOCKING=""
             IFS=',' read -ra NEEDED <<< "$REQUIRED_CHECKS"
-            CHECKS=$(gh pr checks "$PR" --repo "$GITHUB_REPOSITORY" 2>/dev/null || true)
+            ROLLUP=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json statusCheckRollup 2>/dev/null || echo '{}')
 
             for NAME in "${NEEDED[@]}"; do
-              STATE=$(echo "$CHECKS" | awk -F'\t' -v n="$NAME" '$1 == n { print $2; exit }')
+              STATE=$(jq -r --arg n "$NAME" '
+                [.statusCheckRollup[]? | select((.name // .context) == $n)]
+                | sort_by(.startedAt // "") | last
+                | if . == null then ""
+                  elif .__typename == "StatusContext" then
+                    (if .state == "SUCCESS" then "pass"
+                     elif .state == "PENDING" or .state == "EXPECTED" then "pending"
+                     else "fail" end)
+                  elif .status != "COMPLETED" then "pending"
+                  elif .conclusion == "SUCCESS" then "pass"
+                  else (.conclusion | ascii_downcase) end' <<< "$ROLLUP")
               if [ -z "$STATE" ]; then
                 BLOCKING="${BLOCKING}${NAME} (missing), "
               elif [ "$STATE" != "pass" ]; then
