@@ -10,7 +10,7 @@ tags:
 ---
 
 # Bring your own AI key plugin
-<EnterpriseBadge tooltip="This plugin is available with an Enterprise plan."/> <VersionBadge version="5.57.0" />
+<EnterpriseBadge tooltip="This plugin is available with an Enterprise plan."/> <VersionBadge version="5.59.0" />
 
 <Tldr>
 The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
@@ -26,7 +26,7 @@ With the Bring your own AI key plugin, Strapi AI sends the requests of AI Transl
 
 :::prerequisites
 - A license for the CMS Enterprise plan.
-- Strapi 5.57.0 or later.
+- Strapi 5.59.0 or later.
 - An API key for a provider with an OpenAI-compatible API.
 - For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
 :::

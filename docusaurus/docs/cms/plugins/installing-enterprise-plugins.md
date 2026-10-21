@@ -10,7 +10,7 @@ tags:
 ---
 
 # Installing Enterprise plugins
-<EnterpriseBadge tooltip="This is available with an Enterprise plan."/> <VersionBadge version="5.57.0" />
+<EnterpriseBadge tooltip="This is available with an Enterprise plan."/> <VersionBadge version="5.59.0" />
 
 <Tldr>
 Enterprise plugins are distributed from the Strapi package registry to the licenses that include them. The `strapi enterprise install` command finds your license, sets up access to the registry, and installs a version compatible with your Strapi application.
@@ -19,7 +19,7 @@ Enterprise plugins are distributed from the Strapi package registry to the licen
 Enterprise plugins are not published on the public npm registry. They are installed like any other dependency, and the Strapi package registry only serves the plugins your Strapi license includes. The `strapi enterprise install` command sets up the registry for you, so package manager configuration files don't need to be edited by hand.
 
 :::prerequisites
-- A Strapi 5.57.0 or later application, with its dependencies installed.
+- A Strapi 5.59.0 or later application, with its dependencies installed.
 - A license for the CMS Enterprise plan. The license key is available in the [Strapi billing portal](/cms/billing-portal#viewing-and-saving-a-cms-license-key).
 - npm, pnpm, or Yarn (1 or 2 and later).
 :::
