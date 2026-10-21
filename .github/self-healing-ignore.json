@@ -1644,6 +1644,21 @@
       "number": 28000,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3588",
       "added": "2026-10-20"
+    },
+    {
+      "number": 28120,
+      "reason": "Router: Internal bug fix to Review Workflows middleware. No public API or behavior change exposed to users. Fixes duplicate database writes and webhook calls caused by double-calling next() in document service middleware. This is an implementation detail, not documented in user-facing documentation.",
+      "added": "2026-10-21"
+    },
+    {
+      "number": 28117,
+      "reason": "Router: Bug fix for Strapi core with updates to internal architecture docs in strapi/strapi repo. No user-facing API changes. The architecture documentation (docs/docs/architecture/02-server-lifecycle.md) is in the strapi/strapi repository and not part of the public user documentation in strapi/documentation repo.",
+      "added": "2026-10-21"
+    },
+    {
+      "number": 28116,
+      "reason": "Router: MCP server performance optimization with internal architecture documentation updates in strapi/strapi repo. No public API changes or new user-facing features. Performance improvements to schema resolution are internal implementation details. The updated internal contributor docs (docs/docs/packages/core/core/mcp-server.md) are in strapi/strapi, not the public documentation repo.",
+      "added": "2026-10-21"
     }
   ]
 }
