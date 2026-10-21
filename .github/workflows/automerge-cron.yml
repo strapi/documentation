@@ -13,6 +13,8 @@ on:
     # is around to notice it went wrong — a Saturday merge sits unwatched until
     # Monday either way, so the delay costs nothing and buys supervision.
     - cron: '0 8 * * 1-5' # 08:00 UTC, weekdays
+  # Also dispatched by `unflag-released-prs.yml` as soon as a Strapi release
+  # unflags a PR, so a release-gated PR does not wait for the next morning.
   workflow_dispatch:
     inputs:
       dry_run:

@@ -17,6 +17,12 @@ name: Unflag released PRs
 # 10:00 to 15:00 UTC, so a release is picked up within the hour. Repeated runs
 # are harmless: a PR loses its label once, and Slack is only notified when a
 # run actually unflags something.
+#
+# When a run unflags something, it dispatches `automerge-cron.yml` right away.
+# That workflow otherwise runs once, at 08:00 UTC: on 2026-10-21 v5.59.0 was
+# published at 09:40, both release-gated PRs were unflagged at 11:04, and
+# neither could merge before the next morning. Strapi publishes no event this
+# repository can subscribe to, so this hourly check is the release detector.
 
 on:
   schedule:
@@ -32,6 +38,7 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  actions: write # dispatch the auto-merge workflow
 
 jobs:
   unflag:
@@ -102,6 +109,8 @@ jobs:
             exit 0
           fi
 
+          UNFLAGGED_PRS=""  # space-separated, for the auto-merge trigger
+          UNFLAG_TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           UNFLAGGED=0
           STILL_WAITING=0
           SKIPPED=0
@@ -176,6 +185,7 @@ jobs:
                   fi
                 fi
                 UNFLAGGED=$((UNFLAGGED + 1))
+                UNFLAGGED_PRS="$UNFLAGGED_PRS $DOC_PR"
                 # Two link syntaxes are needed and they are not interchangeable:
                 # the GitHub step summary renders Markdown, Slack renders
                 # <url|text>. Building one string for both is what made the
@@ -226,6 +236,8 @@ jobs:
 
           {
             echo "unflagged=$UNFLAGGED"
+            echo "unflagged_prs=${UNFLAGGED_PRS# }"
+            echo "unflag_ts=$UNFLAG_TS"
             echo "tag=$TAG"
             echo "slack_list<<SLACK_EOF"
             printf '%b' "$SLACK_LIST"
@@ -263,3 +275,42 @@ jobs:
             -H "Content-type: application/json; charset=utf-8" \
             -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$TEXT" '{channel: $channel, text: $text}')" \
             > /dev/null || echo "Slack notification failed (non-blocking)"
+
+      # Merge what the release just unblocked, instead of waiting for the 08:00
+      # UTC run. The auto-merge workflow keeps all of its own gates (quarantine,
+      # required checks, human feedback, absence period): this only moves its
+      # start time.
+      - name: Trigger the auto-merge
+        if: steps.unflag.outputs.unflagged != '' && steps.unflag.outputs.unflagged != '0' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRS: ${{ steps.unflag.outputs.unflagged_prs }}
+          SINCE: ${{ steps.unflag.outputs.unflag_ts }}
+        run: |
+          set -uo pipefail
+
+          # Removing the label re-runs `check-labels`, a required check. Dispatching
+          # before that run completes would read it as pending, or read the failure
+          # from when the label was on, and hold the PR until tomorrow. So wait for
+          # a `check-labels` run started after the unflag to complete, on every PR.
+          # Bounded: past 10 minutes, dispatch anyway and let the gates decide.
+          for _ in $(seq 1 20); do
+            PENDING=""
+            for PR in $PRS; do
+              # `gh --jq` takes no --arg, hence the separate jq.
+              DONE=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json statusCheckRollup 2>/dev/null \
+                | jq --arg s "$SINCE" '[.statusCheckRollup[]?
+                  | select(.name == "check-labels" and (.startedAt // "") >= $s and .status == "COMPLETED")]
+                  | length' 2>/dev/null || echo 0)
+              [ "${DONE:-0}" -gt 0 ] || PENDING="$PENDING #$PR"
+            done
+            if [ -z "$PENDING" ]; then
+              echo "check-labels has re-run on every unflagged PR"
+              break
+            fi
+            echo "Waiting for check-labels on:$PENDING"
+            sleep 30
+          done
+
+          gh workflow run automerge-cron.yml --repo "$GITHUB_REPOSITORY" --ref main
+          echo "Auto-merge dispatched for:$(printf ' #%s' $PRS)"
