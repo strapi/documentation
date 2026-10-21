@@ -40,7 +40,7 @@ Strapi AI is powered in one of 2 ways, depending on your plan:
 |---|---|---|
 | Plan | <GrowthBadge /> | <EnterpriseBadge /> |
 | Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
-| Strapi version | 5.30 or later | 5.57 or later |
+| Strapi version | 5.30 or later | 5.59 or later |
 | AI requests go to | Strapi-managed infrastructure | Your own AI provider, with your API key and models |
 | Billing | [AI credits](#credits) | Your AI provider's pricing |
 | Data handling | [Strapi-managed](/cms/usage-information#strapi-ai-data-handling) | Your provider's terms |
