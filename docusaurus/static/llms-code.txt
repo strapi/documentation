@@ -4522,6 +4522,15 @@ File path: /core/database/src/query/helpers/populate/apply.ts
 ]
 ```
 
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::article.article').findMany({
+  populate: { testDZ: 'smart' },
+});
+```
+
 Language: JSON
 File path: N/A
 
@@ -10501,6 +10510,13 @@ File path: N/A
     }
   }
 }
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[blocks]=smart
 ```
 
 Language: JSON
