@@ -232,7 +232,7 @@ $ npx @strapi/upgrade -V
 When passing the `--debug` option (or its `-d` shorthand), the upgrade tool provides more detailed logs while running:
 
 ```bash
-npx @strapi/upgrade --debug
+npx @strapi/upgrade major --debug
 ```
 
 ### Execute the upgrade silently
@@ -240,7 +240,7 @@ npx @strapi/upgrade --debug
 When passing the `--silent` option (or its `-s` shorthand), the tool executes the upgrade without providing any log:
 
 ```bash
-npx @strapi/upgrade --silent
+npx @strapi/upgrade major --silent
 ```
 
 ### Answer yes to every prompt
@@ -248,7 +248,7 @@ npx @strapi/upgrade --silent
 When passing the `--yes` option (or its `-y` shorthand), the tool automatically answers "yes" to every prompt:
 
 ```bash
-npx @strapi/upgrade --yes`
+npx @strapi/upgrade major --yes
 ```
 
 ### Get help
