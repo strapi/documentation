@@ -6,6 +6,21 @@
       "permanent": true
     },
     {
+      "source": "/llm.txt",
+      "destination": "/llms.txt",
+      "permanent": true
+    },
+    {
+      "source": "/quickstart",
+      "destination": "/cms/quick-start",
+      "permanent": true
+    },
+    {
+      "source": "/quick-start",
+      "destination": "/cms/quick-start",
+      "permanent": true
+    },
+    {
       "source": "/cms",
       "destination": "/cms/intro",
       "permanent": true
