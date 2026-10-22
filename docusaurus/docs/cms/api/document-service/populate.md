@@ -68,37 +68,31 @@ const documents = await strapi.documents("api::article.article").findMany({
 <ResponseTab status={200} statusText="OK">
 
 ```json
-{
-  [
-    {
-      "id": "cjld2cjxh0000qzrmn831i7rn",
-      "title": "Test Article",
-      "slug": "test-article",
-      "body": "Test 1",
-      // ...
-      "headerImage": {
-        "data": {
-          "id": 1,
-          "attributes": {
-            "name": "17520.jpg",
-            "alternativeText": "17520.jpg",
-            "formats": {
-              // ...
-            }
-            // ...
-          }
-        }
-      },
-      "author": {
-        // ...
-      },
-      "categories": {
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    "slug": "test-article",
+    "body": "Test 1",
+    // ...
+    "headerImage": {
+      "id": 1,
+      "name": "17520.jpg",
+      "alternativeText": "17520.jpg",
+      "formats": {
         // ...
       }
+      // ...
+    },
+    "author": {
+      // ...
+    },
+    "categories": {
+      // ...
     }
-    // ...
-  ]
-}
+  }
+  // ...
+]
 ```
 
 </ResponseTab>
