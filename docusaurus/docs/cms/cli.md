@@ -105,7 +105,7 @@ options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling |
 - **strapi develop --bundler [bundler]**<br/>
   Selects the bundler for the admin panel build (`vite` or `webpack`).
 - **strapi develop --open**<br/>
-  Starts your application with auto-reloading enabled & open your default browser with the administration panel running.
+  Opens the administration panel in your default browser. This option is enabled by default and has no `--no-open` counterpart. Strapi opens the browser at startup only while no administrator account exists. To disable this behavior, set [`autoOpen`](/cms/configurations/admin-panel#admin-panel-behavior) to `false` in the `/config/admin` file.
 - **strapi develop --no-watch-admin**<br/>
   Prevents the server from auto-reload when changes are made to the admin panel code.
 - **strapi develop --no-build-admin**<br/>
