@@ -142,14 +142,13 @@ strapi build
 
 | Option              | Type | Description                                              |
 | ------------------- | :--: | -------------------------------------------------------- |
+| `--bundler [bundler]` | string | Bundler to use, `vite` or `webpack` (default: `vite`). The `webpack` bundler is deprecated. |
 | `-d, --debug`        |  -   | Enable debugging mode with verbose logs (default: false) |
 | `--minify`           |  -   | Minify the output (default: true)                        |
-| `--no-optimization`  |  -   | [DEPRECATED]: use minify instead                         |
 | `--silent`           |  -   | Don't log anything (default: false)                      |
-| `--sourcemaps`       |  -   | Produce sourcemaps (default: false)                      |
+| `--sourcemap`        |  -   | Produce sourcemaps (default: false)                      |
 | `--stats`            |  -   | Print build statistics to the console (default: false)   |
 | `--install-deps`     |  -   | Auto-installs missing admin peer dependencies (default: false) |
-| `--no-install-deps`  |  -   | Skips auto-installation and fails if dependencies are missing (default: true) |
 
 ### `strapi console`
 
