@@ -99,9 +99,7 @@ Strapi uses a system called [extension](/cms/plugins-development/plugins-extensi
 
 ## Can I add my own 3rd party auth provider?
 
-Yes, you can either follow the following [documentation](/cms/configurations/users-and-permissions-providers/new-provider-guide) or you can take a look at the <ExternalLink to="https://github.com/strapi/strapi/tree/main/packages/plugins/users-permissions" text="users-permissions"/> code and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
-
-There is currently no ETA on this migration however.
+Yes, you can either follow the following [documentation](/cms/configurations/users-and-permissions-providers/new-provider-guide) or you can take a look at the <ExternalLink to="https://github.com/strapi/strapi/tree/main/packages/plugins/users-permissions" text="users-permissions"/> code and submit a pull request to include the provider for everyone.
 
 ## Does Strapi allow me to change the default ID type or name?
 
