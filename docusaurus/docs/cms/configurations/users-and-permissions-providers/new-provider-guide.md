@@ -202,7 +202,7 @@ The OAuth flow between Strapi and the identity provider happens in the browser a
 1. Create a button that links to `STRAPI_BACKEND_URL/api/connect/${provider}` (for example, `https://strapi.mywebsite.com/api/connect/example-provider-name`).<br/>
    Strapi redirects the browser to the identity provider. Once the user has authorized the application, the identity provider redirects the browser back to `STRAPI_BACKEND_URL/api/connect/${provider}/callback`. Strapi then exchanges the authorization code for a token, saves the token response in the session, and redirects the browser to the front-end redirect URL set in the admin panel. The token is not added to the URL.
 2. Create the front-end route set as the redirect URL, for example `FRONTEND_URL/connect/${provider}/redirect`. This route must send a `GET` request to `STRAPI_BACKEND_URL/api/auth/${provider}/callback` that includes the Strapi session cookie (for example, with `credentials: 'include'` when using `fetch`).<br/>
-   Strapi calls the `authCallback` function of the provider, then responds with `{ "jwt": "...", "user": {...} }`.
+   Strapi calls the `authCallback` function of the provider, then responds with `{ "jwt": "...", "user": {...} }`. In the `refresh` [JWT management mode](/cms/features/users-permissions#jwt-management-modes), the response also includes a `refreshToken`, unless the refresh token is sent as an HTTP-only cookie.
 
 If the login fails on the identity provider side or during the token exchange, Strapi redirects the browser to the front-end redirect URL with `error` and `error_description` query parameters instead.
 
