@@ -23496,7 +23496,7 @@ To configure HTTP cookies for admin authentication, use the following parameters
 | `auth.cookie`                     | Cookie configuration for admin authentication                                                                                                                                                      | object        | `{}`                                                                                                                                |
 | `auth.cookie.name`                | Name of the admin access-token cookie. The value is trimmed and validated against RFC 6265 cookie-name characters. Invalid values fall back to the default.                                        | string        | `'jwtToken'`                                                                                                                        |
 | `auth.cookie.domain`              | Cookie domain (inherits from server if not set)                                                                                                                                                   | string        | `undefined`                                                                                                                         |
-| `auth.cookie.path`                | Cookie path                                                                                                                                                                                        | string        | `'/admin'`                                                                                                                          |
+| `auth.cookie.path`                | Path for admin authentication cookies. When unset, the access-token cookie derives from `admin.url` so the panel reads it; the refresh cookie stays at `/admin` for the auth endpoints. When set, applies to both cookies. Both include any `server.url` subpath. A configured path not covering the admin API is ignored for the refresh cookie with a warning. | string        | `undefined` (auto-derives from `admin.url`)                                                                                                                          |
 | `auth.cookie.sameSite`            | [SameSite cookie attribute](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value)                                                                                                                                                                          | string        | `'lax'`                                                                                                                             |
 | `auth.cookie.secure`              | Whether the `Secure` attribute is set on the admin authentication cookie. When unset, it is enabled automatically in production over HTTPS; setting it to `false` in production logs a warning.       | boolean       | `undefined`                                                                                                                         |
 
@@ -24244,10 +24244,58 @@ The `settings` object found in `./config/database.js` (or `./config/database.ts`
 | `forceMigration` | Allow the schema sync to drop tables, columns, indexes, and foreign keys that are no longer part of the content-types schemas. Set to `false` to skip every drop operation. | `Boolean` | `true`  |
 | `runMigrations`  | Run the migration files found in `/database/migrations` on startup. Strapi's own internal migrations and the schema sync run regardless of this setting. | `Boolean` | `true`  |
 | `useTypescriptMigrations` | Look for migration files in the build directory instead of the source directory, so that TypeScript migrations are executed. See [handling migrations with TypeScript code](/cms/database-migrations#handling-migrations-with-typescript-code). | `Boolean` | `false` |
+| `poolTimeoutDiagnostics` | Add pool state, event loop delay, and phase information to connection pool acquire timeout errors, and log a periodic warning while the pool keeps timing out. Set to `false` to leave Knex's original error and message untouched. See [connection pool timeouts](#connection-pool-timeouts). | `Boolean` | `true` |
 
 :::caution
 Despite its name, `forceMigration` does not control whether migrations run, which is what `runMigrations` does. It controls whether the schema sync is allowed to drop database objects. Setting it to `false` prevents data loss, but the schema sync still records the new schema as the reference, so a table whose deletion was skipped is no longer tracked by Strapi and is not dropped if you later set the parameter back to `true`. See [database migrations](/cms/database-migrations#data-loss).
 :::
+
+### Connection pool timeouts
+
+When Knex (through Tarn.js) cannot acquire a database connection before `acquireConnectionTimeout` or `pool.acquireTimeoutMillis` elapses, whichever is smaller, it throws a `KnexTimeoutError`. Unless `settings.poolTimeoutDiagnostics` is `false`, Strapi appends a link to this section to the error's message. It also attaches an `error.details` object describing the pool at that moment. The error's class, name, and underlying stack stay unchanged.
+
+Strapi also logs a warning block, at most once every 30 seconds while the pool keeps timing out. Neither `error.details` nor the warning includes SQL statements or query parameters.
+
+```
+[database] connection pool timeout: waited 1523 ms for a connection (acquire timeout 1500 ms)
+  - connections: 2 in use, 0 free, max 2, min 0
+  - waiting for a connection: 37, connections being opened: 0
+  - reason reported by the pool: operation timed out for an unknown reason
+  - event loop delay over the last 11 s: max 323 ms, p99 41 ms
+  - phase runtime, host api-7f9c, pid 981242
+See https://docs.strapi.io/cms/configurations/database#connection-pool-timeouts.
+```
+
+#### `error.details` structure
+
+| Key                        | Description                                                                                                                   | Type     |
+|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------|----------|
+| `code`                      | Always `DB_POOL_ACQUIRE_TIMEOUT`.                                                                                                | `String` |
+| `waitedMs`                  | How long the caller waited before Knex gave up.                                                                                 | `Number` |
+| `acquireTimeoutMs`          | The effective timeout Knex applied.                                                                                             | `Number` |
+| `acquireConnectionTimeout`  | The configured `connection.acquireConnectionTimeout`, when set.                                                                 | `Number` |
+| `poolAcquireTimeoutMillis`  | The configured `connection.pool.acquireTimeoutMillis`, when set.                                                                | `Number` |
+| `pool`                      | Pool counts at the moment of the timeout: `used`, `free`, `max`, `min`, `pendingAcquires`, `pendingCreates`.                    | `Object` |
+| `poolReason`                | The reason reported by the pool for the failed attempt, for example a driver error, or `"operation timed out for an unknown reason"` when the pool cannot say why. | `String` |
+| `eventLoopDelay`            | Event loop delay observed over the previous 30 to 60 seconds: `maxMs`, `p99Ms`, `windowMs`.                                     | `Object` |
+| `phase`                     | Lifecycle phase during which the timeout occurred: `boot`, `runtime`, `schema sync`, or `migration <name>`.                     | `String` |
+| `hostname`                  | Host name of the process that saw the timeout.                                                                                  | `String` |
+| `pid`                       | Process ID of the process that saw the timeout.                                                                                 | `Number` |
+
+#### Interpreting the diagnostics
+
+The diagnostics state facts and never name a cause. Common patterns:
+
+| Scenario | What the diagnostics show |
+|----------|-----------------------------|
+| Saturated pool (burst of requests, or a long-running query) | `pool.used` at or near `max`, and a high `pendingAcquires` count. |
+| Database refusing or unable to accept connections | `poolReason` contains a driver error, for example a connection refusal or an authentication failure. |
+| Starved Node.js process | `eventLoopDelay.maxMs` and `eventLoopDelay.p99Ms` are high even though the pool has free connections. |
+| Timeout at boot or during a migration | `phase` is `boot`, `schema sync`, or `migration <name>` instead of `runtime`. |
+
+#### GraphQL responses
+
+An unexpected error returned by the GraphQL API no longer copies the internal error's `name`, `message`, and `details` (including the pool timeout diagnostics above) into the response. It now returns the same generic `Internal Server Error` as the REST API. The full error, diagnostics included, is still logged server-side. A custom resolver that throws a plain `Error` to return a message to clients should throw an `ApplicationError` from `@strapi/utils` instead.
 
 ### Configuration examples
 

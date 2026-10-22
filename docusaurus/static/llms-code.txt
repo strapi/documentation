@@ -18832,8 +18832,26 @@ strapi.cron.jobs
 # Database configuration
 Source: https://docs.strapi.io/cms/configurations/database
 
+## Connection pool timeouts
+Description: Strapi also logs a warning block, at most once every 30 seconds while the pool keeps timing out.
+(Source: https://docs.strapi.io/cms/configurations/database#connection-pool-timeouts)
+
+Language: JSON
+File path: ./config/database.js
+
+```json
+[database] connection pool timeout: waited 1523 ms for a connection (acquire timeout 1500 ms)
+  - connections: 2 in use, 0 free, max 2, min 0
+  - waiting for a connection: 37, connections being opened: 0
+  - reason reported by the pool: operation timed out for an unknown reason
+  - event loop delay over the last 11 s: max 323 ms, p99 41 ms
+  - phase runtime, host api-7f9c, pid 981242
+See https://docs.strapi.io/cms/configurations/database#connection-pool-timeouts.
+```
+
+
 ## Configuration examples
-Description: :::caution Despite its name, forceMigration does not control whether migrations run, which is what runMigrations does.
+Description: An unexpected error returned by the GraphQL API no longer copies the internal error's name, message, and details (including the pool timeout diagnostics above) into the response.
 (Source: https://docs.strapi.io/cms/configurations/database#configuration-examples)
 
 Language: DOCKERFILE
@@ -18863,7 +18881,7 @@ module.exports = ({ env }) => ({
 
 ---
 Language: JavaScript
-File path: ./config/database.js
+File path: N/A
 
 ```js
 module.exports = ({ env }) => ({
@@ -18879,7 +18897,7 @@ module.exports = ({ env }) => ({
 
 ---
 Language: JavaScript
-File path: ./config/database.js
+File path: N/A
 
 ```js
 const fs = require('fs');
