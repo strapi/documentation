@@ -27,7 +27,7 @@ To create a new Strapi project based on a template, run the following command:
 <TabItem value="yarn" label="Yarn">
 
 ```sh
-yarn create strapi-app my-project --template <template-name-or-url>
+yarn create strapi my-project --template <template-name-or-url>
 ```
 
 </TabItem>
@@ -35,7 +35,7 @@ yarn create strapi-app my-project --template <template-name-or-url>
 <TabItem value="npm" label="NPM">
 
 ```sh
-npx create-strapi-app@latest my-project --template <template-name-or-url>
+npx create-strapi@latest my-project --template <template-name-or-url>
 ```
 
 </TabItem>

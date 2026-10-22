@@ -21,9 +21,20 @@ Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log i
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
 :::
 
+The `login`, `link`, `deploy`, `projects`, and `logout` commands are registered as `strapi cloud:<command>` (for instance `strapi cloud:login`). The shorter `strapi <command>` form (for instance `strapi login`) is an alias.
+
+## Common options
+
+All the commands on the present page, except the `strapi cloud environments` alias, accept the following options:
+
+| Option | Description |
+| --- | --- |
+| `--debug` | Enable debugging mode with verbose logs |
+| `--silent` | Don't log anything |
+
 ## strapi login
 
-**Alias:** `strapi cloud:login`
+**Alias of:** `strapi cloud:login`
 
 Log in Strapi Cloud.
 
@@ -37,7 +48,7 @@ If the browser window doesn't automatically open, the terminal will display a cl
 
 ## strapi link <NewBadge /> {#strapi-link}
 
-**Alias:** `strapi cloud:link`
+**Alias of:** `strapi cloud:link`
 
 Links project in the current folder to an existing project in Strapi Cloud.
 
@@ -45,11 +56,11 @@ Links project in the current folder to an existing project in Strapi Cloud.
 strapi link
 ```
 
-This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud.
+This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud. If you are not logged in, the command first offers to log you in.
 
 ## strapi deploy
 
-**Alias:** `strapi cloud:deploy`
+**Alias of:** `strapi cloud:deploy`
 
 Deploy a linked local project (< 100MB) to Strapi Cloud.
 
@@ -57,7 +68,19 @@ Deploy a linked local project (< 100MB) to Strapi Cloud.
 strapi deploy
 ```
 
-This command must be used after the [`login`](#strapi-login) and [`link`](#strapi-link) commands. It deploys a local Strapi project to an existing Strapi Cloud project that is linked to the current folder. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
+This command deploys a local Strapi project to the Strapi Cloud project that is linked to the current folder. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
+
+- If you are not logged in, the command first offers to log you in (see [`login`](#strapi-login)).
+- If the current folder is not linked to a Strapi Cloud project, the command asks a few questions to create a new Strapi Cloud project. It then links the current folder to the new project. To deploy to an existing Strapi Cloud project instead, use the [`link`](#strapi-link) command first.
+
+The command deploys to the environment passed with the `--env` option. Without this option, it deploys to the environment linked with [`strapi cloud environment link`](#strapi-cloud-environment-link), or asks you to choose an environment if the project has several. If the target environment already has a live deployment or a deployment in progress, the command asks for a confirmation before deploying.
+
+The `deploy` command accepts the following options:
+
+| Option | Description |
+| --- | --- |
+| `-e, --env <name>` | Name of the environment to deploy to. The command stops if the environment does not exist. |
+| `-f, --force` | Skip the confirmation prompt before deploying |
 
 Once the project is first linked and deployed on Strapi Cloud with the CLI, the `deploy` command can be reused to trigger a new deployment of the same project.
 
@@ -70,7 +93,7 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 
 ## strapi projects <NewBadge />
 
-**Alias:** `strapi cloud:projects`
+**Alias of:** `strapi cloud:projects`
 
 Lists all Strapi Cloud projects associated with your account.
 
@@ -80,9 +103,29 @@ strapi projects
 
 This command retrieves and displays a list of all projects hosted on your Strapi Cloud account.
 
+## strapi cloud environment list
+
+**Alias:** `strapi cloud environments`
+
+Lists the environments of the Strapi Cloud project linked to the current folder.
+
+```bash
+strapi cloud environment list
+```
+
+## strapi cloud environment link
+
+Links the current folder to an environment of the linked Strapi Cloud project.
+
+```bash
+strapi cloud environment link
+```
+
+This command lists the environments of the Strapi Cloud project, except the environment already linked, and prompts you to select one. Subsequent [`deploy`](#strapi-deploy) commands deploy to the selected environment unless you pass the `--env` option.
+
 ## strapi logout
 
-**Alias:** `strapi cloud:logout`
+**Alias of:** `strapi cloud:logout`
 
 Log out of Strapi Cloud.
 

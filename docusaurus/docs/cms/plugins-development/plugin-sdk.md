@@ -30,17 +30,23 @@ The present documentation lists the available Plugin SDK commands. The [associat
 Create a new plugin at a given path.
 
 ```bash
-npx @strapi/sdk-plugin init
+npx @strapi/sdk-plugin init <path>
 ```
 
 | Arguments |  Type  | Description        | Default                   |
 | --------- | :----: | ------------------ | ------------------------- |
-| `path`    | string | Path to the plugin | `./src/plugins/my-plugin` |
+| `path`    | string | Path to the plugin (required). When the command runs from the root of a Strapi project and `path` contains no `/`, the plugin is created in `./src/plugins/<path>`. | - |
 
 | Option        | Type | Description                             | Default |
 | ------------- | :--: | --------------------------------------- | ------- |
 | `-d, --debug` |  -   | Enable debugging mode with verbose logs | false   |
 | `--silent`    |  -   | Do not log anything                     | false   |
+| `--use-npm`   |  -   | Use npm as the plugin package manager   | -       |
+| `--use-yarn`  |  -   | Use yarn as the plugin package manager  | -       |
+| `--use-pnpm`  |  -   | Use pnpm as the plugin package manager  | -       |
+| `--no-install` | -   | Do not install the plugin dependencies nor build the plugin | -       |
+
+When the command runs from the root of a Strapi project that has a lock file, the plugin uses the package manager of the project. In this case, the `--use-npm`, `--use-yarn`, and `--use-pnpm` options are ignored. Otherwise, without these options, the package manager running the command is used, or npm by default.
 
 ## strapi-plugin build
 
@@ -52,7 +58,6 @@ strapi-plugin build
 
 | Option         |  Type  | Description                                                                                                       | Default |
 | -------------- | :----: | ----------------------------------------------------------------------------------------------------------------- | ------- |
-| `--force`      | string | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively. | -       |
 | `-d, --debug`  |   -    | Enable debugging mode with verbose logs                                                                           | false   |
 | `--silent`     |   -    | Do not log anything                                                                                               | false   |
 | `--minify`     |   -    | Minify the output                                                                                                 | false   |

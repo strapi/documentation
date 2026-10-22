@@ -52,7 +52,7 @@ The CLI command consists of the following arguments:
 | `--no-checksums` | Disable end-to-end SHA-256 checksum verification for assets. Checksum verification is enabled by default when both the source and destination instances support it. |
 | `--verbose` | Enable verbose logs. |
 
-Either `--to` or `--from` is required, and you cannot pass both.
+You cannot pass both `--to` and `--from`. If you pass neither, the command runs in interactive mode and asks for the transfer direction. It then reads the remote URL and transfer token from the `STRAPI_TRANSFER_URL` and `STRAPI_TRANSFER_TOKEN` environment variables, or asks for them if the variables are not set (see [CLI reference](/cms/cli#strapi-transfer)).
 
 :::tip Tips
 * To get familiar with the command before running it against a remote instance, see [Test a data transfer locally](/cms/features/data-management/transfer-locally).
@@ -303,7 +303,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 ## Bypass all `transfer` command line prompts
 
-When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `--to-token` option with the transfer token if you use the `--force` option.
+When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. The `--force` option does not skip the transfer token prompt. To run the command without any prompt, also pass the transfer token with the `--to-token` option, or with the `--from-token` option when pulling data with `--from`.
 
 :::caution
 The `--force` option bypasses all warnings about content deletion. The deletion only covers the stages that are actually transferred: if you filter stages with `--only` or `--exclude`, the omitted stages are preserved. See [What a transfer replaces and preserves](#what-a-transfer-replaces-and-preserves).

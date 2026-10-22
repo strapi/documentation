@@ -50,7 +50,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   <TabItem value="npm" label="NPM">
 
   ```bash
-  npx run strapi login
+  npm run strapi login
   ```
 
   </TabItem>
@@ -75,7 +75,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   <TabItem value="npm" label="NPM">
 
   ```bash
-  npx run strapi link
+  npm run strapi link
   ```
 
   </TabItem>
@@ -98,7 +98,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   <TabItem value="npm" label="NPM">
 
   ```bash
-  npx run strapi deploy
+  npm run strapi deploy
   ```
 
   </TabItem>
