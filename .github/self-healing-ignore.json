@@ -1669,6 +1669,11 @@
       "number": 28091,
       "reason": "Router: Diff too large (5054 lines, exceeds 3000-line threshold). Cannot reliably extract routing decision without reading full context.",
       "added": "2026-10-22"
+    },
+    {
+      "number": 28135,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3594",
+      "added": "2026-10-22"
     }
   ]
 }
