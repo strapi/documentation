@@ -181,9 +181,25 @@ To run only a specific codemod, use `run` followed by a UID found from the `ls` 
 npx @strapi/upgrade codemods run 5.0.0-strapi-codemod-uid
 ```
 
+By default, on a Strapi application, the `codemods ls` and `codemods run` commands offer the codemods matching the current major version of the application. On a Strapi plugin, they offer every codemod. To use another version range, pass a semver range with the `-r` or `--range` option:
+
+```bash
+npx @strapi/upgrade codemods ls --range ">=5.0.0"
+```
+
+The `codemods ls` and `codemods run` commands accept the following options:
+
+| Option | Description | Default |
+| --- | --- | --- |
+| `-p, --project-path <project-path>` | Path to the Strapi application or plugin | - |
+| `-n, --dry` | Simulate the execution without updating any files (`codemods run` only) | false |
+| `-d, --debug` | Get more logs in debug mode | false |
+| `-s, --silent` | Don't log anything | false |
+| `-r, --range <range>` | Semver range of the codemods to list or run | Current major version |
+
 ## Options
 
-The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following options:
+The `npx @strapi/upgrade [latest|major|minor|patch]` and `npx @strapi/upgrade to <target>` commands can accept the following options:
 
 | Option                                                                                  | Description                                                                     | Default  |
 | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------|----------|
@@ -192,8 +208,9 @@ The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following 
 | [`-s, --silent`](#execute-the-upgrade-silently)                                         | [Don't log anything](#execute-the-upgrade-silently)                             | false    |
 | [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | [Path](#select-a-path-for-the-strapi-application-folder) to the Strapi project  | -        |
 | [`-y, --yes`](#answer-yes-to-every-prompt)                                              | Automatically [answer "yes"](#answer-yes-to-every-prompt) to every prompt       | false    |
+| [`-c, --codemods-target <codemodsTarget>`](#upgrade-to-a-specific-version) | Version (`<number>.<number>.<number>`) of the codemods to run. Only available with the `to` command. | `major.minor.patch` portion of the target version |
 
-The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch]` commands:
+The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [latest|major|minor|patch]` and `npx @strapi/upgrade to <target>` commands:
 
 | Option                                                                   | Description                                                      |
 | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
@@ -230,7 +247,7 @@ Example:
 
 ```sh
 $ npx @strapi/upgrade -V
-4.15.1
+5.59.0
 ```
 
 ### Get detailed debugging information
@@ -271,17 +288,19 @@ $ npx @strapi/upgrade -h
 Usage: upgrade <command> [options]
 
 Options:
- -V, --version    output the version number
- -h, --help       Print command line options
+  -V, --version          output the version number
+  -h, --help             Print command line options
 
 Commands:
- latest [options]  Upgrade to the latest available version of Strapi
- major [options]   Upgrade to the next available major version of Strapi
- minor [options]   Upgrade to ...
- patch [options]   Upgrade to ...
-to [options] <target> Upgrade to a specific version of Strapi
- help [command]    Print options for a specific command
-
+  latest [options]       Upgrade to the latest available version of Strapi
+  major [options]        Upgrade to the next available major version of Strapi
+  minor [options]        Upgrade to the latest minor and patch version of
+                         Strapi for the current major
+  patch [options]        Upgrade to latest patch version of Strapi for the
+                         current major and minor
+  to [options] <target>  Upgrade to a specific version of Strapi
+  codemods
+  help [command]         Print options for a specific command
 ```
 
 </TabItem>
@@ -295,12 +314,17 @@ Usage: upgrade major [options]
 Upgrade to the next available major version of Strapi
 
 Options:
-  -p, --project-path <project-path>  Path to the Strapi project
-  -n, --dry                          Simulate the upgrade without updating any files (default: false)
-  -d, --debug                        Get more logs in debug mode (default: false)
+  -p, --project-path <project-path>  Root path to the Strapi application or
+                                     plugin
+  -n, --dry                          Simulate the upgrade without updating any
+                                     files (default: false)
+  -d, --debug                        Get more logs in debug mode (default:
+                                     false)
   -s, --silent                       Don't log anything (default: false)
-  -h, --help                         Display help for command
-  -y, --yes                          Automatically answer yes to every prompt
+  -y, --yes                          Automatically answer "yes" to any prompts
+                                     that the CLI might print on the command
+                                     line. (default: false)
+  -h, --help                         display help for command
 ```
 
 </TabItem>
