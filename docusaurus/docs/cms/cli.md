@@ -757,16 +757,15 @@ npm run strapi openapi generate -- --output ./docs/api-spec.json
 
 ### `strapi templates:generate`
 
-Create a template from the current Strapi project.
+:::caution Deprecated
+The `templates:generate` command is deprecated and will be removed in the next major release. The command no longer generates any file: it only prints a deprecation warning.
+:::
 
 ```bash
 strapi templates:generate <path>
 ```
 
-- **strapi templates:generate &#60;path&#62;**<br/>
-  Generates a Strapi template at `<path>`
-
-  Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+To create a template, use an existing Strapi application folder as the template (see [Creating a template](/cms/templates#creating-a-template)).
 
 ### `strapi ts:generate-types`
 
