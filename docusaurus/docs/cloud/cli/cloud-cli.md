@@ -32,6 +32,8 @@ All the commands on the present page, except the `strapi cloud environments` ali
 | `--debug` | Enable debugging mode with verbose logs |
 | `--silent` | Don't log anything |
 
+The command help also lists the `-d` and `-s` short forms, but they have no effect: use `--debug` and `--silent`.
+
 ## strapi login
 
 **Alias of:** `strapi cloud:login`
