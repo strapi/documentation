@@ -26,31 +26,45 @@ You have read the [Users & Permissions providers documentation](/cms/configurati
 
 ## Creating a custom provider
 
-You can use [the `register` lifecycle function](/cms/configurations/functions#register) to create your own custom provider in the `src/index.js|ts` file of your Strapi application. Use the following code example adjusted to your needs:
+A custom provider is registered with the `add()` method of the `providers-registry` service of the Users & Permissions feature. Call `add()` from [the `register` lifecycle function](/cms/configurations/functions#register) in the `src/index.js|ts` file of your Strapi application. A plugin can also call `add()` from its own server `register()` function.
+
+The following example registers an OAuth 2.0 provider named `example-provider-name`. Replace the URLs with the endpoints documented by your identity provider:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" default>
 
 ```js title="/src/index.js"
 module.exports = {
   register({ strapi }) {
     strapi
-      .plugin("users-permissions")
-      .service("providers-registry")
-      .add("example-provider-name", {
-        icon: "",
-        enabled: true,
+      .plugin('users-permissions')
+      .service('providers-registry')
+      .add('example-provider-name', {
+        icon: '',
+        enabled: false,
         grantConfig: {
-          key: "",
-          secret: "",
-          callback: `${strapi.config.server.url}/auth/example-provider-name/callback`,
-          scope: ["email"],
-          authorize_url: "https://awesome.com/authorize",
-          access_url: "https://awesome.com/token",
+          key: '',
+          secret: '',
+          callback: 'http://localhost:3000/connect/example-provider-name/redirect',
+          scope: ['email'],
+          authorize_url: 'https://awesome.com/authorize',
+          access_url: 'https://awesome.com/token',
           oauth: 2,
         },
-        async authCallback({ accessToken, providers, purest }) {
-          // use whatever you want here to get the user info
+        async authCallback({ accessToken }) {
+          const response = await fetch('https://awesome.com/api/me', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+
+          if (!response.ok) {
+            throw new Error('Unable to fetch the user profile');
+          }
+
+          const profile = await response.json();
+
           return {
-            username: "test",
-            email: "test",
+            username: profile.username,
+            email: profile.email,
           };
         },
       });
@@ -58,7 +72,105 @@ module.exports = {
 };
 ```
 
-For additional information on parameters passed to `grantConfig`, please refer to the  <ExternalLink to="https://github.com/simov/grant" text="`grant` documentation"/>. For additional information about `purest` please refer to <ExternalLink to="https://github.com/simov/purest" text="`purest` documentation"/>.
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/src/index.ts"
+import type { Core } from '@strapi/strapi';
+
+export default {
+  register({ strapi }: { strapi: Core.Strapi }) {
+    strapi
+      .plugin('users-permissions')
+      .service('providers-registry')
+      .add('example-provider-name', {
+        icon: '',
+        enabled: false,
+        grantConfig: {
+          key: '',
+          secret: '',
+          callback: 'http://localhost:3000/connect/example-provider-name/redirect',
+          scope: ['email'],
+          authorize_url: 'https://awesome.com/authorize',
+          access_url: 'https://awesome.com/token',
+          oauth: 2,
+        },
+        async authCallback({ accessToken }: { accessToken: string }) {
+          const response = await fetch('https://awesome.com/api/me', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+
+          if (!response.ok) {
+            throw new Error('Unable to fetch the user profile');
+          }
+
+          const profile = await response.json();
+
+          return {
+            username: profile.username,
+            email: profile.email,
+          };
+        },
+      });
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+The name passed as the first argument of `add()` identifies the provider in the URLs of the login flow (for example, `/api/connect/example-provider-name`) and in the admin panel.
+
+### Provider configuration
+
+The second argument of `add()` is an object that accepts the following properties:
+
+| Parameter | Description | Type | Required | Default |
+|-----------|-------------|------|----------|---------|
+| `enabled` | Whether the provider is enabled when Strapi first saves its settings. If omitted, the provider stays disabled until you enable it in the admin panel. | Boolean | No | - |
+| `icon` | Icon name saved with the provider settings. Built-in providers use Font Awesome brand icon names (for example, `discord`). | String | No | - |
+| `grantConfig` | OAuth settings of the provider (see [`grantConfig` options](#grantconfig-options)). | Object | Yes | - |
+| `authCallback` | Function that receives the token returned by the identity provider and returns the user's `username` and `email` (see [`authCallback` function](#authcallback-function)). | Function | Yes | - |
+
+When Strapi starts, it saves the `enabled`, `icon`, and `grantConfig` values of every registered provider in the database. Values already saved in the database, for instance the credentials entered in the admin panel, take precedence over the values defined in code. The `authCallback` function is not saved in the database: Strapi calls it from the registry at each login.
+
+#### `grantConfig` options
+
+The `grantConfig` object accepts the following options:
+
+| Parameter | Description | Type | Required | Default |
+|-----------|-------------|------|----------|---------|
+| `key` | Client ID of the OAuth application. Leave it empty and set it in the admin panel. | String | Yes | - |
+| `secret` | Client secret of the OAuth application. Leave it empty and set it in the admin panel. | String | Yes | - |
+| `callback` | URL of your front-end application that Strapi redirects to at the end of the OAuth flow. You can change it in the admin panel. | String | Yes | - |
+| `authorize_url` | Authorization endpoint of the identity provider. | String | Yes | - |
+| `access_url` | Token endpoint of the identity provider. | String | Yes | - |
+| `oauth` | OAuth version: `2` for OAuth 2.0, `1` for OAuth 1.0a. | Number | No | `2` |
+| `request_url` | Request token endpoint of the identity provider. Only used, and required, when `oauth` is `1`. | String | No | - |
+| `scope` | Scopes requested from the identity provider. Request the scopes that give access to the user's email address. | Array of strings or String | No | - |
+| `scope_delimiter` | Character used to join the `scope` array in the authorization URL. Many OAuth 2.0 providers expect a space (`' '`). | String | No | `','` |
+| `token_endpoint_auth_method` | Set to `'client_secret_basic'` to send the client ID and secret in an HTTP Basic `Authorization` header instead of the request body when exchanging the authorization code. | String | No | - |
+| `subdomain` | Value that replaces the `[subdomain]` placeholder in `authorize_url` and `access_url`. When this value is set, the admin panel also displays a **Host URI (Subdomain)** field for the provider. | String | No | - |
+
+#### `authCallback` function
+
+Strapi calls `authCallback` once the identity provider has returned a token. The function receives an object with the following properties:
+
+| Parameter | Description | Type |
+|-----------|-------------|------|
+| `accessToken` | Token returned by the identity provider. Use it to request the user's profile from the provider's API. | String |
+| `grantResponse` | Token response saved in the session at the end of the OAuth flow. For custom providers, it contains the `access_token`, `oauth_token`, and `id_token` values returned by the identity provider, when present. | Object |
+| `query` | Same object as `grantResponse`. | Object |
+| `providers` | Settings of all providers, as saved in the database (for example, `providers['example-provider-name'].key`). | Object |
+
+The function must return an object with at least a `username` and an `email` property, or a promise resolving to such an object. Throw an error to stop the login: Strapi then responds with a `400` error that contains the error message.
+
+The built-in providers declared in <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/plugins/users-permissions/server/src/services/providers-registry.js" text="`providers-registry.js`"/> in the Strapi codebase are examples of `authCallback` functions.
+
+:::note Changes in recent Strapi 5 versions
+- Since Strapi 5.51.0, the Users & Permissions feature runs the OAuth flow itself instead of relying on the `grant` and `purest` packages. `authCallback` no longer receives a `purest` parameter: use `fetch` or any HTTP client to call the provider's API.
+- Since Strapi 5.53.0, `authCallback` also receives the `grantResponse` parameter.
+:::
 
 ### How authentication flow works
 
