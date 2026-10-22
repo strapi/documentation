@@ -373,7 +373,7 @@ The `list_<slug>` tool accepts a `sort` parameter that supports 4 notations:
 | Object | `{ "title": "asc" }` |
 | Array of objects | `[{ "title": "asc" }, { "createdAt": "desc" }]` |
 
-Sort field names are constrained to the content type's scalar attributes (strings, numbers, booleans, dates, enumerations). Relation, component, dynamic zone, media, and JSON fields cannot be sorted on.
+Sort field names are constrained to the content type's scalar attributes (text, number, boolean, date and time, and enumeration types). Relation, component, dynamic zone, media, JSON, and blocks fields cannot be sorted on, nor can private fields or fields the Admin token cannot read.
 
 #### Filtering
 
@@ -439,7 +439,7 @@ Entry actions performed through the MCP server are recorded in the [Audit Logs](
 
 The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. Because there is no session state, the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
 
-GET and DELETE HTTP methods on the `/mcp` endpoint return a `405 Method Not Allowed` JSON-RPC error, as the MCP server only accepts POST requests.
+GET, DELETE, PUT, and PATCH HTTP methods on the `/mcp` endpoint return a `405 Method Not Allowed` JSON-RPC error, as the MCP server only accepts POST requests.
 
 ### Known limitations
 
