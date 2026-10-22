@@ -1659,6 +1659,16 @@
       "number": 28116,
       "reason": "Router: MCP server performance optimization with internal architecture documentation updates in strapi/strapi repo. No public API changes or new user-facing features. Performance improvements to schema resolution are internal implementation details. The updated internal contributor docs (docs/docs/packages/core/core/mcp-server.md) are in strapi/strapi, not the public documentation repo.",
       "added": "2026-10-21"
+    },
+    {
+      "number": 28148,
+      "reason": "Router: Internal API bug fix to validation logic. No new user-facing behavior or API surface change — the preview feature is already documented, and this fixes only how the endpoint validates input. The public API contract (accepts draft/published) remains unchanged.",
+      "added": "2026-10-22"
+    },
+    {
+      "number": 28091,
+      "reason": "Router: Diff too large (5054 lines, exceeds 3000-line threshold). Cannot reliably extract routing decision without reading full context.",
+      "added": "2026-10-22"
     }
   ]
 }
