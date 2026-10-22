@@ -310,8 +310,16 @@ The destination Strapi instance should be running with the `start` command and n
 | `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                                      |
 
 :::caution
-Either `--to` or `--from` is required, but it's not currently allowed to enter both or neither.
+You can't pass both `--to` and `--from`. The command also stops with an error if you pass `--from` with `--to-token`, or `--to` with `--from-token`.
 :::
+
+If you pass neither `--to` nor `--from`, the command runs in interactive mode:
+
+- It asks whether to pull data from a remote Strapi instance to the local one, or to push local data to a remote Strapi instance.
+- It uses the `STRAPI_TRANSFER_URL` environment variable as the URL of the remote instance, or asks for the URL if the variable is not set.
+- It uses the `--from-token` or `--to-token` option matching the chosen direction as the transfer token. Without this option, it uses the `STRAPI_TRANSFER_TOKEN` environment variable, or asks for the token if the variable is not set.
+
+The `STRAPI_TRANSFER_URL` and `STRAPI_TRANSFER_TOKEN` environment variables are only read in interactive mode.
 
 **Example**
 
