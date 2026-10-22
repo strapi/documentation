@@ -81,7 +81,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
 2. The terminal will ask you whether you want to `Login/Signup` or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to login, you'll receive a 30-day trial of the <GrowthBadge /> plan that will be automatically applied to your created project. If you skip this step, the project will fall back to the CMS Free plan.
 
-3. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
+3. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer will be used. Most questions default to Yes, but the question about starting with an example structure and data defaults to No:
 
   ![Terminal prompts at installation](/img/assets/installation/prompts.png)
 
@@ -102,11 +102,12 @@ The above installation guide only covers the basic installation option using the
 
 | Option                              | Description                                                                                                                                                                                                                                     |
 |-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--no-run`                          | Do not start the application after it is created                                                                                                                                                                                                |
+| `--no-run`                          | Do not start the application after it is created. Only applies with `--quickstart`, since the application is not started otherwise.                                                                                                              |
 | `--ts`<br/>`--typescript`           | Initialize the project with TypeScript (default)                                                                                                                                                                                                |
 | `--js`<br/>`--javascript`           | Initialize the project with JavaScript                                                                                                                                                                                                          |
 | `--use-npm`                         | Force the usage of <ExternalLink to="https://www.npmjs.com/" text="npm"/> as the project package manager                                                                                                                                        |
 | `--use-pnpm`                        | Force the usage of <ExternalLink to="https://pnpm.io/" text="pnpm"/> as the project package manager                                                                                                                                             |
+| `--use-yarn`                        | Force the usage of <ExternalLink to="https://yarnpkg.com/" text="yarn"/> as the project package manager                                                                                                                                         |
 | `--install`                         | Install all dependencies, skipping the related CLI prompt                                                                                                                                                                                       |
 | `--no-install`                      | Do not install all dependencies, skipping the related CLI prompt                                                                                                                                                                                |
 | `--git-init`                        | Initialize a git repository, skipping the related CLI prompt                                                                                                                                                                                    |
@@ -114,8 +115,7 @@ The above installation guide only covers the basic installation option using the
 | `--example`                         | Add example data, skipping the related CLI prompt                                                                                                                                                                                               |
 | `--no-example`                      | Do not add example data, skipping the related CLI prompt                                                                                                                                                                                        |
 | `--skip-cloud`                      | Skip [Strapi login and project creation steps](#skipping-the-strapi-login-step)                                                                                                                                                     |
-| `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no A/B tests). The `<directory>` argument is required when using this flag.                                        |
-| `--enable-ab-tests`<br/>`--no-enable-ab-tests` | Enable or disable anonymous A/B testing, skipping the related CLI prompt                                                                                                                                                  |
+| `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no example data). The `<directory>` argument is required when using this flag.                                        |
 | `--skip-db`                         | Skip all database-related prompts and create a project with the default (SQLite) database                                                                                                                                                       |
 | `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details.                                                                            |
 | `--dbclient <dbclient>`             | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sqlite` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
@@ -125,11 +125,19 @@ The above installation guide only covers the basic installation option using the
 | `--dbusername <dbusername>`         | Define the database username to use by replacing `<dbusername>` in the command by the value of your choice                                                                                                                                      |
 | `--dbpassword <dbpassword>`         | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice                                                                                                                                      |
 | `--dbssl <dbssl>`                   | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default)                                                                                                                                                        |
-| `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbclient>` in the command by the value of your choice                                                                                                                 |
+| `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbfile>` in the command by the value of your choice                                                                                                                 |
 | `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Use `--non-interactive` instead.                                                                                                                               |
 
 :::note Notes
-* If you do not pass a `--use-npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
+* If you do not pass a `--use-npm|pnpm|yarn` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
+* To configure a database other than SQLite with options, pass all of the `--dbclient`, `--dbhost`, `--dbport`, `--dbname`, `--dbusername`, and `--dbpassword` options. If only some of them are passed, the command stops and lists the missing options.
+* The command stops with an error if you combine incompatible options:
+  * `--ts` and `--js`,
+  * `--ts` or `--js` with `--template`,
+  * `--example` with `--template`,
+  * more than one of `--use-npm`, `--use-pnpm`, and `--use-yarn`,
+  * `--quickstart` or `--non-interactive` without a `<directory>` argument.
+* The `--enable-ab-tests` and `--no-enable-ab-tests` options are still accepted so that existing scripts keep working, but they have no effect.
 * For additional information about database configuration, please refer to the [database configuration documentation](/cms/configurations/database).
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
