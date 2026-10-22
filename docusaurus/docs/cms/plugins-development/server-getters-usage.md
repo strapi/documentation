@@ -202,7 +202,7 @@ module.exports = createCoreController('api::project.project', ({ strapi }) => ({
 
     // highlight-next-line
     await strapi.service('plugin::todo.task').create({ // global getter: preferred in application code
-      title: `Review project: ${data.attributes.name}`,
+      title: `Review project: ${data.name}`,
       done: false,
     });
 
@@ -230,7 +230,7 @@ export default factories.createCoreController(
       // highlight-next-line
       // Narrow cast: this generic documentation cannot infer your app-specific service signatures.
       await (strapi.service('plugin::todo.task') as TaskService).create({
-        title: `Review project: ${data.attributes.name}`,
+        title: `Review project: ${data.name}`,
         done: false,
       });
 
