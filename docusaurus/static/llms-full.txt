@@ -1075,9 +1075,20 @@ Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log i
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
 :::
 
+The `login`, `link`, `deploy`, `projects`, and `logout` commands are registered as `strapi cloud:<command>` (for instance `strapi cloud:login`). The shorter `strapi <command>` form (for instance `strapi login`) is an alias.
+
+## Common options
+
+All the commands on the present page, except the `strapi cloud environments` alias, accept the following options:
+
+| Option | Description |
+| --- | --- |
+| `--debug` | Enable debugging mode with verbose logs |
+| `--silent` | Don't log anything |
+
 ## strapi login
 
-**Alias:** `strapi cloud:login`
+**Alias of:** `strapi cloud:login`
 
 Log in Strapi Cloud.
 
@@ -1091,7 +1102,7 @@ If the browser window doesn't automatically open, the terminal will display a cl
 
 ## strapi link  {#strapi-link}
 
-**Alias:** `strapi cloud:link`
+**Alias of:** `strapi cloud:link`
 
 Links project in the current folder to an existing project in Strapi Cloud.
 
@@ -1099,11 +1110,11 @@ Links project in the current folder to an existing project in Strapi Cloud.
 strapi link
 ```
 
-This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud.
+This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud. If you are not logged in, the command first offers to log you in.
 
 ## strapi deploy
 
-**Alias:** `strapi cloud:deploy`
+**Alias of:** `strapi cloud:deploy`
 
 Deploy a linked local project (< 100MB) to Strapi Cloud.
 
@@ -1111,7 +1122,19 @@ Deploy a linked local project (< 100MB) to Strapi Cloud.
 strapi deploy
 ```
 
-This command must be used after the [`login`](#strapi-login) and [`link`](#strapi-link) commands. It deploys a local Strapi project to an existing Strapi Cloud project that is linked to the current folder. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
+This command deploys a local Strapi project to the Strapi Cloud project that is linked to the current folder. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
+
+- If you are not logged in, the command first offers to log you in (see [`login`](#strapi-login)).
+- If the current folder is not linked to a Strapi Cloud project, the command asks a few questions to create a new Strapi Cloud project. It then links the current folder to the new project. To deploy to an existing Strapi Cloud project instead, use the [`link`](#strapi-link) command first.
+
+The command deploys to the environment passed with the `--env` option. Without this option, it deploys to the environment linked with [`strapi cloud environment link`](#strapi-cloud-environment-link), or asks you to choose an environment if the project has several. If the target environment already has a live deployment or a deployment in progress, the command asks for a confirmation before deploying.
+
+The `deploy` command accepts the following options:
+
+| Option | Description |
+| --- | --- |
+| `-e, --env <name>` | Name of the environment to deploy to. The command stops if the environment does not exist. |
+| `-f, --force` | Skip the confirmation prompt before deploying |
 
 Once the project is first linked and deployed on Strapi Cloud with the CLI, the `deploy` command can be reused to trigger a new deployment of the same project.
 
@@ -1124,7 +1147,7 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 
 ## strapi projects 
 
-**Alias:** `strapi cloud:projects`
+**Alias of:** `strapi cloud:projects`
 
 Lists all Strapi Cloud projects associated with your account.
 
@@ -1134,9 +1157,29 @@ strapi projects
 
 This command retrieves and displays a list of all projects hosted on your Strapi Cloud account.
 
+## strapi cloud environment list
+
+**Alias:** `strapi cloud environments`
+
+Lists the environments of the Strapi Cloud project linked to the current folder.
+
+```bash
+strapi cloud environment list
+```
+
+## strapi cloud environment link
+
+Links the current folder to an environment of the linked Strapi Cloud project.
+
+```bash
+strapi cloud environment link
+```
+
+This command lists the environments of the Strapi Cloud project, except the environment already linked, and prompts you to select one. Subsequent [`deploy`](#strapi-deploy) commands deploy to the selected environment unless you pass the `--env` option.
+
 ## strapi logout
 
-**Alias:** `strapi cloud:logout`
+**Alias of:** `strapi cloud:logout`
 
 Log out of Strapi Cloud.
 
@@ -1369,7 +1412,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   yarn strapi login
   ```
   ```bash
-  npx run strapi login
+  npm run strapi login
   ```
 
 4. In the browser window that opens automatically, confirm that the code displayed is the same as the one written in the terminal message.
@@ -1384,7 +1427,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   yarn strapi link
   ```
   ```bash
-  npx run strapi link
+  npm run strapi link
   ```
 
 2. Select the Strapi Cloud project you want to link from the list displayed in the terminal.
@@ -1397,7 +1440,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   yarn strapi deploy
   ```
   ```bash
-  npx run strapi deploy
+  npm run strapi deploy
   ```
 
 2. Follow the progression bar in the terminal until confirmation that the project was successfully deployed with Strapi Cloud.
@@ -6660,37 +6703,31 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```
 
 ```json
-{
-  [
-    {
-      "id": "cjld2cjxh0000qzrmn831i7rn",
-      "title": "Test Article",
-      "slug": "test-article",
-      "body": "Test 1",
-      // ...
-      "headerImage": {
-        "data": {
-          "id": 1,
-          "attributes": {
-            "name": "17520.jpg",
-            "alternativeText": "17520.jpg",
-            "formats": {
-              // ...
-            }
-            // ...
-          }
-        }
-      },
-      "author": {
-        // ...
-      },
-      "categories": {
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    "slug": "test-article",
+    "body": "Test 1",
+    // ...
+    "headerImage": {
+      "id": 1,
+      "name": "17520.jpg",
+      "alternativeText": "17520.jpg",
+      "formats": {
         // ...
       }
+      // ...
+    },
+    "author": {
+      // ...
+    },
+    "categories": {
+      // ...
     }
-    // ...
-  ]
-}
+  }
+  // ...
+]
 ```
 
 ### Populate 1 level for specific relations
@@ -10499,8 +10536,7 @@ Syntax: `createMany(parameters) => { count: number, ids: id[] }`
 | `data`    | Array of objects | Array of input data |
 
 :::caution
-* MySQL will only return an array of one id containing the last inserted id, not the entire list.
-* Prior to Strapi v4.9.0, `createMany()` only returns the `count`. 
+MySQL will only return an array of one id containing the last inserted id, not the entire list.
 :::
 
 ### Example
@@ -16797,7 +16833,7 @@ module.exports = {
 ### Sanitization and Validation in controllers  {#sanitization-and-validation-in-controllers}
 
 :::warning 
-It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
+It's strongly recommended you sanitize and/or validate your incoming request query utilizing the `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
 Sanitization means that the object is “cleaned” and returned.
@@ -18953,7 +18989,7 @@ To list all the registered middlewares, run `yarn strapi middlewares:list`.
 
 ### Restricting content access with an "is-owner policy"
 
-It is often required that the author of an entry is the only user allowed to edit or delete the entry. In previous versions of Strapi, this was known as an "is-owner policy". With Strapi v4, the recommended way to achieve this behavior is to use a middleware.
+It is often required that the author of an entry is the only user allowed to edit or delete the entry. In previous versions of Strapi, this was known as an "is-owner policy". The recommended way to achieve this behavior is to use a middleware.
 
 Proper implementation largely depends on your project's needs and custom code, but the most basic implementation could be achieved with the following procedure: 
 
@@ -18984,10 +19020,10 @@ Proper implementation largely depends on your project's needs and custom code, b
          * the response includes author-related information
          */
         if (entryId) {
-          entry = await strapi.documents('api::restaurant.restaurant').findOne(
-            entryId,
-            { populate: "*" }
-          );
+          entry = await strapi.documents('api::restaurant.restaurant').findOne({
+            documentId: entryId,
+            populate: "*",
+          });
         }
 
         /**
@@ -20211,7 +20247,7 @@ Given an API request sent to the `https://example.com:1337/api/restaurants?id=12
 | `ctx.request.query.populate`         | Parameters to [populate relations, components, or dynamic zones](/cms/api/rest/populate-select#population)             | `String` or `Object` |
 | `ctx.request.query.fields`           | Parameters to [select only specific fields to return with the response](/cms/api/rest/populate-select#field-selection) | `Array`              |
 | `ctx.request.query.pagination`       | Parameter to [page through entries](/cms/api/rest/sort-pagination.md#pagination)                                       | `Object`             |
-| `ctx.request.query.publicationState` | Parameter to [select the Draft & Publish state](/cms/api/rest/status)            | `String`             |
+| `ctx.request.query.status`           | Parameter to [select the Draft & Publish state](/cms/api/rest/status)            | `String`             |
 | `ctx.request.query.locale`           | Parameter to [select one or multiple locales](/cms/api/rest/locale)                         | `String` or `Array`  |
 
 ## `ctx.state`
@@ -22253,7 +22289,7 @@ Strapi CLI commands on the present page are grouped by category:
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
 | [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
 | [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types`, `rename:field` |
-| [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
+| [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `components:list`, `hooks:list`, `controllers:list`, `services:list` |
 | [Enterprise](#enterprise) | `enterprise install` |
 
 :::caution
@@ -22321,7 +22357,7 @@ options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling |
 - **strapi develop --bundler [bundler]**<br/>
   Selects the bundler for the admin panel build (`vite` or `webpack`).
 - **strapi develop --open**<br/>
-  Starts your application with auto-reloading enabled & open your default browser with the administration panel running.
+  Opens the administration panel in your default browser. This option is enabled by default and has no `--no-open` counterpart. Strapi opens the browser at startup only while no administrator account exists. To disable this behavior, set [`autoOpen`](/cms/configurations/admin-panel#admin-panel-behavior) to `false` in the `/config/admin` file.
 - **strapi develop --no-watch-admin**<br/>
   Prevents the server from auto-reload when changes are made to the admin panel code.
 - **strapi develop --no-build-admin**<br/>
@@ -22358,14 +22394,13 @@ strapi build
 
 | Option              | Type | Description                                              |
 | ------------------- | :--: | -------------------------------------------------------- |
+| `--bundler [bundler]` | string | Bundler to use, `vite` or `webpack` (default: `vite`). The `webpack` bundler is deprecated. |
 | `-d, --debug`        |  -   | Enable debugging mode with verbose logs (default: false) |
 | `--minify`           |  -   | Minify the output (default: true)                        |
-| `--no-optimization`  |  -   | [DEPRECATED]: use minify instead                         |
 | `--silent`           |  -   | Don't log anything (default: false)                      |
-| `--sourcemaps`       |  -   | Produce sourcemaps (default: false)                      |
+| `--sourcemap`        |  -   | Produce sourcemaps (default: false)                      |
 | `--stats`            |  -   | Print build statistics to the console (default: false)   |
 | `--install-deps`     |  -   | Auto-installs missing admin peer dependencies (default: false) |
-| `--no-install-deps`  |  -   | Skips auto-installation and fails if dependencies are missing (default: true) |
 
 ### `strapi console`
 
@@ -22448,6 +22483,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 | `--only`            | string | Include only these data. The available types are: `content`, `files`, and `config`.                                        |
 | `--exclude-content-types` | string | Comma-separated list of content-type UIDs to exclude from the export. Both entity records and relation links touching an excluded type are skipped. |
 | `--only-content-types` | string | Comma-separated list of content-type UIDs to include in the export.                                                  |
+| `--verbose`         |   -    | Enable verbose logs.                                                                                                       |
 | `-h`, <br/>`--help` |   -    | Displays help for the `strapi export` command.                                                                             |
 
 **Examples**
@@ -22484,8 +22520,12 @@ The command accepts archives generated by `strapi export` (`.tar`, `.tar.gz`, `.
 | -------------- | ------ | ------------------------------------------------------------------------------------- |
 | `-k,` `--key`  | string | Provide the encryption key in the command instead of a subsequent prompt.             |
 | `-f`, `--file` | string | Path to a `.tar[.gz][.enc]` archive or to an unpacked export directory.               |
+| `--force`      | -      | Skip the confirmation prompt warning that the import deletes existing data. The decryption key prompt is still displayed if `--key` is not passed for an encrypted file. |
+| `--exclude`    | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, `config`, and `media-library` (excludes both upload binaries and upload content type records). |
+| `--only`       | string | Include only these data. The available types are: `content`, `files`, and `config`.  |
 | `--exclude-content-types` | string | Comma-separated list of content-type UIDs to exclude from the import. Both entity records and relation links touching an excluded type are skipped, and the excluded types are preserved on the destination. |
 | `--only-content-types` | string | Comma-separated list of content-type UIDs to include in the import.                  |
+| `--verbose`    | -      | Enable verbose logs.                                                                  |
 | `-h`, `--help` | -      | Display the `strapi import` help commands.                                            |
 
 **Examples**
@@ -22527,8 +22567,16 @@ The destination Strapi instance should be running with the `start` command and n
 | `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                                      |
 
 :::caution
-Either `--to` or `--from` is required, but it's not currently allowed to enter both or neither.
+You can't pass both `--to` and `--from`. The command also stops with an error if you pass `--from` with `--to-token`, or `--to` with `--from-token`.
 :::
+
+If you pass neither `--to` nor `--from`, the command runs in interactive mode:
+
+- It asks whether to pull data from a remote Strapi instance to the local one, or to push local data to a remote Strapi instance.
+- It uses the `STRAPI_TRANSFER_URL` environment variable as the URL of the remote instance, or asks for the URL if the variable is not set.
+- It uses the `--from-token` or `--to-token` option matching the chosen direction as the transfer token. Without this option, it uses the `STRAPI_TRANSFER_TOKEN` environment variable, or asks for the token if the variable is not set.
+
+The `STRAPI_TRANSFER_URL` and `STRAPI_TRANSFER_TOKEN` environment variables are only read in interactive mode.
 
 **Example**
 
@@ -22587,6 +22635,12 @@ It will output the current globally installed version if this command is strapi 
 
 ```bash
 strapi version
+```
+
+The `-v` and `--version` options print the same version number:
+
+```bash
+strapi --version
 ```
 
 ### `strapi help`
@@ -22774,7 +22828,7 @@ strapi admin:block-user --email=chef@strapi.io --block=true
 
 **Alias** `admin:delete`
 
-Deletes an existing administrator account. The email can be passed as an option or provided interactively if you call the command without options. An interactive confirmation prompt is shown before deletion.
+Deletes an existing administrator account. The email can be passed as an option or provided interactively if you call the command without options. The confirmation prompt is only shown in interactive mode: when the `--email` option is passed, the account is deleted without confirmation.
 
 **Example**
 
@@ -22940,7 +22994,7 @@ strapi openapi generate
 
 | Option     | Type     | Default               | Description                                      |
 | ---------- | -------- | --------------------- | ------------------------------------------------ |
-| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
+| `-o, --output` | `string` | `./specification.json` | Output file path for the generated specification. The default file is created in the current working directory. |
 
 #### Examples
 
@@ -22961,16 +23015,15 @@ npm run strapi openapi generate -- --output ./docs/api-spec.json
 
 ### `strapi templates:generate`
 
-Create a template from the current Strapi project.
+:::caution Deprecated
+The `templates:generate` command is deprecated and will be removed in the next major release. The command no longer generates any file: it only prints a deprecation warning.
+:::
 
 ```bash
 strapi templates:generate <path>
 ```
 
-- **strapi templates:generate &#60;path&#62;**<br/>
-  Generates a Strapi template at `<path>`
-
-  Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+To create a template, use an existing Strapi application folder as the template (see [Creating a template](/cms/templates#creating-a-template)).
 
 ### `strapi ts:generate-types`
 
@@ -22980,7 +23033,7 @@ Generate [TypeScript](/cms/typescript) typings for the project schemas.
 strapi ts:generate-types
 ```
 
-- **strapi ts:generate-types --debug**<br />
+- **strapi ts:generate-types --debug** or **strapi ts:generate-types -d**<br />
   Generate typings with the debug mode enabled, displaying a detailed table of the generated schemas.
 - **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
   Generate typings with the silent mode enabled, completely removing all the logs in the terminal. Cannot be combined with `debug`
@@ -23052,6 +23105,14 @@ Display a list of all the existing [content-types](/cms/backend-customization/mo
 
 ```bash
 strapi content-types:list
+```
+
+### `strapi components:list`
+
+Display a list of all the registered components.
+
+```bash
+strapi components:list
 ```
 
 ### `strapi hooks:list`
@@ -24170,7 +24231,7 @@ Source: https://docs.strapi.io/cms/configurations/database
 
 # Database configuration
 
-`/config/database` defines connections, clients, and pooling. Strapi v4 and v5 support SQLite, MySQL, MariaDB, and PostgreSQL. MongoDB and other NoSQL databases are not supported. NoSQL support existed in Strapi v3 only.
+`/config/database` defines connections, clients, and pooling. Strapi supports SQLite, MySQL, MariaDB, and PostgreSQL. MongoDB and other NoSQL databases are not supported. NoSQL support existed in Strapi v3 only.
 
 The `/config/database.js|ts` file is used to define database connections that will be used to store the application content.
 
@@ -24226,7 +24287,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**           | `String`                  |
+| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`.           | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` or `filename` | Database name or filename.   <ul><li>For MySQL or PostgreSQL, use the `database` key (with `host`, `port`, etc.).</li><li>For SQLite, only provide `filename` which points to the database file.</li></ul> | `String`              |
@@ -24600,7 +24661,7 @@ AWS RDS IAM authentication requires SSL and IAM database authentication to be en
 
 ## Environment variables in database configurations
 
-Strapi version `v4.6.2` and higher includes the database configuration options in the `./config/database.js` or `./config/database.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
+Strapi includes the database configuration options in the `./config/database.js` or `./config/database.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
 
 ```js
 const path = require('path');
@@ -24781,22 +24842,9 @@ DATABASE_CLIENT=sqlite
 DATABASE_FILENAME=.tmp/data.db
 ```
 
-### Environment variables for Strapi applications before `v4.6.2`
-
-If you started your project with a version prior to `v4.6.2` you can convert your `database.js|database.ts` configuration file following this procedure:
-
-1. Update your application to `v4.6.2` or a later version. See the [upgrades](/cms/upgrades) documentation.
-2. Replace the contents of your `./config/database.js` or `./config/database.ts` file with the preceding JavaScript or TypeScript code.
-3. Add the environment variables from the preceding code example to your `.env` file.
-4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.
-5. Save the changes and restart your application.
-:::caution
-Do not overwrite the environment variables: `HOST`, `PORT`, `APP_KEYS`, `API_TOKEN_SALT`, and `ADMIN_JWT_SECRET`.
-:::
-
 ### Database connections using `connectionString`
 
-Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi `v4.6.2` and later versions include the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
+Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi includes the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
 
 - overrides the other `connection.connection` properties such as `host` and `port`,
 - can be disabled by setting the property to an empty string: `''`.
@@ -30241,22 +30289,25 @@ to retrieve your user from the database and log you in.
 Now, we need to configure our 'model' for our new provider. That way, our settings can be stored in the database, and
 managed from the admin panel.
 
-Open the file `packages/strapi-plugin-users-permissions/config/functions/bootstrap.js`
+Providers and their settings are declared in the `providers-registry` service of the Users & Permissions feature. The built-in providers live in `packages/plugins/users-permissions/server/src/services/providers-registry.js` in the Strapi codebase. Do not edit this file: register your provider with the `add()` method of the `providers-registry` service instead, as shown in [Creating a custom provider](#creating-a-custom-provider).
+
+When Strapi starts, it saves the `icon`, `enabled`, and `grantConfig` values of every registered provider in the database. You can then manage these settings from  *Users & Permissions plugin > Providers* in the admin panel.
 
 Add the fields your provider needs into the `grantConfig` object.
-For our discord provider it will look like:
+For our discord provider, a simplified registry entry looks like:
 
 ```js
 discord: {
-  enabled: false,  // make this provider disabled by default
-  icon: 'comments', // The icon to use on the UI
-  key: '',  // our provider app id (leave it blank, you will fill it with the Content Manager)
-  secret: '', // our provider secret key (leave it blank, you will fill it with the Content Manager)
-  callback: '/auth/discord/callback', // the callback endpoint of our provider
-  scope: [  // the scope that we need from our user to retrieve information
-    'identify',
-    'email'
-  ]
+  enabled: false, // make this provider disabled by default
+  icon: 'discord', // the icon to use in the admin panel
+  grantConfig: {
+    key: '', // our provider app id (leave it blank, you will fill it in the admin panel)
+    secret: '', // our provider secret key (leave it blank, you will fill it in the admin panel)
+    scope: ['identify', 'email'], // the scope that we need from our user to retrieve information
+  },
+  async authCallback({ accessToken }) {
+    // fetch the user profile from the provider and return its username and email
+  },
 },
 ```
 
@@ -33201,7 +33252,7 @@ Due to these two issues, it is recommended you use a proxy application such as [
 
 ## Can I use TypeScript in a Strapi project?
 
-TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/cms/typescript).
+TypeScript is supported in Strapi projects. TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/cms/typescript).
 
 ## How to fix the build error `Error: Cannot find module @strapi/XXX`
 
@@ -35397,7 +35448,7 @@ register(app) {
 | `error`          | Error received after validation                                                                                                                                                                                                           | [IntlObject](https://formatjs.io/docs/react-intl/)                 |
 | `disabled`       | Whether or not the input is disabled                                                                                                                                                                                                      | `boolean`                                                            |
 
-As of Strapi v4.13.0, fields in the Content Manager can be auto-focussed via the `URLSearchParam` `field`. It's recommended that your input component is wrapped in React's [`forwardRef`](https://react.dev/reference/react/forwardRef) method; you should pass the corresponding `ref` to the `input` element.
+Fields in the Content Manager can be auto-focussed via the `URLSearchParam` `field`. It's recommended that your input component is wrapped in React's [`forwardRef`](https://react.dev/reference/react/forwardRef) method; you should pass the corresponding `ref` to the `input` element.
 
 <br/>
 </details>
@@ -36221,7 +36272,7 @@ yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclud
 ```
 
 ```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
 ```
 
 ## Include only specified data types during import
@@ -36239,7 +36290,7 @@ yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --only c
 ```
 
 ```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
 ```
 
 ## Filter content types during import
@@ -36312,7 +36363,7 @@ The CLI command consists of the following arguments:
 | `--no-checksums` | Disable end-to-end SHA-256 checksum verification for assets. Checksum verification is enabled by default when both the source and destination instances support it. |
 | `--verbose` | Enable verbose logs. |
 
-Either `--to` or `--from` is required, and you cannot pass both.
+You cannot pass both `--to` and `--from`. If you pass neither, the command runs in interactive mode and asks for the transfer direction. It then reads the remote URL and transfer token from the `STRAPI_TRANSFER_URL` and `STRAPI_TRANSFER_TOKEN` environment variables, or asks for them if the variables are not set (see [CLI reference](/cms/cli#strapi-transfer)).
 
 :::tip Tips
 * To get familiar with the command before running it against a remote instance, see [Test a data transfer locally](/cms/features/data-management/transfer-locally).
@@ -36464,7 +36515,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 ## Bypass all `transfer` command line prompts
 
-When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `--to-token` option with the transfer token if you use the `--force` option.
+When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. The `--force` option does not skip the transfer token prompt. To run the command without any prompt, also pass the transfer token with the `--to-token` option, or with the `--from-token` option when pulling data with `--from`.
 
 :::caution
 The `--force` option bypasses all warnings about content deletion. The deletion only covers the stages that are actually transferred: if you filter stages with `--only` or `--exclude`, the omitted stages are preserved. See [What a transfer replaces and preserves](#what-a-transfer-replaces-and-preserves).
@@ -41663,7 +41714,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
 2. The terminal will ask you whether you want to `Login/Signup` or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to login, you'll receive a 30-day trial of the  plan that will be automatically applied to your created project. If you skip this step, the project will fall back to the CMS Free plan.
 
-3. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
+3. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer will be used. Most questions default to Yes, but the question about starting with an example structure and data defaults to No:
 
   ![Terminal prompts at installation](/img/assets/installation/prompts.png)
 
@@ -41684,11 +41735,12 @@ The above installation guide only covers the basic installation option using the
 
 | Option                              | Description                                                                                                                                                                                                                                     |
 |-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--no-run`                          | Do not start the application after it is created                                                                                                                                                                                                |
+| `--no-run`                          | Do not start the application after it is created. Only applies with `--quickstart`, since the application is not started otherwise.                                                                                                              |
 | `--ts`<br/>`--typescript`           | Initialize the project with TypeScript (default)                                                                                                                                                                                                |
 | `--js`<br/>`--javascript`           | Initialize the project with JavaScript                                                                                                                                                                                                          |
 | `--use-npm`                         | Force the usage of [npm](https://www.npmjs.com/) as the project package manager                                                                                                                                        |
 | `--use-pnpm`                        | Force the usage of [pnpm](https://pnpm.io/) as the project package manager                                                                                                                                             |
+| `--use-yarn`                        | Force the usage of [yarn](https://yarnpkg.com/) as the project package manager                                                                                                                                         |
 | `--install`                         | Install all dependencies, skipping the related CLI prompt                                                                                                                                                                                       |
 | `--no-install`                      | Do not install all dependencies, skipping the related CLI prompt                                                                                                                                                                                |
 | `--git-init`                        | Initialize a git repository, skipping the related CLI prompt                                                                                                                                                                                    |
@@ -41696,8 +41748,7 @@ The above installation guide only covers the basic installation option using the
 | `--example`                         | Add example data, skipping the related CLI prompt                                                                                                                                                                                               |
 | `--no-example`                      | Do not add example data, skipping the related CLI prompt                                                                                                                                                                                        |
 | `--skip-cloud`                      | Skip [Strapi login and project creation steps](#skipping-the-strapi-login-step)                                                                                                                                                     |
-| `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no A/B tests). The `<directory>` argument is required when using this flag.                                        |
-| `--enable-ab-tests`<br/>`--no-enable-ab-tests` | Enable or disable anonymous A/B testing, skipping the related CLI prompt                                                                                                                                                  |
+| `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no example data). The `<directory>` argument is required when using this flag.                                        |
 | `--skip-db`                         | Skip all database-related prompts and create a project with the default (SQLite) database                                                                                                                                                       |
 | `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details.                                                                            |
 | `--dbclient <dbclient>`             | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sqlite` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
@@ -41707,11 +41758,19 @@ The above installation guide only covers the basic installation option using the
 | `--dbusername <dbusername>`         | Define the database username to use by replacing `<dbusername>` in the command by the value of your choice                                                                                                                                      |
 | `--dbpassword <dbpassword>`         | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice                                                                                                                                      |
 | `--dbssl <dbssl>`                   | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default)                                                                                                                                                        |
-| `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbclient>` in the command by the value of your choice                                                                                                                 |
+| `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbfile>` in the command by the value of your choice                                                                                                                 |
 | `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Use `--non-interactive` instead.                                                                                                                               |
 
 :::note Notes
-* If you do not pass a `--use-npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
+* If you do not pass a `--use-npm|pnpm|yarn` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
+* To configure a database other than SQLite with options, pass all of the `--dbclient`, `--dbhost`, `--dbport`, `--dbname`, `--dbusername`, and `--dbpassword` options. If only some of them are passed, the command stops and lists the missing options.
+* The command stops with an error if you combine incompatible options:
+  * `--ts` and `--js`,
+  * `--ts` or `--js` with `--template`,
+  * `--example` with `--template`,
+  * more than one of `--use-npm`, `--use-pnpm`, and `--use-yarn`,
+  * `--quickstart` or `--non-interactive` without a `<directory>` argument.
+* The `--enable-ab-tests` and `--no-enable-ab-tests` options are still accepted so that existing scripts keep working, but they have no effect.
 * For additional information about database configuration, please refer to the [database configuration documentation](/cms/configurations/database).
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
@@ -51689,17 +51748,23 @@ The present documentation lists the available Plugin SDK commands. The [associat
 Create a new plugin at a given path.
 
 ```bash
-npx @strapi/sdk-plugin init
+npx @strapi/sdk-plugin init <path>
 ```
 
 | Arguments |  Type  | Description        | Default                   |
 | --------- | :----: | ------------------ | ------------------------- |
-| `path`    | string | Path to the plugin | `./src/plugins/my-plugin` |
+| `path`    | string | Path to the plugin (required). When the command runs from the root of a Strapi project and `path` contains no `/`, the plugin is created in `./src/plugins/<path>`. | - |
 
 | Option        | Type | Description                             | Default |
 | ------------- | :--: | --------------------------------------- | ------- |
 | `-d, --debug` |  -   | Enable debugging mode with verbose logs | false   |
 | `--silent`    |  -   | Do not log anything                     | false   |
+| `--use-npm`   |  -   | Use npm as the plugin package manager   | -       |
+| `--use-yarn`  |  -   | Use yarn as the plugin package manager  | -       |
+| `--use-pnpm`  |  -   | Use pnpm as the plugin package manager  | -       |
+| `--no-install` | -   | Do not install the plugin dependencies nor build the plugin | -       |
+
+When the command runs from the root of a Strapi project that has a lock file, the plugin uses the package manager of the project. In this case, the `--use-npm`, `--use-yarn`, and `--use-pnpm` options are ignored. Otherwise, without these options, the package manager running the command is used, or npm by default.
 
 ## strapi-plugin build
 
@@ -51711,7 +51776,6 @@ strapi-plugin build
 
 | Option         |  Type  | Description                                                                                                       | Default |
 | -------------- | :----: | ----------------------------------------------------------------------------------------------------------------- | ------- |
-| `--force`      | string | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively. | -       |
 | `-d, --debug`  |   -    | Enable debugging mode with verbose logs                                                                           | false   |
 | `--silent`     |   -    | Do not log anything                                                                                               | false   |
 | `--minify`     |   -    | Minify the output                                                                                                 | false   |
@@ -53017,7 +53081,7 @@ module.exports = createCoreController('api::project.project', ({ strapi }) => ({
 
     // highlight-next-line
     await strapi.service('plugin::todo.task').create({ // global getter: preferred in application code
-      title: `Review project: ${data.attributes.name}`,
+      title: `Review project: ${data.name}`,
       done: false,
     });
 
@@ -53039,7 +53103,7 @@ type TaskService = {
       // highlight-next-line
       // Narrow cast: this generic documentation cannot infer your app-specific service signatures.
       await (strapi.service('plugin::todo.task') as TaskService).create({
-        title: `Review project: ${data.attributes.name}`,
+        title: `Review project: ${data.name}`,
         done: false,
       });
 
@@ -54767,6 +54831,7 @@ If you've generated an API called `Document` using [the interactive `strapi gene
 ```graphql
 # Document's Type definition
 input DocumentFiltersInput {
+  documentId: IDFilterInput
   name: StringFilterInput
   description: StringFilterInput
   locked: BooleanFilterInput
@@ -54782,12 +54847,11 @@ input DocumentInput {
   name: String
   description: String
   locked: Boolean
-  createdAt: DateTime
-  updatedAt: DateTime
   publishedAt: DateTime
 }
 
 type Document {
+  documentId: ID!
   name: String
   description: String
   locked: Boolean
@@ -54796,40 +54860,47 @@ type Document {
   publishedAt: DateTime
 }
 
-type DocumentEntity {
-  id: ID
-  attributes: Document
-}
-
-type DocumentEntityResponse {
-  data: DocumentEntity
-}
-
 type DocumentEntityResponseCollection {
-  data: [DocumentEntity!]!
-  meta: ResponseCollectionMeta!
+  nodes: [Document!]!
+  pageInfo: Pagination!
 }
 
 type DocumentRelationResponseCollection {
-  data: [DocumentEntity!]!
+  nodes: [Document!]!
 }
 
-# Queries to retrieve one or multiple restaurants.
-type Query  {
-  document(id: ID): DocumentEntityResponse
+# Queries to retrieve one or multiple documents.
+type Query {
+  document(
+    documentId: ID!
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): Document
   documents(
     filters: DocumentFiltersInput
     pagination: PaginationArg = {}
     sort: [String] = []
-    publicationState: PublicationState = LIVE
-):DocumentEntityResponseCollection
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): [Document]!
+  documents_connection(
+    filters: DocumentFiltersInput
+    pagination: PaginationArg = {}
+    sort: [String] = []
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): DocumentEntityResponseCollection
 }
 
-# Mutations to create, update or delete a restaurant.
+# Mutations to create, update or delete a document.
 type Mutation {
-  createDocument(data: DocumentInput!): DocumentEntityResponse
-  updateDocument(id: ID!, data: DocumentInput!): DocumentEntityResponse
-  deleteDocument(id: ID!): DocumentEntityResponse
+  createDocument(status: PublicationStatus = PUBLISHED, data: DocumentInput!): Document
+  updateDocument(
+    documentId: ID!
+    status: PublicationStatus = PUBLISHED
+    data: DocumentInput!
+  ): Document
+  deleteDocument(documentId: ID!): DeleteMutationResponse
 }
 ```
 
@@ -57068,11 +57139,11 @@ Strapi 5 templates are folders that include all files and folders that you would
 To create a new Strapi project based on a template, run the following command:
 
 ```sh
-yarn create strapi-app my-project --template <template-name-or-url>
+yarn create strapi my-project --template <template-name-or-url>
 ```
 
 ```sh
-npx create-strapi-app@latest my-project --template <template-name-or-url>
+npx create-strapi@latest my-project --template <template-name-or-url>
 ```
 
 In addition to the mandatory `--template` parameter, you can pass the optional `--template-path` and `--template-branch` options to more precisely define the template to use.
@@ -58290,7 +58361,7 @@ To generate typings for your project schemas use the [`ts:generate-types` CLI co
 To use `ts:generate-types`run the following code in a terminal at the project root:
 
 ```sh
-npm run strapi ts:generate-types --debug #optional flag to display additional logging
+npm run strapi ts:generate-types -- --debug #optional flag to display additional logging
 ```
 
 ```sh
@@ -58658,6 +58729,12 @@ For instance, if the latest Strapi v4 version is v4.25.9:
 Before running the upgrade process, make sure you've created a backup of your codebase and database.
 :::
 
+The upgrade tool only updates `@strapi/*` dependencies declared with an exact version (for instance `5.12.0`). Before upgrading, the tool checks the `dependencies` and `devDependencies` of the `package.json` file. If any `@strapi/*` dependency uses a version range (for instance `^5.12.0`), the tool lists these dependencies. It then asks whether to pin them all to the version of `@strapi/strapi`, or to the lowest version of its range if `@strapi/strapi` itself uses a range:
+
+- Answering yes writes the exact versions in the `package.json` file, then the upgrade continues. With the [`--dry`](#simulate-the-upgrade-without-updating-any-files-dry-run) option, the versions are pinned in memory only.
+- Answering no stops the upgrade.
+- The [`--yes`](#answer-yes-to-every-prompt) option answers yes automatically.
+
 ### Upgrade to a major version
 
 Run the upgrade tool with the `major` parameter to upgrade the project to the next major version of Strapi:
@@ -58751,9 +58828,25 @@ To run only a specific codemod, use `run` followed by a UID found from the `ls` 
 npx @strapi/upgrade codemods run 5.0.0-strapi-codemod-uid
 ```
 
+By default, on a Strapi application, the `codemods ls` and `codemods run` commands offer the codemods matching the current major version of the application. On a Strapi plugin, they offer every codemod. To use another version range, pass a semver range with the `-r` or `--range` option:
+
+```bash
+npx @strapi/upgrade codemods ls --range ">=5.0.0"
+```
+
+The `codemods ls` and `codemods run` commands accept the following options:
+
+| Option | Description | Default |
+| --- | --- | --- |
+| `-p, --project-path <project-path>` | Path to the Strapi application or plugin | - |
+| `-n, --dry` | Simulate the execution without updating any files (`codemods run` only) | false |
+| `-d, --debug` | Get more logs in debug mode | false |
+| `-s, --silent` | Don't log anything | false |
+| `-r, --range <range>` | Semver range of the codemods to list or run | Current major version |
+
 ## Options
 
-The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following options:
+The `npx @strapi/upgrade [latest|major|minor|patch]` and `npx @strapi/upgrade to <target>` commands can accept the following options:
 
 | Option                                                                                  | Description                                                                     | Default  |
 | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------|----------|
@@ -58762,8 +58855,9 @@ The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following 
 | [`-s, --silent`](#execute-the-upgrade-silently)                                         | [Don't log anything](#execute-the-upgrade-silently)                             | false    |
 | [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | [Path](#select-a-path-for-the-strapi-application-folder) to the Strapi project  | -        |
 | [`-y, --yes`](#answer-yes-to-every-prompt)                                              | Automatically [answer "yes"](#answer-yes-to-every-prompt) to every prompt       | false    |
+| [`-c, --codemods-target <codemodsTarget>`](#upgrade-to-a-specific-version) | Version (`<number>.<number>.<number>`) of the codemods to run. Only available with the `to` command. | `major.minor.patch` portion of the target version |
 
-The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch]` commands:
+The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [latest|major|minor|patch]` and `npx @strapi/upgrade to <target>` commands:
 
 | Option                                                                   | Description                                                      |
 | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
@@ -58800,7 +58894,7 @@ Example:
 
 ```sh
 $ npx @strapi/upgrade -V
-4.15.1
+5.59.0
 ```
 
 ### Get detailed debugging information
@@ -58808,7 +58902,7 @@ $ npx @strapi/upgrade -V
 When passing the `--debug` option (or its `-d` shorthand), the upgrade tool provides more detailed logs while running:
 
 ```bash
-npx @strapi/upgrade --debug
+npx @strapi/upgrade major --debug
 ```
 
 ### Execute the upgrade silently
@@ -58816,7 +58910,7 @@ npx @strapi/upgrade --debug
 When passing the `--silent` option (or its `-s` shorthand), the tool executes the upgrade without providing any log:
 
 ```bash
-npx @strapi/upgrade --silent
+npx @strapi/upgrade major --silent
 ```
 
 ### Answer yes to every prompt
@@ -58824,7 +58918,7 @@ npx @strapi/upgrade --silent
 When passing the `--yes` option (or its `-y` shorthand), the tool automatically answers "yes" to every prompt:
 
 ```bash
-npx @strapi/upgrade --yes`
+npx @strapi/upgrade major --yes
 ```
 
 ### Get help
@@ -58838,17 +58932,19 @@ $ npx @strapi/upgrade -h
 Usage: upgrade <command> [options]
 
 Options:
- -V, --version    output the version number
- -h, --help       Print command line options
+  -V, --version          output the version number
+  -h, --help             Print command line options
 
 Commands:
- latest [options]  Upgrade to the latest available version of Strapi
- major [options]   Upgrade to the next available major version of Strapi
- minor [options]   Upgrade to ...
- patch [options]   Upgrade to ...
-to [options] <target> Upgrade to a specific version of Strapi
- help [command]    Print options for a specific command
-
+  latest [options]       Upgrade to the latest available version of Strapi
+  major [options]        Upgrade to the next available major version of Strapi
+  minor [options]        Upgrade to the latest minor and patch version of
+                         Strapi for the current major
+  patch [options]        Upgrade to latest patch version of Strapi for the
+                         current major and minor
+  to [options] <target>  Upgrade to a specific version of Strapi
+  codemods
+  help [command]         Print options for a specific command
 ```
 
 ```sh
@@ -58858,12 +58954,17 @@ Usage: upgrade major [options]
 Upgrade to the next available major version of Strapi
 
 Options:
-  -p, --project-path <project-path>  Path to the Strapi project
-  -n, --dry                          Simulate the upgrade without updating any files (default: false)
-  -d, --debug                        Get more logs in debug mode (default: false)
+  -p, --project-path <project-path>  Root path to the Strapi application or
+                                     plugin
+  -n, --dry                          Simulate the upgrade without updating any
+                                     files (default: false)
+  -d, --debug                        Get more logs in debug mode (default:
+                                     false)
   -s, --silent                       Don't log anything (default: false)
-  -h, --help                         Display help for command
-  -y, --yes                          Automatically answer yes to every prompt
+  -y, --yes                          Automatically answer "yes" to any prompts
+                                     that the CLI might print on the command
+                                     line. (default: false)
+  -h, --help                         display help for command
 ```
 
 

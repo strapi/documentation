@@ -758,6 +758,30 @@ strapi projects
 ```
 
 
+## strapi cloud environment list
+Description: Lists the environments of the Strapi Cloud project linked to the current folder.
+(Source: https://docs.strapi.io/cloud/cli/cloud-cli#strapi-cloud-environment-list)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi cloud environment list
+```
+
+
+## strapi cloud environment link
+Description: Links the current folder to an environment of the linked Strapi Cloud project.
+(Source: https://docs.strapi.io/cloud/cli/cloud-cli#strapi-cloud-environment-link)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi cloud environment link
+```
+
+
 ## strapi logout
 Description: Log out of Strapi Cloud.
 (Source: https://docs.strapi.io/cloud/cli/cloud-cli#strapi-logout)
@@ -826,7 +850,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-  npx run strapi login
+  npm run strapi login
 ```
 
 
@@ -846,7 +870,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-  npx run strapi link
+  npm run strapi link
 ```
 
 
@@ -866,7 +890,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-  npx run strapi deploy
+  npm run strapi deploy
 ```
 
 
@@ -4326,37 +4350,31 @@ Language: JSON
 File path: N/A
 
 ```json
-{
-  [
-    {
-      "id": "cjld2cjxh0000qzrmn831i7rn",
-      "title": "Test Article",
-      "slug": "test-article",
-      "body": "Test 1",
-      // ...
-      "headerImage": {
-        "data": {
-          "id": 1,
-          "attributes": {
-            "name": "17520.jpg",
-            "alternativeText": "17520.jpg",
-            "formats": {
-              // ...
-            }
-            // ...
-          }
-        }
-      },
-      "author": {
-        // ...
-      },
-      "categories": {
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    "slug": "test-article",
+    "body": "Test 1",
+    // ...
+    "headerImage": {
+      "id": 1,
+      "name": "17520.jpg",
+      "alternativeText": "17520.jpg",
+      "formats": {
         // ...
       }
+      // ...
+    },
+    "author": {
+      // ...
+    },
+    "categories": {
+      // ...
     }
-    // ...
-  ]
-}
+  }
+  // ...
+]
 ```
 
 
@@ -15044,10 +15062,10 @@ File path: src/api/blog-post/middlewares/isOwner.js
          * the response includes author-related information
          */
         if (entryId) {
-          entry = await strapi.documents('api::restaurant.restaurant').findOne(
-            entryId,
-            { populate: "*" }
-          );
+          entry = await strapi.documents('api::restaurant.restaurant').findOne({
+            documentId: entryId,
+            populate: "*",
+          });
         }
 
         /**
@@ -17754,6 +17772,13 @@ File path: N/A
 strapi version
 ```
 
+Language: Bash
+File path: N/A
+
+```bash
+strapi --version
+```
+
 
 ## strapi help
 Description: List CLI commands.
@@ -17897,11 +17922,11 @@ strapi openapi generate
 
 
 ## Examples
-Description: | Option | Type | Default | Description | | ---------- | -------- | --------------------- | ------------------------------------------------ | | --output | string | ./openapi-spec.json | Output file path for the generated specification |
+Description: | Option | Type | Default | Description | | ---------- | -------- | --------------------- | ------------------------------------------------ | | -o, --output | string | ./specification.json | Output file path for the generated specification.
 (Source: https://docs.strapi.io/cms/cli#examples)
 
 Language: Bash
-File path: ./openapi-spec.js
+File path: ./specification.js
 
 ```bash
 # Generate OpenAPI specification (default)
@@ -17913,7 +17938,7 @@ yarn strapi openapi generate --output ./docs/api-spec.json
 
 ---
 Language: Bash
-File path: ./openapi-spec.js
+File path: ./specification.js
 
 ```bash
 # Generate OpenAPI specification (default)
@@ -17984,11 +18009,11 @@ pnpm strapi enterprise install plugin-byok@1.0.0
 
 
 ## strapi templates:generate
-Description: Create a template from the current Strapi project.
+Description: :::caution Deprecated The templates:generate command is deprecated and will be removed in the next major release.
 (Source: https://docs.strapi.io/cms/cli#strapi-templates-generate)
 
 Language: Bash
-File path: ./openapi-spec.js
+File path: ./specification.js
 
 ```bash
 strapi templates:generate <path>
@@ -18000,7 +18025,7 @@ Description: Generate TypeScript typings for the project schemas.
 (Source: https://docs.strapi.io/cms/cli#strapi-ts-generate-types)
 
 Language: Bash
-File path: ./openapi-spec.js
+File path: ./specification.js
 
 ```bash
 strapi ts:generate-types
@@ -18012,7 +18037,7 @@ Description: Rename a field of a content-type or a component and generate the da
 (Source: https://docs.strapi.io/cms/cli#strapi-rename-field)
 
 Language: Bash
-File path: ./openapi-spec.js
+File path: ./specification.js
 
 ```bash
 strapi rename:field <uid> <oldName> <newName>
@@ -18064,6 +18089,18 @@ File path: N/A
 
 ```bash
 strapi content-types:list
+```
+
+
+## strapi components:list
+Description: Display a list of all the registered components.
+(Source: https://docs.strapi.io/cms/cli#strapi-components-list)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi components:list
 ```
 
 
@@ -19157,7 +19194,7 @@ export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
 
 
 ## Environment variables in database configurations
-Description: Strapi version v4.6.2 and higher includes the database configuration options in the ./config/database.js or ./config/database.ts file.
+Description: Strapi includes the database configuration options in the ./config/database.js or ./config/database.ts file.
 (Source: https://docs.strapi.io/cms/configurations/database#environment-variables-in-database-configurations)
 
 Language: JavaScript
@@ -23770,19 +23807,20 @@ Description: Add the fields your provider needs into the grantConfig object.
 (Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#configure-the-new-provider-model-onto-database)
 
 Language: JavaScript
-File path: /strapi-plugin-users-permissions/config/functions/bootstrap.js
+File path: /plugins/users-permissions/server/src/services/providers-registry.js
 
 ```js
 discord: {
-  enabled: false,  // make this provider disabled by default
-  icon: 'comments', // The icon to use on the UI
-  key: '',  // our provider app id (leave it blank, you will fill it with the Content Manager)
-  secret: '', // our provider secret key (leave it blank, you will fill it with the Content Manager)
-  callback: '/auth/discord/callback', // the callback endpoint of our provider
-  scope: [  // the scope that we need from our user to retrieve information
-    'identify',
-    'email'
-  ]
+  enabled: false, // make this provider disabled by default
+  icon: 'discord', // the icon to use in the admin panel
+  grantConfig: {
+    key: '', // our provider app id (leave it blank, you will fill it in the admin panel)
+    secret: '', // our provider secret key (leave it blank, you will fill it in the admin panel)
+    scope: ['identify', 'email'], // the scope that we need from our user to retrieve information
+  },
+  async authCallback({ accessToken }) {
+    // fetch the user profile from the provider and return its username and email
+  },
 },
 ```
 
@@ -26529,7 +26567,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
 ```
 
 
@@ -26549,7 +26587,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
 ```
 
 
@@ -36874,7 +36912,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-npx @strapi/sdk-plugin init
+npx @strapi/sdk-plugin init <path>
 ```
 
 
@@ -37978,7 +38016,7 @@ module.exports = createCoreController('api::project.project', ({ strapi }) => ({
 
     // highlight-next-line
     await strapi.service('plugin::todo.task').create({ // global getter: preferred in application code
-      title: `Review project: ${data.attributes.name}`,
+      title: `Review project: ${data.name}`,
       done: false,
     });
 
@@ -38007,7 +38045,7 @@ export default factories.createCoreController(
       // highlight-next-line
       // Narrow cast: this generic documentation cannot infer your app-specific service signatures.
       await (strapi.service('plugin::todo.task') as TaskService).create({
-        title: `Review project: ${data.attributes.name}`,
+        title: `Review project: ${data.name}`,
         done: false,
       });
 
@@ -39450,6 +39488,7 @@ File path: N/A
 ```graphql
 # Document's Type definition
 input DocumentFiltersInput {
+  documentId: IDFilterInput
   name: StringFilterInput
   description: StringFilterInput
   locked: BooleanFilterInput
@@ -39465,12 +39504,11 @@ input DocumentInput {
   name: String
   description: String
   locked: Boolean
-  createdAt: DateTime
-  updatedAt: DateTime
   publishedAt: DateTime
 }
 
 type Document {
+  documentId: ID!
   name: String
   description: String
   locked: Boolean
@@ -39479,40 +39517,47 @@ type Document {
   publishedAt: DateTime
 }
 
-type DocumentEntity {
-  id: ID
-  attributes: Document
-}
-
-type DocumentEntityResponse {
-  data: DocumentEntity
-}
-
 type DocumentEntityResponseCollection {
-  data: [DocumentEntity!]!
-  meta: ResponseCollectionMeta!
+  nodes: [Document!]!
+  pageInfo: Pagination!
 }
 
 type DocumentRelationResponseCollection {
-  data: [DocumentEntity!]!
+  nodes: [Document!]!
 }
 
-# Queries to retrieve one or multiple restaurants.
-type Query  {
-  document(id: ID): DocumentEntityResponse
+# Queries to retrieve one or multiple documents.
+type Query {
+  document(
+    documentId: ID!
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): Document
   documents(
     filters: DocumentFiltersInput
     pagination: PaginationArg = {}
     sort: [String] = []
-    publicationState: PublicationState = LIVE
-):DocumentEntityResponseCollection
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): [Document]!
+  documents_connection(
+    filters: DocumentFiltersInput
+    pagination: PaginationArg = {}
+    sort: [String] = []
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): DocumentEntityResponseCollection
 }
 
-# Mutations to create, update or delete a restaurant.
+# Mutations to create, update or delete a document.
 type Mutation {
-  createDocument(data: DocumentInput!): DocumentEntityResponse
-  updateDocument(id: ID!, data: DocumentInput!): DocumentEntityResponse
-  deleteDocument(id: ID!): DocumentEntityResponse
+  createDocument(status: PublicationStatus = PUBLISHED, data: DocumentInput!): Document
+  updateDocument(
+    documentId: ID!
+    status: PublicationStatus = PUBLISHED
+    data: DocumentInput!
+  ): Document
+  deleteDocument(documentId: ID!): DeleteMutationResponse
 }
 ```
 
@@ -40969,7 +41014,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-yarn create strapi-app my-project --template <template-name-or-url>
+yarn create strapi my-project --template <template-name-or-url>
 ```
 
 ---
@@ -40977,7 +41022,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-npx create-strapi-app@latest my-project --template <template-name-or-url>
+npx create-strapi@latest my-project --template <template-name-or-url>
 ```
 
 
@@ -42099,7 +42144,7 @@ Language: Bash
 File path: ./src/index.ts
 
 ```bash
-npm run strapi ts:generate-types --debug #optional flag to display additional logging
+npm run strapi ts:generate-types -- --debug #optional flag to display additional logging
 ```
 
 ---
@@ -42462,6 +42507,13 @@ File path: N/A
 npx @strapi/upgrade codemods run 5.0.0-strapi-codemod-uid
 ```
 
+Language: Bash
+File path: N/A
+
+```bash
+npx @strapi/upgrade codemods ls --range ">=5.0.0"
+```
+
 
 ## Simulate the upgrade without updating any files (dry run)
 Description: Examples:
@@ -42498,7 +42550,7 @@ File path: N/A
 
 ```sh
 $ npx @strapi/upgrade -V
-4.15.1
+5.59.0
 ```
 
 
@@ -42510,7 +42562,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-npx @strapi/upgrade --debug
+npx @strapi/upgrade major --debug
 ```
 
 
@@ -42522,7 +42574,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-npx @strapi/upgrade --silent
+npx @strapi/upgrade major --silent
 ```
 
 
@@ -42534,7 +42586,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-npx @strapi/upgrade --yes`
+npx @strapi/upgrade major --yes
 ```
 
 
@@ -42550,16 +42602,19 @@ $ npx @strapi/upgrade -h
 Usage: upgrade <command> [options]
 
 Options:
- -V, --version    output the version number
- -h, --help       Print command line options
+  -V, --version          output the version number
+  -h, --help             Print command line options
 
 Commands:
- latest [options]  Upgrade to the latest available version of Strapi
- major [options]   Upgrade to the next available major version of Strapi
- minor [options]   Upgrade to ...
- patch [options]   Upgrade to ...
-to [options] <target> Upgrade to a specific version of Strapi
- help [command]    Print options for a specific command
+  latest [options]       Upgrade to the latest available version of Strapi
+  major [options]        Upgrade to the next available major version of Strapi
+  minor [options]        Upgrade to the latest minor and patch version of
+                         Strapi for the current major
+  patch [options]        Upgrade to latest patch version of Strapi for the
+                         current major and minor
+  to [options] <target>  Upgrade to a specific version of Strapi
+  codemods
+  help [command]         Print options for a specific command
 ```
 
 ---
@@ -42573,12 +42628,17 @@ Usage: upgrade major [options]
 Upgrade to the next available major version of Strapi
 
 Options:
-  -p, --project-path <project-path>  Path to the Strapi project
-  -n, --dry                          Simulate the upgrade without updating any files (default: false)
-  -d, --debug                        Get more logs in debug mode (default: false)
+  -p, --project-path <project-path>  Root path to the Strapi application or
+                                     plugin
+  -n, --dry                          Simulate the upgrade without updating any
+                                     files (default: false)
+  -d, --debug                        Get more logs in debug mode (default:
+                                     false)
   -s, --silent                       Don't log anything (default: false)
-  -h, --help                         Display help for command
-  -y, --yes                          Automatically answer yes to every prompt
+  -y, --yes                          Automatically answer "yes" to any prompts
+                                     that the CLI might print on the command
+                                     line. (default: false)
+  -h, --help                         display help for command
 ```
 
 
