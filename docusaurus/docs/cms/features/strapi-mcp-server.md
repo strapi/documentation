@@ -270,6 +270,13 @@ In the following tables, `<slug>` stands for the slug of the content type.
 
 The `publish_<slug>`, `unpublish_<slug>`, and `discard_<slug>_draft` tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
 
+Some tools accept the following optional parameters in addition to `documentId`, `data`, and `locale`:
+
+| Parameter | Tools | Description |
+|-----------|-------|-------------|
+| `status` | `list_<slug>`, `get_<slug>` | Document version to return, `draft` or `published`. Defaults to `draft` when Draft & Publish is enabled. |
+| `discardDraft` | `unpublish_<slug>` | When `true`, also discards the draft while unpublishing. Requires the `update` permission in addition to `publish`. |
+
 #### Media Library tools {#media-library-tools}
 
 <VersionBadge version="5.54.0" />
@@ -308,7 +315,9 @@ The `media_get_asset` tool requires 1 parameter: `id`, the numeric asset ID. Doc
 
 **Writing.** `media_update_asset` writes metadata only. The file itself, its URL, its MIME type and its size belong to the [upload provider](/cms/configurations/media-library-providers) and cannot be changed over MCP. Use `media_move_assets` to change which folder an asset sits in, and `media_rename_folder` rather than `media_move_folder` to change a folder name.
 
-`media_move_assets` and `media_move_folder` both accept `null` as the destination, meaning the Media Library root. A folder cannot be moved into itself or into one of its own descendants.
+`media_move_assets`, `media_delete_assets`, and `media_delete_folder` take an `ids` array of 1 to 100 numeric ids.
+
+`media_move_assets` and `media_move_folder` both accept `null` as the destination, meaning the Media Library root. A folder cannot be moved into itself or into one of its own descendants. `media_create_folder` creates the folder at the Media Library root when its `parent` parameter is omitted or `null`.
 
 :::warning Deletions are permanent
 `media_delete_assets` and `media_delete_folder` remove files from the database and from the storage provider, together with every generated thumbnail and size variant. There is no trash and no undo, and deleting a folder cascades to every subfolder and file inside it. Neither tool can tell whether an asset is referenced by an entry, so a successful deletion is not evidence that nothing was using it.
