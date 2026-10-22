@@ -34,6 +34,7 @@ try {
 // Shared extractor for code carried inside API layout components
 // (<Endpoint>, <ApiCall>) whose code lives in props, not Markdown fences.
 const { extractApiComponentSnippets } = require('./lib/api-components');
+const { agentInstructionsBlock } = require('./lib/agent-instructions');
 
 const DEFAULT_DOCS = [
   'cms/admin-panel-customization/bundlers',
@@ -817,7 +818,7 @@ class DocusaurusLlmsCodeGenerator {
   }
 
   formatOutput(pages) {
-    const lines = [];
+    const lines = [agentInstructionsBlock(), ''];
 
     pages.forEach((page) => {
       lines.push(`# ${page.title}`);

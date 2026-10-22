@@ -5,6 +5,7 @@ const matter = require('gray-matter');
 // generate-llms-code.js). These supersede the previously-duplicated helpers
 // and additionally fix a template-literal interpolation bug.
 const apiComponents = require('./lib/api-components');
+const { agentInstructionsBlock } = require('./lib/agent-instructions');
 
 class DocusaurusLlmsGenerator {
   constructor(config = {}) {
@@ -77,6 +78,8 @@ class DocusaurusLlmsGenerator {
         `# ${page.title}`,
         '',
         `> Source: ${page.url}`,
+        '',
+        agentInstructionsBlock(),
         '',
         contentNoH1,
         '',
@@ -937,7 +940,7 @@ class DocusaurusLlmsGenerator {
   }
 
   generateLlmsTxt(pages) {
-    const lines = [`# ${this.siteName}`, ''];
+    const lines = [`# ${this.siteName}`, '', agentInstructionsBlock(), ''];
 
     pages.forEach(page => {
       const description = page.description || 'No description available';
@@ -962,8 +965,8 @@ class DocusaurusLlmsGenerator {
   }
 
   generateLlmsFullTxt(pages) {
-    const sections = [];
-    
+    const sections = [agentInstructionsBlock(), '\n'];
+
     pages.forEach(page => {
       sections.push(`# ${page.title}`);
       sections.push(`Source: ${page.url}`);
