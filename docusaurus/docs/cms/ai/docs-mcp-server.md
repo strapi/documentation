@@ -55,7 +55,7 @@ When opening the Ask AI window, you should see a **Use MCP** dropdown in the top
 If manual MCP server configuration is required:
 
 1. Click the **Copy MCP URL** from the dropdown. The server URL should be: `https://strapi-docs.mcp.kapa.ai`
-2. Add the server to your IDE's MCP configuration file:
+2. Add the server to your tool's MCP configuration:
 
     <Tabs>
     <TabItem value="cursor" label="Cursor">
@@ -87,6 +87,17 @@ If manual MCP server configuration is required:
       }
     }
     ```
+
+    </TabItem>
+    <TabItem value="claude-code" label="Claude Code">
+
+    Run the following command in your terminal:
+
+    ```bash
+    claude mcp add --transport http strapi-docs https://strapi-docs.mcp.kapa.ai
+    ```
+
+    Then run `/mcp` in Claude Code and follow the steps in your browser to log in.
 
     </TabItem>
     <TabItem value="windsurf" label="Windsurf">
