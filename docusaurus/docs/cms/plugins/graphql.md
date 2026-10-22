@@ -314,6 +314,7 @@ If you've generated an API called `Document` using [the interactive `strapi gene
 ```graphql
 # Document's Type definition
 input DocumentFiltersInput {
+  documentId: IDFilterInput
   name: StringFilterInput
   description: StringFilterInput
   locked: BooleanFilterInput
@@ -329,12 +330,11 @@ input DocumentInput {
   name: String
   description: String
   locked: Boolean
-  createdAt: DateTime
-  updatedAt: DateTime
   publishedAt: DateTime
 }
 
 type Document {
+  documentId: ID!
   name: String
   description: String
   locked: Boolean
@@ -343,40 +343,47 @@ type Document {
   publishedAt: DateTime
 }
 
-type DocumentEntity {
-  id: ID
-  attributes: Document
-}
-
-type DocumentEntityResponse {
-  data: DocumentEntity
-}
-
 type DocumentEntityResponseCollection {
-  data: [DocumentEntity!]!
-  meta: ResponseCollectionMeta!
+  nodes: [Document!]!
+  pageInfo: Pagination!
 }
 
 type DocumentRelationResponseCollection {
-  data: [DocumentEntity!]!
+  nodes: [Document!]!
 }
 
-# Queries to retrieve one or multiple restaurants.
-type Query  {
-  document(id: ID): DocumentEntityResponse
+# Queries to retrieve one or multiple documents.
+type Query {
+  document(
+    documentId: ID!
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): Document
   documents(
     filters: DocumentFiltersInput
     pagination: PaginationArg = {}
     sort: [String] = []
-    publicationState: PublicationState = LIVE
-):DocumentEntityResponseCollection
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): [Document]!
+  documents_connection(
+    filters: DocumentFiltersInput
+    pagination: PaginationArg = {}
+    sort: [String] = []
+    status: PublicationStatus = PUBLISHED
+    publicationFilter: PublicationFilter
+  ): DocumentEntityResponseCollection
 }
 
-# Mutations to create, update or delete a restaurant.
+# Mutations to create, update or delete a document.
 type Mutation {
-  createDocument(data: DocumentInput!): DocumentEntityResponse
-  updateDocument(id: ID!, data: DocumentInput!): DocumentEntityResponse
-  deleteDocument(id: ID!): DocumentEntityResponse
+  createDocument(status: PublicationStatus = PUBLISHED, data: DocumentInput!): Document
+  updateDocument(
+    documentId: ID!
+    status: PublicationStatus = PUBLISHED
+    data: DocumentInput!
+  ): Document
+  deleteDocument(documentId: ID!): DeleteMutationResponse
 }
 ```
 
