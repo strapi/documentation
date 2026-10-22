@@ -12,7 +12,12 @@
     },
     {
       "source": "/quickstart",
-      "destination": "/cms/quickstart",
+      "destination": "/cms/quick-start",
+      "permanent": true
+    },
+    {
+      "source": "/quick-start",
+      "destination": "/cms/quick-start",
       "permanent": true
     },
     {
