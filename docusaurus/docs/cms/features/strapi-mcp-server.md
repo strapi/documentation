@@ -313,7 +313,7 @@ The `media_get_asset` tool requires 1 parameter: `id`, the numeric asset ID. Doc
 :::warning Deletions are permanent
 `media_delete_assets` and `media_delete_folder` remove files from the database and from the storage provider, together with every generated thumbnail and size variant. There is no trash and no undo, and deleting a folder cascades to every subfolder and file inside it. Neither tool can tell whether an asset is referenced by an entry, so a successful deletion is not evidence that nothing was using it.
 
-Both accept a `dryRun` parameter, which reports what would be removed without removing anything. They differ on partial failure: `media_delete_assets` keeps the deletions that succeeded and reports the rest, while `media_delete_folder` rejects the whole call if any id does not resolve to a folder.
+Both accept a `dryRun` parameter, which reports what would be removed without removing anything. `dryRun` defaults to `true`: nothing is deleted unless the call passes `dryRun: false`. They differ on partial failure: `media_delete_assets` keeps the deletions that succeeded and reports the rest, while `media_delete_folder` rejects the whole call if any id does not resolve to a folder.
 :::
 
 #### Built-in utility tools
