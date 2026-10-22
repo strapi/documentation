@@ -75,6 +75,8 @@ This command deploys a local Strapi project to the Strapi Cloud project that is 
 
 The command deploys to the environment passed with the `--env` option. Without this option, it deploys to the environment linked with [`strapi cloud environment link`](#strapi-cloud-environment-link), or asks you to choose an environment if the project has several. If the target environment already has a live deployment or a deployment in progress, the command asks for a confirmation before deploying.
 
+The `deploy` command accepts the following options:
+
 | Option | Description |
 | --- | --- |
 | `-e, --env <name>` | Name of the environment to deploy to. The command stops if the environment does not exist. |
