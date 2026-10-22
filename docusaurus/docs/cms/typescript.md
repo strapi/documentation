@@ -30,7 +30,7 @@ There are 2 ways of getting started with TypeScript in Strapi:
   <TabItem value="yarn" label="Yarn">
 
   ```bash
-  yarn create strapi-app my-project --typescript
+  yarn create strapi my-project --typescript
   ```
   
   </TabItem>
@@ -38,7 +38,7 @@ There are 2 ways of getting started with TypeScript in Strapi:
   <TabItem value="npm" label="NPM">
 
   ```bash
-  npx create-strapi-app@latest my-project --typescript
+  npx create-strapi@latest my-project --typescript
   ```
   
   </TabItem>

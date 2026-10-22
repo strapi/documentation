@@ -25,10 +25,10 @@ The `transfer` command is not intended for transferring data between two local i
 1. Create a new Strapi project using the installation command:
 
    ```bash
-   npx create-strapi-app@latest <project-name> --quickstart
+   npx create-strapi@latest <project-name> --non-interactive
    ```
 
-2. Create at least 1 content type in the project. See the [Quick Start Guide](/cms/quick-start) if you need instructions on creating your first content type.
+2. Start the project with `npm run develop` from its folder, then create at least 1 content type in the project. See the [Quick Start Guide](/cms/quick-start) if you need instructions on creating your first content type.
 
    :::caution
    Do not add any data to your project at this step.

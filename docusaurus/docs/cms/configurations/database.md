@@ -732,7 +732,7 @@ Use one of the following commands:
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn create strapi-app my-project --quickstart
+yarn create strapi my-project --non-interactive
 ```
 
 </TabItem>
@@ -740,14 +740,14 @@ yarn create strapi-app my-project --quickstart
 <TabItem value="npm" label="npm">
 
 ```bash
-npx create-strapi-app@latest my-project --quickstart
+npx create-strapi@latest my-project --non-interactive
 ```
 
 </TabItem>
 
 </Tabs>
 
-This will create a new project and launch it in the browser.
+This creates a new project that uses SQLite, without asking any questions. To start it, run `yarn develop` or `npm run develop` from the project folder.
 
 #### Install SQLite manually
 
