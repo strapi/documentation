@@ -82,7 +82,7 @@ For instance, if the latest Strapi v4 version is v4.25.9:
 Before running the upgrade process, make sure you've created a backup of your codebase and database.
 :::
 
-The upgrade tool only updates `@strapi/*` dependencies declared with an exact version (for instance `5.12.0`). Before upgrading, the tool checks the `dependencies` and `devDependencies` of the `package.json` file. If any `@strapi/*` dependency uses a version range (for instance `^5.12.0`), the tool lists these dependencies and asks whether to pin them all to the version of `@strapi/strapi` (the lowest version of the range if `@strapi/strapi` itself uses a range):
+The upgrade tool only updates `@strapi/*` dependencies declared with an exact version (for instance `5.12.0`). Before upgrading, the tool checks the `dependencies` and `devDependencies` of the `package.json` file. If any `@strapi/*` dependency uses a version range (for instance `^5.12.0`), the tool lists these dependencies. It then asks whether to pin them all to the version of `@strapi/strapi`, or to the lowest version of its range if `@strapi/strapi` itself uses a range:
 
 - Answering yes writes the exact versions in the `package.json` file, then the upgrade continues. With the [`--dry`](#simulate-the-upgrade-without-updating-any-files-dry-run) option, the versions are pinned in memory only.
 - Answering no stops the upgrade.

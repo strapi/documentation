@@ -21,7 +21,7 @@ Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log i
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
 :::
 
-The `login`, `link`, `deploy`, `projects`, and `logout` commands are registered as `strapi cloud:<command>` (for instance `strapi cloud:login`), and `strapi <command>` (for instance `strapi login`) is an alias of each of them.
+The `login`, `link`, `deploy`, `projects`, and `logout` commands are registered as `strapi cloud:<command>` (for instance `strapi cloud:login`). The shorter `strapi <command>` form (for instance `strapi login`) is an alias.
 
 ## Common options
 
@@ -71,7 +71,7 @@ strapi deploy
 This command deploys a local Strapi project to the Strapi Cloud project that is linked to the current folder. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
 
 - If you are not logged in, the command first offers to log you in (see [`login`](#strapi-login)).
-- If the current folder is not linked to a Strapi Cloud project, the command asks a few questions to create a new Strapi Cloud project, then links the current folder to it. To deploy to an existing Strapi Cloud project instead, use the [`link`](#strapi-link) command first.
+- If the current folder is not linked to a Strapi Cloud project, the command asks a few questions to create a new Strapi Cloud project. It then links the current folder to the new project. To deploy to an existing Strapi Cloud project instead, use the [`link`](#strapi-link) command first.
 
 The command deploys to the environment passed with the `--env` option. Without this option, it deploys to the environment linked with [`strapi cloud environment link`](#strapi-cloud-environment-link), or asks you to choose an environment if the project has several. If the target environment already has a live deployment or a deployment in progress, the command asks for a confirmation before deploying.
 

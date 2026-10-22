@@ -46,7 +46,7 @@ npx @strapi/sdk-plugin init <path>
 | `--use-pnpm`  |  -   | Use pnpm as the plugin package manager  | -       |
 | `--no-install` | -   | Do not install the plugin dependencies nor build the plugin | -       |
 
-When the command runs from the root of a Strapi project that has a lock file, the plugin uses the package manager of the project and the `--use-npm`, `--use-yarn`, and `--use-pnpm` options are ignored. Otherwise, without these options, the package manager running the command is used, or npm by default.
+When the command runs from the root of a Strapi project that has a lock file, the plugin uses the package manager of the project. In this case, the `--use-npm`, `--use-yarn`, and `--use-pnpm` options are ignored. Otherwise, without these options, the package manager running the command is used, or npm by default.
 
 ## strapi-plugin build
 
