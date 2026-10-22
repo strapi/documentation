@@ -356,6 +356,8 @@ When [Internationalization (i18n)](/cms/features/internationalization) is enable
 
 The AI client sees which locales are available in each tool's schema, so you can ask it to create or update content in a specific language. For example, asking "Create an article in French titled 'Bonjour'" passes `locale: "fr"` to the `create_article` tool. Which locales are available depends on the Admin token's permissions (see [Permission boundaries](#permission-boundaries)).
 
+Strapi reads the list of locales once, when it starts, and lists them in the tool schemas as the accepted `locale` values. A locale added afterwards in the admin panel does not appear in the tool schemas until Strapi restarts.
+
 :::tip
 When working with localized content, explicitly mention the target language in your prompt so the AI client passes the correct `locale` value. For instance, prefer "Create an article **in French**" over "Create an article titled 'Bonjour'" to avoid ambiguity.
 :::
