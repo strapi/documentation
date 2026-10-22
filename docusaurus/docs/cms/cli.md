@@ -570,7 +570,7 @@ strapi admin:block-user --email=chef@strapi.io --block=true
 
 **Alias** `admin:delete`
 
-Deletes an existing administrator account. The email can be passed as an option or provided interactively if you call the command without options. An interactive confirmation prompt is shown before deletion.
+Deletes an existing administrator account. The email can be passed as an option or provided interactively if you call the command without options. The confirmation prompt is only shown in interactive mode: when the `--email` option is passed, the account is deleted without confirmation.
 
 **Example**
 
