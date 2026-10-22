@@ -35,7 +35,7 @@ Strapi CLI commands on the present page are grouped by category:
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
 | [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
 | [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types`, `rename:field` |
-| [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
+| [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `components:list`, `hooks:list`, `controllers:list`, `services:list` |
 | [Enterprise](#enterprise) | `enterprise install` |
 
 :::caution
@@ -859,6 +859,14 @@ Display a list of all the existing [content-types](/cms/backend-customization/mo
 
 ```bash
 strapi content-types:list
+```
+
+### `strapi components:list`
+
+Display a list of all the registered components.
+
+```bash
+strapi components:list
 ```
 
 ### `strapi hooks:list`
