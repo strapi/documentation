@@ -255,7 +255,7 @@ In the following tables, `<slug>` stands for the slug of the content type.
 | `delete_<slug>` | Delete | `delete` | Delete an entry by document ID |
 | `publish_<slug>` | Publish | `publish` | Publish a draft entry |
 | `unpublish_<slug>` | Unpublish | `publish` | Unpublish a published entry |
-| `discard_<slug>_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
+| `discard_<slug>_draft` | Discard draft | `update` | Discard draft changes and revert to the published version |
 
 **Single types** generate up to 6 tools. Because a single type always represents exactly one document, there is no `list_<slug>` tool and create/update are merged into a single `write_<slug>` tool:
 
@@ -266,7 +266,7 @@ In the following tables, `<slug>` stands for the slug of the content type.
 | `delete_<slug>` | Delete | `delete` | Delete the single-type document |
 | `publish_<slug>` | Publish | `publish` | Publish the document |
 | `unpublish_<slug>` | Unpublish | `publish` | Unpublish the published document |
-| `discard_<slug>_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
+| `discard_<slug>_draft` | Discard draft | `update` | Discard draft changes and revert to the published version |
 
 The `publish_<slug>`, `unpublish_<slug>`, and `discard_<slug>_draft` tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
 
