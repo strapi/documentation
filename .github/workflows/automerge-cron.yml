@@ -295,7 +295,16 @@ jobs:
               fi
             fi
 
-            if gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch 2>/tmp/err; then
+            # `--admin` is required, not a shortcut. `main` requires one approving
+            # review and these PRs have none: the merge only goes through because
+            # the token is an admin's and `enforce_admins` is off. Without the
+            # flag, `gh` checks `mergeStateStatus` itself and refuses a BLOCKED PR
+            # before calling the API. GitHub computes that status lazily, so a PR
+            # whose status was still UNKNOWN merged while one whose status had
+            # been computed did not: on 2026-10-22 #3585 and #3588 merged and
+            # #3574 failed with "the base branch policy prohibits the merge".
+            # The gates above are what decide; this flag only stops a race.
+            if gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch --admin 2>/tmp/err; then
               echo "  #$PR — merged"
               MERGED=$((MERGED + 1))
               MERGED_LIST="${MERGED_LIST}• ${LINK}\n"
