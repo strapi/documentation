@@ -47,12 +47,12 @@ module.exports = {
           secret: '',
           callback: 'http://localhost:3000/connect/example-provider-name/redirect',
           scope: ['email'],
-          authorize_url: 'https://awesome.com/authorize',
-          access_url: 'https://awesome.com/token',
+          authorize_url: 'https://provider.example.com/authorize',
+          access_url: 'https://provider.example.com/token',
           oauth: 2,
         },
         async authCallback({ accessToken }) {
-          const response = await fetch('https://awesome.com/api/me', {
+          const response = await fetch('https://provider.example.com/api/me', {
             headers: { Authorization: `Bearer ${accessToken}` },
           });
 
@@ -91,12 +91,12 @@ export default {
           secret: '',
           callback: 'http://localhost:3000/connect/example-provider-name/redirect',
           scope: ['email'],
-          authorize_url: 'https://awesome.com/authorize',
-          access_url: 'https://awesome.com/token',
+          authorize_url: 'https://provider.example.com/authorize',
+          access_url: 'https://provider.example.com/token',
           oauth: 2,
         },
         async authCallback({ accessToken }: { accessToken: string }) {
-          const response = await fetch('https://awesome.com/api/me', {
+          const response = await fetch('https://provider.example.com/api/me', {
             headers: { Authorization: `Bearer ${accessToken}` },
           });
 
@@ -150,7 +150,7 @@ The `grantConfig` object accepts the following options:
 | `scope` | Scopes requested from the identity provider. Request the scopes that give access to the user's email address. | Array of strings or String | No | - |
 | `scope_delimiter` | Character used to join the `scope` array in the authorization URL. Many OAuth 2.0 providers expect a space (`' '`). | String | No | `','` |
 | `token_endpoint_auth_method` | Set to `'client_secret_basic'` to send the client ID and secret in an HTTP Basic `Authorization` header instead of the request body when exchanging the authorization code. | String | No | - |
-| `subdomain` | Value that replaces the `[subdomain]` placeholder in `authorize_url` and `access_url`. When this value is set, the admin panel also displays a **Host URI (Subdomain)** field for the provider. | String | No | - |
+| `subdomain` | Value that replaces the `[subdomain]` placeholder in `authorize_url` and `access_url`. When this value is set, the admin panel also displays a *Host URI (Subdomain)* field for the provider. | String | No | - |
 
 #### `authCallback` function
 
@@ -169,7 +169,7 @@ The built-in providers declared in <ExternalLink to="https://github.com/strapi/s
 
 :::note Changes in recent Strapi 5 versions
 - Since Strapi 5.51.0, the Users & Permissions feature runs the OAuth flow itself instead of relying on the `grant` and `purest` packages. `authCallback` no longer receives a `purest` parameter: use `fetch` or any HTTP client to call the provider's API.
-- Since Strapi 5.53.0, `authCallback` also receives the `grantResponse` parameter.
+- Since Strapi 5.53.0, `authCallback` also receives the `grantResponse` parameter, and Strapi keeps the token in the session instead of adding an `access_token` parameter to the front-end redirect URL (see [Frontend setup](#frontend-setup)).
 :::
 
 ### Configuring the provider in the admin panel
@@ -206,25 +206,19 @@ The OAuth flow between Strapi and the identity provider happens in the browser a
 
 If the login fails on the identity provider side or during the token exchange, Strapi redirects the browser to the front-end redirect URL with `error` and `error_description` query parameters instead.
 
+The `/api/connect/${provider}` URL also accepts an optional `callback` query parameter that replaces the front-end redirect URL for this login (for example, `/api/connect/example-provider-name?callback=http://localhost:3000/connect/example-provider-name/redirect?lang=fr`). By default, the URL must have the same origin and path as the redirect URL set in the admin panel. To accept other URLs, [create a custom callback validator](/cms/features/users-permissions#creating-a-custom-password-validation).
+
 Now you can make authenticated requests, as described in [token usage](/cms/features/users-permissions#token-usage).
-
-:::tip
-The `/api/connect/${provider}` URL accepts an optional `callback` query parameter that replaces the front-end redirect URL for this login (for example, `/api/connect/example-provider-name?callback=http://localhost:3000/connect/example-provider-name/redirect?lang=fr`). By default, the URL must have the same origin and path as the redirect URL set in the admin panel. To accept other URLs, [create a custom callback validator](/cms/features/users-permissions#creating-a-custom-password-validation).
-:::
-
-:::note
-Before Strapi 5.53.0, Strapi added the `access_token` parameter to the front-end redirect URL, and the front-end route passed it to `/api/auth/${provider}/callback`.
-:::
 
 :::caution Troubleshooting
 
-- **Email was not available.**: This error occurs when the `authCallback` fails to return a valid `email` address.
+- `Email was not available.`: This error occurs when the `authCallback` fails to return a valid `email` address.
   - Make sure that your provider application is configured with the correct OAuth scopes (e.g. `email` or `profile`) to request the user's email.
   - Check that the identity provider actually returns the email in the payload. Note that some users may have their email address hidden or set to private on the identity provider side.
 - **Error 429**: It's most likely because your login flow fell into a loop. To make new requests to the backend, you need to wait a few minutes or restart the backend.
-- **OAuth authentication requires a completed provider session**: The request to `/api/auth/${provider}/callback` did not include the session cookie set during the OAuth flow, or the flow did not complete. Make sure the front-end request sends cookies, and try again in a private tab to rule out a stale session or cookie.
-- **Unknown OAuth provider**: The `authorize_url` or `access_url` option of the provider's `grantConfig` is missing (and `request_url` for an OAuth 1.0a provider).
-- **Provider callback URL is not configured**: *The redirect URL to your front-end app* field of the provider is empty in the admin panel.
+- `OAuth authentication requires a completed provider session`: The request to `/api/auth/${provider}/callback` did not include the session cookie set during the OAuth flow, or the flow did not complete. Make sure the front-end request sends cookies, and try again in a private tab to rule out a stale session or cookie.
+- `Unknown OAuth provider`: The `authorize_url` or `access_url` option of the provider's `grantConfig` is missing (and `request_url` for an OAuth 1.0a provider).
+- `Provider callback URL is not configured`: *The redirect URL to your front-end app* field of the provider is empty in the admin panel.
 - **The redirect URL can't be built**: Make sure you have set the backend URL in `config/server.js`: [Setting up the server URL](/cms/configurations/users-and-permissions-providers#setting-up-the-server-url)
 - **The incorrect use of a domain with ngrok**: Check your URLs and make sure that you use the ngrok URL instead of `http://localhost:1337`.
 - **You can't access your admin panel**: It's most likely because you built it with the backend url set with a ngrok url and you stopped/restarted ngrok. You need to replace the backend url with the new ngrok url and run `yarn build` or `npm run build` again.
