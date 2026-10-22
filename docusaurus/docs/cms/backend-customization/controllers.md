@@ -262,7 +262,7 @@ module.exports = {
 ### Sanitization and Validation in controllers  {#sanitization-and-validation-in-controllers}
 
 :::warning 
-It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
+It's strongly recommended you sanitize and/or validate your incoming request query utilizing the `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
 Sanitization means that the object is “cleaned” and returned.

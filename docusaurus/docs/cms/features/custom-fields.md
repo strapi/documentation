@@ -357,7 +357,7 @@ register(app) {
 | `error`          | Error received after validation                                                                                                                                                                                                           | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="IntlObject"/>                 |
 | `disabled`       | Whether or not the input is disabled                                                                                                                                                                                                      | `boolean`                                                            |
 
-As of Strapi v4.13.0, fields in the Content Manager can be auto-focussed via the `URLSearchParam` `field`. It's recommended that your input component is wrapped in React's <ExternalLink to="https://react.dev/reference/react/forwardRef" text="`forwardRef`"/> method; you should pass the corresponding `ref` to the `input` element.
+Fields in the Content Manager can be auto-focussed via the `URLSearchParam` `field`. It's recommended that your input component is wrapped in React's <ExternalLink to="https://react.dev/reference/react/forwardRef" text="`forwardRef`"/> method; you should pass the corresponding `ref` to the `input` element.
 
 <br/>
 </details>

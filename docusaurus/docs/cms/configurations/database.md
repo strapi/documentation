@@ -18,7 +18,7 @@ import SupportedDatabases from '/docs/snippets/supported-databases.md'
 # Database configuration
 
 <Tldr>
-`/config/database` defines connections, clients, and pooling. Strapi v4 and v5 support SQLite, MySQL, MariaDB, and PostgreSQL. MongoDB and other NoSQL databases are not supported. NoSQL support existed in Strapi v3 only.
+`/config/database` defines connections, clients, and pooling. Strapi supports SQLite, MySQL, MariaDB, and PostgreSQL. MongoDB and other NoSQL databases are not supported. NoSQL support existed in Strapi v3 only.
 </Tldr>
 
 The `/config/database.js|ts` file is used to define database connections that will be used to store the application content.
@@ -66,7 +66,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**           | `String`                  |
+| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`.           | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` or `filename` | Database name or filename.   <ul><li>For MySQL or PostgreSQL, use the `database` key (with `host`, `port`, etc.).</li><li>For SQLite, only provide `filename` which points to the database file.</li></ul> | `String`              |
@@ -485,7 +485,7 @@ AWS RDS IAM authentication requires SSL and IAM database authentication to be en
 
 ## Environment variables in database configurations
 
-Strapi version `v4.6.2` and higher includes the database configuration options in the `./config/database.js` or `./config/database.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
+Strapi includes the database configuration options in the `./config/database.js` or `./config/database.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
 
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
@@ -693,22 +693,9 @@ DATABASE_FILENAME=.tmp/data.db
 </TabItem>
 </Tabs>
 
-### Environment variables for Strapi applications before `v4.6.2`
-
-If you started your project with a version prior to `v4.6.2` you can convert your `database.js|database.ts` configuration file following this procedure:
-
-1. Update your application to `v4.6.2` or a later version. See the [upgrades](/cms/upgrades) documentation.
-2. Replace the contents of your `./config/database.js` or `./config/database.ts` file with the preceding JavaScript or TypeScript code.
-3. Add the environment variables from the preceding code example to your `.env` file.
-4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.
-5. Save the changes and restart your application.
-:::caution
-Do not overwrite the environment variables: `HOST`, `PORT`, `APP_KEYS`, `API_TOKEN_SALT`, and `ADMIN_JWT_SECRET`.
-:::
-
 ### Database connections using `connectionString`
 
-Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi `v4.6.2` and later versions include the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
+Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi includes the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
 
 - overrides the other `connection.connection` properties such as `host` and `port`,
 - can be disabled by setting the property to an empty string: `''`.
