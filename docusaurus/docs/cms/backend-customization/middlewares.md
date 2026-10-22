@@ -147,7 +147,7 @@ To list all the registered middlewares, run `yarn strapi middlewares:list`.
 
 ### Restricting content access with an "is-owner policy"
 
-It is often required that the author of an entry is the only user allowed to edit or delete the entry. In previous versions of Strapi, this was known as an "is-owner policy". With Strapi v4, the recommended way to achieve this behavior is to use a middleware.
+It is often required that the author of an entry is the only user allowed to edit or delete the entry. In previous versions of Strapi, this was known as an "is-owner policy". The recommended way to achieve this behavior is to use a middleware.
 
 Proper implementation largely depends on your project's needs and custom code, but the most basic implementation could be achieved with the following procedure: 
 
