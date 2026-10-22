@@ -257,7 +257,7 @@ yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclud
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </TabItem>
@@ -287,7 +287,7 @@ yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --only c
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
 ```
 
 </TabItem>
