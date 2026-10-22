@@ -172,35 +172,61 @@ The built-in providers declared in <ExternalLink to="https://github.com/strapi/s
 - Since Strapi 5.53.0, `authCallback` also receives the `grantResponse` parameter.
 :::
 
+### Configuring the provider in the admin panel
+
+Once Strapi has restarted with the new provider registered, the provider is listed in <Icon name="gear-six" /> *Users & Permissions plugin > Providers* in the admin panel, with the built-in providers. To set the credentials of the provider:
+
+1. Click on the edit <Icon name="pencil-simple" /> button of your provider.
+2. Set the *Enable* option to **True**.
+3. Fill in the *Client ID* and *Client Secret* fields with the credentials of the OAuth application created on the identity provider side.
+4. Fill in *The redirect URL to your front-end app* field with the URL of the front-end route that completes the login (see [Frontend setup](#frontend-setup)).
+5. Copy the URL displayed in the read-only *The redirect URL to add in your [provider] application configurations* field, for example `http://localhost:1337/api/connect/example-provider-name/callback`, and add it to the allowed redirect URLs of the OAuth application on the identity provider side.
+6. Click on the **Save** button.
+
 ### How authentication flow works
 
-The object returned by the `authCallback` function must contain at least `username` and `email` properties. Strapi uses this returned email address to automatically resolve the authentication flow for both registration and login:
+The object returned by the `authCallback` function must contain at least `username` and `email` properties. Strapi uses the returned email address, converted to lowercase, to resolve the authentication flow for both registration and login:
 
-* If the user does not exist: Strapi registers a new user under the returned `email` and `username` and then logs them in, returning the JWT and user object.
-* If the user already exists: Strapi retrieves the existing user matching that `email` and logs them in, returning the JWT and user object.
+* If a user with this `email` was already registered with the same provider: Strapi logs this user in and returns the JWT and user object.
+* If no user with this `email` exists: Strapi registers a new user with the returned `email` and `username`, assigns the default role, and logs the user in. If the `username` is already taken, Strapi derives a unique username from it.
+* If a user with this `email` was registered with another provider and the *One account per email address* option is enabled in the [advanced settings](/cms/features/users-permissions#advanced-settings), Strapi rejects the login with an `Email is already taken.` error.
+
+Registration through a provider also requires the *Enable sign-ups* option of the advanced settings to be enabled.
 
 Because of this design, you do not need to implement separate lookup or registration logic inside your custom provider. You only need to ensure your `authCallback` fetches the user's profile from the external provider and returns the user's `email` and `username`.
 
 ### Frontend setup
 
-Once you have configured Strapi and the provider, in your frontend application you must:
+The OAuth flow between Strapi and the identity provider happens in the browser and relies on a session cookie that Strapi sets on its own domain. Once you have configured Strapi and the provider, in your frontend application you must:
 
-- Create a button that links to `GET STRAPI_BACKEND_URL/api/connect/${provider}` (e.g., `https://strapi.mywebsite/api/connect/github`).
-- Create a frontend route like `FRONTEND_URL/connect/${provider}/redirect` that have to handle the `access_token` param and that have to request `STRAPI_BACKEND_URL/api/auth/${provider}/callback` with the `access_token` parameter.<br/>
-  The JSON request response will be `{ "jwt": "...", "user": {...} }`.
+1. Create a button that links to `STRAPI_BACKEND_URL/api/connect/${provider}` (for example, `https://strapi.mywebsite.com/api/connect/example-provider-name`).<br/>
+   Strapi redirects the browser to the identity provider. Once the user has authorized the application, the identity provider redirects the browser back to `STRAPI_BACKEND_URL/api/connect/${provider}/callback`. Strapi then exchanges the authorization code for a token, saves the token response in the session, and redirects the browser to the front-end redirect URL set in the admin panel. The token is not added to the URL.
+2. Create the front-end route set as the redirect URL, for example `FRONTEND_URL/connect/${provider}/redirect`. This route must send a `GET` request to `STRAPI_BACKEND_URL/api/auth/${provider}/callback` that includes the Strapi session cookie (for example, with `credentials: 'include'` when using `fetch`).<br/>
+   Strapi calls the `authCallback` function of the provider, then responds with `{ "jwt": "...", "user": {...} }`.
+
+If the login fails on the identity provider side or during the token exchange, Strapi redirects the browser to the front-end redirect URL with `error` and `error_description` query parameters instead.
 
 Now you can make authenticated requests, as described in [token usage](/cms/features/users-permissions#token-usage).
 
+:::tip
+The `/api/connect/${provider}` URL accepts an optional `callback` query parameter that replaces the front-end redirect URL for this login (for example, `/api/connect/example-provider-name?callback=http://localhost:3000/connect/example-provider-name/redirect?lang=fr`). By default, the URL must have the same origin and path as the redirect URL set in the admin panel. To accept other URLs, [create a custom callback validator](/cms/features/users-permissions#creating-a-custom-password-validation).
+:::
+
+:::note
+Before Strapi 5.53.0, Strapi added the `access_token` parameter to the front-end redirect URL, and the front-end route passed it to `/api/auth/${provider}/callback`.
+:::
+
 :::caution Troubleshooting
 
-- **Email not provided**: This error occurs when the `authCallback` fails to return a valid `email` address.
+- **Email was not available.**: This error occurs when the `authCallback` fails to return a valid `email` address.
   - Make sure that your provider application is configured with the correct OAuth scopes (e.g. `email` or `profile`) to request the user's email.
   - Check that the identity provider actually returns the email in the payload. Note that some users may have their email address hidden or set to private on the identity provider side.
 - **Error 429**: It's most likely because your login flow fell into a loop. To make new requests to the backend, you need to wait a few minutes or restart the backend.
-- **Grant: missing session or misconfigured provider**: It may be due to many things.
-  - **The redirect url can't be built**: Make sure you have set the backend url in `config/server.js`: [Setting up the server url](/cms/configurations/users-and-permissions-providers#setting-up-the-server-url)
-  - **A session/cookie/cache problem**: You can try again in a private tab.
-  - **The incorrect use of a domain with ngrok**: Check your urls and make sure that you use the ngrok url instead of `http://localhost:1337`. Don't forget to check the backend url set in the example app at `src/config.js`.
+- **OAuth authentication requires a completed provider session**: The request to `/api/auth/${provider}/callback` did not include the session cookie set during the OAuth flow, or the flow did not complete. Make sure the front-end request sends cookies, and try again in a private tab to rule out a stale session or cookie.
+- **Unknown OAuth provider**: The `authorize_url` or `access_url` option of the provider's `grantConfig` is missing (and `request_url` for an OAuth 1.0a provider).
+- **Provider callback URL is not configured**: *The redirect URL to your front-end app* field of the provider is empty in the admin panel.
+- **The redirect URL can't be built**: Make sure you have set the backend URL in `config/server.js`: [Setting up the server URL](/cms/configurations/users-and-permissions-providers#setting-up-the-server-url)
+- **The incorrect use of a domain with ngrok**: Check your URLs and make sure that you use the ngrok URL instead of `http://localhost:1337`.
 - **You can't access your admin panel**: It's most likely because you built it with the backend url set with a ngrok url and you stopped/restarted ngrok. You need to replace the backend url with the new ngrok url and run `yarn build` or `npm run build` again.
 :::
 
