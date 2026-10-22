@@ -112,6 +112,15 @@ The Docs MCP server requires OAuth. A request without a bearer token, including 
 
 That metadata names the authorization server `https://mcp.kapa.ai/auth/public`, the `openid` scope, and bearer tokens in the `Authorization` header.
 
+### Available tools
+
+The Docs MCP server exposes the following tools to connected AI clients:
+
+| Tool | Parameters | Description |
+|------|------------|-------------|
+| `search_strapi_knowledge_sources` | `query` | Searches the Strapi documentation and other Strapi knowledge sources, and returns the most relevant snippets with their source URL. The query is a complete natural-language sentence. |
+| `give_feedback` | `message`, `category`, and optional `context`, `severity`, and `tool_name` | Sends feedback to the Strapi team. `category` is `product`, `documentation`, `mcp_server`, or `other`. `severity` is `high`, `medium`, or `low`. |
+
 Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
 
 :::tip
