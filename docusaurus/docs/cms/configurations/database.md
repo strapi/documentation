@@ -693,19 +693,6 @@ DATABASE_FILENAME=.tmp/data.db
 </TabItem>
 </Tabs>
 
-### Environment variables for Strapi applications before `v4.6.2`
-
-If you started your project with a version prior to `v4.6.2` you can convert your `database.js|database.ts` configuration file following this procedure:
-
-1. Update your application to `v4.6.2` or a later version. See the [upgrades](/cms/upgrades) documentation.
-2. Replace the contents of your `./config/database.js` or `./config/database.ts` file with the preceding JavaScript or TypeScript code.
-3. Add the environment variables from the preceding code example to your `.env` file.
-4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.
-5. Save the changes and restart your application.
-:::caution
-Do not overwrite the environment variables: `HOST`, `PORT`, `APP_KEYS`, `API_TOKEN_SALT`, and `ADMIN_JWT_SECRET`.
-:::
-
 ### Database connections using `connectionString`
 
 Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi includes the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
