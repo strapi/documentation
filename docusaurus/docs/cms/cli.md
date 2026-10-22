@@ -725,7 +725,7 @@ strapi openapi generate
 
 | Option     | Type     | Default               | Description                                      |
 | ---------- | -------- | --------------------- | ------------------------------------------------ |
-| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
+| `-o, --output` | `string` | `./specification.json` | Output file path for the generated specification. The default file is created in the current working directory. |
 
 #### Examples
 
