@@ -131,7 +131,7 @@ Due to these two issues, it is recommended you use a proxy application such as [
 
 ## Can I use TypeScript in a Strapi project?
 
-TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/cms/typescript).
+TypeScript is supported in Strapi projects. TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/cms/typescript).
 
 ## How to fix the build error `Error: Cannot find module @strapi/XXX`
 
