@@ -385,6 +385,12 @@ It will output the current globally installed version if this command is strapi 
 strapi version
 ```
 
+The `-v` and `--version` options print the same version number:
+
+```bash
+strapi --version
+```
+
 ### `strapi help`
 
 List CLI commands.
@@ -788,7 +794,7 @@ Generate [TypeScript](/cms/typescript) typings for the project schemas.
 strapi ts:generate-types
 ```
 
-- **strapi ts:generate-types --debug**<br />
+- **strapi ts:generate-types --debug** or **strapi ts:generate-types -d**<br />
   Generate typings with the debug mode enabled, displaying a detailed table of the generated schemas.
 - **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
   Generate typings with the silent mode enabled, completely removing all the logs in the terminal. Cannot be combined with `debug`
