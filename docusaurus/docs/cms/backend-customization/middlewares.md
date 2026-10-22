@@ -178,10 +178,10 @@ Proper implementation largely depends on your project's needs and custom code, b
          * the response includes author-related information
          */
         if (entryId) {
-          entry = await strapi.documents('api::restaurant.restaurant').findOne(
-            entryId,
-            { populate: "*" }
-          );
+          entry = await strapi.documents('api::restaurant.restaurant').findOne({
+            documentId: entryId,
+            populate: "*",
+          });
         }
 
         /**
