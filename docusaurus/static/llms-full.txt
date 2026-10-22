@@ -1086,6 +1086,8 @@ All the commands on the present page, except the `strapi cloud environments` ali
 | `--debug` | Enable debugging mode with verbose logs |
 | `--silent` | Don't log anything |
 
+The command help also lists the `-d` and `-s` short forms, but they have no effect: use `--debug` and `--silent`.
+
 ## strapi login
 
 **Alias of:** `strapi cloud:login`
@@ -24877,14 +24879,14 @@ SQLite is the default (see [Quick Start Guide](/cms/quick-start)) and recommende
 Use one of the following commands:
 
 ```bash
-yarn create strapi-app my-project --quickstart
+yarn create strapi my-project --non-interactive
 ```
 
 ```bash
-npx create-strapi-app@latest my-project --quickstart
+npx create-strapi@latest my-project --non-interactive
 ```
 
-This will create a new project and launch it in the browser.
+This creates a new project that uses SQLite, without asking any questions. To start it, run `yarn develop` or `npm run develop` from the project folder.
 
 #### Install SQLite manually
 
@@ -36595,10 +36597,10 @@ The `transfer` command is not intended for transferring data between two local i
 1. Create a new Strapi project using the installation command:
 
    ```bash
-   npx create-strapi-app@latest <project-name> --quickstart
+   npx create-strapi@latest <project-name> --non-interactive
    ```
 
-2. Create at least 1 content type in the project. See the [Quick Start Guide](/cms/quick-start) if you need instructions on creating your first content type.
+2. Start the project with `npm run develop` from its folder, then create at least 1 content type in the project. See the [Quick Start Guide](/cms/quick-start) if you need instructions on creating your first content type.
 
    :::caution
    Do not add any data to your project at this step.
@@ -41759,7 +41761,7 @@ The above installation guide only covers the basic installation option using the
 | `--dbpassword <dbpassword>`         | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice                                                                                                                                      |
 | `--dbssl <dbssl>`                   | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default)                                                                                                                                                        |
 | `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbfile>` in the command by the value of your choice                                                                                                                 |
-| `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Use `--non-interactive` instead.                                                                                                                               |
+| `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Unlike `--non-interactive`, it still asks you to log in to Strapi Cloud unless you also pass `--skip-cloud`. Use `--non-interactive` instead.                                                                                                                             |
 
 :::note Notes
 * If you do not pass a `--use-npm|pnpm|yarn` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
@@ -58188,11 +58190,11 @@ There are 2 ways of getting started with TypeScript in Strapi:
 - Create a new TypeScript project in Strapi by running the following command in a terminal (additional details can be found in the  [CLI installation](/cms/installation/cli) documentation):
 
   ```bash
-  yarn create strapi-app my-project --typescript
+  yarn create strapi my-project --typescript
   ```
 
   ```bash
-  npx create-strapi-app@latest my-project --typescript
+  npx create-strapi@latest my-project --typescript
   ```
 
 - Add TypeScript support to an existing Strapi project using the provided [conversion](/cms/typescript/adding-support-to-existing-project) steps.

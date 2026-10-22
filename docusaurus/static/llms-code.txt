@@ -19404,7 +19404,7 @@ Language: Bash
 File path: .config.js
 
 ```bash
-yarn create strapi-app my-project --quickstart
+yarn create strapi my-project --non-interactive
 ```
 
 ---
@@ -19412,7 +19412,7 @@ Language: Bash
 File path: .config.js
 
 ```bash
-npx create-strapi-app@latest my-project --quickstart
+npx create-strapi@latest my-project --non-interactive
 ```
 
 
@@ -26864,7 +26864,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-   npx create-strapi-app@latest <project-name> --quickstart
+   npx create-strapi@latest <project-name> --non-interactive
 ```
 
 Language: Bash
@@ -42003,7 +42003,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-  yarn create strapi-app my-project --typescript
+  yarn create strapi my-project --typescript
 ```
 
 ---
@@ -42011,7 +42011,7 @@ Language: Bash
 File path: N/A
 
 ```bash
-  npx create-strapi-app@latest my-project --typescript
+  npx create-strapi@latest my-project --typescript
 ```
 
 
