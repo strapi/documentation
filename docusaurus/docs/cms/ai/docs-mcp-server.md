@@ -55,7 +55,7 @@ When opening the Ask AI window, you should see a **Use MCP** dropdown in the top
 If manual MCP server configuration is required:
 
 1. Click the **Copy MCP URL** from the dropdown. The server URL should be: `https://strapi-docs.mcp.kapa.ai`
-2. Add the server to your IDE's MCP configuration file:
+2. Add the server to your tool's MCP configuration:
 
     <Tabs>
     <TabItem value="cursor" label="Cursor">
@@ -89,6 +89,17 @@ If manual MCP server configuration is required:
     ```
 
     </TabItem>
+    <TabItem value="claude-code" label="Claude Code">
+
+    Run the following command in your terminal:
+
+    ```bash
+    claude mcp add --transport http strapi-docs https://strapi-docs.mcp.kapa.ai
+    ```
+
+    Then run `/mcp` in Claude Code and follow the steps in your browser to log in.
+
+    </TabItem>
     <TabItem value="windsurf" label="Windsurf">
 
     Add to your `~/.codeium/windsurf/mcp_config.json` file:
@@ -111,6 +122,15 @@ If manual MCP server configuration is required:
 The Docs MCP server requires OAuth. A request without a bearer token, including the MCP `initialize` method, returns HTTP 401. OAuth protected-resource metadata is published at `https://strapi-docs.mcp.kapa.ai/.well-known/oauth-protected-resource`.
 
 That metadata names the authorization server `https://mcp.kapa.ai/auth/public`, the `openid` scope, and bearer tokens in the `Authorization` header.
+
+### Available tools
+
+The Docs MCP server exposes the following tools to connected AI clients:
+
+| Tool | Parameters | Description |
+|------|------------|-------------|
+| `search_strapi_knowledge_sources` | `query` | Searches the Strapi documentation and other Strapi knowledge sources, and returns the most relevant snippets with their source URL. The query is a complete natural-language sentence. |
+| `give_feedback` | `message`, `category`, and optional `context`, `severity`, and `tool_name` | Sends feedback to the Strapi team. `category` is `product`, `documentation`, `mcp_server`, or `other`. `severity` is `high`, `medium`, or `low`. |
 
 Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
 

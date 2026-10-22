@@ -229,31 +229,53 @@ The MCP server exposes 3 categories of tools: content management tools generated
 
 The tools generated differ depending on whether the content type is a collection type or a single type.
 
+Each tool name combines an operation with a slug derived from the content type's UID, in lowercase:
+
+- For content types created in your application (`api::` UIDs), the slug is the content type name. If the API name differs from the content type name, the slug is the API name and the content type name joined by an underscore.
+- For content types provided by plugins (`plugin::` UIDs), the slug is `plugin-`, followed by the plugin name, an underscore, and the content type name.
+
+The following table gives examples for collection types:
+
+| Content type UID | Slug | Example tool names |
+|------------------|------|--------------------|
+| `api::article.article` | `article` | `list_article`, `create_article`, `discard_article_draft` |
+| `api::writer.editor` | `writer_editor` | `list_writer_editor`, `create_writer_editor`, `discard_writer_editor_draft` |
+| `plugin::users-permissions.user` | `plugin-users-permissions_user` | `list_plugin-users-permissions_user`, `create_plugin-users-permissions_user` |
+
+In the following tables, `<slug>` stands for the slug of the content type.
+
 **Collection types** generate up to 8 tools: 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
 
 | Tool | Action | Permission required | Description |
 |------|--------|-------------------|-------------|
-| `list` | Read | `read` | List entries with pagination, sorting, and filtering |
-| `get` | Read | `read` | Get a single entry by document ID |
-| `create` | Create | `create` | Create a new entry (created as draft if Draft & Publish is enabled) |
-| `update` | Update | `update` | Update an existing entry by document ID |
-| `delete` | Delete | `delete` | Delete an entry by document ID |
-| `publish` | Publish | `publish` | Publish a draft entry |
-| `unpublish` | Unpublish | `publish` | Unpublish a published entry |
-| `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
+| `list_<slug>` | Read | `read` | List entries with pagination, sorting, and filtering |
+| `get_<slug>` | Read | `read` | Get a single entry by document ID |
+| `create_<slug>` | Create | `create` | Create a new entry (created as draft if Draft & Publish is enabled) |
+| `update_<slug>` | Update | `update` | Update an existing entry by document ID |
+| `delete_<slug>` | Delete | `delete` | Delete an entry by document ID |
+| `publish_<slug>` | Publish | `publish` | Publish a draft entry |
+| `unpublish_<slug>` | Unpublish | `publish` | Unpublish a published entry |
+| `discard_<slug>_draft` | Discard draft | `update` | Discard draft changes and revert to the published version |
 
-**Single types** generate up to 6 tools. Because a single type always represents exactly one document, there is no `list` tool and create/update are merged into a single `write` tool:
+**Single types** generate up to 6 tools. Because a single type always represents exactly one document, there is no `list_<slug>` tool and create/update are merged into a single `write_<slug>` tool:
 
 | Tool | Action | Permission required | Description |
 |------|--------|-------------------|-------------|
-| `get` | Read | `read` | Get the single-type document |
-| `write` | Create or update | `create` and/or `update` | Create the document if none exists; update the existing draft otherwise |
-| `delete` | Delete | `delete` | Delete the single-type document |
-| `publish` | Publish | `publish` | Publish the document |
-| `unpublish` | Unpublish | `publish` | Unpublish the published document |
-| `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
+| `get_<slug>` | Read | `read` | Get the single-type document |
+| `write_<slug>` | Create or update | `create` and/or `update` | Create the document if none exists; update the existing draft otherwise |
+| `delete_<slug>` | Delete | `delete` | Delete the single-type document |
+| `publish_<slug>` | Publish | `publish` | Publish the document |
+| `unpublish_<slug>` | Unpublish | `publish` | Unpublish the published document |
+| `discard_<slug>_draft` | Discard draft | `update` | Discard draft changes and revert to the published version |
 
-The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
+The `publish_<slug>`, `unpublish_<slug>`, and `discard_<slug>_draft` tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
+
+Some tools accept the following optional parameters in addition to `documentId`, `data`, and `locale`:
+
+| Parameter | Tools | Description |
+|-----------|-------|-------------|
+| `status` | `list_<slug>`, `get_<slug>` | Document version to return, `draft` or `published`. Defaults to `draft` when Draft & Publish is enabled. |
+| `discardDraft` | `unpublish_<slug>` | When `true`, also discards the draft while unpublishing. Requires the `update` permission in addition to `publish`. |
 
 #### Media Library tools {#media-library-tools}
 
@@ -293,12 +315,14 @@ The `media_get_asset` tool requires 1 parameter: `id`, the numeric asset ID. Doc
 
 **Writing.** `media_update_asset` writes metadata only. The file itself, its URL, its MIME type and its size belong to the [upload provider](/cms/configurations/media-library-providers) and cannot be changed over MCP. Use `media_move_assets` to change which folder an asset sits in, and `media_rename_folder` rather than `media_move_folder` to change a folder name.
 
-`media_move_assets` and `media_move_folder` both accept `null` as the destination, meaning the Media Library root. A folder cannot be moved into itself or into one of its own descendants.
+`media_move_assets`, `media_delete_assets`, and `media_delete_folder` take an `ids` array of 1 to 100 numeric ids.
+
+`media_move_assets` and `media_move_folder` both accept `null` as the destination, meaning the Media Library root. A folder cannot be moved into itself or into one of its own descendants. `media_create_folder` creates the folder at the Media Library root when its `parent` parameter is omitted or `null`.
 
 :::warning Deletions are permanent
 `media_delete_assets` and `media_delete_folder` remove files from the database and from the storage provider, together with every generated thumbnail and size variant. There is no trash and no undo, and deleting a folder cascades to every subfolder and file inside it. Neither tool can tell whether an asset is referenced by an entry, so a successful deletion is not evidence that nothing was using it.
 
-Both accept a `dryRun` parameter, which reports what would be removed without removing anything. They differ on partial failure: `media_delete_assets` keeps the deletions that succeeded and reports the rest, while `media_delete_folder` rejects the whole call if any id does not resolve to a folder.
+Both accept a `dryRun` parameter, which reports what would be removed without removing anything. `dryRun` defaults to `true`: nothing is deleted unless the call passes `dryRun: false`. They differ on partial failure: `media_delete_assets` keeps the deletions that succeeded and reports the rest, while `media_delete_folder` rejects the whole call if any id does not resolve to a folder.
 :::
 
 #### Built-in utility tools
@@ -330,7 +354,9 @@ Once connected, you can interact with your Strapi content using natural language
 
 When [Internationalization (i18n)](/cms/features/internationalization) is enabled on a content type, MCP tools accept an optional `locale` parameter (e.g., `"en"`, `"fr"`). If omitted, the default locale is used.
 
-The AI client sees which locales are available in each tool's schema, so you can ask it to create or update content in a specific language. For example, asking "Create an article in French titled 'Bonjour'" passes `locale: "fr"` to the `create` tool. Which locales are available depends on the Admin token's permissions (see [Permission boundaries](#permission-boundaries)).
+The AI client sees which locales are available in each tool's schema, so you can ask it to create or update content in a specific language. For example, asking "Create an article in French titled 'Bonjour'" passes `locale: "fr"` to the `create_article` tool. Which locales are available depends on the Admin token's permissions (see [Permission boundaries](#permission-boundaries)).
+
+Strapi reads the list of locales once, when it starts, and lists them in the tool schemas as the accepted `locale` values. A locale added afterwards in the admin panel does not appear in the tool schemas until Strapi restarts.
 
 :::tip
 When working with localized content, explicitly mention the target language in your prompt so the AI client passes the correct `locale` value. For instance, prefer "Create an article **in French**" over "Create an article titled 'Bonjour'" to avoid ambiguity.
@@ -338,7 +364,7 @@ When working with localized content, explicitly mention the target language in y
 
 #### Sorting
 
-The `list` tool accepts a `sort` parameter that supports 4 notations:
+The `list_<slug>` tool accepts a `sort` parameter that supports 4 notations:
 
 | Notation | Example |
 |----------|---------|
@@ -347,11 +373,11 @@ The `list` tool accepts a `sort` parameter that supports 4 notations:
 | Object | `{ "title": "asc" }` |
 | Array of objects | `[{ "title": "asc" }, { "createdAt": "desc" }]` |
 
-Sort field names are constrained to the content type's scalar attributes (strings, numbers, booleans, dates, enumerations). Relation, component, dynamic zone, media, and JSON fields cannot be sorted on.
+Sort field names are constrained to the content type's scalar attributes (text, number, boolean, date and time, and enumeration types). Relation, component, dynamic zone, media, JSON, and blocks fields cannot be sorted on, nor can private fields or fields the Admin token cannot read.
 
 #### Filtering
 
-The `list` tool accepts a `filters` parameter using Strapi's filter syntax:
+The `list_<slug>` tool accepts a `filters` parameter using Strapi's filter syntax:
 
 - **Field operators**: `$eq`, `$ne`, `$in`, `$notIn`, `$lt`, `$lte`, `$gt`, `$gte`, `$between`, `$contains`, `$notContains`, `$startsWith`, `$endsWith`, `$null`, `$notNull`, and their case-insensitive variants (`$eqi`, `$nei`, `$containsi`, `$notContainsi`, `$startsWithi`, `$endsWithi`).
 - **Logical operators**: `$and`, `$or` (accept arrays of filter objects), `$not` (wraps a single filter object).
@@ -361,7 +387,7 @@ Like sort fields, filter fields are constrained to scalar attributes only.
 
 #### Pagination
 
-The `list` tool also accepts `page` (1-indexed, default: 1) and `pageSize` (default: 25, max: 100) parameters.
+The `list_<slug>` tool also accepts `page` (1-indexed, default: 1) and `pageSize` (default: 25, max: 100) parameters.
 
 #### Relations
 
@@ -384,7 +410,7 @@ Relation fields support both a shorthand document ID string and a full relation 
 
 The MCP server enforces the same permission model as the Strapi admin panel. Permissions are checked at multiple levels:
 
-1. **Tool visibility**: When an AI client connects, Strapi checks the Admin token's permissions and only exposes tools the token has access to. If the token does not grant `delete` on `Article`, the AI client will not see a delete tool for articles at all.
+1. **Tool visibility**: When an AI client connects, Strapi checks the Admin token's permissions and only exposes tools the token has access to. If the token does not grant `delete` on `Article`, the AI client will not see the `delete_article` tool at all.
 
 2. **Field filtering**: Even within an exposed tool, input and output schemas are narrowed to the fields the token can access. If the token grants `read` on `Article` but excludes the `body` field, the AI client will not see or receive `body` content. Field restrictions are applied independently per action. Write schemas (`create`, `update`) only include fields permitted for the corresponding action.
 
@@ -413,14 +439,14 @@ Entry actions performed through the MCP server are recorded in the [Audit Logs](
 
 The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. Because there is no session state, the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
 
-GET and DELETE HTTP methods on the `/mcp` endpoint return a `405 Method Not Allowed` JSON-RPC error, as the MCP server only accepts POST requests.
+GET, DELETE, PUT, and PATCH HTTP methods on the `/mcp` endpoint return a `405 Method Not Allowed` JSON-RPC error, as the MCP server only accepts POST requests.
 
 ### Known limitations
 
 The MCP server has the following limitations:
 
 - **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas. The internal structure of each component within a dynamic zone is not described.
-- **Nested population parameters**: The `list` and `get` tools do not support nested population parameters for relations.
+- **Nested population parameters**: The `list_<slug>` and `get_<slug>` tools do not support nested population parameters for relations.
 - **Media upload**: Media fields accept existing media asset references but the MCP server cannot upload new files. Use Strapi's media library or upload API to add files first, then reference them in MCP tool calls.
 - **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
 - **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
