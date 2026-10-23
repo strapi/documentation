@@ -45,7 +45,7 @@ jobs:
     if: github.repository == 'strapi/documentation'
     runs-on: ubuntu-latest
     outputs:
-      alert: ${{ steps.release.outputs.alert }}
+      alert: ${{ steps.decide.outputs.alert }}
       tag: ${{ steps.release.outputs.tag }}
       milestone_number: ${{ steps.milestone.outputs.number }}
       milestone_title: ${{ steps.milestone.outputs.title }}
