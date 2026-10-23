@@ -39584,6 +39584,8 @@ It is not possible to delete the last workflow.
 
 **Path to use the feature:**  Content Manager
 
+The *Review Workflows* box only appears when viewing the _Draft_ tab of an entry. This applies both to the edit view and to [Preview](/cms/features/preview). The box does not appear on the _Published_ tab, since a review stage applies to the draft and not to already published content.
+
 ### Changing review stage {#change-review-stage}
 
 As content is created and revised among your team, you can change the review stage of the content. The available target stages in the dropdown depend on your role's permissions: you must have permission to move content from the current stage and permission to move content to the target stage.
