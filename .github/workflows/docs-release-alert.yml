@@ -53,7 +53,6 @@ jobs:
       tag: ${{ steps.release.outputs.tag }}
       milestone_number: ${{ steps.milestone.outputs.number }}
       milestone_title: ${{ steps.milestone.outputs.title }}
-      slack_channel: ${{ steps.post.outputs.channel }}
       slack_ts: ${{ steps.post.outputs.ts }}
     steps:
       - name: Resolve the latest Strapi release
@@ -424,7 +423,10 @@ jobs:
       - name: Reply in the thread
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          CHANNEL: ${{ needs.detect.outputs.slack_channel }}
+          # Read from the secret, not passed as a job output: GitHub drops any
+          # output equal to a secret ("Skip output 'slack_channel' since it may
+          # contain secret"), which left the thread reply with no channel.
+          CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
           TS: ${{ needs.detect.outputs.slack_ts }}
           RESULT: ${{ needs.release.result }}
           VERSION: ${{ needs.release.outputs.version }}
