@@ -1684,6 +1684,11 @@
       "number": 28047,
       "reason": "Router: PR updates internal architectural documentation in strapi/strapi repo (docs/docs/architecture/), not user-facing documentation in strapi/documentation. The change is internal and does not affect user-facing API docs.",
       "added": "2026-10-23"
+    },
+    {
+      "number": 27931,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3603",
+      "added": "2026-10-23"
     }
   ]
 }
