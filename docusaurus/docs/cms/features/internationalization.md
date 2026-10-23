@@ -90,7 +90,7 @@ It is not possible to create custom locales. Locales can only be created based o
 />
 
 #### Enabling AI-powered internationalization
-<GrowthBadge /> <EnterpriseBadge /> <AiAddonBadge />
+<GrowthBadge /> <AiAddonBadge />
 
 AI-Powered Internationalization enables automatic translations for all the locales in a project when the content in the default locale is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
 
@@ -145,7 +145,7 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 :::
 
 ### AI-powered internationalization
-<GrowthBadge /> <EnterpriseBadge /> <AiAddonBadge />
+<GrowthBadge /> <AiAddonBadge />
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
 

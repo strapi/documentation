@@ -30,7 +30,7 @@ This page sums up the AI-powered capabilities available to content managers in S
 
 ## Strapi AI
 
-<GrowthBadge /> <EnterpriseBadge /> <AiAddonBadge /> <VersionBadge version="5.30+" />
+<GrowthBadge /> <AiAddonBadge /> <VersionBadge version="5.30+" />
 
 Some Strapi CMS features can be enhanced with Strapi AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata, all from the admin panel.
 
