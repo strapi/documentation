@@ -1,0 +1,456 @@
+name: 'Docs release: alert and launch'
+
+# Tells #documentation-ops when Strapi publishes a new v5 release, and lets the
+# maintainer launch the docs release from that message.
+#
+# Same model as Strapi Cloud's #cloud-releases messages: the "Launch Docs
+# Release process" button is a plain link to this run, and the `release` job
+# waits on the `docs-release` environment, which requires the maintainer's
+# approval. Approving it runs `docusaurus/automated-release.sh` unchanged: the
+# answers it would ask for in a terminal are fed on stdin, decided from what the
+# Slack message showed. Any question the answers do not cover reads an empty
+# line, which every prompt in the script treats as "no", so it stops instead of
+# guessing. The thread then gets either the release and a drafted
+# announcement for #product, or what went wrong.
+#
+# The script itself is never modified for this workflow: it stays the
+# interactive tool it is when run by hand.
+
+on:
+  schedule:
+    # Strapi ships on Wednesdays (24 of the last 29 releases), around midday.
+    - cron: '0 11-17 * * 3'
+      timezone: 'Europe/Paris'
+    # Other weekdays: one look, to catch a release that slipped.
+    - cron: '0 15 * * 1,2,4,5'
+      timezone: 'Europe/Paris'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Alert on the latest Strapi release even if it was already announced'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: read
+
+env:
+  DOCS_REPO: strapi/documentation
+  FLAG_LABELS: "flag: merge pending release|flag: don't merge"
+
+jobs:
+  detect:
+    if: github.repository == 'strapi/documentation'
+    runs-on: ubuntu-latest
+    outputs:
+      alert: ${{ steps.release.outputs.alert }}
+      tag: ${{ steps.release.outputs.tag }}
+      milestone_number: ${{ steps.milestone.outputs.number }}
+      milestone_title: ${{ steps.milestone.outputs.title }}
+      slack_channel: ${{ steps.post.outputs.channel }}
+      slack_ts: ${{ steps.post.outputs.ts }}
+    steps:
+      - name: Resolve the latest Strapi release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          set -euo pipefail
+          gh api "repos/strapi/strapi/releases?per_page=30" \
+            --jq '[.[] | select(.draft == false and .prerelease == false and (.tag_name | startswith("v5.")))]
+                  | sort_by(.published_at) | reverse | .[0]
+                  | {tag: .tag_name, url: .html_url, published: .published_at}' > /tmp/release.json
+          TAG=$(jq -r .tag /tmp/release.json)
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            echo "::error::Could not resolve a published v5 release"
+            exit 1
+          fi
+          echo "Latest Strapi release: $TAG ($(jq -r .published /tmp/release.json))"
+          {
+            echo "tag=$TAG"
+            echo "url=$(jq -r .url /tmp/release.json)"
+            echo "force=${FORCE:-false}"
+          } >> "$GITHUB_OUTPUT"
+          mkdir -p /tmp/alert-marker && echo "$TAG" > /tmp/alert-marker/tag
+
+      # One alert per Strapi release. The marker lives in the Actions cache, not
+      # in the repository (a committed file would trigger a production deploy)
+      # nor in a repository variable (PAT_TOKEN_PIWI cannot write those).
+      - name: Check whether this release was already announced
+        id: seen
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: /tmp/alert-marker
+          key: docs-release-alert-${{ steps.release.outputs.tag }}
+          lookup-only: true
+
+      - name: Decide
+        id: decide
+        env:
+          SEEN: ${{ steps.seen.outputs.cache-hit }}
+          FORCE: ${{ steps.release.outputs.force }}
+        run: |
+          if [ "$SEEN" = "true" ] && [ "$FORCE" != "true" ]; then
+            echo "Already announced, nothing to do."
+            echo "alert=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "alert=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # The milestone the script would release: the one due today, else the
+      # lowest open one by version (the script then asks to pick it by hand,
+      # and the release job answers with this number).
+      - name: Pick the docs milestone
+        id: milestone
+        if: steps.decide.outputs.alert == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TODAY=$(date -u +%Y-%m-%d)
+          gh api "repos/$DOCS_REPO/milestones?state=open&per_page=100" > /tmp/milestones.json
+          jq -c --arg today "$TODAY" '
+            ([.[] | select(.due_on != null and (.due_on | startswith($today)))] | .[0])
+            // (sort_by(.title | split(".") | map(tonumber? // 0)) | .[0])
+            // empty' /tmp/milestones.json > /tmp/milestone.json
+          if [ ! -s /tmp/milestone.json ]; then
+            echo "No open milestone."
+            echo "number=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          NUMBER=$(jq -r .number /tmp/milestone.json)
+          TITLE=$(jq -r .title /tmp/milestone.json)
+          echo "Milestone: $TITLE (#$NUMBER)"
+          {
+            echo "number=$NUMBER"
+            echo "title=$TITLE"
+            echo "url=$(jq -r .html_url /tmp/milestone.json)"
+            echo "due=$(jq -r '.due_on // "no due date"' /tmp/milestone.json | cut -c1-10)"
+          } >> "$GITHUB_OUTPUT"
+          gh api "repos/$DOCS_REPO/issues?milestone=$NUMBER&state=open&per_page=100" \
+            --jq '[.[] | select(.pull_request) | {number, title, url: .html_url, labels: [.labels[].name]}]' \
+            > /tmp/open-prs.json
+          echo "Open PRs in the milestone: $(jq length /tmp/open-prs.json)"
+
+      - name: Post the alert to Slack
+        id: post
+        if: steps.decide.outputs.alert == 'true'
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
+          TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_URL: ${{ steps.release.outputs.url }}
+          M_NUMBER: ${{ steps.milestone.outputs.number }}
+          M_TITLE: ${{ steps.milestone.outputs.title }}
+          M_URL: ${{ steps.milestone.outputs.url }}
+          M_DUE: ${{ steps.milestone.outputs.due }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          NL=$'\n'
+          if [ -z "$M_NUMBER" ]; then
+            DETAILS=":warning: No open docs milestone, so there is nothing to release."
+          else
+            COUNT=$(jq length /tmp/open-prs.json)
+            DETAILS="*Docs milestone:* <${M_URL}|${M_TITLE}> (due ${M_DUE})"
+            if [ "$COUNT" -eq 0 ]; then
+              DETAILS="${DETAILS}${NL}All its PRs are merged."
+            else
+              # Slack links are <url|text>; titles are cut so a long one cannot
+              # break the layout.
+              LIST=$(jq -r --arg flags "$FLAG_LABELS" '.[]
+                | "• <\(.url)|#\(.number) \(.title[0:70])>"
+                  + (if any(.labels[]; test($flags)) then " _(flagged)_" else "" end)' /tmp/open-prs.json)
+              DETAILS="${DETAILS}${NL}*${COUNT} PR(s) not merged yet* (they move to the next milestone when you launch):${NL}${LIST}"
+            fi
+          fi
+
+          jq -n \
+            --arg channel "$SLACK_CHANNEL" \
+            --arg tag "$TAG" \
+            --arg release "$RELEASE_URL" \
+            --arg milestone "${M_URL:-https://github.com/$DOCS_REPO/milestones}" \
+            --arg details "$DETAILS" \
+            --arg run "$RUN_URL" \
+            --arg launchable "$([ -n "$M_NUMBER" ] && echo true || echo false)" '
+            {
+              channel: $channel,
+              text: "New Strapi CMS release is out: \($tag)",
+              blocks: ([
+                { type: "header", text: { type: "plain_text", text: "New Strapi CMS release is out: \($tag)", emoji: true } },
+                { type: "section", text: { type: "mrkdwn", text: "You can probably release a new Strapi Docs version." } },
+                { type: "actions", elements: [
+                  { type: "button", text: { type: "plain_text", text: "View Strapi CMS release" }, url: $release },
+                  { type: "button", text: { type: "plain_text", text: "View Strapi Docs milestone" }, url: $milestone }
+                ] },
+                { type: "section", text: { type: "mrkdwn", text: $details } }
+              ] + (if $launchable == "true" then [
+                { type: "actions", elements: [
+                  { type: "button", style: "primary", text: { type: "plain_text", text: "Launch Docs Release process" }, url: $run }
+                ] },
+                { type: "context", elements: [
+                  { type: "mrkdwn", text: "Opens the run: approve the `docs-release` deployment there to start `automated-release.sh`. The outcome is posted in this thread." }
+                ] }
+              ] else [] end))
+            }' > /tmp/payload.json
+
+          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json; charset=utf-8" \
+            -d @/tmp/payload.json > /tmp/slack.json
+          if ! jq -e .ok /tmp/slack.json > /dev/null; then
+            echo "::error::Slack refused the message: $(jq -r .error /tmp/slack.json)"
+            exit 1
+          fi
+          {
+            echo "channel=$(jq -r .channel /tmp/slack.json)"
+            echo "ts=$(jq -r .ts /tmp/slack.json)"
+          } >> "$GITHUB_OUTPUT"
+
+      # Saved only once the message is out, so a failed post is retried at the
+      # next run instead of being remembered as announced.
+      - name: Remember the announcement
+        if: steps.decide.outputs.alert == 'true' && steps.seen.outputs.cache-hit != 'true'
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: /tmp/alert-marker
+          key: docs-release-alert-${{ steps.release.outputs.tag }}
+
+  release:
+    needs: detect
+    if: needs.detect.outputs.alert == 'true' && needs.detect.outputs.milestone_number != ''
+    runs-on: ubuntu-latest
+    # Required reviewer: the maintainer. The job waits here until approved.
+    environment: docs-release
+    concurrency:
+      group: docs-release
+      cancel-in-progress: false
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.verify.outputs.version }}
+      failure: ${{ steps.report.outputs.failure }}
+    steps:
+      # The script commits and pushes to main itself, as it does from a
+      # terminal. PAT_TOKEN_PIWI is the maintainer's admin token: main requires a
+      # review, and enforce_admins is off, which is what lets that push through.
+      # A push with this token also triggers deploy-production.yml, which the
+      # script then waits for.
+      - name: Checkout main
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: main
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+
+      - name: Prepare the milestone and the answers
+        id: prepare
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          M_NUMBER: ${{ needs.detect.outputs.milestone_number }}
+          M_TITLE: ${{ needs.detect.outputs.milestone_title }}
+        run: |
+          set -euo pipefail
+          fail() { echo "::error::$1"; echo "$1" > /tmp/failure.txt; exit 1; }
+
+          # An existing release makes the script ask overwrite/next/cancel.
+          # Nothing here should overwrite a release, so stop first.
+          if gh api "repos/$DOCS_REPO/releases/tags/v$M_TITLE" > /dev/null 2>&1; then
+            fail "Release v$M_TITLE already exists. Nothing was changed."
+          fi
+
+          # The script picks the milestone due today by itself. If that is not
+          # the one shown in Slack (approval came on another day, or a second
+          # milestone is due today), stop rather than release something else.
+          TODAY=$(date -u +%Y-%m-%d)
+          # `gh --jq` takes no --arg, hence the separate jq.
+          DUE_TODAY=$(gh api "repos/$DOCS_REPO/milestones?state=open&per_page=100" \
+            | jq -r --arg today "$TODAY" '[.[] | select(.due_on != null and (.due_on | startswith($today))) | .number] | first // empty')
+          if [ -n "$DUE_TODAY" ] && [ "$DUE_TODAY" != "$M_NUMBER" ]; then
+            fail "Milestone #$DUE_TODAY is due today, but the alert proposed $M_TITLE (#$M_NUMBER). The script would release #$DUE_TODAY instead. Nothing was changed."
+          fi
+
+          # Every open PR moves to the next milestone before the script runs.
+          # The script would only offer to move the flagged ones, and only to
+          # the milestone numbered patch + 1, which does not always exist (on
+          # 2026-10-23 the milestone after 7.5.1 was 7.6.0). Unflagged ones it
+          # would leave inside the milestone it closes. Moving them all here
+          # means the script finds none and asks nothing about them.
+          # "Next" is the lowest open milestone above this one by version.
+          NEXT=$(gh api "repos/$DOCS_REPO/milestones?state=open&per_page=100" \
+            | jq -c --arg cur "$M_TITLE" '
+                def v: split(".") | map(tonumber? // 0);
+                [.[] | select((.title | v) > ($cur | v))] | sort_by(.title | v) | .[0] // empty')
+          NEXT_TITLE=$(echo "$NEXT" | jq -r '.title // empty' 2>/dev/null || true)
+          NEXT_NUMBER=$(echo "$NEXT" | jq -r '.number // empty' 2>/dev/null || true)
+          OPEN=$(gh api "repos/$DOCS_REPO/issues?milestone=$M_NUMBER&state=open&per_page=100" \
+            --jq '.[] | select(.pull_request) | .number')
+
+          if [ -n "$OPEN" ] && [ -z "$NEXT_NUMBER" ]; then
+            fail "No open milestone after $M_TITLE, so its open PRs cannot be moved. Create the next one and launch again. Nothing was changed."
+          fi
+          for PR in $OPEN; do
+            gh api --method PATCH "repos/$DOCS_REPO/issues/$PR" -F milestone="$NEXT_NUMBER" --silent
+            echo "Moved #$PR to $NEXT_TITLE"
+          done
+
+          # The answers, in the order the script asks. Only the prompts this
+          # state leads to are answered; anything else reads an empty line.
+          {
+            if [ "$DUE_TODAY" != "$M_NUMBER" ]; then
+              echo y              # No milestone due today: select one by hand?
+              echo "$M_NUMBER"    # Milestone number
+            fi
+            echo y                # Proceed with the automated release?
+          } > /tmp/answers.txt
+          echo "Answers:"; cat /tmp/answers.txt
+
+      - name: Run automated-release.sh
+        id: run
+        working-directory: docusaurus
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          git config user.name "Pierre Wizla"
+          git config user.email "pierre.wizla@strapi.io"
+          set -o pipefail
+          ./automated-release.sh < /tmp/answers.txt 2>&1 | tee /tmp/release.log
+
+      # The script exits 0 when it cancels, so its exit code alone cannot say
+      # the release happened. The release and the closed milestone can.
+      - name: Verify the release
+        id: verify
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          M_NUMBER: ${{ needs.detect.outputs.milestone_number }}
+          M_TITLE: ${{ needs.detect.outputs.milestone_title }}
+        run: |
+          set -euo pipefail
+          if ! gh api "repos/$DOCS_REPO/releases/tags/v$M_TITLE" > /dev/null 2>&1; then
+            echo "The script ended without creating release v$M_TITLE." > /tmp/failure.txt
+            exit 1
+          fi
+          STATE=$(gh api "repos/$DOCS_REPO/milestones/$M_NUMBER" --jq .state)
+          [ "$STATE" = "closed" ] || echo "::warning::Release created but milestone $M_TITLE is still $STATE"
+          echo "version=$M_TITLE" >> "$GITHUB_OUTPUT"
+
+      - name: Report what went wrong
+        id: report
+        if: failure()
+        run: |
+          {
+            echo "failure<<REPORT_EOF"
+            if [ -s /tmp/failure.txt ]; then cat /tmp/failure.txt; echo; fi
+            if [ -s /tmp/release.log ]; then
+              echo "Last lines of automated-release.sh:"
+              # Colour codes stripped, so Slack shows plain text.
+              sed 's/\x1b\[[0-9;]*m//g' /tmp/release.log | tail -n 15
+            fi
+            echo "REPORT_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+  announce:
+    needs: [detect, release]
+    # Runs whatever happened to the release, as long as an alert was posted.
+    if: always() && needs.detect.outputs.slack_ts != '' && needs.detect.outputs.milestone_number != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout main
+        if: needs.release.result == 'success'
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          ref: main
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            docusaurus/docs/release-notes.md
+            docusaurus/package.json
+          sparse-checkout-cone-mode: false
+
+      # The Slack handles the announcement credits people with.
+      - name: Fetch the contributors mapping
+        if: needs.release.result == 'success'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          gh api repos/pwizla/paws/contents/config/contributors.md --jq .content \
+            | base64 -d > /tmp/contributors.md || echo "Contributors mapping unavailable" > /tmp/contributors.md
+
+      # Same rules as the /release-announce skill. The draft is only posted in
+      # the thread, never to #product: the maintainer edits and posts it.
+      - name: Draft the announcement
+        if: needs.release.result == 'success'
+        continue-on-error: true
+        uses: anthropics/claude-code-action@9171db3e57d6a3140a37ddc2ba92788584e0ead6 # v1.0.234
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
+          github_token: ${{ secrets.PAT_TOKEN_PIWI }}
+          claude_args: '--model claude-sonnet-5 --max-turns 40 --allowedTools "Bash,Read,Write" --disallowedTools "Task"'
+          prompt: |
+            Draft the Slack announcement for Strapi Docs ${{ needs.release.outputs.version }}, just released.
+            Write ONLY the message text to the file announce.md in the current working directory. Do not post anything anywhere.
+
+            Data:
+            - Release notes: docusaurus/docs/release-notes.md, section "## ${{ needs.release.outputs.version }}".
+            - For each PR in that section: `gh pr view <n> --repo strapi/documentation --json additions,deletions,title,files,author`.
+            - Slack handles: /tmp/contributors.md (GitHub username to Slack ID). Use `<@SLACK_ID>`. For anyone missing, write their GitHub username and add "(Slack handle to find)".
+
+            Highlights: rank PRs by lines changed (additions + deletions) and files touched; pick the 2 to 4 largest, skipping pure chore/repo PRs unless nothing else is notable.
+            Links: always the live page on docs.strapi.io, never the GitHub PR. Map a changed file `docusaurus/docs/<path>.md(x)` to `https://docs.strapi.io/<path>`, honoring a `slug:` in its frontmatter, and check it answers 200 with `curl -s -o /dev/null -w '%{http_code}' -L <url>`. A change with no published page is described in plain text, without a link.
+
+            Exact format (Slack mrkdwn):
+            :noted: *New Docs release* :pepe_rocket:
+            *Strapi Docs <VERSION>*, with <N> PRs merged.
+
+            [1-2 sentences of context or highlights]
+
+            This week's key highlights include:
+            - <link or description> _(thank you, <@SLACK_ID> :heart_hands:)_
+            - ...
+
+            :point_right: full release notes <https://docs.strapi.io/release-notes#<version without dots>|on the website>
+
+            Style: credits in parentheses and italics after the bullet; extra warmth for community contributors; if self-healing PRs are included, mention it briefly ("a few PRs automatically handled by the self-healing system :human-robot-heart:"); informational but warm; no em dashes.
+
+      - name: Reply in the thread
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          CHANNEL: ${{ needs.detect.outputs.slack_channel }}
+          TS: ${{ needs.detect.outputs.slack_ts }}
+          RESULT: ${{ needs.release.result }}
+          VERSION: ${{ needs.release.outputs.version }}
+          FAILURE: ${{ needs.release.outputs.failure }}
+          M_TITLE: ${{ needs.detect.outputs.milestone_title }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          post() {
+            jq -n --arg channel "$CHANNEL" --arg ts "$TS" --arg text "$1" \
+              '{channel: $channel, thread_ts: $ts, text: $text}' \
+            | curl -s -X POST "https://slack.com/api/chat.postMessage" \
+                -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+                -H "Content-type: application/json; charset=utf-8" \
+                -d @- | jq -c '{ok, error}'
+          }
+
+          if [ "$RESULT" = "success" ]; then
+            post "$(printf ':pepe_rocket: *New Docs Release! Strapi Docs %s is out*\n<https://github.com/%s/releases/tag/v%s|GitHub release> · <https://docs.strapi.io/release-notes|Release notes>' \
+              "$VERSION" "$DOCS_REPO" "$VERSION")"
+            if [ -s "$GITHUB_WORKSPACE/announce.md" ]; then
+              post "$(printf 'Draft announcement for #product, to copy and edit:\n\n%s' "$(cat "$GITHUB_WORKSPACE/announce.md")")"
+            else
+              post "The announcement draft could not be generated. Run /release-announce $VERSION by hand. <$RUN_URL|View run>"
+            fi
+          elif [ "$RESULT" = "failure" ] && [ -n "$FAILURE" ]; then
+            post "$(printf ':pepe_alarm: *Docs release %s failed*\n```\n%s\n```\n<%s|View run>' "$M_TITLE" "$FAILURE" "$RUN_URL")"
+          elif [ "$RESULT" = "failure" ]; then
+            post "$(printf ':pepe_alarm: *Docs release %s failed* before the script could report anything.\n<%s|View run>' "$M_TITLE" "$RUN_URL")"
+          elif [ "$RESULT" = "cancelled" ]; then
+            post "$(printf ':no_entry_sign: Docs release %s was not launched (approval rejected or run cancelled). <%s|View run>' "$M_TITLE" "$RUN_URL")"
+          else
+            echo "Release job result: $RESULT, nothing to post"
+          fi
