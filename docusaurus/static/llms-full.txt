@@ -33843,6 +33843,7 @@ The Audit Logs feature logs the following events:
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
 | Role / Permission | `create`, `update`, `delete` |
+| SSO settings  | `update` |
 | User  | `create`, `update`, `delete`, `password.update`, `password-reset.create`, `password-reset.confirm`, `invite.accept` |
 | Token  | `create`, `update`, `delete`, `regenerate` |
 | Webhook | `create`, `update`, `delete` |
@@ -33901,6 +33902,12 @@ Each log identifies which kind it was, and an update records the fields that cha
 #### Webhook events
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
+
+#### SSO settings events
+
+SSO settings events come from the [SSO](/cms/features/sso) configuration. An update records only the fields that changed, among auto-registration, the default role, and the locked roles; saving with no change to any of them writes no row.
+
+Locked roles are compared as a set, so reordering them alone is not recorded as a change. Role ids are always recorded as numbers, whether the form sent them as numbers or strings.
 
 #### Locale events
 
@@ -39706,6 +39713,8 @@ General settings for SSO are available in the admin panel, and additional SSO pr
 | Local authentication lock-out | Choose among the drop-down list the roles for which the local authentication capabilities are disabled (see [Users & Permissions feature](/cms/features/users-permissions#advanced-settings) documentation).<br />Users locked out of local authentication will be forced to use SSO to login and will not be able to change or reset their password. |
 
 2. Click the **Save** button.
+
+Changes to these settings are recorded in [Audit Logs](/cms/features/audit-logs#sso-settings-events).
 
 :::warning
 Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely.
