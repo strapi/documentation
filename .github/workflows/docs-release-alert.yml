@@ -421,10 +421,11 @@ jobs:
             Credits, decided by the PR labels, never guessed:
             - Never credit pwizla (Pierre Wizla, Slack U01HU1NLNG6): he is the one who posts this message. His PRs can be highlights, without any credit.
             - A PR labelled `auto-doc-healing` was written by the self-healing system: credit nobody on it. If the release has any, add the self-healing sentence below.
-            - A PR labelled `contribution` comes from the community: credit its author with extra warmth ("massive shoutout to community user ...").
+            - A PR labelled `contribution` comes from the community: credit nobody on it.
             - A PR labelled `internal` comes from a Strapi team member: thank its author plainly. Never call an `internal` author a community contributor.
+            - Every PR by an `internal` author other than pwizla is a key highlight, whatever its size, with its credit. There is a single list of highlights: no secondary list, no two-tier thanks.
 
-            Highlights: rank PRs by lines changed (additions + deletions) and files touched; pick the 2 to 4 largest, skipping pure chore/repo PRs unless nothing else is notable.
+            Highlights: first, every PR by an `internal` author other than pwizla (never dropped to keep the list short). Then add the largest other PRs, ranked by lines changed (additions + deletions) and files touched, skipping pure chore/repo PRs: up to 2 more, or up to 4 more when there is no internal PR.
             Links: always the live page on docs.strapi.io, never the GitHub PR. Map a changed file `docusaurus/docs/<path>.md(x)` to `https://docs.strapi.io/<path>`, honoring a `slug:` in its frontmatter, and check it answers 200 with `curl -s -o /dev/null -w '%{http_code}' -L <url>`. A change with no published page is described in plain text, without a link.
 
             Exact format (Slack mrkdwn):
@@ -443,7 +444,7 @@ jobs:
 
             Style: if self-healing PRs are included, mention it briefly ("a few PRs automatically handled by the self-healing system :human-robot-heart:"); informational but warm; no em dashes.
 
-            Before writing the file, check the draft: no `<@U01HU1NLNG6>` and no "Pierre" anywhere; every `_(` closes with `)_` and has no other underscore in between; every credited author matches the label rules above.
+            Before writing the file, check the draft: no `<@U01HU1NLNG6>` and no "Pierre" anywhere; every `_(` closes with `)_` and has no other underscore in between; every credited author matches the label rules above; every PR by an `internal` author other than pwizla is in the highlights, with its credit; there is no second list; no `contribution` author is credited.
 
       - name: Reply in the thread
         env:
