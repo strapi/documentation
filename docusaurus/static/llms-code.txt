@@ -21377,7 +21377,7 @@ module.exports = [
 
 
 ## Scaleway
-Description: | Scaleway | Not needed | Supported | Returns correct virtual-hosted URLs | | Vultr | Not needed | Supported | - | | Backblaze B2 | Not needed | Supported | Returns correct virtual-hosted URLs | | Cloudflare R2 | Not needed | Not supported | Omit ACL from parameters | | Tigris | Not needed | Supported | Single global endpoint; use region: 'auto' |
+Description: | Vultr | Not needed | Supported | - | | Backblaze B2 | Not needed | Supported | Returns correct virtual-hosted URLs | | Cloudflare R2 | Not needed | Not supported | Omit ACL from parameters | | Tigris | Not needed | Supported | Single global endpoint; use region: 'auto' | | Neon | true | private only | Set ACL explicitly; the default public-read returns 501 Not Implemented |
 (Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#scaleway)
 
 Language: JavaScript
@@ -21502,6 +21502,41 @@ module.exports = ({ env }) => ({
           endpoint: 'https://t3.storage.dev',
           params: {
             Bucket: env('TIGRIS_BUCKET'),
+          },
+        },
+        // highlight-end
+      },
+    },
+  },
+});
+```
+
+
+## Neon
+Description: Neon returns a 501 Not Implemented error for the public-read ACL that the provider sends by default.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#neon)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        // highlight-start
+        s3Options: {
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_SECRET_ACCESS_KEY'),
+          },
+          region: env('AWS_REGION'), // e.g. "us-east-2"
+          endpoint: env('AWS_ENDPOINT_URL_S3'), // e.g. "https://br-cool-darkness-a1b2c3d4.storage.c-1.us-east-2.aws.neon.tech"
+          forcePathStyle: true,
+          params: {
+            Bucket: env('NEON_BUCKET'),
+            ACL: undefined, // or 'private' for a private bucket
           },
         },
         // highlight-end
