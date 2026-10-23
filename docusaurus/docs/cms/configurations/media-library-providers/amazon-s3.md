@@ -12,7 +12,7 @@ tags:
 
 <Tldr>
 
-The `@strapi/provider-upload-aws-s3` package lets you store Media Library assets on Amazon S3 or any S3-compatible service (Cloudflare R2, Scaleway, MinIO, Tigris, etc.). This page covers provider configuration, required AWS setup (IAM, CORS, middleware), and extended options such as encryption, checksums, and signed URLs for private buckets.
+The `@strapi/provider-upload-aws-s3` package lets you store Media Library assets on Amazon S3 or any S3-compatible service (Cloudflare R2, Scaleway, MinIO, Tigris, Neon, etc.). This page covers provider configuration, required AWS setup (IAM, CORS, middleware), and extended options such as encryption, checksums, and signed URLs for private buckets.
 
 </Tldr>
 
@@ -329,6 +329,7 @@ The following table shows compatibility settings for each provider:
 | Backblaze B2        | Not needed       | Supported         | Returns correct virtual-hosted URLs |
 | Cloudflare R2       | Not needed       | Not supported     | Omit `ACL` from parameters        |
 | Tigris              | Not needed       | Supported         | Single global endpoint; use `region: 'auto'` |
+| Neon                | `true`           | `private` only    | Set `ACL` explicitly; the default `public-read` returns `501 Not Implemented` |
 
 ### Scaleway
 
@@ -449,6 +450,39 @@ module.exports = ({ env }) => ({
 ```
 
 Tigris buckets also support <ExternalLink to="https://www.tigrisdata.com/docs/buckets/snapshots-and-forks/" text="snapshots and forks"/> to stage or roll back assets without copying data.
+
+### Neon
+
+Neon Object Storage serves each branch from its own endpoint and only supports path-style URLs, so `forcePathStyle` must be `true`. The endpoint, region, and credentials are available in the _Storage_ tab of the _Connect_ dialog in the Neon Console.
+
+Neon returns a `501 Not Implemented` error for the `public-read` ACL that the provider sends by default. Always define `ACL` in `params`: set it to `undefined` for a `public_read` bucket, or to `'private'` for a private bucket with [signed URLs](#private-bucket-and-signed-urls). Removing the `ACL` key is not enough, because the provider then falls back to `public-read`.
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        // highlight-start
+        s3Options: {
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_SECRET_ACCESS_KEY'),
+          },
+          region: env('AWS_REGION'), // e.g. "us-east-2"
+          endpoint: env('AWS_ENDPOINT_URL_S3'), // e.g. "https://br-cool-darkness-a1b2c3d4.storage.c-1.us-east-2.aws.neon.tech"
+          forcePathStyle: true,
+          params: {
+            Bucket: env('NEON_BUCKET'),
+            ACL: undefined, // or 'private' for a private bucket
+          },
+        },
+        // highlight-end
+      },
+    },
+  },
+});
+```
 
 ## Extended provider options
 
