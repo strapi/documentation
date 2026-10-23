@@ -453,7 +453,7 @@ Tigris buckets also support <ExternalLink to="https://www.tigrisdata.com/docs/bu
 
 ### Neon
 
-<ExternalLink to="https://neon.com/docs/storage/overview" text="Neon Object Storage"/> serves each branch from its own endpoint and only supports path-style URLs, so `forcePathStyle` must be `true`. The endpoint, region, and credentials are available in the _Storage_ tab of the _Connect_ dialog in the Neon Console.
+Neon Object Storage serves each branch from its own endpoint and only supports path-style URLs, so `forcePathStyle` must be `true`. The endpoint, region, and credentials are available in the _Storage_ tab of the _Connect_ dialog in the Neon Console.
 
 Neon returns a `501 Not Implemented` error for the `public-read` ACL that the provider sends by default. Always define `ACL` in `params`: set it to `undefined` for a `public_read` bucket, or to `'private'` for a private bucket with [signed URLs](#private-bucket-and-signed-urls). Removing the `ACL` key is not enough, because the provider then falls back to `public-read`.
 
