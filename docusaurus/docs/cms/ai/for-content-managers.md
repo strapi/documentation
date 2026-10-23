@@ -22,7 +22,7 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 <Tldr>
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. It is Strapi-managed on the <GrowthBadge /> plan. On the <EnterpriseBadge /> plan, it is powered by your own AI key, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. It is Strapi-managed on the <GrowthBadge /> plan. On the <EnterpriseBadge /> plan, it requires the AI add-on and is powered by your own AI key, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 </Tldr>
 
@@ -30,7 +30,7 @@ This page sums up the AI-powered capabilities available to content managers in S
 
 ## Strapi AI
 
-<GrowthBadge /> <EnterpriseBadge /> <VersionBadge version="5.30+" />
+<GrowthBadge /> <EnterpriseBadge /> <AiAddonBadge /> <VersionBadge version="5.30+" />
 
 Some Strapi CMS features can be enhanced with Strapi AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata, all from the admin panel.
 
@@ -38,11 +38,11 @@ Strapi AI is powered in one of 2 ways, depending on your plan:
 
 | | Strapi-managed | Bring your own AI key |
 |---|---|---|
-| Plan | <GrowthBadge /> | <EnterpriseBadge /> |
+| Plan | <GrowthBadge /> | <EnterpriseBadge /> with the AI add-on |
 | Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
 | Strapi version | 5.30 or later | 5.59 or later |
 | AI requests go to | Strapi-managed infrastructure | Your own AI provider, with your API key and models |
-| Billing | [AI credits](#credits) | Your AI provider's pricing |
+| Billing | [AI credits](#credits) | The AI add-on fee, plus your AI provider's pricing |
 | Data handling | [Strapi-managed](/cms/usage-information#strapi-ai-data-handling) | Your provider's terms |
 
 ### Activation and configuration {#activation}
@@ -53,7 +53,7 @@ With Strapi-managed AI, Strapi AI works with both Strapi Cloud and self-hosted d
 2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
 3. Access AI features from the Content-Type Builder, Media Library, or Content Manager. The Content-Type Builder assistant and AI metadata generation are enabled by default. AI Translations must be [enabled in the Internationalization settings](/cms/features/internationalization#enabling-ai-powered-internationalization).
 
-To power Strapi AI with your own AI key, on the Enterprise plan, install and configure the [Bring your own AI key plugin](/cms/plugins/byok).
+To power Strapi AI with your own AI key, on the Enterprise plan, subscribe to the AI add-on, then install and configure the [Bring your own AI key plugin](/cms/plugins/byok).
 
 All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they are Strapi-managed or powered by your own AI key:
 

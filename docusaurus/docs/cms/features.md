@@ -20,7 +20,7 @@ Strapi CMS comes with 3 plans:
 
 - Community: the free and open-source core of Strapi, under the MIT license.
 - Growth <GrowthBadge noTooltip />: Adds Strapi AI, Live Preview, Releases, and Content History.
-- Enterprise <EnterpriseBadge noTooltip />: Includes everything in Growth, plus Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins.
+- Enterprise <EnterpriseBadge noTooltip />: Adds Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins to the Growth features. Strapi AI is not part of the base plan: it is available as an add-on.
 
 ## Self-hosted and Strapi Cloud projects
 
@@ -49,12 +49,12 @@ Core features, such as the [admin panel](/cms/features/admin-panel), the [Conten
 | [Preview](/cms/features/preview) | ✅ | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) |
 | [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
 | [Releases](/cms/features/releases) | - | ✅ | ✅ |
-| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | With your own AI key, through the [Bring your own AI key plugin](/cms/plugins/byok) |
+| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | Available as an add-on,<br/>with your own AI key through the [Bring your own AI key plugin](/cms/plugins/byok) |
 | [Single Sign-On (SSO)](/cms/features/sso) | - | Available as an add-on | ✅ |
 | [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
 | [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
 | [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
 
-Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi-managed AI, on the Growth plan.
+Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi-managed AI, on the Growth plan. On the Enterprise plan, all Strapi AI features require the AI add-on.
 
 For prices, support levels, and compliance documents such as the SOC 2 report, see the <ExternalLink to="https://strapi.io/pricing-cms" text="Strapi pricing page"/>. Enterprise plans are available through the <ExternalLink to="https://strapi.io/contact-sales" text="Strapi sales team"/>.

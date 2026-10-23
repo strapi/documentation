@@ -10,7 +10,7 @@ tags:
 ---
 
 # Bring your own AI key plugin
-<EnterpriseBadge tooltip="This plugin is available with an Enterprise plan."/> <VersionBadge version="5.59.0" />
+<EnterpriseBadge tooltip="This plugin is available with an Enterprise plan."/> <AiAddonBadge tooltip="This plugin requires the AI add-on on the Enterprise plan."/> <VersionBadge version="5.59.0" />
 
 <Tldr>
 The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
@@ -19,13 +19,14 @@ The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provid
 With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi-managed AI.
 
 <IdentityCard isPlugin>
+  <IdentityCardItem icon="credit-card" title="Plan">CMS Enterprise plan with the AI add-on</IdentityCardItem>
   <IdentityCardItem icon="navigation-arrow" title="Location">Configured in `/config/plugins`. Used through the Strapi AI features of the admin panel.</IdentityCardItem>
   <IdentityCardItem icon="package" title="Package name">`@strapi-enterprise/plugin-byok`</IdentityCardItem>
   <IdentityCardItem icon="plus-square" title="Additional resources">[Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins)</IdentityCardItem>
 </IdentityCard>
 
 :::prerequisites
-- A license for the CMS Enterprise plan.
+- A license for the CMS Enterprise plan, with the AI add-on.
 - Strapi 5.59.0 or later.
 - An API key for a provider with an OpenAI-compatible API.
 - For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
