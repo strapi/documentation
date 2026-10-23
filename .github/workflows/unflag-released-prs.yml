@@ -58,7 +58,7 @@ jobs:
       # filter brings it to 392 KB in ~1s. The script stays a real file in the
       # repository, so it remains runnable locally.
       - name: Checkout the release-detection script
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           sparse-checkout: .github/scripts
           sparse-checkout-cone-mode: false
