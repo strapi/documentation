@@ -421,7 +421,7 @@ jobs:
             Credits, decided by the PR labels, never guessed:
             - Never credit pwizla (Pierre Wizla, Slack U01HU1NLNG6): he is the one who posts this message. His PRs can be highlights, without any credit.
             - A PR labelled `auto-doc-healing` was written by the self-healing system: credit nobody on it. If the release has any, add the self-healing sentence below.
-            - A PR labelled `contribution` comes from the community: credit nobody on it.
+            - A PR labelled `contribution` comes from the community: credit nobody on it, because there are no Slack handles equivalents usable in an internal message.
             - A PR labelled `internal` comes from a Strapi team member: thank its author plainly. Never call an `internal` author a community contributor.
             - Every PR by an `internal` author other than pwizla is a key highlight, whatever its size, with its credit. There is a single list of highlights: no secondary list, no two-tier thanks.
 
