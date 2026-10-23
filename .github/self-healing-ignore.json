@@ -1674,6 +1674,16 @@
       "number": 28135,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3594",
       "added": "2026-10-22"
+    },
+    {
+      "number": 28114,
+      "reason": "Router: PR fixes OpenAPI schema generation to accurately include meta field that the API already returns. This is an internal accuracy fix to the generated OpenAPI spec, not a user-facing feature change. Existing documentation about API responses does not need updates.",
+      "added": "2026-10-23"
+    },
+    {
+      "number": 28047,
+      "reason": "Router: PR updates internal architectural documentation in strapi/strapi repo (docs/docs/architecture/), not user-facing documentation in strapi/documentation. The change is internal and does not affect user-facing API docs.",
+      "added": "2026-10-23"
     }
   ]
 }
