@@ -166,7 +166,10 @@
 
   }
 
-  &--sso {
+  // The add-on badges share one look: a feature sold separately from the plan
+  // badge sitting next to it.
+  &--sso,
+  &--aiaddon {
     --custom-badge-background-color: #33324D;
     --custom-badge-color: var(--strapi-neutral-0);
     --custom-badge-border-color: #33324D;
@@ -327,6 +330,7 @@ main .badge--pro,
 main .badge--enterprise,
 main .badge--growth,
 main .badge--sso,
+main .badge--aiaddon,
 main .badge--aienhanced,
 main .badge--version {
   .badge__tooltip {
@@ -794,7 +798,8 @@ h6 + .badge:not(.badge--inline) ~ p {
       --custom-badge-color: white;
       --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
     }
-    &--sso {
+    &--sso,
+    &--aiaddon {
       --custom-badge-color: #242432;
       --custom-badge-background-color: #DCDCE3;
       --custom-badge-border-color: #32324D;

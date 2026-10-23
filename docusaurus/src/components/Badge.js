@@ -157,6 +157,24 @@ export function SsoBadge(props) {
   );
 }
 
+/**
+ * Flags a feature that the Enterprise plan only includes through the paid AI
+ * add-on. Growth keeps every AI feature in the base plan, so this badge sits
+ * next to the plan badges rather than replacing them.
+ */
+export function AiAddonBadge(props) {
+  return (
+    <Badge
+      variant="AI add-on"
+      link="https://strapi.io/pricing-cms"
+      icon="plus"
+      iconClasses="ph ph-plus ph-bold"
+      tooltip="Included in the Growth plan. Requires the AI add-on on the Enterprise plan."
+      {...props}
+    />
+  );
+}
+
 export function CloudProBadge(props) {
   return (
     <Badge
