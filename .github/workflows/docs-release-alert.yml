@@ -35,6 +35,10 @@ on:
 permissions:
   contents: read
   issues: read
+  # The issues endpoint only lists the pull requests of a milestone when the
+  # token can read pull requests. With `issues: read` alone, the first alert
+  # (2026-10-23) reported 7.5.1 as fully merged while #3573 was still open.
+  pull-requests: read
 
 env:
   DOCS_REPO: strapi/documentation
@@ -49,7 +53,6 @@ jobs:
       tag: ${{ steps.release.outputs.tag }}
       milestone_number: ${{ steps.milestone.outputs.number }}
       milestone_title: ${{ steps.milestone.outputs.title }}
-      slack_channel: ${{ steps.post.outputs.channel }}
       slack_ts: ${{ steps.post.outputs.ts }}
     steps:
       - name: Resolve the latest Strapi release
@@ -420,7 +423,10 @@ jobs:
       - name: Reply in the thread
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          CHANNEL: ${{ needs.detect.outputs.slack_channel }}
+          # Read from the secret, not passed as a job output: GitHub drops any
+          # output equal to a secret ("Skip output 'slack_channel' since it may
+          # contain secret"), which left the thread reply with no channel.
+          CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
           TS: ${{ needs.detect.outputs.slack_ts }}
           RESULT: ${{ needs.release.result }}
           VERSION: ${{ needs.release.outputs.version }}
