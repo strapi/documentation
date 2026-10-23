@@ -299,6 +299,21 @@ jobs:
             echo "Moved #$PR to $NEXT_TITLE"
           done
 
+          # The milestone listing lags behind the change. On 2026-10-23 #3573
+          # was moved at 09:53:24 and the script, listing the milestone two
+          # seconds later, still found it there and stopped. Wait until the
+          # listing the script reads is empty, for up to two minutes.
+          if [ -n "$OPEN" ]; then
+            for _ in $(seq 1 24); do
+              LEFT=$(gh api "repos/$DOCS_REPO/issues?milestone=$M_NUMBER&state=open&per_page=100" \
+                --jq '[.[] | select(.pull_request)] | length')
+              [ "$LEFT" -eq 0 ] && break
+              echo "The milestone listing still shows $LEFT PR(s), waiting"
+              sleep 5
+            done
+            [ "$LEFT" -eq 0 ] || fail "The PRs were moved to $NEXT_TITLE, but the $M_TITLE listing still shows $LEFT after two minutes. Launch again in a few minutes."
+          fi
+
           # The answers, in the order the script asks. Only the prompts this
           # state leads to are answered; anything else reads an empty line.
           {
