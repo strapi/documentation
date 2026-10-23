@@ -35,6 +35,10 @@ on:
 permissions:
   contents: read
   issues: read
+  # The issues endpoint only lists the pull requests of a milestone when the
+  # token can read pull requests. With `issues: read` alone, the first alert
+  # (2026-10-23) reported 7.5.1 as fully merged while #3573 was still open.
+  pull-requests: read
 
 env:
   DOCS_REPO: strapi/documentation
