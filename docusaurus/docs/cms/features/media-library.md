@@ -746,6 +746,11 @@ The `sharp` option configures the <ExternalLink to="https://sharp.pixelplumbing.
 | --------- | ----------- | ---- | ------- |
 | `cache` | Enables or disables <ExternalLink to="https://sharp.pixelplumbing.com/api-utility#cache" text="libvips' operation cache"/>. Disabling the cache reduces memory usage. | Boolean | `false` |
 | `concurrency` | Sets the number of threads <ExternalLink to="https://sharp.pixelplumbing.com/api-utility#concurrency" text="libvips uses for image processing"/>. Lower values reduce peak memory usage but may slow down processing. | Integer | `1` |
+| `limitInputPixels` | Largest image sharp accepts, measured in pixels as width × height × frames for animated images, not a size in bytes. `false` or `0` removes the limit. When reading from the environment, use `env.int()`. | Boolean &#124; Integer | sharp's default, `268402689` (~268 megapixels) |
+
+:::caution
+When `limitInputPixels` is set to `false`, sharp's protection against decompression bombs is disabled: small crafted files can decode into gigabytes of pixels. Anyone with upload permission can trigger this. Prefer raising the limit to a specific number over disabling it entirely.
+:::
 
 The default values (`cache: false`, `concurrency: 1`) are optimized for low memory usage. For environments with more available memory, you can enable caching and increase concurrency to improve image processing performance:
 
