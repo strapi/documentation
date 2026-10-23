@@ -73,7 +73,6 @@ const sidebars = {
           label: 'Audit Logs',
           id: 'cms/features/audit-logs',
           customProps: {
-            updated: true,
             enterprise: true
           }
         },
@@ -142,7 +141,6 @@ const sidebars = {
           label: 'Review Workflows',
           id: 'cms/features/review-workflows',
           customProps: {
-            updated: true,
             enterprise: true
           }
         },
@@ -158,9 +156,6 @@ const sidebars = {
         },
 
       ],
-      customProps: {
-        new: true
-      }
     },
     { // Plugins
       type: 'category',
@@ -384,6 +379,9 @@ const sidebars = {
               type: 'doc',
               id: 'cms/configurations/database',
               label: 'Database configuration',
+              customProps: {
+                updated: true
+              }
             },
             'cms/database-migrations',
             'cms/database-transactions',
@@ -615,7 +613,7 @@ const sidebars = {
       className: 'category-cms-cli',
       collapsed: false,
       collapsible: false,
-      items: ['cms/cli'],
+      items: [{ type: 'doc', id: 'cms/cli', customProps: { updated: true } }],
     },
     { // Upgrades
       type: 'category',

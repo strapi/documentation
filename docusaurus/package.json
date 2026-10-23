@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "7.5.0",
+  "version": "7.5.1",
   "private": true,
   "scripts": {
     "test:badges": "node --test 'scripts/badges/*.test.js'",

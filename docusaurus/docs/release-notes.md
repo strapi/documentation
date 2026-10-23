@@ -29,7 +29,71 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.58.0](https://github.com/strapi/strapi/releases/tag/v5.58.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.59.0](https://github.com/strapi/strapi/releases/tag/v5.59.0)._
+
+## 7.5.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document connection pool timeout diagnostics](https://github.com/strapi/documentation/pull/3588)
+- [Add tested AI providers and models to the BYOK plugin documentation](https://github.com/strapi/documentation/pull/3581)
+- [Restore the strapi rename:field CLI section](https://github.com/strapi/documentation/pull/3580)
+- [Document the strapi rename:field CLI command](https://github.com/strapi/documentation/pull/3571)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update minimum Strapi version for Bring your own AI key to 5.59.0](https://github.com/strapi/documentation/pull/3591)
+- [Fix cors middleware option names and default values](https://github.com/strapi/documentation/pull/3587)
+- [Update admin panel auth.cookie.path documentation](https://github.com/strapi/documentation/pull/3585)
+- [Clarify Review Workflows panel visibility on the published tab](https://github.com/strapi/documentation/pull/3574)
+- [Add a tip about the Smart Populate community plugin to the populate docs](https://github.com/strapi/documentation/pull/3456)
+
+#### Cloud
+- [Clarify that Cloud environment data transfers cannot target production](https://github.com/strapi/documentation/pull/3578)
+
+#### Repository
+- [Add new redirects for llm.txt and quickstart](https://github.com/strapi/documentation/pull/3599)
+- [Trigger the auto-merge as soon as a Strapi release unflags PRs](https://github.com/strapi/documentation/pull/3592)
+- [Run the unflag workflow hourly around the midday release window](https://github.com/strapi/documentation/pull/3590)
+- [Allow only Markdown tables in docs, and flag HTML tables in Inki](https://github.com/strapi/documentation/pull/3584)
+- [Codify the Troubleshooting format and options table columns in Inki](https://github.com/strapi/documentation/pull/3583)
+- [Let the Inki plugin update itself on every merged change](https://github.com/strapi/documentation/pull/3582)
+- [Run the milestone workflow on every open PR without a milestone](https://github.com/strapi/documentation/pull/3576)
+- [Assign a milestone to new docs PRs automatically](https://github.com/strapi/documentation/pull/3575)
+- [Disable Kapa widget exit survey](https://github.com/strapi/documentation/pull/3572)
+- [Show sidebar badges as colored icons without background](https://github.com/strapi/documentation/pull/3567)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/OcneanuVlad" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/102417094?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="OcneanuVlad"/>
+</a>
+<a href="https://github.com/RaphaelFakhri" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/153192858?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="RaphaelFakhri"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/valfur03" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/40238252?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="valfur03"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.5.0
 
