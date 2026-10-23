@@ -106,6 +106,7 @@ The Audit Logs feature logs the following events:
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
 | Role / Permission | `create`, `update`, `delete` |
+| SSO settings <VersionBadge version="5.59.0+" noTooltip /> | `update` |
 | User <VersionBadge version="5.56.0+" noTooltip /> | `create`, `update`, `delete`, `password.update`, `password-reset.create`, `password-reset.confirm`, `invite.accept` |
 | Token <VersionBadge version="5.54.0+" noTooltip /> | `create`, `update`, `delete`, `regenerate` |
 | Webhook | `create`, `update`, `delete` |
@@ -166,6 +167,13 @@ Each log identifies which kind it was, and an update records the fields that cha
 #### Webhook events
 
 Webhook events record configuration changes for webhooks, including the URL, headers, events, and enabled status. To protect sensitive information, webhook URLs are recorded as scheme and host only (for example, `https://hooks.example.com` instead of the full URL with path or query parameters), and header values are never recorded, only header names. An `update` event records which fields changed and how; unchanged fields are not included.
+
+#### SSO settings events
+<VersionBadge version="5.59.0"/>
+
+SSO settings events come from the [SSO](/cms/features/sso) configuration. An update records only the fields that changed, among auto-registration, the default role, and the locked roles; saving with no change to any of them writes no row.
+
+Locked roles are compared as a set, so reordering them alone is not recorded as a change. Role ids are always recorded as numbers, whether the form sent them as numbers or strings.
 
 #### Locale events
 <VersionBadge version="5.54.0"/>

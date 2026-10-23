@@ -52,6 +52,8 @@ General settings for SSO are available in the admin panel, and additional SSO pr
 
 2. Click the **Save** button.
 
+Changes to these settings are recorded in [Audit Logs](/cms/features/audit-logs#sso-settings-events).
+
 :::warning
 Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely.
 
