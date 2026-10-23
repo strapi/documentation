@@ -415,8 +415,14 @@ jobs:
 
             Data:
             - Release notes: docusaurus/docs/release-notes.md, section "## ${{ needs.release.outputs.version }}".
-            - For each PR in that section: `gh pr view <n> --repo strapi/documentation --json additions,deletions,title,files,author`.
+            - For each PR in that section: `gh pr view <n> --repo strapi/documentation --json additions,deletions,title,files,author,labels`.
             - Slack handles: /tmp/contributors.md (GitHub username to Slack ID). Use `<@SLACK_ID>`. For anyone missing, write their GitHub username and add "(Slack handle to find)".
+
+            Credits, decided by the PR labels, never guessed:
+            - Never credit pwizla (Pierre Wizla, Slack U01HU1NLNG6): he is the one who posts this message. His PRs can be highlights, without any credit.
+            - A PR labelled `auto-doc-healing` was written by the self-healing system: credit nobody on it. If the release has any, add the self-healing sentence below.
+            - A PR labelled `contribution` comes from the community: credit its author with extra warmth ("massive shoutout to community user ...").
+            - A PR labelled `internal` comes from a Strapi team member: thank its author plainly. Never call an `internal` author a community contributor.
 
             Highlights: rank PRs by lines changed (additions + deletions) and files touched; pick the 2 to 4 largest, skipping pure chore/repo PRs unless nothing else is notable.
             Links: always the live page on docs.strapi.io, never the GitHub PR. Map a changed file `docusaurus/docs/<path>.md(x)` to `https://docs.strapi.io/<path>`, honoring a `slug:` in its frontmatter, and check it answers 200 with `curl -s -o /dev/null -w '%{http_code}' -L <url>`. A change with no published page is described in plain text, without a link.
@@ -433,7 +439,11 @@ jobs:
 
             :point_right: full release notes <https://docs.strapi.io/release-notes#<version without dots>|on the website>
 
-            Style: credits in parentheses and italics after the bullet; extra warmth for community contributors; if self-healing PRs are included, mention it briefly ("a few PRs automatically handled by the self-healing system :human-robot-heart:"); informational but warm; no em dashes.
+            Credit markup: one pair of underscores around the whole parenthesis and nothing else, exactly `_(thank you, <@U03MDTXF42K> :heart_hands:)_`. Never put an underscore inside it: `_(thank you, <@ID>_ :heart_hands:_)_` renders broken in Slack. A bullet with nobody to credit has no parenthesis.
+
+            Style: if self-healing PRs are included, mention it briefly ("a few PRs automatically handled by the self-healing system :human-robot-heart:"); informational but warm; no em dashes.
+
+            Before writing the file, check the draft: no `<@U01HU1NLNG6>` and no "Pierre" anywhere; every `_(` closes with `)_` and has no other underscore in between; every credited author matches the label rules above.
 
       - name: Reply in the thread
         env:
