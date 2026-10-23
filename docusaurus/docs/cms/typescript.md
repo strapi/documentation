@@ -15,8 +15,6 @@ TypeScript adds a type system layer to Strapi applications, enabling type-safe c
 
 </Tldr>
 
-<VersionBadge version="4.3.0" />
-
 <ExternalLink to="https://www.typescriptlang.org/" text="TypeScript"/> adds an additional type system layer above JavaScript, which means that any valid JavaScript code is also valid TypeScript code. In the context of Strapi development, TypeScript allows for a more type-safe codebase for your application, and provides you with a set of tools for automatic type generation and autocompletion.
 
 ## Getting Started with TypeScript in Strapi

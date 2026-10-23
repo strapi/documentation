@@ -16,8 +16,6 @@ tags:
 # Audit Logs
 <EnterpriseBadge />
 
-<VersionBadge version="4.6.0" />
-
 <Tldr>
 Audit Logs captures every administrative action in a searchable, filterable history to aid troubleshooting and compliance. In this documentation, examples show viewing payloads and filtering by user or date.
 </Tldr>
