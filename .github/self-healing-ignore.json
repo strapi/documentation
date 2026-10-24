@@ -1689,6 +1689,36 @@
       "number": 27931,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3603",
       "added": "2026-10-23"
+    },
+    {
+      "number": 28190,
+      "reason": "Triage: types only, no runtime change",
+      "added": "2026-10-24"
+    },
+    {
+      "number": 28092,
+      "reason": "Triage: performance optimization, no user-facing behavior changes",
+      "added": "2026-10-24"
+    },
+    {
+      "number": 28199,
+      "reason": "Router: Internal service bug fix. The isFaultyImage function is an internal service method. The upload pipeline always sets filepath, so the default upload flow is not affected. Only direct callers of the internal service with stream-only files are affected. No user-facing API or behavior change.",
+      "added": "2026-10-24"
+    },
+    {
+      "number": 28188,
+      "reason": "Router: Bug fix to upload settings endpoint. This fixes the PUT /upload/settings endpoint to correctly store the aiMetadata default value. It's a behavioral fix, not a new capability. The endpoint documentation already covers settings management.",
+      "added": "2026-10-24"
+    },
+    {
+      "number": 28149,
+      "reason": "Router: Internal admin service bug fix. Adds null checks to prevent TypeError crashes when the super admin role doesn't exist. This is error handling improvement, not a user-facing feature. The behavior now returns proper ApplicationError messages instead of crashes.",
+      "added": "2026-10-24"
+    },
+    {
+      "number": 27868,
+      "reason": "Router: Bug fix to review workflows API. Fixes a validation logic bug where setting only the required stage without sending stages now correctly looks up the stage in the workflow's current stages. This is an internal API fix, not a feature addition.",
+      "added": "2026-10-24"
     }
   ]
 }
