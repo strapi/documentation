@@ -879,8 +879,18 @@ The folder tree on the left side of the interface lists the whole folder hierarc
 - Click a folder name, in the tree or in the list, to display its content.
 - Click the <Icon name="caret-right" classes="ph-bold" /> button next to a folder name to expand or collapse its subfolders.
 - Click <Icon name="house" /> **Home** to go back to the root of the library.
+- Hover a folder name to see its full path in a tooltip, for example _Media Library / Press / Logos_.
 
-Strapi does not enforce a maximum folder depth. The folder tree expands automatically to reveal the folder you are browsing.
+Strapi does not enforce a maximum folder depth. The folder tree expands automatically to reveal the folder you are browsing. Indentation stops increasing from the fourth level of depth onward, including folders you expand by hand, so names stay readable no matter how deep the tree goes.
+
+##### Deeply nested folders
+
+When the open folder is 4 levels deep or more (root folders are level 0), the tree folds the folders between the root and the parent folder into a single summary row, for example _··· 2 parent folders_. The root folder, the parent folder, the open folder, its siblings, and its children stay visible; only the folders in between are hidden.
+
+- Click the summary row, or focus it and press `Enter` or `Space`, to reveal the hidden folders. It closes again as soon as you select a different folder.
+- Hover the summary row to see the hidden part of the path in a tooltip.
+- Hidden folders keep their actions menu and right-click menu (see [using the item actions menu](#item-actions) and [using the right-click menu](#right-click-menu)), but have no expand or collapse control of their own, since the next folder on the path is already shown as the row below.
+- To move an asset or folder into a hidden folder, drag it onto the summary row and hold it there briefly. The row opens, and you can then drop onto the folder you want.
 
 #### Using the item actions menu {#item-actions}
 
