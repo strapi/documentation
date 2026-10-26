@@ -4,8 +4,8 @@
 #
 # Strapi technical documentation does not use em dashes. They are also one of the
 # strongest tells of unedited AI-generated prose, which matters here: the PRs this
-# workflow evaluates are written by an agent. On 2026-09-04 an em dash reached
-# PR #3443 and had to be stripped by hand at review time.
+# workflow evaluates are written by an agent, and an em dash that slips through
+# has to be stripped by hand at review time.
 #
 # The real fix is upstream: the self-healing prompts now run
 # claude-plugins/inki/scripts/style-lint.sh before committing, so an em dash should

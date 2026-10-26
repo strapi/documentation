@@ -6,9 +6,9 @@
 # low risk; rewriting or deleting a line that already worked is not, and a diff
 # cannot tell "corrected" from "broken".
 #
-# Pure additions inside a fence are allowed, and that nuance matters: #3373 adds
-# two table rows AND four lines to a config/server.js example, and is exactly
-# the kind of PR this gate exists to merge.
+# Pure additions inside a fence are allowed, and that nuance matters: a PR that
+# adds a couple of table rows and a few lines to an existing config example is
+# exactly the kind this gate exists to merge.
 #
 # The tricky part is fence state. A unified diff interleaves three kinds of
 # line, and they do not share one timeline:

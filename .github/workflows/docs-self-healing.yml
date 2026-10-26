@@ -256,11 +256,10 @@ jobs:
             # The diff needs the media type in an Accept header. A `.diff`
             # suffix on the path looks like it does the same job and does not:
             # `gh api repos/.../pulls/27593.diff` silently returns the pull
-            # request as JSON. That was the shape of this line from 2026-04-16
-            # (#3062) to 2026-09-17, so every diff written here was metadata,
-            # `wc -l` was always 0, the oversize guard below could never fire,
-            # and Triage, Router and Drafter all routed on the PR title and
-            # body alone for five months.
+            # request as JSON. With that shape every diff written here is
+            # metadata, `wc -l` is always 0, the oversize guard below can never
+            # fire, and Triage, Router and Drafter all route on the PR title and
+            # body alone.
             gh api "repos/strapi/strapi/pulls/$NUMBER" \
               --header "Accept: application/vnd.github.v3.diff" \
               > "/tmp/pr-${NUMBER}.diff" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}.diff"
@@ -552,25 +551,18 @@ jobs:
           #
           # `micro` vs `full` is a mechanical rule: micro means every target is
           # `add_link`, `add_mention` or `add_tip`, anything else is Sonnet's.
-          # Haiku has now got it wrong twice, in opposite directions:
-          #
-          #   2026-06-20 (run 27857268241) — stamped `micro` on `update_section`
-          #     targets and then did nothing, because its prose reasoning had
-          #     correctly concluded they were Sonnet's job. FULL=0 gated Sonnet
-          #     out and both PRs were lost silently.
-          #   2026-09-03 (run 33705096766) — stamped `micro` on `add_section` and
-          #     `update_section` targets and drafted whole sections itself, which
-          #     its own micro-edit procedure does not even cover. Sonnet was
-          #     never invoked.
+          # Haiku gets it wrong in both directions: it stamps `micro` on targets
+          # that are Sonnet's and then either does nothing with them, so FULL=0
+          # gates Sonnet out and the PRs are lost silently, or drafts whole
+          # sections itself, which its own micro-edit procedure does not cover.
           #
           # The rule needs no judgement, so the workflow applies it instead of
           # asking the model to. Two outcomes:
           #
-          #   - No doc PR yet: rewrite to `full` so Sonnet picks it up. That is
-          #     the 2026-06-20 rescue.
+          #   - No doc PR yet: rewrite to `full` so Sonnet picks it up.
           #   - Doc PR already open: leave the record alone, because rerouting
           #     would duplicate the PR, and mark it `overreach` so the reporting
-          #     says a Haiku draft needs closer review. That is 2026-09-03.
+          #     says a Haiku draft needs closer review.
           FULL_ONLY='action:[[:space:]]*(create_page|update_section|add_section|create_category)'
 
           jq --arg re "$FULL_ONLY" '
@@ -642,8 +634,8 @@ jobs:
           #
           # Reporting must NOT reuse this output to mean "the Router found
           # something" — a run that produced only micro PRs has has_targets=false
-          # and would be reported as an empty run. That was the 2026-08-28 bug:
-          # PR #3418 was created and Slack announced "no documentation targets".
+          # and would be reported as an empty run, so Slack would announce "no
+          # documentation targets" on a run that opened a PR.
           # `micro_prs` below is what the Summary and Slack steps read instead.
           if [ "$FULL" -eq 0 ]; then
             echo "has_targets=false" >> $GITHUB_OUTPUT
@@ -661,9 +653,9 @@ jobs:
           #
           # Whatever the classification stage produced, the run must not end
           # green and silent on a target nobody handled. Three distinct
-          # situations, three distinct messages: conflating them is what made
-          # the 2026-09-03 Slack post announce "2 doc PR(s) created" and
-          # "claimed but not delivered" about the very same two PRs.
+          # situations, three distinct messages: conflating them makes one Slack
+          # post announce both "doc PR(s) created" and "claimed but not
+          # delivered" about the very same PRs.
           #
           #   dropped   — still `micro` after the correction above and no doc PR
           #               came out. Genuinely nobody's work, no auto-rescue.
@@ -814,8 +806,8 @@ jobs:
           # Seed the summary here rather than trusting the Drafter to create it.
           # The prompt appends one entry per PR as it goes, so a run that dies
           # on its turn cap still reports what it delivered. Writing the file
-          # only at the end is what made 2026-09-17 report zero doc PRs while
-          # PR #3495 was open.
+          # only at the end makes a run that died report zero doc PRs while the
+          # PRs it opened are sitting there.
           echo '{"processed": [], "errors": []}' > /tmp/self-healing-summary.json
 
           echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
@@ -829,10 +821,10 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-drafter-prompt.outputs.prompt }}
-          # 150, not 50. On 2026-09-17 the Drafter spent all 50 turns on the
-          # first of three routed PRs and died seven seconds after opening it.
-          # The Router allows up to 5 PRs per run, so the cap has to clear that
-          # maximum with room, not the single PR 50 turns actually bought.
+          # 150, not 50. At 50 the Drafter spends the whole budget on the first
+          # routed PR and dies just after opening it. The Router allows up to 5
+          # PRs per run, so the cap has to clear that maximum with room, not the
+          # single PR a smaller budget actually buys.
           claude_args: '--model claude-sonnet-5 --max-turns 150 --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "Task"'
           show_full_output: true
         env:
@@ -986,8 +978,8 @@ jobs:
 
           # Doc PRs come from two places: micro-edits opened by the Router
           # itself, and full drafts opened by Sonnet. Reporting only the second
-          # is what made the 2026-08-28 run announce "no documentation targets"
-          # while PR #3418 had just been created. Both are collected here, the
+          # makes a run announce "no documentation targets" just after opening a
+          # PR. Both are collected here, the
           # same way the Notion step already does it.
           MICRO_COUNT="${{ steps.check-router.outputs.micro_prs }}"
           MICRO_COUNT="${MICRO_COUNT:-0}"
@@ -1061,8 +1053,8 @@ jobs:
 
             # A failed run is not an empty one. The Drafter opens each PR before
             # it can hit its turn cap, so the work already delivered has to be
-            # named here or it is invisible: on 2026-09-17 Slack announced a
-            # bare FAILED while PR #3495 had just been created.
+            # named here or it is invisible, and Slack announces a bare FAILED
+            # on a run that did open a PR.
             if [ "$TOTAL_PRS" -gt 0 ]; then
               MAIN="${MAIN}\n\n:white_check_mark: *Delivered before the failure (${TOTAL_PRS}):*\n${PR_LIST}"
             fi
@@ -1080,12 +1072,12 @@ jobs:
             MAIN=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
             # A dropped target is not "found nothing" — the Router found targets
-            # and failed to act on them. Saying otherwise is how 2026-06-20 went
-            # unnoticed.
+            # and failed to act on them. Saying otherwise is how a lost target
+            # goes unnoticed.
             if [ "${{ steps.check-router.outputs.router_failed }}" == "true" ]; then
               # The Router never examined the candidates. Saying "found no
-              # documentation targets" here is what hid 2026-09-11, 09-16 and
-              # 09-17: three runs in a row, green, and nobody looked.
+              # documentation targets" here is what lets run after run come back
+              # green with nobody looking.
               CANDIDATES=$(jq -r '.[] | "• <https://github.com/strapi/strapi/pull/\(.number)|strapi/strapi#\(.number): \(.title)>"' /tmp/triaged-prs.json 2>/dev/null || true)
               MAIN=":pepe_alarm: *Docs Self-Healing* ($DATE)\nRouter (Haiku) produced no results file, so these candidates were never examined:\n${CANDIDATES}\nRerun within 24h to catch them.\n<${RUN_URL}|View run>"
             elif [ "$DROPPED" -gt 0 ]; then

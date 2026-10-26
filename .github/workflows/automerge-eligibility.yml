@@ -146,8 +146,8 @@ jobs:
         # was violated — so the shell must not treat it as a fatal error.
         #
         # `shell: bash {0}` is required, not `shell: bash`. The latter expands to
-        # `bash --noprofile --norc -e -o pipefail {0}`, which still carries -e:
-        # the run on 2026-08-26 stopped after 3 of 12 checks with that setting.
+        # `bash --noprofile --norc -e -o pipefail {0}`, which still carries -e,
+        # so the loop below stops at the first check that reports a violation.
         # Only the explicit `{0}` form drops it.
         shell: bash {0}
         run: |
@@ -329,10 +329,10 @@ jobs:
       # The veto window. Posted once, when a PR first becomes eligible, roughly
       # 24 hours before the cron merges it.
       #
-      # The backtest is the reason this exists: of 14 PRs that needed the
-      # maintainer, 5 pass every mechanical check. Four were wording touch-ups;
-      # one (#3080) was a real miss whose diff was flawless. No criterion made of
-      # paths, counts and regexes reaches that — but a human reading one line can.
+      # The backtest is the reason this exists: some of the PRs that need the
+      # maintainer pass every mechanical check, and a real miss can have a
+      # flawless diff. No criterion made of paths, counts and regexes reaches
+      # that, but a human reading one line can.
       # Not posted on manual runs: those are tests or re-evaluations, and a veto
       # line for a PR the maintainer is already looking at is noise. The label is
       # still set, so the cron behaves identically either way.
@@ -378,9 +378,9 @@ jobs:
           [ -n "$SOURCE" ] && SOURCE_LINE="\nCorresponding Strapi CMS PR: <https://github.com/strapi/strapi/pull/${SOURCE}|strapi/strapi#${SOURCE}>"
 
           # The cron run that will actually merge this PR, named rather than
-          # guessed. "tomorrow" was wrong in two ways, and both were visible on
-          # #3428: opened Friday 15:12 UTC, it announced Saturday, and the cron
-          # does not run at the weekend. It merged on the Monday.
+          # guessed. Saying "tomorrow" is wrong in two ways: the quarantine can
+          # expire after that day's run has already gone by, and the cron does
+          # not run at the weekend.
           #
           # Two rules decide the day. The quarantine has to have expired by the
           # time the run starts, and the run only happens on a weekday. So: take

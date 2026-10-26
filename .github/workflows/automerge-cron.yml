@@ -223,10 +223,9 @@ jobs:
             # set, or break later from an unrelated change on main.
             #
             # Only the most recent run of each check counts. A PR can carry
-            # several runs of the same check, and `gh pr checks` lists them in no
-            # useful order: on 2026-10-21 #3574 showed a `check-labels` failure
-            # from 2026-10-15 above the pass that followed the unflag, and
-            # reading the first line held a PR that was green.
+            # several runs of the same check and the API returns them in no
+            # useful order, so reading the first one can hold a PR whose latest
+            # run is green.
             BLOCKING=""
             IFS=',' read -ra NEEDED <<< "$REQUIRED_CHECKS"
             ROLLUP=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json statusCheckRollup 2>/dev/null || echo '{}')
@@ -262,9 +261,8 @@ jobs:
             # taking the time to comment is the strongest signal the PR has, and
             # merging past it is how a contested change reaches production.
             #
-            # On #3428 a community member pointed out that the answer behind the
-            # PR was wrong about where something was documented. The gate had no
-            # way to know, and only the weekend delay kept it from merging.
+            # A comment can also say that the answer behind the PR is simply
+            # wrong, which no criterion made of paths, counts and regexes sees.
             #
             # Review comments count too — feedback left on a diff line is still
             # feedback. One login per line, so the filtering below is a plain
@@ -315,10 +313,10 @@ jobs:
             # review and these PRs have none: the merge only goes through because
             # the token is an admin's and `enforce_admins` is off. Without the
             # flag, `gh` checks `mergeStateStatus` itself and refuses a BLOCKED PR
-            # before calling the API. GitHub computes that status lazily, so a PR
-            # whose status was still UNKNOWN merged while one whose status had
-            # been computed did not: on 2026-10-22 #3585 and #3588 merged and
-            # #3574 failed with "the base branch policy prohibits the merge".
+            # before calling the API. GitHub computes that status lazily, so the
+            # same gates can let one PR through and refuse the next with "the base
+            # branch policy prohibits the merge", depending only on whether the
+            # status had been computed yet.
             # The gates above are what decide; this flag only stops a race.
             if gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch --admin 2>/tmp/err; then
               echo "  #$PR — merged"
