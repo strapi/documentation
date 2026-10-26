@@ -313,7 +313,7 @@ The entry events above are triggered for every content type by default. In the *
 
 An event checked on the **Entry** row still applies to every content type: it is displayed as checked and locked on each content type row and can't be unchecked from there. An event can't be selected for `entry.publish` or `entry.unpublish` on a content type that doesn't have [Draft & Publish](/cms/features/draft-and-publish) enabled, since those events never occur for it.
 
-This selection is saved in the webhook's `contentTypeEvents` attribute, which maps a content type UID to the entry events selected for it, for example:
+This selection is saved in the webhook's `contentTypeEvents` attribute, which maps a content type UID to the entry events selected for it as in the following example:
 
 ```json
 {
