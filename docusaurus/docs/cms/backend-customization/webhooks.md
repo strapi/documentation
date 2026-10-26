@@ -306,7 +306,7 @@ By default Strapi webhooks can be triggered by the following events:
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
-## Entry events per content type
+### Entry events per content type
 <VersionBadge version="5.60.0+" noTooltip />
 
 The entry events above are triggered for every content type by default. In the **Settings > Webhooks** form, the events table also lists each collection type and single type below the **Entry** row, so an event can be selected for one content type only, for example `Create` on articles and `Publish` on pages in the same webhook.
