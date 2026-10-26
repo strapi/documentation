@@ -36,8 +36,8 @@ permissions:
   contents: read
   issues: read
   # The issues endpoint only lists the pull requests of a milestone when the
-  # token can read pull requests. With `issues: read` alone, the first alert
-  # (2026-10-23) reported 7.5.1 as fully merged while #3573 was still open.
+  # token can read pull requests. With `issues: read` alone, a milestone with
+  # open PRs in it is reported as fully merged.
   pull-requests: read
 
 env:
@@ -277,8 +277,8 @@ jobs:
 
           # Every open PR moves to the next milestone before the script runs.
           # The script would only offer to move the flagged ones, and only to
-          # the milestone numbered patch + 1, which does not always exist (on
-          # 2026-10-23 the milestone after 7.5.1 was 7.6.0). Unflagged ones it
+          # the milestone numbered patch + 1, which does not always exist: the
+          # next open milestone can be a minor bump. Unflagged ones it
           # would leave inside the milestone it closes. Moving them all here
           # means the script finds none and asks nothing about them.
           # "Next" is the lowest open milestone above this one by version.
@@ -299,10 +299,10 @@ jobs:
             echo "Moved #$PR to $NEXT_TITLE"
           done
 
-          # The milestone listing lags behind the change. On 2026-10-23 #3573
-          # was moved at 09:53:24 and the script, listing the milestone two
-          # seconds later, still found it there and stopped. Wait until the
-          # listing the script reads is empty, for up to two minutes.
+          # The milestone listing lags behind the change: a PR moved seconds
+          # earlier is still listed under the old milestone, which stops the
+          # script. Wait until the listing the script reads is empty, for up to
+          # two minutes.
           if [ -n "$OPEN" ]; then
             for _ in $(seq 1 24); do
               LEFT=$(gh api "repos/$DOCS_REPO/issues?milestone=$M_NUMBER&state=open&per_page=100" \

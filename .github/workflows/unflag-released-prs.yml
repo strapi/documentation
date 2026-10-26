@@ -19,9 +19,8 @@ name: Unflag released PRs
 # run actually unflags something.
 #
 # When a run unflags something, it dispatches `automerge-cron.yml` right away.
-# That workflow otherwise runs once, at 08:00 UTC: on 2026-10-21 v5.59.0 was
-# published at 09:40, both release-gated PRs were unflagged at 11:04, and
-# neither could merge before the next morning. Strapi publishes no event this
+# That workflow otherwise runs once, at 08:00 UTC, so a PR unflagged during the
+# day would wait for the next morning. Strapi publishes no event this
 # repository can subscribe to, so this hourly check is the release detector.
 #
 # A maintainer who removes the label by hand bypasses this workflow entirely, so
@@ -125,9 +124,9 @@ jobs:
           # Read the source PR number from the doc PR body. Same pattern the
           # self-healing dedup already relies on.
           # One PR must never take down the run. `set -e` is deliberately
-          # relaxed inside the loop: on 2026-08-26 a single failed label removal
-          # aborted the job before the other ten PRs were even looked at. Every
-          # step below reports its own failure and moves on.
+          # relaxed inside the loop, because a single failed label removal would
+          # otherwise abort the job before the remaining PRs were even looked at.
+          # Every step below reports its own failure and moves on.
           set +e
 
           while read -r DOC_PR; do
@@ -173,8 +172,8 @@ jobs:
                   #
                   # `gh pr edit` issues a GraphQL mutation that also reads
                   # organisation fields (login, name, slug), so it demands the
-                  # `read:org` scope. PAT_TOKEN_PIWI only carries `repo`, and the
-                  # 2026-08-26 run failed on the first PR with:
+                  # `read:org` scope. PAT_TOKEN_PIWI only carries `repo`, so the
+                  # mutation fails with:
                   #   "The 'login' field requires one of the following scopes:
                   #    ['read:org'], but your token has only been granted: ['repo']"
                   #
@@ -192,8 +191,8 @@ jobs:
                 UNFLAGGED_PRS="$UNFLAGGED_PRS $DOC_PR"
                 # Two link syntaxes are needed and they are not interchangeable:
                 # the GitHub step summary renders Markdown, Slack renders
-                # <url|text>. Building one string for both is what made the
-                # 2026-08-26 message show raw [#3378](https://…) to readers.
+                # <url|text>. Building one string for both shows raw Markdown
+                # link syntax to the readers of whichever side does not render it.
                 PR_URL="https://github.com/strapi/documentation/pull/${DOC_PR}"
                 SHORT_TITLE=$(printf '%s' "$TITLE" | cut -c1-70)
                 if [ "${#TITLE}" -gt 70 ]; then SHORT_TITLE="${SHORT_TITLE}…"; fi

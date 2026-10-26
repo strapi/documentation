@@ -31,8 +31,8 @@ fi
 #
 # Deliberately NOT `releases/latest`: that returns whatever GitHub flags as
 # "latest", which can be a v4 maintenance release. v4 and v5 releases interleave
-# chronologically (v4.26.2 shipped between v5.47.1 and v5.48.0), so comparing a
-# develop commit against a v4 tag would be meaningless.
+# chronologically, so comparing a develop commit against a v4 tag would be
+# meaningless.
 #
 # Take the newest non-draft, non-prerelease tag matching v5.
 if [ -n "$TAG_OVERRIDE" ]; then
