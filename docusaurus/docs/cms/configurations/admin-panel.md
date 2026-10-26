@@ -14,8 +14,6 @@ tags:
 - password
 ---
 
-import AdminUrlCookiePath from '/docs/snippets/admin-url-cookie-path.md'
-
 # Admin panel configuration
 
 <Tldr>
@@ -86,8 +84,6 @@ module.exports = ({ env }) => ({
   url: "/dashboard",
 });
 ```
-
-<AdminUrlCookiePath />
 
 Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin` file should work if you left the `host` and `port` property values untouched in the back-end [server configuration](/cms/configurations/server) file.
 
