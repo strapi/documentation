@@ -8,12 +8,10 @@ name: 'Auto-merge: trigger on an unflag'
 # the job that removed the label. A maintainer who removes the label themselves
 # triggers nothing, and the PR then waits for the next 08:00 UTC run.
 #
-# That manual path is the common one, not the exception. Over the two months to
-# 2026-10-26, 23 of the 27 merged self-healing PRs carried the label, and 12 of
-# them were merged within an hour of it coming off, by hand, because nothing
-# else was going to act on them. On 2026-10-07 four PRs were unflagged between
-# 13:18 and 14:05 and merged in the same second, 47 minutes before the scheduled
-# unflag run would have done it.
+# That manual path is the common one rather than the exception. Most
+# self-healing PRs are release-gated, and a maintainer who unflags one is
+# already looking at it, so without this workflow the PR is merged by hand long
+# before the cron next comes round and the gate never gets to apply.
 #
 # This workflow merges nothing itself. `automerge-cron.yml` keeps every one of
 # its gates: quarantine, required checks, human feedback, absence period. Only
@@ -35,14 +33,20 @@ permissions:
 env:
   ELIGIBLE_LABEL: 'automerge: eligible'
   APPROVED_LABEL: 'automerge: approved by piwi'
-  BLOCKING_LABEL: "flag: don't merge"
+  # The labels `check-labels` fails on, as an alternation for `grep -Ex`. Kept in
+  # step with the list in block-labeled-prs.yml: a PR carrying either one cannot
+  # merge, so dispatching would only add a held line to the cron's recap.
+  BLOCKING_LABELS: "flag: don't merge|flag: merge pending release"
 
 jobs:
   trigger:
+    # This is the event filter, not a merge gate: it says which label removal the
+    # workflow reacts to. Whether the PR can actually merge is decided below,
+    # from the labels it carries at that point.
+    #
     # Matched here rather than in a step so an unrelated label change does not
-    # start a runner at all. The literal has to stay in step with the label name
-    # in `unflag-released-prs.yml` and `block-labeled-prs.yml`; a job-level `if`
-    # cannot read `env`.
+    # start a runner at all. A job-level `if` cannot read `env`, so the literal
+    # has to stay in step with block-labeled-prs.yml.
     if: |
       github.repository == 'strapi/documentation' &&
       github.event.label.name == 'flag: merge pending release'
@@ -74,10 +78,16 @@ jobs:
             exit 0
           fi
 
-          # `flag: don't merge` fails check-labels anyway, so dispatching would
-          # only add a held line to the recap.
-          if echo "$LABELS" | grep -Fxq "$BLOCKING_LABEL"; then
-            echo "PR #$PR carries '$BLOCKING_LABEL', nothing to dispatch"
+          # The event only says the release flag came off. The labels are read back
+          # fresh because either blocking label can be on the PR by now: the flag
+          # can have been re-applied, and `flag: don't merge` can have arrived.
+          #
+          # `paste -sd ', '` cycles through the delimiter list and would join two
+          # labels with a bare comma, so the separator is applied afterwards.
+          BLOCKING=$(echo "$LABELS" | grep -Ex "$BLOCKING_LABELS" | paste -sd ',' - | sed 's/,/, /g')
+
+          if [ -n "$BLOCKING" ]; then
+            echo "PR #$PR still carries: $BLOCKING, nothing to dispatch"
             echo "candidate=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -108,7 +118,6 @@ jobs:
           # Only the most recent run counts, and it is found the same way the
           # cron finds it: a PR carries several `check-labels` runs and the API
           # returns them in no useful order, so they are sorted by `startedAt`.
-          # Reading the first one instead is the bug #3592 fixed.
           #
           # Bounded at 10 minutes. Past that, dispatch anyway and let the cron's
           # own gates decide and report. Same bound and same reasoning
