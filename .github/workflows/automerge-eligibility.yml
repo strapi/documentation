@@ -172,7 +172,7 @@ jobs:
             check-no-frontmatter-change
             check-no-external-links
             check-no-content-removal
-            check-no-component-change
+            check-no-import
             check-no-em-dash
           )
 
