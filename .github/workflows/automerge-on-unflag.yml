@@ -1,0 +1,161 @@
+name: 'Auto-merge: trigger on an unflag'
+
+# Dispatches `automerge-cron.yml` when `flag: merge pending release` is removed
+# from a PR by hand.
+#
+# `unflag-released-prs.yml` already dispatches the cron, but only from inside
+# its own run: it is the release detector, and the dispatch is the last step of
+# the job that removed the label. A maintainer who removes the label themselves
+# triggers nothing, and the PR then waits for the next 08:00 UTC run.
+#
+# That manual path is the common one rather than the exception. Most
+# self-healing PRs are release-gated, and a maintainer who unflags one is
+# already looking at it, so without this workflow the PR is merged by hand long
+# before the cron next comes round and the gate never gets to apply.
+#
+# This workflow merges nothing itself. `automerge-cron.yml` keeps every one of
+# its gates: quarantine, required checks, human feedback, absence period. Only
+# the moment it starts looking moves.
+
+on:
+  # pull_request_target so the trigger also fires on PRs from forks. Safe: the
+  # job only reads labels and check states through the API, and never checks out
+  # the PR's code.
+  pull_request_target:
+    types: [unlabeled]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+  actions: write # dispatch the auto-merge workflow
+
+env:
+  ELIGIBLE_LABEL: 'automerge: eligible'
+  APPROVED_LABEL: 'automerge: approved by piwi'
+  # The labels `check-labels` fails on, as an alternation for `grep -Ex`. Kept in
+  # step with the list in block-labeled-prs.yml: a PR carrying either one cannot
+  # merge, so dispatching would only add a held line to the cron's recap.
+  BLOCKING_LABELS: "flag: don't merge|flag: merge pending release"
+
+jobs:
+  trigger:
+    # This is the event filter, not a merge gate: it says which label removal the
+    # workflow reacts to. Whether the PR can actually merge is decided below,
+    # from the labels it carries at that point.
+    #
+    # Matched here rather than in a step so an unrelated label change does not
+    # start a runner at all. A job-level `if` cannot read `env`, so the literal
+    # has to stay in step with block-labeled-prs.yml.
+    if: |
+      github.repository == 'strapi/documentation' &&
+      github.event.label.name == 'flag: merge pending release'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check the PR is a merge candidate
+        id: scope
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          PR: ${{ github.event.pull_request.number }}
+        shell: bash {0}
+        run: |
+          set -uo pipefail
+
+          # Read the labels back from the API rather than from the event payload:
+          # the payload is a snapshot taken when the label came off, and a PR
+          # unflagged as part of a burst can have changed since.
+          LABELS=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels \
+            --jq '.labels[].name' 2>/dev/null)
+
+          # Nothing to dispatch for a PR the gate has not cleared: the cron would
+          # list it as no candidate and exit. Checked here so that unflagging an
+          # ordinary PR costs one API call instead of a full cron run.
+          if ! echo "$LABELS" | grep -Fxq "$ELIGIBLE_LABEL" \
+            && ! echo "$LABELS" | grep -Fxq "$APPROVED_LABEL"; then
+            echo "PR #$PR carries neither '$ELIGIBLE_LABEL' nor '$APPROVED_LABEL', nothing to dispatch"
+            echo "candidate=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # The event only says the release flag came off. The labels are read back
+          # fresh because either blocking label can be on the PR by now: the flag
+          # can have been re-applied, and `flag: don't merge` can have arrived.
+          #
+          # `paste -sd ', '` cycles through the delimiter list and would join two
+          # labels with a bare comma, so the separator is applied afterwards.
+          BLOCKING=$(echo "$LABELS" | grep -Ex "$BLOCKING_LABELS" | paste -sd ',' - | sed 's/,/, /g')
+
+          if [ -n "$BLOCKING" ]; then
+            echo "PR #$PR still carries: $BLOCKING, nothing to dispatch"
+            echo "candidate=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "PR #$PR is a merge candidate"
+          echo "candidate=true" >> "$GITHUB_OUTPUT"
+
+          exit 0
+
+      - name: Dispatch the auto-merge
+        if: steps.scope.outputs.candidate == 'true'
+        env:
+          # `workflow_dispatch` is one of the two events that always create a run,
+          # so GITHUB_TOKEN is enough here and no PAT is needed. Same call as the
+          # one at the end of `unflag-released-prs.yml`.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        shell: bash {0}
+        run: |
+          set -uo pipefail
+
+          # Removing the label re-runs `check-labels`, which the cron requires to
+          # be green. Dispatching before that run completes would read it as
+          # pending, or read the failure from when the label was still on, and
+          # hold the PR until tomorrow, which is the very delay this workflow
+          # exists to remove. So wait for the check to settle first.
+          #
+          # Only the most recent run counts, and it is found the same way the
+          # cron finds it: a PR carries several `check-labels` runs and the API
+          # returns them in no useful order, so they are sorted by `startedAt`.
+          #
+          # Bounded at 10 minutes. Past that, dispatch anyway and let the cron's
+          # own gates decide and report. Same bound and same reasoning
+          # as the wait in `unflag-released-prs.yml`.
+          for _ in $(seq 1 20); do
+            # `gh --jq` takes no --arg, hence the separate jq.
+            STATE=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json statusCheckRollup 2>/dev/null \
+              | jq -r '[.statusCheckRollup[]? | select((.name // .context) == "check-labels")]
+                | sort_by(.startedAt // "") | last
+                | if . == null then "missing"
+                  elif .status != "COMPLETED" then "pending"
+                  elif .conclusion == "SUCCESS" then "pass"
+                  else (.conclusion | ascii_downcase) end' 2>/dev/null || echo pending)
+
+            if [ "$STATE" = "pass" ]; then
+              echo "check-labels is green on #$PR"
+              break
+            fi
+
+            echo "Waiting for check-labels on #$PR (currently: $STATE)"
+            sleep 30
+          done
+
+          if ! gh workflow run automerge-cron.yml --repo "$GITHUB_REPOSITORY" --ref main 2>/tmp/err; then
+            echo "::warning::Could not dispatch the auto-merge: $(head -1 /tmp/err)"
+            echo "#$PR will be picked up by the 08:00 UTC run instead."
+            exit 0
+          fi
+
+          echo "Auto-merge dispatched for #$PR"
+
+          {
+            echo "## Auto-merge triggered by an unflag"
+            echo ""
+            echo "\`flag: merge pending release\` came off [#$PR](${{ github.event.pull_request.html_url }})."
+            echo ""
+            echo "\`automerge-cron.yml\` was dispatched rather than waiting for the 08:00 UTC run."
+            echo "It keeps all of its own gates, so this does not merge anything by itself."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit 0

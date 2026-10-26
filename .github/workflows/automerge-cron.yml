@@ -13,8 +13,10 @@ on:
     # is around to notice it went wrong — a Saturday merge sits unwatched until
     # Monday either way, so the delay costs nothing and buys supervision.
     - cron: '0 8 * * 1-5' # 08:00 UTC, weekdays
-  # Also dispatched by `unflag-released-prs.yml` as soon as a Strapi release
-  # unflags a PR, so a release-gated PR does not wait for the next morning.
+  # Also dispatched the moment a PR stops waiting on a release, so it does not
+  # sit until the next morning: by `unflag-released-prs.yml` when the release
+  # detector removes the label, and by `automerge-on-unflag.yml` when a
+  # maintainer removes it by hand.
   workflow_dispatch:
     inputs:
       dry_run:
@@ -22,6 +24,20 @@ on:
         required: false
         type: boolean
         default: false
+
+# One merge pass at a time. Two runs can now be asked for at nearly the same
+# moment: `unflag-released-prs.yml` dispatches one at the end of the job that
+# removed the label, and `automerge-on-unflag.yml` dispatches one on the
+# `unlabeled` event that the same removal raises. Both would read the same open
+# PRs, and the loser of the race would report "merge failed" on a PR the winner
+# had just merged.
+#
+# `cancel-in-progress: false` queues rather than cancels: a second pass over an
+# already-merged PR finds nothing and stays silent, whereas cancelling could
+# drop a pass that still had PRs to merge.
+concurrency:
+  group: automerge-cron
+  cancel-in-progress: false
 
 permissions:
   contents: write

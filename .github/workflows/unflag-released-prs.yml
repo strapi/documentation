@@ -23,6 +23,10 @@ name: Unflag released PRs
 # published at 09:40, both release-gated PRs were unflagged at 11:04, and
 # neither could merge before the next morning. Strapi publishes no event this
 # repository can subscribe to, so this hourly check is the release detector.
+#
+# A maintainer who removes the label by hand bypasses this workflow entirely, so
+# that path is covered separately by `automerge-on-unflag.yml`, which listens to
+# the `unlabeled` event and dispatches the same way.
 
 on:
   schedule:
