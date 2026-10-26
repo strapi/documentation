@@ -210,20 +210,6 @@ The `/api/connect/${provider}` URL also accepts an optional `callback` query par
 
 Now you can make authenticated requests, as described in [token usage](/cms/features/users-permissions#token-usage).
 
-:::caution Troubleshooting
-
-- `Email was not available.`: This error occurs when the `authCallback` fails to return a valid `email` address.
-  - Make sure that your provider application is configured with the correct OAuth scopes (e.g. `email` or `profile`) to request the user's email.
-  - Check that the identity provider actually returns the email in the payload. Note that some users may have their email address hidden or set to private on the identity provider side.
-- **Error 429**: It's most likely because your login flow fell into a loop. To make new requests to the backend, you need to wait a few minutes or restart the backend.
-- `OAuth authentication requires a completed provider session`: The request to `/api/auth/${provider}/callback` did not include the session cookie set during the OAuth flow, or the flow did not complete. Make sure the front-end request sends cookies, and try again in a private tab to rule out a stale session or cookie.
-- `Unknown OAuth provider`: The `authorize_url` or `access_url` option of the provider's `grantConfig` is missing (and `request_url` for an OAuth 1.0a provider).
-- `Provider callback URL is not configured`: *The redirect URL to your front-end app* field of the provider is empty in the admin panel.
-- **The redirect URL can't be built**: Make sure you have set the backend URL in `config/server.js`: [Setting up the server URL](/cms/configurations/users-and-permissions-providers#setting-up-the-server-url)
-- **The incorrect use of a domain with ngrok**: Check your URLs and make sure that you use the ngrok URL instead of `http://localhost:1337`.
-- **You can't access your admin panel**: It's most likely because you built it with the backend url set with a ngrok url and you stopped/restarted ngrok. You need to replace the backend url with the new ngrok url and run `yarn build` or `npm run build` again.
-:::
-
 ### Reset password
 
 **Can only be used for users registered using the email provider.**
@@ -354,3 +340,23 @@ axios
     console.error('An error occurred:', error.response);
   });
 ```
+
+## <Icon name="bug" /> Troubleshooting
+
+Each of the following symptoms can appear while setting up a custom provider. The symptom is in bold, followed by what causes it and what to change:
+
+- **The login fails with `Email was not available.`** The `authCallback` did not return a valid `email` address. Make sure the provider application requests the OAuth scopes that expose the email (for instance `email` or `profile`), and check that the identity provider actually returns it in the payload: some users hide their email address or set it to private on the provider side.
+
+- **Requests fail with error `429`.** The login flow most likely fell into a loop. Wait a few minutes or restart the backend before making new requests.
+
+- **The callback fails with `OAuth authentication requires a completed provider session`.** The request to `/api/auth/${provider}/callback` did not include the session cookie set during the OAuth flow, or the flow did not complete. Make sure the front-end request sends cookies, and try again in a private tab to rule out a stale session or cookie.
+
+- **The connection fails with `Unknown OAuth provider`.** The `authorize_url` or `access_url` option of the provider's `grantConfig` is missing, as well as `request_url` for an OAuth 1.0a provider. Add the missing options to `grantConfig`.
+
+- **The connection fails with `Provider callback URL is not configured`.** In the admin panel, the *The redirect URL to your front-end app* field of the provider is empty. Fill it in.
+
+- **The redirect URL can't be built.** The backend URL is not set. Set it in `config/server.js`, as described in [Setting up the server URL](/cms/configurations/users-and-permissions-providers#setting-up-the-server-url).
+
+- **The login fails while the backend runs behind ngrok.** Some URLs still point to `http://localhost:1337`. Check your URLs and use the ngrok URL instead.
+
+- **You can't access the admin panel after restarting ngrok.** The admin panel was built with the previous ngrok URL as backend URL. Replace the backend URL with the new ngrok URL and run `yarn build` or `npm run build` again.
