@@ -23634,7 +23634,7 @@ ngrok http 1337
 Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide
 
 ## Creating a custom provider
-Description: You can use the register lifecycle function to create your own custom provider in the src/index.js|ts file of your Strapi application.
+Description: The following example registers an OAuth 2.0 provider named example-provider-name.
 (Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#creating-a-custom-provider)
 
 Language: JavaScript
@@ -23644,25 +23644,79 @@ File path: /src/index.js
 module.exports = {
   register({ strapi }) {
     strapi
-      .plugin("users-permissions")
-      .service("providers-registry")
-      .add("example-provider-name", {
-        icon: "",
-        enabled: true,
+      .plugin('users-permissions')
+      .service('providers-registry')
+      .add('example-provider-name', {
+        icon: '',
+        enabled: false,
         grantConfig: {
-          key: "",
-          secret: "",
-          callback: `${strapi.config.server.url}/auth/example-provider-name/callback`,
-          scope: ["email"],
-          authorize_url: "https://awesome.com/authorize",
-          access_url: "https://awesome.com/token",
+          key: '',
+          secret: '',
+          callback: 'http://localhost:3000/connect/example-provider-name/redirect',
+          scope: ['email'],
+          authorize_url: 'https://provider.example.com/authorize',
+          access_url: 'https://provider.example.com/token',
           oauth: 2,
         },
-        async authCallback({ accessToken, providers, purest }) {
-          // use whatever you want here to get the user info
+        async authCallback({ accessToken }) {
+          const response = await fetch('https://provider.example.com/api/me', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+
+          if (!response.ok) {
+            throw new Error('Unable to fetch the user profile');
+          }
+
+          const profile = await response.json();
+
           return {
-            username: "test",
-            email: "test",
+            username: profile.username,
+            email: profile.email,
+          };
+        },
+      });
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: /src/index.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default {
+  register({ strapi }: { strapi: Core.Strapi }) {
+    strapi
+      .plugin('users-permissions')
+      .service('providers-registry')
+      .add('example-provider-name', {
+        icon: '',
+        enabled: false,
+        grantConfig: {
+          key: '',
+          secret: '',
+          callback: 'http://localhost:3000/connect/example-provider-name/redirect',
+          scope: ['email'],
+          authorize_url: 'https://provider.example.com/authorize',
+          access_url: 'https://provider.example.com/token',
+          oauth: 2,
+        },
+        async authCallback({ accessToken }: { accessToken: string }) {
+          const response = await fetch('https://provider.example.com/api/me', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+
+          if (!response.ok) {
+            throw new Error('Unable to fetch the user profile');
+          }
+
+          const profile = await response.json();
+
+          return {
+            username: profile.username,
+            email: profile.email,
           };
         },
       });
@@ -23676,7 +23730,7 @@ Description: Then, your forgotten password page has to make the following reques
 (Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#forgotten-password-ask-for-the-reset-password-link)
 
 Language: JavaScript
-File path: /config.js
+File path: N/A
 
 ```js
 import axios from 'axios';
@@ -23700,7 +23754,7 @@ Description: Your reset password page has to make the following request to your 
 (Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#reset-password-send-the-new-password)
 
 Language: JavaScript
-File path: /config.js
+File path: N/A
 
 ```js
 import axios from 'axios';
@@ -23722,7 +23776,7 @@ axios.post(
 ```
 
 Language: JavaScript
-File path: /config.js
+File path: N/A
 
 ```js
 import axios from 'axios';
@@ -23764,99 +23818,6 @@ axios
   .catch(error => {
     console.error('An error occurred:', error.response);
   });
-```
-
-
-## Prepare your files
-Description: To add a new provider on Strapi, you will need to perform changes to the following files:
-(Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#prepare-your-files)
-
-Language: JavaScript
-File path: N/A
-
-```
-extensions/users-permissions/services/Providers.js
-extensions/users-permissions/config/functions/bootstrap.js
-```
-
-
-## Configure your OAuth generic information
-Description: Here is an example that uses the discord provider.
-(Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#configure-your-oauth-generic-information)
-
-Language: JavaScript
-File path: N/A
-
-```js
-case 'discord': {
-  const discord = new Purest({
-    provider: 'discord',
-    config: {
-      'discord': {
-        'https://discordapp.com/api/': {
-          '__domain': {
-            'auth': {
-              'auth': {'bearer': '[0]'}
-            }
-          },
-          '{endpoint}': {
-            '__path': {
-              'alias': '__default'
-            }
-          }
-        }
-      }
-    }
-  });
-}
-```
-
-
-## Retrieve your user's information
-Description: For our Discord provider it will look like the following:
-(Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#retrieve-your-user-s-information)
-
-Language: JavaScript
-File path: /github.com/simov/purest-providers/blob/master/config/providers.js
-
-```js
-  discord.query().get('users/@me').auth(access_token).request((err, res, body) => {
-    if (err) {
-      callback(err);
-    } else {
-      // Combine username and discriminator because discord username is not unique
-      const username = `${body.username}#${body.discriminator}`;
-      callback(null, {
-        username,
-        email: body.email
-      });
-    }
-  });
-  break;
-}
-```
-
-
-## Configure the new provider model onto database
-Description: Add the fields your provider needs into the grantConfig object.
-(Source: https://docs.strapi.io/cms/configurations/users-and-permissions-providers/new-provider-guide#configure-the-new-provider-model-onto-database)
-
-Language: JavaScript
-File path: /plugins/users-permissions/server/src/services/providers-registry.js
-
-```js
-discord: {
-  enabled: false, // make this provider disabled by default
-  icon: 'discord', // the icon to use in the admin panel
-  grantConfig: {
-    key: '', // our provider app id (leave it blank, you will fill it in the admin panel)
-    secret: '', // our provider secret key (leave it blank, you will fill it in the admin panel)
-    scope: ['identify', 'email'], // the scope that we need from our user to retrieve information
-  },
-  async authCallback({ accessToken }) {
-    // fetch the user profile from the provider and return its username and email
-  },
-},
 ```
 
 
