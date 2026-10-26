@@ -24,7 +24,7 @@ If you're looking to create your own custom provider, please refer to the [dedic
 
 ## Understanding the login flow
 
-<ExternalLink to="https://github.com/simov/grant" text="Grant"/> and <ExternalLink to="https://github.com/simov/purest" text="Purest"/> allow you to use OAuth and OAuth2 providers to enable authentication in your application.
+Strapi handles the OAuth and OAuth2 flow of each provider to enable authentication in your application.
 
 For a better understanding, review the following description of the login flow. The example uses `github` as the provider but it works the same for other providers.
 
@@ -37,8 +37,8 @@ Let's say that:
 3. The backend redirects the tab to the GitHub login page where the user logs in.
 4. Once done, Github redirects the tab to the backend URL:`https://strapi.website.com/api/connect/github/callback?code=abcdef`.
 5. The backend uses the given `code` to get an `access_token` from Github that can be used for a period of time to make authorized requests to Github to get the user info.
-6. Then, the backend redirects the tab to the url of your choice with the param `access_token` (example: `http://website.com/connect/github/redirect?access_token=eyfvg`).
-7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/api/auth/github/callback?access_token=eyfvg` that returns the Strapi user profile with its `jwt`. <br/> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address).
+6. Then, the backend saves the token response in its session and redirects the tab to the URL of your choice (example: `http://website.com/connect/github/redirect`). The token is not added to the URL.
+7. The frontend (`http://website.com/connect/github/redirect`) calls `https://strapi.website.com/api/auth/github/callback`, sending the Strapi session cookie with the request (for example, with `credentials: 'include'` when using `fetch`). The backend returns the Strapi user profile with its `jwt`. <br/> (Under the hood, the backend asks GitHub for the user's profile, then logs in or registers the matching Strapi user based on the email address.)
 8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
 An example of a frontend app that handles this flow can be found here: <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react" text="react login example application"/>.
