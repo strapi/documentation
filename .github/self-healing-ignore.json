@@ -1724,6 +1724,21 @@
       "number": 28159,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3612",
       "added": "2026-10-24"
+    },
+    {
+      "number": 28168,
+      "reason": "Router: Internal admin UI bug fix in the webhook headers component. No public API or user-facing behavior change.",
+      "added": "2026-10-27"
+    },
+    {
+      "number": 28126,
+      "reason": "Router: Internal backend bug fix in content-releases migration logic. No public API or documentation changes needed.",
+      "added": "2026-10-27"
+    },
+    {
+      "number": 27864,
+      "reason": "Router: Internal bug fix in review-workflows configuration handling. No public API or user-facing documentation changes needed.",
+      "added": "2026-10-27"
     }
   ]
 }
