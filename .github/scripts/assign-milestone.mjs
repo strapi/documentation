@@ -139,6 +139,21 @@ async function gh(path, options = {}) {
   return response.json();
 }
 
+/**
+ * Every item of a paginated endpoint. GitHub caps a page at 100 items and
+ * returns milestones oldest first, so a single page only ever shows the
+ * closed ones once the repository has more than 100 milestones.
+ */
+async function ghAll(path) {
+  const items = [];
+  for (let page = 1; ; page++) {
+    const batch = await gh(`${path}${path.includes('?') ? '&' : '?'}per_page=100&page=${page}`);
+    if (!batch?.length) return items;
+    items.push(...batch);
+    if (batch.length < 100) return items;
+  }
+}
+
 /** Publish date of the latest non-draft, non-prerelease release, optionally restricted to a major. */
 async function latestReleaseDate(repo, major) {
   const releases = await gh(`repos/${repo}/releases?per_page=50`);
@@ -215,7 +230,7 @@ async function assignMilestone(prNumber) {
   }
 
   const docsReleaseDate = await latestReleaseDate(DOCS_REPO);
-  const docsMilestones = (await gh(`repos/${DOCS_REPO}/milestones?state=all&per_page=100`))
+  const docsMilestones = (await ghAll(`repos/${DOCS_REPO}/milestones?state=all`))
     .map((m) => ({ ...m, date: milestoneDate(m, docsReleaseDate) }));
 
   if (pr.milestone) {
