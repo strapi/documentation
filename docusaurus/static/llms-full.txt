@@ -9916,7 +9916,7 @@ Policies can access `policyContext.state.user` to check group membership, as in 
 
 ```ts title="/src/policies/is-group-member.ts"
 
-  const userGroups = await strapi.query('plugin::users-permissions.group').findMany({
+  const userGroups = await strapi.db.query('plugin::users-permissions.group').findMany({
     where: { users: { id: state.user.id } },
   });
   return userGroups.some(g => g.name === config.group);
@@ -34341,7 +34341,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon  on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <!-- <br /><br /> 💡 Type `/` in the editor to have access to the list of all available options and select one. --> <br /><br /> 💡 You can use text formatting keyboard shortcuts in the Blocks editor (e.g. bold, italics, underline, and pasting link). |
 | Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow you to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation. |
-| Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/cms/features/media-library) or from a [folder](/cms/features/media-library#organizing-assets-with-folders) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
+| Media       | Click **Add asset**, on the right of the field label, then choose **Browse library**, **Upload from device** or **Upload from URL**. <br /><br /> 💡 It is possible to drag and drop files from your computer in the media area. See [media fields](#media-fields) for more information. |
 | Relation    | Choose an entry from the drop-down list. See [relational fields](#relational-fields) for more information.                                                                                                                                                                                                          |
 | Boolean     | Click on **TRUE** or **FALSE**.                                                                                                                                                                                                                                                                                                                                               |
 | JSON        | Write your content, in JSON format, in the code textbox.                                                                                                                                                                                                                                                                                                                  |
@@ -34409,6 +34409,42 @@ You can also use the keyboard to reorder components: focus the component using T
 
 :::note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
+:::
+
+#### Media fields {#media-fields}
+
+Media fields hold one or several assets of the [Media Library](/cms/features/media-library), depending on whether the field was created as _Single media_ or _Multiple media_ in the [Content-type Builder](/cms/features/content-type-builder):
+
+- A single media field displays its asset on one row, with the asset thumbnail, its name, and buttons to copy the asset link, edit the asset or remove it from the field.
+- A multiple media field displays its assets as cards, followed by a drop zone. Arrows page through the cards when they do not all fit. The  button of each card gives access to **Copy link**, **Edit** and **Remove**.
+
+To add assets to a media field:
+
+1. Click **Add asset**, on the right of the field label.
+2. Choose one of the following options:
+   - **Browse library** to pick assets already uploaded in the Media Library (see [asset picker](#asset-picker)),
+   - **Upload from device** to upload files from your computer,
+   - **Upload from URL** to upload files from their URLs.
+
+You can also drag and drop files from your computer in the media area.
+
+Files uploaded from a media field are added at the root of the Media Library. Each file displays its upload progress in the field, and a failed upload stays in the field until you retry or remove it.
+
+:::note
+**Browse library** requires the _Access the Media Library_ permission of the Upload plugin. Both upload options require its _Create_ permission (see [Users & Permissions](/cms/features/users-permissions)). An option is hidden when your role does not have the corresponding permission.
+:::
+
+##### Picking assets from the Media Library {#asset-picker}
+
+**Browse library** opens the asset picker, with 2 tabs:
+
+- **Browse assets** displays the Media Library list, with its folders, search, filters, sort order and views (see [finding assets](/cms/features/media-library#finding-assets)). Assets of a type the field does not accept are displayed but cannot be selected.
+- **Selected assets** displays the assets currently selected, as a grid. For a multiple media field, drag and drop the assets to reorder them: the field keeps this order.
+
+The asset picker opens with the assets the field already holds selected. For a single media field, selecting an asset replaces the previous one. Click **Confirm** to update the field: the button is enabled once the selection differs from the field content.
+
+:::note
+With the `useLegacyMediaLibrary` property set to `true` in the [`config/features` file](/cms/configurations/features), media fields keep the previous interface.
 :::
 
 #### Relational fields
@@ -38092,7 +38128,7 @@ module.exports = ({ env }) => ({
 
 The Media Library displays all assets uploaded in the application, either via the  Media Library itself or via the  Content Manager when managing a media field.
 
-Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).
+Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#media-fields).
 
 :::note
 The Media Library hides what your role cannot do instead of displaying a disabled control. With the _Access the Media Library_ permission alone, the library is read-only: there is no **New** button, no selection checkbox and no bulk action, and the fields of the asset details panel cannot be edited. See [Users & Permissions](/cms/features/users-permissions) to grant the _Create_, _Update_, _Download_ and _Copy link_ permissions of the Upload plugin.
@@ -57395,21 +57431,23 @@ describe('Create service', () => {
 
   beforeEach(() => {
     strapi = {
-      query: jest.fn().mockReturnValue({
-        create: jest.fn().mockReturnValue({
-          data: {
-            name: 'test',
-            status: false,
-          },
+      db: {
+        query: jest.fn().mockReturnValue({
+          create: jest.fn().mockReturnValue({
+            data: {
+              name: 'test',
+              status: false,
+            },
+          }),
         }),
-      }),
+      },
     };
   });
 
   it('persists a todo item', async () => {
     const todo = await createService({ strapi }).create({ name: 'test' });
 
-    expect(strapi.query('plugin::todo.todo').create).toHaveBeenCalledTimes(1);
+    expect(strapi.db.query('plugin::todo.todo').create).toHaveBeenCalledTimes(1);
     expect(todo.data.name).toBe('test');
   });
 });
