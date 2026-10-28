@@ -29,7 +29,56 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.59.0](https://github.com/strapi/strapi/releases/tag/v5.59.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.60.0](https://github.com/strapi/strapi/releases/tag/v5.60.0)._
+
+## 7.6.0
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add an AI add-on badge and flag the Enterprise AI add-on](https://github.com/strapi/documentation/pull/3611)
+- [Rework the custom provider guide for the Strapi 5 OAuth flow](https://github.com/strapi/documentation/pull/3602)
+- [Remove Strapi v4 patterns and version notes from CMS pages](https://github.com/strapi/documentation/pull/3597)
+- [Fix MCP server documentation against the current code](https://github.com/strapi/documentation/pull/3596)
+- [Add Neon to S3-compatible providers in Amazon S3 provider documentation](https://github.com/strapi/documentation/pull/3593)
+
+#### Repository
+- [Align CLI documentation with the current Strapi CLIs](https://github.com/strapi/documentation/pull/3598)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Scope the cookie path callout to Strapi 5.51 to 5.58](https://github.com/strapi/documentation/pull/3614)
+- [Remove Strapi v4 version badges from current CMS pages](https://github.com/strapi/documentation/pull/3604)
+- [Document selecting webhook events per content type](https://github.com/strapi/documentation/pull/3603)
+- [Document SSO settings audit log events](https://github.com/strapi/documentation/pull/3594)
+- [Rename seats to users on the billing portal page](https://github.com/strapi/documentation/pull/3579)
+- [Add sharp limitInputPixels configuration option to Media Library docs](https://github.com/strapi/documentation/pull/3573)
+
+#### Repository
+- [Pin actions/checkout to v5.1.0 to run on Node 24](https://github.com/strapi/documentation/pull/3605)
+- [Add current-docs instructions for AI agents to agent-facing files](https://github.com/strapi/documentation/pull/3595)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/rishi-raj-jain" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/46300090?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="rishi-raj-jain"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.5.1
 

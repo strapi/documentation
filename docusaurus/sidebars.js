@@ -117,6 +117,9 @@ const sidebars = {
           type: 'doc',
           label: 'MCP server',
           id: 'cms/features/strapi-mcp-server',
+          customProps: {
+            updated: true
+          }
         },
         {
           type: 'doc',
@@ -379,9 +382,6 @@ const sidebars = {
               type: 'doc',
               id: 'cms/configurations/database',
               label: 'Database configuration',
-              customProps: {
-                updated: true
-              }
             },
             'cms/database-migrations',
             'cms/database-transactions',
@@ -613,7 +613,7 @@ const sidebars = {
       className: 'category-cms-cli',
       collapsed: false,
       collapsible: false,
-      items: [{ type: 'doc', id: 'cms/cli', customProps: { updated: true } }],
+      items: ['cms/cli'],
     },
     { // Upgrades
       type: 'category',
