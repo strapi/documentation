@@ -31,6 +31,11 @@
       "permanent": true
     },
     {
+      "source": "/cms/plugins/strapi-ai-enterprise",
+      "destination": "/cms/plugins/byok",
+      "permanent": true
+    },
+    {
       "source": "/cms/api/rest/guides",
       "destination": "/cms/api/rest/guides/intro",
       "permanent": true
