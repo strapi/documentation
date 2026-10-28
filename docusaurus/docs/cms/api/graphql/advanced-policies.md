@@ -51,7 +51,7 @@ Policies can access `policyContext.state.user` to check group membership, as in 
 
 ```ts title="/src/policies/is-group-member.ts"
 export default async ({ state }, config, { strapi }) => {
-  const userGroups = await strapi.query('plugin::users-permissions.group').findMany({
+  const userGroups = await strapi.db.query('plugin::users-permissions.group').findMany({
     where: { users: { id: state.user.id } },
   });
   return userGroups.some(g => g.name === config.group);
