@@ -21565,6 +21565,22 @@ By default Strapi webhooks can be triggered by the following events:
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
+### Entry events per content type
+
+The entry events above are triggered for every content type by default. In the **Settings > Webhooks** form, the events table also lists each collection type and single type below the **Entry** row, so an event can be selected for one content type only, for example `Create` on articles and `Publish` on pages in the same webhook.
+
+An event checked on the **Entry** row still applies to every content type: it is displayed as checked and locked on each content type row and can't be unchecked from there. An event can't be selected for `entry.publish` or `entry.unpublish` on a content type that doesn't have [Draft & Publish](/cms/features/draft-and-publish) enabled, since those events never occur for it.
+
+This selection is saved in the webhook's `contentTypeEvents` attribute, which maps a content type UID to the entry events selected for it as in the following example:
+
+```json
+{
+  "api::article.article": ["entry.create"]
+}
+```
+
+Only events not already selected on the **Entry** row are kept in `contentTypeEvents`. Changes to `contentTypeEvents` are recorded in the [Audit Logs](/cms/features/audit-logs) along with the webhook's other fields.
+
 ## Payloads
 
 :::info

@@ -17077,6 +17077,20 @@ export default (config: unknown, { strapi }: any) => {
 ```
 
 
+## Entry events per content type
+Description: This selection is saved in the webhook's contentTypeEvents attribute, which maps a content type UID to the entry events selected for it as in the following example:
+(Source: https://docs.strapi.io/cms/backend-customization/webhooks#entry-events-per-content-type)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "api::article.article": ["entry.create"]
+}
+```
+
+
 ## entry.create
 Description: Example payload
 (Source: https://docs.strapi.io/cms/backend-customization/webhooks#entry-create)
