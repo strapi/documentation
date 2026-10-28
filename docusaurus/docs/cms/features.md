@@ -49,12 +49,12 @@ Core features, such as the [admin panel](/cms/features/admin-panel), the [Conten
 | [Preview](/cms/features/preview) | ✅ | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) |
 | [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
 | [Releases](/cms/features/releases) | - | ✅ | ✅ |
-| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | Available as a paid add-on,<br/>with your own model through [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise) |
+| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi AI Growth, with 1,000 credits per month | Available as a paid add-on,<br/>with your own model through [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise) |
 | [Single Sign-On (SSO)](/cms/features/sso) | - | Available as an add-on | ✅ |
 | [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
 | [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
 | [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
 
-Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi-managed AI, on the Growth plan. On the Enterprise plan, all Strapi AI features require Strapi AI Enterprise, a paid add-on.
+Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi AI Growth, on the Growth plan. On the Enterprise plan, all Strapi AI features require Strapi AI Enterprise, a paid add-on.
 
 For prices, support levels, and compliance documents such as the SOC 2 report, see the <ExternalLink to="https://strapi.io/pricing-cms" text="Strapi pricing page"/>. Enterprise plans are available through the <ExternalLink to="https://strapi.io/contact-sales" text="Strapi sales team"/>.

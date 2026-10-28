@@ -16,7 +16,7 @@ tags:
 Strapi AI Enterprise runs Strapi AI on your own model, for AI Translations and AI-powered metadata generation. You set it up with the Strapi AI Enterprise plugin, and requests go to the AI provider of your choice instead of Strapi-managed infrastructure.
 </Tldr>
 
-With the Strapi AI Enterprise plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi-managed AI.
+With the Strapi AI Enterprise plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi AI Growth.
 
 <IdentityCard isPlugin>
   <IdentityCardItem icon="credit-card" title="Plan">CMS Enterprise plan, with Strapi AI Enterprise as a paid add-on</IdentityCardItem>

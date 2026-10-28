@@ -1247,7 +1247,7 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 #### Generating metadata in bulk {#bulk-metadata}
 <GrowthBadge /> <AiAddonBadge />
 
-When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, Strapi-managed or run on your own model with [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
+When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, with Strapi AI Growth or [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
 
 1. Select the images to describe.
 2. Click the <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar.

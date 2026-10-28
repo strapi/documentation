@@ -22,7 +22,7 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 <Tldr>
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. It is Strapi-managed on the <GrowthBadge /> plan. On the <EnterpriseBadge /> plan, Strapi AI Enterprise, a paid add-on, runs it on your own model, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the <GrowthBadge /> plan, Strapi AI Growth runs it on Strapi-managed infrastructure. On the <EnterpriseBadge /> plan, Strapi AI Enterprise, a paid add-on, runs it on your own model, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 </Tldr>
 
@@ -36,7 +36,7 @@ Some Strapi CMS features can be enhanced with Strapi AI, helping content manager
 
 Strapi AI is powered in one of 2 ways, depending on your plan:
 
-| | Strapi-managed | Strapi AI Enterprise (bring your own model) |
+| | Strapi AI Growth (Strapi-managed) | Strapi AI Enterprise (bring your own model) |
 |---|---|---|
 | Plan | <GrowthBadge /> | <EnterpriseBadge />, as a paid add-on |
 | Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
@@ -47,7 +47,7 @@ Strapi AI is powered in one of 2 ways, depending on your plan:
 
 ### Activation and configuration {#activation}
 
-With Strapi-managed AI, Strapi AI works with both Strapi Cloud and self-hosted deployments. To get started:
+With Strapi AI Growth, Strapi AI works with both Strapi Cloud and self-hosted deployments. To get started:
 
 1. Upgrade to Strapi v5.30+. AI features are not available on earlier versions.
 2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 credits to explore AI features.
@@ -55,7 +55,7 @@ With Strapi-managed AI, Strapi AI works with both Strapi Cloud and self-hosted d
 
 To run Strapi AI on your own model, on the Enterprise plan, subscribe to the Strapi AI Enterprise add-on, then install and configure the [Strapi AI Enterprise plugin](/cms/plugins/strapi-ai-enterprise).
 
-All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they are Strapi-managed or run on your own model with Strapi AI Enterprise:
+All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they run on Strapi AI Growth or Strapi AI Enterprise:
 
 ```js title="/config/admin.js|ts"
 module.exports = {
@@ -70,7 +70,7 @@ module.exports = {
 
 ### Available features {#features}
 
-| Feature | Description | Strapi-managed | Strapi AI Enterprise |
+| Feature | Description | Strapi AI Growth | Strapi AI Enterprise |
 |---------|-------------|----------------|-----------------------|
 | [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Available | Not available |
 | [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available | Available |
@@ -78,11 +78,11 @@ module.exports = {
 
 ### Credits and data handling {#credits}
 
-Strapi-managed AI consumes AI credits.
+Strapi AI Growth consumes AI credits.
 
 <StrapiAiCredits />
 
-Strapi-managed AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi-managed AI follows the same GDPR-aligned framework as Strapi Cloud. With Strapi AI Enterprise, your provider's data handling terms apply.
+Strapi AI Growth requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI Growth follows the same GDPR-aligned framework as Strapi Cloud. With Strapi AI Enterprise, your provider's data handling terms apply.
 
  <Icon name="arrow-fat-right" /> See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
 
