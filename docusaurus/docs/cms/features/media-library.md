@@ -798,7 +798,7 @@ export default ({ env }) => ({
 
 The Media Library displays all assets uploaded in the application, either via the <Icon name="images" /> Media Library itself or via the <Icon name="feather" /> Content Manager when managing a media field.
 
-Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).
+Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#media-fields).
 
 :::note
 The Media Library hides what your role cannot do instead of displaying a disabled control. With the _Access the Media Library_ permission alone, the library is read-only: there is no **New** button, no selection checkbox and no bulk action, and the fields of the asset details panel cannot be edited. See [Users & Permissions](/cms/features/users-permissions) to grant the _Create_, _Update_, _Download_ and _Copy link_ permissions of the Upload plugin.
