@@ -147,7 +147,7 @@ The Content-type Builder allows you to create new content-types: single and coll
 #### Creating content-types with Strapi AI <NewBadge /> {#strapi-ai}  
 <GrowthBadge />
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language. The assistant is only available with Strapi-managed AI: the [Bring your own AI key plugin](/cms/plugins/byok) does not power it.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language. The assistant is only available with Strapi-managed AI: the [Bring your own AI key plugin](/cms/plugins/strapi-ai-enterprise) does not power it.
 
 To use Strapi AI with the Content-Type Builder, click on the <Icon name="sparkle" color="#7B79FF"/> button in the bottom right corner of the admin panel, and describe what you need:
 

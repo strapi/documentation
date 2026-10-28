@@ -38928,167 +38928,6 @@ export default {
 
 
 
-# Bring your own AI key plugin
-Source: https://docs.strapi.io/cms/plugins/byok
-
-## With the command
-Description: From the root folder of your Strapi application, run:
-(Source: https://docs.strapi.io/cms/plugins/byok#with-the-command)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi enterprise install plugin-byok
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi enterprise install plugin-byok
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-pnpm strapi enterprise install plugin-byok
-```
-
-
-## Manually
-Description: Set up access to the registry, as described in Setting up access manually.
-(Source: https://docs.strapi.io/cms/plugins/byok#manually)
-
-Language: Bash
-File path: N/A
-
-```bash
-  yarn add --exact @strapi-enterprise/plugin-byok
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-  npm install --save-exact @strapi-enterprise/plugin-byok
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-  pnpm add --save-exact @strapi-enterprise/plugin-byok
-```
-
-
-## Configuration
-Description: Add the plugin to the plugins configuration file:
-(Source: https://docs.strapi.io/cms/plugins/byok#configuration)
-
-Language: JavaScript
-File path: /config/plugins.js
-
-```js
-  module.exports = ({ env }) => ({
-    // …
-    byok: {
-      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
-      config: {
-        connection: {
-          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
-          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
-        },
-        models: {
-          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
-          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
-        },
-      },
-    },
-  });
-```
-
----
-Language: TypeScript
-File path: /config/plugins.ts
-
-```ts
-  export default ({ env }) => ({
-    // …
-    byok: {
-      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
-      config: {
-        connection: {
-          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
-          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
-        },
-        models: {
-          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
-          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
-        },
-      },
-    },
-  });
-```
-
-Language: DOTENV
-File path: /.env
-
-```dotenv
-  STRAPI_BYOK_ENABLED=true
-  STRAPI_BYOK_PROVIDER_BASE_URL=
-  STRAPI_BYOK_PROVIDER_API_KEY=
-  STRAPI_BYOK_TRANSLATIONS_MODEL=
-  STRAPI_BYOK_MEDIA_METADATA_MODEL=
-```
-
-
-## Checking that the plugin is active
-Description: When Strapi starts, the server logs list the features that use your provider, for instance:
-(Source: https://docs.strapi.io/cms/plugins/byok#checking-that-the-plugin-is-active)
-
-Language: JavaScript
-File path: N/A
-
-```
-BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
-```
-
-
-## Uninstallation
-Description: Stop Strapi.
-(Source: https://docs.strapi.io/cms/plugins/byok#uninstallation)
-
-Language: Bash
-File path: N/A
-
-```bash
-  yarn remove @strapi-enterprise/plugin-byok
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-  npm uninstall @strapi-enterprise/plugin-byok
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-  pnpm remove @strapi-enterprise/plugin-byok
-```
-
-
-
 # Documentation plugin
 Source: https://docs.strapi.io/cms/plugins/documentation
 
@@ -40444,6 +40283,167 @@ const sentryInstance = strapi
   .plugin('sentry')
   .service('sentry')
   .getInstance();
+```
+
+
+
+# Bring your own AI key plugin
+Source: https://docs.strapi.io/cms/plugins/strapi-ai-enterprise
+
+## With the command
+Description: From the root folder of your Strapi application, run:
+(Source: https://docs.strapi.io/cms/plugins/strapi-ai-enterprise#with-the-command)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi enterprise install plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi enterprise install plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+pnpm strapi enterprise install plugin-byok
+```
+
+
+## Manually
+Description: Set up access to the registry, as described in Setting up access manually.
+(Source: https://docs.strapi.io/cms/plugins/strapi-ai-enterprise#manually)
+
+Language: Bash
+File path: N/A
+
+```bash
+  yarn add --exact @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  npm install --save-exact @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  pnpm add --save-exact @strapi-enterprise/plugin-byok
+```
+
+
+## Configuration
+Description: Add the plugin to the plugins configuration file:
+(Source: https://docs.strapi.io/cms/plugins/strapi-ai-enterprise#configuration)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+  module.exports = ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+  export default ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+```
+
+Language: DOTENV
+File path: /.env
+
+```dotenv
+  STRAPI_BYOK_ENABLED=true
+  STRAPI_BYOK_PROVIDER_BASE_URL=
+  STRAPI_BYOK_PROVIDER_API_KEY=
+  STRAPI_BYOK_TRANSLATIONS_MODEL=
+  STRAPI_BYOK_MEDIA_METADATA_MODEL=
+```
+
+
+## Checking that the plugin is active
+Description: When Strapi starts, the server logs list the features that use your provider, for instance:
+(Source: https://docs.strapi.io/cms/plugins/strapi-ai-enterprise#checking-that-the-plugin-is-active)
+
+Language: JavaScript
+File path: N/A
+
+```
+BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
+```
+
+
+## Uninstallation
+Description: Stop Strapi.
+(Source: https://docs.strapi.io/cms/plugins/strapi-ai-enterprise#uninstallation)
+
+Language: Bash
+File path: N/A
+
+```bash
+  yarn remove @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  npm uninstall @strapi-enterprise/plugin-byok
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  pnpm remove @strapi-enterprise/plugin-byok
 ```
 
 

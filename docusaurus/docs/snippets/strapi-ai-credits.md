@@ -1,4 +1,4 @@
-Strapi-managed AI includes 1,000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial. On the <EnterpriseBadge noTooltip /> plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
+Strapi-managed AI includes 1,000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial. On the <EnterpriseBadge noTooltip /> plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/strapi-ai-enterprise), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
