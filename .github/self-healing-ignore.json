@@ -1739,6 +1739,96 @@
       "number": 27864,
       "reason": "Router: Internal bug fix in review-workflows configuration handling. No public API or user-facing documentation changes needed.",
       "added": "2026-10-27"
+    },
+    {
+      "number": 28256,
+      "reason": "Triage: internal refactoring, behavior does not change",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28248,
+      "reason": "Triage: internal test tooling configuration",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28242,
+      "reason": "Triage: API tests only, no runtime code changes",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28187,
+      "reason": "Triage: type fix only, no behavior change for controller",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28278,
+      "reason": "Router: Internal bug fix in Content-Type Builder. Fixes incorrect document counting when converting collection type to single type. This is an edge case fix (race condition with draft/published/localized documents) that doesn't change documented API behavior.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28270,
+      "reason": "Router: Internal Content Manager bug fix. Fixes HTTP 500 error for undocumented edge case (morph-to fields on internal endpoints). Changes error handling path, not user-facing API behavior.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28269,
+      "reason": "Router: Internal bug fix for race condition. Changes behavior for undocumented edge case (document deleted between existence check and write). Fixes to return proper 404 error instead of 200 with empty data. This is edge case error handling, not a documented API change.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28255,
+      "reason": "Router: Internal bug fix removing unused field from Content History type. Fixes type contract mismatch. Does not affect user-facing Content History API documentation; field is unused by both client and server.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28249,
+      "reason": "Router: Internal bug fix in Documentation plugin. Fixes HTTP 500 error for edge case (missing password). Changes error handling to return proper 400 response. Not a user-facing API change.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28236,
+      "reason": "Router: Internal bug fix for component validation. Fixes inconsistency where required fields in new components on non-draft updates weren't enforced. This fixes undocumented inconsistent behavior to match create() semantics. Documented API behavior remains consistent.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28233,
+      "reason": "Router: Internal upload service bug fix. Fixes incorrect metadata retention when replacing image with non-image file. This is a data consistency fix for undocumented edge case that doesn't change documented Upload API behavior.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28203,
+      "reason": "Router: Internal Content-Type Builder bug fix. Fixes silent loss of draftAndPublish setting during updates. This is fixing inconsistent behavior for direct API callers (admin panel unaffected). Bug fix for undocumented behavior, not documented API change.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28202,
+      "reason": "Router: Internal Review Workflows bug fix. Fixes stage assignment when locale is created via update request. Makes behavior consistent with create() semantics. Not a documented API change; fixes undocumented inconsistency.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28200,
+      "reason": "Router: Internal Content-Type Builder bug fix. Fixes issue where component named 'admin' couldn't be edited (false positive schema protection). Fixes undocumented edge case with component naming, not a documented API behavior.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28198,
+      "reason": "Router: Internal Content Manager bug fix. Fixes HTTP 500 errors for invalid history version restore (unknown id, non-numeric id). Changes error handling to return proper 404. Error handling clarification, not documented API change.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28193,
+      "reason": "Router: Internal Review Workflows bug fix. Fixes endpoint to properly respect workflow_id parameter and return 404 for missing stages. This fixes undocumented inconsistent behavior, not a documented API change.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28189,
+      "reason": "Router: Internal bug fix for Document Manager publish operations. Adds validation to prevent publishing when Draft & Publish is disabled. Fixes undocumented error case, not a documented API behavior change.",
+      "added": "2026-10-28"
+    },
+    {
+      "number": 28184,
+      "reason": "Router: Admin panel bug fix. Fixes React rendering crash for content types with 'ref' attribute in list view columns. Fixes UI edge case, not API documentation.",
+      "added": "2026-10-28"
     }
   ]
 }
