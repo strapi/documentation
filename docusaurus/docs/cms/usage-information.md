@@ -94,7 +94,7 @@ If you have any questions or concerns regarding data collection, please contact 
 
 With Strapi-managed AI, on the <GrowthBadge /> plan, [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
 
-With the [Bring your own AI key plugin](/cms/plugins/strapi-ai-enterprise), on the <EnterpriseBadge /> plan, Strapi AI requests go to your own AI provider instead, and that provider's data handling terms apply.
+With [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), on the <EnterpriseBadge /> plan, Strapi AI requests go to your own AI provider instead, and that provider's data handling terms apply.
 
 Strapi-managed AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
 

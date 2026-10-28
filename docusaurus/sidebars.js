@@ -197,7 +197,7 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'Bring your own AI key',
+          label: 'Strapi AI Enterprise',
           id: 'cms/plugins/strapi-ai-enterprise',
           customProps: {
             enterprise: true
