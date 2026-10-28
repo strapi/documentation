@@ -151,7 +151,7 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 
 Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi-managed AI, using this feature consumes AI credits.
 
-On the <EnterpriseBadge /> plan, this feature requires the AI add-on: Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok), and translations use your own AI provider.
+On the <EnterpriseBadge /> plan, this feature requires the AI add-on: Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/strapi-ai-enterprise), and translations use your own AI provider.
 
 <ThemedImage
   alt="Managing locales with AI-powered i18n"

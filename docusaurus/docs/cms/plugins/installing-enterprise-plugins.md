@@ -107,7 +107,7 @@ It does not replace your package manager. Once the registry is set up, you keep 
 :::
 
 :::caution
-* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See the plugin's own page for how to configure it, such as [Bring your own AI key](/cms/plugins/byok#configuration).
+* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See the plugin's own page for how to configure it, such as [Bring your own AI key](/cms/plugins/strapi-ai-enterprise#configuration).
 * If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
 :::
 

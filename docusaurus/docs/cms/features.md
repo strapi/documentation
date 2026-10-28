@@ -49,7 +49,7 @@ Core features, such as the [admin panel](/cms/features/admin-panel), the [Conten
 | [Preview](/cms/features/preview) | ✅ | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) |
 | [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
 | [Releases](/cms/features/releases) | - | ✅ | ✅ |
-| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | Available as an add-on,<br/>with your own AI key through the [Bring your own AI key plugin](/cms/plugins/byok) |
+| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | Available as an add-on,<br/>with your own AI key through the [Bring your own AI key plugin](/cms/plugins/strapi-ai-enterprise) |
 | [Single Sign-On (SSO)](/cms/features/sso) | - | Available as an add-on | ✅ |
 | [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
 | [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
