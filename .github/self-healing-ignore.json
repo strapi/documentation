@@ -1829,6 +1829,51 @@
       "number": 28184,
       "reason": "Router: Admin panel bug fix. Fixes React rendering crash for content types with 'ref' attribute in list view columns. Fixes UI edge case, not API documentation.",
       "added": "2026-10-28"
+    },
+    {
+      "number": 28287,
+      "reason": "Router: Internal CTB service fix for draftAndPublish resolution. No public API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28285,
+      "reason": "Router: Internal CTB service fix for preserving schema options. No public API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28284,
+      "reason": "Router: Internal validation guard in CTB. Prevents a bug but doesn't change documented behavior or APIs.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28279,
+      "reason": "Router: Internal error handling improvement for event listeners. No public API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28273,
+      "reason": "Router: Review Workflows plugin bug fix for null stage handling in UI. The contract change (allowing null strapi_stage) is a bug fix, not a documented API change. The homepage contract is internal.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28271,
+      "reason": "Router: Review Workflows service fix for async/transaction handling. Internal implementation improvement, no API or feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28260,
+      "reason": "Router: CTB service error handling improvement. No API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28237,
+      "reason": "Router: Review Workflows service fix for handling orphaned content types. Internal error handling improvement, no API or feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28205,
+      "reason": "Router: CTB service fix for event emission when content type kind changes. Internal event improvement, not a documented API or feature.",
+      "added": "2026-10-29"
     }
   ]
 }
