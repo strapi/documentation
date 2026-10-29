@@ -149,9 +149,9 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
 
-Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi-managed AI, using this feature consumes AI credits.
+Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi AI Growth, using this feature consumes AI credits.
 
-On the <EnterpriseBadge /> plan, this feature requires the AI add-on: Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok), and translations use your own AI provider.
+On the <EnterpriseBadge /> plan, this feature requires [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a paid add-on, and translations use your own AI provider.
 
 <ThemedImage
   alt="Managing locales with AI-powered i18n"
