@@ -1,5 +1,5 @@
 ---
-title: Strapi AI Enterprise
+title: Strapi AI Enterprise plugin
 displayed_sidebar: cmsSidebar
 description: Run Strapi AI on your own model, with the AI provider, API key, and models of your choice.
 tags:
@@ -9,14 +9,14 @@ tags:
 - Strapi AI Enterprise
 ---
 
-# Strapi AI Enterprise
+# Strapi AI Enterprise plugin
 <EnterpriseBadge tooltip="This plugin is available with an Enterprise plan."/> <AiAddonBadge tooltip="Strapi AI Enterprise is a paid add-on on the Enterprise plan."/> <VersionBadge version="5.59.0" />
 
 <Tldr>
-Strapi AI Enterprise runs Strapi AI on your own model, for AI Translations and AI-powered metadata generation. You set it up with the Strapi AI Enterprise plugin, and requests go to the AI provider of your choice instead of Strapi-managed infrastructure.
+Strapi AI Enterprise runs Strapi AI on your own model, for AI Translations and AI-powered metadata generation. You set it up with the AI Enterprise plugin, and requests go to the AI provider of your choice instead of Strapi-managed infrastructure.
 </Tldr>
 
-With the Strapi AI Enterprise plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi AI Growth.
+With the AI Enterprise plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi AI Growth.
 
 <IdentityCard isPlugin>
   <IdentityCardItem icon="credit-card" title="Plan">CMS Enterprise plan, with Strapi AI Enterprise as a paid add-on</IdentityCardItem>

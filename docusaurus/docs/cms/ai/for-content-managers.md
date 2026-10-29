@@ -53,7 +53,7 @@ With Strapi AI Growth, Strapi AI works with both Strapi Cloud and self-hosted de
 2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 credits to explore AI features.
 3. Access AI features from the Content-Type Builder, Media Library, or Content Manager. The Content-Type Builder assistant and AI metadata generation are enabled by default. AI Translations must be [enabled in the Internationalization settings](/cms/features/internationalization#enabling-ai-powered-internationalization).
 
-To run Strapi AI on your own model, on the Enterprise plan, subscribe to the Strapi AI Enterprise add-on, then install and configure the [Strapi AI Enterprise plugin](/cms/plugins/strapi-ai-enterprise).
+To run Strapi AI on your own model, on the Enterprise plan, subscribe to the Strapi AI Enterprise add-on, then install and configure the [AI Enterprise plugin](/cms/plugins/strapi-ai-enterprise).
 
 All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they run on Strapi AI Growth or Strapi AI Enterprise:
 
