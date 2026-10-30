@@ -831,27 +831,47 @@ This event is only available with the <EnterpriseBadge/> plan of Strapi.<br />Th
 ### `releases.publish`  {#releases-publish}
 <GrowthBadge/><EnterpriseBadge/>
 
-The event is triggered when a [release](/cms/features/releases) is published.
+The event is triggered when a [release](/cms/features/releases) is published, regardless of the result:
+
+- `isPublished` is `true` when the release ends as `done` (every entry was published or unpublished) or `partial` (some entries were skipped).
+- `isPublished` is `false` when the release ends as `failed`: no entry was published or unpublished. This includes a scheduled release that could not be published at its scheduled time. The payload then also includes an `error` object.
+
+The `release` object describes the release after it was published. In addition to its name and schedule, it includes:
+
+<!-- source: packages/core/content-releases/server/src/content-types/release/schema.ts, packages/core/content-releases/server/src/services/release.ts#L39-L86 -->
+| Field | Description |
+| --- | --- |
+| `status` | `done`, `partial`, or `failed` |
+| `releaseCondition` | The [release mode](/cms/features/releases#choosing-a-release-mode): `all_or_nothing` (*Require every entry to be ready*) or `allow_partial` (*Release all ready items*) |
+| `totalPublishedEntries` | Number of entries published |
+| `totalUnpublishedEntries` | Number of entries unpublished |
+| `totalSkippedEntries` | Number of entries skipped |
+| `failureReason` | `missed_schedule` when a scheduled release could not be published at its scheduled time (for example, because the server was unavailable), `null` otherwise |
 
 **Example payload**
 
+<!-- source: packages/core/content-releases/server/src/services/release-run.ts#L199-L204, packages/core/database/src/entity-manager/index.ts#L418-L465 -->
 ```json
-
 {
   "event": "releases.publish",
   "createdAt": "2024-02-21T16:45:36.877Z",
   "isPublished": true,
   "release": {
     "id": 2,
+    "documentId": "tx0fk0o7p0mfnvdhicuk3nfx",
     "name": "Fall Winter highlights",
     "releasedAt": "2024-02-21T16:45:36.873Z",
     "scheduledAt": null,
     "timezone": null,
+    "status": "partial",
+    "releaseCondition": "allow_partial",
+    "totalPublishedEntries": 8,
+    "totalUnpublishedEntries": 1,
+    "totalSkippedEntries": 2,
+    "failureReason": null,
     "createdAt": "2024-02-21T15:16:22.555Z",
     "updatedAt": "2024-02-21T16:45:36.875Z",
-    "actions": {
-      "count": 1
-    }
+    "publishedAt": "2024-02-21T15:16:22.555Z"
   }
 }
 ```
