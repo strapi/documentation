@@ -1874,6 +1874,16 @@
       "number": 28205,
       "reason": "Router: CTB service fix for event emission when content type kind changes. Internal event improvement, not a documented API or feature.",
       "added": "2026-10-29"
+    },
+    {
+      "number": 27994,
+      "reason": "Triage: internal optimization, admin UI performance improvement with no user-facing behavior change",
+      "added": "2026-10-30"
+    },
+    {
+      "number": 28289,
+      "reason": "Router: Internal database fix for Query Engine API. Moving relations with position parameters was already a public API feature. This fix addresses a MySQL/MariaDB-specific bug in the implementation without exposing new API surfaces or user-facing behavior changes. No documentation updates needed.",
+      "added": "2026-10-30"
     }
   ]
 }
