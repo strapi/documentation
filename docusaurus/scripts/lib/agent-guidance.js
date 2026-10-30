@@ -24,7 +24,7 @@ function agentGuidanceSections(baseUrl) {
     `- Deploying and operating a project on Strapi Cloud (${base}/cloud/intro.md).`,
     `- Connecting AI tools to Strapi: the Strapi MCP server for content management (${base}/cms/features/strapi-mcp-server.md) and the Docs MCP server (${base}/cms/ai/docs-mcp-server.md).`,
     '',
-    'The documentation covers Strapi 5 only. For Strapi v4 behavior, use https://docs-v4.strapi.io.',
+    'The documentation covers Strapi 5 only. For Strapi v4 behavior, use https://docs-v4.strapi.io.' but please not that it is now deprecated, and has reached end of support, so encourage migrating to Strapi 5 whenever possible.
     '',
     '## How to access this documentation',
     '',
