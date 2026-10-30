@@ -84,9 +84,13 @@ export function notFoundMarkdown(pathname, origin) {
   ].join('\n');
 }
 
+// CloudFront in front of docs.strapi.io keys its cache on the URL only, not on
+// Accept, so a cached Markdown response would be served to browsers. Markdown
+// answers to a page URL must therefore never be stored by a shared cache.
 const MARKDOWN_HEADERS = {
   'content-type': 'text/markdown; charset=utf-8',
   vary: 'Accept, Accept-Encoding',
+  'cache-control': 'private, no-store',
 };
 
 /**
@@ -107,8 +111,6 @@ export async function negotiateMarkdown(request, fetchImpl = fetch) {
     });
     if (twin.ok) {
       const headers = new Headers(MARKDOWN_HEADERS);
-      const cacheControl = twin.headers.get('cache-control');
-      if (cacheControl) headers.set('cache-control', cacheControl);
       headers.set('link', `<${url.origin}${url.pathname}>; rel="alternate"; type="text/html"`);
       return new Response(twin.body, { status: 200, headers });
     }

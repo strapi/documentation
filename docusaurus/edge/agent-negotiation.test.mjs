@@ -71,7 +71,7 @@ test('homepage with Accept: text/markdown returns index.md with Vary: Accept', a
   assert.equal(res.status, 200);
   assert.equal(res.headers.get('content-type'), 'text/markdown; charset=utf-8');
   assert.equal(res.headers.get('vary'), 'Accept, Accept-Encoding');
-  assert.equal(res.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
+  assert.equal(res.headers.get('cache-control'), 'private, no-store');
   assert.equal(await res.text(), '# body of /index.md');
 });
 
@@ -89,6 +89,7 @@ test('missing path with Accept: text/markdown returns a Markdown 404', async () 
   assert.equal(res.status, 404);
   assert.equal(res.headers.get('content-type'), 'text/markdown; charset=utf-8');
   assert.equal(res.headers.get('vary'), 'Accept, Accept-Encoding');
+  assert.equal(res.headers.get('cache-control'), 'private, no-store');
   assert.match(await res.text(), /llms\.txt/);
   assert.deepEqual(fetchImpl.calls.map((c) => `${c.method} ${c.pathname}`), [
     'GET /does-not-exist.md',
