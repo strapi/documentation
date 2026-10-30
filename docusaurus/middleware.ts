@@ -1,53 +1,10 @@
-import senthor from "@senthor-io/vercel";
 import { negotiateMarkdown } from "./edge/agent-negotiation.mjs";
 
 /**
- * Headers forwarded to the Senthor API.
- *
- * The package ships a deny list: it strips `authorization`, `cookie`,
- * `set-cookie` and `x-csrf-token`, then sends every other header of the
- * incoming request to waf-api.senthor.io. Inverting it into an allow list
- * keeps the infrastructure headers added by CloudFront and Vercel on our
- * edge, including the `cloudfront-viewer-*` geolocation ones, and bounds
- * what leaves the request to the signals a bot detector actually reads.
+ * Serves Markdown to agents that ask for it with `Accept: text/markdown`.
+ * Every other request goes on to the static site untouched.
  */
-const FORWARDED_HEADERS = [
-  "host",
-  "user-agent",
-  "from",
-  "referer",
-  "accept",
-  "accept-language",
-  "accept-encoding",
-  "sec-ch-ua",
-  "sec-ch-ua-mobile",
-  "sec-ch-ua-platform",
-  "sec-fetch-dest",
-  "sec-fetch-mode",
-  "sec-fetch-site",
-  "sec-fetch-user",
-  "x-forwarded-for",
-  "x-real-ip",
-];
-
-export default async function middleware(request: Request) {
-  const headers = new Headers();
-
-  for (const name of FORWARDED_HEADERS) {
-    const value = request.headers.get(name);
-    if (value !== null) {
-      headers.set(name, value);
-    }
-  }
-
-  // Senthor answers only to block or bill a request; otherwise it returns
-  // nothing and the request goes on to the Markdown negotiation, then to the
-  // static site.
-  const senthorResponse = await senthor(new Request(request, { headers }));
-  if (senthorResponse) {
-    return senthorResponse;
-  }
-
+export default function middleware(request: Request) {
   return negotiateMarkdown(request);
 }
 
@@ -55,7 +12,7 @@ export default async function middleware(request: Request) {
  * Pages only. Docusaurus serves its generated bundles from `/assets`, its
  * images from `/img` and `/diagrams`, and its custom scripts from `/js`;
  * a single page pulls dozens of them, and each match here is a billed
- * middleware invocation plus a round trip to the Senthor API.
+ * middleware invocation.
  */
 export const config = {
   matcher: [
