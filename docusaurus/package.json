@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "test:badges": "node --test 'scripts/badges/*.test.js'",
+    "test:agents": "node --test 'edge/*.test.mjs' scripts/generate-llms.test.js",
     "docusaurus": "docusaurus",
     "dev": "yarn generate-llms && node scripts/llms/generate-llms-code.js --anchors --all --output static/llms-code.txt && node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root .. && docusaurus start --port 8080 --no-open",
     "build": "yarn generate-llms && node scripts/llms/generate-llms-code.js --anchors --all --output static/llms-code.txt && node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root .. && docusaurus build",
@@ -36,7 +37,6 @@
     "@kapaai/react-sdk": "^0.9.9",
     "@mdx-js/react": "^3.0.0",
     "@octokit/rest": "^22.0.0",
-    "@senthor-io/vercel": "^1.2.0",
     "axios": "1.13.5",
     "classnames": "^2.5.1",
     "clsx": "^1.2.1",
