@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Vary",
-          "value": "Accept"
+          "value": "Accept, Accept-Encoding"
         }
       ]
     }

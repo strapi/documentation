@@ -86,7 +86,7 @@ export function notFoundMarkdown(pathname, origin) {
 
 const MARKDOWN_HEADERS = {
   'content-type': 'text/markdown; charset=utf-8',
-  vary: 'Accept',
+  vary: 'Accept, Accept-Encoding',
 };
 
 /**
