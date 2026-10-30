@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/((?!assets/|img/|js/|diagrams/).*)",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/cloud",

@@ -1,4 +1,5 @@
 import senthor from "@senthor-io/vercel";
+import { negotiateMarkdown } from "./edge/agent-negotiation.mjs";
 
 /**
  * Headers forwarded to the Senthor API.
@@ -29,7 +30,7 @@ const FORWARDED_HEADERS = [
   "x-real-ip",
 ];
 
-export default function middleware(request: Request) {
+export default async function middleware(request: Request) {
   const headers = new Headers();
 
   for (const name of FORWARDED_HEADERS) {
@@ -39,7 +40,15 @@ export default function middleware(request: Request) {
     }
   }
 
-  return senthor(new Request(request, { headers }));
+  // Senthor answers only to block or bill a request; otherwise it returns
+  // nothing and the request goes on to the Markdown negotiation, then to the
+  // static site.
+  const senthorResponse = await senthor(new Request(request, { headers }));
+  if (senthorResponse) {
+    return senthorResponse;
+  }
+
+  return negotiateMarkdown(request);
 }
 
 /**
