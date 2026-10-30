@@ -3,7 +3,7 @@ import React from 'react';
 export default {
   page: {
     title: 'Strapi 5 Docs',
-    description: 'Official documentation for Strapi 5, the open-source headless CMS: install Strapi, build content APIs with REST and GraphQL, customize the admin panel and back end, and deploy to Strapi Cloud.',
+    description: 'Get set up in minutes to build any project in hours instead of weeks.',
   },
   newsTicker: [
     {

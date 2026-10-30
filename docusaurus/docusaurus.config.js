@@ -228,11 +228,6 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Sets og:image and twitter:image on every page.
-      image: 'img/strapi-logo.png',
-      metadata: [
-        { property: 'og:type', content: 'website' },
-      ],
       // announcementBar: {
       //   id: 'support_us',
       //   content:
