@@ -6,7 +6,6 @@ const matter = require('gray-matter');
 // and additionally fix a template-literal interpolation bug.
 const apiComponents = require('./lib/api-components');
 const { agentInstructionsBlock } = require('./lib/agent-instructions');
-const { agentGuidanceSections } = require('./lib/agent-guidance');
 
 class DocusaurusLlmsGenerator {
   constructor(config = {}) {
@@ -33,7 +32,7 @@ class DocusaurusLlmsGenerator {
       await fs.writeFile(path.join(this.outputDir, 'llms-full.txt'), llmsFullTxt);
 
       console.log('📄 Generating per-page Markdown (.md)...');
-      const mdCount = await this.writePerPageMarkdown(pages, llmsTxt);
+      const mdCount = await this.writePerPageMarkdown(pages);
 
       console.log('✅ LLMs files successfully generated !');
       console.log(`   - ${this.outputDir}/llms.txt`);
@@ -54,7 +53,7 @@ class DocusaurusLlmsGenerator {
    * `static/` (the dev/standalone path) to avoid polluting the source tree with
    * hundreds of generated files. Returns the number of files written.
    */
-  async writePerPageMarkdown(pages, llmsTxt) {
+  async writePerPageMarkdown(pages) {
     // Guard: don't scatter .md files into the source `static/` folder (dev runs
     // and `node scripts/generate-llms.js` default there). Only emit for builds.
     const outName = path.basename(this.outputDir);
@@ -63,12 +62,7 @@ class DocusaurusLlmsGenerator {
       return 0;
     }
 
-    // The homepage has no doc file. Its Markdown twin, served for
-    // `Accept: text/markdown` requests to `/`, is the llms.txt index.
-    await fs.ensureDir(this.outputDir);
-    await fs.writeFile(path.join(this.outputDir, 'index.md'), `${llmsTxt}\n`, 'utf-8');
-
-    let count = 1;
+    let count = 0;
     for (const page of pages) {
       const relPath = page.url
         .replace(/^https?:\/\/[^/]+\//, '') // strip origin
@@ -946,16 +940,7 @@ class DocusaurusLlmsGenerator {
   }
 
   generateLlmsTxt(pages) {
-    const lines = [
-      `# ${this.siteName}`,
-      '',
-      agentInstructionsBlock(),
-      '',
-      ...agentGuidanceSections(this.baseUrl),
-      '',
-      '## Pages',
-      '',
-    ];
+    const lines = [`# ${this.siteName}`, '', agentInstructionsBlock(), ''];
 
     pages.forEach(page => {
       const description = page.description || 'No description available';
