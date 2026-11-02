@@ -22,7 +22,7 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 <Tldr>
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the <GrowthBadge noTooltip /> plan, Strapi AI Growth runs it on Strapi-managed infrastructure. On the <EnterpriseBadge /> plan, Strapi AI Enterprise, a paid add-on, runs it on your own model, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the <GrowthBadge noTooltip /> plan, Strapi AI Growth runs it on Strapi-managed infrastructure. On the <EnterpriseBadge noTooltip /> plan, Strapi AI Enterprise, a paid add-on, runs it on your own model, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 </Tldr>
 
