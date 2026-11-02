@@ -8,4 +8,3 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 Credits are shared across all users within the same project instance.
 
 When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
