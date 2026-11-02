@@ -4163,7 +4163,6 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 Credits are shared across all users within the same project instance.
 
 When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
 Strapi AI Growth requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI Growth follows the same GDPR-aligned framework as Strapi Cloud. With Strapi AI Enterprise, your provider's data handling terms apply.
 
@@ -34728,7 +34727,6 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 Credits are shared across all users within the same project instance.
 
 When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
 :::
 
@@ -37521,7 +37519,6 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 Credits are shared across all users within the same project instance.
 
 When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
 :::
 
@@ -38360,7 +38357,6 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 Credits are shared across all users within the same project instance.
 
 When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 
 :::
 
@@ -55980,7 +55976,7 @@ Configured in `/config/plugins`. Used through the Strapi AI features of the admi
 :::prerequisites
 - A license for the CMS Enterprise plan that includes the Strapi AI Enterprise add-on.
 - Strapi 5.59.0 or later.
-- The Strapi AI Enterprise [paid add-on](https://strapi.io/contact-sales)
+- The Strapi AI Enterprise [paid add-on](https://strapi.io/contact-sales).
 - An API key for a provider with an OpenAI-compatible API.
 - For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
 :::
