@@ -55,6 +55,6 @@ Core features, such as the [admin panel](/cms/features/admin-panel), the [Conten
 | [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
 | [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
 
-Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi AI Growth, on the Growth plan. On the Enterprise plan, all Strapi AI features require Strapi AI Enterprise, a paid add-on.
+Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi AI Growth, on the Growth plan. On the Enterprise plan, all Strapi AI features require Strapi AI Enterprise, <ExternalLink to="https://strapi.io/contact-sales" text="a paid add-on" />.
 
 For prices, support levels, and compliance documents such as the SOC 2 report, see the <ExternalLink to="https://strapi.io/pricing-cms" text="Strapi pricing page"/>. Enterprise plans are available through the <ExternalLink to="https://strapi.io/contact-sales" text="Strapi sales team"/>.
