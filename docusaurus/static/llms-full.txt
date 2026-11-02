@@ -4111,7 +4111,7 @@ Strapi AI is powered in one of 2 ways, depending on your plan:
 
 | | Strapi AI Growth (Strapi-managed) | Strapi AI Enterprise (bring your own model) |
 |---|---|---|
-| Plan |  | , as a paid add-on |
+| Plan |  | , as a [paid add-on](https://strapi.io/contact-sales) |
 | Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
 | Strapi version | 5.30 or later | 5.59 or later |
 | AI requests go to | Strapi-managed infrastructure | Your own AI provider, with your API key and models |
@@ -4126,7 +4126,7 @@ With Strapi AI Growth, Strapi AI works with both Strapi Cloud and self-hosted de
 2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 credits to explore AI features.
 3. Access AI features from the Content-Type Builder, Media Library, or Content Manager. The Content-Type Builder assistant and AI metadata generation are enabled by default. AI Translations must be [enabled in the Internationalization settings](/cms/features/internationalization#enabling-ai-powered-internationalization).
 
-To run Strapi AI on your own model, on the Enterprise plan, subscribe to the Strapi AI Enterprise add-on, then install and configure the [AI Enterprise plugin](/cms/plugins/strapi-ai-enterprise).
+To run Strapi AI on your own model, on the Enterprise plan, subscribe to the Strapi AI Enterprise add-on, then install and configure the [Strapi AI Enterprise plugin](/cms/plugins/strapi-ai-enterprise).
 
 All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they run on Strapi AI Growth or Strapi AI Enterprise:
 
@@ -4145,9 +4145,9 @@ module.exports = {
 
 | Feature | Description | Strapi AI Growth | Strapi AI Enterprise |
 |---------|-------------|----------------|-----------------------|
-| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Available | Not available |
-| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available | Available |
-| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text and captions for uploaded images. | Available | Available |
+| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | ✅ Available | ❌ Not available |
+| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | ✅ Available | ✅ Available |
+| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text and captions for uploaded images. | ✅ Available | ✅ Available |
 
 ### Credits and data handling {#credits}
 
@@ -55980,6 +55980,7 @@ Configured in `/config/plugins`. Used through the Strapi AI features of the admi
 :::prerequisites
 - A license for the CMS Enterprise plan that includes the Strapi AI Enterprise add-on.
 - Strapi 5.59.0 or later.
+- The Strapi AI Enterprise [paid add-on](https://strapi.io/contact-sales)
 - An API key for a provider with an OpenAI-compatible API.
 - For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
 :::
