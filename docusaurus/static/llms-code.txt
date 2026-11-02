@@ -21335,15 +21335,38 @@ Language: JSON
 File path: N/A
 
 ```json
-[
-  {
-    "AllowedHeaders": ["*"],
-    "AllowedMethods": ["GET"],
-    "AllowedOrigins": ["YOUR STRAPI URL"],
-    "ExposeHeaders": [],
-    "MaxAgeSeconds": 3000
-  }
-]
+   [
+     {
+       "AllowedHeaders": ["*"],
+       "AllowedMethods": ["GET"],
+       "AllowedOrigins": ["https://admin.example.com", "http://localhost:1337"],
+       "ExposeHeaders": [],
+       "MaxAgeSeconds": 3000
+     }
+   ]
+```
+
+Language: JSON
+File path: cors.json
+
+```json
+{
+  "CORSRules": [
+    {
+      "AllowedHeaders": ["*"],
+      "AllowedMethods": ["GET"],
+      "AllowedOrigins": ["https://admin.example.com"],
+      "MaxAgeSeconds": 3000
+    }
+  ]
+}
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+aws s3api put-bucket-cors --bucket my-bucket --cors-configuration file://cors.json --endpoint-url https://s3.fr-par.scw.cloud
 ```
 
 
