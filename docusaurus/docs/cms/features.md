@@ -19,8 +19,8 @@ Strapi CMS features are available on 3 plans: Community, Growth, and Enterprise.
 Strapi CMS comes with 3 plans:
 
 - Community: the free and open-source core of Strapi, under the MIT license.
-- Growth <GrowthBadge noTooltip />: Adds Strapi AI, Live Preview, Releases, and Content History.
-- Enterprise <EnterpriseBadge noTooltip />: Adds Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins to the Growth features. Strapi AI is not part of the base plan: it is available as an add-on.
+- Growth <GrowthBadge noTooltip />: Adds Strapi AI Growth, Live Preview, Releases, and Content History.
+- Enterprise <EnterpriseBadge noTooltip />: Adds Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins to the Growth features. Strapi AI is not part of the base plan: it is available as the [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise) paid add-on.
 
 ## Self-hosted and Strapi Cloud projects
 
