@@ -28,7 +28,7 @@ With the AI Enterprise plugin, Strapi AI sends the requests of AI Translations a
 :::prerequisites
 - A license for the CMS Enterprise plan that includes the Strapi AI Enterprise add-on.
 - Strapi 5.59.0 or later.
-- The Strapi AI Enterprise <ExternalLink to="https://strapi.io/contact-sales" text="paid add-on"/>
+- The Strapi AI Enterprise <ExternalLink to="https://strapi.io/contact-sales" text="paid add-on"/>.
 - An API key for a provider with an OpenAI-compatible API.
 - For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
 :::
