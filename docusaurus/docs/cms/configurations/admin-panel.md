@@ -403,7 +403,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 
 ## Strapi AI <NewBadge /> {#strapi-ai}
 
-Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation), can be enabled or disabled. The setting applies whether Strapi AI runs on Strapi AI Growth, on the <GrowthBadge /> plan, or on [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), on the <EnterpriseBadge /> plan:
+Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation), can be enabled or disabled. The setting applies whether Strapi AI runs on Strapi AI Growth, on the <GrowthBadge /> plan, or on [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), on the <EnterpriseBadge /> plan with the <ExternalLink to="https://strapi.io/contact-sales" text="Strapi AI Enterprise add-on" />:
 
 | Parameter    | Description                              | Type     | Default         |
 | ------------ | ---------------------------------------- | -------- | --------------- |
