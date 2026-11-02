@@ -52,7 +52,7 @@ To be able to include your content in releases, and to schedule and publish thos
 **Path to configure the feature:** <Icon name="paper-plane-tilt" /> Releases
 
 1. Click the <Icon name="plus" classes="ph-bold" /> **New Release** button in the upper right corner.
-2. In the side panel, give the release a name in the *Release name* field.
+2. Give the release a name.
 3. Define when the release is published:
    - To schedule the release, select the date, time, and timezone for publication.
    - To publish the release manually, check the *I don't have a release date yet* checkbox.
@@ -63,7 +63,6 @@ To be able to include your content in releases, and to schedule and publish thos
 Your releases can be renamed, rescheduled, or switched to another release mode afterwards, by editing the release using the <Icon name="dots-three-outline" /> then <Icon name="pencil-simple" /> **Edit** buttons. A release can be edited until it has been published.
 :::
 
-<!-- TODO: Replace new-release.png and new-release_DARK.png: the creation modal is now a side panel with a Release mode area. -->
 <ThemedImage
   alt="Adding a new release"
   sources={{
@@ -187,10 +186,8 @@ To schedule an existing release, while on a release page:
 5. Click **Save**.
 
 :::caution
-If the Strapi server is unavailable at the scheduled time, the release is not published. After 5 minutes, the release ends as `Failed` and all its entries are skipped (see [Reviewing release results](#reviewing-release-results)). A scheduled release that contains no entries ends as `Done`.
+If the Strapi server is unavailable at the scheduled time, the release is not published. For 5 minutes after the scheduled time, the release keeps its status and can still be [published manually](#publishing-a-release). After 5 minutes, the release ends as `Failed` and all its entries are skipped (see [Reviewing release results](#reviewing-release-results)). A scheduled release that contains no entries ends as `Done`.
 :::
-
-<!-- TODO: Replace release-scheduling.png and release-scheduling_DARK.png: scheduling now happens in the edit side panel. -->
 
 <ThemedImage
   alt="Release scheduling"
@@ -212,7 +209,7 @@ A release page can display entries either grouped by locale, content-type, or ac
 
 Publishing a release means that the action (publish or unpublish) defined for each entry included in the release is performed. The [release mode](#choosing-a-release-mode) decides what happens to entries that are not ready.
 
-To publish a release, click the **Publish** button in the top right corner of the admin panel. Before, make sure to check the status of both the release and its entries.
+To publish a release, click the **Publish** button in the top right corner of the admin panel. The button is disabled while the release is `Empty` or `Blocked`: hover over it to see why. Before publishing, make sure to check the status of both the release and its entries.
 
   - A badge at the top of the interface indicates the status of your release:
     - `Empty`: no entry has been added to the release yet.
@@ -235,14 +232,12 @@ To fix an entry that is not ready:
 6. Click the **Refresh** button to update the statuses.
 
 :::note
-When you click **Publish**, Strapi checks every entry again. The release is published based on the current state of its entries, even if the displayed statuses are outdated. If publishing the release would publish nothing, Strapi displays the reason and the release is not published.
+When you click **Publish**, Strapi checks every entry again. The release is published based on the current state of its entries, even if the displayed statuses are outdated. If the release is no longer ready, Strapi displays the reason, the release is not published, and its status changes to `Blocked`.
 :::
 
 :::caution
 Once a release is published, it cannot be edited, deleted, or published again, and entries cannot be added to it or removed from it. To publish entries that were skipped, [create a release from skipped entries](#creating-a-release-from-skipped-entries).
 :::
-
-<!-- TODO: Replace publish-release.png and publish-release_DARK.png: entry statuses are now Ready / Not ready, with Ready and Not ready tabs. -->
 
 <ThemedImage
   alt="Release publish"
@@ -275,6 +270,8 @@ The _Status_ column displays `Done` for entries that were published or unpublish
 | Waiting on other entries | The entry was ready, but the release requires every entry to be ready and some were not. |
 | Server unavailable | The release could not be published at the scheduled time, for example because the server was unavailable. |
 
+An entry deleted after the release was published is displayed as *Deleted entry*. It keeps its result, but it can no longer be opened from the release.
+
 To see why an entry was skipped:
 
 1. Click **Skipped** in the _Status_ column of the entry. A side panel displays the reasons captured when the release was published.
@@ -296,6 +293,8 @@ A release cannot be published twice. To publish the entries skipped by a `Partia
 
 :::prerequisites
 - The status of the release is `Partial` or `Failed`.
+- The release did not fail before your project was upgraded to a Strapi version supporting partial releases. Its entries display the `Unknown` status, so Strapi cannot tell which ones were skipped.
+- At least 1 skipped entry still exists.
 - Your role has the permissions to create releases and to add entries to releases (see [configuring administrator roles](/cms/features/rbac#configuring-roles-permissions)).
 :::
 
@@ -317,25 +316,15 @@ The original release is not modified. The new release does not include entries d
 
 The Releases page lists all releases in a single table, with the name, status, schedule, number of entries, and release mode of each release. Click a release to open it.
 
-To filter releases:
+With both *Scheduled date* options, releases without a release date are listed last. Releases that have already been published keep their position by scheduled date.
 
-1. Click the **Filters** button above the table.
-2. Select a field: *Status*, *Release mode*, *Scheduled for*, or *Released on*.
-3. Select an operator.
-4. Select a value. For *Scheduled for* and *Released on*, the value is a date and, optionally, a time.
-5. Click **Add filter**.
-
-Applied filters are displayed as tags above the table. To remove a filter, click the <Icon name="x" /> icon of its tag. To edit a filter, click the text of its tag. To remove all filters, click **Clear all**.
-
-To sort releases, click the **Sort** menu and select an option:
-
-- *Most recent updates* (default)
-- *Oldest updates*
-- *Most recently created*
-- *Name (A to Z)*
-- *Name (Z to A)*
-
-<!-- TODO: Add a screenshot of the Releases page with filters. -->
+<ThemedImage
+  alt="Release publish"
+  sources={{
+    light: '/img/assets/releases/release-list.png',
+    dark: '/img/assets/releases/release-list_DARK.png',
+  }}
+/>
 
 ### Audit logging of release actions
 
