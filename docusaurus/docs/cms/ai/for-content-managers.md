@@ -36,7 +36,7 @@ Some Strapi CMS features can be enhanced with Strapi AI, helping content manager
 
 Strapi AI is powered in one of 2 ways, depending on your plan:
 
-| | Strapi AI Growth (Strapi-managed) | Strapi AI Enterprise (bring your own model) |
+| | Strapi AI Growth | Strapi AI Enterprise |
 |---|---|---|
 | Plan | <GrowthBadge /> | <EnterpriseBadge />, as a paid add-on |
 | Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
