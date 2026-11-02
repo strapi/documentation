@@ -834,11 +834,13 @@ This event is only available with the <EnterpriseBadge/> plan of Strapi.<br />Th
 The event is triggered when a [release](/cms/features/releases) is published, regardless of the result:
 
 - `isPublished` is `true` when the release ends as `done` (every entry was published or unpublished) or `partial` (some entries were skipped).
-- `isPublished` is `false` when the release ends as `failed`: no entry was published or unpublished. This includes a scheduled release that could not be published at its scheduled time. The payload then also includes an `error` object.
+- `isPublished` is `false` when the release ends as `failed`: no entry was published or unpublished. This includes a scheduled release that could not be published at its scheduled time. The payload then also includes an `error` key. Do not rely on its content: it can be an empty object.
+
+No event is sent when a database conflict (for example, a deadlock) interrupts the publication, because nothing was published and the release can be published again.
 
 The `release` object describes the release after it was published. In addition to its name and schedule, it includes:
 
-<!-- source: packages/core/content-releases/server/src/content-types/release/schema.ts, packages/core/content-releases/server/src/services/release.ts#L39-L86 -->
+<!-- source: packages/core/content-releases/server/src/content-types/release/schema.ts, packages/core/content-releases/server/src/services/release.ts#L46-L112 -->
 | Field | Description |
 | --- | --- |
 | `status` | `done`, `partial`, or `failed` |
@@ -850,7 +852,7 @@ The `release` object describes the release after it was published. In addition t
 
 **Example payload**
 
-<!-- source: packages/core/content-releases/server/src/services/release-run.ts#L199-L204, packages/core/database/src/entity-manager/index.ts#L418-L465 -->
+<!-- source: packages/core/content-releases/server/src/services/release-run.ts#L263-L282, packages/core/content-releases/server/src/services/release.ts#L46-L112 -->
 ```json
 {
   "event": "releases.publish",
@@ -870,8 +872,7 @@ The `release` object describes the release after it was published. In addition t
     "totalSkippedEntries": 2,
     "failureReason": null,
     "createdAt": "2024-02-21T15:16:22.555Z",
-    "updatedAt": "2024-02-21T16:45:36.875Z",
-    "publishedAt": "2024-02-21T15:16:22.555Z"
+    "updatedAt": "2024-02-21T16:45:36.875Z"
   }
 }
 ```

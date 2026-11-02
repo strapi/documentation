@@ -60,7 +60,7 @@ To be able to include your content in releases, and to schedule and publish thos
 5. Click the **Create release** button.
 
 :::tip
-Your releases can be renamed, rescheduled, or switched to another release mode afterwards, by editing the release using the <Icon name="dots-three-outline" /> then <Icon name="pencil-simple" /> **Edit** buttons. A release can be edited until it has been published.
+Your releases can be renamed, rescheduled, or switched to another release mode afterwards, by editing the release using the <Icon name="dots-three-outline" /> then <Icon name="pencil-simple" /> **Edit** buttons. A release can be edited until it is published or ends as `Failed`.
 :::
 
 <ThemedImage
@@ -86,7 +86,7 @@ You can rename a release. To do so, while on a release page:
 
 **Path:** <Icon name="paper-plane-tilt" /> Releases
 
-The release mode defines what happens when a release is published while some of its entries are not ready. You choose the release mode when [creating a release](#creating-a-release), and can change it by editing the release until the release has been published.
+The release mode defines what happens when a release is published while some of its entries are not ready. You choose the release mode when [creating a release](#creating-a-release), and can change it by editing the release until the release is published or ends as `Failed`.
 
 An entry is ready when it can be published. Its fields must pass validation. If its [review workflow requires a stage for publishing](/cms/features/review-workflows#requiring-a-stage-for-publishing), the entry must be at that stage. Entries set to be unpublished are always ready.
 
@@ -96,6 +96,10 @@ An entry is ready when it can be published. Its fields must pass validation. If 
 | Require every entry to be ready (default) | All required | Strapi publishes or unpublishes every entry, or none. If at least 1 entry is not ready, nothing is published: a manual publication is refused, and a scheduled release ends as `Failed`. If an error occurs while an entry is published or unpublished, all changes are canceled and the release ends as `Failed`. |
 | Release all ready items | Allow partial | Strapi publishes or unpublishes the entries that are ready and skips the others. If an error occurs while an entry is published or unpublished, only that entry is skipped. |
 
+:::note
+If a database conflict (for example, a deadlock) interrupts the publication, nothing is published, whatever the release mode. The release keeps its status and can be published again.
+:::
+
 :::tip
 Use *Release all ready items* for scheduled releases that must go out on time, even if some entries are not finished. Skipped entries can be published later by [creating a release from skipped entries](#creating-a-release-from-skipped-entries).
 :::
@@ -104,10 +108,10 @@ Use *Release all ready items* for scheduled releases that must go out on time, e
 
 **Path:** <Icon name="paper-plane-tilt" /> Releases
 
-Deleting a release will only delete the release itself, but not the content-type entries included in the release. A release that has already been published cannot be deleted.
+Deleting a release will only delete the release itself, but not the content-type entries included in the release. A `Done` or `Partial` release cannot be deleted. A `Failed` release can be deleted.
 
-1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel.
-2. Select <Icon name="trash" /> **Delete**.
+1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel. For a `Failed` release, skip this step.
+2. Select <Icon name="trash" /> **Delete**. For a `Failed` release, click the <Icon name="trash" /> **Delete** button in the top right corner of the admin panel.
 3. In the confirmation dialog, click <Icon name="trash" /> **Confirm**.
 
 ## Usage
@@ -186,7 +190,7 @@ To schedule an existing release, while on a release page:
 5. Click **Save**.
 
 :::caution
-If the Strapi server is unavailable at the scheduled time, the release is not published. For 5 minutes after the scheduled time, the release keeps its status and can still be [published manually](#publishing-a-release). After 5 minutes, the release ends as `Failed` and all its entries are skipped (see [Reviewing release results](#reviewing-release-results)). A scheduled release that contains no entries ends as `Done`.
+If the Strapi server is unavailable at the scheduled time, the release is not published. If the server restarts less than 5 minutes after the scheduled time, the release is published automatically. During these 5 minutes, the release keeps its status and can also be [published manually](#publishing-a-release). After 5 minutes, the release ends as `Failed`, within a minute or as soon as the server restarts, and all its entries are skipped (see [Reviewing release results](#reviewing-release-results)). A scheduled release that contains no entries ends as `Done`.
 :::
 
 <ThemedImage
@@ -225,7 +229,7 @@ To publish a release, click the **Publish** button in the top right corner of th
 To fix an entry that is not ready:
 
 1. Click **Not ready** in the _Status_ column of the entry. A side panel lists the reasons: each invalid field and what is wrong with it, or the review stage the entry has not reached yet.
-2. Click **Go to entry**. The entry opens in the Content Manager with its validation errors displayed.
+2. Click **Go to entry**. The entry opens in the Content Manager, with its validation errors displayed if there are any.
 3. Fix the issues.
 4. Save the entry.
 5. Go back to the release page.
@@ -236,7 +240,7 @@ When you click **Publish**, Strapi checks every entry again. The release is publ
 :::
 
 :::caution
-Once a release is published, it cannot be edited, deleted, or published again, and entries cannot be added to it or removed from it. To publish entries that were skipped, [create a release from skipped entries](#creating-a-release-from-skipped-entries).
+Once a release is published, it cannot be edited or published again, and entries cannot be added to it or removed from it. A `Done` or `Partial` release cannot be deleted. To publish entries that were skipped, [create a release from skipped entries](#creating-a-release-from-skipped-entries).
 :::
 
 <ThemedImage
@@ -255,7 +259,7 @@ Once a release has been published, manually or at its scheduled time, its badge 
 
 - `Done`: every entry was published or unpublished.
 - `Partial`: some entries were published or unpublished, and the others were skipped. Only releases using the *Release all ready items* mode can end as `Partial`.
-- `Failed`: no entry was published or unpublished.
+- `Failed`: no entry was published or unpublished. Releases that failed before your project was upgraded to a Strapi version supporting partial releases are an exception (see the note below).
 
 The header of the release page indicates how many entries were released (published or unpublished) and how many were skipped. The *All*, *Released*, and *Skipped* tabs filter the list of entries by result.
 
@@ -264,7 +268,7 @@ The _Status_ column displays `Done` for entries that were published or unpublish
 <!-- source: packages/core/content-releases/admin/src/translations/en.json (pages.ReleaseDetails.outcome.*), packages/core/content-releases/shared/constants.ts (RELEASE_ACTION_OUTCOMES) -->
 | Reason | Description |
 | --- | --- |
-| Validation error | Some fields of the entry were incorrectly filled when the release was published. This includes a unique value already used by another entry of the same release. |
+| Validation error | Some fields of the entry were incorrectly filled when the release was published. This includes a unique value already used by another entry of the same release. This reason is also displayed when the entry no longer existed when the release was published. |
 | Not ready to publish | The entry had not reached the required stage for publishing. |
 | Error | A server error prevented the entry from being published or unpublished. The error does not come from the content of the entry. |
 | Waiting on other entries | The entry was ready, but the release requires every entry to be ready and some were not. |
@@ -316,10 +320,30 @@ The original release is not modified. The new release does not include entries d
 
 The Releases page lists all releases in a single table, with the name, status, schedule, number of entries, and release mode of each release. Click a release to open it.
 
+To filter releases:
+
+1. Click the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button.
+2. Choose the field on which the condition applies:
+   - *Status*: `Empty`, `Ready`, `Blocked`, `Done`, `Partial`, or `Failed`
+   - *Release mode*: *All required* or *Allow partial*
+   - *Scheduled for*: the scheduled date of the release
+   - *Released on*: the date the release was published
+3. Choose the condition to apply.
+4. Select the value of the condition. For *Scheduled for* and *Released on*, the time is optional: a date alone matches the whole day.
+5. Click the **Add filter** button.
+
+Active filters are displayed next to the **Filters** button. Several filters add to one another: only releases matching all of them are listed. Click **Clear all** to remove every filter.
+
+:::tip
+To list releases without a release date, use the *Scheduled for* field with the *is null* condition. To list releases that have not been published yet, use the *Released on* field with the *is null* condition.
+:::
+
+To sort releases, click the **Sort** button, which displays the current sort order, and select an option: *Scheduled date (soonest first)* (default), *Scheduled date (latest first)*, *Most recent updates*, *Oldest updates*, *Most recently created*, *Name (A to Z)*, or *Name (Z to A)*.
+
 With both *Scheduled date* options, releases without a release date are listed last. Releases that have already been published keep their position by scheduled date.
 
 <ThemedImage
-  alt="Release publish"
+  alt="Releases list"
   sources={{
     light: '/img/assets/releases/release-list.png',
     dark: '/img/assets/releases/release-list_DARK.png',
