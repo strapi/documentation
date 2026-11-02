@@ -1145,6 +1145,10 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 To leave the editor without changing anything, click **Cancel**.
 
+:::note
+With the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) or an S3-compatible service, the image loads in the _Crop & Focus area_ editor only with a bucket CORS rule. The rule must allow the admin panel URL. Without it, you cannot crop the image or set its focus area (see [bucket CORS configuration](/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)). The [local provider](/cms/configurations/media-library-providers/local-upload) does not need any CORS setup.
+:::
+
 :::info
 * The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
 * The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
@@ -1169,6 +1173,8 @@ The previous file is permanently replaced and cannot be recovered. If [AI metada
 2. Click the <Icon name="download-simple" /> **Download** button to save the file to your computer, or the <Icon name="link" classes="ph-bold" /> **Copy link** button to copy its URL to the clipboard.
 
 Both actions are also available from the asset's <Icon name="dots-three" classes="ph-bold" /> actions menu, as **Copy link to media** and **Download media**.
+
+With the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) or an S3-compatible service, downloading only works if the bucket has a CORS rule that allows the admin panel URL (see [bucket CORS configuration](/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)).
 
 :::note
 **Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's <Icon name="dots-three" classes="ph-bold" /> actions menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
