@@ -838,6 +838,8 @@ The event is triggered when a [release](/cms/features/releases) is published, re
 
 No event is sent when a database conflict (for example, a deadlock) interrupts the publication, since nothing was published. If the release was scheduled and is not published manually within 5 minutes of its scheduled time, it then ends as `failed` with the `missed_schedule` failure reason, and the event is sent at that point.
 
+No event is sent either when a manual publication is refused because the release is not ready: the release is not published and its status changes to `Blocked`.
+
 The `release` object describes the release after it was published. In addition to its name and schedule, it includes:
 
 <!-- source: packages/core/content-releases/server/src/content-types/release/schema.ts, packages/core/content-releases/server/src/services/release.ts#L46-L112 -->
