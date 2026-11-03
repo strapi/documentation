@@ -378,12 +378,12 @@ A non-repeatable component groups several fields, and an entry holds a single in
 When the component has not been added yet, the edit view does not display its fields. The component area only displays a <Icon name="plus-circle" /> _No entry yet. Click to add one._ message. To add the component:
 
 1. Click on the _No entry yet. Click to add one._ message.
-2. In collection types, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).
+2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content). If you're editing a single type, the component is added directly with blank fields.
 3. Fill in the fields of the component.
 
-To remove the component and its content from the entry, click on the delete button <Icon name="trash"/>, displayed on the right of the component name. The _No entry yet. Click to add one._ message is displayed again.
+To remove the component and its content from the entry, click on the delete button <Icon name="trash"/>, displayed on the right of the component name.
 
-In collection types, once the component is added, another button, displayed on the right of the component name just before the delete button, copies content from an existing entry into the component. Its label depends on the content of the component:
+When editing collection types, once the component is added, another button, displayed on the right of the component name just before the delete button, copies content from an existing entry into the component. Its label depends on the content of the component:
 
 - <Icon name="copy"/>&nbsp;**Use existing content…** while all the fields of the component are empty or still hold their default values.
 - <Icon name="copy"/>&nbsp;**Replace content…** as soon as a field holds another value, since copying then overwrites the current content.
@@ -415,7 +415,7 @@ Repeatable components are also a combination of fields, but they allow the creat
 To add a new entry and display its combination of fields:
 
 1. Click on the add button <Icon name="plus-circle" /> to add the component.
-2. In collection types, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content).
+2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content). If you're editing a single type, the component is added directly with blank fields.
 3. Fill in the fields of the component.
 4. (optional) Click on the <Icon name="plus"/>&nbsp;**Add an entry** button to add another entry. In collection types, the same <Icon name="plus"/>&nbsp;**Empty entry** and <Icon name="copy"/>&nbsp;**Use existing content…** choices are displayed.
 
@@ -458,7 +458,7 @@ Developers set this image in the [component schema](/cms/backend-customization/m
 
 1. Click on the <Icon name="plus-circle" /> **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
-3. In collection types, choose <Icon name="plus"/>&nbsp;**Empty component** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy components from an existing entry](#reusing-existing-component-content).
+3. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty component** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy components from an existing entry](#reusing-existing-component-content). If you're editing a single type, the component is added directly with blank fields.
 4. Fill in the fields of the component.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
