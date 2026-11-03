@@ -287,7 +287,7 @@ A release that failed before your project was upgraded to a Strapi version suppo
 :::
 <!-- TODO: Add the Strapi version that introduces partial releases once strapi/strapi#28339 is released. -->
 
-When a release is published, Strapi also sends the [`releases.publish` webhook](/cms/backend-customization/webhooks#releases-publish), which includes the release status and the number of published, unpublished, and skipped entries.
+When a release is published or ends as `Failed`, Strapi also sends the [`releases.publish` webhook](/cms/backend-customization/webhooks#releases-publish), which includes the release status and the number of published, unpublished, and skipped entries.
 
 ### Creating a release from skipped entries
 
