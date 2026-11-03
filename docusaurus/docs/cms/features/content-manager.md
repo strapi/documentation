@@ -490,6 +490,7 @@ The following rules apply when copying content:
 - The content is copied from the same field only: a component used in another field of the source entry is not offered.
 - Entries that do not hold the component are disabled in the list. For a component nested in another component, the check only runs once the entry is picked.
 - The current entry is listed first, with a _This entry_ badge, and copies from its last saved version. The current entry is disabled in the list while it has unsaved changes.
+- If [Draft & Publish](/cms/features/draft-and-publish) is enabled, the content is copied from the draft version of the source entry, which can differ from its published version.
 - The values of `uid` fields and of fields set as unique are not copied. These fields are left empty, so they can be filled in with new values.
 - Relations of the copied components are copied too. A warning is displayed if some relations could not be loaded.
 - The selection cannot exceed the number of components the field can still hold. The limit comes from the maximum set in the Content-type Builder (_Maximum components_ for [repeatable components](/cms/features/content-type-builder#components), _Maximum value_ for [dynamic zones](/cms/features/content-type-builder#dynamiczones)). If too many components are selected, the confirmation button is disabled and the window indicates how many components to unselect.
