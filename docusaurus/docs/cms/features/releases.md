@@ -93,8 +93,10 @@ An entry is ready when it can be published. Its fields must pass validation. If 
 <!-- source: packages/core/content-releases/admin/src/translations/en.json (release-condition.*, pages.Releases.release-condition.*), docs/docs/packages/core/content-releases/01-backend.md "Publishing a release" -->
 | Release mode | Label in the releases list | What happens when the release is published |
 | --- | --- | --- |
-| Require every entry to be ready (default) | All required | Strapi publishes or unpublishes every entry, or none. If at least 1 entry is not ready, nothing is published: a manual publication is refused, and a scheduled release ends as `Failed`. If an error occurs while an entry is published or unpublished, all changes are canceled and the release ends as `Failed`. |
-| Release all ready items | Allow partial | Strapi publishes or unpublishes the entries that are ready and skips the others. If an error occurs while an entry is published or unpublished, only that entry is skipped. |
+| *Require every entry to be ready* (default) | *All required* | Strapi publishes or unpublishes every entry, or none. If at least 1 entry is not ready, a manual publication is refused, and a scheduled release ends as `Failed`. |
+| *Release all ready items* | *Allow partial* | Strapi publishes or unpublishes the entries that are ready and skips the others. |
+
+If an error occurs while an entry is published or unpublished, the *Require every entry to be ready* mode cancels all changes and the release ends as `Failed`, while the *Release all ready items* mode only skips that entry.
 
 :::note
 If a database conflict (for example, a deadlock) interrupts the publication, nothing is published, whatever the release mode. The release keeps its status. A manual release can be published again. A scheduled release can be published manually within 5 minutes of its scheduled time: after that, it ends as `Failed`.
