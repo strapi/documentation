@@ -348,7 +348,15 @@ Active filters are displayed next to the **Filters** button. Several filters add
 To list releases without a release date, use the *Scheduled for* field with the *is null* condition. To list releases that have not been published yet, use the *Released on* field with the *is null* condition.
 :::
 
-To sort releases, click the **Sort** button, which displays the current sort order, and select an option: *Scheduled date (soonest first)* (default), *Scheduled date (latest first)*, *Most recent updates*, *Oldest updates*, *Most recently created*, *Name (A to Z)*, or *Name (Z to A)*.
+To sort releases, click the **Sort** button, which displays the current sort order, and select one of the following options:
+
+- *Scheduled date (soonest first)* (default)
+- *Scheduled date (latest first)*
+- *Most recent updates*
+- *Oldest updates*
+- *Most recently created*
+- *Name (A to Z)*
+- *Name (Z to A)*
 
 With both *Scheduled date* options, releases without a release date are listed last. Releases that have already been published keep their position by scheduled date.
 
