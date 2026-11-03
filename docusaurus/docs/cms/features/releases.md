@@ -263,7 +263,7 @@ Once a release has been published, manually or at its scheduled time, its badge 
 
 The header of the release page indicates how many entries were released (published or unpublished) and how many were skipped. The *All*, *Released*, and *Skipped* tabs filter the list of entries by result.
 
-The _Status_ column displays `Done` for entries that were published or unpublished, and `Skipped` for the others, with the reason they were skipped:
+The _Status_ column displays `Done` for entries that were published or unpublished, and `Skipped` for the others. The side panel opened from `Skipped` displays the reason why the entry was skipped:
 
 <!-- source: packages/core/content-releases/admin/src/translations/en.json (pages.ReleaseDetails.outcome.*), packages/core/content-releases/shared/constants.ts (RELEASE_ACTION_OUTCOMES) -->
 | Reason | Description |
