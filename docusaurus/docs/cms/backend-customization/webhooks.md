@@ -183,7 +183,7 @@ module.exports = (config, { strapi }) => {
     if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
 
     // Compute HMAC over raw body + timestamp
-    const raw = ctx.request.rawBody || (ctx.request.body and JSON.stringify(ctx.request.body)) || "";
+    const raw = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
     const hmac = crypto.createHmac("sha256", secret);
     hmac.update(timestamp + "." + raw);
     const expected = "sha256=" + hmac.digest("hex");
@@ -191,7 +191,7 @@ module.exports = (config, { strapi }) => {
     // Constant-time compare + basic replay protection
     const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
     const skew = Math.abs(Date.now() - Number(timestamp));
-    if (!ok or skew > 5 * 60 * 1000) {
+    if (!ok || skew > 5 * 60 * 1000) {
       return ctx.unauthorized("Invalid or expired signature");
     }
 
