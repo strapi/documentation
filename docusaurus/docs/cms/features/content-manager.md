@@ -383,7 +383,7 @@ When the component has not been added yet, the edit view does not display its fi
 
 To remove the component and its content from the entry, click on the delete button <Icon name="trash"/>, displayed on the right of the component name. The _No entry yet. Click to add one._ message is displayed again.
 
-In collection types, once the component is added, another button displayed next to the delete button copies content from an existing entry into the component. Its label depends on the content of the component:
+In collection types, once the component is added, another button, displayed on the right of the component name just before the delete button, copies content from an existing entry into the component. Its label depends on the content of the component:
 
 - <Icon name="copy"/>&nbsp;**Use existing content…** while all the fields of the component are empty or still hold their default values.
 - <Icon name="copy"/>&nbsp;**Replace content…** as soon as a field holds another value, since copying then overwrites the current content.
