@@ -55,7 +55,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
@@ -100,7 +100,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
@@ -134,7 +134,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
