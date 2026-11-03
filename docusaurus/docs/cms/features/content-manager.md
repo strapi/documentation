@@ -373,15 +373,15 @@ There are 2 types of components: non-repeatable and repeatable components.
   }}
 />
 
-Non-repeatable components are a combination of fields that can be used only once.
+A non-repeatable component groups several fields, and an entry holds a single instance of it.
 
-By default, the combination of fields is not directly displayed in the edit view:
+When the component has not been added yet, the edit view does not display its fields. The component area only displays a <Icon name="plus-circle" /> _No entry yet. Click to add one._ message. To add the component:
 
-1. Click on the add button <Icon name="plus-circle" /> to add the component.
+1. Click on the _No entry yet. Click to add one._ message.
 2. In collection types, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).
 3. Fill in the fields of the component.
 
-To delete the non-repeatable component, click on the delete button <Icon name="trash"/>, located in the top right corner of the component area.
+To remove the component and its content from the entry, click on the delete button <Icon name="trash"/>, displayed on the right of the component name. The _No entry yet. Click to add one._ message is displayed again.
 
 In collection types, a button next to the delete button copies content from an existing entry. The button reads <Icon name="copy"/>&nbsp;**Use existing content…** while the component holds its default values, and <Icon name="copy"/>&nbsp;**Replace content…** once the component is filled.
 
