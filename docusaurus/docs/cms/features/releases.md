@@ -98,9 +98,7 @@ An entry is ready when it can be published. Its fields must pass validation. If 
 
 If an error occurs while an entry is published or unpublished, the *Require every entry to be ready* mode cancels all changes and the release ends as `Failed`, while the *Release all ready items* mode only skips that entry.
 
-:::note
 If a database conflict (for example, a deadlock) interrupts the publication, nothing is published, whatever the release mode. The release keeps its status. A manual release can be published again. A scheduled release can be published manually within 5 minutes of its scheduled time: after that, it ends as `Failed`.
-:::
 
 :::tip
 Use *Release all ready items* for scheduled releases that must go out on time, even if some entries are not finished. Skipped entries can be published later by [creating a release from skipped entries](#creating-a-release-from-skipped-entries).
