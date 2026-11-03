@@ -151,8 +151,8 @@ A release stores a reference to an entry, not a copy of its content. If the draf
 
 The *Releases* box on the right should show which release(s) the entry is included in.
 
-:::info
-If [Releases scheduling](/cms/features/releases#scheduling-a-release) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
+:::note
+If the entry is added to a [scheduled release](#scheduling-a-release), the release date and time are also displayed.
 :::
 
 #### Multiple entries at a time
