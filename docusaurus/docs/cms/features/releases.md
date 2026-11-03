@@ -271,7 +271,7 @@ The _Status_ column displays `Done` for entries that were published or unpublish
 | Validation error | Some fields of the entry were incorrectly filled when the release was published. This includes a unique value already used by another entry of the same release. This reason is also displayed when the entry no longer existed when the release was published. |
 | Not ready to publish | The entry was not at the required stage for publishing. |
 | Error | A server error prevented the entry from being published or unpublished. The error does not come from the content of the entry. |
-| Waiting on other entries | The entry was ready, but the release requires every entry to be ready and some were not. |
+| Waiting on other entries | The entry was ready, but the release requires every entry to be published or unpublished together, and another entry was not ready or could not be published or unpublished. |
 | Server unavailable | The release could not be published at the scheduled time, for example because the server was unavailable. |
 
 An entry deleted after the release was published is displayed as *Deleted entry*. It keeps its result, but it can no longer be opened from the release.
