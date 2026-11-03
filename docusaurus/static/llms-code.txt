@@ -23522,19 +23522,7 @@ File path: ./config/typescript.js
 
 ```js
 module.exports = ({ env }) => ({
-  autogenerate: true,
-});
-```
-
----
-Language: TypeScript
-File path: ./config/typescript.ts
-
-```ts
-import type { Core } from '@strapi/strapi';
-
-export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.TypeScript => ({
-  autogenerate: true,
+  autogenerate: false,
 });
 ```
 
