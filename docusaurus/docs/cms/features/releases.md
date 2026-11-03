@@ -259,7 +259,13 @@ Once a release has been published, manually or at its scheduled time, its badge 
 
 - `Done`: every entry was published or unpublished.
 - `Partial`: some entries were published or unpublished, and the others were skipped. Only releases using the *Release all ready items* mode can end as `Partial`.
-- `Failed`: no entry was published or unpublished. Releases that failed before your project was upgraded to a Strapi version supporting partial releases are an exception (see the note below).
+- `Failed`: no entry was published or unpublished.
+
+:::note
+A release that failed before your project was upgraded to a Strapi version supporting partial releases displays the `Unknown` status for its entries. Strapi did not record which entries were published before the failure.
+:::
+
+<!-- TODO: Add the Strapi version that introduces partial releases once strapi/strapi#28339 is released. -->
 
 The header of the release page indicates how many entries were released (published or unpublished) and how many were skipped. The *All*, *Released*, and *Skipped* tabs filter the list of entries by result.
 
@@ -282,11 +288,6 @@ To see why an entry was skipped:
 2. (_optional_) Click **Previous** or **Next** to browse the other skipped entries.
 3. (_optional_) Click **Go to entry** to open the entry in the Content Manager.
 
-:::note
-A release that failed before your project was upgraded to a Strapi version supporting partial releases displays the `Unknown` status for its entries. Strapi did not record which entries were published before the failure.
-:::
-<!-- TODO: Add the Strapi version that introduces partial releases once strapi/strapi#28339 is released. -->
-
 When a release is published or ends as `Failed`, Strapi also sends the [`releases.publish` webhook](/cms/backend-customization/webhooks#releases-publish), which includes the release status and the number of published, unpublished, and skipped entries.
 
 ### Creating a release from skipped entries
@@ -297,7 +298,7 @@ A release cannot be published twice. To publish the entries skipped by a `Partia
 
 :::prerequisites
 - The status of the release is `Partial` or `Failed`.
-- The release did not fail before your project was upgraded to a Strapi version supporting partial releases. Its entries display the `Unknown` status, so Strapi cannot tell which ones were skipped.
+- The release did not fail before your project was upgraded to a Strapi version supporting partial releases (see [Reviewing release results](#reviewing-release-results)).
 - At least 1 skipped entry still exists.
 - Your role has the permissions to create releases and to add entries to releases (see [configuring administrator roles](/cms/features/rbac#configuring-roles-permissions)).
 :::
