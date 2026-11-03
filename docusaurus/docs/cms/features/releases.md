@@ -222,13 +222,13 @@ To publish a release, click the **Publish** button in the top right corner of th
 
   - The _Status_ column displays the status of each entry:
     - `Ready`: the entry will be published or unpublished with the release.
-    - `Not ready`: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing.
+    - `Not ready`: the entry cannot be published because some fields are incorrectly filled, or it is not at the required stage for publishing.
 
   - The *All*, *Ready*, and *Not ready* tabs filter the list of entries by status.
 
 To fix an entry that is not ready:
 
-1. Click **Not ready** in the _Status_ column of the entry. A side panel lists the reasons: each invalid field and what is wrong with it, or the review stage the entry has not reached yet.
+1. Click **Not ready** in the _Status_ column of the entry. A side panel lists the reasons: each invalid field and what is wrong with it, or the review stage the entry must be at to be published.
 2. Click **Go to entry**. The entry opens in the Content Manager, with its validation errors displayed if there are any.
 3. Fix the issues.
 4. Save the entry.
@@ -269,7 +269,7 @@ The _Status_ column displays `Done` for entries that were published or unpublish
 | Reason | Description |
 | --- | --- |
 | Validation error | Some fields of the entry were incorrectly filled when the release was published. This includes a unique value already used by another entry of the same release. This reason is also displayed when the entry no longer existed when the release was published. |
-| Not ready to publish | The entry had not reached the required stage for publishing. |
+| Not ready to publish | The entry was not at the required stage for publishing. |
 | Error | A server error prevented the entry from being published or unpublished. The error does not come from the content of the entry. |
 | Waiting on other entries | The entry was ready, but the release requires every entry to be ready and some were not. |
 | Server unavailable | The release could not be published at the scheduled time, for example because the server was unavailable. |
