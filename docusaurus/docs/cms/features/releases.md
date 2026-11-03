@@ -147,7 +147,8 @@ A release stores a reference to an entry, not a copy of its content. If the draf
 1. Click on <Icon name="dots-three-outline" /> in the _Entry_ area on the right side of the interface.
 2. In the list, click on the <Icon name="paper-plane-tilt" /> **Add to release** button.
 3. Select which release to add this entry to.
-4. Click on the **Publish** or **Unpublish** button depending on whether you want the entry to be published or unpublished when the release itself is published, then click **Continue**.
+4. Click on the **Publish** or **Unpublish** button depending on whether you want the entry to be published or unpublished when the release itself is published.
+5. Click **Continue**.
 
 The *Releases* box on the right should show which release(s) the entry is included in.
 
@@ -162,7 +163,8 @@ If the entry is added to a [scheduled release](#scheduling-a-release), the relea
 1. Select which entries you want to add by ticking the box on the left side of the entries' record.
 2. Click on the **Add to release** button located above the header of the table.
 3. In the modal, select which release to add these entries to.
-4. Click on the **Publish** or **Unpublish** button to decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
+4. Click on the **Publish** or **Unpublish** button to decide whether these entries will be published or unpublished when the release is published.
+5. Click **Continue**.
 
 <ThemedImage
   alt="Including content in a release"
