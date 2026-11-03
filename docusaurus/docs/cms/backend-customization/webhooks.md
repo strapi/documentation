@@ -16,7 +16,7 @@ tags:
 # Webhooks
 
 <Tldr>
-Webhooks let Strapi notify external systems when content changes, while omitting the Users type for privacy. Configuration in `config/server` sets default headers and endpoints to trigger third-party processing.
+Webhooks let Strapi notify external systems when content changes, while omitting the Users type for privacy. Configuration in `config/server` sets default headers and endpoints to trigger third-party processing. This documentation lists the available events, which can be selected per content type, and the payload each one sends.
 </Tldr>
 
 Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third-party providers to start some processing (CI, build, deployment ...).
