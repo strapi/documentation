@@ -197,7 +197,11 @@ To schedule an existing release, while on a release page:
 5. Click **Save**.
 
 :::caution
-If the Strapi server is unavailable at the scheduled time, the release is not published. If the server restarts less than 5 minutes after the scheduled time, the release is published automatically. During these 5 minutes, the release keeps its status and can also be [published manually](#publishing-a-release). After 5 minutes, the release ends as `Failed`, within a minute or as soon as the server restarts, and all its entries are skipped (see [Reviewing release results](#reviewing-release-results)). A scheduled release that contains no entries ends as `Done`.
+If the Strapi server is unavailable at the scheduled time, the release is not published:
+
+- If the server restarts less than 5 minutes after the scheduled time, the release is published automatically. During these 5 minutes, the release keeps its status and can also be [published manually](#publishing-a-release).
+- After 5 minutes, the release ends as `Failed` and all its entries are skipped (see [Reviewing release results](#reviewing-release-results)). Strapi applies this status within a minute, or as soon as the server restarts.
+- A scheduled release that contains no entries ends as `Done`.
 :::
 
 <ThemedImage
