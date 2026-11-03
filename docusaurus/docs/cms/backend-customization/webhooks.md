@@ -297,7 +297,7 @@ By default Strapi webhooks can be triggered by the following events:
 | [`entry.delete`](#entrydelete)    | Triggered when a Content Type entry is deleted.       |
 | [`entry.publish`](#entrypublish)   | Triggered when a Content Type entry is published.\*   |
 | [`entry.unpublish`](#entryunpublish) | Triggered when a Content Type entry is unpublished.\* |
-| [`entry.draft-discard`](#entry-draft-discard) | Triggered when the draft version of a Content Type entry is discarded.\*<br />This event is not listed in the **Webhooks** form of the admin panel, so subscribing to it requires creating the webhook programmatically. |
+| [`entry.draft-discard`](#entry-draft-discard) | Triggered when the draft version of a Content Type entry is discarded.\*<br />This event is not listed in the *Webhooks* form of the admin panel, so subscribing to it requires creating the webhook programmatically. |
 | [`media.create`](#mediacreate)    | Triggered when a media is created.                    |
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
@@ -309,9 +309,9 @@ By default Strapi webhooks can be triggered by the following events:
 ### Entry events per content type
 <VersionBadge version="5.60.0+" noTooltip />
 
-The entry events above are triggered for every content type by default. In the **Settings > Webhooks** form, the events table also lists each collection type and single type below the **Entry** row, so an event can be selected for one content type only, for example `Create` on articles and `Publish` on pages in the same webhook.
+The entry events above are triggered for every content type by default. In the *Settings > Webhooks* form, the events table also lists each collection type and single type below the *Entry* row, so an event can be selected for one content type only, for example `Create` on articles and `Publish` on pages in the same webhook.
 
-An event checked on the **Entry** row still applies to every content type: it is displayed as checked and locked on each content type row and can't be unchecked from there. An event can't be selected for `entry.publish` or `entry.unpublish` on a content type that doesn't have [Draft & Publish](/cms/features/draft-and-publish) enabled, since those events never occur for it.
+An event checked on the *Entry* row still applies to every content type: it is displayed as checked and locked on each content type row and can't be unchecked from there. An event can't be selected for `entry.publish` or `entry.unpublish` on a content type that doesn't have [Draft & Publish](/cms/features/draft-and-publish) enabled, since those events never occur for it.
 
 This selection is saved in the webhook's `contentTypeEvents` attribute, which maps a content type UID to the entry events selected for it as in the following example:
 
@@ -321,7 +321,7 @@ This selection is saved in the webhook's `contentTypeEvents` attribute, which ma
 }
 ```
 
-Only events not already selected on the **Entry** row are kept in `contentTypeEvents`. Changes to `contentTypeEvents` are recorded in the [Audit Logs](/cms/features/audit-logs) along with the webhook's other fields.
+Only events not already selected on the *Entry* row are kept in `contentTypeEvents`. Changes to `contentTypeEvents` are recorded in the [Audit Logs](/cms/features/audit-logs) along with the webhook's other fields.
 
 ## Payloads
 
