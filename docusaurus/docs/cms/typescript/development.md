@@ -76,7 +76,7 @@ yarn strapi ts:generate-types --debug #optional flag to display additional loggi
 </Tabs>
 
 :::tip Tip: Disable automatic type generation
-For JavaScript projects, types are automatically generated when running `strapi develop` unless `autogenerate: false` is set in [the `config/typescript.js|ts` configuration file](/cms/configurations/typescript#strapi-specific-configuration-for-typescript). TypeScript projects always generate types when running `strapi develop`.
+For JavaScript projects, types are automatically generated when running `strapi develop` unless `autogenerate: false` is set in [the `config/typescript.js` configuration file](/cms/configurations/typescript#strapi-specific-configuration-for-typescript). TypeScript projects always generate types when running `strapi develop`.
 :::
 
 :::tip Tip: Using types in your front-end application
