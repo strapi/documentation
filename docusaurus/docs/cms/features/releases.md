@@ -373,7 +373,7 @@ The following actions are recorded:
 | Create release | The new release name, whether it was scheduled, and its release mode. |
 | Update release | The fields that changed (name, schedule date, timezone, release mode) and their previous and new values. No entry is created if nothing changed. |
 | Delete release | The deleted release identifier. |
-| Trigger release | The outcome: `success` (`Done` release), `partial` (`Partial` release), or `failure` (`Failed` release). For `success` and `partial`, the number of entries published, unpublished, and skipped. For `failure`, the error name only, no internal details. A scheduled release that could not be published because the server was unavailable is logged as a `failure`. |
+| Trigger release | The outcome: `success` (`Done` release), `partial` (`Partial` release), or `failure` (`Failed` release). For `success` and `partial`, the log records the number of entries published, unpublished, and skipped. For `failure`, it records the error name only, with no internal details. A scheduled release that could not be published because the server was unavailable is logged as a `failure`. |
 | Add entry to release | One log entry per entry added, with the content type, document ID, locale, and action type (`publish` or `unpublish`). |
 | Change entry on release | The previous and new action type (`publish` ↔ `unpublish`). No entry is created if nothing changed. |
 | Remove entry from release | The entry that was explicitly removed from the release. |
