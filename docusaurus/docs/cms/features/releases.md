@@ -213,18 +213,16 @@ A release page can display entries either grouped by locale, content-type, or ac
 
 Publishing a release means that the action (publish or unpublish) defined for each entry included in the release is performed. The [release mode](#choosing-a-release-mode) decides what happens to entries that are not ready.
 
-To publish a release, click the **Publish** button in the top right corner of the admin panel. The button is disabled while the release is `Empty` or `Blocked`: hover over it to see why. Before publishing, make sure to check the status of both the release and its entries.
+Before publishing, check the status of both the release and its entries:
 
-  - A badge at the top of the interface indicates the status of your release:
-    - `Empty`: no entry has been added to the release yet.
-    - `Ready`: the release can be published. With the *Release all ready items* mode, a release is ready if at least 1 entry is ready. The entries that are not ready are skipped.
-    - `Blocked`: publishing the release now would publish nothing. With the *Require every entry to be ready* mode, at least 1 entry is not ready. With the *Release all ready items* mode, no entry is ready.
-
-  - The _Status_ column displays the status of each entry:
-    - `Ready`: the entry will be published or unpublished with the release.
-    - `Not ready`: the entry cannot be published because some fields are incorrectly filled, or it is not at the required stage for publishing.
-
-  - The *All*, *Ready*, and *Not ready* tabs filter the list of entries by status.
+- A badge at the top of the interface indicates the status of your release:
+  - `Empty`: no entry has been added to the release yet.
+  - `Ready`: the release can be published. With the *Release all ready items* mode, a release is ready if at least 1 entry is ready. The entries that are not ready are skipped.
+  - `Blocked`: publishing the release now would publish nothing. With the *Require every entry to be ready* mode, at least 1 entry is not ready. With the *Release all ready items* mode, no entry is ready.
+- The _Status_ column displays the status of each entry:
+  - `Ready`: the entry will be published or unpublished with the release.
+  - `Not ready`: the entry cannot be published because some fields are incorrectly filled, or it is not at the required stage for publishing.
+- The *All*, *Ready*, and *Not ready* tabs filter the list of entries by status.
 
 To fix an entry that is not ready:
 
@@ -235,9 +233,9 @@ To fix an entry that is not ready:
 5. Go back to the release page.
 6. Click the **Refresh** button to update the statuses.
 
-:::note
+To publish the release, click the **Publish** button in the top right corner of the admin panel. The button is disabled while the release is `Empty` or `Blocked`: hover over it to see why.
+
 When you click **Publish**, Strapi checks every entry again. The release is published based on the current state of its entries, even if the displayed statuses are outdated. If the release is no longer ready, Strapi displays the reason, the release is not published, and its status changes to `Blocked`.
-:::
 
 :::caution
 Once a release is published, it cannot be edited or published again, and entries cannot be added to it or removed from it. A `Done` or `Partial` release cannot be deleted. To publish entries that were skipped, [create a release from skipped entries](#creating-a-release-from-skipped-entries).
