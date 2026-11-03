@@ -834,7 +834,7 @@ This event is only available with the <EnterpriseBadge/> plan of Strapi.<br />Th
 The event is triggered when a [release](/cms/features/releases) is published, regardless of the result:
 
 - `isPublished` is `true` when the release ends as `done` (every entry was published or unpublished) or `partial` (some entries were published or unpublished, and the others were skipped).
-- `isPublished` is `false` when the release ends as `failed`: no entry was published or unpublished. This includes a scheduled release that could not be published at its scheduled time. The payload then also includes an `error` key. Do not rely on its content: it can be an empty object.
+- `isPublished` is `false` when the release ends as `failed`: no entry was published or unpublished. This includes a scheduled release with entries that could not be published at its scheduled time. A scheduled release without entries ends as `done` instead. The payload then also includes an `error` key. Do not rely on its content: it can be an empty object.
 
 No event is sent when a database conflict (for example, a deadlock) interrupts the publication, since nothing was published. If the release was scheduled and is not published manually within 5 minutes of its scheduled time, it then ends as `failed` with the `missed_schedule` failure reason, and the event is sent at that point.
 
