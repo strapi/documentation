@@ -1,7 +1,7 @@
 ---
 title: Content Manager
 description: Learn to use the Content Manager.
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 tags:
 - admin panel
 - content manager
