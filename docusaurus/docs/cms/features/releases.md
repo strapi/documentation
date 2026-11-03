@@ -84,7 +84,7 @@ You can rename a release. To do so, while on a release page:
 
 ### Choosing a release mode
 
-**Path:** <Icon name="paper-plane-tilt" /> Releases
+**Path to configure the feature:** <Icon name="paper-plane-tilt" /> Releases
 
 The release mode defines what happens when a release is published while some of its entries are not ready. You choose the release mode when [creating a release](#creating-a-release), and can change it by editing the release until the release is published or ends as `Failed`.
 
@@ -106,7 +106,7 @@ Use *Release all ready items* for scheduled releases that must go out on time, e
 
 ### Deleting a release
 
-**Path:** <Icon name="paper-plane-tilt" /> Releases
+**Path to configure the feature:** <Icon name="paper-plane-tilt" /> Releases
 
 Deleting a release will only delete the release itself, but not the content-type entries included in the release. A release that ended as `Done` or `Partial` cannot be deleted, but a release that ended as `Failed` can (see [Reviewing release results](#reviewing-release-results)).
 
