@@ -879,6 +879,36 @@ The `release` object describes the release after it was published. In addition t
 }
 ```
 
+**Example payload for a scheduled release that missed its scheduled time**
+
+<!-- source: packages/core/content-releases/server/src/services/release.ts (recordMissedRun, reportFailedRun), packages/core/content-releases/server/src/services/scheduling.ts (reportFrozenRelease) -->
+```json
+{
+  "event": "releases.publish",
+  "createdAt": "2024-02-22T09:06:00.412Z",
+  "isPublished": false,
+  "error": {
+    "name": "MissedSchedule"
+  },
+  "release": {
+    "id": 3,
+    "documentId": "q8m2cz1v6w0rj5yk7d3hbn4e",
+    "name": "Spring launch",
+    "releasedAt": "2024-02-22T09:06:00.407Z",
+    "scheduledAt": "2024-02-22T09:00:00.000Z",
+    "timezone": "Europe/Paris",
+    "status": "failed",
+    "releaseCondition": "all_or_nothing",
+    "totalPublishedEntries": 0,
+    "totalUnpublishedEntries": 0,
+    "totalSkippedEntries": 5,
+    "failureReason": "missed_schedule",
+    "createdAt": "2024-02-20T14:12:09.301Z",
+    "updatedAt": "2024-02-22T09:06:00.409Z"
+  }
+}
+```
+
 ## Best practices for webhook handling
 
 - Validate incoming requests by checking headers and payload signatures.
