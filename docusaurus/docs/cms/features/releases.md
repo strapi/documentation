@@ -56,7 +56,7 @@ To be able to include your content in releases, and to schedule and publish thos
 3. Define when the release is published:
    - To schedule the release, select the date, time, and timezone for publication.
    - To publish the release manually, check the *I don't have a release date yet* checkbox.
-4. In the *Release mode* area, choose how the release handles entries that are not ready (see [Choosing a release mode](#choosing-a-release-mode)).
+4. In the *Release mode* area, choose *Require every entry to be ready* (default) or *Release all ready items* to define how the release handles entries that are not ready (see [Choosing a release mode](#choosing-a-release-mode)).
 5. Click the **Create release** button.
 
 :::tip
