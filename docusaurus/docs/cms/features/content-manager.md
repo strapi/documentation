@@ -1,7 +1,7 @@
 ---
 title: Content Manager
 description: Learn to use the Content Manager.
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 tags:
 - admin panel
 - content manager
@@ -378,12 +378,23 @@ A non-repeatable component groups several fields, and an entry holds a single in
 When the component has not been added yet, the edit view does not display its fields. The component area only displays a <Icon name="plus-circle" /> _No entry yet. Click to add one._ message. To add the component:
 
 1. Click on the _No entry yet. Click to add one._ message.
-2. In collection types, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).
+2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).<br/>If you're editing a single type, the component is added directly with blank fields.
 3. Fill in the fields of the component.
 
-To remove the component and its content from the entry, click on the delete button <Icon name="trash"/>, displayed on the right of the component name. The _No entry yet. Click to add one._ message is displayed again.
+To remove the component and its content from the entry, click on the delete button <Icon name="trash"/>, displayed on the right of the component name.
 
-In collection types, a button next to the delete button copies content from an existing entry. The button reads <Icon name="copy"/>&nbsp;**Use existing content…** while the component holds its default values, and <Icon name="copy"/>&nbsp;**Replace content…** once the component is filled.
+When editing collection types, once the component is added, another button, displayed on the right of the component name just before the delete button, copies content from an existing entry into the component. Its label depends on the content of the component:
+  - <Icon name="copy"/>&nbsp;**Use existing content…** while all the fields of the component are empty or still hold their default values.
+  - <Icon name="copy"/>&nbsp;**Replace content…** as soon as a field holds another value, since copying then overwrites the current content.
+
+  <ThemedImage
+    alt="Replace content button of a non-repeatable component"
+    width="80%"
+    sources={{
+      light: '/img/assets/content-manager/edit-view_component-copy-button.png',
+      dark: '/img/assets/content-manager/edit-view_component-copy-button_DARK.png',
+    }}
+  />
 
 </TabItem>
 
@@ -403,7 +414,7 @@ Repeatable components are also a combination of fields, but they allow the creat
 To add a new entry and display its combination of fields:
 
 1. Click on the add button <Icon name="plus-circle" /> to add the component.
-2. In collection types, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content).
+2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content).<br/>If you're editing a single type, the component is added directly with blank fields.
 3. Fill in the fields of the component.
 4. (optional) Click on the <Icon name="plus"/>&nbsp;**Add an entry** button to add another entry. In collection types, the same <Icon name="plus"/>&nbsp;**Empty entry** and <Icon name="copy"/>&nbsp;**Use existing content…** choices are displayed.
 
@@ -420,49 +431,7 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 
 </Tabs>
 
-#### Dynamic zones
-
-Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
-
-<ThemedImage
-  alt="Writing content for a dynamic zone"
-  sources={{
-    light: '/img/assets/content-manager/edit-view_dynamic-zone-1.png',
-    dark: '/img/assets/content-manager/edit-view_dynamic-zone-1_DARK.png',
-  }}
-/>
-
-<ThemedImage
-  alt="Writing content for a dynamic zone"
-  sources={{
-    light: '/img/assets/content-manager/edit-view_dynamic-zone-2.png',
-    dark: '/img/assets/content-manager/edit-view_dynamic-zone-2_DARK.png',
-  }}
-/>
-
-In the component picker, each component displays an icon.
-A component whose schema defines a preview image displays that image as a thumbnail instead, and hovering over it shows an enlarged version.
-Developers set this image in the [component schema](/cms/backend-customization/models#component-preview-images).
-
-1. Click on the <Icon name="plus-circle" /> **Add a component to [dynamic zone name]** button.
-2. Choose a component available for the dynamic zone.
-3. In collection types, choose <Icon name="plus"/>&nbsp;**Empty component** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy components from an existing entry](#reusing-existing-component-content).
-4. Fill in the fields of the component.
-
-Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
-
-- Use the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> to reorder components in your dynamic zone.
-- Use the delete button <Icon name="trash"/> to delete a component from your dynamic zone.
-
-:::tip
-You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> and use the arrow keys to then re-order, pressing Space again to drop the item.
-:::
-
-:::note
-Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
-:::
-
-#### Reusing existing component content {#reusing-existing-component-content}
+##### Reusing existing component content {#reusing-existing-component-content}
 
 In collection types, the content of a component can be copied from an existing entry instead of being filled in again by hand. The source entry must belong to the same content-type and locale, and can be the current entry.
 This applies to non-repeatable components, repeatable components and the components of dynamic zones.
@@ -494,6 +463,49 @@ The following rules apply when copying content:
 - The values of `uid` fields and of fields set as unique are not copied. These fields are left empty, so they can be filled in with new values.
 - Relations of the copied components are copied too. A warning is displayed if some relations could not be loaded.
 - The selection cannot exceed the number of components the field can still hold. The limit comes from the maximum set in the Content-type Builder (_Maximum components_ for [repeatable components](/cms/features/content-type-builder#components), _Maximum value_ for [dynamic zones](/cms/features/content-type-builder#dynamiczones)). If too many components are selected, the confirmation button is disabled and the window indicates how many components to unselect.
+
+
+#### Dynamic zones
+
+Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
+
+<ThemedImage
+  alt="Writing content for a dynamic zone"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_dynamic-zone-1.png',
+    dark: '/img/assets/content-manager/edit-view_dynamic-zone-1_DARK.png',
+  }}
+/>
+
+<ThemedImage
+  alt="Writing content for a dynamic zone"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_dynamic-zone-2.png',
+    dark: '/img/assets/content-manager/edit-view_dynamic-zone-2_DARK.png',
+  }}
+/>
+
+In the component picker, each component displays an icon.
+A component whose schema defines a preview image displays that image as a thumbnail instead, and hovering over it shows an enlarged version.
+Developers set this image in the [component schema](/cms/backend-customization/models#component-preview-images).
+
+1. Click on the <Icon name="plus-circle" /> **Add a component to [dynamic zone name]** button.
+2. Choose a component available for the dynamic zone.
+3. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty component** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy components from an existing entry](#reusing-existing-component-content). If you're editing a single type, the component is added directly with blank fields.
+4. Fill in the fields of the component.
+
+Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
+
+- Use the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> to reorder components in your dynamic zone.
+- Use the delete button <Icon name="trash"/> to delete a component from your dynamic zone.
+
+:::tip
+You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> and use the arrow keys to then re-order, pressing Space again to drop the item.
+:::
+
+:::note
+Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
+:::
 
 #### Media fields {#media-fields}
 
