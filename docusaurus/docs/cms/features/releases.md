@@ -97,7 +97,7 @@ An entry is ready when it can be published. Its fields must pass validation. If 
 | Release all ready items | Allow partial | Strapi publishes or unpublishes the entries that are ready and skips the others. If an error occurs while an entry is published or unpublished, only that entry is skipped. |
 
 :::note
-If a database conflict (for example, a deadlock) interrupts the publication, nothing is published, whatever the release mode. The release keeps its status and can be published again.
+If a database conflict (for example, a deadlock) interrupts the publication, nothing is published, whatever the release mode. The release keeps its status. A manual release can be published again. A scheduled release can be published manually within 5 minutes of its scheduled time: after that, it ends as `Failed`.
 :::
 
 :::tip
