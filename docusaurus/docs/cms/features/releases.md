@@ -126,7 +126,7 @@ To delete a `Failed` release, while on the release page:
 **Path to use the feature:** <Icon name="paper-plane-tilt" /> Releases and <Icon name="feather" /> Content Manager
 
 :::caution
-Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/cms/features/draft-and-publish) is disabled for the content-type.
+Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/cms/features/draft-and-publish) is disabled for the content type.
 :::
 
 ### Including content in a release
@@ -322,7 +322,7 @@ A release cannot be published twice. To publish the entries skipped by a `Partia
 6. (_optional_) Change the release mode. By default, the new release uses *Release all ready items*, so entries that are still not ready do not block the others.
 7. Click the **Create release** button.
 
-The original release is not modified. The new release does not include entries deleted since the original release was published. It also does not include entries whose content-type was deleted or no longer uses [Draft & Publish](/cms/features/draft-and-publish).
+The original release is not modified. The new release does not include entries deleted since the original release was published. It also does not include entries whose content type was deleted or no longer uses [Draft & Publish](/cms/features/draft-and-publish).
 
 ### Filtering and sorting releases
 
