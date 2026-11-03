@@ -378,12 +378,12 @@ Non-repeatable components are a combination of fields that can be used only once
 By default, the combination of fields is not directly displayed in the edit view:
 
 1. Click on the add button <Icon name="plus-circle" /> to add the component.
-2. In collection types, choose **Empty entry** to start with blank fields, or **Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).
+2. In collection types, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).
 3. Fill in the fields of the component.
 
 To delete the non-repeatable component, click on the delete button <Icon name="trash"/>, located in the top right corner of the component area.
 
-In collection types, a button next to the delete button copies content from an existing entry. The button reads **Use existing content…** while the component holds its default values, and **Replace content…** once the component is filled.
+In collection types, a button next to the delete button copies content from an existing entry. The button reads <Icon name="copy"/>&nbsp;**Use existing content…** while the component holds its default values, and <Icon name="copy"/>&nbsp;**Replace content…** once the component is filled.
 
 </TabItem>
 
@@ -403,9 +403,9 @@ Repeatable components are also a combination of fields, but they allow the creat
 To add a new entry and display its combination of fields:
 
 1. Click on the add button <Icon name="plus-circle" /> to add the component.
-2. In collection types, choose **Empty entry** to start with blank fields, or **Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content).
+2. In collection types, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content).
 3. Fill in the fields of the component.
-4. (optional) Click on the **Add an entry** button to add another entry. In collection types, the same **Empty entry** and **Use existing content…** choices are displayed.
+4. (optional) Click on the <Icon name="plus"/>&nbsp;**Add an entry** button to add another entry. In collection types, the same <Icon name="plus"/>&nbsp;**Empty entry** and <Icon name="copy"/>&nbsp;**Use existing content…** choices are displayed.
 
 The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 
@@ -446,7 +446,7 @@ Developers set this image in the [component schema](/cms/backend-customization/m
 
 1. Click on the <Icon name="plus-circle" /> **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
-3. In collection types, choose **Empty component** to start with blank fields, or **Use existing content…** to [copy components from an existing entry](#reusing-existing-component-content).
+3. In collection types, choose <Icon name="plus"/>&nbsp;**Empty component** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy components from an existing entry](#reusing-existing-component-content).
 4. Fill in the fields of the component.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
@@ -475,7 +475,7 @@ This applies to non-repeatable components, repeatable components and the compone
   }}
 />
 
-1. Click on **Use existing content…** (or **Replace content…** for a filled non-repeatable component) from the [component](#components) or [dynamic zone](#dynamic-zones) field.
+1. Click on <Icon name="copy"/>&nbsp;**Use existing content…** (or <Icon name="copy"/>&nbsp;**Replace content…** for a filled non-repeatable component) from the [component](#components) or [dynamic zone](#dynamic-zones) field.
 2. In the left pane of the window, pick an entry from the _Recently updated entries_ list, or use the _Search all entries_ field to find one.
 3. In the right pane, review the content to copy:
    - For repeatable components and dynamic zones, tick the box of each component to copy, or tick **Select all**.
