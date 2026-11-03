@@ -325,6 +325,8 @@ Only events not already selected on the *Entry* row are kept in `contentTypeEven
 
 ## Payloads
 
+Each webhook request sends a JSON payload whose structure depends on the event.
+
 :::info
 Private fields are not sent in the payload.
 :::
