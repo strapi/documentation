@@ -30,7 +30,7 @@ The Releases feature enables content managers to organize entries into container
 
 ## Configuration
 
-To be able to include your content in releases, and to schedule and publish those releases, you must first create them. You can also modify the releases' default timezone to use when scheduling a publication, as well as deleting releases that are obsolete or irrelevant.
+To be able to include your content in releases, and to schedule and publish those releases, you must first create them and choose their release mode. You can also modify the releases' default timezone to use when scheduling a publication, as well as deleting releases that are obsolete or irrelevant.
 
 ### Choosing default timezone
 
