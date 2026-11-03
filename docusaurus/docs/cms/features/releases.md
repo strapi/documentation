@@ -108,11 +108,18 @@ Use *Release all ready items* for scheduled releases that must go out on time, e
 
 **Path:** <Icon name="paper-plane-tilt" /> Releases
 
-Deleting a release will only delete the release itself, but not the content-type entries included in the release. A `Done` or `Partial` release cannot be deleted. A `Failed` release can be deleted.
+Deleting a release will only delete the release itself, but not the content-type entries included in the release. A release that ended as `Done` or `Partial` cannot be deleted, but a release that ended as `Failed` can (see [Reviewing release results](#reviewing-release-results)).
 
-1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel. For a `Failed` release, skip this step.
-2. Select <Icon name="trash" /> **Delete**. For a `Failed` release, click the <Icon name="trash" /> **Delete** button in the top right corner of the admin panel.
+To delete a release that has not been published yet, while on the release page:
+
+1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel.
+2. Select <Icon name="trash" /> **Delete**.
 3. In the confirmation dialog, click <Icon name="trash" /> **Confirm**.
+
+To delete a `Failed` release, while on the release page:
+
+1. Click the <Icon name="trash" /> **Delete** button in the top right corner of the admin panel.
+2. In the confirmation dialog, click <Icon name="trash" /> **Confirm**.
 
 ## Usage
 
