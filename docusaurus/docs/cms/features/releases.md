@@ -146,8 +146,8 @@ A release stores a reference to an entry, not a copy of its content. If the draf
 
 1. Click on <Icon name="dots-three-outline" /> in the _Entry_ area on the right side of the interface.
 2. In the list, click on the <Icon name="paper-plane-tilt" /> **Add to release** button.
-2. Select which release to add this entry to.
-3. Click on the **Publish** or **Unpublish** button depending on whether you want the entry to be published or unpublished when the release itself is published, then click **Continue**.
+3. Select which release to add this entry to.
+4. Click on the **Publish** or **Unpublish** button depending on whether you want the entry to be published or unpublished when the release itself is published, then click **Continue**.
 
 The *Releases* box on the right should show which release(s) the entry is included in.
 
