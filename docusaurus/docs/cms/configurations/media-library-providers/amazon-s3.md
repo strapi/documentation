@@ -189,6 +189,8 @@ If your bucket is configured to be private, set the `ACL` option to `private` in
 
 You can define the expiration time of the signed URL by setting the `signedUrlExpires` option in the `params` object. The default value is 15 minutes.
 
+A private bucket also requires a [bucket CORS rule](#bucket-cors-configuration) that allows the admin panel URL. Without it, the Media Library displays no image thumbnails or image previews.
+
 :::note
 If you are using a CDN, the URLs will not be signed.
 :::
@@ -226,7 +228,7 @@ module.exports = ({ env }) => ({
 
 ## Required setup
 
-The following are the minimum configuration actions to take into account for your AWS S3 setup to work with the Media Library.
+The following are the configuration actions to take into account for your AWS S3 setup to work with the Media Library.
 
 ### IAM policy actions
 
@@ -244,24 +246,76 @@ The following are the minimum amount of permissions needed for the AWS S3 provid
 
 ### Bucket CORS configuration
 
-To display thumbnails for GIFs and videos uploaded to S3, edit your bucket's CORS configuration so that thumbnails are properly shown in Strapi. To do so:
+Add a CORS rule to your bucket to use the Media Library features listed in this section.
+
+The admin panel (e.g., `https://admin.example.com`) and the bucket (e.g., `https://my-bucket.s3.eu-west-3.amazonaws.com`) are served from different origins. Displaying an image from the bucket does not require CORS. However, some Media Library features load files in CORS mode. In that mode, the browser only accepts a file if the bucket returns an `Access-Control-Allow-Origin` header that matches the admin panel URL.
+
+A bucket CORS rule is required for the following features:
+
+- Cropping images and setting a focus area: the editor loads the image in CORS mode to draw it on a canvas and export the result. Without a CORS rule, the image does not load in the editor and cannot be cropped.
+- Downloading files: the admin panel fetches the file before saving it. Without a CORS rule, the download fails.
+- Image thumbnails and image previews from a [private bucket](#private-bucket-and-signed-urls): signed URLs are loaded in CORS mode, so no image is displayed without a CORS rule.
+- Previews in the [previous Media Library](/cms/features/media-library#use-legacy-media-library): the image preview of the _Details_ window and the video thumbnails load in CORS mode.
+
+The following table summarizes what works depending on the storage setup. The table assumes that the [security middleware](#security-middleware-configuration) already allows the bucket host.
+
+| Storage setup | Thumbnails and previews | _Crop & Focus area_ editor | Download |
+| --- | --- | --- | --- |
+| Public bucket, no CORS rule | Displayed, except video thumbnails and the _Details_ window preview in the previous Media Library | Fails | Fails |
+| Public bucket, CORS rule allows the admin panel URL | Displayed | Works | Works |
+| Private bucket (signed URLs), no CORS rule | Images not displayed, nor video thumbnails in the previous Media Library | Fails | Fails |
+| Private bucket (signed URLs), CORS rule allows the admin panel URL | Displayed | Works | Works |
+| [Local provider](/cms/configurations/media-library-providers/local-upload) (no bucket) | Displayed | Works | Works |
+
+To add a CORS rule to your bucket:
 
 1. Open your bucket in the AWS console.
 2. Navigate to the _Permissions_ tab.
-3. Locate the _Cross-origin resource sharing (CORS)_ field.
-4. Add the following CORS policy (or adapt it to your needs):
+3. In the _Cross-origin resource sharing (CORS)_ section, click **Edit**.
+4. Add the following CORS policy. Replace the `AllowedOrigins` values with the URL(s) of your admin panel. Keep `http://localhost:1337` only if a local Strapi instance uses this bucket.
 
-```json
-[
-  {
-    "AllowedHeaders": ["*"],
-    "AllowedMethods": ["GET"],
-    "AllowedOrigins": ["YOUR STRAPI URL"],
-    "ExposeHeaders": [],
-    "MaxAgeSeconds": 3000
-  }
-]
+   ```json
+   [
+     {
+       "AllowedHeaders": ["*"],
+       "AllowedMethods": ["GET"],
+       "AllowedOrigins": ["https://admin.example.com", "http://localhost:1337"],
+       "ExposeHeaders": [],
+       "MaxAgeSeconds": 3000
+     }
+   ]
+   ```
+
+5. Click **Save changes**.
+
+:::tip
+An origin consists of the scheme, host, and port only (e.g., `https://admin.example.com` or `http://localhost:1337`). Do not add a trailing slash or a path such as `/admin`, otherwise the origin does not match and the browser rejects the response.
+:::
+
+For an [S3-compatible service](#s3-compatible-services) (Scaleway, Cloudflare R2, MinIO, etc.), set the same rule in the service console. Alternatively, use the AWS CLI with the service endpoint. The AWS CLI expects the rules wrapped in a `CORSRules` object:
+
+```json title="cors.json"
+{
+  "CORSRules": [
+    {
+      "AllowedHeaders": ["*"],
+      "AllowedMethods": ["GET"],
+      "AllowedOrigins": ["https://admin.example.com"],
+      "MaxAgeSeconds": 3000
+    }
+  ]
+}
 ```
+
+```bash
+aws s3api put-bucket-cors --bucket my-bucket --cors-configuration file://cors.json --endpoint-url https://s3.fr-par.scw.cloud
+```
+
+Replace `my-bucket` and the `--endpoint-url` value with your bucket name and the S3 endpoint of your service.
+
+:::note
+The bucket CORS rule is not related to the [`strapi::cors` middleware](/cms/configurations/middlewares#cors). The middleware controls CORS for requests sent to the Strapi server. The bucket CORS rule controls CORS for files served by the bucket.
+:::
 
 ### Security middleware configuration
 

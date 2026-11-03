@@ -1894,6 +1894,34 @@
       "number": 27902,
       "reason": "Router: Type-only change aligning TypeScript types with runtime behavior. No public API surface or user-facing behavior changed; types now correctly reflect what already works at runtime.",
       "added": "2026-10-31"
+      "number": 28369,
+      "reason": "Triage: test infrastructure fix only",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28378,
+      "reason": "Router: Internal admin session configuration fix with default behavior change. Contributor documentation updated. No user-facing API or configuration change that needs documentation.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28337,
+      "reason": "Router: Internal architecture fix aligning audit logs behavior across editions. Contributor documentation updated. User-facing behavior unchanged: audit logs still gated by license feature.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28335,
+      "reason": "Router: Internal fix for API response format consistency (license feature options). No user-facing behavior change or configuration change requiring documentation.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28333,
+      "reason": "Router: Internal validation fix for collection-to-single-type conversion guard. Bug fix only, no new features or configuration changes.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28332,
+      "reason": "Router: Internal developer experience fix for CTB file watcher behavior in strapi develop. Bug fix only, no user-facing documentation needed.",
+      "added": "2026-11-03"
     }
   ]
 }
