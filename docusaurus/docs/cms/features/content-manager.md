@@ -388,6 +388,15 @@ In collection types, once the component is added, another button, displayed on t
 - <Icon name="copy"/>&nbsp;**Use existing content…** while all the fields of the component are empty or still hold their default values.
 - <Icon name="copy"/>&nbsp;**Replace content…** as soon as a field holds another value, since copying then overwrites the current content.
 
+<ThemedImage
+  alt="Replace content button of a non-repeatable component"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component-copy-button.png',
+    dark: '/img/assets/content-manager/edit-view_component-copy-button_DARK.png',
+  }}
+/>
+
 </TabItem>
 
 <TabItem value="Repeatable" label="Repeatable components">
