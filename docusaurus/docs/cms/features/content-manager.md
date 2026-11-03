@@ -378,24 +378,23 @@ A non-repeatable component groups several fields, and an entry holds a single in
 When the component has not been added yet, the edit view does not display its fields. The component area only displays a <Icon name="plus-circle" /> _No entry yet. Click to add one._ message. To add the component:
 
 1. Click on the _No entry yet. Click to add one._ message.
-2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content). If you're editing a single type, the component is added directly with blank fields.
+2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).<br/>If you're editing a single type, the component is added directly with blank fields.
 3. Fill in the fields of the component.
 
 To remove the component and its content from the entry, click on the delete button <Icon name="trash"/>, displayed on the right of the component name.
 
 When editing collection types, once the component is added, another button, displayed on the right of the component name just before the delete button, copies content from an existing entry into the component. Its label depends on the content of the component:
+  - <Icon name="copy"/>&nbsp;**Use existing content…** while all the fields of the component are empty or still hold their default values.
+  - <Icon name="copy"/>&nbsp;**Replace content…** as soon as a field holds another value, since copying then overwrites the current content.
 
-- <Icon name="copy"/>&nbsp;**Use existing content…** while all the fields of the component are empty or still hold their default values.
-- <Icon name="copy"/>&nbsp;**Replace content…** as soon as a field holds another value, since copying then overwrites the current content.
-
-<ThemedImage
-  alt="Replace content button of a non-repeatable component"
-  width="80%"
-  sources={{
-    light: '/img/assets/content-manager/edit-view_component-copy-button.png',
-    dark: '/img/assets/content-manager/edit-view_component-copy-button_DARK.png',
-  }}
-/>
+  <ThemedImage
+    alt="Replace content button of a non-repeatable component"
+    width="80%"
+    sources={{
+      light: '/img/assets/content-manager/edit-view_component-copy-button.png',
+      dark: '/img/assets/content-manager/edit-view_component-copy-button_DARK.png',
+    }}
+  />
 
 </TabItem>
 
@@ -415,7 +414,7 @@ Repeatable components are also a combination of fields, but they allow the creat
 To add a new entry and display its combination of fields:
 
 1. Click on the add button <Icon name="plus-circle" /> to add the component.
-2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content). If you're editing a single type, the component is added directly with blank fields.
+2. If you're editing a collection type, choose <Icon name="plus"/>&nbsp;**Empty entry** to start with blank fields, or <Icon name="copy"/>&nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content).<br/>If you're editing a single type, the component is added directly with blank fields.
 3. Fill in the fields of the component.
 4. (optional) Click on the <Icon name="plus"/>&nbsp;**Add an entry** button to add another entry. In collection types, the same <Icon name="plus"/>&nbsp;**Empty entry** and <Icon name="copy"/>&nbsp;**Use existing content…** choices are displayed.
 
@@ -431,6 +430,39 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 </TabItem>
 
 </Tabs>
+
+##### Reusing existing component content {#reusing-existing-component-content}
+
+In collection types, the content of a component can be copied from an existing entry instead of being filled in again by hand. The source entry must belong to the same content-type and locale, and can be the current entry.
+This applies to non-repeatable components, repeatable components and the components of dynamic zones.
+
+<ThemedImage
+  alt="Copy modal for an existing component"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_copy-component-modal.png',
+    dark: '/img/assets/content-manager/edit-view_copy-component-modal_DARK.png',
+  }}
+/>
+
+1. Click on <Icon name="copy"/>&nbsp;**Use existing content…** (or <Icon name="copy"/>&nbsp;**Replace content…** for a filled non-repeatable component) from the [component](#components) or [dynamic zone](#dynamic-zones) field.
+2. In the left pane of the window, pick an entry from the _Recently updated entries_ list, or use the _Search all entries_ field to find one.
+3. In the right pane, review the content to copy:
+   - For repeatable components and dynamic zones, tick the box of each component to copy, or tick **Select all**.
+   - For non-repeatable components, review the read-only preview. If the entry holds several matching components, for instance when the component is nested in a repeatable component, pick one of them.
+4. Click on the confirmation button. Its label depends on the selection: **Use content**, **Use content from [number] items** or **Replace content**. **Replace content** overwrites the current content of the non-repeatable component, and a warning in the window reminds you of it.
+
+The copied content is added to the field and displays a _Copied_ badge until the entry is saved.
+The copied content is independent from the source entry: editing it does not change the original entry.
+
+The following rules apply when copying content:
+
+- The content is copied from the same field only: a component used in another field of the source entry is not offered.
+- Entries that do not hold the component are disabled in the list. For a component nested in another component, the check only runs once the entry is picked.
+- The current entry is listed first, with a _This entry_ badge, and copies from its last saved version. The current entry is disabled in the list while it has unsaved changes.
+- The values of `uid` fields and of fields set as unique are not copied. These fields are left empty, so they can be filled in with new values.
+- Relations of the copied components are copied too. A warning is displayed if some relations could not be loaded.
+- The selection cannot exceed the number of components the field can still hold. The limit comes from the maximum set in the Content-type Builder (_Maximum components_ for [repeatable components](/cms/features/content-type-builder#components), _Maximum value_ for [dynamic zones](/cms/features/content-type-builder#dynamiczones)). If too many components are selected, the confirmation button is disabled and the window indicates how many components to unselect.
+
 
 #### Dynamic zones
 
@@ -473,38 +505,6 @@ You can also use the keyboard to reorder components: focus the component using T
 :::note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
-
-#### Reusing existing component content {#reusing-existing-component-content}
-
-In collection types, the content of a component can be copied from an existing entry instead of being filled in again by hand. The source entry must belong to the same content-type and locale, and can be the current entry.
-This applies to non-repeatable components, repeatable components and the components of dynamic zones.
-
-<ThemedImage
-  alt="Copy modal for an existing component"
-  sources={{
-    light: '/img/assets/content-manager/edit-view_copy-component-modal.png',
-    dark: '/img/assets/content-manager/edit-view_copy-component-modal_DARK.png',
-  }}
-/>
-
-1. Click on <Icon name="copy"/>&nbsp;**Use existing content…** (or <Icon name="copy"/>&nbsp;**Replace content…** for a filled non-repeatable component) from the [component](#components) or [dynamic zone](#dynamic-zones) field.
-2. In the left pane of the window, pick an entry from the _Recently updated entries_ list, or use the _Search all entries_ field to find one.
-3. In the right pane, review the content to copy:
-   - For repeatable components and dynamic zones, tick the box of each component to copy, or tick **Select all**.
-   - For non-repeatable components, review the read-only preview. If the entry holds several matching components, for instance when the component is nested in a repeatable component, pick one of them.
-4. Click on the confirmation button. Its label depends on the selection: **Use content**, **Use content from [number] items** or **Replace content**. **Replace content** overwrites the current content of the non-repeatable component, and a warning in the window reminds you of it.
-
-The copied content is added to the field and displays a _Copied_ badge until the entry is saved.
-The copied content is independent from the source entry: editing it does not change the original entry.
-
-The following rules apply when copying content:
-
-- The content is copied from the same field only: a component used in another field of the source entry is not offered.
-- Entries that do not hold the component are disabled in the list. For a component nested in another component, the check only runs once the entry is picked.
-- The current entry is listed first, with a _This entry_ badge, and copies from its last saved version. The current entry is disabled in the list while it has unsaved changes.
-- The values of `uid` fields and of fields set as unique are not copied. These fields are left empty, so they can be filled in with new values.
-- Relations of the copied components are copied too. A warning is displayed if some relations could not be loaded.
-- The selection cannot exceed the number of components the field can still hold. The limit comes from the maximum set in the Content-type Builder (_Maximum components_ for [repeatable components](/cms/features/content-type-builder#components), _Maximum value_ for [dynamic zones](/cms/features/content-type-builder#dynamiczones)). If too many components are selected, the confirmation button is disabled and the window indicates how many components to unselect.
 
 #### Media fields {#media-fields}
 
