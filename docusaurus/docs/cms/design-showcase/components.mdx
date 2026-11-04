@@ -1,0 +1,554 @@
+---
+title: Components showcase
+description: A visual reference of every MDX component and rendering case used in the Strapi documentation, for the design team.
+displayed_sidebar: cmsSidebar
+pagination_next: null
+pagination_prev: null
+tags:
+- design
+- components
+- showcase
+---
+
+# Components showcase
+
+<AlphaBadge /> <BetaBadge /> <EnterpriseBadge /> <GrowthBadge /> <SsoBadge /> <CloudStarterBadge /> <CloudProBadge /> <CloudBusinessBadge /> <FeatureFlagBadge feature="my_feature_flag" /> <VersionBadge version="5.0.0" />
+
+<Tldr>
+This is a demo page for designers. It renders every general-purpose component and rendering case used in the docs, grouped by category. For API-specific components, see the [API components showcase](/cms/design-showcase/api-components).
+</Tldr>
+
+This page groups components by category, mirroring how the documentation is organized. Use the table of contents to jump to a section.
+
+## Identity cards
+
+The identity card summarizes the key facts about a feature or a plugin at the top of a page.
+
+Identity card for a **feature**:
+
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Requires the relevant permission in the admin panel</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environments</IdentityCardItem>
+</IdentityCard>
+
+Identity card for a **plugin**:
+
+<IdentityCard isPlugin>
+  <IdentityCardItem icon="navigation-arrow" title="Location">Usable and configurable via the admin panel and server code</IdentityCardItem>
+  <IdentityCardItem icon="package" title="Package name">`@strapi/plugin-users-permissions`</IdentityCardItem>
+  <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://market.strapi.io/" text="Strapi Marketplace page" /></IdentityCardItem>
+</IdentityCard>
+
+Breaking change ID card, with both answers set to "Yes" and an informational note:
+
+<BreakingChangeIdCard plugins codemodName="my-codemod" codemodLink="https://github.com/strapi/strapi" info="This change requires a manual migration step." />
+
+Breaking change ID card variant, with both answers set to "No" and no note:
+
+<BreakingChangeIdCard />
+
+## Text & inline elements
+
+This category covers the plain Markdown primitives: text formatting, headings, lists, and tables.
+
+### Text formatting
+
+The paragraph below mixes the inline styles most often used in the docs.
+
+Regular paragraph text with **bold** and `inline code`. Here is a [plain link](https://strapi.io), and here is a [link wrapping `inline code`](https://docs.strapi.io). You can also reference an internal page like the [REST API introduction](/cms/api/rest).
+
+To reference a button in the interface, use an icon followed by its bold label, like the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button or the <Icon name="list-plus" classes="ph-bold" /> **Configure the view** button.
+
+An inline <Annotation>This is an Annotation: a short definition or note shown on hover or click, inline within a sentence.</Annotation> annotation inside a sentence.
+
+### Headings
+
+Headings structure a page. The showcase shows levels 3 to 5, since levels 1 and 2 are reserved for the page title and section titles.
+
+#### Heading level 4
+
+This is the text that follows a level 4 heading.
+
+##### Heading level 5
+
+This is the text that follows a level 5 heading.
+
+### Lists
+
+Lists come in three flavors: unordered, ordered, and nested.
+
+Bullet list:
+
+- First item
+- Second item with `inline code`
+- Third item with a [link](https://strapi.io)
+  - Nested bullet
+  - Nested bullet with **bold**
+    - Deeper nested bullet
+
+Numbered list (procedure):
+
+1. First step
+2. Second step with `inline code`
+3. Third step
+   1. Nested numbered step
+   2. Nested numbered step
+
+### Tables
+
+Tables are used for reference information such as parameters or availability matrices.
+
+| Feature | Availability | Notes |
+|---------|:------------:|-------|
+| REST API | ✅ | Enabled by default |
+| GraphQL | ✅ | Via `@strapi/plugin-graphql` |
+| Document Service API | ✅ | See [docs](/cms/api/document-service) |
+
+## Admonitions
+
+Every admonition type is shown below, each containing text, a bullet list, a link, inline code, a link wrapping inline code, and a fenced code block, to demonstrate rich rendering inside.
+
+:::note
+This is a **note** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
+- A bullet inside a note
+- Another bullet
+
+```js
+// A code block inside a note
+const strapi = require('@strapi/strapi');
+```
+:::
+
+:::tip Custom tip title
+This is a **tip** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
+- Bullet one
+- Bullet two
+
+```bash
+yarn strapi develop
+```
+:::
+
+:::info
+This is an **info** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
+```json
+{ "enabled": true }
+```
+:::
+
+:::caution
+This is a **caution** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
+- Watch out for this
+- And this
+
+```ts
+const x: number = 42;
+```
+:::
+
+:::danger
+This is a **danger** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
+```bash
+rm -rf ./build
+```
+:::
+
+:::strapi This is a "Strapi-special" callout
+This is the custom **strapi**-branded admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
+- Strapi-specific note
+- Another bullet
+
+```js
+export default { /* config */ };
+```
+:::
+
+:::prerequisites
+This prerequisites admonition contains `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
+- Node.js installed (see [requirements](/cms/installation))
+- A running Strapi project created with `npx create-strapi-app`
+- Basic knowledge of `REST` or `GraphQL`
+:::
+
+## Code & tabs
+
+Code can be shown as standalone blocks or grouped inside tabs.
+
+### Code blocks
+
+A short code block without a title:
+
+```js
+const port = env.int('PORT', 1337);
+```
+
+A code block with a title but no line highlighting:
+
+```js title="src/api/article/controllers/article.js"
+'use strict';
+
+/**
+ * A custom `article` controller that extends the default core controller
+ * and overrides the `find` method to inject a default sort.
+ */
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::article.article', ({ strapi }) => ({
+  async find(ctx) {
+    ctx.query = {
+      ...ctx.query,
+      sort: ctx.query.sort || 'publishedAt:desc',
+    };
+
+    const { data, meta } = await super.find(ctx);
+
+    return { data, meta };
+  },
+}));
+```
+
+The exact same block, now with highlighted lines (the injected sort and the call to the core controller):
+
+```js title="src/api/article/controllers/article.js" {12-15,17}
+'use strict';
+
+/**
+ * A custom `article` controller that extends the default core controller
+ * and overrides the `find` method to inject a default sort.
+ */
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::article.article', ({ strapi }) => ({
+  async find(ctx) {
+    ctx.query = {
+      ...ctx.query,
+      sort: ctx.query.sort || 'publishedAt:desc',
+    };
+
+    const { data, meta } = await super.find(ctx);
+
+    return { data, meta };
+  },
+}));
+```
+
+A terminal block, used when the reader has commands to run in a terminal (a `bash`, `sh`, or `powershell` language renders as a terminal):
+
+```bash
+yarn strapi develop
+```
+
+### Tabs
+
+Simple tabs:
+
+<Tabs>
+<TabItem value="rest" label="REST">
+Content of the REST tab, with `inline code` and a [link](/cms/api/rest).
+</TabItem>
+<TabItem value="graphql" label="GraphQL">
+Content of the GraphQL tab.
+</TabItem>
+</Tabs>
+
+Tabs containing different kinds of content, one per tab (a table, a list with an admonition, and a code block):
+
+<Tabs groupId="content-kind">
+<TabItem value="table" label="Table">
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `locale` | String | Locale to fetch documents for |
+| `status` | Enum | `published` or `draft` |
+| `sort` | String | Field and order, e.g. `title:asc` |
+
+</TabItem>
+<TabItem value="list" label="List & admonition">
+
+Steps to enable the feature:
+
+1. Open the admin panel
+2. Go to **Settings**
+3. Toggle the feature on
+
+:::note
+The feature is available on all plans.
+:::
+
+</TabItem>
+<TabItem value="code" label="Code">
+
+```js title="config/plugins.js"
+module.exports = {
+  'my-plugin': {
+    enabled: true,
+    config: { apiKey: process.env.MY_PLUGIN_API_KEY },
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+JavaScript / TypeScript tabs, with a title bar on each code block:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="config/server.ts"
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+});
+```
+
+</TabItem>
+</Tabs>
+
+Tabs **nested inside tabs**, with admonitions and titled code blocks inside:
+
+<Tabs groupId="os">
+<TabItem value="unix" label="macOS / Linux">
+
+Choose your package manager:
+
+<Tabs groupId="pm">
+<TabItem value="yarn" label="yarn">
+
+:::tip
+Run the following in your project root:
+:::
+
+```bash title="Terminal"
+yarn install && yarn develop
+```
+
+</TabItem>
+<TabItem value="npm" label="npm">
+
+```bash title="Terminal"
+npm install && npm run develop
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="windows" label="Windows">
+
+<Tabs groupId="pm">
+<TabItem value="yarn" label="yarn">
+
+```powershell title="PowerShell"
+yarn install; yarn develop
+```
+
+</TabItem>
+<TabItem value="npm" label="npm">
+
+```powershell title="PowerShell"
+npm install; npm run develop
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+## Steps, progress & checklists
+
+Steps and checklists guide the reader through a procedure.
+
+StepDetails (collapsible steps):
+
+<StepDetails title="Step 1: Create a collection type" defaultOpen>
+Use the Content-Type Builder to create a new collection type.
+
+:::note
+Nested admonition inside a step.
+:::
+
+```bash
+yarn strapi develop
+```
+</StepDetails>
+
+<StepDetails title="Step 2: Add fields">
+Add a `title` field of type `Text` and a `description` field of type `Rich text`.
+</StepDetails>
+
+Checklist:
+
+<Checklist title="Deployment checklist">
+  <ChecklistItem>Set the `APP_KEYS` environment variable</ChecklistItem>
+  <ChecklistItem>Configure the [production database](/cms/configurations/database)</ChecklistItem>
+  <ChecklistItem>Run <code>yarn build</code> before deploying</ChecklistItem>
+</Checklist>
+
+## Cards & navigation
+
+Doc cards link to related pages. They can be shown in a static grid or in an expandable grid.
+
+Custom doc cards:
+
+<CustomDocCardsWrapper>
+<CustomDocCard title="Back-end customization" description="Routes, policies, controllers, services, and more." link="/cms/backend-customization" icon="gear" />
+<CustomDocCard title="Admin panel customization" description="Logos, themes, and menu configuration." link="/cms/admin-panel-customization" icon="paint-brush" />
+<CustomDocCard title="REST API" description="Interact with your content via REST." link="/cms/api/rest" icon="plugs-connected" small />
+</CustomDocCardsWrapper>
+
+Expandable doc cards (collapses after the first few, then reveals the rest):
+
+<ExpandableDocCardsWrapper initialVisible={2}>
+<CustomDocCard title="Content Manager" description="Create and manage entries." link="/cms/features/content-manager" icon="pencil" />
+<CustomDocCard title="Content-Type Builder" description="Design your content structure." link="/cms/features/content-type-builder" icon="layout" />
+<CustomDocCard title="Media Library" description="Manage your assets." link="/cms/features/media-library" icon="images" />
+<CustomDocCard title="Releases" description="Group and publish content." link="/cms/features/releases" icon="rocket-launch" />
+<CustomDocCard title="Internationalization" description="Manage content in multiple locales." link="/cms/features/internationalization" icon="translate" />
+<CustomDocCard title="Review Workflows" description="Define review stages for your content." link="/cms/features/review-workflows" icon="git-branch" />
+<CustomDocCard title="Audit Logs" description="Track actions performed in the admin panel." link="/cms/features/audit-logs" icon="list-magnifying-glass" />
+</ExpandableDocCardsWrapper>
+
+## Layout
+
+Layout components arrange content in columns.
+
+Two-column layout with `Columns`:
+
+<Columns>
+<ColumnLeft title="Before">
+Content in the left column, with `inline code` and a bullet list:
+
+- Item A
+- Item B
+</ColumnLeft>
+<ColumnRight title="After">
+Content in the right column, with a [link](https://strapi.io).
+</ColumnRight>
+</Columns>
+
+Side-by-side layout:
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+Explanation text on the left, describing what the code on the right does.
+
+</SideBySideColumn>
+<SideBySideColumn>
+
+```js
+const entries = await strapi.documents('api::article.article').findMany();
+```
+
+</SideBySideColumn>
+</SideBySideContainer>
+
+## Expandable content
+
+`ExpandableContent` collapses long content beyond a set height and lets the reader expand it with a "Show more" toggle.
+
+<ExpandableContent maxHeight="120px">
+This block is collapsed beyond a certain height and can be expanded by the reader. It can contain any content: paragraphs, `inline code`, [links](https://strapi.io), and lists.
+
+- Item one
+- Item two
+- Item three
+- Item four
+- Item five
+</ExpandableContent>
+
+Wrapping a long code block, so the reader can expand it only if they need the full example:
+
+<ExpandableContent maxHeight="160px">
+
+```js title="config/middlewares.js"
+module.exports = [
+  'strapi::logger',
+  'strapi::errors',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io'],
+          'media-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io'],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  'strapi::cors',
+  'strapi::poweredBy',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+</ExpandableContent>
+
+## Media & miscellaneous
+
+Media components embed diagrams, walkthroughs, and interactive tools.
+
+External link: <ExternalLink to="https://strapi.io" text="Strapi website" /> — it appends an icon to signal that the reader is leaving the documentation site.
+
+Mermaid diagram (via `MermaidWithFallback`, with a light/dark image fallback):
+
+<MermaidWithFallback
+  chartFile="/diagrams/backend-customization.mmd"
+  fallbackImage="/img/assets/diagrams/backend-customization.png"
+  fallbackImageDark="/img/assets/diagrams/backend-customization_DARK.png"
+  alt="Back-end customization diagram"
+/>
+
+Guideflow interactive walkthrough:
+
+<Guideflow lightId="5pvjz4zswp" />
+
+Interactive query builder:
+
+<InteractiveQueryBuilder
+  endpoint="/api/books"
+  code={`
+{
+  sort: ['title:asc'],
+  filters: {
+    title: { $eq: 'hello' },
+  },
+  populate: '*',
+}
+  `}
+/>
+
+## What's next?
+
+<NextSteps>
+  <NextSteps.Step title="Explore the admin panel" description="Create entries, manage roles, and upload media." link="/cms/features/admin-panel" />
+  <NextSteps.Step title="Connect a frontend" description="Consume your content via REST or GraphQL." link="/cms/api/rest" />
+</NextSteps>
