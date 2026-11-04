@@ -29,7 +29,62 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.60.0](https://github.com/strapi/strapi/releases/tag/v5.60.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.61.0](https://github.com/strapi/strapi/releases/tag/v5.61.0)._
+
+## 7.7.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Improve docs.strapi.io readiness for AI agents](https://github.com/strapi/documentation/pull/3627)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document bucket CORS requirements for the Media Library](https://github.com/strapi/documentation/pull/3626)
+- [Document the media field Add asset menu and asset picker](https://github.com/strapi/documentation/pull/3623)
+
+#### Repository
+- [Revert "Improve docs.strapi.io readiness for AI agents" (#3627)](https://github.com/strapi/documentation/pull/3629)
+- [Fill the empty example OpenAPI specification file](https://github.com/strapi/documentation/pull/3628)
+- [Align AI docs on Strapi AI Growth and Strapi AI Enterprise naming](https://github.com/strapi/documentation/pull/3621)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Name Strapi AI Growth and Strapi AI Enterprise in the plans overview](https://github.com/strapi/documentation/pull/3634)
+- [Fix admin session idle defaults in admin panel configuration](https://github.com/strapi/documentation/pull/3633)
+- [Replace deprecated strapi.query with strapi.db.query in examples](https://github.com/strapi/documentation/pull/3624)
+- [Fix autogenerate default and scope in TypeScript docs](https://github.com/strapi/documentation/pull/3620)
+
+#### Repository
+- [Document webhook deduplication configuration](https://github.com/strapi/documentation/pull/3631)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/bolg55" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/43022248?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="bolg55"/>
+</a>
+<a href="https://github.com/giu1io" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6680957?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="giu1io"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.6.0
 

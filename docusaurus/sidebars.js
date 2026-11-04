@@ -38,6 +38,9 @@ const sidebars = {
           type: 'doc',
           id: 'cms/features/content-manager',
           label: 'Content Manager',
+          customProps: {
+            updated: true
+          }
         },
         {
           type: 'doc',
@@ -117,9 +120,6 @@ const sidebars = {
           type: 'doc',
           label: 'MCP server',
           id: 'cms/features/strapi-mcp-server',
-          customProps: {
-            updated: true
-          }
         },
         {
           type: 'doc',
