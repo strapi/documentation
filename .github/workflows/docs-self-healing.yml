@@ -747,6 +747,13 @@ jobs:
       - name: Add rejected PRs to ignore list
         if: steps.check-prs.outputs.has_prs == 'true' && inputs.dry_run != true
         run: |
+          # The Router opens micro-edit doc PRs from this same checkout and can
+          # leave HEAD on one of their branches. A bare `git push` then sends the
+          # ignore-list commit into that doc PR instead of the branch the
+          # workflow runs on. Start from that branch's tip, whatever HEAD is.
+          git fetch -q origin "$GITHUB_REF_NAME"
+          git checkout -q -f -B "$GITHUB_REF_NAME" "origin/$GITHUB_REF_NAME"
+
           IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
           TODAY=$(date -u '+%Y-%m-%d')
           ADDED=0
@@ -795,7 +802,7 @@ jobs:
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add .github/self-healing-ignore.json
             git commit -m "Auto-ignore $ADDED rejected PRs from self-healing run"
-            git push
+            git push origin "HEAD:$GITHUB_REF_NAME"
           fi
 
       # ── Step B: Sonnet Drafter (only if full-complexity targets found) ──
@@ -841,6 +848,11 @@ jobs:
       - name: Record drafted PRs in the ignore list
         if: always() && steps.check-router.outputs.has_targets == 'true' && inputs.dry_run != true
         run: |
+          # Same as the rejected-PRs step: the Drafter can leave HEAD on a doc
+          # branch, and this commit belongs on the branch the workflow runs on.
+          git fetch -q origin "$GITHUB_REF_NAME"
+          git checkout -q -f -B "$GITHUB_REF_NAME" "origin/$GITHUB_REF_NAME"
+
           IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
           SUMMARY_FILE="/tmp/self-healing-summary.json"
           TODAY=$(date -u '+%Y-%m-%d')
@@ -871,7 +883,7 @@ jobs:
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add .github/self-healing-ignore.json
             git commit -m "Auto-ignore $ADDED PRs already drafted by self-healing"
-            git push
+            git push origin "HEAD:$GITHUB_REF_NAME"
           fi
 
       - name: Summary
