@@ -33903,12 +33903,14 @@ The Audit Logs feature logs the following events:
 | Audit log  | `export` |
 | Component | `create`, `update`, `delete` |
 | Content Type | `create`, `update`, `delete` |
-| Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
+| Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish`, `draft-discard` , `history.restore`  |
 | Entry assignee  | `update` |
 | Entry review stage  | `updateEntryStage` |
 | Locale  | `create`, `update`, `delete`, `default.update` |
-| Media | `create`, `update`, `delete` |
-| Media folder | `create`, `update`, `delete` |
+| Media | `create`, `update`, `delete`, `move`  (files, and folders with Strapi 5.61.0 or later, see [media events](#media-events)) |
+| Media folder | `create`, `update`, `delete` (Strapi 5.60.x and earlier) |
+| Media Library settings  | `update` |
+| Project settings  | `update` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
@@ -33983,6 +33985,34 @@ Locked roles are compared as a set, so reordering them alone is not recorded as 
 
 Locale events come from [Internationalization](/cms/features/internationalization) settings. Setting a locale as the default records a separate `locale.default.update` event, in addition to the `locale.create` or `locale.update` event.
 
+#### Media events
+
+Media events come from the [Media Library](/cms/features/media-library). Files and folders share the `media.create`, `media.update`, `media.delete`, and `media.move` actions. The `resource.type` of each log tells them apart: `media` for a file, `media-folder` for a folder.
+
+Each action records the following details:
+
+- `media.create`: a file uploaded or a folder created. A file log records its MIME type and size.
+- `media.update`: only the fields that changed. For a file, these are among the name, alternative text, caption, focus area, folder, and replaced file. For a folder, they are among the name and the parent folder. An update that changes nothing writes no row.
+- `media.delete`: a file or folder deleted. Deleting a folder writes one row for that folder and one row for each file it contained, including files in its subfolders. Subfolders get no row.
+- `media.move`: one row per file or folder selected in a bulk move, with the folder it moved `from` and `to` (`null` for the root). Files and folders inside a moved folder get no row, and neither does an item already in the destination folder. Changing the folder of a single file from its details records a `media.update` with the `folder` field instead.
+
+Folder logs recorded before Strapi 5.61.0 keep their `media-folder.*` actions until they are removed by the [retention period](#configuration). The Action filter still finds them (see [filtering logs](#filtering-logs)).
+
+#### Content History and draft events
+
+Restoring a version from [Content History](/cms/features/content-history#restoring-a-previous-version) records an `entry.history.restore` event with the locale and the restored version (its `id` and `createdAt`). The restore also records the usual `entry.update` event.
+
+[Discarding changes](/cms/features/draft-and-publish#discarding-changes) made to a draft records an `entry.draft-discard` event with the locale. The log identifies the entry, not the discarded draft content.
+
+#### Project and Media Library settings events
+
+These events record changes made to the following settings pages:
+
+- Project settings ( *Settings > Global settings > Overview*): an update records changes to the [*Menu logo* and *Auth logo*](/cms/features/admin-panel#customizing-the-logo), with file names only. Uploading a new logo with the same file name is still recorded.
+- Media Library settings ( *Settings > Global settings > Media Library*): an update records the [options](/cms/features/media-library#admin-panel-configuration) that changed, among `sizeOptimization`, `responsiveDimensions`, `autoOrientation`, and `aiMetadata`.
+
+Saving either settings page with no change writes no row.
+
 #### Review workflows events
 
 Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
@@ -34008,7 +34038,7 @@ By default, all logs are displayed in reverse chronological order. You can filte
 - Date: select a date (range) and time to filter by.
 
 :::info
-The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
+The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values recorded before the `admin-user.*` format, so old and new rows appear together. Similarly, filtering on a Media action, such as _Update media_, also finds the `media-folder.*` logs recorded before Strapi 5.61.0 (see [media events](#media-events)).
 :::
 
 ### Exporting audit logs
