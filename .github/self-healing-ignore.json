@@ -1893,7 +1893,7 @@
     {
       "number": 27902,
       "reason": "Router: Type-only change aligning TypeScript types with runtime behavior. No public API surface or user-facing behavior changed; types now correctly reflect what already works at runtime.",
-      "added": "2026-10-31"
+      "added": "2026-10-31",
       "number": 28369,
       "reason": "Triage: test infrastructure fix only",
       "added": "2026-11-03"
