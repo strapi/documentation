@@ -731,6 +731,36 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
+          # ── Not routed ──
+          #
+          # The Router prompt caps a run at 5 PRs. A Triage "yes" beyond the cap
+          # gets no decision at all: it is neither drafted nor ignored, and once
+          # it leaves the 24-hour window no scheduled run sees it again. Routed
+          # PRs are either in the ignore list or already have a doc PR, so a
+          # rerun routes only these.
+          jq --slurpfile r "$RESULTS_FILE" \
+            '[.[] | select(.number as $n | ($r[0].prs | map(.number) | index($n)) | not)]' \
+            /tmp/triaged-prs.json > /tmp/unrouted-prs.json
+          UNROUTED=$(jq 'length' /tmp/unrouted-prs.json)
+          echo "unrouted=$UNROUTED" >> $GITHUB_OUTPUT
+
+          if [ "$UNROUTED" -gt 0 ]; then
+            echo "::warning::$UNROUTED Triage candidate(s) were never routed (5-PR cap). Rerun within 24 hours to route them."
+
+            {
+              echo "### ⚠️ Not routed"
+              echo ""
+              echo "Triage kept these PRs, but the Router stopped at its 5-PR cap."
+              echo "They are **not** in the ignore list: rerun the workflow within"
+              echo "24 hours and it routes only these."
+              echo ""
+            } >> $GITHUB_STEP_SUMMARY
+
+            jq -r '.[] | "- [strapi/strapi#\(.number): \(.title)](https://github.com/strapi/strapi/pull/\(.number))"' \
+              /tmp/unrouted-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
           # Pass router results to Sonnet. The comment here used to claim "only
           # full-complexity PRs" while handing over the whole file, and the
           # Drafter prompt filters on `decision` alone — so a run with both micro
@@ -1056,6 +1086,17 @@ jobs:
               "$ROUTER_FILE" 2>/dev/null || true)
             if [ -n "$LIST" ]; then
               DEAD_ZONE="${DEAD_ZONE}\n\n:warning: *Drafted by Haiku beyond its micro scope — review with extra care:*\n${LIST}\nThese doc PRs exist, but Haiku wrote section-level prose its micro-edit procedure does not cover."
+            fi
+          fi
+
+          # Kept by Triage, never examined by the Router: over its 5-PR cap.
+          UNROUTED="${{ steps.check-router.outputs.unrouted }}"
+          UNROUTED="${UNROUTED:-0}"
+          if [ "$UNROUTED" -gt 0 ] && [ -f /tmp/unrouted-prs.json ]; then
+            LIST=$(jq -r '.[] | "• <https://github.com/strapi/strapi/pull/\(.number)|strapi/strapi#\(.number): \(.title)>"' \
+              /tmp/unrouted-prs.json 2>/dev/null || true)
+            if [ -n "$LIST" ]; then
+              DEAD_ZONE="${DEAD_ZONE}\n\n:pepe_alarm: *Not routed, over the 5-PR cap:*\n${LIST}\nThey stay out of the ignore list. Rerun within 24h to route them."
             fi
           fi
 
