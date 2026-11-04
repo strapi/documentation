@@ -82,6 +82,10 @@ There is no equivalent setting in the admin panel: the retention period can only
 
 The `/config/admin` file also accepts `auditLogs.enabled`, which turns off Audit Logs when set to `false`, and `auditLogs.exportMaxRows`, which limits [exports](#exporting-audit-logs). See the [admin panel configuration](/cms/configurations/admin-panel#audit-logs) for all available parameters.
 
+:::note Audit Logs permissions and configuration
+When `auditLogs.enabled` is set to `false`, the Audit Logs feature is disabled and the routes are not available. However, audit log permissions that were granted to roles and admin tokens are preserved. This means when you turn `auditLogs.enabled` back to `true`, the previously granted permissions work again without needing to be re-granted.
+:::
+
 ## Usage
 
 **Path to use the feature:** <Icon name="gear-six" /> Settings > Administration Panel - Audit Logs
