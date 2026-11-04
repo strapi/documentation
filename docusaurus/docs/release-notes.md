@@ -34,12 +34,6 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 ## 7.7.0
 
 <br />
-### <Icon name='sparkle' /> New content
-
-<br />
-
-#### Repository
-- [Improve docs.strapi.io readiness for AI agents](https://github.com/strapi/documentation/pull/3627)
 
 ### <Icon name='pen-nib' /> Updated content
 
@@ -50,7 +44,6 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Document the media field Add asset menu and asset picker](https://github.com/strapi/documentation/pull/3623)
 
 #### Repository
-- [Revert "Improve docs.strapi.io readiness for AI agents" (#3627)](https://github.com/strapi/documentation/pull/3629)
 - [Fill the empty example OpenAPI specification file](https://github.com/strapi/documentation/pull/3628)
 - [Align AI docs on Strapi AI Growth and Strapi AI Enterprise naming](https://github.com/strapi/documentation/pull/3621)
 
