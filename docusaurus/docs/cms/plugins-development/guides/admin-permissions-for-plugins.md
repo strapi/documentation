@@ -27,7 +27,7 @@ To create admin permissions for your Strapi plugin, you'll need to register them
 
 ## Register the permissions server side
 
-Each individual permission has to registered in the bootstrap function of your plugin, as follows:
+Each individual permission has to be registered in the bootstrap function of your plugin, as follows:
 
 <Tabs groupId="js-ts">
 
