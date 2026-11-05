@@ -114,6 +114,8 @@ const config = {
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
+      // Animated mascot shown in the modal header (same character as the AI mode panel)
+      'data-modal-logo-src': '/img/ai-mascot.svg',
       'data-button-hide': 'true',
       'data-modal-disclaimer':
         'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',

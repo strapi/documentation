@@ -5,6 +5,7 @@ import { KapaProvider, useChat } from '@kapaai/react-sdk';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useViewMode } from './ViewModeContext';
+import AgentBot from '../AgentBot/AgentBot';
 import styles from './aiPanel.module.scss';
 
 const KAPA_INTEGRATION_ID = 'e35b7c7b-7ec8-4c1a-8a39-0ab7b6d8db3a';
@@ -89,11 +90,52 @@ function useTldrContent(viewMode) {
   return tldrText;
 }
 
-function ChatInterface({ pageContext }) {
+/**
+ * Maps the Kapa chat status to a mascot state: thinking while connecting,
+ * working while streaming, a short happy "done" once the answer is complete,
+ * idle otherwise. A failed request leaves it idle: the error is the service's,
+ * not the reader's, so the mascot never gets angry at them.
+ */
+function useBotState({ isPreparingAnswer, isGeneratingAnswer, error }) {
+  const [justDone, setJustDone] = useState(false);
+  const wasBusy = useRef(false);
+  const busy = isPreparingAnswer || isGeneratingAnswer;
+
+  useEffect(() => {
+    if (wasBusy.current && !busy && !error) {
+      setJustDone(true);
+      const timer = setTimeout(() => setJustDone(false), 2500);
+      wasBusy.current = busy;
+      return () => clearTimeout(timer);
+    }
+    wasBusy.current = busy;
+    return undefined;
+  }, [busy, error]);
+
+  if (error) return 'idle';
+  if (isPreparingAnswer) return 'think';
+  if (isGeneratingAnswer) return 'work';
+  if (justDone) return 'done';
+  return 'idle';
+}
+
+function ChatInterface({ pageContext, onBotStateChange }) {
   const [question, setQuestion] = useState('');
   const messagesEndRef = useRef(null);
-  const { conversation, submitQuery, resetConversation, isGeneratingAnswer } = useChat();
+  const {
+    conversation,
+    submitQuery,
+    resetConversation,
+    isPreparingAnswer,
+    isGeneratingAnswer,
+    error,
+  } = useChat();
   const { pathname } = useLocation();
+  const botState = useBotState({ isPreparingAnswer, isGeneratingAnswer, error });
+
+  useEffect(() => {
+    onBotStateChange?.(botState);
+  }, [botState]);
 
   // Reset conversation on page navigation
   useEffect(() => {
@@ -181,6 +223,10 @@ function ChatInterface({ pageContext }) {
                       );
                     })()}
                   </>
+                ) : error && index === conversation.length - 1 ? (
+                  <p className={styles.chatError}>
+                    Sorry, I couldn't get an answer this time. Please try again in a moment.
+                  </p>
                 ) : (
                   <div className={styles.thinking}>
                     <span>Thinking</span>
@@ -245,9 +291,19 @@ function ChatInterface({ pageContext }) {
 }
 
 export default function AiPanel() {
-  const { viewMode, setViewMode } = useViewMode();
+  const { viewMode, setViewMode, leavingAi } = useViewMode();
   const isOpen = viewMode === 'ai';
   const tldrText = useTldrContent(viewMode);
+  const [botState, setBotState] = useState('idle');
+  const [greeting, setGreeting] = useState(false);
+
+  // Lexi waves hello when the panel opens
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    setGreeting(true);
+    const timer = setTimeout(() => setGreeting(false), 1800);
+    return () => clearTimeout(timer);
+  }, [isOpen]);
 
   return (
     <aside
@@ -263,7 +319,13 @@ export default function AiPanel() {
           <i className="ph-bold ph-arrow-left" />
           Back
         </button>
-        <h3>Strapi Docs AI Assistant</h3>
+        <div className={styles.title}>
+          <AgentBot state={leavingAi || greeting ? 'wave' : botState} size={64} decorative />
+          <h3>
+            <span className={styles.titleName}>Hi! I'm Lexi,</span>
+            <span className={styles.titleRole}>Strapi Docs AI Assistant</span>
+          </h3>
+        </div>
         <button
           className={styles.closeButton}
           onClick={() => setViewMode('elegant')}
@@ -298,7 +360,7 @@ export default function AiPanel() {
         <BrowserOnly>
           {() => (
             <KapaProvider integrationId={KAPA_INTEGRATION_ID} callbacks={{ askAI: {} }}>
-              <ChatInterface pageContext={{
+              <ChatInterface onBotStateChange={setBotState} pageContext={{
                 title: document.querySelector('article h1')?.textContent || '',
                 url: window.location.href,
                 summary: tldrText,
