@@ -9,7 +9,9 @@ import styles from './agentBot.module.scss';
  * every transform directly on the DOM nodes (springs for gaze, squash, tilt…),
  * so state changes never re-render the SVG.
  *
- * States: idle, think, read, work, angry, done.
+ * States: idle, think, read, work, angry, done, wave.
+ * Styles that matter are inline so the bot also renders inside a shadow DOM
+ * (the Kapa modal), where the CSS module does not reach.
  * Props (bubbles, page, blocks) only render from 64px up unless forced.
  */
 
@@ -36,6 +38,7 @@ const STATE_LABELS = {
   read: ', is reading',
   work: ', is working',
   done: ', is done',
+  wave: ', is waving',
 };
 
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
@@ -91,6 +94,9 @@ const PUFF_PATH =
 const BUBBLES = [[748, 34, 24], [826, -50, 38], [930, -170, 60]];
 const LINE_WIDTHS = [140, 116, 132, 96, 140, 120, 132, 104, 128];
 const BLOCKS = [[830, 702], [904, 702], [978, 702], [867, 628], [941, 628], [904, 554]];
+// Waving hand pivot, hidden behind the right side of the tile so the hand
+// looks like it comes from behind the body
+const HAND = { x: 690, y: 470 };
 
 export default function AgentBot({
   state = 'idle',
@@ -132,6 +138,7 @@ export default function AgentBot({
       pThink: q('[data-p-think]'),
       pRead: q('[data-p-read]'),
       pWork: q('[data-p-work]'),
+      hand: q('[data-hand]'),
       bubbles: qa('[data-bubble]'),
       lines: q('[data-lines]'),
       marks: qa('[data-mark]'),
@@ -157,7 +164,7 @@ export default function AgentBot({
       tiltA: 0, vTiltA: 0, sqz: 0, vSqz: 0, sleep: 0, hover: false,
       happyUntil: 0, lastHop: 0, anger: 0, shown: 0, lastPoke: 0,
       tantrumAt: -1e9, huffAt: -1e9, sulkK: 0, vSulkK: 0, shake: 0, sulkUntil: 0,
-      tint: -1, clock: 0, fThink: 0, fRead: 0, fWork: 0, lastBlock: -1,
+      tint: -1, clock: 0, fThink: 0, fRead: 0, fWork: 0, fWave: 0, lastBlock: -1,
       nextBlink: performance.now() + 1500 + 3000 * Math.random(),
       blinkT: -1, double: false, seed: 100 * Math.random(),
     };
@@ -253,6 +260,7 @@ export default function AgentBot({
       const reading = st === 'read';
       const working = st === 'work';
       const done = st === 'done';
+      const waving = st === 'wave';
       const line = Math.floor(clock / 2.5);
       const word = Math.min(4, Math.floor(((clock % 2.5) / 2.5) * 5));
       const idleFor = now - pointer.last;
@@ -388,7 +396,10 @@ export default function AgentBot({
         s.happyUntil = now + 1300;
       }
       [s.sq, s.vsq] = spring(s.sq, s.vsq, calm ? 0 : squash, 420, 11, dt);
-      [s.tiltA, s.vTiltA] = spring(s.tiltA, s.vTiltA, thinking && !calm ? 9 * s.lx : 0, 90, 9, dt);
+      let tiltTarget = 0;
+      if (thinking && !calm) tiltTarget = 9 * s.lx;
+      else if (waving && !calm) tiltTarget = -6 + 4 * Math.sin(8 * clock);
+      [s.tiltA, s.vTiltA] = spring(s.tiltA, s.vTiltA, tiltTarget, 90, 9, dt);
 
       const scaleY = 1 + s.sq;
       const scaleX = 1 - 0.55 * s.sq;
@@ -421,6 +432,13 @@ export default function AgentBot({
       s.fThink = fade(s.fThink, thinking);
       s.fRead = fade(s.fRead, reading);
       s.fWork = fade(s.fWork, working);
+      s.fWave = fade(s.fWave, waving);
+
+      if (el.hand) {
+        const k = calm ? +waving : popIn(s.fWave * 1.2);
+        const angle = calm ? 40 : 40 + 18 * Math.sin(16 * clock);
+        el.hand.setAttribute('transform', `translate(${HAND.x} ${HAND.y}) rotate(${angle.toFixed(2)}) scale(${k.toFixed(3)})`);
+      }
 
       if (el.pThink) {
         el.pThink.setAttribute('opacity', s.fThink.toFixed(3));
@@ -498,7 +516,7 @@ export default function AgentBot({
       [s.sqz, s.vSqz] = spring(s.sqz, s.vSqz, +!!thinking, 160, 16, dt);
       const focus = 1 - 0.18 * s.fRead - 0.22 * s.fWork;
       const squint = (1 + (0.44 - 0.2 * squintPulse - 1) * s.sqz) * focus;
-      const happy = (now < s.happyUntil || done) && frown < 0.2;
+      const happy = (now < s.happyUntil || done || waving) && frown < 0.2;
       const faceX = 26 * s.lx;
       const faceY = 20 * s.ly;
       el.brows.forEach((n, i) => {
@@ -547,10 +565,15 @@ export default function AgentBot({
       role={decorative ? undefined : 'img'}
       aria-label={decorative ? undefined : `${label}${STATE_LABELS[state] || ''}`}
       aria-hidden={decorative ? 'true' : undefined}
-      style={{ width: size }}
+      style={{ position: 'relative', display: 'inline-block', flex: 'none', width: size }}
     >
-      <span data-tilt className={styles.tilt}>
-        <svg viewBox="39 32 721 721" aria-hidden="true" focusable="false">
+      <span data-tilt className={styles.tilt} style={{ display: 'block' }}>
+        <svg
+          viewBox="39 32 721 721"
+          aria-hidden="true"
+          focusable="false"
+          style={{ display: 'block', width: '100%', height: 'auto', overflow: 'visible' }}
+        >
           <defs>
             <radialGradient data-light id={`${id}-tile`} gradientUnits="userSpaceOnUse" cx={280.5} cy={239.5} r="640">
               <stop data-tile-stop offset="0" stopColor="#6461FF" />
@@ -564,6 +587,11 @@ export default function AgentBot({
             </radialGradient>
           </defs>
           <g data-body>
+            {props !== false && (
+              <g data-hand transform={`translate(${HAND.x} ${HAND.y}) scale(0)`}>
+                <rect x={-62} y={-300} width={124} height={300} rx={62} fill={foldFill} />
+              </g>
+            )}
             <path data-tile d={TILE_PATH} fill={tileFill} />
             <g data-face>
               <path d="M536.4 250.7H293.7v123.8h123.8v123.7h123.8V255.5c0-2.6-2.2-4.8-4.9-4.8Z" fill="#fff" />

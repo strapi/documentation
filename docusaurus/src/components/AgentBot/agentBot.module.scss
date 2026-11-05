@@ -31,3 +31,8 @@
   transform: translateX(-50%);
   pointer-events: none;
 }
+
+// The light-mode shadow would read lighter than a dark background
+:global(html[data-theme='dark']) .shadow {
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent);
+}
