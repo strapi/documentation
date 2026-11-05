@@ -78,7 +78,8 @@ When [Draft & Publish](/cms/features/draft-and-publish) is enabled for the conte
 When [Draft & Publish](/cms/features/draft-and-publish) is enabled, you can also sort entries by publication status. Click the **Status** column header to sort from draft to published, or click it again to reverse the order.
 
 :::note
-The **Status** column sort is disabled when a status filter is active, since filtered results already share the same publication status.
+- The **Status** column sort is disabled when a status filter is active, since filtered results already share the same publication status.
+- Filtering on a date or date-time field lets you pick a date and, optionally, a time: picking a date only matches the entire day, while picking a date and a time matches that specific minute. Editing a filter that was set with a time keeps showing that time, and a link using an older time format is still read, matching that minute.
 :::
 
 <!-- TO INTEGRATE IN THE PAGE? USE A GUIDEFLOW?
