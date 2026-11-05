@@ -51,6 +51,13 @@
   }
 }
 
+// Mascot + panel title
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-3);
+}
+
 // Small hint under the panel title explaining how to leave AI mode.
 .headerHint {
   margin: 0;

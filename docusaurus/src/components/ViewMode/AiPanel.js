@@ -5,6 +5,7 @@ import { KapaProvider, useChat } from '@kapaai/react-sdk';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useViewMode } from './ViewModeContext';
+import AgentBot from '../AgentBot/AgentBot';
 import styles from './aiPanel.module.scss';
 
 const KAPA_INTEGRATION_ID = 'e35b7c7b-7ec8-4c1a-8a39-0ab7b6d8db3a';
@@ -89,11 +90,51 @@ function useTldrContent(viewMode) {
   return tldrText;
 }
 
-function ChatInterface({ pageContext }) {
+/**
+ * Maps the Kapa chat status to a mascot state: thinking while connecting,
+ * working while streaming, a short happy "done" once the answer is complete,
+ * angry on error, idle otherwise.
+ */
+function useBotState({ isPreparingAnswer, isGeneratingAnswer, error }) {
+  const [justDone, setJustDone] = useState(false);
+  const wasBusy = useRef(false);
+  const busy = isPreparingAnswer || isGeneratingAnswer;
+
+  useEffect(() => {
+    if (wasBusy.current && !busy && !error) {
+      setJustDone(true);
+      const timer = setTimeout(() => setJustDone(false), 2500);
+      wasBusy.current = busy;
+      return () => clearTimeout(timer);
+    }
+    wasBusy.current = busy;
+    return undefined;
+  }, [busy, error]);
+
+  if (error) return 'angry';
+  if (isPreparingAnswer) return 'think';
+  if (isGeneratingAnswer) return 'work';
+  if (justDone) return 'done';
+  return 'idle';
+}
+
+function ChatInterface({ pageContext, onBotStateChange }) {
   const [question, setQuestion] = useState('');
   const messagesEndRef = useRef(null);
-  const { conversation, submitQuery, resetConversation, isGeneratingAnswer } = useChat();
+  const {
+    conversation,
+    submitQuery,
+    resetConversation,
+    isPreparingAnswer,
+    isGeneratingAnswer,
+    error,
+  } = useChat();
   const { pathname } = useLocation();
+  const botState = useBotState({ isPreparingAnswer, isGeneratingAnswer, error });
+
+  useEffect(() => {
+    onBotStateChange?.(botState);
+  }, [botState]);
 
   // Reset conversation on page navigation
   useEffect(() => {
@@ -248,6 +289,7 @@ export default function AiPanel() {
   const { viewMode, setViewMode } = useViewMode();
   const isOpen = viewMode === 'ai';
   const tldrText = useTldrContent(viewMode);
+  const [botState, setBotState] = useState('idle');
 
   return (
     <aside
@@ -263,7 +305,10 @@ export default function AiPanel() {
           <i className="ph-bold ph-arrow-left" />
           Back
         </button>
-        <h3>Strapi Docs AI Assistant</h3>
+        <div className={styles.title}>
+          <AgentBot state={botState} size={40} decorative />
+          <h3>Strapi Docs AI Assistant</h3>
+        </div>
         <button
           className={styles.closeButton}
           onClick={() => setViewMode('elegant')}
@@ -298,7 +343,7 @@ export default function AiPanel() {
         <BrowserOnly>
           {() => (
             <KapaProvider integrationId={KAPA_INTEGRATION_ID} callbacks={{ askAI: {} }}>
-              <ChatInterface pageContext={{
+              <ChatInterface onBotStateChange={setBotState} pageContext={{
                 title: document.querySelector('article h1')?.textContent || '',
                 url: window.location.href,
                 summary: tldrText,
