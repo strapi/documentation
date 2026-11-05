@@ -11,16 +11,16 @@ tags:
 # Cron jobs
 
 <Tldr>
-Cron jobs schedule custom functions at specific times via `node-schedule`, activated through server config and optional task files.
+Cron jobs schedule custom functions at specific times via `croner`, activated through server config and optional task files.
 </Tldr>
 
 :::prerequisites
 The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/cms/configurations/server).
 :::
 
-`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
+`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs.
 
-This feature is powered by the <ExternalLink to="https://www.npmjs.com/package/node-schedule" text="`node-schedule`"/> package.
+This feature is powered by the <ExternalLink to="https://github.com/Hexagon/croner" text="`croner`"/> package.
 
 The `cron` format consists of:
 
