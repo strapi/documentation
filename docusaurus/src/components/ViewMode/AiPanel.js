@@ -92,9 +92,9 @@ function useTldrContent(viewMode) {
 
 /**
  * Maps the Kapa chat status to a mascot state: thinking while connecting,
- * working while streaming, a short happy "done" once the answer is complete,
- * idle otherwise. A failed request leaves it idle: the error is the service's,
- * not the reader's, so the mascot never gets angry at them.
+ * working while streaming, a short happy "done" with sparkles once the answer
+ * is complete, idle otherwise. A failed request makes it sad, never angry: the
+ * error is the service's, not the reader's.
  */
 function useBotState({ isPreparingAnswer, isGeneratingAnswer, error }) {
   const [justDone, setJustDone] = useState(false);
@@ -112,7 +112,7 @@ function useBotState({ isPreparingAnswer, isGeneratingAnswer, error }) {
     return undefined;
   }, [busy, error]);
 
-  if (error) return 'idle';
+  if (error) return 'sad';
   if (isPreparingAnswer) return 'think';
   if (isGeneratingAnswer) return 'work';
   if (justDone) return 'done';
