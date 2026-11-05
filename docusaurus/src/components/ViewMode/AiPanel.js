@@ -93,7 +93,8 @@ function useTldrContent(viewMode) {
 /**
  * Maps the Kapa chat status to a mascot state: thinking while connecting,
  * working while streaming, a short happy "done" once the answer is complete,
- * angry on error, idle otherwise.
+ * idle otherwise. A failed request leaves it idle: the error is the service's,
+ * not the reader's, so the mascot never gets angry at them.
  */
 function useBotState({ isPreparingAnswer, isGeneratingAnswer, error }) {
   const [justDone, setJustDone] = useState(false);
@@ -111,7 +112,7 @@ function useBotState({ isPreparingAnswer, isGeneratingAnswer, error }) {
     return undefined;
   }, [busy, error]);
 
-  if (error) return 'angry';
+  if (error) return 'idle';
   if (isPreparingAnswer) return 'think';
   if (isGeneratingAnswer) return 'work';
   if (justDone) return 'done';
@@ -222,6 +223,10 @@ function ChatInterface({ pageContext, onBotStateChange }) {
                       );
                     })()}
                   </>
+                ) : error && index === conversation.length - 1 ? (
+                  <p className={styles.chatError}>
+                    Sorry, I couldn't get an answer this time. Please try again in a moment.
+                  </p>
                 ) : (
                   <div className={styles.thinking}>
                     <span>Thinking</span>
@@ -286,10 +291,19 @@ function ChatInterface({ pageContext, onBotStateChange }) {
 }
 
 export default function AiPanel() {
-  const { viewMode, setViewMode } = useViewMode();
+  const { viewMode, setViewMode, leavingAi } = useViewMode();
   const isOpen = viewMode === 'ai';
   const tldrText = useTldrContent(viewMode);
   const [botState, setBotState] = useState('idle');
+  const [greeting, setGreeting] = useState(false);
+
+  // Lexi waves hello when the panel opens
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    setGreeting(true);
+    const timer = setTimeout(() => setGreeting(false), 1800);
+    return () => clearTimeout(timer);
+  }, [isOpen]);
 
   return (
     <aside
@@ -306,8 +320,11 @@ export default function AiPanel() {
           Back
         </button>
         <div className={styles.title}>
-          <AgentBot state={botState} size={40} decorative />
-          <h3>Strapi Docs AI Assistant</h3>
+          <AgentBot state={leavingAi || greeting ? 'wave' : botState} size={64} decorative />
+          <h3>
+            <span className={styles.titleName}>Hi! I'm Lexi,</span>
+            <span className={styles.titleRole}>Strapi Docs AI Assistant</span>
+          </h3>
         </div>
         <button
           className={styles.closeButton}

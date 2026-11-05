@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 
 const STORAGE_KEY = 'strapi-view-mode';
 const VIEW_MODES = ['elegant', 'markdown', 'ai'];
+// How long the AI panel stays open while the mascot waves goodbye
+const GOODBYE_MS = 900;
 
 function getInitialMode() {
   if (typeof window === 'undefined') return 'elegant';
@@ -17,6 +19,7 @@ function getInitialMode() {
 const ViewModeContext = createContext({
   viewMode: 'elegant',
   setViewMode: () => {},
+  leavingAi: false,
 });
 
 export function ViewModeProvider({ children }) {
@@ -66,8 +69,10 @@ export function ViewModeProvider({ children }) {
     }
   }, [viewMode]);
 
-  const setViewMode = useCallback((mode) => {
-    if (!VIEW_MODES.includes(mode)) return;
+  const [leavingAi, setLeavingAi] = useState(false);
+  const goodbyeTimer = useRef(null);
+
+  const applyViewMode = useCallback((mode) => {
     setViewModeState(mode);
     document.documentElement.dataset.viewMode = mode;
 
@@ -86,8 +91,28 @@ export function ViewModeProvider({ children }) {
     );
   }, []);
 
+  // Leaving AI mode waits for the mascot's goodbye wave, unless motion is reduced
+  const setViewMode = useCallback((mode) => {
+    if (!VIEW_MODES.includes(mode)) return;
+    clearTimeout(goodbyeTimer.current);
+    const leaving = viewModeRef.current === 'ai' && mode !== 'ai';
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!leaving || calm) {
+      setLeavingAi(false);
+      applyViewMode(mode);
+      return;
+    }
+    setLeavingAi(true);
+    goodbyeTimer.current = setTimeout(() => {
+      setLeavingAi(false);
+      applyViewMode(mode);
+    }, GOODBYE_MS);
+  }, [applyViewMode]);
+
+  useEffect(() => () => clearTimeout(goodbyeTimer.current), []);
+
   return (
-    <ViewModeContext.Provider value={{ viewMode, setViewMode }}>
+    <ViewModeContext.Provider value={{ viewMode, setViewMode, leavingAi }}>
       {children}
     </ViewModeContext.Provider>
   );

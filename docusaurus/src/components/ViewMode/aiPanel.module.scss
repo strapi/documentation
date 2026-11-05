@@ -55,7 +55,29 @@
 .title {
   display: flex;
   align-items: center;
-  gap: var(--strapi-spacing-3);
+  // Just enough room for the waving hand on the right of the mascot
+  gap: calc(var(--strapi-spacing-4) + 10px);
+
+  // A global style makes h3 a flex row; stack the name and the role instead
+  h3 {
+    display: block;
+  }
+}
+
+// Name on top, role below, same technical style, told apart by size
+.titleName {
+  display: block;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+// Own line-heights: the global h3 one (32px) leaves a gap under the role and
+// pushes the text off the mascot's vertical center
+.titleRole {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 // Small hint under the panel title explaining how to leave AI mode.
@@ -422,6 +444,12 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.chatError {
+  margin: 0;
+  color: var(--strapi-neutral-600);
+  font-size: 13px;
 }
 
 .thinking {
