@@ -1954,6 +1954,21 @@
       "number": 28331,
       "reason": "Router: Internal permission checker bug fix. No public API surface change.",
       "added": "2026-11-04"
+    },
+    {
+      "number": 27895,
+      "reason": "Triage: bug fix for development-mode issue only",
+      "added": "2026-11-05"
+    },
+    {
+      "number": 28382,
+      "reason": "Router: Internal admin UI enhancement adding a visual badge. No user-facing API or feature changes. Contributor docs in strapi/strapi already updated.",
+      "added": "2026-11-05"
+    },
+    {
+      "number": 28239,
+      "reason": "Router: Diff too large (4486 lines exceeds 3000 line limit)",
+      "added": "2026-11-05"
     }
   ]
 }
