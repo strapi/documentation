@@ -202,6 +202,10 @@ export default {
 </TabItem>
 </Tabs>
 
+:::tip
+Admin routes already require an authenticated admin user, so the `admin::isAuthenticatedAdmin` policy is optional. To restrict an admin route to users with a specific permission, use the `admin::hasPermissions` policy, as described in [How to create admin permissions from plugins](/cms/plugins-development/guides/admin-permissions-for-plugins#protect-the-server-routes).
+:::
+
 ### Factory callback format
 
 For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on configuration), you can export a factory callback.
