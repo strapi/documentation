@@ -476,10 +476,12 @@ All 3 lifecycle functions can be put together to configure custom behavior durin
 3. Restart Strapi to confirm each lifecycle executes in sequence.
 
 ```ts title="src/index.ts"
+import type { Core } from '@strapi/strapi';
+
 let cronJobKey: string | undefined;
 
 export default {
-  register({ strapi }) {
+  register({ strapi }: { strapi: Core.Strapi }) {
     strapi.customFields.register({
       name: 'color',
       type: 'string',
@@ -487,7 +489,7 @@ export default {
     });
   },
 
-  async bootstrap({ strapi }) {
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     cronJobKey = 'log-reminders';
 
     strapi.cron.add({
@@ -502,7 +504,7 @@ export default {
     });
   },
 
-  async destroy({ strapi }) {
+  async destroy({ strapi }: { strapi: Core.Strapi }) {
     if (cronJobKey) {
       strapi.cron.remove(cronJobKey);
     }
