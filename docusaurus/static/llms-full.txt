@@ -23944,15 +23944,15 @@ Source: https://docs.strapi.io/cms/configurations/cron
 
 # Cron jobs
 
-Cron jobs schedule custom functions at specific times via `node-schedule`, activated through server config and optional task files.
+Cron jobs schedule custom functions at specific times via `croner`, activated through server config and optional task files.
 
 :::prerequisites
 The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/cms/configurations/server).
 :::
 
-`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
+`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs.
 
-This feature is powered by the [`node-schedule`](https://www.npmjs.com/package/node-schedule) package.
+This feature is powered by the [`croner`](https://github.com/Hexagon/croner) package.
 
 The `cron` format consists of:
 
@@ -28655,7 +28655,7 @@ The `/config/server.js` file can include the following parameters:
 | `proxy.koa`                         | Set the koa variable `app.proxy`. When `true`, proxy header fields will be trusted.                                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
 | `proxy.ipHeader`                    |  Proxy IP header name to trust when identifying the client's real IP address. Set when behind a reverse proxy (e.g., Nginx, Apache, load balancer). For security, always pair with `proxy.maxIpsCount` to prevent header spoofing. Example: `'X-Forwarded-For'`, `'CF-Connecting-IP'`.                                                                                        | string                                                                                            | `'X-Forwarded-For'` |
 | `proxy.maxIpsCount`                 |  Maximum number of IP addresses to read from the proxy IP header. Must be set when using a reverse proxy to prevent IP spoofing attacks. Set to `1` for a single proxy, `2` for proxy chains, etc. Setting to `0` (Koa default) means unlimited, which is insecure behind a proxy.                                                                                             | integer                                                                                           | `0`                 |
-| `cron`                              | Cron configuration (powered by [`node-schedule`](https://github.com/node-schedule/node-schedule))                                                                                                                                                                                                                                                                           | object                                                                                            |                     |
+| `cron`                              | Cron configuration (powered by [`croner`](https://github.com/Hexagon/croner))                                                                                                                                                                                                                                                                                         | object                                                                                            |                     |
 | `cron.enabled`                      | Enable or disable [CRON jobs](/cms/configurations/cron.md) to schedule jobs at specific dates.                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
 | `cron.tasks`                        | Declare [CRON jobs](/cms/configurations/cron.md) to be run at specific dates.                                                                                                                                                                                                                                                                                          | object                                                                                            |                     |
 | `dirs`                              | Path configuration of different directories Strapi uses.                                                                                                                                                                                                                                                                                                                    | object                                                                                            |                     |
