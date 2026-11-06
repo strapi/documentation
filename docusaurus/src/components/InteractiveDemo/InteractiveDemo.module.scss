@@ -566,6 +566,34 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
+// Dark mode: Guideflow keeps white bubbles and cards, which glare on a dark page.
+[data-theme='dark'] {
+  .bubbleExplain,
+  .card {
+    background: #27272a;
+    color: #f4f4f5;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0.2em 0.9em rgba(0, 0, 0, 0.4);
+  }
+
+  .counter {
+    color: rgba(244, 244, 245, 0.45);
+  }
+
+  .backButton {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #f4f4f5;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .restartButton {
+    color: #a1a1aa;
+  }
+}
+
 // Too narrow to sit next to the target: bubbles dock at the bottom of the frame.
 @container (max-width: 480px) {
   .bubble {
