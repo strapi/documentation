@@ -97,7 +97,7 @@ Bucket each PR:
 
 ### Description non-compliance reasons
 
-Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness, **missing the trailing "Direct preview link 👉 [here](...)" line when the PR changes a page under `docusaurus/docs/`** (see Step 5, which also covers the PRs that must not have one).
+Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness, body restates the diff (per-file change lists, pasted command output, more than 2 sentences of explanation), **missing the trailing "Direct preview link 👉 [here](...)" line when the PR changes a page under `docusaurus/docs/`** (see Step 5, which also covers the PRs that must not have one).
 
 ## Step 4: Apply rewrites
 
@@ -267,6 +267,7 @@ Include PRs classified as compliant in a separate count below the table (e.g., `
 - In interactive mode (`AUTO=false`), never edit without explicit confirmation.
 - In auto mode (`AUTO=true`), still respect the compliant filter: never rewrite content that already passes the rules.
 - Never propose content that itself fails the rules.
+- A rewrite condenses, it does not transcribe. Drop the details the diff already shows instead of reformatting them into flat text. Keep the author's disclosures (e.g., "_AI assisted_"), issue and PR references, and the preview link.
 - `title` action only modifies the title. `description`/`body` action only modifies the body. Cross-pollination is not allowed.
 - If the rewrite would change meaning (not just form), surface that in the Reason line so the user can intervene. In auto mode, this is informational only; the edit still proceeds.
 
