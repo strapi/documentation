@@ -14,7 +14,7 @@ const DEMOS = Object.fromEntries(
 const TYPING_MS = 45;
 const PAGE_WIDTH = 1920; // widths of the two captured sizes, see capture.js
 const HD_WIDTH = 3840;
-const SLOW_CONNECTIONS = ['slow-2g', '2g', '3g'];
+const SLOW_CONNECTIONS = ['slow-2g', '2g'];
 const MAX_ZOOM = 2.5;
 
 // Scenario texts use a tiny Markdown subset: **bold**, *italic*, [label](url) and line breaks.
