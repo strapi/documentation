@@ -1,11 +1,13 @@
 // Measurements taken from the Guideflow embeds this component replaces, so both look alike.
-// Sizes are in em of the frame font size, which scales with the frame width like Guideflow does.
-$accent: #7b79ff;
-$accent-hover: #6563f0;
+// Sizes follow 3 type scales measured on Guideflow, from a 616 px wide frame (the docs column) to 1400 px.
 $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
 .demo {
   margin: 0 0 2rem;
+  container: demo / inline-size;
+  // Guideflow uses the Strapi primary in light mode and a lighter shade in dark mode.
+  --demo-accent: #4945ff;
+  --demo-accent-hover: #271fe0;
   border: 1px solid var(--strapi-neutral-200);
   border-radius: 10px;
   overflow: hidden;
@@ -13,12 +15,19 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter var', Inter, var(--strapi-font-family-body, sans-serif);
 }
 
+[data-theme='dark'] .demo {
+  --demo-accent: #7b79ff;
+  --demo-accent-hover: #6563f0;
+}
+
+// Three columns with equal sides, so the title stays centered whatever the controls on each side.
 .chrome {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, auto) 1fr;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   height: 36px;
-  padding: 0 8px 0 12px;
+  padding: 0 10px;
   border-bottom: 1px solid var(--strapi-neutral-150);
   background: #fff;
 
@@ -26,6 +35,17 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom-color: #3a3a3a;
     background: #262626;
   }
+}
+
+.chromeSide {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.chromeSideEnd {
+  justify-content: flex-end;
 }
 
 .dots {
@@ -80,19 +100,15 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-
-  &:last-child {
-    margin-left: auto;
-  }
 }
 
 .address {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  justify-self: center;
   min-width: 0;
-  max-width: 50%;
-  margin: 0 auto;
+  max-width: 100%;
   padding: 2px 10px;
   border-radius: 5px;
   background: #f4f4f5;
@@ -124,7 +140,10 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   overflow: clip; // hidden would still let focus or scrollIntoView shift the screenshot
   container-type: inline-size;
   user-select: none;
-  font-size: clamp(14px, 1.48cqw, 20.7px);
+  --explain-size: clamp(13.79px, calc(8.36px + 0.881cqw), 20.7px); // explanation and chapter bubbles
+  --action-size: clamp(18.67px, calc(17.07px + 0.259cqw), 20.7px); // bubbles of steps to click
+  --intro-size: clamp(15.41px, calc(13.54px + 0.304cqw), 17.79px); // intro and outro cards
+  font-size: var(--explain-size);
   line-height: 1.57;
 }
 
@@ -144,7 +163,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   position: absolute;
   inset: 0;
   backdrop-filter: blur(1px);
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(201, 201, 201, 0.5); // Guideflow's intro veil, the same in both themes
 }
 
 // Dims the whole screen except the explained area.
@@ -166,7 +185,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid $accent;
+    outline: 2px solid var(--demo-accent);
     outline-offset: 3px;
   }
 }
@@ -175,8 +194,8 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 1.6em;
-  height: 1.6em;
+  width: clamp(26px, calc(20.5px + 0.893cqw), 33px);
+  height: clamp(26px, calc(20.5px + 0.893cqw), 33px);
   transform: translate(-50%, -50%);
   pointer-events: none;
 
@@ -185,7 +204,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     content: '';
     position: absolute;
     inset: 0;
-    border: 3px solid $accent;
+    border: 3px solid var(--demo-accent);
     border-radius: 9999px;
     animation: pulsate 1s ease-out infinite;
   }
@@ -194,7 +213,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   span {
     position: absolute;
     inset: 0;
-    border: 6px solid $accent;
+    border: 6px solid var(--demo-accent);
     border-radius: 9999px;
     background: rgba(255, 255, 255, 0.35);
     animation: pulse-dot 1s ease-in-out infinite alternate;
@@ -203,7 +222,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .target:hover .hotspot span {
-  background: rgba(123, 121, 255, 0.35);
+  background: color-mix(in srgb, var(--demo-accent) 35%, transparent);
 }
 
 .targetNudged .hotspot::before {
@@ -286,6 +305,7 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bubbleExplain {
+  font-size: var(--explain-size);
   width: 16em;
   max-width: calc(100% - 16px);
   padding: 0.5em 0.9em 0.7em;
@@ -295,25 +315,31 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bubbleAction {
+  font-size: var(--action-size);
   max-width: 13.75em;
   padding: 0.5em;
-  background: $accent;
+  background: var(--demo-accent);
   color: #fff;
-  box-shadow: 0 0 0 0.25em rgba(123, 121, 255, 0.2);
+  box-shadow: 0 0 0 0.25em color-mix(in srgb, var(--demo-accent) 20%, transparent);
   text-align: center;
 }
 
 .bubbleChapter {
-  width: 11em;
+  font-size: var(--explain-size);
+  width: 16em;
   max-width: calc(100% - 16px);
-  padding: 0.6em 0.75em 0.6em;
-  background: $accent;
+  padding: 0.75em 0.65em 0.6em;
+  background: var(--demo-accent);
   color: #fff;
   text-align: center;
   box-shadow: 0 0.2em 0.9em rgba(0, 0, 0, 0.12);
 
   a {
     color: inherit;
+  }
+
+  .bubbleFooter {
+    margin-top: 1.15em;
   }
 }
 
@@ -396,16 +422,17 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   text-align: left;
 
   .bubbleChapter & {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.7);
   }
 }
 
 .backButton,
 .nextButton {
-  height: 2em; // 31px at the 20.7px reference size, like Guideflow
-  padding: 0 0.625em;
+  // Guideflow labels are 0.75em of the bubble size, in a 21 px high button at the docs width.
+  height: 2.03em;
+  padding: 0 0.834em;
   border: 1px solid transparent;
-  border-radius: 0.25em;
+  border-radius: 0.333em;
   font: inherit;
   font-size: 0.75em;
   line-height: 1;
@@ -414,20 +441,20 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
 .backButton {
   background: #fff;
-  color: $accent;
+  color: var(--demo-accent);
 
   &:hover {
-    background: rgba(123, 121, 255, 0.08);
+    background: color-mix(in srgb, var(--demo-accent) 8%, transparent);
   }
 }
 
 .nextButton {
-  background: $accent;
+  background: var(--demo-accent);
   color: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
   &:hover {
-    background: $accent-hover;
+    background: var(--demo-accent-hover);
   }
 }
 
@@ -435,12 +462,13 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.75em;
-  height: 1.5em;
+  width: 1.74em;
+  height: 1.52em;
   padding: 0;
   border: 0;
-  border-radius: 0.25em;
-  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  font: inherit;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
   cursor: pointer;
 
@@ -467,11 +495,12 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.6em;
-  width: 16em;
+  gap: 1em;
+  width: 18.75em;
   max-width: calc(100% - 16px);
-  padding: 1.1em 1.25em 1.25em;
-  border-radius: 0.5em;
+  padding: 1.5em;
+  border-radius: 0.7em;
+  font-size: var(--intro-size);
   background: #fff;
   color: #000;
   text-align: center;
@@ -480,29 +509,30 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card .cardText {
-  margin: 0 0 0.2em;
+  margin: 0;
   color: inherit;
-  font-size: 0.86em;
-  line-height: 1.6;
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.572;
 }
 
 .startButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 1.9em;
-  padding: 0 0.75em;
+  height: 2.52em;
+  padding: 0 1em;
   border: 0;
-  border-radius: 0.53em;
-  background: $accent;
+  border-radius: 0.7em;
+  background: var(--demo-accent);
   color: #fff;
   font: inherit;
-  font-size: 0.75em;
+  font-size: 0.875em;
   font-weight: 500;
   cursor: pointer;
 
   &:hover {
-    background: $accent-hover;
+    background: var(--demo-accent-hover);
     color: #fff;
     text-decoration: none;
   }
@@ -603,5 +633,12 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   li {
     margin: 4px 0;
+  }
+}
+
+// Narrow demos: drop the decorative dots so the centered title keeps its room.
+@container demo (max-width: 480px) {
+  .dots {
+    display: none;
   }
 }

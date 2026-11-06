@@ -212,28 +212,33 @@ export default function InteractiveDemo({ id }) {
   const isChapter = step?.type === 'chapter';
   const placement = isChapter ? { side: 'center' } : bubblePlacement(rect);
   const box = rect && { left: `${rect.x}%`, top: `${rect.y}%`, width: `${rect.w}%`, height: `${rect.h}%` };
-  const counter = <span className={styles.counter}>{index + 1}/{total}</span>;
+  // Like Guideflow, the count includes the closing screen.
+  const counter = <span className={styles.counter}>{index + 1}/{total + 1}</span>;
 
   return (
     <figure ref={figureRef} className={styles.demo} aria-label={demo.title}>
       <div className={styles.chrome}>
-        <span className={styles.dots} aria-hidden="true"><i /><i /><i /></span>
-        <button type="button" className={styles.chromeButton} onClick={() => go(index - 1)} disabled={isIntro} aria-label="Previous step">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" /></svg>
-        </button>
-        <button type="button" className={styles.chromeButton} onClick={() => go(index + 1)} disabled={isOutro} aria-label="Next step">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
-        </button>
-        <button type="button" className={styles.chromeButton} onClick={() => go(-1)} disabled={isIntro} aria-label="Restart">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" /></svg>
-        </button>
+        <div className={styles.chromeSide}>
+          <span className={styles.dots} aria-hidden="true"><i /><i /><i /></span>
+          <button type="button" className={styles.chromeButton} onClick={() => go(index - 1)} disabled={isIntro} aria-label="Previous step">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" /></svg>
+          </button>
+          <button type="button" className={styles.chromeButton} onClick={() => go(index + 1)} disabled={isOutro} aria-label="Next step">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+          </button>
+          <button type="button" className={styles.chromeButton} onClick={() => go(-1)} disabled={isIntro} aria-label="Restart">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" /></svg>
+          </button>
+        </div>
         <span className={styles.address}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" /><path d="M2.5 8h11M8 2.5c-2 2-2 9 0 11m0-11c2 2 2 9 0 11" /></svg>
           {demo.title}
         </span>
-        <button type="button" className={styles.chromeButton} onClick={toggleFullscreen} aria-label="Toggle full screen">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 2.5h4v4m0-4L9 7M6.5 13.5h-4v-4m0 4L7 9" /></svg>
-        </button>
+        <div className={clsx(styles.chromeSide, styles.chromeSideEnd)}>
+          <button type="button" className={styles.chromeButton} onClick={toggleFullscreen} aria-label="Toggle full screen">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 2.5h4v4m0-4L9 7M6.5 13.5h-4v-4m0 4L7 9" /></svg>
+          </button>
+        </div>
       </div>
 
       <div
