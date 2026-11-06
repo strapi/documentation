@@ -320,7 +320,7 @@ export default function AiPanel() {
           Back
         </button>
         <div className={styles.title}>
-          <AgentBot state={leavingAi || greeting ? 'wave' : botState} size={64} decorative />
+          <AgentBot state={leavingAi || greeting ? 'wave' : botState} size={44} props decorative />
           <h3>
             <span className={styles.titleName}>Hi! I'm Lexi,</span>
             <span className={styles.titleRole}>Strapi Docs AI Assistant</span>
