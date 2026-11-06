@@ -1,0 +1,460 @@
+@use '../../scss/mixins' as *;
+
+$accent: #4945ff; // Strapi admin primary, matches the captured interface in both themes.
+$accent-hover: #271fe0;
+
+.demo {
+  margin: 0 0 2rem;
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: var(--strapi-radius-md);
+  overflow: hidden;
+  background: var(--strapi-surface-0, var(--strapi-neutral-0));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 32px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--strapi-neutral-150);
+  background: var(--strapi-neutral-100);
+}
+
+.dots {
+  display: inline-flex;
+  gap: 6px;
+
+  i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--strapi-neutral-300);
+  }
+}
+
+.chromeTitle {
+  flex: 1;
+  margin-right: 46px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--strapi-neutral-600);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: clip; // hidden would still let focus or scrollIntoView shift the screenshot
+  container-type: inline-size;
+  user-select: none;
+}
+
+.screen {
+  display: block;
+  width: 100%;
+  margin: 0 !important; // docs images get a bottom margin from images.scss
+  height: auto; // the image sets the frame height; width/height attributes reserve it before load
+  transition: filter 0.3s ease;
+}
+
+.screenBlurred {
+  filter: blur(4px) saturate(0.8);
+  transform: scale(1.02);
+}
+
+// Dims the whole screen except the explained area.
+.spotlight {
+  position: absolute;
+  border-radius: 6px;
+  box-shadow: 0 0 0 9999px rgba(15, 15, 30, 0.45), 0 0 0 2px rgba(255, 255, 255, 0.9);
+  transition: left 0.35s ease, top 0.35s ease, width 0.35s ease, height 0.35s ease;
+  pointer-events: none;
+}
+
+.dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 15, 30, 0.45);
+  pointer-events: none;
+}
+
+// The reader clicks the real element: the whole target area is the button.
+.target {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 3px;
+  }
+
+  &:hover .hotspot::after {
+    background: rgba(73, 69, 255, 0.35);
+  }
+}
+
+.hotspot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(18px, 3.2cqw, 34px);
+  height: clamp(18px, 3.2cqw, 34px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+
+  &::before {
+    border: 2px solid $accent;
+    animation: pulse 1.6s ease-out infinite;
+  }
+
+  &::after {
+    inset: 20%;
+    border: 2px solid $accent;
+    background: rgba(73, 69, 255, 0.12);
+    transition: background 0.15s ease;
+  }
+}
+
+.targetNudged .hotspot::before {
+  animation: pulse 0.5s ease-out 3, pulse 1.6s ease-out 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.typed {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 0 1.2cqw;
+  font-size: 1.1cqw;
+  color: #32324d;
+  pointer-events: none;
+}
+
+[data-theme='dark'] .typed {
+  color: #fff;
+}
+
+.caret {
+  display: inline-block;
+  width: 1px;
+  height: 1.2em;
+  margin-left: 1px;
+  background: currentColor;
+  animation: blink 0.8s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.bubble {
+  position: absolute;
+  z-index: 2;
+  width: min(300px, 34cqw);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: clamp(12px, 1.25cqw, 15px);
+  line-height: 1.45;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: appear 0.25s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+}
+
+.bubbleExplain {
+  background: #fff;
+  color: #32324d;
+}
+
+.bubbleAction {
+  background: $accent;
+  color: #fff;
+}
+
+.bubble_right {
+  transform: translate(16px, -50%);
+
+  &::before {
+    left: -5px;
+    top: calc(50% - 5px);
+  }
+}
+
+.bubble_left {
+  transform: translate(calc(-100% - 16px), -50%);
+
+  &::before {
+    right: -5px;
+    top: calc(50% - 5px);
+  }
+}
+
+.bubble_below {
+  transform: translate(-50%, 16px);
+
+  &::before {
+    top: -5px;
+    left: calc(50% - 5px);
+  }
+}
+
+.bubble_above {
+  transform: translate(-50%, calc(-100% - 16px));
+
+  &::before {
+    bottom: -5px;
+    left: calc(50% - 5px);
+  }
+}
+
+.bubble_center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  &::before {
+    display: none;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+// Beats the docs dark-theme paragraph color: bubbles and cards keep their own palette.
+.bubble .bubbleText,
+.card .cardText {
+  color: inherit;
+}
+
+.bubbleText {
+  margin: 0;
+}
+
+.bubbleFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.counter {
+  flex: 1;
+  font-size: 0.85em;
+  color: #8e8ea9;
+}
+
+.primaryButton,
+.secondaryButton,
+.linkButton {
+  font: inherit;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.primaryButton {
+  padding: 6px 14px;
+  border: 0;
+  background: $accent;
+  color: #fff;
+
+  &:hover {
+    background: $accent-hover;
+  }
+}
+
+.secondaryButton {
+  padding: 6px 12px;
+  border: 1px solid #dcdce4;
+  background: #fff;
+  color: #32324d;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+    text-decoration: none;
+  }
+}
+
+.linkButton {
+  padding: 6px 4px;
+  border: 0;
+  background: none;
+  color: $accent;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(340px, 80%);
+  padding: 22px;
+  border-radius: 10px;
+  background: #fff;
+  color: #32324d;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+
+  .primaryButton {
+    width: 100%;
+    padding: 9px 14px;
+  }
+}
+
+.cardText {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.cardLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-top: 1px solid var(--strapi-neutral-150);
+}
+
+.progress {
+  flex: 1;
+  height: 4px;
+  margin-right: 8px;
+  border-radius: 2px;
+  background: var(--strapi-neutral-150);
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    background: $accent;
+    transition: width 0.3s ease;
+  }
+}
+
+.iconButton {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--strapi-neutral-700);
+  font-size: 15px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: var(--strapi-neutral-100);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
+
+// Too narrow to sit next to the target: bubbles dock at the bottom of the frame.
+@container (max-width: 480px) {
+  .bubble {
+    left: 50% !important;
+    top: auto !important;
+    bottom: 8px;
+    width: calc(100% - 16px);
+    transform: translateX(-50%);
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .cardText {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspot::before,
+  .bubble,
+  .spotlight {
+    animation: none;
+    transition: none;
+  }
+}
+
+.demo:fullscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--strapi-neutral-100);
+
+  .chrome,
+  .frame,
+  .toolbar {
+    width: min(100%, calc((100vh - 80px) * 1.6));
+    margin: 0 auto;
+  }
+}
+
+.bubble_inside {
+  transform: translate(-50%, -50%);
+
+  &::before {
+    display: none;
+  }
+}

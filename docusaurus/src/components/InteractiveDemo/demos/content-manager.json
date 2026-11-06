@@ -1,0 +1,265 @@
+{
+  "id": "content-manager",
+  "title": "Content Manager overview",
+  "width": 1280,
+  "height": 800,
+  "intro": {
+    "text": "Welcome to the guided tour of the Content Manager!",
+    "button": "Let's start",
+    "image": "/img/assets/interactive-demos/content-manager/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/01",
+      "text": "This is the navigation of the Content Manager. It gives access to all content-types created beforehand in the Content-type Builder.",
+      "rect": {
+        "x": 3.91,
+        "y": 0,
+        "w": 19.06,
+        "h": 100
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/01",
+      "text": "The content-types are organised in 2 categories, **Collection types** and **Single types**, to make it easier to find them. You can also use the search field.",
+      "rect": {
+        "x": 3.91,
+        "y": 0,
+        "w": 19.06,
+        "h": 100
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/01",
+      "text": "Here we have an example of a **Single type**, which can only have one entry.",
+      "rect": {
+        "x": 22.03,
+        "y": 0,
+        "w": 77.97,
+        "h": 74.99
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/01",
+      "text": "Therefore, with Single types, we directly land on their edit view.",
+      "rect": {
+        "x": 22.03,
+        "y": 0,
+        "w": 77.97,
+        "h": 74.99
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/01",
+      "text": "Let's see an example of a Collection type to compare!",
+      "rect": {
+        "x": 5,
+        "y": 19.88,
+        "w": 16.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/02",
+      "text": "\"Article\" is a **Collection type**. It can manage several entries.",
+      "rect": {
+        "x": 26.41,
+        "y": 6.25,
+        "w": 8.43,
+        "h": 6.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/02",
+      "text": "We first land on the **list view**, where we can choose which entry to edit.",
+      "rect": {
+        "x": 28.36,
+        "y": 26.88,
+        "w": 71.64,
+        "h": 49.06
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/02",
+      "text": "These are the search and filter buttons to help you find specific entries in the table.",
+      "rect": {
+        "x": 26.41,
+        "y": 20.75,
+        "w": 11.48,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/02",
+      "text": "This dropdown displays the entries based on the language, called \"locale\", they are available in.",
+      "rect": {
+        "x": 81.21,
+        "y": 20.75,
+        "w": 11.76,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/02",
+      "text": "This is the settings button, from which you can decide which fields to display in the table. It also gives access to the configuration of the list view.",
+      "rect": {
+        "x": 92.66,
+        "y": 20.75,
+        "w": 3.44,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/02",
+      "text": "Let's try using all these buttons together!",
+      "rect": null
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/02",
+      "text": "Click here to filter the entries listed in the table.",
+      "rect": {
+        "x": 30,
+        "y": 21.5,
+        "w": 7.42,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/03",
+      "text": "Choose the field to filter on.",
+      "rect": {
+        "x": 31.02,
+        "y": 27.63,
+        "w": 14.69,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/04",
+      "text": "Let's filter based on the \"category\" field!",
+      "rect": {
+        "x": 31.43,
+        "y": 42.79,
+        "w": 13.91,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-manager/05",
+      "text": "Let's filter entries whose category is \"nature\".",
+      "rect": {
+        "x": 31.09,
+        "y": 39.75,
+        "w": 14.53,
+        "h": 4.75
+      },
+      "value": "nature"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/06",
+      "text": "Click on **Add filter** to apply the new filter on the table.",
+      "rect": {
+        "x": 31.02,
+        "y": 45.63,
+        "w": 14.69,
+        "h": 5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/07",
+      "text": "We now have only 2 entries left in our filtered table! Now, let's configure the table so that it fits our preferences.",
+      "rect": {
+        "x": 28.36,
+        "y": 26.88,
+        "w": 71.64,
+        "h": 24.69
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/07",
+      "text": "Click on the settings button.",
+      "rect": {
+        "x": 93.13,
+        "y": 21.5,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/08",
+      "text": "Click here to display the \"author\" field in the table of entries.",
+      "rect": {
+        "x": 82.37,
+        "y": 37.12,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/09",
+      "text": "To define the displayed fields more permanently, set your preferences with the **Configure the view** button.",
+      "rect": {
+        "x": 80.96,
+        "y": 26.88,
+        "w": 14.14,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-manager/10",
+      "text": "Authors are now displayed in the table!",
+      "rect": {
+        "x": 28.36,
+        "y": 26.88,
+        "w": 71.64,
+        "h": 24.69
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-manager/10",
+      "text": "Now that we've explored the list view, let's discover the edit view by creating a new entry!",
+      "rect": {
+        "x": 83.18,
+        "y": 7.5,
+        "w": 12.45,
+        "h": 4
+      }
+    }
+  ],
+  "outro": {
+    "text": "This prototype stops here. The full tour continues with the edit view.",
+    "links": [
+      {
+        "label": "Content Manager docs",
+        "href": "/cms/features/content-manager"
+      },
+      {
+        "label": "Quick Start Guide",
+        "href": "/cms/quick-start"
+      }
+    ],
+    "image": "/img/assets/interactive-demos/content-manager/10"
+  }
+}
