@@ -57,7 +57,7 @@ const KAPA_EVENTS = {
   onModalClose: () => setBotState('idle'),
   onAskAIQuerySubmit: () => setBotState('think'),
   onAskAIExampleQuerySubmit: () => setBotState('think'),
-  onAskAIAnswerCompleted: () => setBotState('done', 2500),
+  onAskAIAnswerCompleted: () => setBotState('happy', 2500),
   onAskAIGenerationStop: () => setBotState('idle'),
   onAskAIConversationReset: () => setBotState('idle'),
 };
