@@ -1,0 +1,287 @@
+{
+  "id": "draft-and-publish",
+  "title": "Draft & Publish",
+  "width": 1536,
+  "height": 960,
+  "bytes": {
+    "light": 1025258,
+    "dark": 997168
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Draft & Publish feature!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/draft-and-publish/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/01",
+      "text": "Draft & Publish is the feature that allows you to manage content-types as drafts before publishing them.\n\nBefore using it, it should be enabled via the **Content-type Builder**.",
+      "rect": {
+        "x": 79.75,
+        "y": 3.96,
+        "w": 6.06,
+        "h": 4.58
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/02",
+      "text": "Let's go to the **advanced settings** of the content-type of our choice!",
+      "rect": {
+        "x": 64.94,
+        "y": 29.29,
+        "w": 10,
+        "h": 4.9
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/03",
+      "text": "Draft & Publish is by default enabled for all content-types.",
+      "rect": {
+        "x": 24.67,
+        "y": 51.04,
+        "w": 25.07,
+        "h": 5.41
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/03",
+      "text": "Now that we know Draft & Publish is enabled for our articles, we can move to the **Content Manager** to use it!",
+      "rect": {
+        "x": 73.63,
+        "y": 34.9,
+        "w": 2.08,
+        "h": 3.33
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/04",
+      "text": "In the **list view of the Content Manager**, with Draft & Publish enabled, you can see a \"Status\" column indicating which articles are a draft and which are published.",
+      "rect": {
+        "x": 84.72,
+        "y": 22.4,
+        "w": 6.28,
+        "h": 40.89
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/04",
+      "text": "Let's publish an article!",
+      "rect": {
+        "x": 28.68,
+        "y": 49.17,
+        "w": 19.87,
+        "h": 6.77
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/05",
+      "text": "At the top of the interface, below the title, you can see the **status of the article**.",
+      "rect": {
+        "x": 22.01,
+        "y": 10.21,
+        "w": 4.2,
+        "h": 4.38
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/06",
+      "text": "And here you can see **2 tabs**:\n• **Draft** is where you can edit your article.\n• **Published** is a read-only tab where you can see the content that is published. It is only accessible if the article is published.",
+      "rect": {
+        "x": 22.01,
+        "y": 15,
+        "w": 11.55,
+        "h": 6.15
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/06",
+      "text": "Let's click on the *Publish* button to visit the Published tab!",
+      "rect": {
+        "x": 79.75,
+        "y": 29.37,
+        "w": 12.89,
+        "h": 3.33
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/07",
+      "text": "Now that we have published the article, the status is updated to \"Published\" and the Published tab is accessible!",
+      "rect": {
+        "x": 22.01,
+        "y": 10.21,
+        "w": 11.55,
+        "h": 10.94
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/07",
+      "text": "Click the **Published tab**!",
+      "rect": {
+        "x": 26.92,
+        "y": 15.63,
+        "w": 6.25,
+        "h": 4.9
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/draft-and-publish/08",
+      "text": "The content of the article, as it was published, is shown here in read-only mode."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/08",
+      "text": "Let's go back to the **Draft tab**!",
+      "rect": {
+        "x": 22.4,
+        "y": 15.63,
+        "w": 4.52,
+        "h": 4.9
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/09",
+      "text": "Via the *...* button, you can **unpublish the article**.",
+      "rect": {
+        "x": 80.27,
+        "y": 37.4,
+        "w": 14.65,
+        "h": 3.75
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/draft-and-publish/06",
+      "text": "Draft & Publish supports **bulk actions**, meaning that changing the status can be done for several entries of the same content-type, simultaneously."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/06",
+      "text": "Let's go back to the **list view of the Content Manager**!",
+      "rect": {
+        "x": 22.4,
+        "y": 2.5,
+        "w": 3.63,
+        "h": 2.08
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/draft-and-publish/10",
+      "text": "Let's select a couple of articles from the table!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/11",
+      "text": "Tick the boxes to select your articles!",
+      "rect": {
+        "x": 24.28,
+        "y": 63.28,
+        "w": 1.3,
+        "h": 2.08
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/12",
+      "text": "You can see buttons above the table. These are the available actions that can be performed simultaneously for the selected entries.",
+      "rect": {
+        "x": 22.01,
+        "y": 22.29,
+        "w": 19.09,
+        "h": 4.58
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/12",
+      "text": "Let's publish the 2 articles!",
+      "rect": {
+        "x": 30.43,
+        "y": 22.92,
+        "w": 5.06,
+        "h": 3.33
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/13",
+      "text": "A dialog will indicate you if the entries can be published or if a pending action is preventing the publishing.",
+      "rect": {
+        "x": 22.59,
+        "y": 21.43,
+        "w": 54.82,
+        "h": 57.14
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/14",
+      "text": "Since both articles are **ready to publish**, we can go ahead and click the *Publish* button!",
+      "rect": {
+        "x": 70.66,
+        "y": 72.94,
+        "w": 5.06,
+        "h": 3.33
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/draft-and-publish/14",
+      "text": "Click *Publish* again to confirm the action.",
+      "rect": {
+        "x": 70.62,
+        "y": 72.9,
+        "w": 5.05,
+        "h": 3.33
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/draft-and-publish/15",
+      "text": "We can see in the Status column that our 2 articles have properly been published!",
+      "rect": {
+        "x": 84.72,
+        "y": 22.4,
+        "w": 8.39,
+        "h": 40.89
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/draft-and-publish/16",
+      "text": "✏️ Note that you can also bulk unpublish entries of your content-type."
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/draft-and-publish/15",
+      "text": "And that's it! We've used Draft & Publish to manage drafts and publish (or unpublish) one or more entries ✨"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "links": [
+      {
+        "label": "Draft & Publish docs 📖",
+        "href": "/cms/features/draft-and-publish"
+      },
+      {
+        "label": "🚀 Quick Start Guide",
+        "href": "/cms/quick-start"
+      }
+    ],
+    "image": "/img/assets/interactive-demos/draft-and-publish/15"
+  }
+}
