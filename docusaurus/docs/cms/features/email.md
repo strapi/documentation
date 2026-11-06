@@ -362,7 +362,7 @@ To use the `sendTemplatedEmail()` function, define the `emailTemplate` object an
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
 | `emailOptions` <br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
-| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash string templates"/> | `object` | { }      |
+| `emailTemplate` | Contains email content properties using <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash string templates"/>. Required: `subject`, `text`. Optional: `html` | `object` | { }      |
 | `data`  <br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 The following code example can be used in a controller or a service:
