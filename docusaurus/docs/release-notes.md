@@ -44,7 +44,6 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Document the media field Add asset menu and asset picker](https://github.com/strapi/documentation/pull/3623)
 
 #### Repository
-- [Fill the empty example OpenAPI specification file](https://github.com/strapi/documentation/pull/3628)
 - [Align AI docs on Strapi AI Growth and Strapi AI Enterprise naming](https://github.com/strapi/documentation/pull/3621)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
