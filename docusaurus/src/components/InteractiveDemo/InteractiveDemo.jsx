@@ -327,7 +327,7 @@ export default function InteractiveDemo({ id }) {
 
         {loading === 'deferred' && (
           <div className={styles.card}>
-            <p className={styles.cardText}>{demo.intro.text}</p>
+            <p className={styles.cardText}><RichText text={demo.intro.text} /></p>
             <p className={styles.cardNote}>
               Interactive demo, {total} steps, about {formatMegabytes(demo.bytes?.[colorMode === 'dark' ? 'dark' : 'light'] ?? 0)}.
             </p>
@@ -337,14 +337,14 @@ export default function InteractiveDemo({ id }) {
 
         {isIntro && loading === 'ready' && (
           <div className={styles.card}>
-            <p className={styles.cardText}>{demo.intro.text}</p>
+            <p className={styles.cardText}><RichText text={demo.intro.text} /></p>
             <button type="button" className={styles.startButton} onClick={() => go(0)}>{demo.intro.button}</button>
           </div>
         )}
 
         {isOutro && (
           <div className={styles.card}>
-            <p className={styles.cardText}>{demo.outro.text}</p>
+            <p className={styles.cardText}><RichText text={demo.outro.text} /></p>
             {demo.outro.links?.map((link) => (
               <Link key={link.href} className={styles.startButton} to={link.href}>{link.label}</Link>
             ))}

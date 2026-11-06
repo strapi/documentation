@@ -14,7 +14,11 @@ module.exports = {
 
   // Brings the app back to the same state before every capture.
   async setup({ api }) {
+    // The tour shows English and French only (the internationalization tour adds German).
     const locales = await api.get('/i18n/locales');
+    for (const locale of locales.filter((item) => !['en', 'fr'].includes(item.code))) {
+      await api.del(`/i18n/locales/${locale.id}`);
+    }
     if (!locales.some((locale) => locale.code === 'fr')) {
       await api.post('/i18n/locales', { name: 'French (fr)', code: 'fr', isDefault: false });
     }

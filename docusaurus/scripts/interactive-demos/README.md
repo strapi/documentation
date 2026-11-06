@@ -22,7 +22,7 @@ Run these commands from `docusaurus/`.
    node scripts/interactive-demos/setup-demo-app.js ~/strapi-demo --port 1337
    ```
 
-   It creates the official Strapi example app, localizes Article, turns off the admin login rate limit and seeds the example data. Add `--version 5.61.0` to pin a Strapi version.
+   It creates the official Strapi example app, localizes Article, adds the French and German admin languages and the Documentation plugin, turns off the admin login rate limit and seeds the example data. Add `--version 5.61.0` to pin a Strapi version.
 
 2. Start the app in a separate terminal and leave it running:
 
@@ -30,17 +30,25 @@ Run these commands from `docusaurus/`.
    cd ~/strapi-demo && npm run develop
    ```
 
+   The Releases, Content History and Review Workflows demos need an Enterprise license. Keep the key in a file outside the repository and pass it when starting the app, without printing it:
+
+   ```bash
+   cd ~/strapi-demo && STRAPI_LICENSE="$(cat ~/.strapi-license)" npm run develop
+   ```
+
 3. Capture the demo:
 
    ```bash
-   DEMO_STRAPI_URL=http://localhost:1337 \
-   DEMO_STRAPI_EMAIL=you@example.com DEMO_STRAPI_PASSWORD=YourPassw0rd \
+   DEMO_STRAPI_URL=http://localhost:1337 DEMO_STRAPI_DIR=~/strapi-demo \
+   DEMO_STRAPI_EMAIL=kai.doe@example.com DEMO_STRAPI_PASSWORD=YourPassw0rd \
    node scripts/interactive-demos/capture.js content-manager
    ```
 
-   The first run creates the admin user with these credentials. Each run resets what the scenario changes (see `setup` in the scenario), so you can capture as often as needed. A run takes about a minute and captures light and dark screenshots at once.
+   The first run creates the admin user, Kai Doe, with these credentials. Always use a made-up `example.com` address: the admin home page, the user menu and the users list display it, and it would end up in the published screenshots. `DEMO_STRAPI_DIR` is the demo app folder, where the Media Library demo takes the images it uploads. Each run resets what the scenario changes (see `setup` in the scenario), so you can capture as often as needed. A run takes about a minute and captures light and dark screenshots at once.
 
 4. Check the result with `yarn dev`, then commit the scenario, the JSON file and the images.
+
+The Internationalization demo starts by turning off localization on Article, and its tour turns it back on. If its capture stops midway, run it again until it completes before capturing other demos.
 
 If the capture stops with `Target not visible: <selector>` or a timeout, the interface changed: the step's selector no longer matches. Fix the selector in the scenario and run the capture again.
 
@@ -70,7 +78,7 @@ Options:
 
 - `explain` takes one selector or a list (the highlight covers them all), `padding` widens the highlight and `zoom: true` zooms on it.
 - `before: [actions]` runs before the screenshot, to open a dropdown for instance. `after: [actions]` runs after a `click` or `fill`, to pick an option in the list that opened, for instance.
-- Actions are `{ goto }`, `{ click }`, `{ fill, value }`, `{ press }` and `{ wait }`.
+- Actions are `{ goto }`, `{ click }`, `{ fill, value }`, `{ press }`, `{ hover }`, `{ upload, files }` (paths relative to `capture.js`), `{ waitFor: selector, timeout }` (to wait for an element, after a server restart for instance) and `{ wait: ms }`.
 - Texts accept `**bold**`, `*italic*`, `[label](url)` and line breaks (`\n`).
 
 Selectors are [Playwright selectors](https://playwright.dev/docs/other-locators). Prefer accessible names, which survive redesigns better than CSS classes: `role=button[name="Save"]`, `[aria-label="Locales"]`, `input[name=title]`. Accessible names are case-sensitive here: check them in the browser accessibility panel.

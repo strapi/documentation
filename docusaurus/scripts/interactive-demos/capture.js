@@ -26,7 +26,8 @@
  *   { do: [actions] }                         silent actions, no step shown
  * Any step accepts `before: [actions]`, run before the screenshot, and click or fill steps
  * accept `after: [actions]`, run once the action is done (to pick an option in a list, say).
- * Actions: { goto }, { click }, { fill, value }, { press }, { wait }.
+ * Actions: { goto }, { click }, { fill, value }, { press }, { hover }, { upload, files },
+ * { waitFor: selector, timeout } and { wait: ms }. `files` paths are relative to this script.
  * Texts accept **bold**, *italic*, [label](url) and line breaks.
  */
 
@@ -100,6 +101,13 @@ async function runActions(page, baseUrl, actions = []) {
     else if (action.fill) await page.locator(action.fill).first().fill(action.value);
     else if (action.click) await page.locator(action.click).first().click();
     else if (action.press) await page.keyboard.press(action.press);
+    else if (action.hover) await page.locator(action.hover).first().hover();
+    else if (action.upload) {
+      const files = [].concat(action.files).map((file) => path.resolve(__dirname, file));
+      await page.locator(action.upload).first().setInputFiles(files);
+    }
+    // Waits for an element, after a server restart for instance.
+    if (action.waitFor) await page.locator(action.waitFor).first().waitFor({ timeout: action.timeout ?? 60000 });
     if (action.wait) await page.waitForTimeout(action.wait);
     await settle(page);
   }

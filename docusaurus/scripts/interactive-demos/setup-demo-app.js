@@ -70,6 +70,16 @@ function main() {
     fs.writeFileSync(adminConfig, admin.replace(/\n\}\);\s*$/, '\n  rateLimit: {\n    enabled: false,\n  },\n});\n'));
   }
 
+  // The admin panel tour switches the interface language, which needs extra admin locales.
+  fs.writeFileSync(
+    path.join(target, 'src/admin/app.js'),
+    "export default {\n  config: { locales: ['fr', 'de'] },\n  bootstrap() {},\n};\n",
+  );
+
+  // The documentation tour needs the Documentation plugin, at the same version as Strapi.
+  const strapiVersion = JSON.parse(fs.readFileSync(path.join(target, 'package.json'), 'utf8')).dependencies['@strapi/strapi'];
+  run('npm', ['install', `@strapi/plugin-documentation@${strapiVersion}`], target);
+
   run('npm', ['run', 'seed:example'], target);
 
   console.log(`\nDemo app ready. Start it with:\n  cd ${target} && npm run develop\nThen open http://localhost:${port}/admin once it is up.`);
