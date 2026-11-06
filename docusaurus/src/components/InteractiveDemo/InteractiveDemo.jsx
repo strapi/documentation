@@ -12,18 +12,38 @@ const DEMOS = Object.fromEntries(
 );
 
 const TYPING_MS = 45;
+const MAX_ZOOM = 2.5;
 
-// Renders **bold** segments; scenario texts carry no other markup.
+// Scenario texts use a tiny Markdown subset: **bold**, *italic*, [label](url) and line breaks.
 function RichText({ text }) {
-  return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
-    part.startsWith('**') ? <strong key={index}>{part.slice(2, -2)}</strong> : <React.Fragment key={index}>{part}</React.Fragment>
-  );
+  return text.split('\n').map((line, lineIndex) => (
+    <React.Fragment key={lineIndex}>
+      {lineIndex > 0 && <br />}
+      {line.split(/(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g).map((part, index) => {
+        if (part.startsWith('**')) return <strong key={index}>{part.slice(2, -2)}</strong>;
+        if (part.startsWith('*')) return <em key={index}>{part.slice(1, -1)}</em>;
+        const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (link) return <Link key={index} to={link[2]}>{link[1]}</Link>;
+        return <React.Fragment key={index}>{part}</React.Fragment>;
+      })}
+    </React.Fragment>
+  ));
 }
 
-// Places the bubble on the side of the target with the most room, in % of the frame.
+// Zoomed steps scale the screenshot so the target fills most of the frame, all in % of the frame.
+function viewFor(step) {
+  const rect = step?.rect;
+  if (!rect || !step.zoom) return { scale: 1, x: 0, y: 0, rect };
+  const scale = Math.min(MAX_ZOOM, 70 / rect.w, 70 / rect.h);
+  const clamp = (value, min) => Math.min(0, Math.max(min, value));
+  const x = clamp(6 - rect.x * scale, 100 - 100 * scale);
+  const y = clamp(6 - rect.y * scale, 100 - 100 * scale);
+  return { scale, x, y, rect: { x: rect.x * scale + x, y: rect.y * scale + y, w: rect.w * scale, h: rect.h * scale } };
+}
+
+// Places the bubble on the side of the target with the most room.
 function bubblePlacement(rect) {
   if (!rect) return { side: 'center' };
-  // Large areas leave no room around them: the bubble sits inside.
   if (rect.w * rect.h > 2500) return { side: 'inside', left: rect.x + rect.w / 2, top: rect.y + rect.h / 2 };
   const right = 100 - (rect.x + rect.w);
   const below = 100 - (rect.y + rect.h);
@@ -33,11 +53,15 @@ function bubblePlacement(rect) {
   return { side: 'above', left: rect.x + rect.w / 2, top: rect.y };
 }
 
+function isEditable(element) {
+  return element && (element.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(element.tagName));
+}
+
 export default function InteractiveDemo({ id }) {
   const demo = DEMOS[id];
   const { colorMode } = useColorMode();
   const suffix = colorMode === 'dark' ? '_DARK' : '';
-  const imageBase = useBaseUrl('/');
+  const imageBase = useBaseUrl('/').replace(/\/$/, '');
   const [index, setIndex] = useState(-1); // -1 = intro, steps.length = outro
   const [typed, setTyped] = useState(null);
   const [nudge, setNudge] = useState(0);
@@ -45,14 +69,17 @@ export default function InteractiveDemo({ id }) {
   const frameRef = useRef(null);
   const actionRef = useRef(null);
   const bubbleRef = useRef(null);
+  const visibleRef = useRef(false);
+  const typingRef = useRef(null);
 
   const total = demo ? demo.steps.length : 0;
   const step = demo && index >= 0 && index < total ? demo.steps[index] : null;
   const isIntro = index === -1;
   const isOutro = index === total;
 
-  const src = (image) => `${imageBase.replace(/\/$/, '')}${image}${suffix}.jpg`;
+  const src = (image) => `${imageBase}${image}${suffix}.jpg`;
   const go = useCallback((next) => {
+    clearInterval(typingRef.current);
     setTyped(null);
     setIndex(Math.max(-1, Math.min(total, next)));
   }, [total]);
@@ -67,20 +94,19 @@ export default function InteractiveDemo({ id }) {
     if (typed !== null) return;
     let count = 0;
     setTyped('');
-    const timer = setInterval(() => {
+    typingRef.current = setInterval(() => {
       count += 1;
       setTyped(step.value.slice(0, count));
       if (count >= step.value.length) {
-        clearInterval(timer);
-        setTimeout(() => go(index + 1), 350);
+        clearInterval(typingRef.current);
+        typingRef.current = setTimeout(() => go(index + 1), 350);
       }
     }, TYPING_MS);
   }, [step, typed, index, go]);
 
   // Preload the next screen so clicks feel instant.
   useEffect(() => {
-    if (!demo) return;
-    const next = demo.steps[index + 1];
+    const next = demo?.steps[index + 1];
     if (next) new Image().src = src(next.image);
   }, [demo, index, suffix]);
 
@@ -91,10 +117,31 @@ export default function InteractiveDemo({ id }) {
     }
   }, [index]);
 
-  const toggleFullscreen = () => {
-    if (document.fullscreenElement) document.exitFullscreen();
-    else figureRef.current?.requestFullscreen?.();
-  };
+  // Left and right arrows drive the demo while it is on screen, without clicking into it first.
+  useEffect(() => {
+    const figure = figureRef.current;
+    if (!figure) return undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      visibleRef.current = entry.intersectionRatio >= 0.5;
+    }, { threshold: [0, 0.5, 1] });
+    observer.observe(figure);
+    const onKeyDown = (event) => {
+      if (!visibleRef.current && !document.fullscreenElement) return;
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || isEditable(event.target)) return;
+      if (event.key === 'ArrowRight' && index < total) {
+        event.preventDefault();
+        go(index + 1);
+      } else if (event.key === 'ArrowLeft' && index > -1) {
+        event.preventDefault();
+        go(index - 1);
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [index, total, go]);
 
   // Keeps the bubble inside the frame whatever the target position and frame width.
   useEffect(() => {
@@ -119,70 +166,66 @@ export default function InteractiveDemo({ id }) {
     };
   }, [index]);
 
-  const onKeyDown = (event) => {
-    if (event.key === 'ArrowRight' && !isOutro) {
-      event.preventDefault();
-      go(index + 1);
-    } else if (event.key === 'ArrowLeft' && !isIntro) {
-      event.preventDefault();
-      go(index - 1);
-    }
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else figureRef.current?.requestFullscreen?.();
   };
 
   if (!demo) return null;
 
   const image = isIntro ? demo.intro.image : isOutro ? demo.outro.image : step.image;
-  const rect = step?.rect;
-  const placement = bubblePlacement(rect);
-  const isAction = step && step.type !== 'explain';
+  const view = viewFor(step);
+  const rect = view.rect;
+  const isAction = step && (step.type === 'click' || step.type === 'fill');
+  const isChapter = step?.type === 'chapter';
+  const placement = isChapter ? { side: 'center' } : bubblePlacement(rect);
   const box = rect && { left: `${rect.x}%`, top: `${rect.y}%`, width: `${rect.w}%`, height: `${rect.h}%` };
-
-  const bubble = step && (
-    <div
-      ref={bubbleRef}
-      className={clsx(styles.bubble, isAction ? styles.bubbleAction : styles.bubbleExplain, styles[`bubble_${placement.side}`])}
-      style={placement.side === 'center' ? undefined : { left: `${placement.left}%`, top: `${placement.top}%` }}
-      role="status"
-    >
-      <p className={styles.bubbleText}><RichText text={step.text} /></p>
-      {!isAction && (
-        <div className={styles.bubbleFooter}>
-          <span className={styles.counter}>{index + 1}/{total}</span>
-          <button type="button" className={styles.linkButton} onClick={() => go(index - 1)}>Back</button>
-          <button type="button" ref={actionRef} className={styles.primaryButton} onClick={() => go(index + 1)}>Next</button>
-        </div>
-      )}
-    </div>
-  );
+  const counter = <span className={styles.counter}>{index + 1}/{total}</span>;
 
   return (
     <figure ref={figureRef} className={styles.demo} aria-label={demo.title}>
-      <div className={styles.chrome} aria-hidden="true">
-        <span className={styles.dots}><i /><i /><i /></span>
-        <span className={styles.chromeTitle}>{demo.title}</span>
+      <div className={styles.chrome}>
+        <span className={styles.dots} aria-hidden="true"><i /><i /><i /></span>
+        <button type="button" className={styles.chromeButton} onClick={() => go(index - 1)} disabled={isIntro} aria-label="Previous step">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" /></svg>
+        </button>
+        <button type="button" className={styles.chromeButton} onClick={() => go(index + 1)} disabled={isOutro} aria-label="Next step">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+        </button>
+        <button type="button" className={styles.chromeButton} onClick={() => go(-1)} disabled={isIntro} aria-label="Restart">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" /></svg>
+        </button>
+        <span className={styles.address}>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" /><path d="M2.5 8h11M8 2.5c-2 2-2 9 0 11m0-11c2 2 2 9 0 11" /></svg>
+          {demo.title}
+        </span>
+        <button type="button" className={styles.chromeButton} onClick={toggleFullscreen} aria-label="Toggle full screen">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 2.5h4v4m0-4L9 7M6.5 13.5h-4v-4m0 4L7 9" /></svg>
+        </button>
       </div>
 
       <div
         ref={frameRef}
         className={styles.frame}
-        onKeyDown={onKeyDown}
         onClick={(event) => {
           // A click outside the expected target makes the hotspot pulse harder.
-          if (isAction && event.target === event.currentTarget.querySelector(`.${styles.screen}`)) setNudge((n) => n + 1);
+          if (isAction && event.target.tagName === 'IMG') setNudge((n) => n + 1);
         }}
       >
-        <img
-          className={clsx(styles.screen, (isIntro || isOutro) && styles.screenBlurred)}
-          src={src(image)}
-          width={demo.width}
-          height={demo.height}
-          alt=""
-          draggable={false}
-        />
+        <div className={styles.viewport} style={{ transform: `translate(${view.x}%, ${view.y}%) scale(${view.scale})` }}>
+          <img
+            className={styles.screen}
+            src={src(image)}
+            width={demo.width}
+            height={demo.height}
+            alt=""
+            draggable={false}
+          />
+        </div>
 
-        {step?.type === 'explain' && (rect
-          ? <div className={styles.spotlight} style={box} aria-hidden="true" />
-          : <div className={styles.dim} aria-hidden="true" />)}
+        {(isIntro || isOutro) && <div className={styles.backdrop} aria-hidden="true" />}
+
+        {step?.type === 'explain' && rect && <div className={styles.spotlight} style={box} aria-hidden="true" />}
 
         {isAction && (
           <>
@@ -196,45 +239,66 @@ export default function InteractiveDemo({ id }) {
               className={clsx(styles.target, nudge > 0 && styles.targetNudged)}
               style={box}
               onClick={act}
-              aria-label={step.text.replace(/\*\*/g, '')}
+              aria-label={step.text.replace(/[*[\]]|\(.*?\)/g, '')}
             >
-              <span className={styles.hotspot} aria-hidden="true" />
+              <span className={styles.hotspot} aria-hidden="true"><span /></span>
             </button>
           </>
         )}
 
-        {bubble}
+        {step && (
+          <div
+            ref={bubbleRef}
+            key={index}
+            className={clsx(
+              styles.bubble,
+              isAction ? styles.bubbleAction : isChapter ? styles.bubbleChapter : styles.bubbleExplain,
+              styles[`bubble_${placement.side}`]
+            )}
+            style={placement.left === undefined ? undefined : { left: `${placement.left}%`, top: `${placement.top}%` }}
+            role="status"
+          >
+            <div className={styles.bubbleText}><RichText text={step.text} /></div>
+            {step.type === 'explain' && (
+              <div className={styles.bubbleFooter}>
+                {counter}
+                <button type="button" className={styles.backButton} onClick={() => go(index - 1)}>Back</button>
+                <button type="button" ref={actionRef} className={styles.nextButton} onClick={() => go(index + 1)}>Next</button>
+              </div>
+            )}
+            {isChapter && (
+              <div className={styles.bubbleFooter}>
+                {counter}
+                <button type="button" className={styles.arrowButton} onClick={() => go(index - 1)} aria-label="Back">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3m4-4L3 8l4 4" /></svg>
+                </button>
+                <button type="button" ref={actionRef} className={styles.arrowButton} onClick={() => go(index + 1)} aria-label="Next">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
         {isIntro && (
           <div className={styles.card}>
             <p className={styles.cardText}>{demo.intro.text}</p>
-            <button type="button" className={styles.primaryButton} onClick={() => go(0)} autoFocus={false}>
-              {demo.intro.button} 🚀
-            </button>
+            <button type="button" className={styles.startButton} onClick={() => go(0)}>{demo.intro.button}</button>
           </div>
         )}
 
         {isOutro && (
           <div className={styles.card}>
             <p className={styles.cardText}>{demo.outro.text}</p>
-            <div className={styles.cardLinks}>
-              {demo.outro.links?.map((link) => (
-                <Link key={link.href} className={styles.secondaryButton} to={link.href}>{link.label}</Link>
-              ))}
-            </div>
-            <button type="button" className={styles.linkButton} onClick={() => go(-1)}>Restart</button>
+            {demo.outro.links?.map((link) => (
+              <Link key={link.href} className={styles.startButton} to={link.href}>{link.label}</Link>
+            ))}
+            <button type="button" className={styles.restartButton} onClick={() => go(-1)}>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" /></svg>
+              Restart
+            </button>
           </div>
         )}
-      </div>
-
-      <div className={styles.toolbar}>
-        <div className={styles.progress} aria-hidden="true">
-          <span style={{ width: `${(Math.max(0, index) / total) * 100}%` }} />
-        </div>
-        <button type="button" className={styles.iconButton} onClick={() => go(index - 1)} disabled={isIntro} aria-label="Previous step">←</button>
-        <button type="button" className={styles.iconButton} onClick={() => go(index + 1)} disabled={isOutro} aria-label="Next step">→</button>
-        <button type="button" className={styles.iconButton} onClick={() => go(-1)} disabled={isIntro} aria-label="Restart">↺</button>
-        <button type="button" className={styles.iconButton} onClick={toggleFullscreen} aria-label="Toggle full screen">⛶</button>
       </div>
     </figure>
   );

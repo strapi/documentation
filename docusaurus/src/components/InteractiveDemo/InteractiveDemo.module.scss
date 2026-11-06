@@ -1,48 +1,121 @@
-@use '../../scss/mixins' as *;
-
-$accent: #4945ff; // Strapi admin primary, matches the captured interface in both themes.
-$accent-hover: #271fe0;
+// Measurements taken from the Guideflow embeds this component replaces, so both look alike.
+// Sizes are in em of the frame font size, which scales with the frame width like Guideflow does.
+$accent: #7b79ff;
+$accent-hover: #6563f0;
+$ease: cubic-bezier(0.4, 0, 0.2, 1);
 
 .demo {
   margin: 0 0 2rem;
   border: 1px solid var(--strapi-neutral-200);
-  border-radius: var(--strapi-radius-md);
+  border-radius: 10px;
   overflow: hidden;
-  background: var(--strapi-surface-0, var(--strapi-neutral-0));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: var(--strapi-neutral-0);
+  font-family: 'Inter var', Inter, var(--strapi-font-family-body, sans-serif);
 }
 
 .chrome {
   display: flex;
   align-items: center;
-  gap: 12px;
-  height: 32px;
-  padding: 0 12px;
+  gap: 2px;
+  height: 36px;
+  padding: 0 8px 0 12px;
   border-bottom: 1px solid var(--strapi-neutral-150);
-  background: var(--strapi-neutral-100);
+  background: #fff;
+
+  [data-theme='dark'] & {
+    border-bottom-color: #3a3a3a;
+    background: #262626;
+  }
 }
 
 .dots {
   display: inline-flex;
   gap: 6px;
+  margin-right: 10px;
 
   i {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--strapi-neutral-300);
+    background: #d4d4d8;
+
+    [data-theme='dark'] & {
+      background: #52525b;
+    }
   }
 }
 
-.chromeTitle {
-  flex: 1;
-  margin-right: 46px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--strapi-neutral-600);
+.chromeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: #52525b;
+  cursor: pointer;
+
+  [data-theme='dark'] & {
+    color: #d4d4d8;
+  }
+
+  &:hover:not(:disabled) {
+    background: rgba(127, 127, 127, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &:last-child {
+    margin-left: auto;
+  }
+}
+
+.address {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 2px 10px;
+  border-radius: 5px;
+  background: #f4f4f5;
+  font-size: 11px;
+  color: #18181b;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  [data-theme='dark'] & {
+    background: #3f3f46;
+    color: #f4f4f5;
+  }
+
+  svg {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    opacity: 0.7;
+  }
 }
 
 .frame {
@@ -51,34 +124,35 @@ $accent-hover: #271fe0;
   overflow: clip; // hidden would still let focus or scrollIntoView shift the screenshot
   container-type: inline-size;
   user-select: none;
+  font-size: clamp(14px, 1.48cqw, 20.7px);
+  line-height: 1.57;
+}
+
+.viewport {
+  transform-origin: 0 0;
+  transition: transform 0.5s $ease;
 }
 
 .screen {
   display: block;
   width: 100%;
-  margin: 0 !important; // docs images get a bottom margin from images.scss
   height: auto; // the image sets the frame height; width/height attributes reserve it before load
-  transition: filter 0.3s ease;
+  margin: 0 !important; // docs images get a bottom margin from images.scss
 }
 
-.screenBlurred {
-  filter: blur(4px) saturate(0.8);
-  transform: scale(1.02);
+.backdrop {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(1px);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 // Dims the whole screen except the explained area.
 .spotlight {
   position: absolute;
-  border-radius: 6px;
-  box-shadow: 0 0 0 9999px rgba(15, 15, 30, 0.45), 0 0 0 2px rgba(255, 255, 255, 0.9);
-  transition: left 0.35s ease, top 0.35s ease, width 0.35s ease, height 0.35s ease;
-  pointer-events: none;
-}
-
-.dim {
-  position: absolute;
-  inset: 0;
-  background: rgba(15, 15, 30, 0.45);
+  border-radius: 8px;
+  box-shadow: 0 0 40px 200cqw rgba(0, 0, 0, 0.4);
+  transition: left 0.35s $ease, top 0.35s $ease, width 0.35s $ease, height 0.35s $ease;
   pointer-events: none;
 }
 
@@ -95,54 +169,64 @@ $accent-hover: #271fe0;
     outline: 2px solid $accent;
     outline-offset: 3px;
   }
-
-  &:hover .hotspot::after {
-    background: rgba(73, 69, 255, 0.35);
-  }
 }
 
 .hotspot {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(18px, 3.2cqw, 34px);
-  height: clamp(18px, 3.2cqw, 34px);
+  width: 1.6em;
+  height: 1.6em;
   transform: translate(-50%, -50%);
   pointer-events: none;
 
-  &::before,
-  &::after {
+  // Outer ring: pulsates outwards.
+  &::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 50%;
+    border: 3px solid $accent;
+    border-radius: 9999px;
+    animation: pulsate 1s ease-out infinite;
   }
 
-  &::before {
-    border: 2px solid $accent;
-    animation: pulse 1.6s ease-out infinite;
-  }
-
-  &::after {
-    inset: 20%;
-    border: 2px solid $accent;
-    background: rgba(73, 69, 255, 0.12);
+  // Inner ring: thick, with a breathing dot effect.
+  span {
+    position: absolute;
+    inset: 0;
+    border: 6px solid $accent;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.35);
+    animation: pulse-dot 1s ease-in-out infinite alternate;
     transition: background 0.15s ease;
   }
 }
 
-.targetNudged .hotspot::before {
-  animation: pulse 0.5s ease-out 3, pulse 1.6s ease-out 1.5s infinite;
+.target:hover .hotspot span {
+  background: rgba(123, 121, 255, 0.35);
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(0.8);
+.targetNudged .hotspot::before {
+  animation: pulsate 0.4s ease-out 3, pulsate 1s ease-out 1.2s infinite;
+}
+
+@keyframes pulsate {
+  from {
+    transform: scale(1);
     opacity: 1;
   }
-  100% {
+  to {
     transform: scale(2);
     opacity: 0;
+  }
+}
+
+@keyframes pulse-dot {
+  from {
+    transform: scale(0.85);
+  }
+  to {
+    transform: scale(1);
   }
 }
 
@@ -150,14 +234,17 @@ $accent-hover: #271fe0;
   position: absolute;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
   padding: 0 1.2cqw;
   font-size: 1.1cqw;
+  line-height: 1;
   color: #32324d;
   pointer-events: none;
-}
 
-[data-theme='dark'] .typed {
-  color: #fff;
+  [data-theme='dark'] & {
+    color: #fff;
+  }
 }
 
 .caret {
@@ -178,77 +265,17 @@ $accent-hover: #271fe0;
 .bubble {
   position: absolute;
   z-index: 2;
-  width: min(300px, 34cqw);
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: clamp(12px, 1.25cqw, 15px);
-  line-height: 1.45;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  animation: appear 0.25s ease;
+  border-radius: 0.5em;
+  animation: appear 0.2s ease;
 
+  // Arrow pointing at the target.
   &::before {
     content: '';
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 0.6em;
+    height: 0.6em;
     background: inherit;
     transform: rotate(45deg);
-  }
-}
-
-.bubbleExplain {
-  background: #fff;
-  color: #32324d;
-}
-
-.bubbleAction {
-  background: $accent;
-  color: #fff;
-}
-
-.bubble_right {
-  transform: translate(16px, -50%);
-
-  &::before {
-    left: -5px;
-    top: calc(50% - 5px);
-  }
-}
-
-.bubble_left {
-  transform: translate(calc(-100% - 16px), -50%);
-
-  &::before {
-    right: -5px;
-    top: calc(50% - 5px);
-  }
-}
-
-.bubble_below {
-  transform: translate(-50%, 16px);
-
-  &::before {
-    top: -5px;
-    left: calc(50% - 5px);
-  }
-}
-
-.bubble_above {
-  transform: translate(-50%, calc(-100% - 16px));
-
-  &::before {
-    bottom: -5px;
-    left: calc(50% - 5px);
-  }
-}
-
-.bubble_center {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  &::before {
-    display: none;
   }
 }
 
@@ -258,67 +285,178 @@ $accent-hover: #271fe0;
   }
 }
 
-// Beats the docs dark-theme paragraph color: bubbles and cards keep their own palette.
-.bubble .bubbleText,
-.card .cardText {
-  color: inherit;
+.bubbleExplain {
+  width: 16em;
+  max-width: calc(100% - 16px);
+  padding: 0.5em 0.9em 0.7em;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0.2em 0.9em rgba(0, 0, 0, 0.12);
 }
 
-.bubbleText {
-  margin: 0;
+.bubbleAction {
+  max-width: 13.75em;
+  padding: 0.5em;
+  background: $accent;
+  color: #fff;
+  box-shadow: 0 0 0 0.25em rgba(123, 121, 255, 0.2);
+  text-align: center;
+}
+
+.bubbleChapter {
+  width: 11em;
+  max-width: calc(100% - 16px);
+  padding: 0.6em 0.75em 0.6em;
+  background: $accent;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0.2em 0.9em rgba(0, 0, 0, 0.12);
+
+  a {
+    color: inherit;
+  }
+}
+
+.bubble_right {
+  transform: translate(0.9em, -50%);
+
+  &::before {
+    left: -0.3em;
+    top: calc(50% - 0.3em);
+  }
+}
+
+.bubble_left {
+  transform: translate(calc(-100% - 0.9em), -50%);
+
+  &::before {
+    right: -0.3em;
+    top: calc(50% - 0.3em);
+  }
+}
+
+.bubble_below {
+  transform: translate(-50%, 0.9em);
+
+  &::before {
+    top: -0.3em;
+    left: calc(50% - 0.3em);
+  }
+}
+
+.bubble_above {
+  transform: translate(-50%, calc(-100% - 0.9em));
+
+  &::before {
+    bottom: -0.3em;
+    left: calc(50% - 0.3em);
+  }
+}
+
+.bubble_center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bubble_inside {
+  transform: translate(-50%, -50%);
+}
+
+.bubble_center,
+.bubble_inside {
+  &::before {
+    display: none;
+  }
+}
+
+// Beats the docs dark-theme text colors: bubbles keep their own palette.
+.bubble .bubbleText {
+  color: inherit;
+  font-size: 0.75em;
+  line-height: 1.57;
+
+  strong,
+  em {
+    color: inherit;
+  }
 }
 
 .bubbleFooter {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 0.25em;
+  margin-top: 0.5em;
 }
 
 .counter {
   flex: 1;
-  font-size: 0.85em;
-  color: #8e8ea9;
+  font-size: 0.75em;
+  color: rgba(107, 114, 128, 0.5);
+  text-align: left;
+
+  .bubbleChapter & {
+    color: rgba(255, 255, 255, 0.75);
+  }
 }
 
-.primaryButton,
-.secondaryButton,
-.linkButton {
+.backButton,
+.nextButton {
+  height: 2em; // 31px at the 20.7px reference size, like Guideflow
+  padding: 0 0.625em;
+  border: 1px solid transparent;
+  border-radius: 0.25em;
   font: inherit;
-  font-size: 14px;
-  border-radius: 4px;
+  font-size: 0.75em;
+  line-height: 1;
   cursor: pointer;
 }
 
-.primaryButton {
-  padding: 6px 14px;
-  border: 0;
+.backButton {
+  background: #fff;
+  color: $accent;
+
+  &:hover {
+    background: rgba(123, 121, 255, 0.08);
+  }
+}
+
+.nextButton {
   background: $accent;
   color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
   &:hover {
     background: $accent-hover;
   }
 }
 
-.secondaryButton {
-  padding: 6px 12px;
-  border: 1px solid #dcdce4;
-  background: #fff;
-  color: #32324d;
+.arrowButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75em;
+  height: 1.5em;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25em;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
 
   &:hover {
-    border-color: $accent;
-    color: $accent;
-    text-decoration: none;
+    background: rgba(255, 255, 255, 0.3);
   }
-}
 
-.linkButton {
-  padding: 6px 4px;
-  border: 0;
-  background: none;
-  color: $accent;
+  svg {
+    width: 0.75em;
+    height: 0.75em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 }
 
 .card {
@@ -328,77 +466,67 @@ $accent-hover: #271fe0;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  width: min(340px, 80%);
-  padding: 22px;
-  border-radius: 10px;
+  align-items: stretch;
+  gap: 0.6em;
+  width: 16em;
+  max-width: calc(100% - 16px);
+  padding: 1.1em 1.25em 1.25em;
+  border-radius: 0.5em;
   background: #fff;
-  color: #32324d;
+  color: #000;
   text-align: center;
   transform: translate(-50%, -50%);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-
-  .primaryButton {
-    width: 100%;
-    padding: 9px 14px;
-  }
+  box-shadow: 0 0.2em 0.9em rgba(0, 0, 0, 0.12);
 }
 
-.cardText {
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.45;
+.card .cardText {
+  margin: 0 0 0.2em;
+  color: inherit;
+  font-size: 0.86em;
+  line-height: 1.6;
 }
 
-.cardLinks {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-.toolbar {
+.startButton {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 10px;
-  border-top: 1px solid var(--strapi-neutral-150);
-}
-
-.progress {
-  flex: 1;
-  height: 4px;
-  margin-right: 8px;
-  border-radius: 2px;
-  background: var(--strapi-neutral-150);
-  overflow: hidden;
-
-  span {
-    display: block;
-    height: 100%;
-    background: $accent;
-    transition: width 0.3s ease;
-  }
-}
-
-.iconButton {
-  width: 28px;
-  height: 28px;
+  justify-content: center;
+  height: 1.9em;
+  padding: 0 0.75em;
   border: 0;
-  border-radius: 4px;
-  background: none;
-  color: var(--strapi-neutral-700);
-  font-size: 15px;
+  border-radius: 0.53em;
+  background: $accent;
+  color: #fff;
+  font: inherit;
+  font-size: 0.75em;
+  font-weight: 500;
   cursor: pointer;
 
-  &:hover:not(:disabled) {
-    background: var(--strapi-neutral-100);
+  &:hover {
+    background: $accent-hover;
+    color: #fff;
+    text-decoration: none;
   }
+}
 
-  &:disabled {
-    opacity: 0.35;
-    cursor: default;
+.restartButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  border: 0;
+  background: none;
+  color: #71717a;
+  font: inherit;
+  font-size: 0.7em;
+  cursor: pointer;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
   }
 }
 
@@ -409,28 +537,12 @@ $accent-hover: #271fe0;
     top: auto !important;
     bottom: 8px;
     width: calc(100% - 16px);
+    max-width: none;
     transform: translateX(-50%);
 
     &::before {
       display: none;
     }
-  }
-
-  .card {
-    padding: 14px;
-  }
-
-  .cardText {
-    font-size: 15px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hotspot::before,
-  .bubble,
-  .spotlight {
-    animation: none;
-    transition: none;
   }
 }
 
@@ -444,17 +556,19 @@ $accent-hover: #271fe0;
   background: var(--strapi-neutral-100);
 
   .chrome,
-  .frame,
-  .toolbar {
-    width: min(100%, calc((100vh - 80px) * 1.6));
+  .frame {
+    width: min(100%, calc((100vh - 60px) * 1.6));
     margin: 0 auto;
   }
 }
 
-.bubble_inside {
-  transform: translate(-50%, -50%);
-
-  &::before {
-    display: none;
+@media (prefers-reduced-motion: reduce) {
+  .hotspot::before,
+  .hotspot span,
+  .bubble,
+  .spotlight,
+  .viewport {
+    animation: none;
+    transition: none;
   }
 }
