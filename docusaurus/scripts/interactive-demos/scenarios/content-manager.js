@@ -211,7 +211,7 @@ module.exports = {
     },
     {
       chapter: true,
-      text: 'This is the Content\nManager in a nutshell!\n\nFeel free to visit\n[https://docs.strapi.io/](https://docs.strapi.io/)\nfor more info on Strapi ❤️',
+      text: 'This is the Content Manager in a nutshell!',
     },
   ],
 
