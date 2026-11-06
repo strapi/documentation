@@ -42,6 +42,8 @@ sources={{
 <!-- TODO: create dark mode version and replace the darkId value -->
 <Guideflow lightId="zpen5g4t8p" darkId="9r22q12szr" />
 
+<InteractiveDemo id="content-manager" />
+
 The <Icon name="feather" /> Content Manager contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/cms/features/content-type-builder).
 
 Content can be created, managed and published from the 2 categories displayed in the sub navigation of the <Icon name="feather" /> Content Manager:
