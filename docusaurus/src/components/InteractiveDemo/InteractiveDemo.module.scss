@@ -572,3 +572,36 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
     transition: none;
   }
 }
+
+// Stands in for the screenshot until it may load, with the same size to avoid layout shifts.
+.placeholder {
+  width: 100%;
+  background: var(--strapi-neutral-100);
+}
+
+.card .cardNote {
+  margin: -0.2em 0 0.2em;
+  color: #71717a;
+  font-size: 0.7em;
+}
+
+// Text version of the steps, for screen readers and readers who skip the demo.
+.transcript {
+  border-top: 1px solid var(--strapi-neutral-150);
+  font-size: var(--strapi-font-size-sm, 14px);
+
+  summary {
+    padding: 8px 14px;
+    color: var(--strapi-neutral-600);
+    cursor: pointer;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0 14px 12px 40px;
+  }
+
+  li {
+    margin: 4px 0;
+  }
+}

@@ -12,6 +12,9 @@ const DEMOS = Object.fromEntries(
 );
 
 const TYPING_MS = 45;
+const PAGE_WIDTH = 1920; // widths of the two captured sizes, see capture.js
+const HD_WIDTH = 3840;
+const SLOW_CONNECTIONS = ['slow-2g', '2g', '3g'];
 const MAX_ZOOM = 2.5;
 
 // Scenario texts use a tiny Markdown subset: **bold**, *italic*, [label](url) and line breaks.
@@ -44,13 +47,25 @@ function viewFor(step) {
 // Places the bubble on the side of the target with the most room.
 function bubblePlacement(rect) {
   if (!rect) return { side: 'center' };
-  if (rect.w * rect.h > 2500) return { side: 'inside', left: rect.x + rect.w / 2, top: rect.y + rect.h / 2 };
   const right = 100 - (rect.x + rect.w);
   const below = 100 - (rect.y + rect.h);
   if (right >= 30) return { side: 'right', left: rect.x + rect.w, top: rect.y + rect.h / 2 };
   if (rect.x >= 30) return { side: 'left', left: rect.x, top: rect.y + rect.h / 2 };
+  // Large areas leave no room on the sides: the bubble sits inside.
+  if (rect.w * rect.h > 2500) return { side: 'inside', left: rect.x + rect.w / 2, top: rect.y + rect.h / 2 };
   if (below >= 25) return { side: 'below', left: rect.x + rect.w / 2, top: rect.y + rect.h };
   return { side: 'above', left: rect.x + rect.w / 2, top: rect.y };
+}
+
+// Data saver on, or a slow connection: wait for the reader to ask for the demo.
+// navigator.connection is missing in some browsers, which then rely on lazy loading only.
+function prefersDeferredLoading() {
+  const connection = typeof navigator === 'undefined' ? null : navigator.connection;
+  return Boolean(connection && (connection.saveData || SLOW_CONNECTIONS.includes(connection.effectiveType)));
+}
+
+function formatMegabytes(bytes) {
+  return `${Math.max(0.1, Math.round(bytes / 100000) / 10)}\u00a0MB`;
 }
 
 function isEditable(element) {
@@ -65,6 +80,9 @@ export default function InteractiveDemo({ id }) {
   const [index, setIndex] = useState(-1); // -1 = intro, steps.length = outro
   const [typed, setTyped] = useState(null);
   const [nudge, setNudge] = useState(0);
+  // Decided after hydration, so that a slow connection never starts downloading screenshots.
+  const [loading, setLoading] = useState('pending'); // pending | deferred | ready
+  const [frameWidth, setFrameWidth] = useState(800);
   const figureRef = useRef(null);
   const frameRef = useRef(null);
   const actionRef = useRef(null);
@@ -77,7 +95,8 @@ export default function InteractiveDemo({ id }) {
   const isIntro = index === -1;
   const isOutro = index === total;
 
-  const src = (image) => `${imageBase}${image}${suffix}.jpg`;
+  const src = (image) => `${imageBase}${image}${suffix}.webp`;
+  const srcSet = (image) => `${src(image)} ${PAGE_WIDTH}w, ${imageBase}${image}-hd${suffix}.webp ${HD_WIDTH}w`;
   const go = useCallback((next) => {
     clearInterval(typingRef.current);
     setTyped(null);
@@ -104,11 +123,24 @@ export default function InteractiveDemo({ id }) {
     }, TYPING_MS);
   }, [step, typed, index, go]);
 
+  // Decide how to load once in the browser, and track the frame width to pick the right image size.
+  useEffect(() => {
+    setLoading(prefersDeferredLoading() ? 'deferred' : 'ready');
+    const frame = frameRef.current;
+    if (!frame) return undefined;
+    const observer = new ResizeObserver(([entry]) => setFrameWidth(entry.contentRect.width));
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+
   // Preload the next screen so clicks feel instant.
   useEffect(() => {
     const next = demo?.steps[index + 1];
-    if (next) new Image().src = src(next.image);
-  }, [demo, index, suffix]);
+    if (!next || loading !== 'ready') return;
+    const preload = new Image();
+    preload.sizes = `${Math.round(frameWidth * viewFor(next).scale)}px`;
+    preload.srcset = srcSet(next.image);
+  }, [demo, index, suffix, loading, frameWidth]);
 
   // Keep keyboard focus on the action the reader is expected to take.
   useEffect(() => {
@@ -126,7 +158,7 @@ export default function InteractiveDemo({ id }) {
     }, { threshold: [0, 0.5, 1] });
     observer.observe(figure);
     const onKeyDown = (event) => {
-      if (!visibleRef.current && !document.fullscreenElement) return;
+      if (loading !== 'ready' || (!visibleRef.current && !document.fullscreenElement)) return;
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || isEditable(event.target)) return;
       if (event.key === 'ArrowRight' && index < total) {
         event.preventDefault();
@@ -141,7 +173,7 @@ export default function InteractiveDemo({ id }) {
       observer.disconnect();
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [index, total, go]);
+  }, [index, total, go, loading]);
 
   // Keeps the bubble inside the frame whatever the target position and frame width.
   useEffect(() => {
@@ -213,17 +245,25 @@ export default function InteractiveDemo({ id }) {
         }}
       >
         <div className={styles.viewport} style={{ transform: `translate(${view.x}%, ${view.y}%) scale(${view.scale})` }}>
-          <img
-            className={styles.screen}
-            src={src(image)}
-            width={demo.width}
-            height={demo.height}
-            alt=""
-            draggable={false}
-          />
+          {loading === 'ready' ? (
+            <img
+              className={styles.screen}
+              src={src(image)}
+              srcSet={srcSet(image)}
+              sizes={`${Math.round(frameWidth * view.scale)}px`}
+              width={demo.width}
+              height={demo.height}
+              loading="lazy"
+              decoding="async"
+              alt=""
+              draggable={false}
+            />
+          ) : (
+            <div className={styles.placeholder} style={{ aspectRatio: `${demo.width} / ${demo.height}` }} />
+          )}
         </div>
 
-        {(isIntro || isOutro) && <div className={styles.backdrop} aria-hidden="true" />}
+        {(isIntro || isOutro) && loading === 'ready' && <div className={styles.backdrop} aria-hidden="true" />}
 
         {step?.type === 'explain' && rect && <div className={styles.spotlight} style={box} aria-hidden="true" />}
 
@@ -280,7 +320,17 @@ export default function InteractiveDemo({ id }) {
           </div>
         )}
 
-        {isIntro && (
+        {loading === 'deferred' && (
+          <div className={styles.card}>
+            <p className={styles.cardText}>{demo.intro.text}</p>
+            <p className={styles.cardNote}>
+              Interactive demo, {total} steps, about {formatMegabytes(demo.bytes?.[colorMode === 'dark' ? 'dark' : 'light'] ?? 0)}.
+            </p>
+            <button type="button" className={styles.startButton} onClick={() => setLoading('ready')}>Load the demo</button>
+          </div>
+        )}
+
+        {isIntro && loading === 'ready' && (
           <div className={styles.card}>
             <p className={styles.cardText}>{demo.intro.text}</p>
             <button type="button" className={styles.startButton} onClick={() => go(0)}>{demo.intro.button}</button>
@@ -300,6 +350,18 @@ export default function InteractiveDemo({ id }) {
           </div>
         )}
       </div>
+
+      <details className={styles.transcript}>
+        <summary>Read the steps as text</summary>
+        <ol>
+          {demo.steps.map((item, itemIndex) => (
+            <li key={itemIndex}>
+              <RichText text={item.text} />
+              {item.type === 'fill' && <> (type “{item.value}”)</>}
+            </li>
+          ))}
+        </ol>
+      </details>
     </figure>
   );
 }
