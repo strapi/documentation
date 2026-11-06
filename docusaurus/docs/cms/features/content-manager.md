@@ -40,7 +40,7 @@ sources={{
 -->
 
 <!-- TODO: create dark mode version and replace the darkId value -->
-<Guideflow lightId="zpen5g4t8p" darkId="9r22q12szr" />
+<!-- <Guideflow lightId="zpen5g4t8p" darkId="9r22q12szr" /> -->
 
 <InteractiveDemo id="content-manager" />
 
