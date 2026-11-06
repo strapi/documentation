@@ -92,7 +92,7 @@ function useTldrContent(viewMode) {
 
 /**
  * Maps the Kapa chat status to a mascot state: thinking while connecting,
- * working while streaming, a short happy "done" with sparkles once the answer
+ * working while streaming, a short happy bounce among sparkles once the answer
  * is complete, idle otherwise. A failed request makes it sad, never angry: the
  * error is the service's, not the reader's.
  */
@@ -115,7 +115,7 @@ function useBotState({ isPreparingAnswer, isGeneratingAnswer, error }) {
   if (error) return 'sad';
   if (isPreparingAnswer) return 'think';
   if (isGeneratingAnswer) return 'work';
-  if (justDone) return 'done';
+  if (justDone) return 'happy';
   return 'idle';
 }
 
@@ -320,7 +320,7 @@ export default function AiPanel() {
           Back
         </button>
         <div className={styles.title}>
-          <AgentBot state={leavingAi || greeting ? 'wave' : botState} size={64} decorative />
+          <AgentBot state={leavingAi || greeting ? 'wave' : botState} size={44} props decorative />
           <h3>
             <span className={styles.titleName}>Hi! I'm Lexi,</span>
             <span className={styles.titleRole}>Strapi Docs AI Assistant</span>

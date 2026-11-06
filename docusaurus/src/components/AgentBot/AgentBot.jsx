@@ -9,9 +9,10 @@ import styles from './agentBot.module.scss';
  * every transform directly on the DOM nodes (springs for gaze, squash, tilt…),
  * so state changes never re-render the SVG.
  *
- * States: idle, think, read, work, angry, done, wave, sad.
- * The sad state and the sparkles of done come from the Strapi bot animation
- * reel (sad: cool tint, slump, droopy eyes, a falling tear).
+ * States: idle, think, read, work, angry, done, happy, wave, sad.
+ * The sad and happy states follow the designer's reference export
+ * (strapi-bot-svg: still frames plus BEHAVIOR.md): sad drains the colors,
+ * droops the lids and drops a tear; happy bounces among twinkling sparkles.
  * Styles that matter are inline so the bot also renders inside a shadow DOM
  * (the Kapa modal), where the CSS module does not reach.
  * Props (bubbles, page, blocks) only render from 64px up unless forced.
@@ -27,7 +28,8 @@ const CALM_COLORS = {
   eye: '#4945FF',
 };
 const SAD_COLORS = {
-  tile: ['#8084AA', '#63678E', '#4A4E70'],
+  tile: ['#9293BC', '#7778A2', '#5F6088'],
+  fold: ['#C9CAE4', '#B5B6D6', '#A2A4C8'],
 };
 const ANGRY_COLORS = {
   tile: ['#FF6B5E', '#EE3B2E', '#C42418'],
@@ -43,6 +45,7 @@ const STATE_LABELS = {
   read: ', is reading',
   work: ', is working',
   done: ', is done',
+  happy: ', is happy',
   wave: ', is waving',
   sad: ', is sad',
 };
@@ -100,10 +103,10 @@ const PUFF_PATH =
   'M-38 14a24 24 0 0 1 6-40 28 28 0 0 1 50-6 22 22 0 0 1 24 30 18 18 0 0 1-12 30h-52a20 20 0 0 1-16-14z';
 const BUBBLES = [[748, 34, 24], [826, -50, 38], [930, -170, 60]];
 const LINE_WIDTHS = [140, 116, 132, 96, 140, 120, 132, 104, 128];
-// Sparkles when done: [x, y, size, on the tile]; white on the tile, violet around it
-const SPARKLES = [[77, 162, 1.3, 0], [754, 162, 1.5, 0], [-20, 436, 1.05, 0], [843, 436, 1.35, 0], [311, 78, 0.95, 1], [537, 581, 1.2, 1]];
-const SPARKLE_PATH = 'M0 -17 Q2.5 -2.5 17 0 Q2.5 2.5 0 17 Q-2.5 2.5 -17 0 Q-2.5 -2.5 0 -17 Z';
-const TEAR_PATH = 'M0 -16 C 8 -2 10 6 0 17 C -10 6 -8 -2 0 -16 Z';
+// Sparkles when happy: [x, y, radius]
+const SPARKLES = [[70, 70, 26.4], [740, 40, 34], [830, 420, 16.8], [-20, 520, 32], [730, 800, 22.8], [160, 820, 24]];
+const SPARKLE_PATH = 'M0 -1C.1 -.1 .1 -.1 1 0C.1 .1 .1 .1 0 1C-.1 .1 -.1 .1 -1 0C-.1 -.1 -.1 -.1 0 -1Z';
+const TEAR_PATH = 'M0 -18C6 -8 11 -1 11 6a11 11 0 0 1-22 0c0-7 5-14 11-24Z';
 const BLOCKS = [[830, 702], [904, 702], [978, 702], [867, 628], [941, 628], [904, 554]];
 // Waving hand pivot, hidden behind the right side of the tile so the hand
 // looks like it comes from behind the body
@@ -167,6 +170,7 @@ export default function AgentBot({
         x: EYE_X[i],
         open: g.querySelector('[data-open]'),
         happy: g.querySelector('[data-happy]'),
+        lid: g.querySelector('[data-lid]'),
       })),
     };
 
@@ -274,6 +278,7 @@ export default function AgentBot({
       const reading = st === 'read';
       const working = st === 'work';
       const done = st === 'done';
+      const happyState = st === 'happy';
       const waving = st === 'wave';
       const sad = st === 'sad';
       if (st !== s.lastState) {
@@ -324,7 +329,7 @@ export default function AgentBot({
         s.tint = redness;
         s.tintCool = s.fSad;
         el.tileStops.forEach((n, i) => n.setAttribute('stop-color', moodColor(CALM_COLORS.tile[i], SAD_COLORS.tile[i], ANGRY_COLORS.tile[i], s.fSad, redness)));
-        el.foldStops.forEach((n, i) => n.setAttribute('stop-color', moodColor(CALM_COLORS.fold[i], CALM_COLORS.fold[i], ANGRY_COLORS.fold[i], 0, redness)));
+        el.foldStops.forEach((n, i) => n.setAttribute('stop-color', moodColor(CALM_COLORS.fold[i], SAD_COLORS.fold[i], ANGRY_COLORS.fold[i], s.fSad, redness)));
         const eye = moodColor(CALM_COLORS.eye, CALM_COLORS.eye, ANGRY_COLORS.eye, 0, redness);
         el.eyeFills.forEach((n) => n.setAttribute(n.tagName === 'path' ? 'stroke' : 'fill', eye));
       }
@@ -362,8 +367,9 @@ export default function AgentBot({
         lookX = 0.45 + 0.12 * Math.sin(1.3 * clock);
         lookY = 0.75;
       } else if (sad) {
-        lookX = 0.1 * Math.sin(0.9 * clock);
-        lookY = 0.7;
+        // Down and away
+        lookX = -0.25 + 0.08 * Math.sin(0.9 * clock);
+        lookY = 0.6;
       } else if (calm) {
         lookX = 0;
         lookY = 0;
@@ -394,8 +400,8 @@ export default function AgentBot({
       let squash = 0.05 * !!s.hover + 0.012 * Math.sin(2.2 * clock + s.seed) * (1 - s.sleep);
       if (frown > 0.2 && !calm) squash -= 0.05 * Math.max(0, Math.sin(clock * (6 + 6 * frown))) * frown;
       if (working && !calm) squash -= 0.018 * Math.max(0, Math.sin(9 * clock));
-      // Slumped when sad: wider and lower
-      squash -= 0.1 * s.fSad;
+      // Sags when sad
+      squash -= 0.05 * s.fSad;
       if (s.anticip) {
         squash = -0.2;
         if (now - s.anticip > 110) {
@@ -415,17 +421,16 @@ export default function AgentBot({
           s.vsq -= 7 * Math.min(1.4, s.power);
         }
       }
-      // Happy hops when done
-      if (done && !s.air && !s.anticip && now - s.lastHop > 1400) {
+      // A happy hop every 1.4 s when done, small quick bounces when happy
+      if ((done || happyState) && !s.air && !s.anticip && now - s.lastHop > (done ? 1400 : 1050)) {
         s.lastHop = now;
-        hop(0.7);
+        hop(done ? 0.7 : 0.4);
         s.happyUntil = now + 1300;
       }
       [s.sq, s.vsq] = spring(s.sq, s.vsq, calm ? 0 : squash, 420, 11, dt);
       let tiltTarget = 0;
       if (thinking && !calm) tiltTarget = 9 * s.lx;
       else if (waving && !calm) tiltTarget = -6 + 4 * Math.sin(8 * clock);
-      else if (sad && !calm) tiltTarget = -3 + 1.3 * Math.sin(0.9 * clock);
       [s.tiltA, s.vTiltA] = spring(s.tiltA, s.vTiltA, tiltTarget, 90, 9, dt);
 
       const scaleY = 1 + s.sq;
@@ -433,7 +438,7 @@ export default function AgentBot({
       const shakeX = calm ? 0 : (26 * s.shake + (redness > 0.6 ? (redness - 0.6) * 14 : 0)) * Math.sin(70 * clock);
       el.body.setAttribute(
         'transform',
-        `translate(${shakeX.toFixed(1)} ${(s.y + 36 * s.fSad).toFixed(1)}) rotate(${s.tiltA.toFixed(2)} 399.5 600) translate(399.5 753) scale(${scaleX.toFixed(4)} ${scaleY.toFixed(4)}) translate(-399.5 -753)`
+        `translate(${shakeX.toFixed(1)} ${s.y.toFixed(1)}) rotate(${s.tiltA.toFixed(2)} 399.5 600) translate(399.5 753) scale(${scaleX.toFixed(4)} ${scaleY.toFixed(4)}) translate(-399.5 -753)`
       );
       if (el.shadow) {
         const lift = Math.min(1, -s.y / 260);
@@ -462,26 +467,28 @@ export default function AgentBot({
       s.fWave = fade(s.fWave, waving);
       // Sadness settles in slowly; happiness pops
       s.fSad = calm ? +sad : s.fSad + (+sad - s.fSad) * Math.min(1, dt * (sad ? 2.2 : 6));
-      s.fHappy = fade(s.fHappy, done);
+      s.fHappy = fade(s.fHappy, happyState);
 
-      // A tear rolls down from the left eye, again and again while sad
+      // A tear rolls down from under the left eye every 2.6 s while sad
       if (el.tear) {
-        const p = calm ? 0.1 : (inState % 3.2) / 3.2;
+        const p = calm ? 0.1 : (inState % 2.6) / 2.6;
         const grow = 0.5 + 0.65 * smoothstep(0, 0.2, p);
         const fall = 165 * smoothstep(0.2, 0.8, p);
         const out = 1 - smoothstep(0.8, 0.95, p);
-        const x = EYE_X[0] + 26 * s.lx + 12;
-        const y = EYE_Y + 20 * s.ly + 26 + fall;
+        const x = EYE_X[0] + 26 * s.lx + 2;
+        const y = EYE_Y + 20 * s.ly + 8 * s.fSad + 42 + fall;
         el.tear.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${grow.toFixed(3)})`);
         el.tear.setAttribute('opacity', (s.fSad * out * smoothstep(0, 0.08, p)).toFixed(3));
       }
 
-      // Sparkles pop one after the other, then twinkle, while done
+      // Sparkles pop one after the other, then twinkle and spin, while happy;
+      // bigger on small bots so they still read
+      const sparkleK = Math.min(3, Math.max(1, 100 / size));
       el.sparkles.forEach((n, i) => {
-        const [x, y, size] = SPARKLES[i];
+        const [x, y, radius] = SPARKLES[i];
         const appear = calm ? 1 : smoothstep(0.1 + i * 0.09, 0.4 + i * 0.09, inState);
         const twinkle = calm ? 1 : 0.65 + 0.35 * Math.sin(clock * 4 + i * 1.3);
-        const k = popIn(appear) * twinkle * size * 5 * s.fHappy;
+        const k = popIn(appear) * twinkle * radius * sparkleK * s.fHappy;
         const spin = calm ? 0 : clock * 30 + i * 20;
         n.setAttribute('transform', `translate(${x} ${y}) rotate(${spin.toFixed(1)}) scale(${Math.max(0, k).toFixed(3)})`);
         n.setAttribute('opacity', (appear * (0.8 + 0.2 * Math.sin(clock * 5 + i)) * s.fHappy).toFixed(3));
@@ -569,7 +576,7 @@ export default function AgentBot({
       [s.sqz, s.vSqz] = spring(s.sqz, s.vSqz, +!!thinking, 160, 16, dt);
       const focus = 1 - 0.18 * s.fRead - 0.22 * s.fWork;
       const squint = (1 + (0.44 - 0.2 * squintPulse - 1) * s.sqz) * focus;
-      const happy = (now < s.happyUntil || done || waving) && frown < 0.2;
+      const happy = (now < s.happyUntil || done || happyState || waving) && frown < 0.2;
       const faceX = 26 * s.lx;
       const faceY = 20 * s.ly;
       el.brows.forEach((n, i) => {
@@ -582,16 +589,19 @@ export default function AgentBot({
       el.eyes.forEach((eye, i) => {
         let open = happy
           ? 1
-          : lid * (s.hover ? 1.14 : 1) * (1 - 0.85 * s.sleep) * squint * (1 - 0.42 * frown) * (1 - s.sulkK * (glance ? 0.1 : 0.38)) * (1 - 0.5 * s.fSad);
+          : lid * (s.hover ? 1.14 : 1) * (1 - 0.85 * s.sleep) * squint * (1 - 0.42 * frown) * (1 - s.sulkK * (glance ? 0.1 : 0.38)) * (1 - 0.4 * s.fSad);
         if (s.sqz > 0.01 && !happy) open *= 1 - 0.35 * s.sqz * Math.max(0, (i === 0 ? -1 : 1) * s.lx);
         const rot = happy ? 0 : (8 * s.sqz + 22 * frown) * (i === 0 ? 1 : -1);
         const widen = (1 / Math.max(0.6, open) ** 0.15) * (1 + (happy ? 0 : s.sqz) * 0.3);
         eye.g.setAttribute(
           'transform',
-          `translate(${(eye.x + faceX).toFixed(2)} ${(EYE_Y + faceY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${widen.toFixed(3)} ${Math.max(0.06, open).toFixed(3)})`
+          `translate(${(eye.x + faceX).toFixed(2)} ${(EYE_Y + faceY + 8 * s.fSad).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${widen.toFixed(3)} ${Math.max(0.06, open).toFixed(3)})`
         );
         eye.open.setAttribute('opacity', happy ? '0' : '1');
         eye.happy.setAttribute('opacity', happy ? '1' : '0');
+        // Droopy lids: a white cut over the outer top of each eye, slid down when sad
+        eye.lid.setAttribute('transform', `rotate(${i === 0 ? -16 : 16}) translate(0 ${(-40 * (1 - s.fSad)).toFixed(1)})`);
+        eye.lid.setAttribute('opacity', happy ? '0' : s.fSad.toFixed(3));
       });
     }
 
@@ -665,6 +675,7 @@ export default function AgentBot({
                     strokeLinecap="round"
                     opacity="0"
                   />
+                  <rect data-lid x={-30} y={-64} width={60} height={56} fill="#fff" opacity="0" />
                 </g>
               ))}
               {EYE_X.map((x) => (
@@ -680,7 +691,7 @@ export default function AgentBot({
                   transform={`translate(${x} ${EYE_Y - 76})`}
                 />
               ))}
-              {props !== false && <path data-tear d={TEAR_PATH} fill="#BBD6FF" opacity="0" />}
+              {props !== false && <path data-tear d={TEAR_PATH} fill="#6FA8FF" opacity="0" />}
             </g>
             {props !== false &&
               [-1, 1].flatMap((side) =>
@@ -708,8 +719,8 @@ export default function AgentBot({
           </g>
           {showProps && (
             <g data-props>
-              {SPARKLES.map(([x, y, , onTile], i) => (
-                <path key={`sparkle${i}`} data-sparkle d={SPARKLE_PATH} fill={onTile ? '#fff' : '#7B79FF'} opacity="0" transform={`translate(${x} ${y}) scale(0)`} />
+              {SPARKLES.map(([x, y], i) => (
+                <path key={`sparkle${i}`} data-sparkle d={SPARKLE_PATH} fill="#9C99FF" opacity="0" transform={`translate(${x} ${y}) scale(0)`} />
               ))}
               <g data-p-think opacity="0">
                 {BUBBLES.map(([x, y, r]) => (
