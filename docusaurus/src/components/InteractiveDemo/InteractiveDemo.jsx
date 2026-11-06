@@ -231,7 +231,7 @@ export default function InteractiveDemo({ id }) {
           </button>
         </div>
         <span className={styles.address}>
-          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" /><path d="M2.5 8h11M8 2.5c-2 2-2 9 0 11m0-11c2 2 2 9 0 11" /></svg>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.4" /><path d="M1.6 8h12.8M8 1.6c-2.3 2.3-2.3 10.5 0 12.8m0-12.8c2.3 2.3 2.3 10.5 0 12.8" /></svg>
           {demo.title}
         </span>
         <div className={clsx(styles.chromeSide, styles.chromeSideEnd)}>
