@@ -29,44 +29,14 @@ The documentation covers two products with different audiences:
 
 ## Inki: the documentation toolkit
 
-Inki (`claude-plugins/inki/`) encodes how Strapi documentation is researched, written, reviewed, and submitted: templates, authoring guides, style rules, review rubrics, and git conventions. Before writing, reviewing, or submitting documentation in this repository, use Inki instead of improvising your own process.
+Before writing, reviewing, or submitting documentation in this repository, use Inki (`claude-plugins/inki/`) instead of improvising your own process. It encodes the templates, authoring guides, style rules, review rubrics, and git conventions of the Strapi docs. Overview: `claude-plugins/inki/README.md`.
 
-Inki is packaged as a Claude Code plugin, but its skills are plain Markdown instructions that any AI coding agent can follow.
+Each task has a skill at `claude-plugins/inki/skills/<skill>/SKILL.md`; pick it from the `description` in its frontmatter. Claude Code users install the plugin and call `/inki:<skill>` (see the README). Any other AI tool can follow the `SKILL.md` files directly:
 
-### Pick the skill for the task
-
-Each skill lives at `claude-plugins/inki/skills/<skill>/SKILL.md`. The full reference is in `claude-plugins/inki/README.md` and `claude-plugins/inki/COMMANDS.md`.
-
-| Task | Skill |
-|------|-------|
-| Document a subject end to end (Strapi code PR, Notion page, Linear issue, spec, notes) | `document` |
-| Check whether a topic is already documented | `exists` |
-| Find which doc pages a `strapi/strapi` or `strapi/cloud` PR affects | `route` |
-| Audit how well a feature is documented | `coverage` |
-| Outline, then draft a new page | `write` (or `outline`, then `draft`) |
-| Review a page, a directory, or a docs PR | `review` (or one of `style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check`) |
-| Record a new recurring documentation mistake | `pitfalls-add` |
-| Branch, commit, push, and open a PR | `submit` (or `branch`, `commit`, `push`, `pr`) |
-| Fix the title or description of an open PR | `pr-fix` |
-
-### Use Inki with Claude Code
-
-Install the plugin, then call skills as `/inki:<skill>`:
-
-```bash
-/plugin marketplace add strapi/documentation
-/plugin install inki@strapi-documentation
-```
-
-### Use Inki with any other AI tool
-
-Codex, Cursor, Copilot, Gemini CLI, Windsurf, Cline, and other agents can run the same skills without installing anything:
-
-1. Read `claude-plugins/inki/skills/<skill>/SKILL.md` and follow its steps.
-2. Treat `$ARGUMENTS` as the arguments the user gave for that skill (target path, PR, flags such as `--non-interactive` or `--fix`).
-3. Resolve relative paths (`../../references/...`, `../_shared/...`) from the directory of the `SKILL.md` file, and read `${CLAUDE_PLUGIN_ROOT}` as `claude-plugins/inki`.
-4. When a skill says to dispatch an `inki:<name>` agent, read `claude-plugins/inki/agents/<name>.md` and follow it. Run those agents as parallel subagents if your tool supports them, one after another otherwise. They are read-only: they return findings and never edit files.
-5. When a skill says to ask the user a question, ask it in your tool's normal way, unless `--non-interactive` was passed.
+1. Treat `$ARGUMENTS` as the arguments the user gave (target path, PR, flags such as `--non-interactive` or `--fix`).
+2. Resolve relative paths (`../../references/...`, `../_shared/...`) from the directory of the `SKILL.md` file, and read `${CLAUDE_PLUGIN_ROOT}` as `claude-plugins/inki`.
+3. When a skill says to dispatch an `inki:<name>` agent, read `claude-plugins/inki/agents/<name>.md` and follow it, as parallel subagents if your tool supports them, one after another otherwise. These agents are read-only.
+4. When a skill says to ask the user a question, ask it in your tool's normal way, unless `--non-interactive` was passed.
 
 ## Development commands and prerequisites
 
@@ -209,7 +179,7 @@ Router → Outliner (Generator) → Drafter → Style Checker → Integrity Chec
 These prompts are designed for use in:
 - **Claude Code / Claude Projects**: Install the Inki plugin (see the Inki section above); in Claude Projects, import prompts as project knowledge
 - **Cursor IDE**: Use the `.cursor/rules/*.mdc` wrappers
-- **Other AI tools (Codex, Copilot, Gemini CLI, Cline, Windsurf…)**: Follow the Inki skills directly (see "Use Inki with any other AI tool"), or use the prompts as system prompts
+- **Other AI tools (Codex, Copilot, Gemini CLI, Cline, Windsurf…)**: Follow the Inki skills directly (see the Inki section above), or use the prompts as system prompts
 
 See `claude-plugins/inki/references/prompts/README.md` for detailed usage instructions.
 
