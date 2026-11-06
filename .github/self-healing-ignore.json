@@ -1974,6 +1974,36 @@
       "number": 28367,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3641",
       "added": "2026-11-05"
+    },
+    {
+      "number": 28452,
+      "reason": "Triage: admin UI behavior fix for intended behavior",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28440,
+      "reason": "Triage: admin UI layout/CSS fix",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28395,
+      "reason": "Triage: types-only change, no runtime behavior",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28171,
+      "reason": "Triage: internal telemetry implementation fix",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28413,
+      "reason": "Router: Internal admin panel fix. Modifies internal contributor documentation (docs/docs/packages/core/admin/) and admin hooks, not public-facing API documentation. Behavior is self-evident to users (link is hidden when disabled).",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28250,
+      "reason": "Router: Bug fix to internal license limit handling. Modifies internal plugin documentation (docs/docs/packages/core/review-workflows/) to clarify how existing license limits work. No changes to public-facing APIs or behavior.",
+      "added": "2026-11-06"
     }
   ]
 }
