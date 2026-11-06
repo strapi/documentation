@@ -239,7 +239,7 @@ The following parameters are accepted:
 | --------- | ----------- |
 |`files`    | The file(s) to upload. The value(s) can be a Buffer or Stream. |
 |`path` (optional) | The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). |
-| `refId` | The ID of the entry which the file(s) will be linked to. |
+| `refId` | The ID of the entry which the file(s) will be linked to. Can be either the entry's numeric `id` or its `documentId`. |
 | `ref` | The unique ID (uid) of the model which the file(s) will be linked to (see more below). |
 | `source` (optional) | The name of the plugin where the model is located. |
 | `field` | The field of the entry which the file(s) will be precisely linked to. |
