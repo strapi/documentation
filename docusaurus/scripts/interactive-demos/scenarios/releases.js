@@ -1,6 +1,13 @@
-// Releases tour, step for step the Guideflow tour it replaces.
+// Releases tour: the Guideflow tour it replaces, plus a partial release (Release all ready items).
 // Runs against the demo app from setup-demo-app.js. Releases is an Enterprise feature:
 // start the app with a license (STRAPI_LICENSE) or the Releases pages do not exist.
+// Partial releases need a Strapi version that includes strapi/strapi#28339. While that PR
+// requires it, also enable the next design system in the app's config/features.js:
+//   module.exports = { future: { unstableNextDesignSystem: true } };
+// Set DEMO_STRAPI_DIR so setup can remove the releases a previous capture published.
+
+const fs = require('fs');
+const path = require('path');
 
 const ARTICLE = 'api::article.article';
 const RELEASE = 'Spring 2027 Release';
@@ -9,6 +16,9 @@ const RELEASE_DATE = '05/28/2027';
 const RELEASE_TIME = '16:00';
 // Articles the tour adds to the release from the list view, then publishes with it.
 const BULK_ARTICLES = ['Beautiful picture', "The internet's Own boy"];
+// The second one is not ready: setup gives it a slug a published entry cannot have.
+const NOT_READY_ARTICLE = BULK_ARTICLES[1];
+const INVALID_SLUG = "the internet's own boy";
 const EDIT_ARTICLE = "What's inside a Black Hole";
 
 const MAIN_NAV = 'nav';
@@ -19,6 +29,36 @@ const MENU = '[role=menu]';
 const MENU_BUTTON = 'button[aria-haspopup=menu][aria-expanded=true]';
 const RELEASES_PANEL = 'aside:has(h2:text-is("Releases"))';
 const ENTRY_PANEL = 'aside:has(h2:text-is("Entry"))';
+const RELEASE_HEADER = 'main h1';
+const STATUS_BADGE = 'main h1 + *';
+const READY_ROW = `main [role=grid] >> role=row[name*="${BULK_ARTICLES[0]}"]`;
+const NOT_READY_ROW = `main [role=grid] >> role=row[name*="${NOT_READY_ARTICLE}"]`;
+
+// Strapi refuses to delete a release once published, and the releases list shows every release:
+// remove the releases a previous capture published straight from the demo app's SQLite database.
+function deletePublishedReleases() {
+  const appDir = process.env.DEMO_STRAPI_DIR;
+  const file = appDir && path.join(appDir.replace(/^~(?=\/)/, process.env.HOME), '.tmp/data.db');
+  if (!file || !fs.existsSync(file)) {
+    console.warn('DEMO_STRAPI_DIR not set or not a SQLite app: releases published by a previous capture stay in the list.');
+    return;
+  }
+  const { DatabaseSync } = require('node:sqlite');
+  const db = new DatabaseSync(file);
+  const ids = db
+    .prepare('SELECT id FROM strapi_releases WHERE name LIKE ? AND released_at IS NOT NULL')
+    .all(`${RELEASE}%`)
+    .map((row) => row.id);
+  if (ids.length) {
+    const list = ids.join(',');
+    db.exec('BEGIN');
+    db.exec(`DELETE FROM strapi_release_actions WHERE id IN (SELECT release_action_id FROM strapi_release_actions_release_lnk WHERE release_id IN (${list}))`);
+    db.exec(`DELETE FROM strapi_release_actions_release_lnk WHERE release_id IN (${list})`);
+    db.exec(`DELETE FROM strapi_releases WHERE id IN (${list})`);
+    db.exec('COMMIT');
+  }
+  db.close();
+}
 
 module.exports = {
   title: 'Releases',
@@ -27,19 +67,22 @@ module.exports = {
 
   // Brings the app back to the same state before every capture.
   async setup({ api }) {
-    // Releases created by a previous capture. Strapi refuses to delete a published release
-    // ("Release already published"): those stay in the Done tab, which the tour never opens,
-    // and the "Select a release" lists only show pending releases.
+    // Releases created by a previous capture: pending ones through the API, published ones from the database.
     const { data: releases } = await api.get('/content-releases?page=1&pageSize=100');
     for (const release of releases) {
-      if (release.name === RELEASE && !release.releasedAt) await api.del(`/content-releases/${release.id}`);
+      if (release.name.startsWith(RELEASE) && !release.releasedAt) await api.del(`/content-releases/${release.id}`);
     }
+    deletePublishedReleases();
 
-    // Publishing the release published these articles: put them back to draft only.
     const { results } = await api.get(`/content-manager/collection-types/${ARTICLE}?pageSize=100&locale=en`);
     for (const entry of results.filter((item) => BULK_ARTICLES.includes(item.title))) {
+      // Publishing the release published this article: put it back to draft only.
       if (entry.status !== 'draft') {
         await api.post(`/content-manager/collection-types/${ARTICLE}/${entry.documentId}/actions/unpublish?locale=en`, {});
+      }
+      // A draft accepts this slug, publication does not: the article is not ready.
+      if (entry.title === NOT_READY_ARTICLE) {
+        await api.put(`/content-manager/collection-types/${ARTICLE}/${entry.documentId}?locale=en`, { slug: INVALID_SLUG });
       }
     }
   },
@@ -56,22 +99,22 @@ module.exports = {
       text: 'The Releases feature is directly accessible from the **navigation of the admin panel**.',
     },
     {
-      explain: ['role=tablist[name="Releases list"]', 'role=tabpanel'],
-      text: 'All created releases will be displayed in this area, first in the **Pending tab** then in the **Done tab** once they happened.',
+      explain: 'main [role=grid]',
+      text: 'All created releases will be displayed in this table, with their status, schedule, entries and release mode.',
     },
     {
       click: 'role=button[name="New Release"]',
       text: "Let's click the *New Release* button to **create a new release**!",
     },
     {
-      fill: `${DIALOG} >> role=textbox[name="Name"]`,
+      fill: `${DIALOG} >> role=textbox[name="Release name"]`,
       value: RELEASE,
       text: "Let's give a name to our release.",
     },
     {
-      click: 'role=checkbox[name="Schedule release"]',
-      // Clicking unticks the box: tick it again so the release stays scheduled.
-      after: [{ click: 'role=checkbox[name="Schedule release"]' }],
+      click: `${DIALOG} >> role=checkbox[name="I don't have a release date yet"]`,
+      // Clicking ticks the box: untick it again so the release stays scheduled.
+      after: [{ click: `${DIALOG} >> role=checkbox[name="I don't have a release date yet"]` }],
       text: 'Here you can decide whether the release is scheduled or not.',
     },
     {
@@ -85,8 +128,16 @@ module.exports = {
       text: "And let's define a release time.",
     },
     {
-      click: `${DIALOG} >> role=button[name="Continue"]`,
-      text: 'Click on *Continue*.',
+      explain: `${DIALOG} >> role=radiogroup[name="Release mode"]`,
+      text: 'The **release mode** defines what happens if some entries are not ready when the release is published.',
+    },
+    {
+      click: `${DIALOG} >> role=radio[name="Release all ready items"]`,
+      text: "Let's choose *Release all ready items*: entries that are ready will be published, and the others **skipped**.",
+    },
+    {
+      click: `${DIALOG} >> role=button[name="Create release"]`,
+      text: 'Click on *Create release*.',
     },
 
     // Release details
@@ -189,31 +240,46 @@ module.exports = {
     },
     {
       explain: 'main [role=grid]',
-      text: 'Our articles have properly been added to the release!',
+      text: 'Our articles have properly been added to the release!\n\nHovering an article displays buttons to **open the article** and to **remove it from the release**.',
     },
     {
-      click: 'role=button[name="Ready to publish"]',
+      explain: [`${READY_ROW} >> role=gridcell >> nth=4`, `${NOT_READY_ROW} >> role=gridcell >> nth=4`],
       text: "Each has a **status** indicating whether or not they're ready to be published.",
     },
     {
-      explain: ['role=button[name="Ready to publish"]', '[data-radix-popper-content-wrapper]'],
-      text: 'Clicking on the arrow next to the status will display more details.',
+      click: `role=button[name="Why ${NOT_READY_ARTICLE} isn’t ready"]`,
+      text: 'Clicking on the reason next to a *Not ready* status will display more details.',
     },
     {
-      before: [{ press: 'Escape' }, { click: 'main [role=grid] >> role=button[name="Release action options"]' }],
-      explain: [MENU_BUTTON, MENU],
-      text: 'And for each article, you can click on ... to access a link to **edit the article** and a button to remove it from the release.',
+      explain: DIALOG,
+      text: "The side panel lists what prevents the entry from being published: here, the slug of the article doesn't match the expected format. *Go to entry* opens the article to fix it.",
     },
     {
       before: [{ press: 'Escape' }],
-      click: 'main >> role=button[name="Publish"]',
-      // The page shows the Done status only once the publication is over.
-      after: [{ waitFor: 'main >> text=This entry was' }],
-      text: "Since we're all good with our articles, let's try publishing the release!",
+      explain: ['main [role=tab] >> nth=0', 'main [role=tab] >> nth=2'],
+      text: 'The *Ready* and *Not ready* tabs filter the entries by status.',
     },
     {
-      chapter: true,
-      text: 'We can now see that the release\'s status is "Done" and that for both articles the table confirms that they were published!',
+      explain: [RELEASE_HEADER, STATUS_BADGE],
+      text: 'Since the release mode is *Release all ready items*, the release is **Ready** even though one article is not: this article will be skipped.',
+    },
+    {
+      click: 'main >> role=button[name="Publish"]',
+      // The page shows the result only once the publication is over.
+      after: [{ waitFor: 'main >> text=Released on' }],
+      text: "Let's try publishing the release!",
+    },
+    {
+      explain: [RELEASE_HEADER, STATUS_BADGE, 'main span:has-text("Released on")'],
+      text: 'The release\'s status is now **Partial**: 1 of the 2 articles was published, and the other one was skipped.',
+    },
+    {
+      explain: [`${READY_ROW} >> role=gridcell >> nth=4`, `${NOT_READY_ROW} >> role=gridcell >> nth=4`],
+      text: 'The table confirms which article was published and which one was **skipped**, and why.',
+    },
+    {
+      explain: 'role=button[name="Create release from skipped entries"]',
+      text: 'Once the skipped article is fixed, *Create release from skipped* creates a new release with the skipped entries, to publish them later.',
     },
     {
       chapter: true,
