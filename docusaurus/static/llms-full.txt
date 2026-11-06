@@ -24020,7 +24020,7 @@ module.exports = {
       rule: "0 0 1 * * 1",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 <details>
@@ -24065,7 +24065,7 @@ module.exports = {
       tz: "Asia/Dhaka",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </details>
@@ -24096,7 +24096,7 @@ module.exports = {
     // only run once after 10 seconds
     options: new Date(Date.now() + 10000),
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </details>
@@ -24138,7 +24138,7 @@ module.exports = {
       end: new Date(Date.now() + 20000),
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </details>
@@ -24174,7 +24174,7 @@ module.exports = {
   "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 ## Enabling cron jobs
@@ -24187,6 +24187,9 @@ const cronTasks = require("./cron-tasks");
 module.exports = ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS"),
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -24198,6 +24201,9 @@ module.exports = ({ env }) => ({
 
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS")!,
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -25968,9 +25974,10 @@ All 3 lifecycle functions can be put together to configure custom behavior durin
 3. Restart Strapi to confirm each lifecycle executes in sequence.
 
 ```ts title="src/index.ts"
+
 let cronJobKey: string | undefined;
 
-  register({ strapi }) {
+  register({ strapi }: { strapi: Core.Strapi }) {
     strapi.customFields.register({
       name: 'color',
       type: 'string',
@@ -25978,7 +25985,7 @@ let cronJobKey: string | undefined;
     });
   },
 
-  async bootstrap({ strapi }) {
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     cronJobKey = 'log-reminders';
 
     strapi.cron.add({
@@ -25993,7 +26000,7 @@ let cronJobKey: string | undefined;
     });
   },
 
-  async destroy({ strapi }) {
+  async destroy({ strapi }: { strapi: Core.Strapi }) {
     if (cronJobKey) {
       strapi.cron.remove(cronJobKey);
     }

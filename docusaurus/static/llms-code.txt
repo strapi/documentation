@@ -18639,6 +18639,8 @@ Language: TypeScript
 File path: ./config/cron-tasks.ts
 
 ```ts
+import type { Modules } from "@strapi/strapi";
+
 export default {
   /**
    * Simple example.
@@ -18653,7 +18655,7 @@ export default {
       rule: "0 0 1 * * 1",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 Language: JavaScript
@@ -18684,6 +18686,8 @@ Language: TypeScript
 File path: ./config/cron-tasks.ts
 
 ```ts
+import type { Modules } from "@strapi/strapi";
+
 export default {
   /**
    * Cron job with timezone example.
@@ -18700,7 +18704,7 @@ export default {
       tz: "Asia/Dhaka",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 Language: JavaScript
@@ -18723,6 +18727,8 @@ Language: TypeScript
 File path: ./config/cron-tasks.ts
 
 ```ts
+import type { Modules } from "@strapi/strapi";
+
 export default {
   myJob: {
     task: async ({ strapi }) => {
@@ -18731,7 +18737,7 @@ export default {
     // only run once after 10 seconds
     options: new Date(Date.now() + 10000),
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 Language: JavaScript
@@ -18759,6 +18765,8 @@ Language: TypeScript
 File path: ./config/cron-tasks.ts
 
 ```ts
+import type { Modules } from "@strapi/strapi";
+
 export default {
   myJob: {
     task: async ({ strapi }) => {
@@ -18773,7 +18781,7 @@ export default {
       end: new Date(Date.now() + 20000),
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 
@@ -18802,6 +18810,8 @@ Language: TypeScript
 File path: ./config/cron-tasks.ts
 
 ```ts
+import type { Modules } from "@strapi/strapi";
+
 export default {
   /**
    * Simple example.
@@ -18811,7 +18821,7 @@ export default {
   "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 
@@ -18828,6 +18838,9 @@ const cronTasks = require("./cron-tasks");
 module.exports = ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS"),
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -18846,6 +18859,9 @@ import type { Core } from '@strapi/strapi';
 export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS")!,
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -20401,10 +20417,12 @@ Language: TypeScript
 File path: src/index.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
+
 let cronJobKey: string | undefined;
 
 export default {
-  register({ strapi }) {
+  register({ strapi }: { strapi: Core.Strapi }) {
     strapi.customFields.register({
       name: 'color',
       type: 'string',
@@ -20412,7 +20430,7 @@ export default {
     });
   },
 
-  async bootstrap({ strapi }) {
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     cronJobKey = 'log-reminders';
 
     strapi.cron.add({
@@ -20427,7 +20445,7 @@ export default {
     });
   },
 
-  async destroy({ strapi }) {
+  async destroy({ strapi }: { strapi: Core.Strapi }) {
     if (cronJobKey) {
       strapi.cron.remove(cronJobKey);
     }
