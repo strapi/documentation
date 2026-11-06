@@ -46,6 +46,14 @@ If the capture stops with `Target not visible: <selector>` or a timeout, the int
 
 `capture.js` needs `playwright-core` and a Chromium build. If `playwright-core` is not installed, point `PLAYWRIGHT_CORE_PATH` to a copy of it (for example the one in the Yarn cache).
 
+## Weight and loading
+
+Each screen is saved in WebP, in light and dark, at 2 widths: 1920 px for the page and 3840 px (`-hd`) for full screen and zoomed steps. The browser picks the size it needs through `srcset`. Identical screens are saved once. The Content Manager demo weighs 5.6 MB in the repository, and a reader who goes through all 38 steps downloads about 0.9 MB.
+
+In the page, nothing loads before the demo gets close to the viewport (`loading="lazy"`), then one screen at a time, one step ahead. With data saver on or a slow connection (2G, 3G), the demo shows a "Load the demo" card and downloads nothing until it is clicked. This detection relies on `navigator.connection`, which some browsers lack: they get lazy loading only. A "Read the steps as text" list under each demo gives the steps to screen readers and to readers who skip the demo.
+
+Recapturing only adds the screens that changed to the Git history.
+
 ## Write or change a scenario
 
 A scenario exports a title, a start URL, an intro, the steps and an outro. Each step is one of:

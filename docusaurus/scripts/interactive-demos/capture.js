@@ -5,7 +5,8 @@
  * Plays a scenario (scripts/interactive-demos/scenarios/<id>.js) in a headless
  * browser, takes a light and a dark screenshot at every step, records where the
  * targeted element sits, and writes:
- *   - static/img/assets/interactive-demos/<id>/<NN>.jpg and <NN>_DARK.jpg
+ *   - static/img/assets/interactive-demos/<id>/<NN>.webp and <NN>_DARK.webp (1920 px wide),
+ *     plus <NN>-hd.webp and <NN>-hd_DARK.webp (3840 px) for full screen and zoomed steps
  *   - src/components/InteractiveDemo/demos/<id>.json (read by <InteractiveDemo />)
  *
  * Usage:
@@ -36,6 +37,9 @@ const crypto = require('crypto');
 const ROOT = path.resolve(__dirname, '../..');
 const SETTLE_MS = 700;
 const SPOTLIGHT_PADDING = 6;
+const CAPTURE_SCALE = 3; // 3840 px wide screenshots, sharp in full screen on high-density displays
+const PAGE_SCALE = 1.5; // 1920 px wide, what the page loads
+const WEBP_QUALITY = 0.85;
 
 function loadPlaywright() {
   const candidates = [process.env.PLAYWRIGHT_CORE_PATH, 'playwright-core', 'playwright'].filter(Boolean);
@@ -136,7 +140,6 @@ async function main() {
   const email = requireEnv('DEMO_STRAPI_EMAIL');
   const password = requireEnv('DEMO_STRAPI_PASSWORD');
   const viewport = scenario.viewport || { width: 1280, height: 800 };
-  const quality = scenario.jpegQuality || 80;
 
   const imageDir = path.join(ROOT, 'static/img/assets/interactive-demos', id);
   const imageUrl = `/img/assets/interactive-demos/${id}`;
@@ -149,7 +152,7 @@ async function main() {
 
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ viewport, deviceScaleFactor: scenario.deviceScaleFactor || 1.5, colorScheme: 'light' });
+  const context = await browser.newContext({ viewport, deviceScaleFactor: CAPTURE_SCALE, colorScheme: 'light' });
   await context.addInitScript(() => {
     localStorage.setItem('STRAPI_GUIDED_TOUR', JSON.stringify({ tours: {}, enabled: false, hidden: true, completedActions: [] }));
     // Follow prefers-color-scheme so both themes can be captured without a reload.
@@ -162,6 +165,19 @@ async function main() {
     });
   });
   const page = await context.newPage();
+  // Encodes WebP with the browser, so the script needs no image library.
+  const encoder = await browser.newPage();
+  const toWebp = (png, width) => encoder.evaluate(async ({ b64, width, quality }) => {
+    const bitmap = await createImageBitmap(await (await fetch(`data:image/png;base64,${b64}`)).blob());
+    const height = Math.round((bitmap.height * width) / bitmap.width);
+    const canvas = new OffscreenCanvas(width, height);
+    const context2d = canvas.getContext('2d');
+    context2d.imageSmoothingQuality = 'high';
+    context2d.drawImage(bitmap, 0, 0, width, height);
+    const blob = await canvas.convertToBlob({ type: 'image/webp', quality });
+    return Array.from(new Uint8Array(await blob.arrayBuffer()));
+  }, { b64: png.toString('base64'), width, quality: WEBP_QUALITY }).then((data) => Buffer.from(data));
+  const bytes = { light: 0, dark: 0 };
 
   await page.goto(`${baseUrl}/admin/auth/login`);
   await page.locator('input[name=email]').fill(email);
@@ -180,17 +196,21 @@ async function main() {
       if (!document.querySelector('[role=dialog], [role=listbox], [data-radix-popper-content-wrapper]')) document.activeElement?.blur();
     });
     await page.waitForTimeout(150);
-    const light = await page.screenshot({ type: 'jpeg', quality });
+    const light = await page.screenshot({ type: 'png' });
     await page.emulateMedia({ colorScheme: 'dark' });
     await page.waitForTimeout(400);
-    const dark = await page.screenshot({ type: 'jpeg', quality });
+    const dark = await page.screenshot({ type: 'png' });
     await page.emulateMedia({ colorScheme: 'light' });
     await page.waitForTimeout(250);
     const hash = crypto.createHash('sha1').update(light).update(dark).digest('hex');
     if (!imagesByHash.has(hash)) {
       const name = String(imagesByHash.size + 1).padStart(2, '0');
-      fs.writeFileSync(path.join(imageDir, `${name}.jpg`), light);
-      fs.writeFileSync(path.join(imageDir, `${name}_DARK.jpg`), dark);
+      for (const [theme, png, suffix] of [['light', light, ''], ['dark', dark, '_DARK']]) {
+        const normal = await toWebp(png, viewport.width * PAGE_SCALE);
+        fs.writeFileSync(path.join(imageDir, `${name}${suffix}.webp`), normal);
+        fs.writeFileSync(path.join(imageDir, `${name}-hd${suffix}.webp`), await toWebp(png, viewport.width * CAPTURE_SCALE));
+        bytes[theme] += normal.length;
+      }
       imagesByHash.set(hash, `${imageUrl}/${name}`);
     }
     return imagesByHash.get(hash);
@@ -236,6 +256,8 @@ async function main() {
     title: scenario.title,
     width: viewport.width,
     height: viewport.height,
+    // What a reader downloads to go through the whole demo, shown before loading on slow connections.
+    bytes,
     intro: { ...scenario.intro, image: introImage },
     steps,
     outro: { ...scenario.outro, image: steps[steps.length - 1].image },
