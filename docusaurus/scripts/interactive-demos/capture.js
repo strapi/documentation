@@ -17,12 +17,16 @@
  * playwright-core is not resolvable from this directory.
  *
  * Step types in a scenario:
- *   { explain: selector | selector[] | null, text }  highlight an area, reader clicks Next
- *   { click: selector, text }                        reader clicks the real button to continue
- *   { fill: selector, value, text }                  reader clicks the field, the value gets typed
- *   { do: [actions] }                                silent actions, no step shown
- * Any step accepts `before: [actions]`, run before the screenshot.
+ *   { explain: selector | selector[], text }  highlight an area, reader clicks Next
+ *                                             (`zoom: true` zooms on it, `padding` widens the highlight)
+ *   { chapter: true, text }                   centered bubble with arrows, no highlight
+ *   { click: selector, text }                 reader clicks the real element to continue
+ *   { fill: selector, value, text }           reader clicks the field, the value gets typed
+ *   { do: [actions] }                         silent actions, no step shown
+ * Any step accepts `before: [actions]`, run before the screenshot, and click or fill steps
+ * accept `after: [actions]`, run once the action is done (to pick an option in a list, say).
  * Actions: { goto }, { click }, { fill, value }, { press }, { wait }.
+ * Texts accept **bold**, *italic*, [label](url) and line breaks.
  */
 
 const fs = require('fs');
@@ -52,6 +56,16 @@ function requireEnv(name) {
 }
 
 async function adminApi(baseUrl, email, password) {
+  // A fresh demo app has no admin yet: the first capture registers it.
+  const init = await fetch(`${baseUrl}/admin/init`).then((res) => res.json());
+  if (!init.data?.hasAdmin) {
+    const res = await fetch(`${baseUrl}/admin/register-admin`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstname: 'Kai', lastname: 'Doe', email, password }),
+    });
+    if (!res.ok) throw new Error(`Admin registration failed: ${res.status} ${await res.text()}`);
+  }
   const response = await fetch(`${baseUrl}/admin/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -72,6 +86,7 @@ async function adminApi(baseUrl, email, password) {
     get: (url) => call('GET', url),
     put: (url, body) => call('PUT', url, body),
     post: (url, body) => call('POST', url, body),
+    del: (url) => call('DELETE', url),
   };
 }
 
@@ -139,6 +154,12 @@ async function main() {
     localStorage.setItem('STRAPI_GUIDED_TOUR', JSON.stringify({ tours: {}, enabled: false, hidden: true, completedActions: [] }));
     // Follow prefers-color-scheme so both themes can be captured without a reload.
     localStorage.setItem('STRAPI_THEME', 'system');
+    // Toasts such as "Saved document" would linger on the next screenshots.
+    document.addEventListener('DOMContentLoaded', () => {
+      const style = document.createElement('style');
+      style.textContent = '[data-sonner-toaster] { display: none !important; }';
+      document.head.append(style);
+    });
   });
   const page = await context.newPage();
 
@@ -185,18 +206,23 @@ async function main() {
       continue;
     }
     const image = await capture();
-    if ('explain' in step) {
-      steps.push({ type: 'explain', image, text: step.text, rect: await rectOf(page, step.explain, viewport, SPOTLIGHT_PADDING) });
+    if (step.chapter) {
+      steps.push({ type: 'chapter', image, text: step.text });
+    } else if (step.explain) {
+      const rect = await rectOf(page, step.explain, viewport, step.padding ?? SPOTLIGHT_PADDING);
+      steps.push({ type: 'explain', image, text: step.text, rect, ...(step.zoom && { zoom: true }) });
     } else if (step.click) {
       const rect = await rectOf(page, step.click, viewport, 0);
       steps.push({ type: 'click', image, text: step.text, rect });
       await page.locator(step.click).first().click();
       await settle(page);
+      await runActions(page, baseUrl, step.after);
     } else if (step.fill) {
       const rect = await rectOf(page, step.fill, viewport, 0);
       steps.push({ type: 'fill', image, text: step.text, rect, value: step.value });
       await page.locator(step.fill).first().fill(step.value);
       await settle(page);
+      await runActions(page, baseUrl, step.after);
     } else {
       throw new Error(`Unknown type for ${label}`);
     }
