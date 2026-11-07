@@ -2004,6 +2004,106 @@
       "number": 28250,
       "reason": "Router: Bug fix to internal license limit handling. Modifies internal plugin documentation (docs/docs/packages/core/review-workflows/) to clarify how existing license limits work. No changes to public-facing APIs or behavior.",
       "added": "2026-11-06"
+    },
+    {
+      "number": 28501,
+      "reason": "Triage: build infrastructure dependency update",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28470,
+      "reason": "Triage: example template internal fix",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28462,
+      "reason": "Triage: types only, no runtime behavior change",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28461,
+      "reason": "Triage: internal logic, types only",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28416,
+      "reason": "Triage: types only",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28415,
+      "reason": "Triage: types only",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28414,
+      "reason": "Triage: internal logging formatting",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28477,
+      "reason": "Router: TypeScript type rename in custom field API. Internal API type fix with no user-facing behavior or documentation impact.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28474,
+      "reason": "Router: Package build configuration fix (rollup config). Runtime impact is transparent to documentation readers.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28473,
+      "reason": "Router: Documentation updates are already included in the source PR (develop.md and server-lifecycle.md). Routing docs are in-place.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28472,
+      "reason": "Router: Type dependency management fix. No user-facing behavior change or public API impact.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28467,
+      "reason": "Router: CLI behavior fix that restores documented default behavior. No new user-facing feature or API change.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28464,
+      "reason": "Router: Internal service behavior fix. HTTP API already validates displayName; this adds validation to direct service calls, catching invalid states earlier.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28463,
+      "reason": "Router: Developer error handling improvement. Provides better error messages for misconfigured policies/middlewares. No new public API or behavior documented.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28460,
+      "reason": "Router: Internal implementation detail for TypeScript type generation. Fixes non-deterministic output across machines, not a user-facing API change.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28449,
+      "reason": "Router: UI bug fix in Media Library folder sidebar. No documentation required for UI fixes.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28417,
+      "reason": "Router: Endpoint robustness fix. Prevents 500 errors on edge-case inputs by falling back to defaults instead of crashing.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28398,
+      "reason": "Router: Documentation updates are already included in the source PR (content-type-builder index.md explains the rename transaction behavior). Architectural docs are handled.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28172,
+      "reason": "Router: Documentation updates are already included in the source PR (document-write-path.md updated to reflect boolean error handling). Breaking change docs are in-place.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28169,
+      "reason": "Router: Documentation updates are already included in the source PR (content-releases backend.md updated to clarify published releases are not modified). Behavior docs are handled.",
+      "added": "2026-11-07"
     }
   ]
 }
