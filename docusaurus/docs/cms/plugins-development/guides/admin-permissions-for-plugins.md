@@ -16,18 +16,18 @@ tags:
 
 <Tldr>
 
-Plugins can register admin permissions server-side using `strapi.admin.services.permission.actionProvider.registerMany()`, then protect pages with `<Page.Protect>`, menu links, and components using the `useRBAC` hook to enforce role-based access control.
+Plugins can register admin permissions server-side using `strapi.admin.services.permission.actionProvider.registerMany()`. They then check these permissions on the plugin's admin routes with the `admin::hasPermissions` policy, and protect pages with `<Page.Protect>`, menu links, and components using the `useRBAC` hook.
 
 </Tldr>
 
 
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins), you might want to create admin permissions for your plugin. By doing that you can hook in to the [RBAC system](/cms/features/rbac) of Strapi to selectively grant permissions to certain pieces of your plugin.
 
-To create admin permissions for your Strapi plugin, you'll need to register them on the server side before implementing them on the admin side.
+To create admin permissions for your Strapi plugin, you'll need to register them on the server side, check them on the plugin's admin routes, and then implement them on the admin side.
 
 ## Register the permissions server side
 
-Each individual permission has to registered in the bootstrap function of your plugin, as follows:
+Each individual permission has to be registered in the bootstrap function of your plugin, as follows:
 
 <Tabs groupId="js-ts">
 
@@ -94,6 +94,82 @@ export default bootstrap;
 </TabItem>
 
 </Tabs>
+
+## Protect the server routes
+
+The checks described in [Implement permissions on the admin panel side](#implement-permissions-on-the-admin-panel-side) only hide pages and components. A user can still call your plugin's API directly. Each [admin route](/cms/plugins-development/server-routes) that reads or changes data must also check the permission on the server side.
+
+To check a permission on a route, add the `admin::hasPermissions` policy to the route configuration. List the required actions in its `config.actions` array, where each action is a permission registered in the `bootstrap` function:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/plugins/my-plugin/server/src/routes/admin/index.js"
+'use strict';
+
+module.exports = {
+  type: 'admin',
+  routes: [
+    {
+      method: 'GET',
+      path: '/overview',
+      handler: 'overview.find',
+      config: {
+        policies: [
+          {
+            name: 'admin::hasPermissions',
+            config: {
+              actions: ['plugin::my-plugin.overview.access'],
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/src/plugins/my-plugin/server/src/routes/admin/index.ts"
+export default {
+  type: 'admin' as const,
+  routes: [
+    {
+      method: 'GET' as const,
+      path: '/overview',
+      handler: 'overview.find',
+      config: {
+        policies: [
+          {
+            name: 'admin::hasPermissions',
+            config: {
+              actions: ['plugin::my-plugin.overview.access'],
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+Each action name follows the `plugin::<pluginName>.<uid>` format, built from the `pluginName` and `uid` values registered in the `bootstrap` function. When the `actions` array lists several actions, the user needs all of them. If the user lacks one of them, Strapi returns a `403 Forbidden` error and the controller does not run.
+
+An admin route without the `admin::hasPermissions` policy is open to every authenticated admin user, whatever their role.
+
+:::caution Do I also need the `admin::isAuthenticatedAdmin` policy?
+No. Admin routes require an authenticated admin user by default. Strapi rejects requests without valid admin credentials with a `401 Unauthorized` error before any policy runs. The `admin::isAuthenticatedAdmin` policy, used in some core routes and route examples, adds no check on top of this.
+
+The `admin::hasPermissions` policy needs this authenticated user. Do not use it on a route that sets `auth: false`.
+:::
 
 
 ## Implement permissions on the admin panel side
