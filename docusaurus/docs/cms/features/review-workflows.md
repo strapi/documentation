@@ -25,7 +25,9 @@ The Review Workflows feature allows you to create and manage workflows for your 
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="zpez8vgs3p" darkId="lpx4d4zs4k"/>
+<!-- <Guideflow lightId="zpez8vgs3p" darkId="lpx4d4zs4k"/> -->
+
+<InteractiveDemo id="review-workflows" />
 
 ## Configuration
 

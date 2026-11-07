@@ -1,0 +1,324 @@
+{
+  "id": "internationalization",
+  "title": "Internationalization (i18n)",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 1205348,
+    "dark": 1152684
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Internationalization (i18n) feature!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/internationalization/01"
+  },
+  "steps": [
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/01",
+      "text": "First, we need to go to the **Settings** of the admin panel, to configure the **Internationalization** feature.",
+      "rect": {
+        "x": 5,
+        "y": 29.12,
+        "w": 16.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/02",
+      "text": "Languages available via the Internationalization feature are called \"**locales**\". Let's add new ones!",
+      "rect": {
+        "x": 84.13,
+        "y": 5.5,
+        "w": 11.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/03",
+      "text": "You can choose any of the 500+ locales available in the *Locales* dropdown. For example, let's select French.",
+      "rect": {
+        "x": 20.47,
+        "y": 24.5,
+        "w": 28.52,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/internationalization/04",
+      "text": "You can decide which *Locale display name* to give your new locale.",
+      "rect": {
+        "x": 50.7,
+        "y": 49.63,
+        "w": 29.14,
+        "h": 4.75
+      },
+      "value": "French"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/05",
+      "text": "**Advanced settings** are available when adding or editing locales.",
+      "rect": {
+        "x": 67.92,
+        "y": 37.01,
+        "w": 12,
+        "h": 5.88
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/internationalization/06",
+      "text": "This is where a new locale can be set as the default one.",
+      "rect": {
+        "x": 19.61,
+        "y": 46.26,
+        "w": 60.47,
+        "h": 13.48
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/07",
+      "text": "Let's save our new locale!",
+      "rect": {
+        "x": 74.12,
+        "y": 70.12,
+        "w": 6.74,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/internationalization/08",
+      "text": "You can repeat this procedure as many times as you want, to add more locales to your project!"
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/internationalization/08",
+      "text": "From the Internationalization settings you can also:\n• ✏️ **Edit** a locale\n• 🗑️ **Delete** a locale",
+      "rect": {
+        "x": 86.64,
+        "y": 36.06,
+        "w": 6.25,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/08",
+      "text": "Let's edit the English locale to modify the display name!",
+      "rect": {
+        "x": 89.92,
+        "y": 28.69,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/internationalization/09",
+      "text": "We can remove the \"(en)\" part to make the display name fit with the others.",
+      "rect": {
+        "x": 50.7,
+        "y": 49.63,
+        "w": 29.14,
+        "h": 4.75
+      },
+      "value": "English"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/10",
+      "text": "Don't forget to save!",
+      "rect": {
+        "x": 74.12,
+        "y": 70.12,
+        "w": 6.74,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/internationalization/11",
+      "text": "Now, we need to make sure Internationalization is enabled in the **Content-type Builder**.",
+      "rect": {
+        "x": 0.12,
+        "y": 27.38,
+        "w": 4.06,
+        "h": 6.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/11",
+      "text": "Let's edit our Article collection type to enable the feature!",
+      "rect": {
+        "x": 76.17,
+        "y": 5.5,
+        "w": 6.33,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/12",
+      "text": "Go to the **Advanced settings** of the collection type.",
+      "rect": {
+        "x": 67.92,
+        "y": 25.15,
+        "w": 12,
+        "h": 5.88
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/13",
+      "text": "Tick the Internationalization box to enable the feature for the Article collection type.",
+      "rect": {
+        "x": 50.47,
+        "y": 52,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/14",
+      "text": "Don't forget to click on *Finish* to confirm the changes!",
+      "rect": {
+        "x": 75.47,
+        "y": 64.12,
+        "w": 5.39,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/internationalization/15",
+      "text": "Finally, we can move to the **Content Manager** to manage content in the different locales we've added earlier!",
+      "rect": {
+        "x": 0.12,
+        "y": 14.38,
+        "w": 4.06,
+        "h": 6.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/15",
+      "text": "For now, our articles are only available in English. Let's make a version of this one in another locale!",
+      "rect": {
+        "x": 34.42,
+        "y": 67.13,
+        "w": 23.85,
+        "h": 8.06
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/16",
+      "text": "Let's create a version of our article in the French locale!",
+      "rect": {
+        "x": 81.59,
+        "y": 16.37,
+        "w": 15.54,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/internationalization/17",
+      "text": "You can fill in one field at a time for the new locale.",
+      "rect": {
+        "x": 28.91,
+        "y": 35.37,
+        "w": 22.89,
+        "h": 4.75
+      },
+      "value": "Qu'y a-t-il dans un trou noir ?"
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/internationalization/18",
+      "text": "For example, we can translate the title of the article into French.",
+      "rect": {
+        "x": 28.44,
+        "y": 34.62,
+        "w": 23.83,
+        "h": 6.25
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/19",
+      "text": "Or we can click the *Fill in from another locale* button to automatically fill in all the fields with existing content from a chosen locale.",
+      "rect": {
+        "x": 90,
+        "y": 6.5,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/20",
+      "text": "Let's try reusing the content from the English version of the article. Note however that all the fields will be automatically filled in, meaning that the content we just filled in will be erased!",
+      "rect": {
+        "x": 35.86,
+        "y": 60.75,
+        "w": 28.28,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/21",
+      "text": "Let's go ahead with the automatic fill-in from another locale!",
+      "rect": {
+        "x": 50.52,
+        "y": 66.75,
+        "w": 14.63,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/internationalization/22",
+      "text": "Let's properly fill in all our fields in French!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/internationalization/23",
+      "text": "And let's not forget to save!",
+      "rect": {
+        "x": 80.7,
+        "y": 40.25,
+        "w": 13.59,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/internationalization/24",
+      "text": "And we are done: new locales are available for our articles and we have created a French version for one of them! ✨"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "links": [
+      {
+        "label": "i18n documentation 📖",
+        "href": "/cms/features/internationalization"
+      },
+      {
+        "label": "🚀 Quick Start Guide",
+        "href": "/cms/quick-start"
+      }
+    ],
+    "image": "/img/assets/interactive-demos/internationalization/24"
+  }
+}

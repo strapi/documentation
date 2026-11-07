@@ -28,7 +28,9 @@ The Internationalization feature allows you to manage content in different langu
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="zkj5431ser" darkId="vkm9nn0t3p"/>
+<!-- <Guideflow lightId="zkj5431ser" darkId="vkm9nn0t3p"/> -->
+
+<InteractiveDemo id="internationalization" />
 
 ## Configuration
 
