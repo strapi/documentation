@@ -880,8 +880,8 @@ When configuring a component through the Content-type Builder, it is possible to
 |----------------|-----------------------------------------------------------------------------------------|
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
 | Private field  | Tick to make the field private and prevent it from being found via the API.             |
-| Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
-| Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
+| Minimum components | For repeatable components only - Tick to define a minimum number of components allowed. |
+| Maximum components | For repeatable components only - Tick to define a maximum number of components allowed. |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the component to be translated per available locale. |
 
 </TabItem>
@@ -913,8 +913,8 @@ Dynamic zones are a combination of components that can be added to content-types
 | Setting name   | Instructions                                                                            |
 |----------------|-----------------------------------------------------------------------------------------|
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
-| Maximum value  | Tick to define a maximum number of characters allowed.                                  |
-| Minimum value  | Tick to define a minimum number of characters allowed.                                  |
+| Maximum value  | Tick to define a maximum number of components allowed.                                  |
+| Minimum value  | Tick to define a minimum number of components allowed.                                  |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
 
 </TabItem>
