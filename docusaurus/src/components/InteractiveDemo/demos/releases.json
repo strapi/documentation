@@ -1,0 +1,460 @@
+{
+  "id": "releases",
+  "title": "Releases",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 1151840,
+    "dark": 1113374
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Releases feature!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/releases/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/01",
+      "text": "The Releases feature is directly accessible from the **navigation of the admin panel**.",
+      "rect": {
+        "x": 0.12,
+        "y": 20.88,
+        "w": 4.06,
+        "h": 6.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/01",
+      "text": "All created releases will be displayed in this table, with their status, schedule, entries and release mode.",
+      "rect": {
+        "x": 10.23,
+        "y": 24.88,
+        "w": 83.91,
+        "h": 43.56
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/01",
+      "text": "Let's click the *New Release* button to **create a new release**!",
+      "rect": {
+        "x": 85.21,
+        "y": 5.5,
+        "w": 10.42,
+        "h": 4
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/releases/02",
+      "text": "Let's give a name to our release.",
+      "rect": {
+        "x": 61.09,
+        "y": 19.74,
+        "w": 36.25,
+        "h": 4.75
+      },
+      "value": "Spring 2027 Release"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/03",
+      "text": "Here you can decide whether the release is scheduled or not.",
+      "rect": {
+        "x": 61.02,
+        "y": 29.62,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/04",
+      "text": "Since it is a **scheduled release**, let's choose a release date.",
+      "rect": {
+        "x": 64.22,
+        "y": 34.25,
+        "w": 13.67,
+        "h": 2.75
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/05",
+      "text": "And let's define a release time.",
+      "rect": {
+        "x": 83.05,
+        "y": 34.25,
+        "w": 10.86,
+        "h": 2.75
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/06",
+      "text": "The **release mode** defines what happens if some entries are not ready when the release is published.",
+      "rect": {
+        "x": 60.55,
+        "y": 54.99,
+        "w": 37.34,
+        "h": 13.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/06",
+      "text": "Let's choose *Release all ready items*: entries that are ready will be published, and the others **skipped**.",
+      "rect": {
+        "x": 61.02,
+        "y": 55.74,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/07",
+      "text": "Click on *Create release*.",
+      "rect": {
+        "x": 88.07,
+        "y": 91.88,
+        "w": 9.35,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/releases/08",
+      "text": "Our release has been created!\n\nLet's explore the available options!"
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/09",
+      "text": "By clicking on the ... button, you can access the *Edit* and *Delete* buttons.",
+      "rect": {
+        "x": 66.88,
+        "y": 6.75,
+        "w": 15.68,
+        "h": 24.75
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/08",
+      "text": "The *Refresh* button allows you to reload the page, for instance to make sure all content types related to the release are well displayed with their current status.",
+      "rect": {
+        "x": 82.23,
+        "y": 6.75,
+        "w": 7.17,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/08",
+      "text": "And finally the *Publish* button allows you to **manually publish the release**.",
+      "rect": {
+        "x": 89.09,
+        "y": 6.75,
+        "w": 7,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/08",
+      "text": "Now let's move to the Content Manager to **add content types to the newly created release**!",
+      "rect": {
+        "x": 0.59,
+        "y": 15.13,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/10",
+      "text": "Let's go to the **edit view** of this article!",
+      "rect": {
+        "x": 34.51,
+        "y": 75.25,
+        "w": 23.85,
+        "h": 8.06
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/11",
+      "text": "In the Entry area, click the ... button to access the *Add to release* button.",
+      "rect": {
+        "x": 75.47,
+        "y": 28.88,
+        "w": 20.63,
+        "h": 35.51
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/12",
+      "text": "In the dialog, select the release the article should be added to!",
+      "rect": {
+        "x": 20.47,
+        "y": 49.25,
+        "w": 58.75,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/13",
+      "text": "Click the *Continue* button!",
+      "rect": {
+        "x": 74.04,
+        "y": 66.49,
+        "w": 6.82,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/14",
+      "text": "A Release area is now displayed in the edit view to show information related to the release.",
+      "rect": {
+        "x": 78.91,
+        "y": 59.36,
+        "w": 17.19,
+        "h": 30.98
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/15",
+      "text": "✏️ Note that clicking on the ... button will give you access to a link to **edit the release**, and another to **remove the article from the release**.\n\nLet's try using it!",
+      "rect": {
+        "x": 68.31,
+        "y": 80.6,
+        "w": 16.7,
+        "h": 16.87
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/16",
+      "text": "Now let's go back to the **list view** to try another way to add articles in our release!",
+      "rect": {
+        "x": 5,
+        "y": 19.88,
+        "w": 16.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/10",
+      "text": "Let's tick some boxes to select several articles!",
+      "rect": {
+        "x": 29.14,
+        "y": 45.56,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/17",
+      "text": "Another one!",
+      "rect": {
+        "x": 29.14,
+        "y": 67.81,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/18",
+      "text": "Via the list view, you can **add to a release several articles at the same time**! Let's click the button!",
+      "rect": {
+        "x": 42.74,
+        "y": 26.75,
+        "w": 10.48,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/19",
+      "text": "Exactly as we did previously via the edit view: let's select a release.",
+      "rect": {
+        "x": 20.47,
+        "y": 49.25,
+        "w": 58.75,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/20",
+      "text": "And click on *Continue*.",
+      "rect": {
+        "x": 74.04,
+        "y": 66.49,
+        "w": 6.82,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/21",
+      "text": "Let's go back to Releases via the admin panel navigation!",
+      "rect": {
+        "x": 0.59,
+        "y": 21.63,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/22",
+      "text": "Click on the release.",
+      "rect": {
+        "x": 11.02,
+        "y": 35.68,
+        "w": 10.41,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/23",
+      "text": "Our articles have properly been added to the release!\n\nHovering an article displays buttons to **open the article** and to **remove it from the release**.",
+      "rect": {
+        "x": 10.23,
+        "y": 42,
+        "w": 83.91,
+        "h": 25.19
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/23",
+      "text": "Each has a **status** indicating whether or not they're ready to be published.",
+      "rect": {
+        "x": 65.74,
+        "y": 49,
+        "w": 20.59,
+        "h": 18.19
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/23",
+      "text": "Clicking on the reason next to a *Not ready* status will display more details.",
+      "rect": {
+        "x": 75.17,
+        "y": 60.81,
+        "w": 9.44,
+        "h": 3
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/24",
+      "text": "The side panel lists what prevents the entry from being published: here, the slug of the article doesn't match the expected format. *Go to entry* opens the article to fix it.",
+      "rect": {
+        "x": 59.22,
+        "y": 1.25,
+        "w": 40,
+        "h": 97.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/23",
+      "text": "The *Ready* and *Not ready* tabs filter the entries by status.",
+      "rect": {
+        "x": 8.28,
+        "y": 20.75,
+        "w": 25.11,
+        "h": 8.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/23",
+      "text": "Since the release mode is *Release all ready items*, the release is **Ready** even though one article is not: this article will be skipped.",
+      "rect": {
+        "x": 8.28,
+        "y": 6.25,
+        "w": 31.53,
+        "h": 6.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/releases/23",
+      "text": "Let's try publishing the release!",
+      "rect": {
+        "x": 89.56,
+        "y": 7.5,
+        "w": 6.07,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/25",
+      "text": "The release's status is now **Partial**: 1 of the 2 articles was published, and the other one was skipped.",
+      "rect": {
+        "x": 8.28,
+        "y": 6.25,
+        "w": 55.84,
+        "h": 11
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/26",
+      "text": "The table confirms which article was published and which one was **skipped**, and why.",
+      "rect": {
+        "x": 65.41,
+        "y": 49,
+        "w": 19.29,
+        "h": 17.69
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/releases/26",
+      "text": "Once the skipped article is fixed, *Create release from skipped* creates a new release with the skipped entries, to publish them later.",
+      "rect": {
+        "x": 79.47,
+        "y": 6.75,
+        "w": 16.62,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/releases/26",
+      "text": "And that's it! We've learned to use the Releases feature from its creating to publishing! ✨"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "links": [
+      {
+        "label": "Releases documentation 📖",
+        "href": "/cms/features/releases"
+      },
+      {
+        "label": "🚀 Quick Start Guide",
+        "href": "/cms/quick-start"
+      }
+    ],
+    "image": "/img/assets/interactive-demos/releases/26"
+  }
+}

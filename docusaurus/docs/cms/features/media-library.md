@@ -29,7 +29,9 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="ok8v0jeaxp" darkId="ok8v0jeaxp"/>
+<!-- <Guideflow lightId="ok8v0jeaxp" darkId="ok8v0jeaxp"/> -->
+
+<InteractiveDemo id="media-library" />
 
 ## Configuration
 
