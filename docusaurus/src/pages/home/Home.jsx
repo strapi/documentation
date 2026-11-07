@@ -1,10 +1,13 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './home.module.scss';
 import { HomepageAIButton } from '../../components';
 import ApiExplorer from '../../components/ApiExplorer/ApiExplorer';
 import GeneralFeedback from '../../components/GeneralFeedback';
 import content from './_home.content';
+import homeStructuredData from './_structuredData';
 
 /**
  * Copiable code block with copy button
@@ -157,11 +160,20 @@ const POWERFUL_FEATURES = [
 ];
 
 export default function PageHome() {
+  const { siteConfig } = useDocusaurusContext();
+  const origin = siteConfig.url.replace(/\/$/, '');
+
   return (
     <Layout
       title={content.page.title}
       description={content.page.description}
     >
+      <Head>
+        <link rel="alternate" type="text/markdown" href={`${origin}/index.md`} />
+        <script type="application/ld+json">
+          {JSON.stringify(homeStructuredData(origin, content.page.description))}
+        </script>
+      </Head>
       <main className={styles.home}>
         {/* ═══ HERO ═══ */}
         <section className={styles.hero}>
