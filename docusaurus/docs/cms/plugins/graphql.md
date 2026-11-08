@@ -1,4 +1,4 @@
-le---
+---
 title: GraphQL plugin
 pagination_label: GraphQL plugin
 displayed_sidebar: cmsSidebar
