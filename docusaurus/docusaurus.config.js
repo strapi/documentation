@@ -184,8 +184,21 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // Exclude agent guides and templates from docs ingestion
-          exclude: ['**/AGENTS.md', '**/AGENTS.*.md', '**/templates/**', '../agents/**'],
+          // Setting exclude replaces Docusaurus' defaults, so the first 4 patterns
+          // restate them (_-prefixed partials, tests). Snippets are imported into
+          // pages, never served as pages of their own. The patterns are inlined
+          // because SearchBar imports this file into the client bundle.
+          exclude: [
+            '**/_*.{js,jsx,ts,tsx,md,mdx}',
+            '**/_*/**',
+            '**/*.test.{js,jsx,ts,tsx}',
+            '**/__tests__/**',
+            'snippets/**',
+            '**/AGENTS.md',
+            '**/AGENTS.*.md',
+            '**/templates/**',
+            '../agents/**',
+          ],
           editUrl:
             'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
