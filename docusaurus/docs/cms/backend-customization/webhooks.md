@@ -144,12 +144,12 @@ The following table lists the ranges that each option blocks:
 | Option | IPv4 | IPv6 |
 |--------|------|------|
 | `loopback` | `127.0.0.0/8`, `0.0.0.0/8`, and the server's own addresses | `::1`, `::`, and the server's own addresses |
-| `privateNetworks` | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `100.64.0.0/10`, `192.0.0.0/24`, `198.18.0.0/15`, `240.0.0.0/4` | `fc00::/7`, `fec0::/10` |
-| `linkLocal` | `169.254.0.0/16`, `168.63.129.16` (Azure), `100.100.100.200` (Alibaba Cloud) | `fe80::/10`, `fd00:ec2::254` (AWS) |
+| `privateNetworks` | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `100.64.0.0/10`, `192.0.0.0/24`, `198.18.0.0/15`, `240.0.0.0/4` | `fc00::/7`, `fec0::/10`, `64:ff9b:1::/48` |
+| `linkLocal` | `169.254.0.0/16`, `168.63.129.16` (Azure), `100.100.100.200` (Alibaba Cloud), `192.0.0.192` (Oracle Cloud Classic) | `fe80::/10`, `fd00:ec2::254` (AWS) |
 
 Strapi checks only the ranges listed in this table. An address can be in more than one row. For example, `100.100.100.200` and `fd00:ec2::254` are blocked by `linkLocal` and by `privateNetworks`.
 
-IPv4-mapped (`::ffff:10.0.0.5`), IPv4-compatible and NAT64 (`64:ff9b::/96`) IPv6 addresses are checked as the IPv4 address they carry.
+IPv4-mapped (`::ffff:10.0.0.5`), IPv4-translated, IPv4-compatible, NAT64 (`64:ff9b::/96`) and 6to4 (`2002::/16`) IPv6 addresses are checked as the IPv4 address they carry.
 
 #### When the checks apply
 
@@ -160,7 +160,7 @@ IPv4-mapped (`::ffff:10.0.0.5`), IPv4-compatible and NAT64 (`64:ff9b::/96`) IPv6
 - Webhooks created in code with `strapi.get('webhookStore')` aren't checked when they are saved. `onSend` still applies to them.
 
 :::note Using a proxy
-When `server.proxy.fetch` or `server.proxy.global` is set, the proxy resolves hostnames and opens the connections. With `onSend`, Strapi checks the addresses it resolves for the hostname before handing the webhook to the proxy. The proxy may connect to a different address. Use `redirects: 'check'` to check redirect targets the same way. In this setup, the proxy controls where webhooks can go.
+When `server.proxy.fetch` or `server.proxy.global` is set, or when Node's own proxy support is on (`NODE_USE_ENV_PROXY=1` with `HTTP_PROXY` or `HTTPS_PROXY`), the proxy resolves hostnames and opens the connections. With `onSend`, Strapi checks the addresses it resolves for the hostname before it hands each request to the proxy, redirects included. The proxy may connect to a different address. In this setup, the proxy controls where webhooks can go.
 :::
 
 ## Webhooks security
