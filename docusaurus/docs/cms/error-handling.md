@@ -49,21 +49,6 @@ Errors thrown by the REST API are included in the [response](/cms/api/rest#reque
 }
 ```
 
-The HTTP status depends on the [error class](#default-error-classes) thrown:
-
-| Status | Error name | Description |
-| --- | --- | --- |
-| `400` | `ValidationError`, `PaginationError`, `ApplicationError`, and any other error class extending `ApplicationError` not listed in this table | Invalid query parameters or body data, including [filter values](/cms/api/rest/filters#filter-values) that cannot be cast to the type of the filtered attribute |
-| `401` | `UnauthorizedError` | Missing or invalid authentication credentials |
-| `403` | `ForbiddenError`, `PolicyError` | Authenticated, but not allowed to perform the action |
-| `404` | `NotFoundError` | Entry or route not found |
-| `413` | `PayloadTooLargeError` | Request body or uploaded file too large |
-| `429` | `RateLimitError` | Too many requests |
-| `501` | `NotImplementedError` | Feature not implemented or not configured |
-| `500` | `InternalServerError` | Any other error. The response does not include the original error message. |
-
-Errors returned with the [context error functions](#controllers-and-middlewares) (e.g., `ctx.badRequest()`) use the status of the corresponding function.
-
 ### GraphQL errors
 
 Errors thrown by the GraphQL API are included in the response that has the following format:
