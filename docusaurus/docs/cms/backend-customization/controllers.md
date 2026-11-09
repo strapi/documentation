@@ -276,6 +276,8 @@ In Strapi 5, both query parameters and input data (i.e., create and update body 
 - non-writable fields and internal timestamps like `createdAt` and `createdBy` fields
 - setting or updating an `id` field (except for connecting relations)
 
+Requests with [filter values](/cms/api/rest/filters#filter-values) that cannot be cast to the type of the filtered attribute (e.g., `no` on a boolean attribute or an invalid date) also throw a `400 Bad Request` error.
+
 :::note Internal `entity-validator` service
 Strapi exposes a low-level `entity-validator` service (accessible through `strapi.service('entity-validator')`) with `validateEntityCreation` and `validateEntityUpdate` methods that the document service uses internally. These are not part of the public API and their semantics can change between releases. From a custom controller, service, or middleware, use the documented `validateInput` factory helper or the [`strapi.contentAPI.validate.*` helpers](#sanitize-validate-custom-controllers) instead. They apply the same content-type schema rules and additionally account for permissions, non-writable fields, and the request authentication strategy.
 :::

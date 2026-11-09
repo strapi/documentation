@@ -40,7 +40,7 @@ Errors thrown by the REST API are included in the [response](/cms/api/rest#reque
   "data": null,
   "error": {
     "status": "", // HTTP status
-    "name": "", // Strapi error name ('ApplicationError' or 'ValidationError')
+    "name": "", // Strapi error name (e.g., 'ValidationError' or 'NotFoundError')
     "message": "", // A human readable error message
     "details": {
       // error info specific to the error type
@@ -48,6 +48,21 @@ Errors thrown by the REST API are included in the [response](/cms/api/rest#reque
   }
 }
 ```
+
+The HTTP status depends on the [error class](#default-error-classes) thrown:
+
+| Status | Error name | Description |
+| --- | --- | --- |
+| `400` | `ValidationError`, `PaginationError`, `ApplicationError`, and any other error class extending `ApplicationError` not listed in this table | Invalid query parameters or body data, including [filter values](/cms/api/rest/filters#filter-values) that cannot be cast to the type of the filtered attribute |
+| `401` | `UnauthorizedError` | Missing or invalid authentication credentials |
+| `403` | `ForbiddenError`, `PolicyError` | Authenticated, but not allowed to perform the action |
+| `404` | `NotFoundError` | Entry or route not found |
+| `413` | `PayloadTooLargeError` | Request body or uploaded file too large |
+| `429` | `RateLimitError` | Too many requests |
+| `501` | `NotImplementedError` | Feature not implemented or not configured |
+| `500` | `InternalServerError` | Any other error. The response does not include the original error message. |
+
+Errors returned with the [context error functions](#controllers-and-middlewares) (e.g., `ctx.badRequest()`) use the status of the corresponding function.
 
 ### GraphQL errors
 
@@ -404,7 +419,7 @@ throw new errors.NotFoundError('These are not the droids you are looking for');
 
 <TabItem value="Forbidden" label="Forbidden">
 
-The `ForbiddenError` class is a specific error class used when a user either doesn't provide any or the correct authentication credentials. It accepts the following parameters:
+The `ForbiddenError` class is a specific error class for throwing `403` status code errors, used when a user has properly authenticated but doesn't have the proper role or permissions to perform a specific action. It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
@@ -422,7 +437,7 @@ The custom `message` passed to `ForbiddenError` is not included in the API respo
 
 <TabItem value="Unauthorized" label="Unauthorized">
 
-The `UnauthorizedError` class is a specific error class used when a user doesn't have the proper role or permissions to perform a specific action, but has properly authenticated. It accepts the following parameters:
+The `UnauthorizedError` class is a specific error class for throwing `401` status code errors, used when a user either doesn't provide any or the correct authentication credentials. It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
