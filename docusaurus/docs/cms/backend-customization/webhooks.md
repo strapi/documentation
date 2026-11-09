@@ -77,7 +77,7 @@ A webhook can point at any URL the Strapi server can reach. This includes `local
 Anyone with the webhook permissions in the admin panel decides where webhooks are sent. Give those permissions only to administrators you trust with outbound requests from the server. To limit what webhooks can reach, use egress controls on the network Strapi runs in.
 
 :::caution Change in Strapi 5.62.0
-Before Strapi 5.62.0, Strapi rejected webhook URLs that pointed to a local or private network address when a webhook was saved and `NODE_ENV` was `production`. These URLs are now accepted in every environment. To reject them again when a webhook is saved, turn on the `loopback`, `privateNetworks` and `linkLocal` [destination checks](#destination-checks). These checks also cover some ranges that the previous check did not.
+Before Strapi 5.62.0, Strapi rejected webhook URLs that pointed to a local or private network address when a webhook was saved and `NODE_ENV` was `production`. These URLs are now accepted in every environment. To reject them again when a webhook is saved, set the `blockLoopback`, `blockPrivateNetworks` and `blockLinkLocal` [destination checks](#destination-checks) to `true`. These checks also cover some ranges that the previous check did not.
 :::
 
 ### Destination checks
@@ -86,13 +86,13 @@ Destination checks are an optional restriction on the URLs that webhooks can use
 
 | Option | Description | Type | Required | Default |
 |--------|-------------|------|----------|---------|
-| `loopback` | Blocks loopback and unspecified addresses, and the addresses of the server's own network interfaces. | Boolean | No | `false` |
-| `privateNetworks` | Blocks private and other non-public network ranges. | Boolean | No | `false` |
-| `linkLocal` | Blocks link-local addresses and some cloud metadata addresses. | Boolean | No | `false` |
-| `onSend` | Also applies the enabled checks when a webhook is sent, to the address Strapi connects to. | Boolean | No | `false` |
+| `blockLoopback` | Blocks loopback and unspecified addresses, and the addresses of the server's own network interfaces. | Boolean | No | `false` |
+| `blockPrivateNetworks` | Blocks private and other non-public network ranges. | Boolean | No | `false` |
+| `blockLinkLocal` | Blocks link-local addresses and some cloud metadata addresses. | Boolean | No | `false` |
+| `checkOnSend` | Also applies the enabled checks when a webhook is sent, to the address Strapi connects to. | Boolean | No | `false` |
 | `redirects` | How redirects are handled when a webhook is sent:<ul><li>`'follow'` follows them.</li><li>`'check'` follows up to 5 redirects and applies the enabled checks to each target before following it. A sixth redirect fails the webhook.</li><li>`'none'` doesn't follow them. The redirect response is the result of the webhook.</li></ul> | String | No | `'follow'` |
 
-`onSend` and `redirects: 'check'` apply the `loopback`, `privateNetworks` and `linkLocal` checks. Without one of these three checks, they have no effect, and Strapi logs a warning at startup. Strapi doesn't start if `destinationChecks` contains an unknown option or an invalid value.
+`checkOnSend` and `redirects: 'check'` apply the blocks that `blockLoopback`, `blockPrivateNetworks` and `blockLinkLocal` turn on. Without one of these three options set to `true`, they have no effect, and Strapi logs a warning at startup. Strapi doesn't start if `destinationChecks` contains an unknown option or an invalid value.
 
 The following example turns on every check:
 
@@ -104,10 +104,10 @@ The following example turns on every check:
 module.exports = {
   webhooks: {
     destinationChecks: {
-      loopback: true,
-      privateNetworks: true,
-      linkLocal: true,
-      onSend: true,
+      blockLoopback: true,
+      blockPrivateNetworks: true,
+      blockLinkLocal: true,
+      checkOnSend: true,
       redirects: 'check',
     },
   },
@@ -122,10 +122,10 @@ module.exports = {
 export default {
   webhooks: {
     destinationChecks: {
-      loopback: true,
-      privateNetworks: true,
-      linkLocal: true,
-      onSend: true,
+      blockLoopback: true,
+      blockPrivateNetworks: true,
+      blockLinkLocal: true,
+      checkOnSend: true,
       redirects: 'check',
     },
   },
@@ -135,7 +135,7 @@ export default {
 </TabItem>
 </Tabs>
 
-To block only link-local addresses and the cloud metadata addresses listed below, and leave internal services reachable, turn on `linkLocal` and `onSend`.
+To block only link-local addresses and the cloud metadata addresses listed below, and leave internal services reachable, set `blockLinkLocal` and `checkOnSend` to `true`.
 
 #### Blocked addresses
 
@@ -143,11 +143,11 @@ The following table lists the ranges that each option blocks:
 
 | Option | IPv4 | IPv6 |
 |--------|------|------|
-| `loopback` | `127.0.0.0/8`, `0.0.0.0/8`, and the server's own addresses | `::1`, `::`, and the server's own addresses |
-| `privateNetworks` | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `100.64.0.0/10`, `192.0.0.0/24`, `198.18.0.0/15`, `240.0.0.0/4` | `fc00::/7`, `fec0::/10`, `64:ff9b:1::/48` |
-| `linkLocal` | `169.254.0.0/16`, `168.63.129.16` (Azure), `100.100.100.200` (Alibaba Cloud), `192.0.0.192` (Oracle Cloud Classic) | `fe80::/10`, `fd00:ec2::254` (AWS) |
+| `blockLoopback` | `127.0.0.0/8`, `0.0.0.0/8`, and the server's own addresses | `::1`, `::`, and the server's own addresses |
+| `blockPrivateNetworks` | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `100.64.0.0/10`, `192.0.0.0/24`, `198.18.0.0/15`, `240.0.0.0/4` | `fc00::/7`, `fec0::/10`, `64:ff9b:1::/48` |
+| `blockLinkLocal` | `169.254.0.0/16`, `168.63.129.16` (Azure), `100.100.100.200` (Alibaba Cloud), `192.0.0.192` (Oracle Cloud Classic) | `fe80::/10`, `fd00:ec2::254` (AWS) |
 
-Strapi checks only the ranges listed in this table. An address can be in more than one row. For example, `100.100.100.200` and `fd00:ec2::254` are blocked by `linkLocal` and by `privateNetworks`.
+Strapi checks only the ranges listed in this table. An address can be in more than one row. For example, `100.100.100.200` and `fd00:ec2::254` are blocked by `blockLinkLocal` and by `blockPrivateNetworks`.
 
 IPv4-mapped (`::ffff:10.0.0.5`), IPv4-translated, IPv4-compatible, NAT64 (`64:ff9b::/96`) and 6to4 (`2002::/16`) IPv6 addresses are checked as the IPv4 address they carry.
 
@@ -155,12 +155,12 @@ IPv4-mapped (`::ffff:10.0.0.5`), IPv4-translated, IPv4-compatible, NAT64 (`64:ff
 
 - Strapi checks a webhook URL when the webhook is created, or when its URL changes, from the admin panel or the admin API. Strapi resolves the URL's hostname and rejects the URL if any of its addresses is blocked. The error names the option that blocks the address.
 - A hostname that doesn't resolve from the server is accepted, since there is no address to check.
-- A webhook saved before a check was turned on keeps its URL. It can still be edited or disabled, and it is still sent unless `onSend` is on.
-- With `onSend`, the checks also apply when the webhook is sent, to the address Strapi connects to. A DNS record that changed since the webhook was saved is checked too. A blocked webhook isn't sent, and Strapi logs a warning that names the option.
-- Webhooks created in code with `strapi.get('webhookStore')` aren't checked when they are saved. `onSend` still applies to them.
+- A webhook saved before a check was turned on keeps its URL. It can still be edited or disabled, and it is still sent unless `checkOnSend` is on.
+- With `checkOnSend`, the checks also apply when the webhook is sent, to the address Strapi connects to. A DNS record that changed since the webhook was saved is checked too. A blocked webhook isn't sent, and Strapi logs a warning that names the option.
+- Webhooks created in code with `strapi.get('webhookStore')` aren't checked when they are saved. `checkOnSend` still applies to them.
 
 :::note Using a proxy
-When `server.proxy.fetch` or `server.proxy.global` is set, or when Node's own proxy support is on (`NODE_USE_ENV_PROXY=1` with `HTTP_PROXY` or `HTTPS_PROXY`), the proxy resolves hostnames and opens the connections. With `onSend`, Strapi checks the addresses it resolves for the hostname before it hands each request to the proxy, redirects included. The proxy may connect to a different address. In this setup, the proxy controls where webhooks can go.
+When `server.proxy.fetch` or `server.proxy.global` is set, or when Node's own proxy support is on (`NODE_USE_ENV_PROXY=1` with `HTTP_PROXY` or `HTTPS_PROXY`), the proxy resolves hostnames and opens the connections. With `checkOnSend`, Strapi checks the addresses it resolves for the hostname before it hands each request to the proxy, redirects included. The proxy may connect to a different address. In this setup, the proxy controls where webhooks can go.
 :::
 
 ## Webhooks security
