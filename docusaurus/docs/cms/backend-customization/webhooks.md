@@ -153,7 +153,7 @@ IPv4-mapped (`::ffff:10.0.0.5`), IPv4-translated, IPv4-compatible, NAT64 (`64:ff
 
 #### When the checks apply
 
-- Strapi checks a webhook URL when the webhook is created, or when its URL changes, from the admin panel or the admin API. Strapi resolves the URL's hostname and rejects the URL if any of its addresses is blocked. The error names the option that blocks the address.
+- Strapi checks a webhook URL when the webhook is created, or when its URL changes, from the admin panel or the admin API. Strapi resolves the URL's hostname and rejects the URL if any of its addresses is blocked. The admin panel explains why the URL was rejected, and the error returned by the API names the option that blocks the address.
 - A hostname that doesn't resolve from the server is accepted, since there is no address to check.
 - A webhook saved before a check was turned on keeps its URL. It can still be edited or disabled, and it is still sent unless `checkOnSend` is on.
 - With `checkOnSend`, the checks also apply when the webhook is sent, to the address Strapi connects to. A DNS record that changed since the webhook was saved is checked too. A blocked webhook isn't sent, and Strapi logs a warning that names the option.
