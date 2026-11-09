@@ -151,6 +151,9 @@ const sidebars = {
           type: 'doc',
           label: 'Single Sign-On (SSO)',
           id: 'cms/features/sso',
+          customProps: {
+            enterprise: true
+          }
         },
         {
           type: 'doc',
