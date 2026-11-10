@@ -4,8 +4,8 @@
   "width": 1280,
   "height": 800,
   "bytes": {
-    "light": 1151840,
-    "dark": 1113374
+    "light": 1103358,
+    "dark": 1067800
   },
   "intro": {
     "text": "Welcome to the guided tour of the Releases feature!",
@@ -411,13 +411,13 @@
       "rect": {
         "x": 8.28,
         "y": 6.25,
-        "w": 55.84,
+        "w": 57.56,
         "h": 11
       }
     },
     {
       "type": "explain",
-      "image": "/img/assets/interactive-demos/releases/26",
+      "image": "/img/assets/interactive-demos/releases/25",
       "text": "The table confirms which article was published and which one was **skipped**, and why.",
       "rect": {
         "x": 65.41,
@@ -428,7 +428,7 @@
     },
     {
       "type": "explain",
-      "image": "/img/assets/interactive-demos/releases/26",
+      "image": "/img/assets/interactive-demos/releases/25",
       "text": "Once the skipped article is fixed, *Create release from skipped* creates a new release with the skipped entries, to publish them later.",
       "rect": {
         "x": 79.47,
@@ -439,7 +439,7 @@
     },
     {
       "type": "chapter",
-      "image": "/img/assets/interactive-demos/releases/26",
+      "image": "/img/assets/interactive-demos/releases/25",
       "text": "And that's it! We've learned to use the Releases feature from its creating to publishing! ✨"
     }
   ],
@@ -455,6 +455,6 @@
         "href": "/cms/quick-start"
       }
     ],
-    "image": "/img/assets/interactive-demos/releases/26"
+    "image": "/img/assets/interactive-demos/releases/25"
   }
 }

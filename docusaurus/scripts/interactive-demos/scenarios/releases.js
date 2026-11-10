@@ -1,9 +1,7 @@
 // Releases tour: the Guideflow tour it replaces, plus a partial release (Release all ready items).
 // Runs against the demo app from setup-demo-app.js. Releases is an Enterprise feature:
 // start the app with a license (STRAPI_LICENSE) or the Releases pages do not exist.
-// Partial releases need a Strapi version that includes strapi/strapi#28339. While that PR
-// requires it, also enable the next design system in the app's config/features.js:
-//   module.exports = { future: { unstableNextDesignSystem: true } };
+// Partial releases need a Strapi version that includes strapi/strapi#28339 (no future flag needed).
 // Set DEMO_STRAPI_DIR so setup can remove the releases a previous capture published.
 
 const fs = require('fs');
