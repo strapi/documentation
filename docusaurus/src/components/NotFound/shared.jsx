@@ -6,7 +6,7 @@ import { useAllDocsData } from '@docusaurus/plugin-content-docs/client';
 import styles from './notFound.module.scss';
 
 // URL segments that carry no meaning for a search
-const NOISE = new Set(['cms', 'cloud', 'docs', 'dev', 'html', 'md', 'index', 'en', 'v4', 'v5']);
+const NOISE = new Set(['cms', 'cloud', 'docs', 'dev', 'html', 'md', 'index', 'en', 'v4', 'v5', '404']);
 
 // Turns /cms/features/content-type-bilder into "features content type bilder"
 export function queryFromPath(pathname) {
@@ -154,15 +154,24 @@ export function DidYouMean({ onHover }) {
   );
 }
 
+// Shown when nothing in the docs looks like the broken URL
+const POPULAR = [
+  { path: '/cms/installation', title: 'Installation' },
+  { path: '/cms/api/rest', title: 'REST API reference' },
+  { path: '/cms/features/content-type-builder', title: 'Content-type Builder' },
+  { path: '/cloud/getting-started/deployment', title: 'Dashboard deployment' },
+].map((item) => ({ ...item, section: sectionOf(item.path) }));
+
 /**
  * Suggests pages for the broken URL: closest real routes first, then
  * MeiliSearch hits on the words of the URL. Meili also gives the page titles.
+ * Falls back to popular pages, flagged with `popular`, when nothing matches.
  */
 export function useSuggestions(limit = 4) {
   const { pathname } = useLocation();
   const { siteConfig } = useDocusaurusContext();
   const allDocs = useAllDocsData();
-  const [state, setState] = useState({ loading: true, items: [] });
+  const [state, setState] = useState({ loading: true, items: [], popular: false });
 
   useEffect(() => {
     const docPaths = listDocPaths(allDocs);
@@ -199,10 +208,11 @@ export function useSuggestions(limit = 4) {
           seen.add(item.path);
           items.push({ ...item, section: sectionOf(item.path) });
         });
-        setState({ loading: false, items });
+        if (items.length) setState({ loading: false, items, popular: false });
+        else setState({ loading: false, items: POPULAR, popular: true });
       })
       .catch((err) => {
-        if (err.name !== 'AbortError') setState({ loading: false, items: [] });
+        if (err.name !== 'AbortError') setState({ loading: false, items: POPULAR, popular: true });
       });
     return () => controller.abort();
   }, [pathname, siteConfig, allDocs, limit]);
@@ -218,12 +228,12 @@ export function askAi(pathname, question) {
 
 export function Suggestions({ title = 'Maybe you were looking for', onHover }) {
   const didYouMean = useDidYouMean();
-  const { loading, items: all } = useSuggestions(5);
+  const { loading, items: all, popular } = useSuggestions(5);
   const items = all.filter((item) => item.path !== didYouMean).slice(0, 4);
   if (!loading && items.length === 0) return null;
   return (
     <section className={styles.suggestions} aria-busy={loading}>
-      <h2 className={styles.kicker}>{title}</h2>
+      <h2 className={styles.kicker}>{popular ? 'Nothing close, but these are good places to start' : title}</h2>
       <ul>
         {loading
           ? [0, 1, 2].map((i) => <li key={i} className={styles.skeleton} />)

@@ -77,7 +77,7 @@ function NotFoundResponse({ pathname }) {
 export default function ApiTerminal() {
   const { pathname } = useLocation();
   const history = useHistory();
-  const { items, loading } = useSuggestions(5);
+  const { items, loading, popular } = useSuggestions(5);
   const [lines, setLines] = useState([]);
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
@@ -102,12 +102,15 @@ export default function ApiTerminal() {
       case 'ls':
         if (loading) print(cmd, <span className={styles.dim}>searching the index…</span>);
         else if (!items.length) print(cmd, <span className={styles.dim}>nothing similar. try: ask {'<question>'}</span>);
-        else print(cmd, items.map((item, i) => (
+        else print(cmd, [
+          popular && <div key="popular" className={styles.dim}>nothing similar. good places to start:</div>,
+          ...items.map((item, i) => (
           <div key={item.path}>
             <span className={styles.dim}>[{i + 1}]</span> <Link to={item.path}>{item.title}</Link>{' '}
             <span className={styles.dim}>{item.path}</span>
           </div>
-        )));
+        )),
+        ]);
         break;
       case 'open': {
         const item = items[Number(arg) - 1];
