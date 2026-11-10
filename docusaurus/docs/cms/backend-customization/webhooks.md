@@ -82,15 +82,15 @@ Before Strapi 5.62.0, Strapi rejected webhook URLs that pointed to a local or pr
 
 ### Destination checks
 
-Destination checks are an optional restriction on the URLs that webhooks can use. These checks are all off by default. Turn them on in the `webhooks.destinationChecks` object of `/config/server`:
+Destination checks are an optional restriction on the URLs that webhooks can use. These checks are all off by default. Turn them on in the `webhooks.destinationChecks` object of `/config/server`. None of these options are required, and an option you leave out keeps its default:
 
-| Option | Description | Type | Required | Default |
-|--------|-------------|------|----------|---------|
-| `blockLoopback` | Blocks loopback and unspecified addresses, and the addresses of the server's own network interfaces. | Boolean | No | `false` |
-| `blockPrivateNetworks` | Blocks private and other non-public network ranges. | Boolean | No | `false` |
-| `blockLinkLocal` | Blocks link-local addresses and some cloud metadata addresses. | Boolean | No | `false` |
-| `checkOnSend` | Also applies the enabled checks when a webhook is sent, to the address Strapi connects to. | Boolean | No | `false` |
-| `redirects` | How redirects are handled when a webhook is sent:<ul><li>`'follow'` follows them.</li><li>`'check'` follows up to 5 redirects and applies the enabled checks to each target before following it. A sixth redirect fails the webhook.</li><li>`'none'` doesn't follow them. The redirect response is the result of the webhook.</li></ul> | String | No | `'follow'` |
+| Option | Description | Type | Default |
+|--------|-------------|------|---------|
+| `blockLoopback` | Blocks loopback and unspecified addresses, and the addresses of the server's own network interfaces. | Boolean | `false` |
+| `blockPrivateNetworks` | Blocks private and other non-public network ranges. | Boolean | `false` |
+| `blockLinkLocal` | Blocks link-local addresses and some cloud metadata addresses. | Boolean | `false` |
+| `checkOnSend` | Also applies the enabled checks when a webhook is sent, to the address Strapi connects to. | Boolean | `false` |
+| `redirects` | How redirects are handled when a webhook is sent:<ul><li>`'follow'` follows them.</li><li>`'check'` follows up to 5 redirects and applies the enabled checks to each target before following it. A sixth redirect fails the webhook.</li><li>`'none'` doesn't follow them. The redirect response is the result of the webhook.</li></ul> | String | `'follow'` |
 
 `checkOnSend` and `redirects: 'check'` apply the blocks that `blockLoopback`, `blockPrivateNetworks` and `blockLinkLocal` turn on. Without one of these three options set to `true`, they have no effect, and Strapi logs a warning at startup. Strapi doesn't start if `destinationChecks` contains an unknown option or an invalid value.
 
