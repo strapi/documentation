@@ -1,4 +1,4 @@
-// Setup for the content-type-builder scenario (content-type-builder.yaml): brings the demo app back to the state it starts from.
+// Setup for the content-type-builder demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 // Deletes the content-type the tour creates, then waits for the server to restart.
 
 const NEW_UID = 'api::simple-article.simple-article';

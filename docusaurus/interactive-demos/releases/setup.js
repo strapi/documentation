@@ -1,4 +1,4 @@
-// Setup for the releases scenario (releases.yaml): brings the demo app back to the state it starts from.
+// Setup for the releases demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 
 const ARTICLE = 'api::article.article';
 const RELEASE = 'Spring 2027 Release';

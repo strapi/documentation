@@ -2,18 +2,18 @@
 /**
  * Shows the demo app at a given point of a scenario, to write or fix its steps.
  *
- * Replays scenarios/<id>.yaml (after its setup) up to a step, then saves a screenshot and the
+ * Replays interactive-demos/<id>/scenario.yaml (after its setup.js) up to a step, then saves a screenshot and the
  * page's accessibility tree (the roles and names that selectors such as role=button[name="Save"]
  * use), and checks whether that step's selectors match a visible element.
  *
  * Usage:
  *   DEMO_STRAPI_URL=... DEMO_STRAPI_EMAIL=... DEMO_STRAPI_PASSWORD=... \
- *   node scripts/interactive-demos/explore.js <id> [--step N] [--url /admin/...] [--out dir] [--no-setup]
+ *   node claude-plugins/inki/skills/inki-interactive-demo/scripts/explore.js <id> [--step N] [--url /admin/...] [--out dir] [--no-setup]
  *
  *   --step N     stop where step N is shown, after its `before` actions (default: after the last step)
  *   --url PATH   then open this admin page, to explore beyond the steps written so far
  *   --out DIR    where to write step-N.png and step-N.aria.yaml (default: <tmp>/interactive-demos/<id>)
- *   --no-setup   do not run <id>.setup.js first
+ *   --no-setup   do not run the demo setup.js first
  *
  * The scenario file can be missing or have no steps yet: the script then opens its start page
  * (or --url) so you can look for the first selectors.
@@ -31,7 +31,7 @@ function option(name) {
 
 async function main() {
   const id = process.argv[2];
-  if (!id || id.startsWith('--')) throw new Error('Usage: node scripts/interactive-demos/explore.js <id> [--step N] [--url PATH] [--out DIR] [--no-setup]');
+  if (!id || id.startsWith('--')) throw new Error('Usage: node claude-plugins/inki/skills/inki-interactive-demo/scripts/explore.js <id> [--step N] [--url PATH] [--out DIR] [--no-setup]');
   const outDir = option('out') || path.join(os.tmpdir(), 'interactive-demos', id);
   fs.mkdirSync(outDir, { recursive: true });
 

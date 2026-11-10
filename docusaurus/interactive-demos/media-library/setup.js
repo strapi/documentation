@@ -1,4 +1,4 @@
-// Setup for the media-library scenario (media-library.yaml): brings the demo app back to the state it starts from.
+// Setup for the media-library demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 // The 4 folders, and the seed assets in the root folder.
 
 const path = require('path');

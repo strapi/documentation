@@ -1,4 +1,4 @@
-// Setup for the content-manager scenario (content-manager.yaml): brings the demo app back to the state it starts from.
+// Setup for the content-manager demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 
 const ARTICLE = 'api::article.article';
 const TITLE_EN = 'How I wrote my first article with Strapi';

@@ -121,7 +121,7 @@ Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skil
 
 Special commands sit outside the four families: no orchestrator runs them, and Claude never starts them on its own. Only a maintainer runs them, by typing the command.
 
-- `/inki:inki-interactive-demo <demo-id>`: create or update an interactive demo embedded in a feature page, from a plain-text description of the tour. It finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures the demo and checks the result. See `docusaurus/scripts/interactive-demos/README.md`.
+- `/inki:inki-interactive-demo <demo-id>`: create or update an interactive demo embedded in a feature page, from a plain-text description of the tour. It finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures the demo and checks the result. See [its README](./skills/inki-interactive-demo/README.md).
 
 ## Command reference
 

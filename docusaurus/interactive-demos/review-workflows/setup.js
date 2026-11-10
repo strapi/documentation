@@ -1,4 +1,4 @@
-// Setup for the review-workflows scenario (review-workflows.yaml): brings the demo app back to the state it starts from.
+// Setup for the review-workflows demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 // Only the Default workflow, with its 4 stages, no role restriction, no required stage and no
 // content type, and no assignee on any article.
 

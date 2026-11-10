@@ -2,20 +2,23 @@
 /**
  * Captures an interactive demo from a running Strapi app.
  *
- * Plays a scenario (scripts/interactive-demos/scenarios/<id>.yaml) in a headless
- * browser, after running <id>.setup.js if it exists to reset the app, takes a light and a dark screenshot at every step, records where the
+ * Plays a scenario (docusaurus/interactive-demos/<id>/scenario.yaml) in a headless
+ * browser, after running setup.js in the same folder if it exists to reset the app, takes a light and a dark screenshot at every step, records where the
  * targeted element sits, and writes:
  *   - static/img/assets/interactive-demos/<id>/<NN>.webp and <NN>_DARK.webp (1920 px wide),
  *     plus <NN>-hd.webp and <NN>-hd_DARK.webp (3840 px) for full screen and zoomed steps
- *   - src/components/InteractiveDemo/demos/<id>.json (read by <InteractiveDemo />)
+ *   - docusaurus/interactive-demos/<id>/generated-capture.json (read by <InteractiveDemo />)
  *
  * Usage:
  *   DEMO_STRAPI_URL=http://localhost:1337 DEMO_STRAPI_DIR=~/strapi-demo \
  *   DEMO_STRAPI_EMAIL=... DEMO_STRAPI_PASSWORD=... \
- *   node scripts/interactive-demos/capture.js content-manager
+ *   node claude-plugins/inki/skills/inki-interactive-demo/scripts/capture.js content-manager
+ *
+ * Run it from the strapi/documentation checkout: it finds the repository from the current
+ * folder, not from its own location, so the copy installed with the Inki plugin works too.
  *
  * Requires playwright-core and a Chromium build. Set PLAYWRIGHT_CORE_PATH if
- * playwright-core is not resolvable from this directory.
+ * playwright-core is not resolvable from the docusaurus folder.
  *
  * Step types in a scenario:
  *   explain: selector | [selectors], text   highlight an area, reader clicks Next
@@ -36,9 +39,23 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const os = require('os');
-const yaml = require('js-yaml');
+const { createRequire } = require('module');
 
-const ROOT = path.resolve(__dirname, '../..');
+// The docusaurus folder of the strapi/documentation checkout the command runs from.
+function findDocusaurus(start) {
+  for (let dir = path.resolve(start); ; dir = path.dirname(dir)) {
+    for (const candidate of [dir, path.join(dir, 'docusaurus')]) {
+      if (fs.existsSync(path.join(candidate, 'interactive-demos')) && fs.existsSync(path.join(candidate, 'package.json'))) return candidate;
+    }
+    if (dir === path.dirname(dir)) throw new Error('Run this command from the strapi/documentation repository.');
+  }
+}
+
+const ROOT = findDocusaurus(process.cwd());
+const DEMOS_DIR = path.join(ROOT, 'interactive-demos');
+// Dependencies come from the docusaurus folder, not from wherever this script is installed.
+const requireFromDocs = createRequire(path.join(ROOT, 'package.json'));
+const yaml = requireFromDocs('js-yaml');
 const SETTLE_MS = 700;
 const SPOTLIGHT_PADDING = 6;
 const CAPTURE_SCALE = 3; // 3840 px wide screenshots, sharp in full screen on high-density displays
@@ -49,7 +66,7 @@ function loadPlaywright() {
   const candidates = [process.env.PLAYWRIGHT_CORE_PATH, 'playwright-core', 'playwright'].filter(Boolean);
   for (const candidate of candidates) {
     try {
-      return require(candidate);
+      return requireFromDocs(candidate);
     } catch (error) {
       // Try the next candidate.
     }
@@ -151,9 +168,9 @@ async function rectOf(page, selectors, viewport, padding) {
 // Loads a scenario, runs its setup, and opens a logged-in admin on its start page.
 // Also used by explore.js.
 async function openDemo(id, { scale = CAPTURE_SCALE, setup = true } = {}) {
-  const scenarioFile = path.join(__dirname, 'scenarios', `${id}.yaml`);
+  const scenarioFile = path.join(DEMOS_DIR, id, 'scenario.yaml');
   const scenario = fs.existsSync(scenarioFile) ? yaml.load(fs.readFileSync(scenarioFile, 'utf8')) : { steps: [] };
-  const setupFile = path.join(__dirname, 'scenarios', `${id}.setup.js`);
+  const setupFile = path.join(DEMOS_DIR, id, 'setup.js');
   const baseUrl = (process.env.DEMO_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
   const email = requireEnv('DEMO_STRAPI_EMAIL');
   const password = requireEnv('DEMO_STRAPI_PASSWORD');
@@ -200,10 +217,10 @@ async function act(page, baseUrl, step) {
 
 async function main() {
   const id = process.argv[2];
-  if (!id) throw new Error('Usage: node scripts/interactive-demos/capture.js <scenario-id>');
+  if (!id) throw new Error('Usage: node claude-plugins/inki/skills/inki-interactive-demo/scripts/capture.js <demo-id>');
   const imageDir = path.join(ROOT, 'static/img/assets/interactive-demos', id);
   const imageUrl = `/img/assets/interactive-demos/${id}`;
-  const dataFile = path.join(ROOT, 'src/components/InteractiveDemo/demos', `${id}.json`);
+  const dataFile = path.join(DEMOS_DIR, id, 'generated-capture.json');
   fs.rmSync(imageDir, { recursive: true, force: true });
   fs.mkdirSync(imageDir, { recursive: true });
   fs.mkdirSync(path.dirname(dataFile), { recursive: true });

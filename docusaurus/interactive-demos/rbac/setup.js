@@ -1,4 +1,4 @@
-// Setup for the rbac scenario (rbac.yaml): brings the demo app back to the state it starts from.
+// Setup for the rbac demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 
 const ARTICLE = 'api::article.article';
 const AUTHOR = 'api::author.author';

@@ -361,7 +361,7 @@ No orchestrator runs these commands, and Claude never starts them on its own (`d
 
 ### `/inki:inki-interactive-demo`
 
-Create or update an interactive demo from a plain-text description of its steps: finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures it and checks the result. See `docusaurus/scripts/interactive-demos/README.md`.
+Create or update an interactive demo from a plain-text description of its steps: finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures it and checks the result. See [its README](./skills/inki-interactive-demo/README.md).
 
 ```
 /inki:inki-interactive-demo <demo-id> [description file or text]

@@ -3,7 +3,7 @@
  * Creates the throwaway Strapi app that interactive demos are captured from.
  *
  * Usage:
- *   node scripts/interactive-demos/setup-demo-app.js <target-dir> [--port 1337] [--version latest]
+ *   node claude-plugins/inki/skills/inki-interactive-demo/scripts/setup-demo-app.js <target-dir> [--port 1337] [--version latest]
  *
  * The app is the official example (Article, Author, Category, About, Global), with:
  *   - Article and its fields localized, so the locale picker shows up;
@@ -37,7 +37,7 @@ const LOCALIZED_ARTICLE_FIELDS = ['title', 'description', 'slug', 'cover', 'bloc
 
 function main() {
   const target = process.argv[2] && !process.argv[2].startsWith('--') ? path.resolve(process.argv[2]) : null;
-  if (!target) throw new Error('Usage: node scripts/interactive-demos/setup-demo-app.js <target-dir> [--port 1337] [--version latest]');
+  if (!target) throw new Error('Usage: node claude-plugins/inki/skills/inki-interactive-demo/scripts/setup-demo-app.js <target-dir> [--port 1337] [--version latest]');
   if (fs.existsSync(target)) throw new Error(`${target} already exists. Remove it or pick another directory.`);
   const port = arg('port', '1337');
   const version = arg('version', 'latest');

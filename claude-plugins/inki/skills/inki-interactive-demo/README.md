@@ -2,26 +2,28 @@
 
 Clickable product tours, like the former Guideflow embeds, captured from a real Strapi app instead of recorded by hand. Readers click the real buttons of the interface, or use Next and the ← → keys, to move through the steps.
 
-A demo has 5 parts:
+Each demo has its own folder, `docusaurus/interactive-demos/<id>/`, named after the id that pages use. A demo has 5 parts:
 
 | Part | File | Who edits it |
 |---|---|---|
-| Description: the tour in plain text | `scenarios/<id>.md` (optional) | You |
-| Scenario: the steps, their target and their text | `scenarios/<id>.yaml` | You, or Claude from the description: the only file to change to change a demo |
-| Setup: code that brings the demo app back to the state the scenario starts from | `scenarios/<id>.setup.js` (optional) | Rarely |
-| Captured demo: screenshots and target positions | `static/img/assets/interactive-demos/<id>/` and `src/components/InteractiveDemo/demos/<id>.json` | `capture.js`, never by hand |
-| Player: the React component that renders any captured demo | `src/components/InteractiveDemo/` | Rarely |
+| Description: the tour in plain text | `docusaurus/interactive-demos/<id>/description.md` (optional) | You |
+| Scenario: the steps, their target and their text | `docusaurus/interactive-demos/<id>/scenario.yaml` | You, or Claude from the description: the only file to change to change a demo |
+| Setup: code that brings the demo app back to the state the scenario starts from | `docusaurus/interactive-demos/<id>/setup.js` (optional) | Rarely |
+| Captured demo: screenshots and target positions | `docusaurus/static/img/assets/interactive-demos/<id>/` and `docusaurus/interactive-demos/<id>/generated-capture.json` | `capture.js`, never by hand |
+| Player: the React component that renders any captured demo | `docusaurus/src/components/InteractiveDemo/` | Rarely |
 
 In a page: `<InteractiveDemo id="content-manager" />`.
 
+The scripts, `capture.js`, `explore.js` and `setup-demo-app.js`, are in `scripts/` next to this README. Run them from the strapi/documentation repository: they find it from the current folder, not from their own location, and take their dependencies (`js-yaml`, `playwright-core`) from `docusaurus/node_modules`. So the copy installed with the Inki plugin works as well as the one in the repository, as long as `yarn` has run in `docusaurus/`.
+
 ## Update a demo after a UI change
 
-Run these commands from `docusaurus/`.
+Run these commands from the root of the strapi/documentation repository.
 
 1. Create the demo app, once per machine (or again after a Strapi release):
 
    ```bash
-   node scripts/interactive-demos/setup-demo-app.js ~/strapi-demo --port 1337
+   node claude-plugins/inki/skills/inki-interactive-demo/scripts/setup-demo-app.js ~/strapi-demo --port 1337
    ```
 
    It creates the official Strapi example app, localizes Article, adds the French and German admin languages and the Documentation plugin, turns off the admin login rate limit and seeds the example data. Add `--version 5.61.0` to pin a Strapi version.
@@ -43,16 +45,16 @@ Run these commands from `docusaurus/`.
    ```bash
    DEMO_STRAPI_URL=http://localhost:1337 DEMO_STRAPI_DIR=~/strapi-demo \
    DEMO_STRAPI_EMAIL=kai.doe@example.com DEMO_STRAPI_PASSWORD=YourPassw0rd \
-   node scripts/interactive-demos/capture.js content-manager
+   node claude-plugins/inki/skills/inki-interactive-demo/scripts/capture.js content-manager
    ```
 
-   The first run creates the admin user, Kai Doe, with these credentials. Always use a made-up `example.com` address: the admin home page, the user menu and the users list display it, and it would end up in the published screenshots. `DEMO_STRAPI_DIR` is the demo app folder, where the Media Library demo takes the images it uploads. Each run resets what the scenario changes (see `<id>.setup.js`), so you can capture as often as needed. A run takes about a minute and captures light and dark screenshots at once.
+   The first run creates the admin user, Kai Doe, with these credentials. Always use a made-up `example.com` address: the admin home page, the user menu and the users list display it, and it would end up in the published screenshots. `DEMO_STRAPI_DIR` is the demo app folder, where the Media Library demo takes the images it uploads. Each run resets what the scenario changes (see `setup.js`), so you can capture as often as needed. A run takes about a minute and captures light and dark screenshots at once.
 
-4. Check the result with `yarn dev`, then commit the scenario, the JSON file and the images.
+4. Check the result with `yarn dev`, then commit the demo folder and the images.
 
 The Internationalization demo starts by turning off localization on Article, and its tour turns it back on. If its capture stops midway, run it again until it completes before capturing other demos.
 
-If the capture stops with `Target not visible: <selector>` or a timeout, the interface changed: the step's selector no longer matches. Fix the selector in `scenarios/<id>.yaml` and run the capture again.
+If the capture stops with `Target not visible: <selector>` or a timeout, the interface changed: the step's selector no longer matches. Fix the selector in `docusaurus/interactive-demos/<id>/scenario.yaml` and run the capture again.
 
 `capture.js` needs `playwright-core` and a Chromium build. If `playwright-core` is not installed, point `PLAYWRIGHT_CORE_PATH` to a copy of it (for example the one in the Yarn cache).
 
@@ -66,7 +68,7 @@ Recapturing only adds the screens that changed to the Git history.
 
 ## Write a demo from a plain-text description
 
-Describe the tour in `scenarios/<id>.md`, in your own words: the page it starts on, then each step in order, with the text of each bubble when you have one. For example:
+Describe the tour in `docusaurus/interactive-demos/<id>/description.md`, in your own words: the page it starts on, then each step in order, with the text of each bubble when you have one. For example:
 
 ```markdown
 Start on the Article list view in the Content Manager.
@@ -81,12 +83,12 @@ Intro: "Let's see how to filter entries!", button "Let's go 🚀".
 End: "Thank you for following this guided tour!", with a link to the Content Manager docs.
 ```
 
-Then, in Claude Code, run `/inki:inki-interactive-demo <id>`. It reads the description, finds each element in the running demo app, writes `<id>.yaml` (and `<id>.setup.js` when the tour changes data), captures the demo twice, checks the screens, and lists where the scenario had to differ from the description. Run it again after changing the description or when the interface changes.
+Then, in Claude Code, run `/inki:inki-interactive-demo <id>`. It reads the description, finds each element in the running demo app, writes `scenario.yaml` (and `setup.js` when the tour changes data), captures the demo twice, checks the screens, and lists where the scenario had to differ from the description. Run it again after changing the description or when the interface changes.
 
 To look at the app yourself at a given step, the way `/inki:inki-interactive-demo` does:
 
 ```bash
-node scripts/interactive-demos/explore.js <id> --step 5 --out /tmp/explore
+node claude-plugins/inki/skills/inki-interactive-demo/scripts/explore.js <id> --step 5 --out /tmp/explore
 ```
 
 It replays the scenario up to step 5, then saves a screenshot and the accessibility tree (the roles and names that selectors use), and says whether step 5's target is found. Add `--url /admin/...` to open another page, for a new scenario with no steps yet.

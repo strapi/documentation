@@ -1,4 +1,4 @@
-// Setup for the internationalization scenario (internationalization.yaml): brings the demo app back to the state it starts from.
+// Setup for the internationalization demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 
 const ARTICLE = 'api::article.article';
 

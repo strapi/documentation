@@ -1,4 +1,4 @@
-// Setup for the content-history scenario (content-history.yaml): brings the demo app back to the state it starts from.
+// Setup for the content-history demo (scenario.yaml in this folder): brings the demo app back to the state it starts from.
 // History versions cannot be deleted, so every capture recreates the article and gives it the same
 // 3 versions: published, modified, published again.
 
