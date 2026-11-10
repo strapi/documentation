@@ -165,7 +165,9 @@ Each action name follows the `plugin::<pluginName>.<uid>` format, built from the
 
 An admin route without the `admin::hasPermissions` policy is open to every authenticated admin user, whatever their role.
 
-:::caution Do I also need the `admin::isAuthenticatedAdmin` policy?
+:::caution
+Do I also need the `admin::isAuthenticatedAdmin` policy?
+
 No. Admin routes require an authenticated admin user by default. Strapi rejects requests without valid admin credentials with a `401 Unauthorized` error before any policy runs. The `admin::isAuthenticatedAdmin` policy, used in some core routes and route examples, adds no check on top of this.
 
 The `admin::hasPermissions` policy needs this authenticated user. Do not use it on a route that sets `auth: false`.
