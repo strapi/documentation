@@ -1,0 +1,170 @@
+# Content-type Builder tour, step for step the Guideflow tour it replaces.
+# Runs against the demo app from setup-demo-app.js, started with `npm run develop`:
+# saving in the Content-type Builder restarts the server, so the steps after a save
+# wait for the admin to come back.
+#
+# Notes:
+# - Matches once the "Waiting for restart" overlay is gone and nothing is left to save.
+# - The admin can reload once more right after the restart, so wait, then check again.
+
+title: Content-type Builder Overview
+viewport:
+  width: 1280
+  height: 800
+start: /admin/plugins/content-type-builder/content-types/api::category.category
+
+intro:
+  text: Welcome to the guided tour of the Content-type Builder!
+  button: Let's start 🚀
+
+steps:
+  # Navigation
+  - explain: nav[aria-label="Content-Type Builder"]
+    text: |-
+      This is the **navigation of the Content-type Builder**. It gives access to already created content-type and allows to create more.
+  
+      It is organised in **3 categories**: *Collection types*, *Single types* and *Components*.
+  
+      ✏️ When creating a new content-type, the first thing you have to decide is which type of content you want to create.
+  - explain:
+      - role=button[name="Save"]
+      - role=button[name="More actions"]
+      - role=searchbox[name="Search"]
+    text: |-
+      The navigation also displays **centralised buttons and a search** which apply to all content-types and components, which allow you to work on several at the same time.
+      • The *Save* button saves all changes made to all content-types and components.
+      • The *...* button gives access to *Undo*, *Redo* and *Discard changes* buttons.
+    zoom: true
+
+  # Edition interface
+  - explain:
+      - h1
+      - role=button[name="Add another field"]
+      - role=button[name="Add another field to this collection type"]
+    text: Let's now take a look at the **content-type edition interface**! 🚀
+    padding: 24
+  - explain: role=button[name="Configure the view"]
+    text: This is the button to **configure the edit view** of the content-type when in the Content Manager.
+  - explain: role=button[name="Edit"]
+    text: |-
+      The *Edit* button leads to the content-type's **settings** which allow you to rename the content-type or even change its type.
+  
+      From the content-type's **advanced settings** you can also enable or disable features such as **Draft & Publish** and **Internationalisation**.
+  - explain: role=button[name="Add another field"]
+    text: This is the button to **add another field** to the content-type.
+  - explain:
+      - role=button[name="name"]
+      - role=button[name="Add another field to this collection type"]
+    text: And this is the **list of fields** that have been added to the content-type.
+  - explain:
+      - role=button[name="Edit slug"]
+      - role=button[name="Delete slug"]
+    text: |-
+      For each field, you can click on:
+      • the ✏️ **edit** button to access the field's basic and advanced settings
+      • the 🗑️ **delete** button to delete the field from the content-type
+  - chapter: true
+    text: Let's create a simple content-type together! 🚀
+
+  # New collection type
+  - click: role=menuitem[name="New Collection-Type"]
+    text: Click on "*New Collection-Type*".
+    before:
+      - click: role=button[name="New Collection-Type"]
+  - fill: role=textbox[name="Display name"]
+    value: Simple article
+    text: Let's create a content type for simple articles.
+  - click: role=tab[name="Advanced settings"]
+    text: Let's take a look at the **Advanced settings**.
+  - click: role=checkbox[name="Internationalization"]
+    text: Tick the "*Internationalization*" box to enable this feature for our new content-type.
+  - click: role=button[name="Continue"]
+    text: Click the *Continue* button.
+  - explain: div:has(> a[href$="api::simple-article.simple-article"])
+    text: |-
+      Our newly created collection type is now listed among the collection types!
+  
+      ✏️ The **"N" status** **indicates that the content type is new**. Other statuses can be displayed in the navigation:
+      • **"M"** for **modified**
+      • **"D"** for **deleted**
+  
+      All statuses are erased after clicking the *Save* button.
+  - click: role=button[name="Save"]
+    text: Let's save our new collection type!
+
+  # Fields
+  - click: role=button[name="Add new field"] >> nth=-1
+    text: It's now time to **select fields for our content-type**!
+    before:
+      - waitFor: body:not(:has-text("Waiting for restart")) >> role=button[name="Save"][disabled]
+      - wait: 2500
+      - waitFor: body:not(:has-text("Waiting for restart")) >> role=button[name="Save"][disabled]
+  - click: role=button[name=/^Text Small/]
+    text: Let's start with a **Text field**.
+  - fill: input[name=name]
+    value: title
+    text: Let's make our Text field the title for our simple article.
+  - click: role=tab[name="Advanced settings"]
+    text: Let's see what options are available in our field's Advanced settings!
+  - click: role=checkbox[name="Required field"]
+    text: Tick the *Required field* box to make sure this field is always filled in by content managers.
+  - click: role=dialog >> role=button[name="Add another field"]
+    text: Let's **add another field** to our simple article!
+  - click: role=button[name=/^Rich text \(Blocks\)/]
+    text: A **Rich text** field could be quite useful to write the content of the article.
+  - fill: input[name=name]
+    value: body
+    text: Let's name our new field.
+  - click: role=dialog >> role=button[name="Add another field"]
+    text: And let's add one more field!
+  - click: role=button[name=/^Media Files/]
+    text: A **Media field** would be great to add a cover to our article!
+  - fill: input[name=name]
+    value: cover
+    text: Let's name our new media field.
+  - click: label:has(input[name=multiple][value=false])
+    text: Select the **Single media** option since we do not want content managers to be able to upload more than one photo.
+  - click: role=button[name="Finish"]
+    text: Click on *Finish* to stop adding new fields for now.
+  - explain:
+      - role=button[name="title"] >> text="New"
+      - role=button[name="cover"] >> text="New"
+    text: ✏️ Just like in the navigation, **statuses are displayed in the list of fields** to indicate whether the fields are new, modified or deleted.
+    padding: 10
+  - click: role=button[name="Save"]
+    text: Let's not forget to click on the *Save* button for all the modifications to be validated.
+
+  # Statuses and undo
+  - click: role=button[name="Edit cover"]
+    text: Let's edit one of our fields to see another status!
+    before:
+      - waitFor: body:not(:has-text("Waiting for restart")) >> role=button[name="Save"][disabled]
+      - wait: 2500
+      - waitFor: body:not(:has-text("Waiting for restart")) >> role=button[name="Save"][disabled]
+  - click: label:has(input[name=multiple][value=true])
+    text: Let's switch from Single to Multiple media.
+  - click: role=button[name="Finish"]
+    text: And click on *Finish*.
+
+  # Lets the badge transition end, so steps 35 to 37 share one screen.
+  - explain: role=button[name="cover"] >> text="Modified"
+    text: You can see the "Modified" status here in the list of fields...
+    padding: 10
+    before:
+      - wait: 800
+  - explain: div:has(> a[href$="api::simple-article.simple-article"])
+    text: ... and an "M" here in the navigation!
+  - click: role=button[name="More actions"]
+    text: 'One last thing to try in the Content-type Builder: let''s click on the *...* button.'
+  - click: role=menuitem[name="Undo last change"]
+    text: Instead of clicking the edit button changing the settings again, you can click the *Undo last change* button!
+  - chapter: true
+    text: And that's it, we have created the new "*Simple article*" collection type and tried various options available in the Content-type Builder!
+
+outro:
+  text: Thank you for following this guided tour!
+  links:
+    - label: Content-type Builder docs 📖
+      href: /cms/features/content-type-builder
+    - label: 🚀 Quick Start Guide
+      href: /cms/quick-start

@@ -2,11 +2,12 @@
 
 Clickable product tours, like the former Guideflow embeds, captured from a real Strapi app instead of recorded by hand. Readers click the real buttons of the interface, or use Next and the ← → keys, to move through the steps.
 
-A demo has 3 parts:
+A demo has 4 parts:
 
 | Part | File | Who edits it |
 |---|---|---|
-| Scenario: the steps, their target and their text | `scenarios/<id>.js` | You |
+| Scenario: the steps, their target and their text | `scenarios/<id>.yaml` | You: the only file to change to change a demo |
+| Setup: code that brings the demo app back to the state the scenario starts from | `scenarios/<id>.setup.js` (optional) | Rarely |
 | Captured demo: screenshots and target positions | `static/img/assets/interactive-demos/<id>/` and `src/components/InteractiveDemo/demos/<id>.json` | `capture.js`, never by hand |
 | Player: the React component that renders any captured demo | `src/components/InteractiveDemo/` | Rarely |
 
@@ -44,13 +45,13 @@ Run these commands from `docusaurus/`.
    node scripts/interactive-demos/capture.js content-manager
    ```
 
-   The first run creates the admin user, Kai Doe, with these credentials. Always use a made-up `example.com` address: the admin home page, the user menu and the users list display it, and it would end up in the published screenshots. `DEMO_STRAPI_DIR` is the demo app folder, where the Media Library demo takes the images it uploads. Each run resets what the scenario changes (see `setup` in the scenario), so you can capture as often as needed. A run takes about a minute and captures light and dark screenshots at once.
+   The first run creates the admin user, Kai Doe, with these credentials. Always use a made-up `example.com` address: the admin home page, the user menu and the users list display it, and it would end up in the published screenshots. `DEMO_STRAPI_DIR` is the demo app folder, where the Media Library demo takes the images it uploads. Each run resets what the scenario changes (see `<id>.setup.js`), so you can capture as often as needed. A run takes about a minute and captures light and dark screenshots at once.
 
 4. Check the result with `yarn dev`, then commit the scenario, the JSON file and the images.
 
 The Internationalization demo starts by turning off localization on Article, and its tour turns it back on. If its capture stops midway, run it again until it completes before capturing other demos.
 
-If the capture stops with `Target not visible: <selector>` or a timeout, the interface changed: the step's selector no longer matches. Fix the selector in the scenario and run the capture again.
+If the capture stops with `Target not visible: <selector>` or a timeout, the interface changed: the step's selector no longer matches. Fix the selector in `scenarios/<id>.yaml` and run the capture again.
 
 `capture.js` needs `playwright-core` and a Chromium build. If `playwright-core` is not installed, point `PLAYWRIGHT_CORE_PATH` to a copy of it (for example the one in the Yarn cache).
 
@@ -64,21 +65,52 @@ Recapturing only adds the screens that changed to the Git history.
 
 ## Write or change a scenario
 
-A scenario exports a title, a start URL, an intro, the steps and an outro. Each step is one of:
+A scenario is a YAML file with a title, a viewport, a start URL, an intro, the steps and an outro:
+
+```yaml
+title: Content Manager Overview
+viewport:
+  width: 1280
+  height: 800
+start: /admin/content-manager/single-types/api::about.about
+
+intro:
+  text: Welcome to the guided tour of the Content Manager!
+  button: Let's start 🚀
+
+steps:
+  - explain: nav[aria-label="Content Manager"]
+    text: This is the navigation of the Content Manager.
+  - click: role=button[name="Filters"]
+    text: Click here to filter the entries listed in the table.
+    after:
+      - click: role=option[name="category"]
+
+outro:
+  text: Thank you for following this guided tour!
+  links:
+    - label: Content Manager docs 📖
+      href: /cms/features/content-manager
+```
+
+Each step is one of:
 
 | Step | Shows | Reader |
 |---|---|---|
-| `{ explain: selector, text }` | White bubble, the rest of the screen dimmed | Clicks Next |
-| `{ chapter: true, text }` | Purple bubble in the center | Clicks the arrows |
-| `{ click: selector, text }` | Pulsing circle on the element, purple bubble | Clicks the element |
-| `{ fill: selector, value, text }` | Pulsing circle on the field | Clicks it, the value types itself |
-| `{ do: [actions] }` | Nothing: silent actions between steps | |
+| `explain: selector` + `text` | White bubble, the rest of the screen dimmed | Clicks Next |
+| `chapter: true` + `text` | Purple bubble in the center | Clicks the arrows |
+| `click: selector` + `text` | Pulsing circle on the element, purple bubble | Clicks the element |
+| `fill: selector` + `value` + `text` | Pulsing circle on the field | Clicks it, the value types itself |
+| `do: [actions]` | Nothing: silent actions between steps | |
 
 Options:
 
 - `explain` takes one selector or a list (the highlight covers them all), `padding` widens the highlight and `zoom: true` zooms on it.
 - `before: [actions]` runs before the screenshot, to open a dropdown for instance. `after: [actions]` runs after a `click` or `fill`, to pick an option in the list that opened, for instance.
-- Actions are `{ goto }`, `{ click }`, `{ fill, value }`, `{ press }`, `{ hover }`, `{ upload, files }` (paths relative to `capture.js`), `{ waitFor: selector, timeout }` (to wait for an element, after a server restart for instance) and `{ wait: ms }`.
+- Actions are `goto`, `click`, `fill` (with `value`), `press`, `hover`, `upload` (with `files`, relative to the demo app folder), `waitFor` (a selector to wait for, after a server restart for instance, with an optional `timeout`) and `wait` (in ms).
+- Use `# comments` to note why a step differs from what a reader might expect.
 - Texts accept `**bold**`, `*italic*`, `[label](url)` and line breaks (`\n`).
+
+The setup file exports one function, `async function setup({ api })`, where `api` calls the Strapi admin API (`get`, `post`, `put`, `del`) as the demo admin. It can return `{ start }` to replace the start URL, when the page to open is only known once the setup has created it.
 
 Selectors are [Playwright selectors](https://playwright.dev/docs/other-locators). Prefer accessible names, which survive redesigns better than CSS classes: `role=button[name="Save"]`, `[aria-label="Locales"]`, `input[name=title]`. Accessible names are case-sensitive here: check them in the browser accessibility panel.

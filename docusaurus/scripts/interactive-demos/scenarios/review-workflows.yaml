@@ -1,0 +1,138 @@
+# Review Workflows tour, step for step the Guideflow tour it replaces.
+# Runs against the demo app from setup-demo-app.js, started with an Enterprise license
+# (STRAPI_LICENSE): Review Workflows is not available without it.
+#
+# Notes:
+# - Column order once setup has set the list view: select, id, title, to be released in,
+# - review stage, assignee, available in, status. With the description column too, the
+# - Review Workflows columns would be scrolled out of the 1280 px wide table.
+
+title: Review Workflows
+viewport:
+  width: 1280
+  height: 800
+start: /admin/settings/review-workflows
+
+intro:
+  text: Welcome to the guided tour of the Review Workflows feature!
+  button: Let's go 🚀
+
+steps:
+  # Settings
+  - explain:
+      - nav[aria-label="Settings"] h2
+      - nav[aria-label="Settings"] a:has-text("Webhooks")
+    text: The Review Workflows feature must first be configured via the **Settings section of the admin panel**.
+  - explain: role=link[name="Create new workflow"]
+    text: In the Review Workflows section of Global settings, you can **create a new workflow**.
+  - explain: main [role=grid]
+    text: Or you can **edit the default workflow** already available in your project. This is what we will do in this demo!
+  - click: role=link[name="Edit Default"]
+    text: Let's click on the *Edit* button!
+  - click: role=option[name="Article"]
+    text: Let's enable the review workflow for the Article content type.
+    before:
+      - click: role=combobox[name="Associated to"]
+  - chapter: true
+    text: Make sure to select all the content type where the review workflow should be enabled, as they're not selected by default!
+
+  # Scrolls the last option into the list.
+  - click: role=option[name="Reviewed"]
+    text: Now let's define a required stage before an article can be published.
+    before:
+      - press: Escape
+      - click: role=combobox[name="Required stage for publishing"]
+      - hover: role=option[name="Reviewed"]
+  - click: role=button[name="Ready to review"]
+    text: Other configurations are also available per review stage. Let's discover them!
+  - click: role=region[name="Ready to review"] >> role=combobox[name="Roles that can change from this stage"]
+    text: Other than editing the stage name or colour, we can assign a specific role that can change the stage.
+  - click: role=option[name="Author"]
+    text: For instance, let's decide that only Authors can change the "Ready to review" stage.
+    after:
+      - press: Escape
+  - chapter: true
+    text: |-
+      Each review stage can be similarly configured.
+  
+      Let's do the same with the "In progress" and "Reviewed" stages!
+    before:
+      - click: role=button[name="In progress"]
+      - click: role=region[name="In progress"] >> role=combobox[name="Roles that can change from this stage"]
+      - click: role=option[name="Editor"]
+      - press: Escape
+      - click: role=button[name="Reviewed"]
+      - click: role=region[name="Reviewed"] >> role=combobox[name="Roles that can change from this stage"]
+      - click: role=option[name="Editor"]
+      - press: Escape
+  - click: role=button[name="Save"]
+    text: Now let's click *Save* to confirm all the changes.
+    before:
+      - hover: role=button[name="Save"]
+
+  # Content Manager
+  - explain: nav[aria-label="Content Manager"]
+    text: Now that our review workflow is fully configured for our Article content type, we can use the feature in the **Content Manager**.
+    before:
+      - goto: /admin/content-manager/collection-types/api::article.article
+      - waitFor: role=gridcell[name="review stage"]
+  - explain:
+      - role=gridcell[name="review stage"]
+      - role=row >> nth=-1 >> role=gridcell >> nth=4
+    text: You can see in the **list view** that there is now a "Review stage" column indicating the stage in which the articles currently are.
+  - click: role=gridcell[name="This shrimp is awesome"]
+    text: Let's go to the **edit view** of one of the articles to see how to change the review stage!
+  - explain:
+      - aside:has(h2:text-is("Review Workflows"))
+      - role=listbox
+    text: |-
+      Available actions related to the Review Workflows feature are displayed in this area.
+  
+      Let's **select another review stage**: for example, "In progress".
+    before:
+      - waitFor: role=heading[name="This shrimp is awesome"]
+      - click: aside:has(h2:text-is("Review Workflows")) >> role=combobox[name="Review stage"]
+  - do:
+      - click: role=option[name="In progress"]
+        wait: 1500
+  - click: nav[aria-label="Content Manager"] a:has-text("Article")
+    text: |-
+      There is no need to save.
+  
+      Now let's go back to the list view!
+
+  # The list refetches its entries when coming back from the edit view.
+  - explain: role=row[name*="This shrimp is awesome"] >> role=gridcell >> nth=4
+    text: We can now see from the list view that our article's review is in progress!
+    before:
+      - waitFor: role=row[name*="This shrimp is awesome"] >> text="In progress"
+  - click: role=gridcell[name="Beautiful picture"]
+    text: Let's go to the edit view of another article!
+  - explain:
+      - aside:has(h2:text-is("Review Workflows"))
+      - role=listbox
+    text: This time, let's **assign a specific user** for the review of this article!
+    before:
+      - waitFor: role=heading[name="Beautiful picture"]
+      - click: aside:has(h2:text-is("Review Workflows")) >> role=combobox[name="Assignee"]
+  - do:
+      - click: role=option[name="Kai Doe"]
+        wait: 1500
+  - click: nav[aria-label="Content Manager"] a:has-text("Article")
+    text: And let's go back again to the list view!
+  - explain:
+      - role=gridcell[name="review stage"]
+      - role=row >> nth=-1 >> role=gridcell >> nth=5
+    text: You can now notice another new column in the list view, "Assignee", which now indicates that Kai Doe has been assigned to the review of the article.
+    before:
+      - waitFor: role=row[name*="Beautiful picture"] >> text="Kai Doe"
+  - chapter: true
+    text: And that's it! We've learned to configure and use the Review Workflows feature! ✨
+
+outro:
+  text: Thank you for following this guided tour!
+  links:
+    - label: Review Workflows docs 📖
+      href: /cms/features/review-workflows
+    - label: 🚀 Quick Start Guide
+      href: /cms/quick-start

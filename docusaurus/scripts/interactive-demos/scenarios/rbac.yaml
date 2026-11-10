@@ -1,0 +1,153 @@
+# Role-Based Access Control (RBAC) tour, step for step the Guideflow tour it replaces.
+# Runs against the demo app from setup-demo-app.js (Community Edition: no SSO toggle
+# in the invite form, see step 27).
+
+title: Role-Based Access Control (RBAC)
+viewport:
+  width: 1280
+  height: 800
+start: /admin/settings/roles
+
+intro:
+  text: Welcome to the guided tour of the Role-Based Access Control (RBAC) feature!
+  button: Let's go 🚀
+
+steps:
+  # Roles
+  - explain:
+      - a[href="/admin/settings/roles"]
+      - a[href^="/admin/settings/users?"]
+    text: The RBAC feature is managed from the **Roles and Users sections of Settings**, accessible from the navigation of the admin panel.
+  - explain: main [role=grid]
+    text: |-
+      Roles is where are listed the various roles that the users of the admin panel can have.
+  
+      There are **3 default roles**: Author, Editor and Super Admin.
+  - explain: main >> role=button[name="Add new role"]
+    text: You can also **create your own new role**.
+  - explain:
+      - role=row[name=/^Editor/] >> role=button[name="Duplicate"]
+      - role=row[name=/^Editor/] >> role=button[name="Delete"]
+    text: |-
+      For each role, you can use these buttons to:
+      • **Duplicate** the role
+      • ✏️ **Edit** the role
+      • 🗑️ **Delete** the role
+  - click: role=row[name=/^Editor/] >> role=button[name="Edit"]
+    text: Let's edit the Editor role!
+
+  # Edit a role
+  - explain:
+      - main >> role=textbox[name="Name"]
+      - main >> role=textbox[name="Description"]
+      - main >> role=button[name=/users with this role/]
+    text: |-
+      In this area, you can **edit the name and description** of the role.
+  
+      ✏️ Note that you can also see how many users have been assigned this role.
+    padding: 24
+  - explain:
+      - role=tablist[name="Tabs Permissions"]
+      - '[role=tabpanel][data-state=active]'
+    text: |-
+      And in this area, you can **select in detail what the users with this role can do**.
+  
+      Detailed access can be set for the content types but also for the plugins and settings of the project!
+  - explain:
+      - role=tablist[name="Tabs Permissions"]
+      - '[role=tabpanel][data-state=active]'
+    text: In this demo, we will focus on the Editor role's accesses with collection types.
+  - click: role=checkbox[name="Select all Author permissions"]
+    text: Let's untick the Author collection type!
+  - explain:
+      - role=checkbox[name="Select all Author permissions"]
+      - role=checkbox[name="Select Publish author permission"]
+    text: 'All other boxes have been unticked: Editors cannot access the Author content type at all.'
+  - click: '[role=tabpanel][data-state=active] >> role=button[name="Article"]'
+    text: Now let's click on the arrow next to the Article content type to see more detailed options.
+
+  # Centers the expanded Article block in the view.
+  - explain:
+      - role=checkbox[name="Select all Article permissions"]
+      - '[role=tabpanel][data-state=active] button:has-text("Settings")'
+      - role=checkbox[name="Select blocks Update permission"]
+    text: 'Accesses can be set for each specific field: we can decide whether Editors can create, read or update them.'
+    before:
+      - hover: role=checkbox[name="Select cover Read permission"]
+  - click: role=checkbox[name="Select Delete article permission"]
+    text: Let's decide that Editors cannot delete articles.
+  - click: role=checkbox[name="Select all slug permissions"]
+    text: And that they cannot access the "slug" field at all.
+  - click: '[role=tabpanel][data-state=active] button:has-text("Settings")'
+    text: More RBAC settings are also available by clicking on this button.
+
+  # Can Update When
+  - click: '[role=dialog] >> role=combobox >> nth=2'
+    text: For each content type, you can **decide specific conditions under which the Editor can act**.
+  - click: '[role=dialog] >> role=button[name="Close modal"]'
+    text: Let's go back to the basic RBAC settings!
+    before:
+      - press: Escape
+  - click: main >> role=button[name="Save"]
+    text: Make sure to click *Save* for the settings to be confirmed.
+
+  # Users
+  - click: a[href^="/admin/settings/users?"]
+    text: Now let's explore the Users sections!
+  - chapter: true
+    text: Users is where are listed the users of the admin panel.
+  - explain: role=row[name=/Kai Doe/] >> role=link[name="Edit Kai Doe"]
+    text: |-
+      For every user listed, it is possible to:
+      • ✏️ **Edit** the user
+      • 🗑️ **Delete** the user (except yourself)
+    padding: 12
+  - explain: main >> role=button[name="Invite new user"]
+    text: The *Invite new user* button is to manually **add new users to the admin panel**.
+  - click: main >> role=button[name="Invite new user"]
+    text: Let's click on the button!
+  - fill: input[name=firstname]
+    value: Camille
+    text: 'Let''s write the details of the new user: first name and last name.'
+    after:
+      - fill: input[name=lastname]
+        value: Doe
+  - fill: input[name=email]
+    value: camille.doe@example.com
+    text: And let's write their email address.
+  - click: role=option[name="Editor"]
+    text: 'We can already **assign a role to the new user**: for instance, Editor.'
+    before:
+      - click: '[role=dialog] >> role=combobox[name="User''s roles"]'
+    after:
+      - press: Escape
+
+  # The Connect with SSO toggle only exists with the SSO feature: highlight where it sits.
+  - explain:
+      - '[role=dialog] >> role=heading[name="Roles"]'
+      - '[role=dialog] >> role=combobox[name="User''s roles"]'
+    text: And, with SSO enabled, we can also decide whether or not the user will be able to connect with SSO.
+    padding: 16
+  - click: '[role=dialog] >> role=button[name="Invite user"]'
+    text: Let's **invite** our new user!
+
+  # The card that holds the invitation link.
+  - explain: '[role=dialog] div:has(> div > :text("Copy and share this link"))'
+    text: A link is available here to share with the user to directly invite them to the admin panel.
+  - click: '[role=dialog] >> role=button[name="Finish"]'
+    text: Once the link has been copied to be shared to the user, click on *Finish*.
+  - explain: role=row[name=/camille.doe@example.com/]
+    text: |-
+      Our new user is now listed in the table.
+  
+      ✏️ Note that for now, their account is inactive but is can be manually activated.
+  - chapter: true
+    text: And that's it! We've learned to use the RBAC feature via the roles & users settings! ✨
+
+outro:
+  text: Thank you for following this guided tour!
+  links:
+    - label: RBAC documentation 📖
+      href: /cms/features/rbac
+    - label: 🚀 Quick Start Guide
+      href: /cms/quick-start
