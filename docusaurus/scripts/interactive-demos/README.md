@@ -81,9 +81,9 @@ Intro: "Let's see how to filter entries!", button "Let's go 🚀".
 End: "Thank you for following this guided tour!", with a link to the Content Manager docs.
 ```
 
-Then, in Claude Code, run `/inki:demo <id>`. It reads the description, finds each element in the running demo app, writes `<id>.yaml` (and `<id>.setup.js` when the tour changes data), captures the demo twice, checks the screens, and lists where the scenario had to differ from the description. Run it again after changing the description or when the interface changes.
+Then, in Claude Code, run `/inki:inki-interactive-demo <id>`. It reads the description, finds each element in the running demo app, writes `<id>.yaml` (and `<id>.setup.js` when the tour changes data), captures the demo twice, checks the screens, and lists where the scenario had to differ from the description. Run it again after changing the description or when the interface changes.
 
-To look at the app yourself at a given step, the way `/inki:demo` does:
+To look at the app yourself at a given step, the way `/inki:inki-interactive-demo` does:
 
 ```bash
 node scripts/interactive-demos/explore.js <id> --step 5 --out /tmp/explore
