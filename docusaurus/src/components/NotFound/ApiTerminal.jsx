@@ -165,8 +165,8 @@ export default function ApiTerminal() {
         <span className={styles.code404}>Error 404</span>
         <h1 className={styles.title}>Even the API agrees: nothing here</h1>
         <p className={styles.lede}>
-          The page you asked for has no published version. Find your way with the terminal, or
-          click a command below it.
+          The page you asked for has no published version.<br />
+          Find your way with the terminal, or click a command below it.
         </p>
       </div>
 
