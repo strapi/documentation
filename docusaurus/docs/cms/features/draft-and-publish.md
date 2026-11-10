@@ -27,7 +27,9 @@ The Draft & Publish feature allows you to manage drafts for your content.
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="3r3wj5lbnk" darkId="ok8y5xehxp"/>
+<!-- <Guideflow lightId="3r3wj5lbnk" darkId="ok8y5xehxp"/> -->
+
+<InteractiveDemo id="draft-and-publish" />
 
 ## Configuration
 

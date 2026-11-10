@@ -50,6 +50,10 @@ env:
   # else: everything below this line still applies.
   # See automerge-eligibility.yml for the rationale.
   APPROVED_LABEL: 'automerge: approved by piwi'
+  # The same label automerge-eligibility.yml sets on PRs that fail the form
+  # checks, so every PR the gate will not merge alone sits behind one filter.
+  # `needs-human-review`, without the prefix, belongs to the issue workflows.
+  REVIEW_LABEL: 'automerge: needs human review'
   QUARANTINE_HOURS: 24
   # Checks that must be green. Deliberately an allow-list, not "everything":
   # `license/cla` is permanently pending on pipeline PRs because the CLA bot does
@@ -283,10 +287,14 @@ jobs:
               HELD_LIST="${HELD_LIST}• ${LINK} — human feedback from ${COMMENTERS}\n"
 
               # Recorded on the PR so the hold is visible there, not only in the
-              # Slack recap. Removing the label is what releases it.
+              # Slack recap. The label is a marker only: the hold comes from the
+              # comments above, so removing it releases nothing.
+              #
+              # REST rather than `gh pr edit`: the latter goes through GraphQL and
+              # demands the read:org scope, which PAT_TOKEN_PIWI does not carry.
               if [ "$DRY_RUN" != "true" ]; then
-                gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" \
-                  --add-label "needs-human-review" 2>/dev/null || true
+                gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR/labels" \
+                  -f "labels[]=$REVIEW_LABEL" --silent 2>/dev/null || true
               fi
               continue
             fi

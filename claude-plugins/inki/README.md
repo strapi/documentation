@@ -117,6 +117,12 @@ Once the page passes review, one command takes it all the way to an open PR, del
 
 Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skill encodes a slice of `git-rules.md` once and is reused everywhere. Already opened a PR and need to fix its title or description? `/inki:pr-fix` rewrites them to match `git-rules.md`.
 
+## Special commands
+
+Special commands sit outside the four families: no orchestrator runs them, and Claude never starts them on its own. Only a maintainer runs them, by typing the command.
+
+- `/inki:inki-interactive-demo <demo-id>`: create or update an interactive demo embedded in a feature page, from a plain-text description of the tour. It finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures the demo and checks the result. See [its README](./skills/inki-interactive-demo/README.md).
+
 ## Command reference
 
 The summary below covers the most common usage. For a per-command reference of every skill and its argument signature, see [COMMANDS.md](./COMMANDS.md) (curated, not auto-generated; mirrors each skill's frontmatter). You can also type `/inki:<skill> --help` to print a single command's usage.
@@ -180,6 +186,10 @@ Find out what already exists, where to put new content, what's missing.
 - `/inki:push`: push with validation.
 - `/inki:pr [issue]`: open a PR with a compliant title and description.
 - `/inki:pr-fix <title|description|body> [--non-interactive] [--include-old] [PR# or URL...]`: rewrite the title or body of existing PRs (`body` is an alias of `description`).
+
+### Special commands: run by a maintainer only
+
+- `/inki:inki-interactive-demo <demo-id> [description file or text]`: create or update an interactive demo from a plain-text description of its steps.
 
 ### Common flags
 

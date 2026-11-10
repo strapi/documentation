@@ -11,16 +11,16 @@ tags:
 # Cron jobs
 
 <Tldr>
-Cron jobs schedule custom functions at specific times via `node-schedule`, activated through server config and optional task files.
+Cron jobs schedule custom functions at specific times via `croner`, activated through server config and optional task files.
 </Tldr>
 
 :::prerequisites
 The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/cms/configurations/server).
 :::
 
-`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
+`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs.
 
-This feature is powered by the <ExternalLink to="https://www.npmjs.com/package/node-schedule" text="`node-schedule`"/> package.
+This feature is powered by the <ExternalLink to="https://github.com/Hexagon/croner" text="`croner`"/> package.
 
 The `cron` format consists of:
 
@@ -82,6 +82,8 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/cron-tasks.ts"
+import type { Modules } from "@strapi/strapi";
+
 export default {
   /**
    * Simple example.
@@ -96,7 +98,7 @@ export default {
       rule: "0 0 1 * * 1",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </TabItem>
@@ -137,6 +139,8 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/cron-tasks.ts"
+import type { Modules } from "@strapi/strapi";
+
 export default {
   /**
    * Cron job with timezone example.
@@ -153,7 +157,7 @@ export default {
       tz: "Asia/Dhaka",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </TabItem>
@@ -188,6 +192,8 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/cron-tasks.ts"
+import type { Modules } from "@strapi/strapi";
+
 export default {
   myJob: {
     task: async ({ strapi }) => {
@@ -196,7 +202,7 @@ export default {
     // only run once after 10 seconds
     options: new Date(Date.now() + 10000),
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </TabItem>
@@ -236,6 +242,8 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/cron-tasks.ts"
+import type { Modules } from "@strapi/strapi";
+
 export default {
   myJob: {
     task: async ({ strapi }) => {
@@ -250,7 +258,7 @@ export default {
       end: new Date(Date.now() + 20000),
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </TabItem>
@@ -289,6 +297,8 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/cron-tasks.ts"
+import type { Modules } from "@strapi/strapi";
+
 export default {
   /**
    * Simple example.
@@ -298,7 +308,7 @@ export default {
   "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </TabItem>
@@ -319,6 +329,9 @@ const cronTasks = require("./cron-tasks");
 module.exports = ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS"),
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -337,6 +350,9 @@ import type { Core } from '@strapi/strapi';
 export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS")!,
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,

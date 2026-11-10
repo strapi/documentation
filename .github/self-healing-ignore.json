@@ -1829,6 +1829,346 @@
       "number": 28184,
       "reason": "Router: Admin panel bug fix. Fixes React rendering crash for content types with 'ref' attribute in list view columns. Fixes UI edge case, not API documentation.",
       "added": "2026-10-28"
+    },
+    {
+      "number": 28287,
+      "reason": "Router: Internal CTB service fix for draftAndPublish resolution. No public API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28285,
+      "reason": "Router: Internal CTB service fix for preserving schema options. No public API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28284,
+      "reason": "Router: Internal validation guard in CTB. Prevents a bug but doesn't change documented behavior or APIs.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28279,
+      "reason": "Router: Internal error handling improvement for event listeners. No public API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28273,
+      "reason": "Router: Review Workflows plugin bug fix for null stage handling in UI. The contract change (allowing null strapi_stage) is a bug fix, not a documented API change. The homepage contract is internal.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28271,
+      "reason": "Router: Review Workflows service fix for async/transaction handling. Internal implementation improvement, no API or feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28260,
+      "reason": "Router: CTB service error handling improvement. No API or documented feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28237,
+      "reason": "Router: Review Workflows service fix for handling orphaned content types. Internal error handling improvement, no API or feature change.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 28205,
+      "reason": "Router: CTB service fix for event emission when content type kind changes. Internal event improvement, not a documented API or feature.",
+      "added": "2026-10-29"
+    },
+    {
+      "number": 27994,
+      "reason": "Triage: internal optimization, admin UI performance improvement with no user-facing behavior change",
+      "added": "2026-10-30"
+    },
+    {
+      "number": 28289,
+      "reason": "Router: Internal database fix for Query Engine API. Moving relations with position parameters was already a public API feature. This fix addresses a MySQL/MariaDB-specific bug in the implementation without exposing new API surfaces or user-facing behavior changes. No documentation updates needed.",
+      "added": "2026-10-30"
+    },
+    {
+      "number": 28283,
+      "reason": "Router: Internal UI refactoring replacing legacy dialog with controlled drawer component. The asset details feature is already documented in the Media Library page; this PR updates internal implementation only.",
+      "added": "2026-10-31"
+    },
+    {
+      "number": 27902,
+      "reason": "Router: Type-only change aligning TypeScript types with runtime behavior. No public API surface or user-facing behavior changed; types now correctly reflect what already works at runtime.",
+      "added": "2026-10-31"
+    },
+    {
+      "number": 28369,
+      "reason": "Triage: test infrastructure fix only",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28378,
+      "reason": "Router: Internal admin session configuration fix with default behavior change. Contributor documentation updated. No user-facing API or configuration change that needs documentation.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28337,
+      "reason": "Router: Internal architecture fix aligning audit logs behavior across editions. Contributor documentation updated. User-facing behavior unchanged: audit logs still gated by license feature.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28335,
+      "reason": "Router: Internal fix for API response format consistency (license feature options). No user-facing behavior change or configuration change requiring documentation.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28333,
+      "reason": "Router: Internal validation fix for collection-to-single-type conversion guard. Bug fix only, no new features or configuration changes.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28332,
+      "reason": "Router: Internal developer experience fix for CTB file watcher behavior in strapi develop. Bug fix only, no user-facing documentation needed.",
+      "added": "2026-11-03"
+    },
+    {
+      "number": 28401,
+      "reason": "Triage: code style/linting fix with no behavior change",
+      "added": "2026-11-04"
+    },
+    {
+      "number": 28393,
+      "reason": "Triage: build/type-checking configuration, no runtime behavior change",
+      "added": "2026-11-04"
+    },
+    {
+      "number": 27981,
+      "reason": "Triage: debugging/observability improvement, no user-facing functionality change",
+      "added": "2026-11-04"
+    },
+    {
+      "number": 28390,
+      "reason": "Router: Internal admin UI auth flow fix. No public API or user-facing behavior change.",
+      "added": "2026-11-04"
+    },
+    {
+      "number": 28383,
+      "reason": "Router: Internal logging improvement for boot cleanup. No public API or behavior change.",
+      "added": "2026-11-04"
+    },
+    {
+      "number": 28331,
+      "reason": "Router: Internal permission checker bug fix. No public API surface change.",
+      "added": "2026-11-04"
+    },
+    {
+      "number": 27895,
+      "reason": "Triage: bug fix for development-mode issue only",
+      "added": "2026-11-05"
+    },
+    {
+      "number": 28382,
+      "reason": "Router: Internal admin UI enhancement adding a visual badge. No user-facing API or feature changes. Contributor docs in strapi/strapi already updated.",
+      "added": "2026-11-05"
+    },
+    {
+      "number": 28239,
+      "reason": "Router: Diff too large (4486 lines exceeds 3000 line limit)",
+      "added": "2026-11-05"
+    },
+    {
+      "number": 28367,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3641",
+      "added": "2026-11-05"
+    },
+    {
+      "number": 28452,
+      "reason": "Triage: admin UI behavior fix for intended behavior",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28440,
+      "reason": "Triage: admin UI layout/CSS fix",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28395,
+      "reason": "Triage: types-only change, no runtime behavior",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28171,
+      "reason": "Triage: internal telemetry implementation fix",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28413,
+      "reason": "Router: Internal admin panel fix. Modifies internal contributor documentation (docs/docs/packages/core/admin/) and admin hooks, not public-facing API documentation. Behavior is self-evident to users (link is hidden when disabled).",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28250,
+      "reason": "Router: Bug fix to internal license limit handling. Modifies internal plugin documentation (docs/docs/packages/core/review-workflows/) to clarify how existing license limits work. No changes to public-facing APIs or behavior.",
+      "added": "2026-11-06"
+    },
+    {
+      "number": 28501,
+      "reason": "Triage: build infrastructure dependency update",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28470,
+      "reason": "Triage: example template internal fix",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28462,
+      "reason": "Triage: types only, no runtime behavior change",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28461,
+      "reason": "Triage: internal logic, types only",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28416,
+      "reason": "Triage: types only",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28415,
+      "reason": "Triage: types only",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28414,
+      "reason": "Triage: internal logging formatting",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28477,
+      "reason": "Router: TypeScript type rename in custom field API. Internal API type fix with no user-facing behavior or documentation impact.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28474,
+      "reason": "Router: Package build configuration fix (rollup config). Runtime impact is transparent to documentation readers.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28473,
+      "reason": "Router: Documentation updates are already included in the source PR (develop.md and server-lifecycle.md). Routing docs are in-place.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28472,
+      "reason": "Router: Type dependency management fix. No user-facing behavior change or public API impact.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28467,
+      "reason": "Router: CLI behavior fix that restores documented default behavior. No new user-facing feature or API change.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28464,
+      "reason": "Router: Internal service behavior fix. HTTP API already validates displayName; this adds validation to direct service calls, catching invalid states earlier.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28463,
+      "reason": "Router: Developer error handling improvement. Provides better error messages for misconfigured policies/middlewares. No new public API or behavior documented.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28460,
+      "reason": "Router: Internal implementation detail for TypeScript type generation. Fixes non-deterministic output across machines, not a user-facing API change.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28449,
+      "reason": "Router: UI bug fix in Media Library folder sidebar. No documentation required for UI fixes.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28417,
+      "reason": "Router: Endpoint robustness fix. Prevents 500 errors on edge-case inputs by falling back to defaults instead of crashing.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28398,
+      "reason": "Router: Documentation updates are already included in the source PR (content-type-builder index.md explains the rename transaction behavior). Architectural docs are handled.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28172,
+      "reason": "Router: Documentation updates are already included in the source PR (document-write-path.md updated to reflect boolean error handling). Breaking change docs are in-place.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28169,
+      "reason": "Router: Documentation updates are already included in the source PR (content-releases backend.md updated to clarify published releases are not modified). Behavior docs are handled.",
+      "added": "2026-11-07"
+    },
+    {
+      "number": 28534,
+      "reason": "Triage: type/contract fix with no observable behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28528,
+      "reason": "Triage: type fix with no observable behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28523,
+      "reason": "Triage: type tightening fix with no runtime code changes",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28522,
+      "reason": "Triage: type fix with no runtime change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28517,
+      "reason": "Triage: type fix, server unchanged, admin query returns same tree as before",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28515,
+      "reason": "Triage: type fix, route behavior unchanged",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28478,
+      "reason": "Triage: compiler performance fix with no behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28469,
+      "reason": "Triage: type fix with no runtime change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28429,
+      "reason": "Triage: test infrastructure change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28356,
+      "reason": "Triage: bug fix enabling edge case to work",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28157,
+      "reason": "Triage: performance optimization with no behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28357,
+      "reason": "Router: Diff too large (3905 lines). Internal enhancement removing an experimental feature flag; no new user-facing functionality added, only a flag removal. Minimal documentation impact expected.",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28339,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3665",
+      "added": "2026-11-10"
     }
   ]
 }

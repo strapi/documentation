@@ -27,6 +27,17 @@ The documentation covers two products with different audiences:
 - **CMS Docs** (`docs/cms/`) — Core Strapi CMS features and APIs
 - **Cloud Docs** (`docs/cloud/`) — Strapi Cloud hosting platform
 
+## Inki: the documentation toolkit
+
+Before writing, reviewing, or submitting documentation in this repository, use Inki (`claude-plugins/inki/`) instead of improvising your own process. It encodes the templates, authoring guides, style rules, review rubrics, and git conventions of the Strapi docs. Overview: `claude-plugins/inki/README.md`.
+
+Each task has a skill at `claude-plugins/inki/skills/<skill>/SKILL.md`; pick it from the `description` in its frontmatter. Claude Code users install the plugin and call `/inki:<skill>` (see the README). Any other AI tool can follow the `SKILL.md` files directly:
+
+1. Treat `$ARGUMENTS` as the arguments the user gave (target path, PR, flags such as `--non-interactive` or `--fix`).
+2. Resolve relative paths (`../../references/...`, `../_shared/...`) from the directory of the `SKILL.md` file, and read `${CLAUDE_PLUGIN_ROOT}` as `claude-plugins/inki`.
+3. When a skill says to dispatch an `inki:<name>` agent, read `claude-plugins/inki/agents/<name>.md` and follow it, as parallel subagents if your tool supports them, one after another otherwise. These agents are read-only.
+4. When a skill says to ask the user a question, ask it in your tool's normal way, unless `--non-interactive` was passed.
+
 ## Development commands and prerequisites
 
 All development is done in the `/docusaurus` subdirectory (`cd docusaurus`).
@@ -62,7 +73,7 @@ All development is done in the `/docusaurus` subdirectory (`cd docusaurus`).
 Path‑based policy (applies to folders and all subfolders):
 - `src/` (and `docusaurus/src/`): allow `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.css`, `.scss`, `.html`.
 - `docs/cms/`, `docs/cloud/`, `docs/snippets/`: allow only `.md`, `.mdx`.
-- `static/`: allow image assets (`.png`, `.svg`, `.gif`, `.jpg`), `.html`, `.js`.
+- `static/`: allow image assets (`.png`, `.svg`, `.gif`, `.jpg`, `.webp`), `.html`, `.js`. Interactive demo screenshots use `.webp`.
 - `.github/workflows/`: allow only `.yml`.
 - Also present elsewhere: `.scss`, `.css`, image assets (do not expand usage without approval).
 - Not allowed without explicit approval: Python, Ruby, Go, Rust, etc. (no new stacks).
@@ -80,7 +91,9 @@ Path‑based policy (applies to folders and all subfolders):
 │   ├── scripts/               # Build and utility scripts
 │   ├── sidebars.js           # Sidebar configuration
 │   └── docusaurus.config.js  # Main configuration
-├── claude-plugins/inki/       # Inki Claude Code plugin
+├── claude-plugins/inki/       # Inki docs toolkit (Claude Code plugin, usable by any agent)
+│   ├── skills/               # One SKILL.md per task (see "Inki" section)
+│   ├── agents/               # Read-only reviewers dispatched by the review skills
 │   └── references/           # Agent prompts, templates, authoring guides
 │       ├── prompts/          # AI agent specifications
 │       ├── templates/        # Content templates
@@ -164,9 +177,9 @@ Router → Outliner (Generator) → Drafter → Style Checker → Integrity Chec
 ### Usage
 
 These prompts are designed for use in:
-- **Claude Code / Claude Projects**: Import prompts as project knowledge
+- **Claude Code / Claude Projects**: Install the Inki plugin (see the Inki section above); in Claude Projects, import prompts as project knowledge
 - **Cursor IDE**: Use the `.cursor/rules/*.mdc` wrappers
-- **Other AI tools (Copilot, Cline, Windsurf…)**: Copy prompt content or use as system prompts
+- **Other AI tools (Codex, Copilot, Gemini CLI, Cline, Windsurf…)**: Follow the Inki skills directly (see the Inki section above), or use the prompts as system prompts
 
 See `claude-plugins/inki/references/prompts/README.md` for detailed usage instructions.
 

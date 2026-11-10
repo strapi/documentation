@@ -29,7 +29,9 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="ok8v0jeaxp" darkId="ok8v0jeaxp"/>
+<!-- <Guideflow lightId="ok8v0jeaxp" darkId="ok8v0jeaxp"/> -->
+
+<InteractiveDemo id="media-library" />
 
 ## Configuration
 
@@ -1015,7 +1017,7 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 <GrowthBadge /> <AiAddonBadge />
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi AI](/cms/ai/for-content-managers#strapi-ai) automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the <EnterpriseBadge /> plan, this feature requires the AI add-on: Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi AI](/cms/ai/for-content-managers#strapi-ai) automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the <EnterpriseBadge /> plan, this feature requires [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a paid add-on, and uses your own AI provider. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
@@ -1145,6 +1147,10 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 To leave the editor without changing anything, click **Cancel**.
 
+:::note
+With the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) or an S3-compatible service, the image loads in the _Crop & Focus area_ editor only with a bucket CORS rule. The rule must allow the admin panel URL. Without it, you cannot crop the image or set its focus area (see [bucket CORS configuration](/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)). The [local provider](/cms/configurations/media-library-providers/local-upload) does not need any CORS setup.
+:::
+
 :::info
 * The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
 * The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
@@ -1169,6 +1175,8 @@ The previous file is permanently replaced and cannot be recovered. If [AI metada
 2. Click the <Icon name="download-simple" /> **Download** button to save the file to your computer, or the <Icon name="link" classes="ph-bold" /> **Copy link** button to copy its URL to the clipboard.
 
 Both actions are also available from the asset's <Icon name="dots-three" classes="ph-bold" /> actions menu, as **Copy link to media** and **Download media**.
+
+With the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) or an S3-compatible service, downloading only works if the bucket has a CORS rule that allows the admin panel URL (see [bucket CORS configuration](/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)).
 
 :::note
 **Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's <Icon name="dots-three" classes="ph-bold" /> actions menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
@@ -1247,7 +1255,7 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 #### Generating metadata in bulk {#bulk-metadata}
 <GrowthBadge /> <AiAddonBadge />
 
-When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, Strapi-managed or powered by the [Bring your own AI key plugin](/cms/plugins/byok), a <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
+When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, with Strapi AI Growth or [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
 
 1. Select the images to describe.
 2. Click the <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar.

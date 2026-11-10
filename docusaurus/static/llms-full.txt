@@ -4099,7 +4099,7 @@ Source: https://docs.strapi.io/cms/ai/for-content-managers
 
 # AI for content managers
 
-Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. It is Strapi-managed on the  plan. On the  plan, it requires the AI add-on and is powered by your own AI key, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. On the  plan, Strapi AI Growth runs it on Strapi-managed infrastructure. On the  plan, Strapi AI Enterprise, a paid add-on, runs it on your own model, for translations and asset metadata only. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
 
 This page sums up the AI-powered capabilities available to content managers in Strapi: the AI features built into the admin panel, and the MCP server that lets AI clients manage your content.
 
@@ -4109,26 +4109,26 @@ Some Strapi CMS features can be enhanced with Strapi AI, helping content manager
 
 Strapi AI is powered in one of 2 ways, depending on your plan:
 
-| | Strapi-managed | Bring your own AI key |
+| | Strapi AI Growth (Strapi-managed) | Strapi AI Enterprise (bring your own model) |
 |---|---|---|
-| Plan |  |  with the AI add-on |
+| Plan |  | , as a [paid add-on](https://strapi.io/contact-sales) |
 | Features | Content-Type Builder assistant, AI Translations, AI metadata generation | AI Translations and AI metadata generation. No Content-Type Builder assistant. |
 | Strapi version | 5.30 or later | 5.59 or later |
 | AI requests go to | Strapi-managed infrastructure | Your own AI provider, with your API key and models |
-| Billing | [AI credits](#credits) | The AI add-on fee, plus your AI provider's pricing |
+| Billing | [AI credits](#credits) | The add-on fee, with unlimited usage and no credits, plus your AI provider's pricing |
 | Data handling | [Strapi-managed](/cms/usage-information#strapi-ai-data-handling) | Your provider's terms |
 
 ### Activation and configuration {#activation}
 
-With Strapi-managed AI, Strapi AI works with both Strapi Cloud and self-hosted deployments. To get started:
+With Strapi AI Growth, Strapi AI works with both Strapi Cloud and self-hosted deployments. To get started:
 
 1. Upgrade to Strapi v5.30+. AI features are not available on earlier versions.
-2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
+2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 credits to explore AI features.
 3. Access AI features from the Content-Type Builder, Media Library, or Content Manager. The Content-Type Builder assistant and AI metadata generation are enabled by default. AI Translations must be [enabled in the Internationalization settings](/cms/features/internationalization#enabling-ai-powered-internationalization).
 
-To power Strapi AI with your own AI key, on the Enterprise plan, subscribe to the AI add-on, then install and configure the [Bring your own AI key plugin](/cms/plugins/byok).
+To run Strapi AI on your own model, on the Enterprise plan, subscribe to the Strapi AI Enterprise add-on, then install and configure the [Strapi AI Enterprise plugin](/cms/plugins/strapi-ai-enterprise).
 
-All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they are Strapi-managed or powered by your own AI key:
+All Strapi AI features can be enabled or disabled globally through the admin panel configuration, whether they run on Strapi AI Growth or Strapi AI Enterprise:
 
 ```js title="/config/admin.js|ts"
 module.exports = {
@@ -4143,17 +4143,17 @@ module.exports = {
 
 ### Available features {#features}
 
-| Feature | Description | Strapi-managed | Bring your own AI key |
+| Feature | Description | Strapi AI Growth | Strapi AI Enterprise |
 |---------|-------------|----------------|-----------------------|
-| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | Available | Not available |
-| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | Available | Available |
-| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text and captions for uploaded images. | Available | Available |
+| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. | ✅ Available | ❌ Not available |
+| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. | ✅ Available | ✅ Available |
+| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text and captions for uploaded images. | ✅ Available | ✅ Available |
 
 ### Credits and data handling {#credits}
 
-Strapi-managed AI consumes AI credits.
+Strapi AI Growth consumes AI credits.
 
-Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
+Strapi AI Growth includes 1,000 credits per month on the  plan, and 10 credits during the free trial. On the  plan, Strapi AI runs on your own AI provider through [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -4162,10 +4162,9 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
+When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
 
-Strapi-managed AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi-managed AI follows the same GDPR-aligned framework as Strapi Cloud. With your own AI key, your provider's data handling terms apply.
+Strapi AI Growth requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI Growth follows the same GDPR-aligned framework as Strapi Cloud. With Strapi AI Enterprise, your provider's data handling terms apply.
 
   See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
 
@@ -11602,7 +11601,7 @@ Returns a paginated list of documents. Supports filtering, sorting, field select
 - `populate` (string | object): Relations and components to include. Use `*` for all. See populate (/cms/api/rest/populate-select).
 - `fields` (string[]): Select specific fields to return. See field selection (/cms/api/rest/populate-select#field-selection).
 - `pagination[page]` (integer): Page number. Default: `1`
-- `pagination[pageSize]` (integer): Items per page. Default: `25`. The maximum is set by `api.rest.maxLimit` (see pagination (/cms/api/rest/sort-pagination#pagination-by-page)).
+- `pagination[pageSize]` (integer): Items per page. Default: `25`. Capped by `api.rest.maxLimit` when it is set (see pagination (/cms/api/rest/sort-pagination#pagination-by-page)).
 - `locale` (string): Locale of the documents to fetch. See locale (/cms/api/rest/locale).
 - `status` (string): `published` or `draft`. See status (/cms/api/rest/status).
 - `publicationFilter` (string): Query documents by the relationship between their draft and published versions. See publicationFilter (/cms/api/rest/publication-filter).
@@ -15672,7 +15671,7 @@ To paginate results by page, use the following parameters:
 | Parameter               | Type    | Description                                                               | Default |
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
-| `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
+| `pagination[pageSize]`  | Integer | Page size, capped by `api.rest.maxLimit` when it is set                   | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 #### GET /api/articles?pagination[page]=1&pagination[pageSize]=10 — Pagination by page
@@ -15717,11 +15716,11 @@ await request(`/api/articles?${query}`);
 
 To paginate results by offset, use the following parameters:
 
-| Parameter               | Type    | Description                                                    | Default |
-| ----------------------- | ------- | -------------------------------------------------------------- | ------- |
-| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                      | 0       |
-| `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
-| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
+| Parameter               | Type    | Description                                                                                                                | Default |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                                                                                   | 0       |
+| `pagination[limit]`     | Integer | Number of entries to return, capped by `api.rest.maxLimit` when it is set. Use `-1` to return all entries, up to that cap. | 25      |
+| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response                                                             | `true`  |
 
 :::tip
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/cms/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
@@ -16288,7 +16287,7 @@ It accepts the same query parameters as other REST collection endpoints:
 | `pagination[page]` | Page number (1-based). Default `1`. |
 | `pagination[pageSize]` | Number of files per page. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. |
 | `pagination[start]` | Pagination by offset: number of files to skip. |
-| `pagination[limit]` | Pagination by offset: maximum number of files to return. |
+| `pagination[limit]` | Pagination by offset: maximum number of files to return. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. Use `-1` to return all files, up to that cap. |
 | `pagination[withCount]` | Whether to run the count query and include `total` and `pageCount` in the response. Defaults to `true`. |
 | `filters` | [Filter](/cms/api/rest/filters) the results. |
 | `sort` | [Sort](/cms/api/rest/sort-pagination#sorting) the results. |
@@ -22755,6 +22754,8 @@ Administrator's first name, last name, email, and password can be:
 - passed as options
 - or set interactively if you call the command without passing any option.
 
+The password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks. When the password is set interactively, it is checked after the last question and the command asks for the password again. When it is passed with `--password`, the command exits with an error.
+
 **Example**
 
 ```bash
@@ -22778,6 +22779,8 @@ strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io -
 
 Reset an admin user's password.
 You can pass the email and new password as options or set them interactively if you call the command without passing the options.
+
+The new password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks and the command exits with an error, whether the password is set interactively or passed with `--password`.
 
 **Example**
 
@@ -23587,9 +23590,9 @@ To configure session lifespans and behavior, use the following parameters:
 | `auth.sessions`                           | Session management configuration                                                                                                                                                                   | object        | `{}`                                                                                                                                |
 | `auth.sessions.accessTokenLifespan`       | Access token lifespan in seconds                                                                                                                                                                   | number        | `1800` (30 minutes)                                                                                                                 |
 | `auth.sessions.maxRefreshTokenLifespan`   | Maximum refresh token lifespan in seconds                                                                                                                                                          | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
-| `auth.sessions.idleRefreshTokenLifespan`  | Idle refresh token timeout in seconds                                                                                                                                                              | number        | `604800` (7 days)                                                                                                                   |
+| `auth.sessions.idleRefreshTokenLifespan`  | Idle refresh token timeout in seconds                                                                                                                                                              | number        | `1209600` (14 days)                                                                                                                 |
 | `auth.sessions.maxSessionLifespan`        | Maximum session duration in seconds                                                                                                                                                                | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
-| `auth.sessions.idleSessionLifespan`       | Session idle timeout in seconds                                                                                                                                                                    | number        | `3600` (1 hour)                                                                                                                     |
+| `auth.sessions.idleSessionLifespan`       | Session idle timeout in seconds                                                                                                                                                                    | number        | `7200` (2 hours)                                                                                                                   |
 | `auth.sessions.options`                   | Options passed to jsonwebtoken to sign and verify admin tokens. Merged on top of the deprecated `auth.options`. `expiresIn` is stripped before tokens are signed, so it never sets a token lifetime, but it is still read as the fallback value of `maxRefreshTokenLifespan` and `maxSessionLifespan` when these are not set.  | object        | `{}`                                                                                                                                |
 | `auth.sessions.options.algorithm`         | Algorithm used to sign admin tokens (e.g., `HS256`, `RS256`, `ES256`). Symmetric `HS*` algorithms use `auth.secret` as the key.                                                                    | string        | `HS256`                                                                                                                             |
 | `auth.sessions.options.privateKey`        | Private key used to sign tokens. Required for asymmetric algorithms (`RS*`, `ES*`, `PS*`): tokens cannot be signed without it, and the resulting error names the legacy `admin.auth.options.privateKey` path.  | string        | -                                                                                                                                   |
@@ -23665,7 +23668,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 
 ## Strapi AI  {#strapi-ai}
 
-Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation), can be enabled or disabled. The setting applies whether Strapi AI is Strapi-managed, on  plans, or powered by the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan:
+Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai), [Internationalization](/cms/features/internationalization#ai-powered-internationalization) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation), can be enabled or disabled. The setting applies whether Strapi AI runs on Strapi AI Growth, on the  plan, or on [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), on the  plan with the [Strapi AI Enterprise add-on](https://strapi.io/contact-sales):
 
 | Parameter    | Description                              | Type     | Default         |
 | ------------ | ---------------------------------------- | -------- | --------------- |
@@ -23882,7 +23885,7 @@ General settings for API calls can be set in the `./config/api.js` (or `./config
 | `rest`                        | REST API configuration                                                                                                                                                                                                                               | Object       | -       |
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
 | `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). Setting it to `-1` removes the limit (see note below).                                                                     | Integer      | `25`    |
-| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
+| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). When unset, there is no maximum. New projects set `rest.maxLimit` to `100` in the generated `config/api` file. | Integer      | -       |
 | `rest.withCount`              | Whether list responses include the total number of entries and pages in `meta.pagination` by default. Can be overridden per request with the [`pagination[withCount]`](/cms/api/rest/sort-pagination#pagination-by-offset) parameter. | Boolean      | `true`  |
 | `rest.strictParams`           | When `true`, only allowed query and body parameters are accepted on Content API routes; unknown top-level keys are rejected. Add allowed parameters via [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters) in `register`. | Boolean      | -       |
 | `documents`                   | Document Service configuration                                                                                                                                                                                                                        | Object       | -       |
@@ -23945,15 +23948,15 @@ Source: https://docs.strapi.io/cms/configurations/cron
 
 # Cron jobs
 
-Cron jobs schedule custom functions at specific times via `node-schedule`, activated through server config and optional task files.
+Cron jobs schedule custom functions at specific times via `croner`, activated through server config and optional task files.
 
 :::prerequisites
 The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/cms/configurations/server).
 :::
 
-`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
+`cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs.
 
-This feature is powered by the [`node-schedule`](https://www.npmjs.com/package/node-schedule) package.
+This feature is powered by the [`croner`](https://github.com/Hexagon/croner) package.
 
 The `cron` format consists of:
 
@@ -24021,7 +24024,7 @@ module.exports = {
       rule: "0 0 1 * * 1",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 <details>
@@ -24066,7 +24069,7 @@ module.exports = {
       tz: "Asia/Dhaka",
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </details>
@@ -24097,7 +24100,7 @@ module.exports = {
     // only run once after 10 seconds
     options: new Date(Date.now() + 10000),
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </details>
@@ -24139,7 +24142,7 @@ module.exports = {
       end: new Date(Date.now() + 20000),
     },
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 </details>
@@ -24175,7 +24178,7 @@ module.exports = {
   "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
-};
+} satisfies Modules.Cron.CronTasks;
 ```
 
 ## Enabling cron jobs
@@ -24188,6 +24191,9 @@ const cronTasks = require("./cron-tasks");
 module.exports = ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS"),
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -24199,6 +24205,9 @@ module.exports = ({ env }) => ({
 
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
+  app: {
+    keys: env.array("APP_KEYS")!,
+  },
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -25969,9 +25978,10 @@ All 3 lifecycle functions can be put together to configure custom behavior durin
 3. Restart Strapi to confirm each lifecycle executes in sequence.
 
 ```ts title="src/index.ts"
+
 let cronJobKey: string | undefined;
 
-  register({ strapi }) {
+  register({ strapi }: { strapi: Core.Strapi }) {
     strapi.customFields.register({
       name: 'color',
       type: 'string',
@@ -25979,7 +25989,7 @@ let cronJobKey: string | undefined;
     });
   },
 
-  async bootstrap({ strapi }) {
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     cronJobKey = 'log-reminders';
 
     strapi.cron.add({
@@ -25994,7 +26004,7 @@ let cronJobKey: string | undefined;
     });
   },
 
-  async destroy({ strapi }) {
+  async destroy({ strapi }: { strapi: Core.Strapi }) {
     if (cronJobKey) {
       strapi.cron.remove(cronJobKey);
     }
@@ -27003,6 +27013,8 @@ If your bucket is configured to be private, set the `ACL` option to `private` in
 
 You can define the expiration time of the signed URL by setting the `signedUrlExpires` option in the `params` object. The default value is 15 minutes.
 
+A private bucket also requires a [bucket CORS rule](#bucket-cors-configuration) that allows the admin panel URL. Without it, the Media Library displays no image thumbnails or image previews.
+
 :::note
 If you are using a CDN, the URLs will not be signed.
 :::
@@ -27040,7 +27052,7 @@ module.exports = ({ env }) => ({
 
 ## Required setup
 
-The following are the minimum configuration actions to take into account for your AWS S3 setup to work with the Media Library.
+The following are the configuration actions to take into account for your AWS S3 setup to work with the Media Library.
 
 ### IAM policy actions
 
@@ -27058,24 +27070,76 @@ The following are the minimum amount of permissions needed for the AWS S3 provid
 
 ### Bucket CORS configuration
 
-To display thumbnails for GIFs and videos uploaded to S3, edit your bucket's CORS configuration so that thumbnails are properly shown in Strapi. To do so:
+Add a CORS rule to your bucket to use the Media Library features listed in this section.
+
+The admin panel (e.g., `https://admin.example.com`) and the bucket (e.g., `https://my-bucket.s3.eu-west-3.amazonaws.com`) are served from different origins. Displaying an image from the bucket does not require CORS. However, some Media Library features load files in CORS mode. In that mode, the browser only accepts a file if the bucket returns an `Access-Control-Allow-Origin` header that matches the admin panel URL.
+
+A bucket CORS rule is required for the following features:
+
+- Cropping images and setting a focus area: the editor loads the image in CORS mode to draw it on a canvas and export the result. Without a CORS rule, the image does not load in the editor and cannot be cropped.
+- Downloading files: the admin panel fetches the file before saving it. Without a CORS rule, the download fails.
+- Image thumbnails and image previews from a [private bucket](#private-bucket-and-signed-urls): signed URLs are loaded in CORS mode, so no image is displayed without a CORS rule.
+- Previews in the [previous Media Library](/cms/features/media-library#use-legacy-media-library): the image preview of the _Details_ window and the video thumbnails load in CORS mode.
+
+The following table summarizes what works depending on the storage setup. The table assumes that the [security middleware](#security-middleware-configuration) already allows the bucket host.
+
+| Storage setup | Thumbnails and previews | _Crop & Focus area_ editor | Download |
+| --- | --- | --- | --- |
+| Public bucket, no CORS rule | Displayed, except video thumbnails and the _Details_ window preview in the previous Media Library | Fails | Fails |
+| Public bucket, CORS rule allows the admin panel URL | Displayed | Works | Works |
+| Private bucket (signed URLs), no CORS rule | Images not displayed, nor video thumbnails in the previous Media Library | Fails | Fails |
+| Private bucket (signed URLs), CORS rule allows the admin panel URL | Displayed | Works | Works |
+| [Local provider](/cms/configurations/media-library-providers/local-upload) (no bucket) | Displayed | Works | Works |
+
+To add a CORS rule to your bucket:
 
 1. Open your bucket in the AWS console.
 2. Navigate to the _Permissions_ tab.
-3. Locate the _Cross-origin resource sharing (CORS)_ field.
-4. Add the following CORS policy (or adapt it to your needs):
+3. In the _Cross-origin resource sharing (CORS)_ section, click **Edit**.
+4. Add the following CORS policy. Replace the `AllowedOrigins` values with the URL(s) of your admin panel. Keep `http://localhost:1337` only if a local Strapi instance uses this bucket.
 
-```json
-[
-  {
-    "AllowedHeaders": ["*"],
-    "AllowedMethods": ["GET"],
-    "AllowedOrigins": ["YOUR STRAPI URL"],
-    "ExposeHeaders": [],
-    "MaxAgeSeconds": 3000
-  }
-]
+   ```json
+   [
+     {
+       "AllowedHeaders": ["*"],
+       "AllowedMethods": ["GET"],
+       "AllowedOrigins": ["https://admin.example.com", "http://localhost:1337"],
+       "ExposeHeaders": [],
+       "MaxAgeSeconds": 3000
+     }
+   ]
+   ```
+
+5. Click **Save changes**.
+
+:::tip
+An origin consists of the scheme, host, and port only (e.g., `https://admin.example.com` or `http://localhost:1337`). Do not add a trailing slash or a path such as `/admin`, otherwise the origin does not match and the browser rejects the response.
+:::
+
+For an [S3-compatible service](#s3-compatible-services) (Scaleway, Cloudflare R2, MinIO, etc.), set the same rule in the service console. Alternatively, use the AWS CLI with the service endpoint. The AWS CLI expects the rules wrapped in a `CORSRules` object:
+
+```json title="cors.json"
+{
+  "CORSRules": [
+    {
+      "AllowedHeaders": ["*"],
+      "AllowedMethods": ["GET"],
+      "AllowedOrigins": ["https://admin.example.com"],
+      "MaxAgeSeconds": 3000
+    }
+  ]
+}
 ```
+
+```bash
+aws s3api put-bucket-cors --bucket my-bucket --cors-configuration file://cors.json --endpoint-url https://s3.fr-par.scw.cloud
+```
+
+Replace `my-bucket` and the `--endpoint-url` value with your bucket name and the S3 endpoint of your service.
+
+:::note
+The bucket CORS rule is not related to the [`strapi::cors` middleware](/cms/configurations/middlewares#cors). The middleware controls CORS for requests sent to the Strapi server. The bucket CORS rule controls CORS for files served by the bucket.
+:::
 
 ### Security middleware configuration
 
@@ -28602,7 +28666,7 @@ The `/config/server.js` file can include the following parameters:
 | `proxy.koa`                         | Set the koa variable `app.proxy`. When `true`, proxy header fields will be trusted.                                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
 | `proxy.ipHeader`                    |  Proxy IP header name to trust when identifying the client's real IP address. Set when behind a reverse proxy (e.g., Nginx, Apache, load balancer). For security, always pair with `proxy.maxIpsCount` to prevent header spoofing. Example: `'X-Forwarded-For'`, `'CF-Connecting-IP'`.                                                                                        | string                                                                                            | `'X-Forwarded-For'` |
 | `proxy.maxIpsCount`                 |  Maximum number of IP addresses to read from the proxy IP header. Must be set when using a reverse proxy to prevent IP spoofing attacks. Set to `1` for a single proxy, `2` for proxy chains, etc. Setting to `0` (Koa default) means unlimited, which is insecure behind a proxy.                                                                                             | integer                                                                                           | `0`                 |
-| `cron`                              | Cron configuration (powered by [`node-schedule`](https://github.com/node-schedule/node-schedule))                                                                                                                                                                                                                                                                           | object                                                                                            |                     |
+| `cron`                              | Cron configuration (powered by [`croner`](https://github.com/Hexagon/croner))                                                                                                                                                                                                                                                                                         | object                                                                                            |                     |
 | `cron.enabled`                      | Enable or disable [CRON jobs](/cms/configurations/cron.md) to schedule jobs at specific dates.                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
 | `cron.tasks`                        | Declare [CRON jobs](/cms/configurations/cron.md) to be run at specific dates.                                                                                                                                                                                                                                                                                          | object                                                                                            |                     |
 | `dirs`                              | Path configuration of different directories Strapi uses.                                                                                                                                                                                                                                                                                                                    | object                                                                                            |                     |
@@ -28625,6 +28689,7 @@ The `/config/server.js` file can include the following parameters:
 | `openapi.admin.cache.maxAgeMs`      | Cache validity in milliseconds.                                                                                                                                                                                                                                                                                                                                             | integer                                                                                           | `60000`             |
 | `openapi.admin.cache.filePath`      | File path for the cached specification. Relative paths resolve from the application root.                                                                                                                                                                                                                                                                                   | string                                                                                            | `.strapi/openapi/admin.json` |
 | `webhooks.defaultHeaders`           | Default headers sent with every webhook request. Headers set on an individual webhook take precedence. See [Webhooks](/cms/backend-customization/webhooks). | object                                                                                            | `{}`                |
+| `webhooks.deduplicateReleaseWebhooks` | Skip individual `entry.publish` and `entry.unpublish` webhook requests during a release publish when the webhook is also subscribed to `releases.publish`, reducing duplicate notifications for webhooks that handle both events. | boolean                                                                                           | `false`             |
 | `webhooks.populateRelations`        | (**Removed in Strapi 5**)<br/>The option is no longer read and has no effect. If the key is still present in your `/config/server` file, you can safely delete it. See [The `webhooks.populateRelations` server configuration is removed](/cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations). | boolean                                                                                           |                     |
 
 :::note
@@ -29383,11 +29448,11 @@ Source: https://docs.strapi.io/cms/configurations/typescript
 
 # TypeScript configuration
 
-TypeScript configuration explains the project’s tsconfig files, output directories, and an optional `config/typescript.js|ts` that auto-generates types on server restart. This documentation explains which folders store compiled code and how to toggle this experimental feature.
+TypeScript configuration explains the project’s tsconfig files, output directories, and an optional `config/typescript.js` file that controls automatic type generation in JavaScript projects. This documentation explains which folders store compiled code and how to toggle this experimental feature.
 
 [TypeScript](/cms/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
 
-Strapi also has dedicated TypeScript features that are configured [in the `config/typescript.js|ts` file](#strapi-specific-configuration-for-typescript).
+Strapi also has dedicated TypeScript features that are configured [in the `config/typescript.js` file](#strapi-specific-configuration-for-typescript).
 
 ## Project structure and TypeScript-specific configuration files
 
@@ -29408,23 +29473,19 @@ These settings are considered experimental and might have issues or break some f
 
 Types generated by Strapi are based on the user project structure. Once the type definitions are emitted into their dedicated files, Strapi reads the type definitions to adapt the autocompletion results accordingly.
 
-To avoid having to [manually generate types](/cms/typescript/development#generate-typings-for-content-types-schemas) every time the server restarts, an optional `config/typescript.js|ts` configuration file can be added, which currently accepts only one parameter:
+TypeScript projects (projects with a `tsconfig.json` file at the root) always generate types each time `strapi develop` starts or restarts the server. JavaScript projects do the same unless automatic type generation is disabled. `strapi start` never generates types, and `strapi ts:generate-types` always does.
 
-| Parameter      | Description                                                    | Type      | Default |
-| -------------- | -------------------------------------------------------------- | --------- | ------- |
-| `autogenerate` | Enable or disable automatic types generation on server restart | `Boolean` | `false` |
+To disable automatic type generation for a JavaScript project, add an optional `config/typescript.js` configuration file, which currently accepts only one parameter:
+
+| Parameter      | Description                                                                                            | Type      | Default |
+| -------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
+| `autogenerate` | Enable or disable automatic types generation when running `strapi develop` (JavaScript projects only)  | `Boolean` | `true`  |
 
 **Example:**
 
 ```js title="./config/typescript.js"
 module.exports = ({ env }) => ({
-  autogenerate: true,
-});
-```
-
-```ts title="./config/typescript.ts"
-
-  autogenerate: true,
+  autogenerate: false,
 });
 ```
 
@@ -33370,8 +33431,8 @@ Strapi CMS features are available on 3 plans: Community, Growth, and Enterprise.
 Strapi CMS comes with 3 plans:
 
 - Community: the free and open-source core of Strapi, under the MIT license.
-- Growth : Adds Strapi AI, Live Preview, Releases, and Content History.
-- Enterprise : Adds Single Sign-On, Review Workflows, Audit Logs, and Enterprise plugins to the Growth features. Strapi AI is not part of the base plan: it is available as an add-on.
+- Growth : Adds Strapi AI Growth, Live Preview, Releases, and Content History. Single Sign-On is also available as a paid add-on to the Growth plan.
+- Enterprise : Adds Single Sign-On, Review Workflows, and Audit Logs to the Growth features. [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise) is also available as a paid add-on on top of the Enterprise features.
 
 ## Self-hosted and Strapi Cloud projects
 
@@ -33400,13 +33461,13 @@ Core features, such as the [admin panel](/cms/features/admin-panel), the [Conten
 | [Preview](/cms/features/preview) | ✅ | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) | ✅<br/>adds [Live Preview](/cms/features/preview#live-preview) |
 | [Content History](/cms/features/content-history) | - | 14-day retention | 30-day retention, up to 90 days |
 | [Releases](/cms/features/releases) | - | ✅ | ✅ |
-| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi-managed, with 1,000 credits per month | Available as an add-on,<br/>with your own AI key through the [Bring your own AI key plugin](/cms/plugins/byok) |
+| [Strapi AI](/cms/ai/for-content-managers) | - | Strapi AI Growth, with 1,000 credits per month | Available as a paid add-on,<br/>with your own model through [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise) |
 | [Single Sign-On (SSO)](/cms/features/sso) | - | Available as an add-on | ✅ |
 | [Audit Logs](/cms/features/audit-logs) | - | - | ✅ |
 | [Enterprise plugins](/cms/plugins/installing-enterprise-plugins) | - | - | ✅ |
 | [Review Workflows](/cms/features/review-workflows) | - | - | ✅ |
 
-Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi-managed AI, on the Growth plan. On the Enterprise plan, all Strapi AI features require the AI add-on.
+Strapi AI enhances [Internationalization](/cms/features/internationalization#ai-powered-internationalization), the [Media Library](/cms/features/media-library#ai-powered-metadata-generation), and the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai). The Content-Type Builder AI assistant is only available with Strapi AI Growth, on the Growth plan. On the Enterprise plan, all Strapi AI features require Strapi AI Enterprise, [a paid add-on](https://strapi.io/contact-sales).
 
 For prices, support levels, and compliance documents such as the SOC 2 report, see the [Strapi pricing page](https://strapi.io/pricing-cms). Enterprise plans are available through the [Strapi sales team](https://strapi.io/contact-sales).
 
@@ -33417,7 +33478,7 @@ Source: https://docs.strapi.io/cms/features/admin-panel
 
 # Administration panel
 
-The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel before focusing on profile settings that manage interface language and mode, login and personal information, and logo for branding.
+The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel. It then covers profile settings (interface language and mode, login and personal information) and settings (logo for branding, password policy for administrator accounts).
 
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types and write their actual content, but also manage users, both administrators and end users of your Strapi application.
 
@@ -33445,11 +33506,13 @@ There are a few factors that you should keep in mind when using the admin panel,
 - **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the  badge in the docs and read the [Feature flags documentation](/cms/configurations/features#enabling-a-future-flag) for more information.
 :::
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the admin panel:** Account name or initials (bottom left hand corner) > Profile
 
-If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application.
+If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application. From the settings, administrators with the "Read the password policy" and "Update the password policy" permissions can also define the [password policy](#configuring-the-password-policy) that applies to all administrator passwords.
 
 There are many more configuration and customization options available. See the following pages for more details:
 
@@ -33478,7 +33541,7 @@ There are many more configuration and customization options available. See the f
 | Password modification | Instructions                                |
 | --------------------- | ------------------------------------------- |
 | Current password      | Write your current password in the textbox. |
-| Password              | Write the new password in the textbox.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](#configuring-the-password-policy), whose rules are displayed under the field. |
 | Password confirmation | Write the same new password in the textbox. |
 
 3. Click on the **Save** button.
@@ -33523,6 +33586,39 @@ Once uploaded, the new logo can be replaced with another one , or reset  with th
 :::note
 Both logos can also be customized programmatically via the Strapi application's configuration files (see [Admin panel customization](/cms/admin-panel-customization/logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
 :::
+
+### Configuring the password policy
+
+**Path to configure the password policy:**  *Settings > Administration panel > Password policy*
+
+The password policy defines the rules that every administrator password must follow. End users of the [Users & Permissions feature](/cms/features/users-permissions) are managed separately and do not follow this policy.
+
+Viewing the policy requires the "Read the password policy" permission, and editing it requires the "Update the password policy" permission (see [RBAC](/cms/features/rbac#plugins-and-settings)). With the read permission only, the options are displayed but cannot be edited, and the **Save** button is not displayed.
+
+The rules apply whenever an administrator password is set or changed:
+
+- when registering,
+- when resetting a forgotten password,
+- when changing your own password from your profile (see [Changing account password](#changing-account-password)),
+- when editing another administrator account (see [RBAC](/cms/features/rbac#editing-an-account)),
+- when using the `admin:create-user` and `admin:reset-user-password` [CLI commands](/cms/cli#administration).
+
+Existing passwords stay valid until they are changed.
+
+To configure the password policy:
+
+1. Fill in the following options:
+
+| Option                      | Instructions                                                                                                                        | Default value |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Minimum length              | Write the minimum number of characters for a password, between 8 and 64. Whatever the policy, a password cannot exceed 72 bytes. | 8             |
+| Require a lowercase letter  | Choose whether a password must contain at least one lowercase letter.                                                               | True          |
+| Require an uppercase letter | Choose whether a password must contain at least one uppercase letter.                                                               | True          |
+| Require a number            | Choose whether a password must contain at least one number.                                                                         | True          |
+| Require a special character | Choose whether a password must contain at least one special character, meaning any character that is neither a letter nor a digit. | False         |
+
+2. Check the *Hint shown to users* preview. It displays the rules as administrators will read them under password fields.
+3. Click on the **Save** button.
 
 ## Usage
 
@@ -33841,6 +33937,10 @@ There is no equivalent setting in the admin panel: the retention period can only
 
 The `/config/admin` file also accepts `auditLogs.enabled`, which turns off Audit Logs when set to `false`, and `auditLogs.exportMaxRows`, which limits [exports](#exporting-audit-logs). See the [admin panel configuration](/cms/configurations/admin-panel#audit-logs) for all available parameters.
 
+:::note Audit Logs permissions and configuration
+When `auditLogs.enabled` is set to `false`, the Audit Logs feature is disabled and the routes are not available. However, audit log permissions that were granted to roles and admin tokens are preserved. This means when you turn `auditLogs.enabled` back to `true`, the previously granted permissions work again without needing to be re-granted.
+:::
+
 ## Usage
 
 **Path to use the feature:**  Settings > Administration Panel - Audit Logs
@@ -33853,12 +33953,14 @@ The Audit Logs feature logs the following events:
 | Audit log  | `export` |
 | Component | `create`, `update`, `delete` |
 | Content Type | `create`, `update`, `delete` |
-| Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
+| Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish`, `draft-discard` , `history.restore`  |
 | Entry assignee  | `update` |
 | Entry review stage  | `updateEntryStage` |
 | Locale  | `create`, `update`, `delete`, `default.update` |
-| Media | `create`, `update`, `delete` |
-| Media folder | `create`, `update`, `delete` |
+| Media | `create`, `update`, `delete`, `move`  (files, and folders with Strapi 5.61.0 or later, see [media events](#media-events)) |
+| Media folder | `create`, `update`, `delete` (Strapi 5.60.x and earlier) |
+| Media Library settings  | `update` |
+| Project settings  | `update` |
 | Releases | `create`, `update`, `delete`, `trigger` |
 | Release entries | `add`, `update`, `remove` |
 | Release settings | `update` |
@@ -33933,6 +34035,34 @@ Locked roles are compared as a set, so reordering them alone is not recorded as 
 
 Locale events come from [Internationalization](/cms/features/internationalization) settings. Setting a locale as the default records a separate `locale.default.update` event, in addition to the `locale.create` or `locale.update` event.
 
+#### Media events
+
+Media events come from the [Media Library](/cms/features/media-library). Files and folders share the `media.create`, `media.update`, `media.delete`, and `media.move` actions. The `resource.type` of each log tells them apart: `media` for a file, `media-folder` for a folder.
+
+Each action records the following details:
+
+- `media.create`: a file uploaded or a folder created. A file log records its MIME type and size.
+- `media.update`: only the fields that changed. For a file, these are among the name, alternative text, caption, focus area, folder, and replaced file. For a folder, they are among the name and the parent folder. An update that changes nothing writes no row.
+- `media.delete`: a file or folder deleted. Deleting a folder writes one row for that folder and one row for each file it contained, including files in its subfolders. Subfolders get no row.
+- `media.move`: one row per file or folder selected in a bulk move, with the folder it moved `from` and `to` (`null` for the root). Files and folders inside a moved folder get no row, and neither does an item already in the destination folder. Changing the folder of a single file from its details records a `media.update` with the `folder` field instead.
+
+Folder logs recorded before Strapi 5.61.0 keep their `media-folder.*` actions until they are removed by the [retention period](#configuration). The Action filter still finds them (see [filtering logs](#filtering-logs)).
+
+#### Content History and draft events
+
+Restoring a version from [Content History](/cms/features/content-history#restoring-a-previous-version) records an `entry.history.restore` event with the locale and the restored version (its `id` and `createdAt`). The restore also records the usual `entry.update` event.
+
+[Discarding changes](/cms/features/draft-and-publish#discarding-changes) made to a draft records an `entry.draft-discard` event with the locale. The log identifies the entry, not the discarded draft content.
+
+#### Project and Media Library settings events
+
+These events record changes made to the following settings pages:
+
+- Project settings ( *Settings > Global settings > Overview*): an update records changes to the [*Menu logo* and *Auth logo*](/cms/features/admin-panel#customizing-the-logo), with file names only. Uploading a new logo with the same file name is still recorded.
+- Media Library settings ( *Settings > Global settings > Media Library*): an update records the [options](/cms/features/media-library#admin-panel-configuration) that changed, among `sizeOptimization`, `responsiveDimensions`, `autoOrientation`, and `aiMetadata`.
+
+Saving either settings page with no change writes no row.
+
 #### Review workflows events
 
 Workflow, entry review stage and entry assignee events come from [Review Workflows](/cms/features/review-workflows). Workflow events record changes to a workflow configuration. Entry review stage and entry assignee events record changes made to a single entry. See [audit logging of review workflow actions](/cms/features/review-workflows#audit-logging-of-review-workflow-actions) for what each one records.
@@ -33958,7 +34088,7 @@ By default, all logs are displayed in reverse chronological order. You can filte
 - Date: select a date (range) and time to filter by.
 
 :::info
-The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values used before this format, so old and new rows appear together.
+The Action filter also matches the legacy `user.create`, `user.update` and `user.delete` values recorded before the `admin-user.*` format, so old and new rows appear together. Similarly, filtering on a Media action, such as _Update media_, also finds the `media-folder.*` logs recorded before Strapi 5.61.0 (see [media events](#media-events)).
 :::
 
 ### Exporting audit logs
@@ -34001,6 +34131,8 @@ Available by default, if required plan
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 A version is only created when a document is modified through the  Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
 
@@ -34113,6 +34245,7 @@ Available in both Development & Production environment.
 -->
 
 <!-- TODO: create dark mode version and replace the darkId value -->
+<!--  -->
 
 The  Content Manager contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/cms/features/content-type-builder).
 
@@ -34537,6 +34670,8 @@ Available in Development environment only.
 
 ## Overview
 
+<!--  -->
+
 The  Content-type Builder allows the creation and management of content-types, which can be:
 
 - Collection types: content-types that can manage several entries.
@@ -34650,7 +34785,7 @@ The Content-type Builder allows you to create new content-types: single and coll
 
 #### Creating content-types with Strapi AI  {#strapi-ai}  
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language. The assistant is only available with Strapi-managed AI: the [Bring your own AI key plugin](/cms/plugins/byok) does not power it.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI adds an assistant that helps you create or edit content types with natural language. The assistant is only available with Strapi AI Growth: [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise) does not include it.
 
 To use Strapi AI with the Content-Type Builder, click on the  button in the bottom right corner of the admin panel, and describe what you need:
 
@@ -34664,7 +34799,7 @@ The more precise your prompts, the more accurate your created schemas are likely
 
 :::note AI credits
 
-Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
+Strapi AI Growth includes 1,000 credits per month on the  plan, and 10 credits during the free trial. On the  plan, Strapi AI runs on your own AI provider through [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -34673,8 +34808,7 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
+When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
 
 :::
 
@@ -34850,27 +34984,6 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 2. Define the *if* part of the condition, based on a Boolean or Enumeration field of the same content-type (e.g. if `boolean_field` is `true`).
 3. Define the *then* part of the condition by choosing whether to hide or show the field you are configuring (e.g. then `show carousel_media`).
  
-#### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
-
-The Password field displays a password field that is encrypted.
-
-| Setting name  | Instructions                                                    |
-|---------------|-----------------------------------------------------------------|
-| Name          | Write the name of the Password field.                           |
-
-| Setting name   | Instructions                                                                |
-|----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Password field.                              |
-| Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
-| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
-
-1. Click the **Apply condition** button.
-2. Define the *if* part of the condition, based on a Boolean or Enumeration field of the same content-type (e.g. if `boolean_field` is `true`).
-3. Define the *then* part of the condition by choosing whether to hide or show the field you are configuring (e.g. then `show carousel_media`).
-
 #### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
 
 The Media field allows you to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
@@ -36799,6 +36912,8 @@ Available but disabled by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the feature:**  Content Type Builder
@@ -37252,7 +37367,7 @@ To use the `sendTemplatedEmail()` function, define the `emailTemplate` object an
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
 | `emailOptions` <br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
-| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
+| `emailTemplate` | Contains email content properties using [Lodash string templates](https://lodash.com/docs/4.17.15#template). Required: `subject`, `text`. Optional: `html` | `object` | { }      |
 | `data`  <br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 The following code example can be used in a controller or a service:
@@ -37360,6 +37475,8 @@ Available but disabled by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 Before being usable in the Content Manager, the Internationalization feature must be configured from  *Settings*, and it should be enabled on your content types from the  _Content-type Builder_.
@@ -37445,9 +37562,9 @@ Click on the  *Fill in from another locale* button, in the top right corner, for
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
 
-Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi-managed AI, using this feature consumes AI credits.
+Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. With Strapi AI Growth, using this feature consumes AI credits.
 
-On the  plan, this feature requires the AI add-on: Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok), and translations use your own AI provider.
+On the  plan, this feature requires [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a paid add-on, and translations use your own AI provider.
 
 :::caution
 AI-powered internationalization only works one way, keeping the default locale content as the unique source of truth. Consequently, once the feature is enabled:
@@ -37457,7 +37574,7 @@ AI-powered internationalization only works one way, keeping the default locale c
 
 :::note AI credits
 
-Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
+Strapi AI Growth includes 1,000 credits per month on the  plan, and 10 credits during the free trial. On the  plan, Strapi AI runs on your own AI provider through [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -37466,8 +37583,7 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
+When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
 
 :::
 
@@ -37508,6 +37624,8 @@ Available and activated by default
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -38288,7 +38406,7 @@ By default, files are uploaded one at a time. Increase [`concurrentUploadRequest
 
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi AI](/cms/ai/for-content-managers#strapi-ai) automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the  plan, this feature requires the AI add-on: Strapi AI is powered by the [Bring your own AI key plugin](/cms/plugins/byok) and uses your own AI provider. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), [Strapi AI](/cms/ai/for-content-managers#strapi-ai) automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. On the  plan, this feature requires [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a paid add-on, and uses your own AI provider. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
 AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
@@ -38296,7 +38414,7 @@ Metadata can also be generated for images that already exist in the library, eit
 
 :::note AI credits
 
-Strapi-managed AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. On the  plan, Strapi AI is powered by your own AI provider through the [Bring your own AI key plugin](/cms/plugins/byok), and your provider bills the requests.
+Strapi AI Growth includes 1,000 credits per month on the  plan, and 10 credits during the free trial. On the  plan, Strapi AI runs on your own AI provider through [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), and your provider bills the requests.
 
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -38305,8 +38423,7 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 
 Credits are shared across all users within the same project instance.
 
-When your credits run out, you can keep using Strapi-managed AI, with overages billed monthly.
-For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
+When your credits run out, you can keep using Strapi AI Growth, with overages billed monthly.
 
 :::
 
@@ -38406,6 +38523,10 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 To leave the editor without changing anything, click **Cancel**.
 
+:::note
+With the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) or an S3-compatible service, the image loads in the _Crop & Focus area_ editor only with a bucket CORS rule. The rule must allow the admin panel URL. Without it, you cannot crop the image or set its focus area (see [bucket CORS configuration](/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)). The [local provider](/cms/configurations/media-library-providers/local-upload) does not need any CORS setup.
+:::
+
 :::info
 * The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
 * The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
@@ -38430,6 +38551,8 @@ The previous file is permanently replaced and cannot be recovered. If [AI metada
 2. Click the  **Download** button to save the file to your computer, or the  **Copy link** button to copy its URL to the clipboard.
 
 Both actions are also available from the asset's  actions menu, as **Copy link to media** and **Download media**.
+
+With the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) or an S3-compatible service, downloading only works if the bucket has a CORS rule that allows the admin panel URL (see [bucket CORS configuration](/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)).
 
 :::note
 **Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's  actions menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
@@ -38499,7 +38622,7 @@ Deleting a folder also deletes everything it contains, including its subfolders 
 
 #### Generating metadata in bulk {#bulk-metadata}
 
-When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, Strapi-managed or powered by the [Bring your own AI key plugin](/cms/plugins/byok), a  **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
+When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, with Strapi AI Growth or [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), a  **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
 
 1. Select the images to describe.
 2. Click the  **Create metadata** button in the bulk actions bar.
@@ -39156,6 +39279,8 @@ Available and activated by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the feature:**  *Settings > Administration panel > Roles*
@@ -39274,6 +39399,7 @@ Settings permissions can be configured for all settings accessible from *General
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
 | API Tokens |  <ul><li>API tokens</li><ul><li>"Access the API tokens settings page" - toggles access to the API tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br /> *General > Settings > Global Settings - API Tokens* |
 | Admin Tokens | <ul><li>Admin tokens</li><ul><li>"Access the Admin tokens settings page" - toggles access to the Admin Tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Admin tokens</li><li>"Read" - allows you to see created Admin tokens</li><li>"Update" - allows editing of Admin tokens</li><li>"Delete (revoke)" - allows deletion of Admin tokens</li><li>"Regenerate" - allows regeneration of Admin tokens</li></ul></ul> 👉 Path reminder to Admin Tokens settings: <br /> *General > Settings > Administration Panel - Admin Tokens*  |
+| Password policy | <ul><li>General</li><ul><li>"Read the password policy" - gives access to the password policy settings, displayed as read-only without the "Update the password policy" permission</li><li>"Update the password policy" - allows you to edit the password policy</li></ul></ul> 👉 Path reminder to the password policy settings: <br /> *General > Settings > Administration Panel - Password policy* |
 | Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows you to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
 | Transfer Tokens | <ul><li>Transfer tokens</li><ul><li>"Access the Transfer tokens settings page" - toggles access to the Transfer tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Transfer tokens</li><li>"Read" - allows you to see created Transfer tokens (disabling this permission will disable access to the *Global Settings - Transfer Tokens* settings)</li><li>"Update" - allows editing of Transfer tokens</li><li>"Delete (revoke)" - allows deletion of Transfer tokens</li> <li> "Regenerate" - allows regeneration of the Transfer token</li></ul></ul> 👉 Path reminder to Transfer Tokens settings: <br /> *General > Settings > Global Settings - Transfer Tokens* |
 
@@ -39372,7 +39498,7 @@ It is possible to delete one or several administrator accounts at the same time.
 | Last name             | Write the administrator's last name in the textbox.                                         |
 | Email                 | Write the administrator's complete email address in the textbox.                            |
 | Username              | Write the administrator's username in the textbox.                                          |
-| Password              | Write the new administrator account's password in the textbox.                              |
+| Password              | Write the new administrator account's password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field.                              |
 | Confirm password      | Write the new password in the textbox for confirmation.                                     |
 | Active                | Click on **TRUE** to activate the administrator's account.                                  |
 
@@ -39407,6 +39533,8 @@ Available by default, if required plan
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -39606,6 +39734,8 @@ Available by default, if required plan
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -41723,7 +41853,7 @@ To change the password of your account:
 | Password modification |                                                                                                                  |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | Current password      | Write your current password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown. |
-| Password              | Write the new password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field. <br/> 💡 You can click on the  icon for the password to be shown.      |
 | Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown. |
 
 3. Click on the **Save** button.
@@ -53492,7 +53622,7 @@ A policy is a function that runs before the controller action for a given route.
 Policies are exported as plain functions (not factory functions). Each policy receives the following 3 arguments:
 
 - `policyContext` is a wrapper around the Koa context object. Use it to access `policyContext.state.user`, `policyContext.request`, etc.
-- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }`, where `config` is the per-policy options object).
+- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }`, where `config` is the per-route configuration object).
 - `{ strapi }` gives access to the Strapi instance.
 
 :::note
@@ -53513,7 +53643,7 @@ module.exports = {
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const targetRole = config.role;
@@ -53546,7 +53676,7 @@ module.exports = (policyContext, config, { strapi }) => {
 type UserRole = { code?: string; name?: string };
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 
   policyContext: Core.PolicyContext,
   config: { role?: string },
@@ -53594,7 +53724,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -53625,7 +53755,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -53796,13 +53926,7 @@ module.exports = ({ strapi }) => {
 Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A server-level middleware that throws or never calls `next()` will break every request on the server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
 :::
 
-:::note Version/runtime behavior
-For route declarations, validation accepts object entries shaped as `{ name, options }` for both `policies` and `middlewares` (see `services/server/routing.ts`).
-
-At runtime, some internals still reference `{ resolve, config }` support in the middleware resolver (`services/server/middleware.ts`), but that shape is not accepted by route validation in standard route files.
-
-To avoid validation errors, use `{ name, options }` in route configurations.
-:::
+In route configurations, pass per-route parameters for both `policies` and `middlewares` in the `config` key of the `{ name, config }` object. Routes do not read an `options` key: a policy or middleware declared with `{ name, options }` in a route receives an empty object.
 
 :::strapi Backend customization
 For the full middleware reference, see [Middlewares](/cms/backend-customization/middlewares).
@@ -53818,7 +53942,7 @@ For the full middleware reference, see [Middlewares](/cms/backend-customization/
 
 - **Always call `await next()` in middlewares.** Forgetting `next()` means the request chain is interrupted and the controller never executes, resulting in a hanging request with no response.
 
-- **Use `options` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, options }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.
+- **Use `config` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, config }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.
 
 
 
@@ -54128,29 +54252,25 @@ Each route accepts an optional `config` object with the following properties:
 
 ### `policies`
 
-**Type:** `Array<string | PolicyHandler | { name: string; options?: object }>`
+**Type:** `Array<string | PolicyHandler | { name: string; config?: object }>`
 
-Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `options`.
+Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `config`.
 
-The `options` object is passed as-is to the policy function's second argument (`config` in policy signatures). The shape of this object depends on the policy.
+The `config` object is passed as-is to the policy function's second argument. The shape of this object depends on the policy.
 
 Plugin policies are referenced as `plugin::my-plugin.policy-name`.
 
 ### `middlewares`
 
-**Type:** `Array<string | MiddlewareHandler | { name: string; options?: object }>`
+**Type:** `Array<string | MiddlewareHandler | { name: string; config?: object }>`
 
 Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with:
 
 - `name`: a registered middleware name,
-- `options` (optional): middleware options.
+- `config` (optional): middleware configuration, passed as-is to the middleware factory's first argument.
 
-:::note Route middlewares vs. global server middlewares
-At route validation time, Strapi validates middleware/policy objects against `{ name: string; options?: object }` (see `services/server/routing.ts`).
-
-The middleware resolver (`services/server/middleware.ts`) still contains runtime support for `{ resolve, config }` objects, but this shape is rejected by route validation before resolution for standard plugin route declarations.
-
-Use `{ name, options }` in route configs for compatibility with validation.
+:::caution
+Routes do not read an `options` key in policy or middleware objects. A policy or middleware declared with `{ name, options }` in a route receives an empty object, so always pass per-route parameters in `config`.
 :::
 
 ### `auth`
@@ -54189,221 +54309,6 @@ For configuration examples including policies, public routes, dynamic URL parame
 
 
 
-# Bring your own AI key plugin
-Source: https://docs.strapi.io/cms/plugins/byok
-
-# Bring your own AI key plugin
-
-The Bring your own AI key (BYOK) plugin powers Strapi AI with your own AI provider, for AI Translations and AI-powered metadata generation.
-
-With the Bring your own AI key plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi-managed AI.
-
-**Plan**
-
-CMS Enterprise plan with the AI add-on
-
-**Location**
-
-Configured in `/config/plugins`. Used through the Strapi AI features of the admin panel.
-
-**Package name**
-
-`@strapi-enterprise/plugin-byok`
-
-**Additional resources**
-
-[Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins)
-
-:::prerequisites
-- A license for the CMS Enterprise plan, with the AI add-on.
-- Strapi 5.59.0 or later.
-- An API key for a provider with an OpenAI-compatible API.
-- For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
-:::
-
-## Installation
-
-The plugin installs from the Strapi package registry. The `strapi enterprise install` command does the setup for you, or you can do it manually.
-
-### With the command
-
-From the root folder of your Strapi application, run:
-
-```bash
-yarn strapi enterprise install plugin-byok
-```
-```bash
-npm run strapi enterprise install plugin-byok
-```
-```bash
-pnpm strapi enterprise install plugin-byok
-```
-
-The command finds your license, sets up access to the registry, and installs a version that supports the Strapi version of your application. See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for details.
-
-### Manually
-
-1. Set up access to the registry, as described in [Setting up access manually](/cms/plugins/installing-enterprise-plugins#setting-up-access-manually).
-2. From the root folder of your Strapi application, install the package, saving the exact version:
-
-  ```bash
-  yarn add --exact @strapi-enterprise/plugin-byok
-  ```
-  ```bash
-  npm install --save-exact @strapi-enterprise/plugin-byok
-  ```
-  ```bash
-  pnpm add --save-exact @strapi-enterprise/plugin-byok
-  ```
-
-:::caution
-Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. See [Configuration](#configuration).
-:::
-
-## Configuration
-
-The plugin is configured in the plugins configuration file, with environment variables for the provider connection and the models.
-
-1. Add the plugin to the plugins configuration file:
-
-  ```js title="/config/plugins.js"
-  module.exports = ({ env }) => ({
-    // …
-    byok: {
-      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
-      config: {
-        connection: {
-          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
-          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
-        },
-        models: {
-          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
-          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
-        },
-      },
-    },
-  });
-  ```
-  ```ts title="/config/plugins.ts"
-  export default ({ env }) => ({
-    // …
-    byok: {
-      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
-      config: {
-        connection: {
-          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
-          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
-        },
-        models: {
-          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
-          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
-        },
-      },
-    },
-  });
-  ```
-
-2. Set the environment variables in the `.env` file. See [Configuration options](#configuration-options) for the expected value of each one:
-
-  ```bash title="/.env"
-  STRAPI_BYOK_ENABLED=true
-  STRAPI_BYOK_PROVIDER_BASE_URL=
-  STRAPI_BYOK_PROVIDER_API_KEY=
-  STRAPI_BYOK_TRANSLATIONS_MODEL=
-  STRAPI_BYOK_MEDIA_METADATA_MODEL=
-  ```
-
-3. Restart Strapi.
-
-### Configuration options
-
-If a required option is missing while the plugin is enabled, Strapi does not start and logs the first missing option.
-
-| Option | Type | Required | Description |
-|---|---|---|---|
-| `enabled` | Boolean | No | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
-| `connection.baseURL` | String | Yes | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
-| `connection.apiKey` | String | Yes | API key for your provider. Keep it in the server environment only. |
-| `models.translations` | String | Yes | Model used for AI Translations, for instance `gpt-4o` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
-| `models.mediaMetadata` | String | Yes | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4o` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
-
-:::tip
-Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
-:::
-
-### Tested providers and models
-
-The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the following models. For the `connection.baseURL` value, see the documentation of your provider: [Anthropic](https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk), [OpenAI](https://developers.openai.com/api/reference/overview), [Google Gemini](https://ai.google.dev/gemini-api/docs/openai), [OpenRouter](https://openrouter.ai/docs/quickstart), or [LiteLLM](https://docs.litellm.ai/docs/proxy/user_keys).
-
-| Provider and model family | AI Translations (`models.translations`) | AI-powered metadata generation (`models.mediaMetadata`) |
-|---|---|---|
-| Anthropic Claude Haiku | `>=claude-haiku-4-5` | `>=claude-haiku-4-5` |
-| Anthropic Claude Sonnet | `>=claude-sonnet-4-5` | `>=claude-sonnet-4-5` |
-| Anthropic Claude Opus | `>=claude-opus-4-5` | `>=claude-opus-4-8` |
-| Anthropic Claude Fable | `>=claude-fable-5` | `>=claude-fable-5` |
-| OpenAI GPT | `>=gpt-4` | `>=gpt-4o` |
-| OpenAI GPT mini | `>=gpt-5.4-mini` | `>=gpt-4o-mini` |
-| OpenAI o-series | `>=o3` | `>=o3` |
-| Google Gemini | `>=gemini-3` | `>=gemini-3` |
-| OpenRouter | Same as above, with OpenRouter IDs (e.g., `anthropic/claude-haiku-4.5`) | Same as above, with OpenRouter IDs |
-| LiteLLM | Same as above, with your LiteLLM model names | Same as above, with your LiteLLM model names |
-
-:::note
-Strapi only tested the models above, but in theory any other OpenAI-compatible API should work. For AI-powered metadata generation, ensure that you use a model that accepts image input.
-
-AI models don't always reply the same way to the same request, so even a tested model can fail now and then. If that happens, retry the request.
-:::
-
-## Usage
-
-Once the plugin is configured, each AI feature works as described in its own documentation, including how to turn it on. Its requests go to your provider:
-
-- [AI Translations](/cms/features/internationalization#enabling-ai-powered-internationalization) (AI-powered internationalization)
-- [AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation), including [generating metadata in bulk](/cms/features/media-library#bulk-metadata)
-
-To turn off all Strapi AI features, including the ones the plugin powers, set [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false`.
-
-### Checking that the plugin is active
-
-When Strapi starts, the server logs list the features that use your provider, for instance:
-
-```
-BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
-```
-
-## Troubleshooting
-
-| Symptom | What to do |
-|---|---|
-| Strapi does not start and logs an option that `is required` | Set that option. See [Configuration options](#configuration-options). |
-| A warning says your Strapi license does not include the feature | Check your license. Until it includes the feature, Strapi AI features stay off. |
-| A warning says the i18n plugin is not installed | AI Translations stays off until the [Internationalization](/cms/features/internationalization) feature is enabled. The Media Library feature still uses your provider. |
-| No `BYOK is ready` line in the logs at startup | Check that `STRAPI_BYOK_ENABLED` is `true` and that [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) is not `false`. |
-| `The AI provider rejected the request (HTTP 401)` or `(HTTP 403)` | Check `connection.apiKey`. |
-| `The AI provider rejected the request (HTTP 404)` | Check that `connection.baseURL` includes the API version path, such as `/v1`, and that your provider still offers the model you set. Some providers also return a 404 error when your account cannot use the model. |
-| `The AI provider did not return valid JSON` | Retry. If the error happens often, try a more recent model from [Tested providers and models](#tested-providers-and-models). With a server that runs models on your own infrastructure, such as Ollama, try a larger model. |
-
-## Uninstallation
-
-1. Stop Strapi.
-2. Remove the `byok` entry from the plugins configuration file.
-3. Remove the package:
-
-  ```bash
-  yarn remove @strapi-enterprise/plugin-byok
-  ```
-  ```bash
-  npm uninstall @strapi-enterprise/plugin-byok
-  ```
-  ```bash
-  pnpm remove @strapi-enterprise/plugin-byok
-  ```
-
-4. Remove the `STRAPI_BYOK_ENABLED`, `STRAPI_BYOK_PROVIDER_BASE_URL`, `STRAPI_BYOK_PROVIDER_API_KEY`, `STRAPI_BYOK_TRANSLATIONS_MODEL` and `STRAPI_BYOK_MEDIA_METADATA_MODEL` variables from the `.env` file.
-5. Start Strapi again.
-
-
-
 # Documentation plugin
 Source: https://docs.strapi.io/cms/plugins/documentation
 
@@ -54428,6 +54333,8 @@ Usable via the admin panel.<br/>Configured through both admin panel and server c
 :::caution Unmaintained plugin
 The Documentation plugin is not actively maintained and may not work with Strapi 5.
 :::
+
+<!--  -->
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). The Documentation plugin generates the [paths objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [schema objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object) and converts all Strapi types to [OpenAPI data types](https://swagger.io/docs/specification/data-models/data-types/).
 
@@ -55655,7 +55562,7 @@ Strapi uses `documentId` as the unique identifier for entities instead of `id`. 
 const client = new ApolloClient({
   link: new HttpLink({ uri: "http://localhost:1337/graphql" }),
   cache: new InMemoryCache({
-    dataIdFromObject: (o) => `${o.__typename}:${o["documentId"]}`,
+    dataIdFromObject: (o) => `${o.__typename}:${o["documentId"] || o["id"]}`,
   }),
 });
 ```
@@ -55810,7 +55717,7 @@ It does not replace your package manager. Once the registry is set up, you keep 
 :::
 
 :::caution
-* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See the plugin's own page for how to configure it, such as [Bring your own AI key](/cms/plugins/byok#configuration).
+* Strapi enables an installed plugin by default. A plugin that requires a configuration may stop Strapi from starting until it is configured. See the plugin's own page for how to configure it, such as [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise#configuration).
 * If a project-level `.npmrc` or `.yarnrc.yml` sets another license for `packages.strapi.io`, the command stops before installing anything. A project-level file takes precedence over the user-level file.
 :::
 
@@ -56104,6 +56011,222 @@ const sentryInstance = strapi
   .service('sentry')
   .getInstance();
 ```
+
+
+
+# Strapi AI Enterprise plugin
+Source: https://docs.strapi.io/cms/plugins/strapi-ai-enterprise
+
+# Strapi AI Enterprise plugin
+
+Strapi AI Enterprise runs Strapi AI on your own model, for AI Translations and AI-powered metadata generation. You set it up with the AI Enterprise plugin, and requests go to the AI provider of your choice instead of Strapi-managed infrastructure.
+
+With the AI Enterprise plugin, Strapi AI sends the requests of AI Translations and AI-powered metadata generation in the Media Library to the provider of your choice. You set the API key and pick the model for each feature. The [Content-Type Builder AI assistant](/cms/features/content-type-builder#strapi-ai) is not included: it is only available with Strapi AI Growth.
+
+**Plan**
+
+CMS Enterprise plan, with Strapi AI Enterprise as a paid add-on
+
+**Location**
+
+Configured in `/config/plugins`. Used through the Strapi AI features of the admin panel.
+
+**Package name**
+
+`@strapi-enterprise/plugin-byok`
+
+**Additional resources**
+
+[Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins)
+
+:::prerequisites
+- A license for the CMS Enterprise plan that includes the Strapi AI Enterprise add-on.
+- Strapi 5.59.0 or later.
+- The Strapi AI Enterprise [paid add-on](https://strapi.io/contact-sales).
+- An API key for a provider with an OpenAI-compatible API.
+- For AI Translations, the [Internationalization](/cms/features/internationalization) feature.
+:::
+
+## Installation
+
+The plugin installs from the Strapi package registry. The `strapi enterprise install` command does the setup for you, or you can do it manually.
+
+### With the command
+
+From the root folder of your Strapi application, run:
+
+```bash
+yarn strapi enterprise install plugin-byok
+```
+```bash
+npm run strapi enterprise install plugin-byok
+```
+```bash
+pnpm strapi enterprise install plugin-byok
+```
+
+The command finds your license, sets up access to the registry, and installs a version that supports the Strapi version of your application. See [Installing Enterprise plugins](/cms/plugins/installing-enterprise-plugins) for details.
+
+### Manually
+
+1. Set up access to the registry, as described in [Setting up access manually](/cms/plugins/installing-enterprise-plugins#setting-up-access-manually).
+2. From the root folder of your Strapi application, install the package, saving the exact version:
+
+  ```bash
+  yarn add --exact @strapi-enterprise/plugin-byok
+  ```
+  ```bash
+  npm install --save-exact @strapi-enterprise/plugin-byok
+  ```
+  ```bash
+  pnpm add --save-exact @strapi-enterprise/plugin-byok
+  ```
+
+:::caution
+Once installed, the plugin is enabled, and Strapi does not start until the plugin is configured. See [Configuration](#configuration).
+:::
+
+## Configuration
+
+The plugin is configured in the plugins configuration file, with environment variables for the provider connection and the models.
+
+1. Add the plugin to the plugins configuration file:
+
+  ```js title="/config/plugins.js"
+  module.exports = ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+  ```
+  ```ts title="/config/plugins.ts"
+  export default ({ env }) => ({
+    // …
+    byok: {
+      enabled: env.bool('STRAPI_BYOK_ENABLED', false),
+      config: {
+        connection: {
+          baseURL: env('STRAPI_BYOK_PROVIDER_BASE_URL'),
+          apiKey: env('STRAPI_BYOK_PROVIDER_API_KEY'),
+        },
+        models: {
+          translations: env('STRAPI_BYOK_TRANSLATIONS_MODEL'),
+          mediaMetadata: env('STRAPI_BYOK_MEDIA_METADATA_MODEL'),
+        },
+      },
+    },
+  });
+  ```
+
+2. Set the environment variables in the `.env` file. See [Configuration options](#configuration-options) for the expected value of each one:
+
+  ```bash title="/.env"
+  STRAPI_BYOK_ENABLED=true
+  STRAPI_BYOK_PROVIDER_BASE_URL=
+  STRAPI_BYOK_PROVIDER_API_KEY=
+  STRAPI_BYOK_TRANSLATIONS_MODEL=
+  STRAPI_BYOK_MEDIA_METADATA_MODEL=
+  ```
+
+3. Restart Strapi.
+
+### Configuration options
+
+If a required option is missing while the plugin is enabled, Strapi does not start and logs the first missing option.
+
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `enabled` | Boolean | No | Turns the plugin on or off without uninstalling it. With the configuration above, the plugin stays off unless `STRAPI_BYOK_ENABLED` is `true`. |
+| `connection.baseURL` | String | Yes | Root URL of your provider's OpenAI-compatible API, with its version prefix. For instance, `https://api.openai.com/v1` for OpenAI, or `https://api.anthropic.com/v1` for Anthropic. |
+| `connection.apiKey` | String | Yes | API key for your provider. Keep it in the server environment only. |
+| `models.translations` | String | Yes | Model used for AI Translations, for instance `gpt-4o` (OpenAI) or `claude-haiku-4-5` (Anthropic). |
+| `models.mediaMetadata` | String | Yes | Model used to generate alternative text and captions in the Media Library. The model must accept image input, for instance `gpt-4o` (OpenAI) or `claude-sonnet-5-5` (Anthropic). |
+
+:::tip
+Use `STRAPI_BYOK_ENABLED` to keep the plugin off in an environment without an API key, such as a staging environment.
+:::
+
+### Tested providers and models
+
+The plugin works with providers that offer an OpenAI-compatible API. Strapi tested the following models. For the `connection.baseURL` value, see the documentation of your provider: [Anthropic](https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk), [OpenAI](https://developers.openai.com/api/reference/overview), [Google Gemini](https://ai.google.dev/gemini-api/docs/openai), [OpenRouter](https://openrouter.ai/docs/quickstart), or [LiteLLM](https://docs.litellm.ai/docs/proxy/user_keys).
+
+| Provider and model family | AI Translations (`models.translations`) | AI-powered metadata generation (`models.mediaMetadata`) |
+|---|---|---|
+| Anthropic Claude Haiku | `>=claude-haiku-4-5` | `>=claude-haiku-4-5` |
+| Anthropic Claude Sonnet | `>=claude-sonnet-4-5` | `>=claude-sonnet-4-5` |
+| Anthropic Claude Opus | `>=claude-opus-4-5` | `>=claude-opus-4-8` |
+| Anthropic Claude Fable | `>=claude-fable-5` | `>=claude-fable-5` |
+| OpenAI GPT | `>=gpt-4` | `>=gpt-4o` |
+| OpenAI GPT mini | `>=gpt-5.4-mini` | `>=gpt-4o-mini` |
+| OpenAI o-series | `>=o3` | `>=o3` |
+| Google Gemini | `>=gemini-3` | `>=gemini-3` |
+| OpenRouter | Same as above, with OpenRouter IDs (e.g., `anthropic/claude-haiku-4.5`) | Same as above, with OpenRouter IDs |
+| LiteLLM | Same as above, with your LiteLLM model names | Same as above, with your LiteLLM model names |
+
+:::note
+Strapi only tested the models above, but in theory any other OpenAI-compatible API should work. For AI-powered metadata generation, ensure that you use a model that accepts image input.
+
+AI models don't always reply the same way to the same request, so even a tested model can fail now and then. If that happens, retry the request.
+:::
+
+## Usage
+
+Once the plugin is configured, each AI feature works as described in its own documentation, including how to turn it on. Its requests go to your provider:
+
+- [AI Translations](/cms/features/internationalization#enabling-ai-powered-internationalization) (AI-powered internationalization)
+- [AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation), including [generating metadata in bulk](/cms/features/media-library#bulk-metadata)
+
+To turn off all Strapi AI features, including the ones the plugin powers, set [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) to `false`.
+
+### Checking that the plugin is active
+
+When Strapi starts, the server logs list the features that use your provider, for instance:
+
+```
+BYOK is ready for AI Translation, AI Media Library. Requests go to your configured provider.
+```
+
+## Troubleshooting
+
+| Symptom | What to do |
+|---|---|
+| Strapi does not start and logs an option that `is required` | Set that option. See [Configuration options](#configuration-options). |
+| A warning says your Strapi license does not include the feature | Check your license. Until it includes the feature, Strapi AI features stay off. |
+| A warning says the i18n plugin is not installed | AI Translations stays off until the [Internationalization](/cms/features/internationalization) feature is enabled. The Media Library feature still uses your provider. |
+| No `BYOK is ready` line in the logs at startup | Check that `STRAPI_BYOK_ENABLED` is `true` and that [`ai.enabled`](/cms/configurations/admin-panel#strapi-ai) is not `false`. |
+| `The AI provider rejected the request (HTTP 401)` or `(HTTP 403)` | Check `connection.apiKey`. |
+| `The AI provider rejected the request (HTTP 404)` | Check that `connection.baseURL` includes the API version path, such as `/v1`, and that your provider still offers the model you set. Some providers also return a 404 error when your account cannot use the model. |
+| `The AI provider did not return valid JSON` | Retry. If the error happens often, try a more recent model from [Tested providers and models](#tested-providers-and-models). With a server that runs models on your own infrastructure, such as Ollama, try a larger model. |
+
+## Uninstallation
+
+1. Stop Strapi.
+2. Remove the `byok` entry from the plugins configuration file.
+3. Remove the package:
+
+  ```bash
+  yarn remove @strapi-enterprise/plugin-byok
+  ```
+  ```bash
+  npm uninstall @strapi-enterprise/plugin-byok
+  ```
+  ```bash
+  pnpm remove @strapi-enterprise/plugin-byok
+  ```
+
+4. Remove the `STRAPI_BYOK_ENABLED`, `STRAPI_BYOK_PROVIDER_BASE_URL`, `STRAPI_BYOK_PROVIDER_API_KEY`, `STRAPI_BYOK_TRANSLATIONS_MODEL` and `STRAPI_BYOK_MEDIA_METADATA_MODEL` variables from the `.env` file.
+5. Start Strapi again.
 
 
 
@@ -58482,8 +58605,8 @@ npm run strapi ts:generate-types -- --debug #optional flag to display additional
 yarn strapi ts:generate-types --debug #optional flag to display additional logging
 ```
 
-:::tip Tip: Automatically generate types
-Types can be automatically generated on server restart by adding `autogenerate: true` to [the `config/typescript.js|ts` configuration file](/cms/configurations/typescript#strapi-specific-configuration-for-typescript).
+:::tip Tip: Disable automatic type generation
+For JavaScript projects, types are automatically generated when running `strapi develop` unless `autogenerate: false` is set in [the `config/typescript.js` configuration file](/cms/configurations/typescript#strapi-specific-configuration-for-typescript). TypeScript projects always generate types when running `strapi develop`.
 :::
 
 :::tip Tip: Using types in your front-end application
@@ -59183,11 +59306,11 @@ If you have any questions or concerns regarding data collection, please contact 
 
 ## Strapi AI data handling {#strapi-ai-data-handling}
 
-With Strapi-managed AI, on the  plan, [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
+With Strapi AI Growth, on the  plan, [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
 
-With the [Bring your own AI key plugin](/cms/plugins/byok), on the  plan, Strapi AI requests go to your own AI provider instead, and that provider's data handling terms apply.
+With [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), on the  plan, Strapi AI requests go to your own AI provider instead, and that provider's data handling terms apply.
 
-Strapi-managed AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
+Strapi AI Growth follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
 
 For more information, refer to Strapi's [Privacy Policy](https://strapi.io/privacy).
 

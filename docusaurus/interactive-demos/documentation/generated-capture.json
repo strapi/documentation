@@ -1,0 +1,76 @@
+{
+  "id": "documentation",
+  "title": "Documentation plugin",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 156422,
+    "dark": 155212
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Documentation plugin!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/documentation/01"
+  },
+  "steps": [
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/documentation/01",
+      "text": "Click here to access the plugin",
+      "rect": {
+        "x": 0.59,
+        "y": 47.63,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/documentation/02",
+      "text": "Open the API documentation",
+      "rect": {
+        "x": 81.43,
+        "y": 5.5,
+        "w": 14.19,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/documentation/03",
+      "text": "Browse your API",
+      "rect": {
+        "x": 94.38,
+        "y": 82.46,
+        "w": 2.5,
+        "h": 3.7
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/documentation/04",
+      "text": "Use the toggle to show/hide details",
+      "rect": {
+        "x": 94.38,
+        "y": 82.46,
+        "w": 2.5,
+        "h": 3.7
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/documentation/03",
+      "text": "Click here if you need to authenticate your queries with a JWT (JSON web token).",
+      "rect": {
+        "x": 85.82,
+        "y": 46.01,
+        "w": 11.84,
+        "h": 4.5
+      }
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "image": "/img/assets/interactive-demos/documentation/03"
+  }
+}
