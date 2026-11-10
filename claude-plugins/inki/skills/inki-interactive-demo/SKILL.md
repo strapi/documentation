@@ -3,6 +3,7 @@ name: inki-interactive-demo
 description: "Create or update an interactive demo (the clickable product tours that replaced Guideflow) from a plain-text description of its steps: finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures it and checks the result."
 argument-hint: "<demo-id> [description file or text]"
 user-invocable: true
+disable-model-invocation: true
 ---
 
 # /inki:inki-interactive-demo: write an interactive demo from a plain-text description

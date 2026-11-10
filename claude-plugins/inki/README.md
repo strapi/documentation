@@ -25,12 +25,12 @@ After install, the skills are available at `/inki:<skill>`.
 
 ## The four families: a docs workflow end to end
 
-Inki ships 23 skills organized into 4 families that mirror the life of a documentation change: figure out **where** the doc goes, **write** it, **review** it, then **submit** it. Each family has a top-level **orchestrator** with the same name that runs the whole stage, plus **granular skills** you can call on their own for finer control.
+Inki ships 22 skills organized into 4 families that mirror the life of a documentation change: figure out **where** the doc goes, **write** it, **review** it, then **submit** it. Each family has a top-level **orchestrator** with the same name that runs the whole stage, plus **granular skills** you can call on their own for finer control.
 
 | Stage | Family | Orchestrator | Granular skills |
 |-------|--------|-------------|-----------------|
 | 1 | 🔍 Research | `/inki:research` | `exists`, `route`, `coverage` |
-| 2 | ✍️ Write | `/inki:write` | `outline`, `draft`, `inki-interactive-demo` |
+| 2 | ✍️ Write | `/inki:write` | `outline`, `draft` |
 | 3 | 🔬 Review | `/inki:review` | `style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check`, `pitfalls-add` |
 | 4 | 🚀 Submit | `/inki:submit` | `branch`, `commit`, `push`, `pr`, `pr-fix` |
 
@@ -77,8 +77,6 @@ Turn a topic brief into a drafted page, grounded in the right template and autho
 
 A `<brief>` can be inline text (e.g. "MCP server feature, AI tools section, similar to existing AI pages") or a path to a `.md` file describing what you want.
 
-For the interactive demos embedded in feature pages, `/inki:inki-interactive-demo <demo-id>` turns a plain-text description of the tour into a captured demo, and updates it when the description or the interface changes.
-
 ### 3. 🔬 Review: check what you wrote
 
 One command runs six reviewers in parallel against your page and returns a single report, sorted by severity.
@@ -119,6 +117,12 @@ Once the page passes review, one command takes it all the way to an open PR, del
 
 Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skill encodes a slice of `git-rules.md` once and is reused everywhere. Already opened a PR and need to fix its title or description? `/inki:pr-fix` rewrites them to match `git-rules.md`.
 
+## Special commands
+
+Special commands sit outside the four families: no orchestrator runs them, and Claude never starts them on its own. Only a maintainer runs them, by typing the command.
+
+- `/inki:inki-interactive-demo <demo-id>`: create or update an interactive demo embedded in a feature page, from a plain-text description of the tour. It finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures the demo and checks the result. See `docusaurus/scripts/interactive-demos/README.md`.
+
 ## Command reference
 
 The summary below covers the most common usage. For a per-command reference of every skill and its argument signature, see [COMMANDS.md](./COMMANDS.md) (curated, not auto-generated; mirrors each skill's frontmatter). You can also type `/inki:<skill> --help` to print a single command's usage.
@@ -157,7 +161,6 @@ Find out what already exists, where to put new content, what's missing.
 👉 `/inki:write [--non-interactive] <brief>`: orchestrator: outline then draft.
 - `/inki:outline <brief>`: generate an outline from a brief and template.
 - `/inki:draft <outline>`: draft a page from an outline + template + authoring guide.
-- `/inki:inki-interactive-demo <demo-id>`: create or update an interactive demo from a plain-text description of its steps.
 
 ### Review: check what you wrote
 
@@ -183,6 +186,10 @@ Find out what already exists, where to put new content, what's missing.
 - `/inki:push`: push with validation.
 - `/inki:pr [issue]`: open a PR with a compliant title and description.
 - `/inki:pr-fix <title|description|body> [--non-interactive] [--include-old] [PR# or URL...]`: rewrite the title or body of existing PRs (`body` is an alias of `description`).
+
+### Special commands: run by a maintainer only
+
+- `/inki:inki-interactive-demo <demo-id> [description file or text]`: create or update an interactive demo from a plain-text description of its steps.
 
 ### Common flags
 
