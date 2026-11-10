@@ -6,7 +6,6 @@ import styles from './notFound.module.scss';
 
 // What Lexi says when poked, in order
 const LINES = [
-  'This page is still in Draft…',
   'Did someone change the slug without a redirect?',
   'I checked every locale. Nothing.',
   'OK, poking me will not publish it.',
