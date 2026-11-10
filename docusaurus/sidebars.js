@@ -50,6 +50,14 @@ const sidebars = {
             ai: true
           }
         },
+        {
+          type: 'doc',
+          id: 'cms/content-lifecycle',
+          label: 'Content lifecycle',
+          customProps: {
+            new: true
+          }
+        },
         'cms/deployment',
         {
           type: 'doc',
