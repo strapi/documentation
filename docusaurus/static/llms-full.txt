@@ -11601,7 +11601,7 @@ Returns a paginated list of documents. Supports filtering, sorting, field select
 - `populate` (string | object): Relations and components to include. Use `*` for all. See populate (/cms/api/rest/populate-select).
 - `fields` (string[]): Select specific fields to return. See field selection (/cms/api/rest/populate-select#field-selection).
 - `pagination[page]` (integer): Page number. Default: `1`
-- `pagination[pageSize]` (integer): Items per page. Default: `25`. The maximum is set by `api.rest.maxLimit` (see pagination (/cms/api/rest/sort-pagination#pagination-by-page)).
+- `pagination[pageSize]` (integer): Items per page. Default: `25`. Capped by `api.rest.maxLimit` when it is set (see pagination (/cms/api/rest/sort-pagination#pagination-by-page)).
 - `locale` (string): Locale of the documents to fetch. See locale (/cms/api/rest/locale).
 - `status` (string): `published` or `draft`. See status (/cms/api/rest/status).
 - `publicationFilter` (string): Query documents by the relationship between their draft and published versions. See publicationFilter (/cms/api/rest/publication-filter).
@@ -15671,7 +15671,7 @@ To paginate results by page, use the following parameters:
 | Parameter               | Type    | Description                                                               | Default |
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
-| `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
+| `pagination[pageSize]`  | Integer | Page size, capped by `api.rest.maxLimit` when it is set                   | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 #### GET /api/articles?pagination[page]=1&pagination[pageSize]=10 — Pagination by page
@@ -15716,11 +15716,11 @@ await request(`/api/articles?${query}`);
 
 To paginate results by offset, use the following parameters:
 
-| Parameter               | Type    | Description                                                    | Default |
-| ----------------------- | ------- | -------------------------------------------------------------- | ------- |
-| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                      | 0       |
-| `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
-| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
+| Parameter               | Type    | Description                                                                                                                | Default |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                                                                                   | 0       |
+| `pagination[limit]`     | Integer | Number of entries to return, capped by `api.rest.maxLimit` when it is set. Use `-1` to return all entries, up to that cap. | 25      |
+| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response                                                             | `true`  |
 
 :::tip
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/cms/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
@@ -16287,7 +16287,7 @@ It accepts the same query parameters as other REST collection endpoints:
 | `pagination[page]` | Page number (1-based). Default `1`. |
 | `pagination[pageSize]` | Number of files per page. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. |
 | `pagination[start]` | Pagination by offset: number of files to skip. |
-| `pagination[limit]` | Pagination by offset: maximum number of files to return. |
+| `pagination[limit]` | Pagination by offset: maximum number of files to return. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. Use `-1` to return all files, up to that cap. |
 | `pagination[withCount]` | Whether to run the count query and include `total` and `pageCount` in the response. Defaults to `true`. |
 | `filters` | [Filter](/cms/api/rest/filters) the results. |
 | `sort` | [Sort](/cms/api/rest/sort-pagination#sorting) the results. |
@@ -23881,7 +23881,7 @@ General settings for API calls can be set in the `./config/api.js` (or `./config
 | `rest`                        | REST API configuration                                                                                                                                                                                                                               | Object       | -       |
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
 | `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). Setting it to `-1` removes the limit (see note below).                                                                     | Integer      | `25`    |
-| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
+| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). When unset, there is no maximum. New projects set `rest.maxLimit` to `100` in the generated `config/api` file. | Integer      | -       |
 | `rest.withCount`              | Whether list responses include the total number of entries and pages in `meta.pagination` by default. Can be overridden per request with the [`pagination[withCount]`](/cms/api/rest/sort-pagination#pagination-by-offset) parameter. | Boolean      | `true`  |
 | `rest.strictParams`           | When `true`, only allowed query and body parameters are accepted on Content API routes; unknown top-level keys are rejected. Add allowed parameters via [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters) in `register`. | Boolean      | -       |
 | `documents`                   | Document Service configuration                                                                                                                                                                                                                        | Object       | -       |
@@ -53586,7 +53586,7 @@ A policy is a function that runs before the controller action for a given route.
 Policies are exported as plain functions (not factory functions). Each policy receives the following 3 arguments:
 
 - `policyContext` is a wrapper around the Koa context object. Use it to access `policyContext.state.user`, `policyContext.request`, etc.
-- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }`, where `config` is the per-policy options object).
+- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }`, where `config` is the per-route configuration object).
 - `{ strapi }` gives access to the Strapi instance.
 
 :::note
@@ -53607,7 +53607,7 @@ module.exports = {
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const targetRole = config.role;
@@ -53640,7 +53640,7 @@ module.exports = (policyContext, config, { strapi }) => {
 type UserRole = { code?: string; name?: string };
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 
   policyContext: Core.PolicyContext,
   config: { role?: string },
@@ -53688,7 +53688,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -53719,7 +53719,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -53890,13 +53890,7 @@ module.exports = ({ strapi }) => {
 Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A server-level middleware that throws or never calls `next()` will break every request on the server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
 :::
 
-:::note Version/runtime behavior
-For route declarations, validation accepts object entries shaped as `{ name, options }` for both `policies` and `middlewares` (see `services/server/routing.ts`).
-
-At runtime, some internals still reference `{ resolve, config }` support in the middleware resolver (`services/server/middleware.ts`), but that shape is not accepted by route validation in standard route files.
-
-To avoid validation errors, use `{ name, options }` in route configurations.
-:::
+In route configurations, pass per-route parameters for both `policies` and `middlewares` in the `config` key of the `{ name, config }` object. Routes do not read an `options` key: a policy or middleware declared with `{ name, options }` in a route receives an empty object.
 
 :::strapi Backend customization
 For the full middleware reference, see [Middlewares](/cms/backend-customization/middlewares).
@@ -53912,7 +53906,7 @@ For the full middleware reference, see [Middlewares](/cms/backend-customization/
 
 - **Always call `await next()` in middlewares.** Forgetting `next()` means the request chain is interrupted and the controller never executes, resulting in a hanging request with no response.
 
-- **Use `options` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, options }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.
+- **Use `config` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, config }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.
 
 
 
@@ -54222,29 +54216,25 @@ Each route accepts an optional `config` object with the following properties:
 
 ### `policies`
 
-**Type:** `Array<string | PolicyHandler | { name: string; options?: object }>`
+**Type:** `Array<string | PolicyHandler | { name: string; config?: object }>`
 
-Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `options`.
+Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `config`.
 
-The `options` object is passed as-is to the policy function's second argument (`config` in policy signatures). The shape of this object depends on the policy.
+The `config` object is passed as-is to the policy function's second argument. The shape of this object depends on the policy.
 
 Plugin policies are referenced as `plugin::my-plugin.policy-name`.
 
 ### `middlewares`
 
-**Type:** `Array<string | MiddlewareHandler | { name: string; options?: object }>`
+**Type:** `Array<string | MiddlewareHandler | { name: string; config?: object }>`
 
 Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with:
 
 - `name`: a registered middleware name,
-- `options` (optional): middleware options.
+- `config` (optional): middleware configuration, passed as-is to the middleware factory's first argument.
 
-:::note Route middlewares vs. global server middlewares
-At route validation time, Strapi validates middleware/policy objects against `{ name: string; options?: object }` (see `services/server/routing.ts`).
-
-The middleware resolver (`services/server/middleware.ts`) still contains runtime support for `{ resolve, config }` objects, but this shape is rejected by route validation before resolution for standard plugin route declarations.
-
-Use `{ name, options }` in route configs for compatibility with validation.
+:::caution
+Routes do not read an `options` key in policy or middleware objects. A policy or middleware declared with `{ name, options }` in a route receives an empty object, so always pass per-route parameters in `config`.
 :::
 
 ### `auth`
