@@ -182,35 +182,6 @@
   font-size: 15px;
 }
 
-// Preview switcher, only while the three proposals are compared
-.switcher {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 50;
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  border: 1px solid var(--strapi-neutral-200);
-  border-radius: 999px;
-  background: var(--strapi-surface-1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-
-  a {
-    padding: 6px 12px;
-    border-radius: 999px;
-    color: var(--strapi-neutral-600);
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  a[aria-current='true'] {
-    background: var(--strapi-primary-600);
-    color: #fff;
-  }
-}
-
 /* ---------- 1. Sad Lexi ---------- */
 
 .lexiStage {
