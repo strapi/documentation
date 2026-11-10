@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import { useLocation } from '@docusaurus/router';
 import AgentBot from '../AgentBot/AgentBot';
 import { AskAiButton, DidYouMean, QuickLinks, Suggestions } from './shared';
@@ -20,6 +21,9 @@ const ANGRY_LINES = [
   'Seriously. Hands off.',
 ];
 
+// Past the angry lines, every extra poke stretches the scream a little more
+const meltdown = (extra) => `N${'O'.repeat(Math.min(4 + 2 * extra, 16))}!`;
+
 /**
  * Proposal 1: Lexi is sad the page is gone, and cheers up as soon as the
  * reader heads somewhere useful (hovering a suggestion or Ask AI).
@@ -34,21 +38,38 @@ export default function SadLexi() {
   const [rants, setRants] = useState(0);
   // After a tantrum, Lexi apologizes once and starts its lines over
   const [sorry, setSorry] = useState(false);
+  // A meltdown ends with Lexi asking to be left alone instead of apologizing
+  const [fedUp, setFedUp] = useState(false);
+  // A few seconds after asking to be left alone, Lexi forgives the reader,
+  // then a few seconds later goes back to neutral and stops talking
+  const [forgiven, setForgiven] = useState(false);
+  const [settled, setSettled] = useState(false);
   const waveTimer = useRef(null);
 
   useEffect(() => () => clearTimeout(waveTimer.current), []);
+
+  const sulking = !angry && sorry && fedUp;
+  useEffect(() => {
+    if (!sulking) return undefined;
+    const timers = [setTimeout(() => setForgiven(true), 4000), setTimeout(() => setSettled(true), 8000)];
+    return () => timers.forEach(clearTimeout);
+  }, [sulking]);
 
   const cheered = !sorry && pokes >= LINES.length - 1;
   let state = 'sad';
   if (angry) state = 'sad';
   else if (waving) state = 'wave';
-  else if (hopeful || cheered) state = 'happy';
+  else if (sulking && settled) state = 'idle';
+  else if (hopeful || cheered || (sulking && forgiven)) state = 'happy';
 
   const onAngryChange = (isAngry) => {
     setAngry(isAngry);
+    setForgiven(false);
+    setSettled(false);
     if (isAngry) {
-      setRants((n) => n + 1);
+      setRants(1);
     } else {
+      setFedUp(rants > ANGRY_LINES.length);
       setPokes(0);
       setSorry(true);
     }
@@ -61,6 +82,8 @@ export default function SadLexi() {
     }
     if (sorry) {
       setSorry(false);
+      setForgiven(false);
+      setSettled(false);
       return;
     }
     setPokes((n) => Math.min(n + 1, LINES.length - 1));
@@ -80,11 +103,17 @@ export default function SadLexi() {
             style={{ all: 'unset', cursor: 'pointer', position: 'relative', display: 'inline-block' }}
           >
             <AgentBot state={state} size={150} decorative onAngryChange={onAngryChange} />
-            <span key={angry ? `rant-${rants}` : `${sorry}-${pokes}`} className={styles.speech} aria-live="polite">
-              {angry && ANGRY_LINES[(rants - 1) % ANGRY_LINES.length]}
-              {!angry && sorry && 'Sorry. I am calm now. Still sad, though.'}
-              {!angry && !sorry && (hopeful && !cheered ? 'Ooh, that one looks promising!' : LINES[pokes])}
-            </span>
+            {!(sulking && settled) && (
+              <span
+                key={angry ? `rant-${rants}` : `${sorry}-${forgiven}-${pokes}`}
+                className={clsx(styles.speech, angry && rants > ANGRY_LINES.length && styles.shout)}
+                aria-live="polite"
+              >
+                {angry && (rants <= ANGRY_LINES.length ? ANGRY_LINES[rants - 1] : meltdown(rants - ANGRY_LINES.length))}
+                {!angry && sorry && (fedUp ? (forgiven ? 'OK, I forgive you. Friends again?' : 'Please leave me alone.') : 'Sorry. I am calm now. Still sad, though.')}
+                {!angry && !sorry && (hopeful && !cheered ? 'Ooh, that one looks promising!' : LINES[pokes])}
+              </span>
+            )}
           </button>
         </div>
         <span className={styles.code404}>Error 404</span>

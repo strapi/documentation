@@ -204,6 +204,17 @@
   animation: pop 240ms var(--strapi-ease);
 }
 
+.shout {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  animation: pop 240ms var(--strapi-ease), shake 320ms var(--strapi-ease);
+}
+
+@keyframes shake {
+  25% { translate: -3px 0; }
+  75% { translate: 3px 0; }
+}
+
 @keyframes pop {
   from { opacity: 0; transform: scale(0.8) translateY(6px); }
 }
