@@ -22754,6 +22754,8 @@ Administrator's first name, last name, email, and password can be:
 - passed as options
 - or set interactively if you call the command without passing any option.
 
+The password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks. When the password is set interactively, it is checked after the last question and the command asks for the password again. When it is passed with `--password`, the command exits with an error.
+
 **Example**
 
 ```bash
@@ -22777,6 +22779,8 @@ strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io -
 
 Reset an admin user's password.
 You can pass the email and new password as options or set them interactively if you call the command without passing the options.
+
+The new password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks and the command exits with an error, whether the password is set interactively or passed with `--password`.
 
 **Example**
 
@@ -33474,7 +33478,7 @@ Source: https://docs.strapi.io/cms/features/admin-panel
 
 # Administration panel
 
-The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel before focusing on profile settings that manage interface language and mode, login and personal information, and logo for branding.
+The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel. It then covers profile settings (interface language and mode, login and personal information) and settings (logo for branding, password policy for administrator accounts).
 
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types and write their actual content, but also manage users, both administrators and end users of your Strapi application.
 
@@ -33506,7 +33510,7 @@ There are a few factors that you should keep in mind when using the admin panel,
 
 **Path to configure the admin panel:** Account name or initials (bottom left hand corner) > Profile
 
-If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application.
+If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application. From the settings, administrators with the "Read the password policy" and "Update the password policy" permissions can also define the [password policy](#configuring-the-password-policy) that applies to all administrator passwords.
 
 There are many more configuration and customization options available. See the following pages for more details:
 
@@ -33535,7 +33539,7 @@ There are many more configuration and customization options available. See the f
 | Password modification | Instructions                                |
 | --------------------- | ------------------------------------------- |
 | Current password      | Write your current password in the textbox. |
-| Password              | Write the new password in the textbox.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](#configuring-the-password-policy), whose rules are displayed under the field. |
 | Password confirmation | Write the same new password in the textbox. |
 
 3. Click on the **Save** button.
@@ -33580,6 +33584,39 @@ Once uploaded, the new logo can be replaced with another one , or reset  with th
 :::note
 Both logos can also be customized programmatically via the Strapi application's configuration files (see [Admin panel customization](/cms/admin-panel-customization/logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
 :::
+
+### Configuring the password policy
+
+**Path to configure the password policy:**  *Settings > Administration panel > Password policy*
+
+The password policy defines the rules that every administrator password must follow. End users of the [Users & Permissions feature](/cms/features/users-permissions) are managed separately and do not follow this policy.
+
+Viewing the policy requires the "Read the password policy" permission, and editing it requires the "Update the password policy" permission (see [RBAC](/cms/features/rbac#plugins-and-settings)). With the read permission only, the options are displayed but cannot be edited, and the **Save** button is not displayed.
+
+The rules apply whenever an administrator password is set or changed:
+
+- when registering,
+- when resetting a forgotten password,
+- when changing your own password from your profile (see [Changing account password](#changing-account-password)),
+- when editing another administrator account (see [RBAC](/cms/features/rbac#editing-an-account)),
+- when using the `admin:create-user` and `admin:reset-user-password` [CLI commands](/cms/cli#administration).
+
+Existing passwords stay valid until they are changed.
+
+To configure the password policy:
+
+1. Fill in the following options:
+
+| Option                      | Instructions                                                                                                                        | Default value |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Minimum length              | Write the minimum number of characters for a password, between 8 and 64. Whatever the policy, a password cannot exceed 72 bytes. | 8             |
+| Require a lowercase letter  | Choose whether a password must contain at least one lowercase letter.                                                               | True          |
+| Require an uppercase letter | Choose whether a password must contain at least one uppercase letter.                                                               | True          |
+| Require a number            | Choose whether a password must contain at least one number.                                                                         | True          |
+| Require a special character | Choose whether a password must contain at least one special character, meaning any character that is neither a letter nor a digit. | False         |
+
+2. Check the *Hint shown to users* preview. It displays the rules as administrators will read them under password fields.
+3. Click on the **Save** button.
 
 ## Usage
 
@@ -34940,27 +34977,6 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 2. Define the *if* part of the condition, based on a Boolean or Enumeration field of the same content-type (e.g. if `boolean_field` is `true`).
 3. Define the *then* part of the condition by choosing whether to hide or show the field you are configuring (e.g. then `show carousel_media`).
  
-#### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
-
-The Password field displays a password field that is encrypted.
-
-| Setting name  | Instructions                                                    |
-|---------------|-----------------------------------------------------------------|
-| Name          | Write the name of the Password field.                           |
-
-| Setting name   | Instructions                                                                |
-|----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Password field.                              |
-| Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
-| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
-
-1. Click the **Apply condition** button.
-2. Define the *if* part of the condition, based on a Boolean or Enumeration field of the same content-type (e.g. if `boolean_field` is `true`).
-3. Define the *then* part of the condition by choosing whether to hide or show the field you are configuring (e.g. then `show carousel_media`).
-
 #### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
 
 The Media field allows you to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
@@ -39368,6 +39384,7 @@ Settings permissions can be configured for all settings accessible from *General
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
 | API Tokens |  <ul><li>API tokens</li><ul><li>"Access the API tokens settings page" - toggles access to the API tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br /> *General > Settings > Global Settings - API Tokens* |
 | Admin Tokens | <ul><li>Admin tokens</li><ul><li>"Access the Admin tokens settings page" - toggles access to the Admin Tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Admin tokens</li><li>"Read" - allows you to see created Admin tokens</li><li>"Update" - allows editing of Admin tokens</li><li>"Delete (revoke)" - allows deletion of Admin tokens</li><li>"Regenerate" - allows regeneration of Admin tokens</li></ul></ul> 👉 Path reminder to Admin Tokens settings: <br /> *General > Settings > Administration Panel - Admin Tokens*  |
+| Password policy | <ul><li>General</li><ul><li>"Read the password policy" - gives access to the password policy settings, displayed as read-only without the "Update the password policy" permission</li><li>"Update the password policy" - allows you to edit the password policy</li></ul></ul> 👉 Path reminder to the password policy settings: <br /> *General > Settings > Administration Panel - Password policy* |
 | Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows you to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
 | Transfer Tokens | <ul><li>Transfer tokens</li><ul><li>"Access the Transfer tokens settings page" - toggles access to the Transfer tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Transfer tokens</li><li>"Read" - allows you to see created Transfer tokens (disabling this permission will disable access to the *Global Settings - Transfer Tokens* settings)</li><li>"Update" - allows editing of Transfer tokens</li><li>"Delete (revoke)" - allows deletion of Transfer tokens</li> <li> "Regenerate" - allows regeneration of the Transfer token</li></ul></ul> 👉 Path reminder to Transfer Tokens settings: <br /> *General > Settings > Global Settings - Transfer Tokens* |
 
@@ -39466,7 +39483,7 @@ It is possible to delete one or several administrator accounts at the same time.
 | Last name             | Write the administrator's last name in the textbox.                                         |
 | Email                 | Write the administrator's complete email address in the textbox.                            |
 | Username              | Write the administrator's username in the textbox.                                          |
-| Password              | Write the new administrator account's password in the textbox.                              |
+| Password              | Write the new administrator account's password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field.                              |
 | Confirm password      | Write the new password in the textbox for confirmation.                                     |
 | Active                | Click on **TRUE** to activate the administrator's account.                                  |
 
@@ -41817,7 +41834,7 @@ To change the password of your account:
 | Password modification |                                                                                                                  |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | Current password      | Write your current password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown. |
-| Password              | Write the new password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field. <br/> 💡 You can click on the  icon for the password to be shown.      |
 | Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown. |
 
 3. Click on the **Save** button.
