@@ -1,6 +1,6 @@
 ---
 title: Users & Permissions Providers
-description: Learn how to setup providers for the Users & Permissions feature, or create your own.
+description: Learn how to set up providers for the Users & Permissions feature, or create your own.
 displayed_sidebar: cmsSidebar
 tags:
 - users and permissions

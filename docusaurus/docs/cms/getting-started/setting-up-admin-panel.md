@@ -1,7 +1,7 @@
 ---
 title: Setting up the admin panel
 displayed_sidebar: cmsSidebar
-description: How to setup your Strapi Admin Panel
+description: How to set up your Strapi Admin Panel
 tags:
 - admin panel
 - administrator
