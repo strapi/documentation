@@ -1,0 +1,415 @@
+{
+  "id": "content-lifecycle",
+  "title": "Content lifecycle",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 1401556,
+    "dark": 1356228
+  },
+  "intro": {
+    "text": "Let's follow a blog post from its first draft to its release, and see what the Audit Logs recorded along the way!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/content-lifecycle/01"
+  },
+  "steps": [
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/01",
+      "text": "Let's write a new blog post about black holes! Click on *Create new entry*.",
+      "rect": {
+        "x": 83.18,
+        "y": 7.5,
+        "w": 12.45,
+        "h": 4
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-lifecycle/02",
+      "text": "First, let's give our blog post a title.",
+      "rect": {
+        "x": 28.91,
+        "y": 35.37,
+        "w": 22.89,
+        "h": 4.75
+      },
+      "value": "Black holes, explained"
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-lifecycle/03",
+      "text": "Then a short description.",
+      "rect": {
+        "x": 53.2,
+        "y": 35.37,
+        "w": 22.89,
+        "h": 13.13
+      },
+      "value": "What happens beyond the event horizon, in 5 minutes."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/04",
+      "text": "Click the regenerate icon of the *slug* field to generate the slug from the title.",
+      "rect": {
+        "x": 49.3,
+        "y": 58.11,
+        "w": 1.25,
+        "h": 2
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/05",
+      "text": "Let's save our blog post. It stays a **draft** until it is published.",
+      "rect": {
+        "x": 80.7,
+        "y": 40.25,
+        "w": 13.59,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/06",
+      "text": "Our blog post exists in English. Let's **translate it into French**!",
+      "rect": {
+        "x": 78.87,
+        "y": 6.5,
+        "w": 10.82,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/07",
+      "text": "Let's create the French version of our blog post.",
+      "rect": {
+        "x": 79.27,
+        "y": 16.37,
+        "w": 17.1,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-lifecycle/08",
+      "text": "We can now translate the title into French...",
+      "rect": {
+        "x": 28.91,
+        "y": 35.37,
+        "w": 22.89,
+        "h": 4.75
+      },
+      "value": "Les trous noirs, expliqués"
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-lifecycle/09",
+      "text": "... and the description.",
+      "rect": {
+        "x": 53.2,
+        "y": 35.37,
+        "w": 22.89,
+        "h": 13.13
+      },
+      "value": "Ce qui se passe au-delà de l'horizon des événements, en 5 minutes."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/10",
+      "text": "Let's save the French version.",
+      "rect": {
+        "x": 80.7,
+        "y": 40.25,
+        "w": 13.59,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/content-lifecycle/11",
+      "text": "Our blog post now exists in **English** and **French**!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/11",
+      "text": "Now let's create a **release** to publish both versions together. Click on *Releases* in the navigation.",
+      "rect": {
+        "x": 0.59,
+        "y": 21.63,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/12",
+      "text": "Click on *New Release*.",
+      "rect": {
+        "x": 85.21,
+        "y": 5.5,
+        "w": 10.42,
+        "h": 4
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-lifecycle/13",
+      "text": "Let's give a name to our release.",
+      "rect": {
+        "x": 61.09,
+        "y": 19.74,
+        "w": 36.25,
+        "h": 4.75
+      },
+      "value": "Space Week"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/14",
+      "text": "We don't have a date yet, we will publish the release manually.",
+      "rect": {
+        "x": 61.02,
+        "y": 29.62,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-lifecycle/15",
+      "text": "The **release mode** defines what happens if some entries are not ready when the release is published.",
+      "rect": {
+        "x": 60.55,
+        "y": 40.5,
+        "w": 37.34,
+        "h": 13.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/15",
+      "text": "Let's allow a **partial release**: entries that are ready will be published, and the others skipped.",
+      "rect": {
+        "x": 61.02,
+        "y": 41.25,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/16",
+      "text": "Click on *Create release*.",
+      "rect": {
+        "x": 88.07,
+        "y": 91.88,
+        "w": 9.35,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/content-lifecycle/17",
+      "text": "Our release is created. Let's go back to our blog post to add it to the release!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/17",
+      "text": "Click on *Content Manager* in the navigation.",
+      "rect": {
+        "x": 0.59,
+        "y": 15.13,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/18",
+      "text": "Let's open the French version of our blog post.",
+      "rect": {
+        "x": 34.78,
+        "y": 34.63,
+        "w": 15.32,
+        "h": 8.06
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/19",
+      "text": "In the *Entry* area, the ... button gives access to *Add to release*.",
+      "rect": {
+        "x": 76.33,
+        "y": 44.88,
+        "w": 17.59,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/20",
+      "text": "Select our *Space Week* release.",
+      "rect": {
+        "x": 20.47,
+        "y": 49.25,
+        "w": 58.75,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/21",
+      "text": "The French version will be **published** with the release. Click on *Continue*.",
+      "rect": {
+        "x": 74.04,
+        "y": 66.49,
+        "w": 6.82,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-lifecycle/22",
+      "text": "The *Releases* area now shows that the French version will be published with *Space Week*.",
+      "rect": {
+        "x": 78.91,
+        "y": 59.36,
+        "w": 17.19,
+        "h": 25.99
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/22",
+      "text": "Each locale is added to a release separately: let's switch to the English version.",
+      "rect": {
+        "x": 76.66,
+        "y": 6.5,
+        "w": 10.21,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/23",
+      "text": "Let's add the English version to the same release, exactly as we did for the French one.",
+      "rect": {
+        "x": 20.47,
+        "y": 49.25,
+        "w": 58.75,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/24",
+      "text": "Click on *Continue*.",
+      "rect": {
+        "x": 74.04,
+        "y": 66.49,
+        "w": 6.82,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/25",
+      "text": "Let's check our release. Click on *Releases* in the navigation.",
+      "rect": {
+        "x": 0.59,
+        "y": 21.63,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/26",
+      "text": "Click on the *Space Week* release.",
+      "rect": {
+        "x": 11.02,
+        "y": 35.31,
+        "w": 6.24,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-lifecycle/27",
+      "text": "Both versions of our blog post are in the release, ready to be published together.",
+      "rect": {
+        "x": 10.23,
+        "y": 42,
+        "w": 83.91,
+        "h": 25.19
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/27",
+      "text": "Now let's see what the **Audit Logs** recorded while we worked. Click on *Settings* in the navigation.",
+      "rect": {
+        "x": 0.59,
+        "y": 54.13,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/28",
+      "text": "Click on *Audit Logs*.",
+      "rect": {
+        "x": 5,
+        "y": 60.36,
+        "w": 16.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-lifecycle/29",
+      "text": "Everything we did is here, newest first: our blog post created in English and in French, the release created, and both versions added to it.",
+      "rect": {
+        "x": 28.36,
+        "y": 31.88,
+        "w": 65.78,
+        "h": 42.13
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-lifecycle/30",
+      "text": "Click the eye icon of an action to see its details. Let's open the creation of our blog post.",
+      "rect": {
+        "x": 89.92,
+        "y": 67.19,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-lifecycle/31",
+      "text": "The details show the action, its date, the user who did it and the **payload**: here, the content of our blog post as it was created.",
+      "rect": {
+        "x": 17.11,
+        "y": 4.25,
+        "w": 65.78,
+        "h": 91.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/content-lifecycle/31",
+      "text": "And that's it! We've written a blog post, translated it into French, added it to a partial release, and checked what the Audit Logs recorded. ✨"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "image": "/img/assets/interactive-demos/content-lifecycle/31"
+  }
+}

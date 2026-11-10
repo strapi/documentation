@@ -1,0 +1,127 @@
+# Content lifecycle tour: write a blog post, translate it, add it to a partial release, then check the Audit Logs.
+# Runs against the demo app from setup-demo-app.js. Releases and Audit Logs are Enterprise features:
+# start the app with a license (STRAPI_LICENSE) or their pages do not exist.
+# The release mode (partial releases) needs a Strapi version that includes strapi/strapi#28339.
+#
+# Notes:
+# - The button that opened the menu: an open menu hides the rest of the page from role selectors.
+
+title: Content lifecycle
+viewport:
+  width: 1280
+  height: 800
+start: /admin/content-manager/collection-types/api::article.article?page=1&pageSize=10&sort=title:ASC&plugins[i18n][locale]=en
+
+intro:
+  text: Let's follow a blog post from its first draft to its release, and see what the Audit Logs recorded along the way!
+  button: Let's go 🚀
+
+steps:
+  # 1. Write the blog post
+  - click: role=link[name="Create new entry"]
+    text: Let's write a new blog post about black holes! Click on *Create new entry*.
+  - fill: input[name=title]
+    value: Black holes, explained
+    text: First, let's give our blog post a title.
+  - fill: textarea[name=description]
+    value: What happens beyond the event horizon, in 5 minutes.
+    text: Then a short description.
+  - click: role=button[name="Regenerate"]
+    text: Click the regenerate icon of the *slug* field to generate the slug from the title.
+  - click: role=button[name="Save"]
+    text: Let's save our blog post. It stays a **draft** until it is published.
+  - click: "[aria-label=\"Locales\"]"
+    text: Our blog post exists in English. Let's **translate it into French**!
+  - click: role=option[name="Create French (fr) locale"]
+    text: Let's create the French version of our blog post.
+  - fill: input[name=title]
+    value: Les trous noirs, expliqués
+    text: We can now translate the title into French...
+  - fill: textarea[name=description]
+    value: Ce qui se passe au-delà de l'horizon des événements, en 5 minutes.
+    text: ... and the description.
+  - click: role=button[name="Save"]
+    text: Let's save the French version.
+  - chapter: true
+    text: Our blog post now exists in **English** and **French**!
+
+  # 3. Add it to a release
+  - click: nav >> role=link[name="Releases"]
+    text: Now let's create a **release** to publish both versions together. Click on *Releases* in the navigation.
+  - click: role=button[name="New Release"]
+    text: Click on *New Release*.
+  - fill: '[role=dialog] >> role=textbox[name="Release name"]'
+    value: Space Week
+    text: Let's give a name to our release.
+  - click: '[role=dialog] >> role=checkbox[name="I don''t have a release date yet"]'
+    text: We don't have a date yet, we will publish the release manually.
+  - explain: '[role=dialog] >> role=radiogroup[name="Release mode"]'
+    text: The **release mode** defines what happens if some entries are not ready when the release is published.
+  - click: '[role=dialog] >> role=radio[name="Release all ready items"]'
+    text: 'Let''s allow a **partial release**: entries that are ready will be published, and the others skipped.'
+  - click: '[role=dialog] >> role=button[name="Create release"]'
+    text: Click on *Create release*.
+  - chapter: true
+    text: Our release is created. Let's go back to our blog post to add it to the release!
+  # The Content Manager opens on its first single type: go on to the Article list.
+  - click: nav >> role=link[name="Content Manager"]
+    text: Click on *Content Manager* in the navigation.
+    after:
+      - click: nav[aria-label="Content Manager"] a:has-text("Article")
+  # The list view remembers the last locale: French.
+  - click: role=gridcell[name="Les trous noirs, expliqués"]
+    text: Let's open the French version of our blog post.
+  - click: role=menuitem[name="Add to release"]
+    text: In the *Entry* area, the ... button gives access to *Add to release*.
+    before:
+      - click: role=button[name="More document actions"]
+  - click: role=option[name="Space Week"]
+    text: Select our *Space Week* release.
+    before:
+      - click: '[role=dialog] >> role=combobox[name="Select a release"]'
+  - click: '[role=dialog] >> role=button[name="Continue"]'
+    text: The French version will be **published** with the release. Click on *Continue*.
+  - explain: aside:has(h2:text-is("Releases"))
+    text: The *Releases* area now shows that the French version will be published with *Space Week*.
+  - click: "[aria-label=\"Locales\"]"
+    text: 'Each locale is added to a release separately: let''s switch to the English version.'
+    after:
+      - click: role=option[name*="English"]
+  - click: role=option[name="Space Week"]
+    text: Let's add the English version to the same release, exactly as we did for the French one.
+    before:
+      - waitFor: main h1:text-is("Black holes, explained")
+      - click: role=button[name="More document actions"]
+      - click: role=menuitem[name="Add to release"]
+      - click: '[role=dialog] >> role=combobox[name="Select a release"]'
+  - click: '[role=dialog] >> role=button[name="Continue"]'
+    text: Click on *Continue*.
+  - click: nav >> role=link[name="Releases"]
+    text: Let's check our release. Click on *Releases* in the navigation.
+  - click: role=link[name*="Space Week"]
+    text: Click on the *Space Week* release.
+  - explain: main [role=grid]
+    text: Both versions of our blog post are in the release, ready to be published together.
+
+  # 4. Audit Logs
+  - click: nav >> role=link[name="Settings"]
+    text: Now let's see what the **Audit Logs** recorded while we worked. Click on *Settings* in the navigation.
+  - click: nav[aria-label="Settings"] a:has-text("Audit Logs")
+    text: Click on *Audit Logs*.
+  # The 5 most recent logs are the actions of the tour. Older logs (the setup deletions, the login) come after.
+  - explain:
+      - main [role=grid] >> role=row >> nth=1
+      - main [role=grid] >> role=row >> nth=2
+      - main [role=grid] >> role=row >> nth=3
+      - main [role=grid] >> role=row >> nth=4
+      - main [role=grid] >> role=row >> nth=5
+    text: 'Everything we did is here, newest first: our blog post created in English and in French, the release created, and both versions added to it.'
+  - click: main [role=grid] >> role=row >> nth=5 >> role=button
+    text: Click the eye icon of an action to see its details. Let's open the creation of our blog post.
+  - explain: "[role=dialog]"
+    text: 'The details show the action, its date, the user who did it and the **payload**: here, the content of our blog post as it was created.'
+  - chapter: true
+    text: And that's it! We've written a blog post, translated it into French, added it to a partial release, and checked what the Audit Logs recorded. ✨
+
+outro:
+  text: Thank you for following this guided tour!
