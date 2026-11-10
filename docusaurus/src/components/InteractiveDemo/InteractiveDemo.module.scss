@@ -163,6 +163,9 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   height: auto; // the image sets the frame height; width/height attributes reserve it before load
   margin: 0 !important; // docs images get a bottom margin from images.scss
+  // The docs image zoom targets every .markdown img: a click on the screenshot would hide it
+  // behind a zoom overlay, which is invisible in full screen.
+  pointer-events: none;
 }
 
 .backdrop {
@@ -621,8 +624,13 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   .chrome,
   .frame {
+    flex: none; // a column taller than the screen would squeeze the browser bar
     width: min(100%, calc((100vh - 60px) * 1.6));
     margin: 0 auto;
+  }
+
+  .transcript {
+    display: none;
   }
 }
 

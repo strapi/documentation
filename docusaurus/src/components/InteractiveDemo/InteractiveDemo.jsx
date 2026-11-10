@@ -246,7 +246,7 @@ export default function InteractiveDemo({ id }) {
         className={styles.frame}
         onClick={(event) => {
           // A click outside the expected target makes the hotspot pulse harder.
-          if (isAction && event.target.tagName === 'IMG') setNudge((n) => n + 1);
+          if (isAction && !event.target.closest('button') && !bubbleRef.current?.contains(event.target)) setNudge((n) => n + 1);
         }}
       >
         <div className={styles.viewport} style={{ transform: `translate(${view.x}%, ${view.y}%) scale(${view.scale})` }}>
