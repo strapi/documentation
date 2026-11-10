@@ -37,7 +37,7 @@ ngrok http 1337
 Don't forget to update the server url in the Strapi config file `./config/server.js` and the server URL in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react" text="react login example app"/>) with the generated ngrok URL.
 :::
 
-1. You must be a Patreon Creator in order to register an Oauth client.
+1. You must be a Patreon Creator in order to register an OAuth client.
 2. Go to the <ExternalLink to="https://www.patreon.com/portal" text="Patreon developer portal"/>
 3. Click on <ExternalLink to="https://www.patreon.com/portal/registration/register-clients" text="Clients & API Keys"/>
 4. Click on "Create Client"
