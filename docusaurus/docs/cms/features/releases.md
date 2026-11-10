@@ -19,6 +19,8 @@ Releases group entries into publishable batches to trigger simultaneous publish 
 
 The Releases feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
 
+By default, a release only runs if every one of its entries is ready: if a single entry can't be published or unpublished, nothing in the release runs. You can instead set a release to run partially, so it publishes or unpublishes the entries that are ready and skips the rest (see [Creating a release](#creating-a-release) and [Viewing release outcomes](#viewing-release-outcomes)).
+
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">CMS Growth and Enterprise plans</IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Administrator role in the project's admin panel</IdentityCardItem>
@@ -53,8 +55,11 @@ To be able to include your content in releases, and to schedule and publish thos
 
 1. Click the <Icon name="plus" classes="ph-bold" /> **New Release** button in the upper right corner.  
 2. Give the release a name.
-3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication.
-4. Click the **Continue** button.
+3. Under **Release mode**, choose how the release should behave if some entries aren't ready when it runs:
+    - **Require every entry to be ready** (default): nothing is released unless every entry is ready.
+    - **Release all ready items**: the release publishes or unpublishes the entries that are ready and skips the rest.
+4. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication.
+5. Click the **Continue** button.
 
 :::tip
 Your releases can be renamed afterwards, by editing the release using the <Icon name="dots-three-outline" /> then <Icon name="pencil-simple" /> **Edit** buttons.
@@ -84,6 +89,10 @@ You can rename a release. To do so, while on a release page:
 **Path:** <Icon name="paper-plane-tilt" /> Releases
 
 Deleting a release will only delete the release itself, but not the content-type entries included in the release.
+
+:::note
+A release that has already run, whether it completed, ran partially, or failed, can no longer be deleted. Only a release that hasn't run yet can be deleted.
+:::
 
 1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel.
 2. Select <Icon name="trash" /> **Delete**.
@@ -115,7 +124,8 @@ A release stores a reference to an entry, not a copy of its content. If the draf
 1. Click on <Icon name="dots-three-outline" /> in the _Entry_ area on the right side of the interface.
 2. In the list, click on the <Icon name="paper-plane-tilt" /> **Add to release** button.
 2. Select which release to add this entry to.
-3. Click on the **Publish** or **Unpublish** button depending on whether you want the entry to be published or unpublished when the release itself is published, then click **Continue**.
+3. Click the **Publish** or **Unpublish** button to decide whether the entry is published or unpublished when the release itself is published.
+4. Click **Continue**.
 
 The *Releases* box on the right should show which release(s) the entry is included in.
 
@@ -130,7 +140,8 @@ If [Releases scheduling](/cms/features/releases#scheduling-a-release) is enabled
 1. Select which entries you want to add by ticking the box on the left side of the entries' record.
 2. Click on the **Add to release** button located above the header of the table.
 3. In the modal, select which release to add these entries to.
-4. Click on the **Publish** or **Unpublish** button to decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
+4. Click the **Publish** or **Unpublish** button to decide whether these entries are published or unpublished when the release is published.
+5. Click **Continue**.
 
 <ThemedImage
   alt="Including content in a release"
@@ -190,14 +201,13 @@ To publish a release, click the **Publish** button in the top right corner of th
     - `Empty`: no entry has been added to the release yet
     - `Blocked`: content has been added to the release but at least one issue in an entry prevents the release from being published
     - `Ready`: content has been added to the release, all checks have been passed and the release can be published
-    - `Done`: the release has been released and is now done
+    - `Done`: the release ran and published or unpublished every entry
+    - `Partial`: the release ran with the **Release all ready items** mode and published or unpublished only the entries that were ready, skipping the rest (see [Viewing release outcomes](#viewing-release-outcomes))
+    - `Failed`: the release ran but nothing was published or unpublished, for example because the server was down at the scheduled time
 
-  - The _Status_ column displays the status of each entry:
-    - <Icon name="check-circle" color="rgb(58,115,66)"/> Already published: the entry is already published and publishing the release will not affect this entry 
-    - <Icon name="check-circle" color="rgb(58,115,66)"/> Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
-    - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to publish: the entry is ready to  be published with the release
-    - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to unpublish: the entry is ready to  be unpublished with the release
-    - <Icon name="x-circle" color="rgb(190,51,33)" /> Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+  - Before the release runs, the _Status_ column shows whether each entry is ready to be included:
+    - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready: the entry is ready to be published or unpublished with the release
+    - <Icon name="x-circle" color="rgb(190,51,33)" /> Not ready: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed, unless the release uses the **Release all ready items** mode.
 
 If your release is `Blocked` because some of your entries have a <Icon name="x-circle" color="rgb(190,51,33)" /> status, click the <Icon name="dots-three-outline" /> button, then **Edit the entry** to fix the issues until all entries have the <Icon name="check-circle" color="rgb(58,115,66)"/> status.
 
@@ -206,7 +216,7 @@ You will have to click on the **Refresh** button to update the release page as y
 :::
 
 :::caution
-Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
+Once a release has run, whether it completed, ran partially, or failed, it cannot be updated or re-published with the same group of entries. To publish entries a partial or failed release skipped, create another release from the skipped entries (see [Viewing release outcomes](#viewing-release-outcomes)).
 :::
 
 <ThemedImage
@@ -216,6 +226,26 @@ Once a release is published, the release itself cannot be updated. You can not r
     dark: '/img/assets/releases/publish-release_DARK.png',
   }}
 />
+
+### Viewing release outcomes
+
+Once a release has run, the _Status_ column of its details page shows what happened to each entry instead of whether it was ready:
+
+- <Icon name="check-circle" color="rgb(58,115,66)"/> Done: the entry was published or unpublished with the release.
+- <Icon name="x-circle" color="rgb(190,51,33)" /> Skipped: the entry wasn't published or unpublished. Click **View details** next to the entry to see the reason, which is one of the following:
+    - Validation error: the entry's content didn't pass publish validation.
+    - Not ready to publish: the entry hadn't reached the required review stage.
+    - Error: the publish or unpublish action failed on the server.
+    - Waiting on other entries: the release uses the **Require every entry to be ready** mode, and another entry in the release wasn't ready or couldn't be released, so none were. The reason also lists which entries held this one back.
+    - Server unavailable: the server was down at the scheduled time, so the release didn't run.
+
+With the **Release all ready items** mode, a release that skips at least one entry is marked `Partial`, and a notification on the details page reports how many entries were released against the total, and how many were skipped. A release that skips every entry is marked `Failed`.
+
+For a `Partial` or `Failed` release, click the **Create release from skipped** button in the upper right corner to create a new release from the skipped entries. The new release is pre-filled with those entries, which you can review and publish like any other release.
+
+:::note
+A release that failed before this feature shipped doesn't have recorded entry outcomes: its entries show an `Unknown` status instead of `Done` or `Skipped`, and the **Create release from skipped** button isn't available for it.
+:::
 
 ### Audit logging of release actions
 
@@ -227,10 +257,10 @@ The following actions are recorded:
 
 | Action | What is logged |
 | --- | --- |
-| Create release | The new release name, and whether it was scheduled. |
-| Update release | The fields that changed (name, schedule date, timezone) and their previous and new values. No entry is created if nothing changed. |
+| Create release | The new release name, whether it was scheduled, and its release mode (`all_or_nothing` or `allow_partial`). |
+| Update release | The fields that changed (name, schedule date, timezone, release mode) and their previous and new values. No entry is created if nothing changed. |
 | Delete release | The deleted release identifier. |
-| Trigger release | The number of entries published or unpublished and the outcome: `success` or `failure` (error name only, no internal details). |
+| Trigger release | The outcome (`success`, `partial`, or `failure`) and, for `success` and `partial`, the number of entries published, unpublished, and skipped. A `failure` logs the error name only, no internal details. |
 | Add entry to release | One log entry per entry added, with the content type, document ID, locale, and action type (`publish` or `unpublish`). |
 | Change entry on release | The previous and new action type (`publish` ↔ `unpublish`). No entry is created if nothing changed. |
 | Remove entry from release | The entry that was explicitly removed from the release. |
