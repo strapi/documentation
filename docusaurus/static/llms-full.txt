@@ -33506,6 +33506,8 @@ There are a few factors that you should keep in mind when using the admin panel,
 - **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the  badge in the docs and read the [Feature flags documentation](/cms/configurations/features#enabling-a-future-flag) for more information.
 :::
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the admin panel:** Account name or initials (bottom left hand corner) > Profile
@@ -34130,6 +34132,8 @@ Available by default, if required plan
 
 Available in both Development & Production environment
 
+<!--  -->
+
 A version is only created when a document is modified through the  Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
 
 :::note
@@ -34241,6 +34245,7 @@ Available in both Development & Production environment.
 -->
 
 <!-- TODO: create dark mode version and replace the darkId value -->
+<!--  -->
 
 The  Content Manager contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/cms/features/content-type-builder).
 
@@ -34664,6 +34669,8 @@ Minimum "Read" permission in Roles > Plugins - Content Type Builder.
 Available in Development environment only.
 
 ## Overview
+
+<!--  -->
 
 The  Content-type Builder allows the creation and management of content-types, which can be:
 
@@ -36905,6 +36912,8 @@ Available but disabled by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the feature:**  Content Type Builder
@@ -37466,6 +37475,8 @@ Available but disabled by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 Before being usable in the Content Manager, the Internationalization feature must be configured from  *Settings*, and it should be enabled on your content types from the  _Content-type Builder_.
@@ -37613,6 +37624,8 @@ Available and activated by default
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -39266,6 +39279,8 @@ Available and activated by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the feature:**  *Settings > Administration panel > Roles*
@@ -39519,6 +39534,8 @@ Available by default, if required plan
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 To be able to include your content in releases, and to schedule and publish those releases, you must first create them. You can also modify the releases' default timezone to use when scheduling a publication, as well as deleting releases that are obsolete or irrelevant.
@@ -39717,6 +39734,8 @@ Available by default, if required plan
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -54314,6 +54333,8 @@ Usable via the admin panel.<br/>Configured through both admin panel and server c
 :::caution Unmaintained plugin
 The Documentation plugin is not actively maintained and may not work with Strapi 5.
 :::
+
+<!--  -->
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). The Documentation plugin generates the [paths objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [schema objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object) and converts all Strapi types to [OpenAPI data types](https://swagger.io/docs/specification/data-models/data-types/).
 
