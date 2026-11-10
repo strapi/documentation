@@ -157,10 +157,10 @@ export default function LexiRun() {
     <div className={styles.page}>
       <div className={styles.hero}>
         <span className={styles.code404}>Error 404</span>
-        <h1 className={styles.title}>You found a dead end. Lexi found a game.</h1>
+        <h1 className={styles.title}>You found a dead end.<br />Lexi found a game.</h1>
         <p className={styles.lede}>
-          The page is gone, but the 404s are everywhere. Help Lexi jump over them, then pick a
-          real page below.
+          The page is gone, but 404s are everywhere on the internet.<br />
+          Help Lexi jump over them, then pick a real page below.
         </p>
         <DidYouMean />
       </div>
