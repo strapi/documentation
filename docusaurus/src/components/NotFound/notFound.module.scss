@@ -295,6 +295,37 @@
   caret-color: #7b79ff;
 }
 
+.helpRow {
+  display: grid;
+  grid-template-columns: 18ch 1fr;
+  gap: 8px;
+}
+
+.helpCommand {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted #6e6e8a;
+  text-underline-offset: 3px;
+
+  &:hover,
+  &:focus-visible {
+    color: #a5a3ff;
+    text-decoration-color: currentColor;
+  }
+}
+
+@media (max-width: 600px) {
+  .helpRow {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 6px;
+  }
+}
+
 .ok { color: #5cb176; }
 .err { color: #ee5e52; }
 .dim { color: #8e8ea9; }

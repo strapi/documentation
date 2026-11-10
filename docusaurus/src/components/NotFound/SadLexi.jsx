@@ -12,6 +12,14 @@ const LINES = [
   'Fine. You cheered me up.',
 ];
 
+// What Lexi says when rapid pokes make it angry, in turn
+const ANGRY_LINES = [
+  'Hey! Stop poking me!',
+  'Poking me will not bring the page back!',
+  'I said STOP.',
+  'Seriously. Hands off.',
+];
+
 /**
  * Proposal 1: Lexi is sad the page is gone, and cheers up as soon as the
  * reader heads somewhere useful (hovering a suggestion or Ask AI).
@@ -21,16 +29,29 @@ export default function SadLexi() {
   const [hopeful, setHopeful] = useState(false);
   const [pokes, setPokes] = useState(0);
   const [waving, setWaving] = useState(false);
+  // AgentBot gets angry on its own when poked too fast; the bubble follows it
+  const [angry, setAngry] = useState(false);
+  const [rants, setRants] = useState(0);
   const waveTimer = useRef(null);
 
   useEffect(() => () => clearTimeout(waveTimer.current), []);
 
   const cheered = pokes >= LINES.length - 1;
   let state = 'sad';
-  if (waving) state = 'wave';
+  if (angry) state = 'sad';
+  else if (waving) state = 'wave';
   else if (hopeful || cheered) state = 'happy';
 
+  const onAngryChange = (isAngry) => {
+    setAngry(isAngry);
+    if (isAngry) setRants((n) => n + 1);
+  };
+
   const poke = () => {
+    if (angry) {
+      setRants((n) => n + 1);
+      return;
+    }
     setPokes((n) => Math.min(n + 1, LINES.length - 1));
     setWaving(true);
     clearTimeout(waveTimer.current);
@@ -47,9 +68,10 @@ export default function SadLexi() {
             aria-label="Poke Lexi"
             style={{ all: 'unset', cursor: 'pointer', position: 'relative', display: 'inline-block' }}
           >
-            <AgentBot state={state} size={150} decorative />
-            <span key={pokes} className={styles.speech} aria-live="polite">
-              {hopeful && !cheered ? 'Ooh, that one looks promising!' : LINES[pokes]}
+            <AgentBot state={state} size={150} decorative onAngryChange={onAngryChange} />
+            <span key={angry ? `rant-${rants}` : pokes} className={styles.speech} aria-live="polite">
+              {angry && ANGRY_LINES[(rants - 1) % ANGRY_LINES.length]}
+              {!angry && (hopeful && !cheered ? 'Ooh, that one looks promising!' : LINES[pokes])}
             </span>
           </button>
         </div>

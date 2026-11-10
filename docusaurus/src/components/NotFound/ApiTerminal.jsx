@@ -4,14 +4,42 @@ import Link from '@docusaurus/Link';
 import { askAi, CorrectedPath, QuickLinks, useDidYouMean, useSuggestions } from './shared';
 import styles from './notFound.module.scss';
 
+// Each help entry lists clickable commands: `run` runs one, `fill` types it
+// into the prompt so the reader can add the argument
 const HELP = [
-  ['ls', 'list pages that look like the one you wanted'],
-  ['open <n>', 'go to suggestion number n'],
-  ['ask <question>', 'ask the Strapi Docs AI'],
-  ['cd cms | cd cloud', 'go to the CMS or Cloud docs'],
-  ['home', 'back to the docs home'],
-  ['clear', 'clear the screen'],
+  [[{ label: 'ls', run: 'ls' }], 'list pages that look like the one you wanted'],
+  [[{ label: 'open <n>', fill: 'open ' }], 'go to suggestion number n'],
+  [[{ label: 'ask <question>', fill: 'ask ' }], 'ask the Strapi Docs AI'],
+  [[{ label: 'cd cms', run: 'cd cms' }, { label: 'cd cloud', run: 'cd cloud' }], 'go to the CMS or Cloud docs'],
+  [[{ label: 'home', run: 'home' }], 'back to the docs home'],
+  [[{ label: 'clear', run: 'clear' }], 'clear the screen'],
 ];
+
+function HelpOutput({ onRun, onFill }) {
+  return HELP.map(([commands, description]) => (
+    <div key={description} className={styles.helpRow}>
+      <span>
+        {commands.map((command, i) => (
+          <React.Fragment key={command.label}>
+            {i > 0 && <span className={styles.dim}> | </span>}
+            <button
+              type="button"
+              className={styles.helpCommand}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (command.run) onRun(command.run);
+                else onFill(command.fill);
+              }}
+            >
+              {command.label}
+            </button>
+          </React.Fragment>
+        ))}
+      </span>
+      <span>{description}</span>
+    </div>
+  ));
+}
 
 const CHIPS = ['help', 'ls', 'open 1', 'ask where did this page go?', 'cd cms', 'sudo publish'];
 
@@ -69,7 +97,7 @@ export default function ApiTerminal() {
 
     switch (name.toLowerCase()) {
       case 'help':
-        print(cmd, HELP.map(([c, d]) => `${c.padEnd(18)} ${d}`).join('\n'));
+        print(cmd, <HelpOutput onRun={(c) => runRef.current(c)} onFill={fill} />);
         break;
       case 'ls':
         if (loading) print(cmd, <span className={styles.dim}>searching the index…</span>);
@@ -114,6 +142,15 @@ export default function ApiTerminal() {
       default:
         print(cmd, <span className={styles.err}>{name}: command not found. type help</span>);
     }
+  };
+
+  // Help output stays on screen after re-renders, so it calls the latest run
+  const runRef = useRef(run);
+  runRef.current = run;
+
+  const fill = (text) => {
+    setValue(text);
+    inputRef.current?.focus();
   };
 
   const submit = (e) => {
