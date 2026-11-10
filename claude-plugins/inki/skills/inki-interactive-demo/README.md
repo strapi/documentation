@@ -8,9 +8,9 @@ Each demo has its own folder, `docusaurus/interactive-demos/<id>/`, named after 
 |---|---|---|
 | Description: the tour in plain text | `docusaurus/interactive-demos/<id>/description.md` (optional) | You |
 | Scenario: the steps, their target and their text | `docusaurus/interactive-demos/<id>/scenario.yaml` | You, or Claude from the description: the only file to change to change a demo |
-| Setup: code that brings the demo app back to the state the scenario starts from | `docusaurus/interactive-demos/<id>/setup.js` (optional) | Rarely |
+| Setup: code that brings the demo app back to the state the scenario starts from | `docusaurus/interactive-demos/<id>/setup.js` (optional) | You, or Claude, when the tour creates or changes data |
 | Captured demo: screenshots and target positions | `docusaurus/static/img/assets/interactive-demos/<id>/` and `docusaurus/interactive-demos/<id>/generated-capture.json` | `capture.js`, never by hand |
-| Player: the React component that renders any captured demo | `docusaurus/src/components/InteractiveDemo/` | Rarely |
+| Player: the React component that renders any captured demo | `docusaurus/src/components/InteractiveDemo/` | A front-end developer, to change how all demos look or behave |
 
 In a page: `<InteractiveDemo id="content-manager" />`.
 
