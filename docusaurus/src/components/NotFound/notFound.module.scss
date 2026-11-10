@@ -1,0 +1,447 @@
+// Shared layout for the three 404 proposals
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 16px 80px;
+  color: var(--strapi-fg-1);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.code404 {
+  font-family: var(--strapi-font-family-technical);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--strapi-primary-600);
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1.15;
+}
+
+.lede {
+  margin: 0;
+  max-width: 540px;
+  font-size: 17px;
+  color: var(--strapi-neutral-600);
+}
+
+.lede code {
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+.didYouMean {
+  margin: 0;
+  max-width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--strapi-primary-200);
+  border-radius: var(--strapi-radius-md);
+  background: var(--strapi-primary-100);
+  font-size: 16px;
+  overflow-wrap: anywhere;
+
+  a {
+    font-family: var(--strapi-font-family-technical);
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+.fix {
+  padding: 0 1px;
+  border-radius: 3px;
+  background: var(--strapi-primary-600);
+  color: #fff;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.askAi {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--strapi-primary-600);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--strapi-duration-fast) var(--strapi-ease), background var(--strapi-duration-fast) var(--strapi-ease);
+
+  &:hover {
+    background: var(--strapi-primary-500);
+    transform: translateY(-1px);
+  }
+}
+
+.kicker {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--strapi-neutral-500);
+}
+
+.suggestions {
+  margin-top: 40px;
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 10px;
+    align-items: center;
+    height: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--strapi-neutral-200);
+    border-radius: var(--strapi-radius-md);
+    background: var(--strapi-surface-1);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--strapi-duration-fast) var(--strapi-ease), transform var(--strapi-duration-fast) var(--strapi-ease);
+
+    &:hover {
+      border-color: var(--strapi-primary-600);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.skeleton {
+  height: 68px;
+  border-radius: var(--strapi-radius-md);
+  background: var(--strapi-neutral-100);
+  animation: pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  to { opacity: 0.4; }
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--strapi-primary-100);
+  color: var(--strapi-primary-600);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.suggestionTitle {
+  font-weight: 600;
+}
+
+.suggestionPath {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 12px;
+  color: var(--strapi-neutral-500);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quickLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin-top: 32px;
+  font-size: 15px;
+}
+
+// Preview switcher, only while the three proposals are compared
+.switcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: 999px;
+  background: var(--strapi-surface-1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  a {
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: var(--strapi-neutral-600);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  a[aria-current='true'] {
+    background: var(--strapi-primary-600);
+    color: #fff;
+  }
+}
+
+/* ---------- 1. Sad Lexi ---------- */
+
+.lexiStage {
+  position: relative;
+  padding-top: 24px;
+}
+
+.speech {
+  position: absolute;
+  top: -8px;
+  left: calc(100% - 16px);
+  padding: 6px 12px;
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: 14px 14px 14px 4px;
+  background: var(--strapi-surface-1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  color: var(--strapi-fg-1);
+  font-size: 14px;
+  white-space: nowrap;
+  animation: pop 240ms var(--strapi-ease);
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.8) translateY(6px); }
+}
+
+@media (max-width: 600px) {
+  .speech {
+    top: auto;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: none;
+  }
+}
+
+/* ---------- 2. Terminal ---------- */
+
+.terminal {
+  margin-top: 32px;
+  overflow: hidden;
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: var(--strapi-radius-lg);
+  background: #181826;
+  color: #e7e7f3;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 14px;
+  text-align: left;
+}
+
+.termBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #212134;
+  color: #a5a5ba;
+  font-size: 12px;
+
+  i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #4a4a6a;
+  }
+
+  span {
+    margin-left: 8px;
+  }
+}
+
+.termBody {
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 16px;
+  cursor: text;
+
+  pre {
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  a {
+    color: #a5a3ff;
+  }
+}
+
+.termLine {
+  display: flex;
+  gap: 8px;
+}
+
+.prompt {
+  color: #7b79ff;
+  white-space: nowrap;
+}
+
+.termInput {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  caret-color: #7b79ff;
+}
+
+.ok { color: #5cb176; }
+.err { color: #ee5e52; }
+.dim { color: #8e8ea9; }
+.key { color: #a5a3ff; }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+
+  button {
+    padding: 4px 10px;
+    border: 1px solid var(--strapi-neutral-200);
+    border-radius: 999px;
+    background: var(--strapi-surface-1);
+    color: var(--strapi-neutral-700);
+    font-family: var(--strapi-font-family-technical);
+    font-size: 13px;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--strapi-primary-600);
+      color: var(--strapi-primary-600);
+    }
+  }
+}
+
+/* ---------- 3. Mini game ---------- */
+
+.game {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  margin-top: 24px;
+  overflow: hidden;
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: var(--strapi-radius-lg);
+  background: linear-gradient(var(--strapi-surface-1), var(--strapi-neutral-100));
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+
+  &:focus-visible {
+    outline: 2px solid var(--strapi-primary-600);
+    outline-offset: 2px;
+  }
+}
+
+.ground {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 28px;
+  border-top: 2px dashed var(--strapi-neutral-300);
+}
+
+.runner {
+  position: absolute;
+  bottom: 28px;
+  left: 48px;
+  will-change: transform;
+}
+
+.obstacle {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  border-radius: 6px;
+  background: var(--strapi-neutral-800);
+  color: var(--strapi-neutral-0);
+  font-family: var(--strapi-font-family-technical);
+  font-size: 11px;
+  font-weight: 700;
+  will-change: transform;
+}
+
+.cloudBlock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--strapi-primary-200);
+  opacity: 0.7;
+  will-change: transform;
+}
+
+.score {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 14px;
+  color: var(--strapi-neutral-600);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 4px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--strapi-surface-1) 70%, transparent);
+  text-align: center;
+
+  strong {
+    font-size: 20px;
+  }
+
+  span {
+    color: var(--strapi-neutral-600);
+    font-size: 14px;
+  }
+}
