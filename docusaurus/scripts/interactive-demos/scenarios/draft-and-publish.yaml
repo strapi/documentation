@@ -1,0 +1,121 @@
+# Draft & Publish tour, step for step the Guideflow tour it replaces.
+# Runs against the demo app from setup-demo-app.js.
+
+title: Draft & Publish
+viewport:
+  width: 1536
+  height: 960
+start: /admin/plugins/content-type-builder/content-types/api::article.article
+
+intro:
+  text: Welcome to the guided tour of the Draft & Publish feature!
+  button: Let's go 🚀
+
+steps:
+  # Content-type Builder
+  - explain: role=button[name="Edit"s]
+    text: |-
+      Draft & Publish is the feature that allows you to manage content-types as drafts before publishing them.
+  
+      Before using it, it should be enabled via the **Content-type Builder**.
+  - click: role=tab[name="Advanced settings"]
+    text: Let's go to the **advanced settings** of the content-type of our choice!
+    before:
+      - click: role=button[name="Edit"s]
+  - explain:
+      - role=checkbox[name="Draft & publish"]
+      - text=Allows writing a draft version of an entry
+    text: Draft & Publish is by default enabled for all content-types.
+  - click: role=button[name="Close modal"]
+    text: Now that we know Draft & Publish is enabled for our articles, we can move to the **Content Manager** to use it!
+    after:
+      - goto: /admin/content-manager/collection-types/api::article.article
+
+  # Publish one entry
+  - explain:
+      - role=gridcell[name="status"s]
+      - tbody tr:last-child td:has([role=status])
+    text: In the **list view of the Content Manager**, with Draft & Publish enabled, you can see a "Status" column indicating which articles are a draft and which are published.
+  - click: role=gridcell[name="This shrimp is awesome"]
+    text: Let's publish an article!
+  - explain: main [role=status]
+    text: At the top of the interface, below the title, you can see the **status of the article**.
+  - explain:
+      - role=tab[name="draft"]
+      - role=tab[name="published"]
+    text: |-
+      And here you can see **2 tabs**:
+      • **Draft** is where you can edit your article.
+      • **Published** is a read-only tab where you can see the content that is published. It is only accessible if the article is published.
+  - click: role=button[name="Publish"s]
+    text: Let's click on the *Publish* button to visit the Published tab!
+  - explain:
+      - main [role=status]
+      - role=tab[name="draft"]
+      - role=tab[name="published"]
+    text: Now that we have published the article, the status is updated to "Published" and the Published tab is accessible!
+  - click: role=tab[name="published"]
+    text: Click the **Published tab**!
+  - chapter: true
+    text: The content of the article, as it was published, is shown here in read-only mode.
+  - click: role=tab[name="draft"]
+    text: Let's go back to the **Draft tab**!
+
+  # Right after the switch back to the Draft tab, the click on this button intermittently
+  # times out although the button is there; pressing Shift first avoids it.
+  - click: role=menuitem[name="Unpublish"]
+    text: Via the *...* button, you can **unpublish the article**.
+    before:
+      - press: Shift
+      - click: role=button[name="More document actions"]
+
+  # Bulk actions
+  # Moves the focus away from the ... button, whose tooltip would stay on the screenshot.
+  - chapter: true
+    text: Draft & Publish supports **bulk actions**, meaning that changing the status can be done for several entries of the same content-type, simultaneously.
+    before:
+      - click: main h1
+  - click: main a:has-text("Back")
+    text: Let's go back to the **list view of the Content Manager**!
+  - chapter: true
+    text: Let's select a couple of articles from the table!
+  - click: role=checkbox[name="Select 5"]
+    text: Tick the boxes to select your articles!
+    before:
+      - click: role=checkbox[name="Select 2"]
+  - explain:
+      - text=/entries selected/
+      - role=button[name="Delete"]
+    text: You can see buttons above the table. These are the available actions that can be performed simultaneously for the selected entries.
+  - click: main >> role=button[name="Publish"s]
+    text: Let's publish the 2 articles!
+  - explain: role=dialog
+    text: A dialog will indicate you if the entries can be published or if a pending action is preventing the publishing.
+  - click: role=dialog >> role=button[name="Publish"s]
+    text: Since both articles are **ready to publish**, we can go ahead and click the *Publish* button!
+
+  # The "Confirmation" dialog opened by the previous step closes when capture.js switches
+  # the theme for the dark screenshot, so it cannot be captured: this step closes it, shows
+  # the "Publish entries" dialog and its Publish button, then confirms right away.
+  - click: role=dialog >> role=button[name="Publish"s]
+    text: Click *Publish* again to confirm the action.
+    before:
+      - click: role=alertdialog >> role=button[name="Cancel"]
+    after:
+      - click: role=alertdialog >> role=button[name="Publish"s]
+  - explain:
+      - role=gridcell[name="status"s]
+      - tbody tr:last-child td:has([role=status])
+    text: We can see in the Status column that our 2 articles have properly been published!
+  - chapter: true
+    text: ✏️ Note that you can also bulk unpublish entries of your content-type.
+  - chapter: true
+    text: And that's it! We've used Draft & Publish to manage drafts and publish (or unpublish) one or more entries ✨
+
+outro:
+  text: Thank you for following this guided tour!
+  links:
+    - label: Draft & Publish docs 📖
+      href: /cms/features/draft-and-publish
+    - label: 🚀 Quick Start Guide
+      href: /cms/quick-start

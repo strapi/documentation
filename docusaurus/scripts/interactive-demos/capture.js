@@ -2,15 +2,15 @@
 /**
  * Captures an interactive demo from a running Strapi app.
  *
- * Plays a scenario (scripts/interactive-demos/scenarios/<id>.js) in a headless
- * browser, takes a light and a dark screenshot at every step, records where the
+ * Plays a scenario (scripts/interactive-demos/scenarios/<id>.yaml) in a headless
+ * browser, after running <id>.setup.js if it exists to reset the app, takes a light and a dark screenshot at every step, records where the
  * targeted element sits, and writes:
  *   - static/img/assets/interactive-demos/<id>/<NN>.webp and <NN>_DARK.webp (1920 px wide),
  *     plus <NN>-hd.webp and <NN>-hd_DARK.webp (3840 px) for full screen and zoomed steps
  *   - src/components/InteractiveDemo/demos/<id>.json (read by <InteractiveDemo />)
  *
  * Usage:
- *   DEMO_STRAPI_URL=http://localhost:1337 \
+ *   DEMO_STRAPI_URL=http://localhost:1337 DEMO_STRAPI_DIR=~/strapi-demo \
  *   DEMO_STRAPI_EMAIL=... DEMO_STRAPI_PASSWORD=... \
  *   node scripts/interactive-demos/capture.js content-manager
  *
@@ -18,22 +18,25 @@
  * playwright-core is not resolvable from this directory.
  *
  * Step types in a scenario:
- *   { explain: selector | selector[], text }  highlight an area, reader clicks Next
- *                                             (`zoom: true` zooms on it, `padding` widens the highlight)
- *   { chapter: true, text }                   centered bubble with arrows, no highlight
- *   { click: selector, text }                 reader clicks the real element to continue
- *   { fill: selector, value, text }           reader clicks the field, the value gets typed
- *   { do: [actions] }                         silent actions, no step shown
+ *   explain: selector | [selectors], text   highlight an area, reader clicks Next
+ *                                            (`zoom: true` zooms on it, `padding` widens the highlight)
+ *   chapter: true, text                      centered bubble with arrows, no highlight
+ *   click: selector, text                    reader clicks the real element to continue
+ *   fill: selector, value, text              reader clicks the field, the value gets typed
+ *   do: [actions]                            silent actions, no step shown
  * Any step accepts `before: [actions]`, run before the screenshot, and click or fill steps
  * accept `after: [actions]`, run once the action is done (to pick an option in a list, say).
- * Actions: { goto }, { click }, { fill, value }, { press }, { hover }, { upload, files },
- * { waitFor: selector, timeout } and { wait: ms }. `files` paths are relative to this script.
+ * Actions: goto, click, fill (with value), press, hover, upload (with files), waitFor (with
+ * timeout) and wait (ms). Relative `files` paths start from the demo app folder (DEMO_STRAPI_DIR).
+ * The setup can return { start } to replace the scenario's start page.
  * Texts accept **bold**, *italic*, [label](url) and line breaks.
  */
 
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const os = require('os');
+const yaml = require('js-yaml');
 
 const ROOT = path.resolve(__dirname, '../..');
 const SETTLE_MS = 700;
@@ -95,6 +98,11 @@ async function adminApi(baseUrl, email, password) {
   };
 }
 
+// The demo app folder, where uploaded files are taken from.
+function appDir() {
+  return (process.env.DEMO_STRAPI_DIR || path.join(os.homedir(), 'strapi-demo')).replace(/^~(?=\/|$)/, os.homedir());
+}
+
 async function runActions(page, baseUrl, actions = []) {
   for (const action of actions) {
     if (action.goto) await page.goto(`${baseUrl}${action.goto}`);
@@ -103,7 +111,7 @@ async function runActions(page, baseUrl, actions = []) {
     else if (action.press) await page.keyboard.press(action.press);
     else if (action.hover) await page.locator(action.hover).first().hover();
     else if (action.upload) {
-      const files = [].concat(action.files).map((file) => path.resolve(__dirname, file));
+      const files = [].concat(action.files).map((file) => path.resolve(appDir(), file));
       await page.locator(action.upload).first().setInputFiles(files);
     }
     // Waits for an element, after a server restart for instance.
@@ -143,7 +151,9 @@ async function rectOf(page, selectors, viewport, padding) {
 async function main() {
   const id = process.argv[2];
   if (!id) throw new Error('Usage: node scripts/interactive-demos/capture.js <scenario-id>');
-  const scenario = require(path.join(__dirname, 'scenarios', `${id}.js`));
+  const scenarioFile = path.join(__dirname, 'scenarios', `${id}.yaml`);
+  const scenario = yaml.load(fs.readFileSync(scenarioFile, 'utf8'));
+  const setupFile = path.join(__dirname, 'scenarios', `${id}.setup.js`);
   const baseUrl = (process.env.DEMO_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
   const email = requireEnv('DEMO_STRAPI_EMAIL');
   const password = requireEnv('DEMO_STRAPI_PASSWORD');
@@ -156,7 +166,10 @@ async function main() {
   fs.mkdirSync(imageDir, { recursive: true });
   fs.mkdirSync(path.dirname(dataFile), { recursive: true });
 
-  if (scenario.setup) await scenario.setup({ api: await adminApi(baseUrl, email, password) });
+  if (fs.existsSync(setupFile)) {
+    const overrides = await require(setupFile)({ api: await adminApi(baseUrl, email, password) });
+    Object.assign(scenario, overrides);
+  }
 
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch({ headless: true });

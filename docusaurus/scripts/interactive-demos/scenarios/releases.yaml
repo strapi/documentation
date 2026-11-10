@@ -1,0 +1,180 @@
+# Releases tour: the Guideflow tour it replaces, plus a partial release (Release all ready items).
+# Runs against the demo app from setup-demo-app.js. Releases is an Enterprise feature:
+# start the app with a license (STRAPI_LICENSE) or the Releases pages do not exist.
+# Partial releases need a Strapi version that includes strapi/strapi#28339 (no future flag needed).
+# Set DEMO_STRAPI_DIR so setup can remove the releases a previous capture published.
+#
+# Notes:
+# - A date in the future: a release cannot be scheduled in the past.
+# - The button that opened the menu: an open menu hides the rest of the page from role selectors.
+
+title: Releases
+viewport:
+  width: 1280
+  height: 800
+start: /admin/plugins/content-releases
+
+intro:
+  text: Welcome to the guided tour of the Releases feature!
+  button: Let's go 🚀
+
+steps:
+  # Releases page
+  - explain: nav >> role=link[name="Releases"]
+    text: The Releases feature is directly accessible from the **navigation of the admin panel**.
+  - explain: main [role=grid]
+    text: All created releases will be displayed in this table, with their status, schedule, entries and release mode.
+  - click: role=button[name="New Release"]
+    text: Let's click the *New Release* button to **create a new release**!
+  - fill: '[role=dialog] >> role=textbox[name="Release name"]'
+    value: Spring 2027 Release
+    text: Let's give a name to our release.
+
+  # Clicking ticks the box: untick it again so the release stays scheduled.
+  - click: '[role=dialog] >> role=checkbox[name="I don''t have a release date yet"]'
+    text: Here you can decide whether the release is scheduled or not.
+    after:
+      - click: '[role=dialog] >> role=checkbox[name="I don''t have a release date yet"]'
+  - click: role=combobox[name="Date"]
+    text: Since it is a **scheduled release**, let's choose a release date.
+    after:
+      - fill: role=combobox[name="Date"]
+        value: 05/28/2027
+      - press: Enter
+  - click: role=combobox[name="Time"]
+    text: And let's define a release time.
+    after:
+      - click: role=option[name="16:00"]
+  - explain: '[role=dialog] >> role=radiogroup[name="Release mode"]'
+    text: The **release mode** defines what happens if some entries are not ready when the release is published.
+  - click: '[role=dialog] >> role=radio[name="Release all ready items"]'
+    text: 'Let''s choose *Release all ready items*: entries that are ready will be published, and the others **skipped**.'
+  - click: '[role=dialog] >> role=button[name="Create release"]'
+    text: Click on *Create release*.
+
+  # Release details
+  - chapter: true
+    text: |-
+      Our release has been created!
+  
+      Let's explore the available options!
+  - explain:
+      - button[aria-haspopup=menu][aria-expanded=true]
+      - '[role=menu]'
+    text: By clicking on the ... button, you can access the *Edit* and *Delete* buttons.
+    before:
+      - click: role=button[name="Release edit and delete menu"]
+  - explain: role=button[name="Refresh"]
+    text: The *Refresh* button allows you to reload the page, for instance to make sure all content types related to the release are well displayed with their current status.
+    before:
+      - press: Escape
+  - explain: main >> role=button[name="Publish"]
+    text: And finally the *Publish* button allows you to **manually publish the release**.
+
+  # Edit view
+  # The Content Manager opens on its first single type: go on to the Article list.
+  - click: nav >> role=link[name="Content Manager"]
+    text: Now let's move to the Content Manager to **add content types to the newly created release**!
+    after:
+      - click: nav[aria-label="Content Manager"] a:has-text("Article")
+  - click: role=gridcell[name="What's inside a Black Hole"]
+    text: Let's go to the **edit view** of this article!
+  - explain:
+      - aside:has(h2:text-is("Entry"))
+      - '[role=menu]'
+    text: In the Entry area, click the ... button to access the *Add to release* button.
+    before:
+      - click: role=button[name="More document actions"]
+  - click: role=option[name="Spring 2027 Release"]
+    text: In the dialog, select the release the article should be added to!
+    before:
+      - click: role=menuitem[name="Add to release"]
+      - click: '[role=dialog] >> role=combobox[name="Select a release"]'
+  - click: '[role=dialog] >> role=button[name="Continue"]'
+    text: Click the *Continue* button!
+  - explain: aside:has(h2:text-is("Releases"))
+    text: A Release area is now displayed in the edit view to show information related to the release.
+  - explain:
+      - button[aria-haspopup=menu][aria-expanded=true]
+      - '[role=menu]'
+    text: |-
+      ✏️ Note that clicking on the ... button will give you access to a link to **edit the release**, and another to **remove the article from the release**.
+  
+      Let's try using it!
+    before:
+      - click: aside:has(h2:text-is("Releases")) >> role=button[name="Release action options"]
+  - do:
+      - click: role=menuitem[name="Remove from release"]
+
+  # List view
+  - click: nav[aria-label="Content Manager"] a:has-text("Article")
+    text: Now let's go back to the **list view** to try another way to add articles in our release!
+  - click: role=row[name*="Beautiful picture"] >> role=checkbox
+    text: Let's tick some boxes to select several articles!
+  - click: role=row[name*="The internet's Own boy"] >> role=checkbox
+    text: Another one!
+  - explain: role=button[name="Add to Release"]
+    text: Via the list view, you can **add to a release several articles at the same time**! Let's click the button!
+  - click: role=option[name="Spring 2027 Release"]
+    text: 'Exactly as we did previously via the edit view: let''s select a release.'
+    before:
+      - click: role=button[name="Add to Release"]
+      - click: '[role=dialog] >> role=combobox[name="Select a release"]'
+  - click: '[role=dialog] >> role=button[name="Continue"]'
+    text: And click on *Continue*.
+
+  # Back to the release
+  - click: nav >> role=link[name="Releases"]
+    text: Let's go back to Releases via the admin panel navigation!
+  - click: role=link[name*="Spring 2027 Release"]
+    text: Click on the release.
+  - explain: main [role=grid]
+    text: |-
+      Our articles have properly been added to the release!
+  
+      Hovering an article displays buttons to **open the article** and to **remove it from the release**.
+  - explain:
+      - main [role=grid] >> role=row[name*="Beautiful picture"] >> role=gridcell >> nth=4
+      - main [role=grid] >> role=row[name*="The internet's Own boy"] >> role=gridcell >> nth=4
+    text: Each has a **status** indicating whether or not they're ready to be published.
+  - click: role=button[name="Why The internet's Own boy isn’t ready"]
+    text: Clicking on the reason next to a *Not ready* status will display more details.
+  - explain: '[role=dialog]'
+    text: 'The side panel lists what prevents the entry from being published: here, the slug of the article doesn''t match the expected format. *Go to entry* opens the article to fix it.'
+  - explain:
+      - main [role=tab] >> nth=0
+      - main [role=tab] >> nth=2
+    text: The *Ready* and *Not ready* tabs filter the entries by status.
+    before:
+      - press: Escape
+  - explain:
+      - main h1
+      - main h1 + *
+    text: 'Since the release mode is *Release all ready items*, the release is **Ready** even though one article is not: this article will be skipped.'
+
+  # The page shows the result only once the publication is over.
+  - click: main >> role=button[name="Publish"]
+    text: Let's try publishing the release!
+    after:
+      - waitFor: main >> text=Released on
+  - explain:
+      - main h1
+      - main h1 + *
+      - main span:has-text("Released on")
+    text: 'The release''s status is now **Partial**: 1 of the 2 articles was published, and the other one was skipped.'
+  - explain:
+      - main [role=grid] >> role=row[name*="Beautiful picture"] >> role=gridcell >> nth=4
+      - main [role=grid] >> role=row[name*="The internet's Own boy"] >> role=gridcell >> nth=4
+    text: The table confirms which article was published and which one was **skipped**, and why.
+  - explain: role=button[name="Create release from skipped entries"]
+    text: Once the skipped article is fixed, *Create release from skipped* creates a new release with the skipped entries, to publish them later.
+  - chapter: true
+    text: And that's it! We've learned to use the Releases feature from its creating to publishing! ✨
+
+outro:
+  text: Thank you for following this guided tour!
+  links:
+    - label: Releases documentation 📖
+      href: /cms/features/releases
+    - label: 🚀 Quick Start Guide
+      href: /cms/quick-start
