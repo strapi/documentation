@@ -71,7 +71,7 @@ It accepts the same query parameters as other REST collection endpoints:
 | `pagination[page]` | Page number (1-based). Default `1`. |
 | `pagination[pageSize]` | Number of files per page. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. |
 | `pagination[start]` | Pagination by offset: number of files to skip. |
-| `pagination[limit]` | Pagination by offset: maximum number of files to return. |
+| `pagination[limit]` | Pagination by offset: maximum number of files to return. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. Use `-1` to return all files, up to that cap. |
 | `pagination[withCount]` | Whether to run the count query and include `total` and `pageCount` in the response. Defaults to `true`. |
 | `filters` | [Filter](/cms/api/rest/filters) the results. |
 | `sort` | [Sort](/cms/api/rest/sort-pagination#sorting) the results. |
