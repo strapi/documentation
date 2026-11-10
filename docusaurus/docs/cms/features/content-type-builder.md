@@ -459,42 +459,6 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 </Tabs>
  
-#### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
-
-The Password field displays a password field that is encrypted.
-
-<Tabs>
-
-<TabItem value="base" label="Basic settings">
-
-| Setting name  | Instructions                                                    |
-|---------------|-----------------------------------------------------------------|
-| Name          | Write the name of the Password field.                           |
-
-</TabItem>
-
-<TabItem value="advanced" label="Advanced settings">
-
-| Setting name   | Instructions                                                                |
-|----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Password field.                              |
-| Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
-| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
-
-</TabItem>
-
-<TabItem value="condition" label="Condition">
-
-<ConditionalFields components={props.components} />
-
-</TabItem>
-
-</Tabs>
-
-
 #### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
 
 The Media field allows you to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
