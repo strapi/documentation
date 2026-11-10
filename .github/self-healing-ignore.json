@@ -2164,6 +2164,11 @@
       "number": 28357,
       "reason": "Router: Diff too large (3905 lines). Internal enhancement removing an experimental feature flag; no new user-facing functionality added, only a flag removal. Minimal documentation impact expected.",
       "added": "2026-11-10"
+    },
+    {
+      "number": 28339,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3665",
+      "added": "2026-11-10"
     }
   ]
 }
