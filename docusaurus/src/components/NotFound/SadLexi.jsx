@@ -32,11 +32,13 @@ export default function SadLexi() {
   // AgentBot gets angry on its own when poked too fast; the bubble follows it
   const [angry, setAngry] = useState(false);
   const [rants, setRants] = useState(0);
+  // After a tantrum, Lexi apologizes once and starts its lines over
+  const [sorry, setSorry] = useState(false);
   const waveTimer = useRef(null);
 
   useEffect(() => () => clearTimeout(waveTimer.current), []);
 
-  const cheered = pokes >= LINES.length - 1;
+  const cheered = !sorry && pokes >= LINES.length - 1;
   let state = 'sad';
   if (angry) state = 'sad';
   else if (waving) state = 'wave';
@@ -44,12 +46,21 @@ export default function SadLexi() {
 
   const onAngryChange = (isAngry) => {
     setAngry(isAngry);
-    if (isAngry) setRants((n) => n + 1);
+    if (isAngry) {
+      setRants((n) => n + 1);
+    } else {
+      setPokes(0);
+      setSorry(true);
+    }
   };
 
   const poke = () => {
     if (angry) {
       setRants((n) => n + 1);
+      return;
+    }
+    if (sorry) {
+      setSorry(false);
       return;
     }
     setPokes((n) => Math.min(n + 1, LINES.length - 1));
@@ -69,9 +80,10 @@ export default function SadLexi() {
             style={{ all: 'unset', cursor: 'pointer', position: 'relative', display: 'inline-block' }}
           >
             <AgentBot state={state} size={150} decorative onAngryChange={onAngryChange} />
-            <span key={angry ? `rant-${rants}` : pokes} className={styles.speech} aria-live="polite">
+            <span key={angry ? `rant-${rants}` : `${sorry}-${pokes}`} className={styles.speech} aria-live="polite">
               {angry && ANGRY_LINES[(rants - 1) % ANGRY_LINES.length]}
-              {!angry && (hopeful && !cheered ? 'Ooh, that one looks promising!' : LINES[pokes])}
+              {!angry && sorry && 'Sorry. I am calm now. Still sad, though.'}
+              {!angry && !sorry && (hopeful && !cheered ? 'Ooh, that one looks promising!' : LINES[pokes])}
             </span>
           </button>
         </div>
