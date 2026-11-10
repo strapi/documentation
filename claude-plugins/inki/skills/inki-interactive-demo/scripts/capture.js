@@ -221,10 +221,17 @@ async function main() {
   const imageDir = path.join(ROOT, 'static/img/assets/interactive-demos', id);
   const imageUrl = `/img/assets/interactive-demos/${id}`;
   const dataFile = path.join(DEMOS_DIR, id, 'generated-capture.json');
-  fs.rmSync(imageDir, { recursive: true, force: true });
-  fs.mkdirSync(imageDir, { recursive: true });
-  fs.mkdirSync(path.dirname(dataFile), { recursive: true });
+  // Screenshots go to a temporary folder and replace the demo images only once the whole
+  // capture succeeds: a capture that stops midway leaves the current demo untouched.
+  const stagingDir = fs.mkdtempSync(path.join(os.tmpdir(), `interactive-demo-${id}-`));
+  try {
+    await captureTo(id, stagingDir, imageDir, imageUrl, dataFile);
+  } finally {
+    fs.rmSync(stagingDir, { recursive: true, force: true });
+  }
+}
 
+async function captureTo(id, stagingDir, imageDir, imageUrl, dataFile) {
   const { scenario, viewport, baseUrl, browser, page } = await openDemo(id);
   // Encodes WebP with the browser, so the script needs no image library.
   const encoder = await browser.newPage();
@@ -260,8 +267,8 @@ async function main() {
       const name = String(imagesByHash.size + 1).padStart(2, '0');
       for (const [theme, png, suffix] of [['light', light, ''], ['dark', dark, '_DARK']]) {
         const normal = await toWebp(png, viewport.width * PAGE_SCALE);
-        fs.writeFileSync(path.join(imageDir, `${name}${suffix}.webp`), normal);
-        fs.writeFileSync(path.join(imageDir, `${name}-hd${suffix}.webp`), await toWebp(png, viewport.width * CAPTURE_SCALE));
+        fs.writeFileSync(path.join(stagingDir, `${name}${suffix}.webp`), normal);
+        fs.writeFileSync(path.join(stagingDir, `${name}-hd${suffix}.webp`), await toWebp(png, viewport.width * CAPTURE_SCALE));
         bytes[theme] += normal.length;
       }
       imagesByHash.set(hash, `${imageUrl}/${name}`);
@@ -311,6 +318,9 @@ async function main() {
     steps,
     outro: { ...scenario.outro, image: steps[steps.length - 1].image },
   };
+  fs.rmSync(imageDir, { recursive: true, force: true });
+  fs.cpSync(stagingDir, imageDir, { recursive: true });
+  fs.mkdirSync(path.dirname(dataFile), { recursive: true });
   fs.writeFileSync(dataFile, `${JSON.stringify(demo, null, 2)}\n`);
   console.log(`\n${steps.length} steps, ${imagesByHash.size} image pairs -> ${path.relative(ROOT, dataFile)}`);
 }

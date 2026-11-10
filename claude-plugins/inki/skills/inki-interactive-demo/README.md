@@ -54,7 +54,7 @@ Run these commands from the root of the strapi/documentation repository.
 
 The Internationalization demo starts by turning off localization on Article, and its tour turns it back on. If its capture stops midway, run it again until it completes before capturing other demos.
 
-If the capture stops with `Target not visible: <selector>` or a timeout, the interface changed: the step's selector no longer matches. Fix the selector in `docusaurus/interactive-demos/<id>/scenario.yaml` and run the capture again.
+If the capture stops with `Target not visible: <selector>` or a timeout, the interface changed: the step's selector no longer matches. Fix the selector in `docusaurus/interactive-demos/<id>/scenario.yaml` and run the capture again. To find the new selector, `node claude-plugins/inki/skills/inki-interactive-demo/scripts/explore.js <id> --step <N>` replays the scenario up to that step, saves a screenshot and the accessibility tree (the roles and names that selectors use), and says whether the target is found.
 
 `capture.js` needs `playwright-core` and a Chromium build. If `playwright-core` is not installed, point `PLAYWRIGHT_CORE_PATH` to a copy of it (for example the one in the Yarn cache).
 
@@ -68,30 +68,7 @@ Recapturing only adds the screens that changed to the Git history.
 
 ## Write a demo from a plain-text description
 
-Describe the tour in `docusaurus/interactive-demos/<id>/description.md`, in your own words: the page it starts on, then each step in order, with the text of each bubble when you have one. For example:
-
-```markdown
-Start on the Article list view in the Content Manager.
-Intro: "Let's see how to filter entries!", button "Let's go 🚀".
-
-1. Highlight the Filters button: "Filters help you find specific entries."
-2. Click Filters.
-3. Pick the "category" field in the list that opens.
-4. Type "nature" in the value field.
-5. Click Add filter: "Only nature articles are left!"
-
-End: "Thank you for following this guided tour!", with a link to the Content Manager docs.
-```
-
-Then, in Claude Code, run `/inki:inki-interactive-demo <id>`. It reads the description, finds each element in the running demo app, writes `scenario.yaml` (and `setup.js` when the tour changes data), captures the demo twice, checks the screens, and lists where the scenario had to differ from the description. Run it again after changing the description or when the interface changes.
-
-To look at the app yourself at a given step, the way `/inki:inki-interactive-demo` does:
-
-```bash
-node claude-plugins/inki/skills/inki-interactive-demo/scripts/explore.js <id> --step 5 --out /tmp/explore
-```
-
-It replays the scenario up to step 5, then saves a screenshot and the accessibility tree (the roles and names that selectors use), and says whether step 5's target is found. Add `--url /admin/...` to open another page, for a new scenario with no steps yet.
+Describe the tour in your own words in `docusaurus/interactive-demos/<id>/description.md`: the page it starts on, then each step in order, with the text of each bubble when you have one. Then run `/inki:inki-interactive-demo <id>` in Claude Code: it writes the scenario, captures the demo and lists where it had to differ from your description.
 
 ## Write or change a scenario
 
