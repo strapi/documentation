@@ -1,6 +1,8 @@
-# Releases tour, step for step the Guideflow tour it replaces.
+# Releases tour: the Guideflow tour it replaces, plus a partial release (Release all ready items).
 # Runs against the demo app from setup-demo-app.js. Releases is an Enterprise feature:
 # start the app with a license (STRAPI_LICENSE) or the Releases pages do not exist.
+# Partial releases need a Strapi version that includes strapi/strapi#28339 (no future flag needed).
+# Set DEMO_STRAPI_DIR so setup can remove the releases a previous capture published.
 #
 # Notes:
 # - A date in the future: a release cannot be scheduled in the past.
@@ -20,21 +22,19 @@ steps:
   # Releases page
   - explain: nav >> role=link[name="Releases"]
     text: The Releases feature is directly accessible from the **navigation of the admin panel**.
-  - explain:
-      - role=tablist[name="Releases list"]
-      - role=tabpanel
-    text: All created releases will be displayed in this area, first in the **Pending tab** then in the **Done tab** once they happened.
+  - explain: main [role=grid]
+    text: All created releases will be displayed in this table, with their status, schedule, entries and release mode.
   - click: role=button[name="New Release"]
     text: Let's click the *New Release* button to **create a new release**!
-  - fill: '[role=dialog] >> role=textbox[name="Name"]'
+  - fill: '[role=dialog] >> role=textbox[name="Release name"]'
     value: Spring 2027 Release
     text: Let's give a name to our release.
 
-  # Clicking unticks the box: tick it again so the release stays scheduled.
-  - click: role=checkbox[name="Schedule release"]
+  # Clicking ticks the box: untick it again so the release stays scheduled.
+  - click: '[role=dialog] >> role=checkbox[name="I don''t have a release date yet"]'
     text: Here you can decide whether the release is scheduled or not.
     after:
-      - click: role=checkbox[name="Schedule release"]
+      - click: '[role=dialog] >> role=checkbox[name="I don''t have a release date yet"]'
   - click: role=combobox[name="Date"]
     text: Since it is a **scheduled release**, let's choose a release date.
     after:
@@ -45,8 +45,12 @@ steps:
     text: And let's define a release time.
     after:
       - click: role=option[name="16:00"]
-  - click: '[role=dialog] >> role=button[name="Continue"]'
-    text: Click on *Continue*.
+  - explain: '[role=dialog] >> role=radiogroup[name="Release mode"]'
+    text: The **release mode** defines what happens if some entries are not ready when the release is published.
+  - click: '[role=dialog] >> role=radio[name="Release all ready items"]'
+    text: 'Let''s choose *Release all ready items*: entries that are ready will be published, and the others **skipped**.'
+  - click: '[role=dialog] >> role=button[name="Create release"]'
+    text: Click on *Create release*.
 
   # Release details
   - chapter: true
@@ -125,30 +129,45 @@ steps:
   - click: role=link[name*="Spring 2027 Release"]
     text: Click on the release.
   - explain: main [role=grid]
-    text: Our articles have properly been added to the release!
-  - click: role=button[name="Ready to publish"]
+    text: |-
+      Our articles have properly been added to the release!
+  
+      Hovering an article displays buttons to **open the article** and to **remove it from the release**.
+  - explain:
+      - main [role=grid] >> role=row[name*="Beautiful picture"] >> role=gridcell >> nth=4
+      - main [role=grid] >> role=row[name*="The internet's Own boy"] >> role=gridcell >> nth=4
     text: Each has a **status** indicating whether or not they're ready to be published.
+  - click: role=button[name="Why The internet's Own boy isn’t ready"]
+    text: Clicking on the reason next to a *Not ready* status will display more details.
+  - explain: '[role=dialog]'
+    text: 'The side panel lists what prevents the entry from being published: here, the slug of the article doesn''t match the expected format. *Go to entry* opens the article to fix it.'
   - explain:
-      - role=button[name="Ready to publish"]
-      - '[data-radix-popper-content-wrapper]'
-    text: Clicking on the arrow next to the status will display more details.
-  - explain:
-      - button[aria-haspopup=menu][aria-expanded=true]
-      - '[role=menu]'
-    text: And for each article, you can click on ... to access a link to **edit the article** and a button to remove it from the release.
+      - main [role=tab] >> nth=0
+      - main [role=tab] >> nth=2
+    text: The *Ready* and *Not ready* tabs filter the entries by status.
     before:
       - press: Escape
-      - click: main [role=grid] >> role=button[name="Release action options"]
+  - explain:
+      - main h1
+      - main h1 + *
+    text: 'Since the release mode is *Release all ready items*, the release is **Ready** even though one article is not: this article will be skipped.'
 
-  # The page shows the Done status only once the publication is over.
+  # The page shows the result only once the publication is over.
   - click: main >> role=button[name="Publish"]
-    text: Since we're all good with our articles, let's try publishing the release!
-    before:
-      - press: Escape
+    text: Let's try publishing the release!
     after:
-      - waitFor: main >> text=This entry was
-  - chapter: true
-    text: We can now see that the release's status is "Done" and that for both articles the table confirms that they were published!
+      - waitFor: main >> text=Released on
+  - explain:
+      - main h1
+      - main h1 + *
+      - main span:has-text("Released on")
+    text: 'The release''s status is now **Partial**: 1 of the 2 articles was published, and the other one was skipped.'
+  - explain:
+      - main [role=grid] >> role=row[name*="Beautiful picture"] >> role=gridcell >> nth=4
+      - main [role=grid] >> role=row[name*="The internet's Own boy"] >> role=gridcell >> nth=4
+    text: The table confirms which article was published and which one was **skipped**, and why.
+  - explain: role=button[name="Create release from skipped entries"]
+    text: Once the skipped article is fixed, *Create release from skipped* creates a new release with the skipped entries, to publish them later.
   - chapter: true
     text: And that's it! We've learned to use the Releases feature from its creating to publishing! ✨
 
