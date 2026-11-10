@@ -40,18 +40,28 @@ export default function SadLexi() {
   const [sorry, setSorry] = useState(false);
   // A meltdown ends with Lexi asking to be left alone instead of apologizing
   const [fedUp, setFedUp] = useState(false);
+  // A few seconds after asking to be left alone, Lexi forgives the reader
+  const [forgiven, setForgiven] = useState(false);
   const waveTimer = useRef(null);
 
   useEffect(() => () => clearTimeout(waveTimer.current), []);
+
+  const sulking = !angry && sorry && fedUp;
+  useEffect(() => {
+    if (!sulking) return undefined;
+    const timer = setTimeout(() => setForgiven(true), 4000);
+    return () => clearTimeout(timer);
+  }, [sulking]);
 
   const cheered = !sorry && pokes >= LINES.length - 1;
   let state = 'sad';
   if (angry) state = 'sad';
   else if (waving) state = 'wave';
-  else if (hopeful || cheered) state = 'happy';
+  else if (hopeful || cheered || (sulking && forgiven)) state = 'happy';
 
   const onAngryChange = (isAngry) => {
     setAngry(isAngry);
+    setForgiven(false);
     if (isAngry) {
       setRants(1);
     } else {
@@ -68,6 +78,7 @@ export default function SadLexi() {
     }
     if (sorry) {
       setSorry(false);
+      setForgiven(false);
       return;
     }
     setPokes((n) => Math.min(n + 1, LINES.length - 1));
@@ -88,12 +99,12 @@ export default function SadLexi() {
           >
             <AgentBot state={state} size={150} decorative onAngryChange={onAngryChange} />
             <span
-              key={angry ? `rant-${rants}` : `${sorry}-${pokes}`}
+              key={angry ? `rant-${rants}` : `${sorry}-${forgiven}-${pokes}`}
               className={clsx(styles.speech, angry && rants > ANGRY_LINES.length && styles.shout)}
               aria-live="polite"
             >
               {angry && (rants <= ANGRY_LINES.length ? ANGRY_LINES[rants - 1] : meltdown(rants - ANGRY_LINES.length))}
-              {!angry && sorry && (fedUp ? 'Please leave me alone.' : 'Sorry. I am calm now. Still sad, though.')}
+              {!angry && sorry && (fedUp ? (forgiven ? 'OK, I forgive you. Friends again?' : 'Please leave me alone.') : 'Sorry. I am calm now. Still sad, though.')}
               {!angry && !sorry && (hopeful && !cheered ? 'Ooh, that one looks promising!' : LINES[pokes])}
             </span>
           </button>
