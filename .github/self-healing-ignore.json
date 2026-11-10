@@ -2104,6 +2104,66 @@
       "number": 28169,
       "reason": "Router: Documentation updates are already included in the source PR (content-releases backend.md updated to clarify published releases are not modified). Behavior docs are handled.",
       "added": "2026-11-07"
+    },
+    {
+      "number": 28534,
+      "reason": "Triage: type/contract fix with no observable behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28528,
+      "reason": "Triage: type fix with no observable behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28523,
+      "reason": "Triage: type tightening fix with no runtime code changes",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28522,
+      "reason": "Triage: type fix with no runtime change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28517,
+      "reason": "Triage: type fix, server unchanged, admin query returns same tree as before",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28515,
+      "reason": "Triage: type fix, route behavior unchanged",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28478,
+      "reason": "Triage: compiler performance fix with no behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28469,
+      "reason": "Triage: type fix with no runtime change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28429,
+      "reason": "Triage: test infrastructure change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28356,
+      "reason": "Triage: bug fix enabling edge case to work",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28157,
+      "reason": "Triage: performance optimization with no behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28357,
+      "reason": "Router: Diff too large (3905 lines). Internal enhancement removing an experimental feature flag; no new user-facing functionality added, only a flag removal. Minimal documentation impact expected.",
+      "added": "2026-11-10"
     }
   ]
 }
