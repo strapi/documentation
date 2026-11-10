@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from '@docusaurus/router';
-import Link from '@docusaurus/Link';
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import SadLexi from '@site/src/components/NotFound/SadLexi';
 import ApiTerminal from '@site/src/components/NotFound/ApiTerminal';
 import LexiRun from '@site/src/components/NotFound/LexiRun';
@@ -14,7 +14,12 @@ const VARIANTS = [
 ];
 
 export default function NotFoundContent() {
-  const { pathname, search } = useLocation();
+  const { search } = useLocation();
+  // The static 404.html is built for /404 and served on any missing URL, so
+  // everything that reads the URL renders in the browser only
+  const isBrowser = useIsBrowser();
+  if (!isBrowser) return <main style={{ minHeight: '70vh' }} />;
+
   const v = new URLSearchParams(search).get('v') || '1';
   const [, , Variant] = VARIANTS.find(([key]) => key === v) || VARIANTS[0];
 
@@ -23,9 +28,9 @@ export default function NotFoundContent() {
       <Variant />
       <nav className={styles.switcher} aria-label="404 proposals">
         {VARIANTS.map(([key, label]) => (
-          <Link key={key} to={`${pathname}?v=${key}`} aria-current={key === v ? 'true' : undefined}>
+          <a key={key} href={`?v=${key}`} aria-current={key === v ? 'true' : undefined}>
             {key}. {label}
-          </Link>
+          </a>
         ))}
       </nav>
     </main>
