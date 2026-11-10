@@ -148,32 +148,25 @@ async function rectOf(page, selectors, viewport, padding) {
   };
 }
 
-async function main() {
-  const id = process.argv[2];
-  if (!id) throw new Error('Usage: node scripts/interactive-demos/capture.js <scenario-id>');
+// Loads a scenario, runs its setup, and opens a logged-in admin on its start page.
+// Also used by explore.js.
+async function openDemo(id, { scale = CAPTURE_SCALE, setup = true } = {}) {
   const scenarioFile = path.join(__dirname, 'scenarios', `${id}.yaml`);
-  const scenario = yaml.load(fs.readFileSync(scenarioFile, 'utf8'));
+  const scenario = fs.existsSync(scenarioFile) ? yaml.load(fs.readFileSync(scenarioFile, 'utf8')) : { steps: [] };
   const setupFile = path.join(__dirname, 'scenarios', `${id}.setup.js`);
   const baseUrl = (process.env.DEMO_STRAPI_URL || 'http://localhost:1337').replace(/\/$/, '');
   const email = requireEnv('DEMO_STRAPI_EMAIL');
   const password = requireEnv('DEMO_STRAPI_PASSWORD');
   const viewport = scenario.viewport || { width: 1280, height: 800 };
 
-  const imageDir = path.join(ROOT, 'static/img/assets/interactive-demos', id);
-  const imageUrl = `/img/assets/interactive-demos/${id}`;
-  const dataFile = path.join(ROOT, 'src/components/InteractiveDemo/demos', `${id}.json`);
-  fs.rmSync(imageDir, { recursive: true, force: true });
-  fs.mkdirSync(imageDir, { recursive: true });
-  fs.mkdirSync(path.dirname(dataFile), { recursive: true });
-
-  if (fs.existsSync(setupFile)) {
+  if (setup && fs.existsSync(setupFile)) {
     const overrides = await require(setupFile)({ api: await adminApi(baseUrl, email, password) });
     Object.assign(scenario, overrides);
   }
 
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ viewport, deviceScaleFactor: CAPTURE_SCALE, colorScheme: 'light' });
+  const context = await browser.newContext({ viewport, deviceScaleFactor: scale, colorScheme: 'light' });
   await context.addInitScript(() => {
     localStorage.setItem('STRAPI_GUIDED_TOUR', JSON.stringify({ tours: {}, enabled: false, hidden: true, completedActions: [] }));
     // Follow prefers-color-scheme so both themes can be captured without a reload.
@@ -186,6 +179,36 @@ async function main() {
     });
   });
   const page = await context.newPage();
+  await page.goto(`${baseUrl}/admin/auth/login`);
+  await page.locator('input[name=email]').fill(email);
+  await page.locator('input[name=password]').fill(password);
+  await page.getByRole('button', { name: 'Login' }).click();
+  await page.waitForURL(/\/admin(\/)?$/);
+  if (scenario.start) await page.goto(`${baseUrl}${scenario.start}`);
+  await settle(page);
+  return { scenario, viewport, baseUrl, browser, page };
+}
+
+// Plays what the reader does on a click or fill step, then its `after` actions.
+async function act(page, baseUrl, step) {
+  if (step.click) await page.locator(step.click).first().click();
+  else if (step.fill) await page.locator(step.fill).first().fill(step.value);
+  else return;
+  await settle(page);
+  await runActions(page, baseUrl, step.after);
+}
+
+async function main() {
+  const id = process.argv[2];
+  if (!id) throw new Error('Usage: node scripts/interactive-demos/capture.js <scenario-id>');
+  const imageDir = path.join(ROOT, 'static/img/assets/interactive-demos', id);
+  const imageUrl = `/img/assets/interactive-demos/${id}`;
+  const dataFile = path.join(ROOT, 'src/components/InteractiveDemo/demos', `${id}.json`);
+  fs.rmSync(imageDir, { recursive: true, force: true });
+  fs.mkdirSync(imageDir, { recursive: true });
+  fs.mkdirSync(path.dirname(dataFile), { recursive: true });
+
+  const { scenario, viewport, baseUrl, browser, page } = await openDemo(id);
   // Encodes WebP with the browser, so the script needs no image library.
   const encoder = await browser.newPage();
   const toWebp = (png, width) => encoder.evaluate(async ({ b64, width, quality }) => {
@@ -199,14 +222,6 @@ async function main() {
     return Array.from(new Uint8Array(await blob.arrayBuffer()));
   }, { b64: png.toString('base64'), width, quality: WEBP_QUALITY }).then((data) => Buffer.from(data));
   const bytes = { light: 0, dark: 0 };
-
-  await page.goto(`${baseUrl}/admin/auth/login`);
-  await page.locator('input[name=email]').fill(email);
-  await page.locator('input[name=password]').fill(password);
-  await page.getByRole('button', { name: 'Login' }).click();
-  await page.waitForURL(/\/admin(\/)?$/);
-  await page.goto(`${baseUrl}${scenario.start}`);
-  await settle(page);
 
   // Identical screens share one image pair: explanation steps often stay on the same screen.
   const imagesByHash = new Map();
@@ -255,15 +270,11 @@ async function main() {
     } else if (step.click) {
       const rect = await rectOf(page, step.click, viewport, 0);
       steps.push({ type: 'click', image, text: step.text, rect });
-      await page.locator(step.click).first().click();
-      await settle(page);
-      await runActions(page, baseUrl, step.after);
+      await act(page, baseUrl, step);
     } else if (step.fill) {
       const rect = await rectOf(page, step.fill, viewport, 0);
       steps.push({ type: 'fill', image, text: step.text, rect, value: step.value });
-      await page.locator(step.fill).first().fill(step.value);
-      await settle(page);
-      await runActions(page, baseUrl, step.after);
+      await act(page, baseUrl, step);
     } else {
       throw new Error(`Unknown type for ${label}`);
     }
@@ -287,7 +298,11 @@ async function main() {
   console.log(`\n${steps.length} steps, ${imagesByHash.size} image pairs -> ${path.relative(ROOT, dataFile)}`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+module.exports = { openDemo, act, runActions, rectOf, settle };
+
+if (require.main === module) {
+  main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}

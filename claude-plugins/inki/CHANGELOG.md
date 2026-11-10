@@ -1,6 +1,12 @@
 # Inki Changelog
 
 
+## 2026-11-10
+
+### Added
+
+- `/inki:demo <demo-id>`: creates or updates an interactive demo from a plain-text description of its steps (`docusaurus/scripts/interactive-demos/scenarios/<id>.md`). It finds the UI elements in a running Strapi demo app with `explore.js`, writes the YAML scenario and its setup, captures the demo twice, checks the screens, and reports deviations from the description.
+
 ## 2026-10-16
 
 ### Added

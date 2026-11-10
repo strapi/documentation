@@ -2,11 +2,12 @@
 
 Clickable product tours, like the former Guideflow embeds, captured from a real Strapi app instead of recorded by hand. Readers click the real buttons of the interface, or use Next and the ← → keys, to move through the steps.
 
-A demo has 4 parts:
+A demo has 5 parts:
 
 | Part | File | Who edits it |
 |---|---|---|
-| Scenario: the steps, their target and their text | `scenarios/<id>.yaml` | You: the only file to change to change a demo |
+| Description: the tour in plain text | `scenarios/<id>.md` (optional) | You |
+| Scenario: the steps, their target and their text | `scenarios/<id>.yaml` | You, or Claude from the description: the only file to change to change a demo |
 | Setup: code that brings the demo app back to the state the scenario starts from | `scenarios/<id>.setup.js` (optional) | Rarely |
 | Captured demo: screenshots and target positions | `static/img/assets/interactive-demos/<id>/` and `src/components/InteractiveDemo/demos/<id>.json` | `capture.js`, never by hand |
 | Player: the React component that renders any captured demo | `src/components/InteractiveDemo/` | Rarely |
@@ -63,6 +64,33 @@ In the page, nothing loads before the demo gets close to the viewport (`loading=
 
 Recapturing only adds the screens that changed to the Git history.
 
+## Write a demo from a plain-text description
+
+Describe the tour in `scenarios/<id>.md`, in your own words: the page it starts on, then each step in order, with the text of each bubble when you have one. For example:
+
+```markdown
+Start on the Article list view in the Content Manager.
+Intro: "Let's see how to filter entries!", button "Let's go 🚀".
+
+1. Highlight the Filters button: "Filters help you find specific entries."
+2. Click Filters.
+3. Pick the "category" field in the list that opens.
+4. Type "nature" in the value field.
+5. Click Add filter: "Only nature articles are left!"
+
+End: "Thank you for following this guided tour!", with a link to the Content Manager docs.
+```
+
+Then, in Claude Code, run `/inki:demo <id>`. It reads the description, finds each element in the running demo app, writes `<id>.yaml` (and `<id>.setup.js` when the tour changes data), captures the demo twice, checks the screens, and lists where the scenario had to differ from the description. Run it again after changing the description or when the interface changes.
+
+To look at the app yourself at a given step, the way `/inki:demo` does:
+
+```bash
+node scripts/interactive-demos/explore.js <id> --step 5 --out /tmp/explore
+```
+
+It replays the scenario up to step 5, then saves a screenshot and the accessibility tree (the roles and names that selectors use), and says whether step 5's target is found. Add `--url /admin/...` to open another page, for a new scenario with no steps yet.
+
 ## Write or change a scenario
 
 A scenario is a YAML file with a title, a viewport, a start URL, an intro, the steps and an outro:
@@ -92,6 +120,8 @@ outro:
     - label: Content Manager docs 📖
       href: /cms/features/content-manager
 ```
+
+Each step's screenshot is taken before the reader acts: a `click` or `fill` step shows the element still to click, so a text about the result of the click belongs on the next step. The outro card is drawn over the last step's screenshot. Each capture opens a fresh browser: what the browser stores (filters in the URL, open panels) starts over, what the server stores (entries, list view columns) carries over.
 
 Each step is one of:
 
