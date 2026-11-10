@@ -66,7 +66,7 @@ Texts:
 - When it does not, write one: one or two short sentences, the same tone as the other demos ("Let's…", "Click on…"), UI labels exactly as the interface displays them in `*italic*` or `**bold**`. Never name a button or field that the interface does not display. No em dashes.
 - `\n` only for real paragraph breaks or list items, never to wrap a line.
 
-The intro (text and button) and the outro (text and links to docs pages, as `/cms/...` paths) come from the description, or follow the pattern of the existing demos.
+The intro (text and button) and the outro (text only, with no links: the reader is already on the docs page, and the outro card offers a Restart button) come from the description, or follow the pattern of the existing demos.
 
 For a new demo, write the skeleton of `scenario.yaml` first: `title` (from the description, or the feature name like the other demos), `viewport` (`width: 1280`, `height: 800` unless the screens need more room), `start`, `intro` and `outro`, with `steps: []`. Then add the steps one by one in Step 3.
 

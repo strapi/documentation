@@ -114,8 +114,3 @@ steps:
 
 outro:
   text: Thank you for following this guided tour!
-  links:
-    - label: Draft & Publish docs 📖
-      href: /cms/features/draft-and-publish
-    - label: 🚀 Quick Start Guide
-      href: /cms/quick-start

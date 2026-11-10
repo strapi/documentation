@@ -415,16 +415,6 @@
   ],
   "outro": {
     "text": "Thank you for following this guided tour!",
-    "links": [
-      {
-        "label": "Content Manager docs 📖",
-        "href": "/cms/features/content-manager"
-      },
-      {
-        "label": "🚀 Quick Start Guide",
-        "href": "/cms/quick-start"
-      }
-    ],
     "image": "/img/assets/interactive-demos/content-manager/19"
   }
 }

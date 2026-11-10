@@ -154,8 +154,3 @@ steps:
 
 outro:
   text: Thank you for following this guided tour!
-  links:
-    - label: Releases documentation 📖
-      href: /cms/features/releases
-    - label: 🚀 Quick Start Guide
-      href: /cms/quick-start

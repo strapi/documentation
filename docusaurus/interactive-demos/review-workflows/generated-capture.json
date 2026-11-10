@@ -251,16 +251,6 @@
   ],
   "outro": {
     "text": "Thank you for following this guided tour!",
-    "links": [
-      {
-        "label": "Review Workflows docs 📖",
-        "href": "/cms/features/review-workflows"
-      },
-      {
-        "label": "🚀 Quick Start Guide",
-        "href": "/cms/quick-start"
-      }
-    ],
     "image": "/img/assets/interactive-demos/review-workflows/17"
   }
 }

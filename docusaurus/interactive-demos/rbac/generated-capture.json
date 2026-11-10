@@ -358,16 +358,6 @@
   ],
   "outro": {
     "text": "Thank you for following this guided tour!",
-    "links": [
-      {
-        "label": "RBAC documentation 📖",
-        "href": "/cms/features/rbac"
-      },
-      {
-        "label": "🚀 Quick Start Guide",
-        "href": "/cms/quick-start"
-      }
-    ],
     "image": "/img/assets/interactive-demos/rbac/17"
   }
 }

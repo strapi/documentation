@@ -438,16 +438,6 @@
   ],
   "outro": {
     "text": "Thank you for following this guided tour!",
-    "links": [
-      {
-        "label": "Content-type Builder docs 📖",
-        "href": "/cms/features/content-type-builder"
-      },
-      {
-        "label": "🚀 Quick Start Guide",
-        "href": "/cms/quick-start"
-      }
-    ],
     "image": "/img/assets/interactive-demos/content-type-builder/22"
   }
 }

@@ -29,8 +29,3 @@ steps:
 
 outro:
   text: Thank you for following this guided tour!
-  links:
-    - label: Documentation plugin docs 📖
-      href: /cms/plugins/documentation
-    - label: 🚀 Quick Start Guide
-      href: /cms/quick-start

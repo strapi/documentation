@@ -95,9 +95,6 @@ steps:
 
 outro:
   text: Thank you for following this guided tour!
-  links:
-    - label: Content Manager docs 📖
-      href: /cms/features/content-manager
 ```
 
 Each step's screenshot is taken before the reader acts: a `click` or `fill` step shows the element still to click, so a text about the result of the click belongs on the next step. The outro card is drawn over the last step's screenshot. Each capture opens a fresh browser: what the browser stores (filters in the URL, open panels) starts over, what the server stores (entries, list view columns) carries over.

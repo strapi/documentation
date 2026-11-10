@@ -346,9 +346,6 @@ export default function InteractiveDemo({ id }) {
         {isOutro && (
           <div className={styles.card}>
             <p className={styles.cardText}><RichText text={demo.outro.text} /></p>
-            {demo.outro.links?.map((link) => (
-              <Link key={link.href} className={styles.startButton} to={link.href}>{link.label}</Link>
-            ))}
             <button type="button" className={styles.restartButton} onClick={() => go(-1)}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v3h-3" /></svg>
               Restart

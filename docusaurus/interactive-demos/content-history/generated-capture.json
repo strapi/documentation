@@ -103,16 +103,6 @@
   ],
   "outro": {
     "text": "Thank you for following this guided tour!",
-    "links": [
-      {
-        "label": "Content History docs 📖",
-        "href": "/cms/features/content-history"
-      },
-      {
-        "label": "🚀 Quick Start Guide",
-        "href": "/cms/quick-start"
-      }
-    ],
     "image": "/img/assets/interactive-demos/content-history/10"
   }
 }
