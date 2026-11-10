@@ -1,0 +1,363 @@
+{
+  "id": "rbac",
+  "title": "Role-Based Access Control (RBAC)",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 929688,
+    "dark": 879206
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Role-Based Access Control (RBAC) feature!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/rbac/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/01",
+      "text": "The RBAC feature is managed from the **Roles and Users sections of Settings**, accessible from the navigation of the admin panel.",
+      "rect": {
+        "x": 4.53,
+        "y": 63.86,
+        "w": 17.73,
+        "h": 9.75
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/01",
+      "text": "Roles is where are listed the various roles that the users of the admin panel can have.\n\nThere are **3 default roles**: Author, Editor and Super Admin.",
+      "rect": {
+        "x": 28.36,
+        "y": 24.88,
+        "w": 65.78,
+        "h": 32.81
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/01",
+      "text": "You can also **create your own new role**.",
+      "rect": {
+        "x": 84.63,
+        "y": 4.75,
+        "w": 11.47,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/01",
+      "text": "For each role, you can use these buttons to:\n• **Duplicate** the role\n• ✏️ **Edit** the role\n• 🗑️ **Delete** the role",
+      "rect": {
+        "x": 83.83,
+        "y": 42.06,
+        "w": 9.06,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/01",
+      "text": "Let's edit the Editor role!",
+      "rect": {
+        "x": 87.11,
+        "y": 42.81,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/02",
+      "text": "In this area, you can **edit the name and description** of the role.\n\n✏️ Note that you can also see how many users have been assigned this role.",
+      "rect": {
+        "x": 26.95,
+        "y": 22,
+        "w": 68.67,
+        "h": 28
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/02",
+      "text": "And in this area, you can **select in detail what the users with this role can do**.\n\nDetailed access can be set for the content types but also for the plugins and settings of the project!",
+      "rect": {
+        "x": 26.41,
+        "y": 52.37,
+        "w": 69.69,
+        "h": 45.62
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/02",
+      "text": "In this demo, we will focus on the Editor role's accesses with collection types.",
+      "rect": {
+        "x": 26.41,
+        "y": 52.37,
+        "w": 69.69,
+        "h": 45.62
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/02",
+      "text": "Let's untick the Author collection type!",
+      "rect": {
+        "x": 28.83,
+        "y": 79.43,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/03",
+      "text": "All other boxes have been unticked: Editors cannot access the Author content type at all.",
+      "rect": {
+        "x": 28.36,
+        "y": 78.68,
+        "w": 57.66,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/03",
+      "text": "Now let's click on the arrow next to the Article content type to see more detailed options.",
+      "rect": {
+        "x": 31.02,
+        "y": 72.8,
+        "w": 11.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/04",
+      "text": "Accesses can be set for each specific field: we can decide whether Editors can create, read or update them.",
+      "rect": {
+        "x": 28.44,
+        "y": 14.24,
+        "w": 66.88,
+        "h": 57.69
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/04",
+      "text": "Let's decide that Editors cannot delete articles.",
+      "rect": {
+        "x": 74.69,
+        "y": 15.68,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/05",
+      "text": "And that they cannot access the \"slug\" field at all.",
+      "rect": {
+        "x": 28.83,
+        "y": 42.18,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/06",
+      "text": "More RBAC settings are also available by clicking on this button.",
+      "rect": {
+        "x": 86.45,
+        "y": 14.99,
+        "w": 8.39,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/07",
+      "text": "For each content type, you can **decide specific conditions under which the Editor can act**.",
+      "rect": {
+        "x": 42.06,
+        "y": 51.5,
+        "w": 33.59,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/08",
+      "text": "Let's go back to the basic RBAC settings!",
+      "rect": {
+        "x": 78.36,
+        "y": 22.88,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/06",
+      "text": "Make sure to click *Save* for the settings to be confirmed.",
+      "rect": {
+        "x": 91.38,
+        "y": 1.5,
+        "w": 6.74,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/09",
+      "text": "Now let's explore the Users sections!",
+      "rect": {
+        "x": 5,
+        "y": 68.86,
+        "w": 16.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/rbac/10",
+      "text": "Users is where are listed the users of the admin panel."
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/11",
+      "text": "For every user listed, it is possible to:\n• ✏️ **Edit** the user\n• 🗑️ **Delete** the user (except yourself)",
+      "rect": {
+        "x": 88.98,
+        "y": 33.19,
+        "w": 4.38,
+        "h": 7
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/11",
+      "text": "The *Invite new user* button is to manually **add new users to the admin panel**.",
+      "rect": {
+        "x": 83.64,
+        "y": 4.75,
+        "w": 12.45,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/11",
+      "text": "Let's click on the button!",
+      "rect": {
+        "x": 84.11,
+        "y": 5.5,
+        "w": 11.51,
+        "h": 4
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/rbac/12",
+      "text": "Let's write the details of the new user: first name and last name.",
+      "rect": {
+        "x": 20.16,
+        "y": 37.38,
+        "w": 28.83,
+        "h": 4.75
+      },
+      "value": "Camille"
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/rbac/13",
+      "text": "And let's write their email address.",
+      "rect": {
+        "x": 20.16,
+        "y": 47.38,
+        "w": 28.83,
+        "h": 4.75
+      },
+      "value": "camille.doe@example.com"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/14",
+      "text": "We can already **assign a role to the new user**: for instance, Editor.",
+      "rect": {
+        "x": 20.47,
+        "y": 73.13,
+        "w": 28.2,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/15",
+      "text": "And, with SSO enabled, we can also decide whether or not the user will be able to connect with SSO.",
+      "rect": {
+        "x": 18.83,
+        "y": 53.25,
+        "w": 62.03,
+        "h": 16.24
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/15",
+      "text": "Let's **invite** our new user!",
+      "rect": {
+        "x": 73.36,
+        "y": 77.11,
+        "w": 7.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/16",
+      "text": "A link is available here to share with the user to directly invite them to the admin panel.",
+      "rect": {
+        "x": 19.61,
+        "y": 20.27,
+        "w": 60.47,
+        "h": 16.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/rbac/16",
+      "text": "Once the link has been copied to be shared to the user, click on *Finish*.",
+      "rect": {
+        "x": 75.47,
+        "y": 86.11,
+        "w": 5.39,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/rbac/17",
+      "text": "Our new user is now listed in the table.\n\n✏️ Note that for now, their account is inactive but is can be manually activated.",
+      "rect": {
+        "x": 28.36,
+        "y": 31.88,
+        "w": 67.92,
+        "h": 9.63
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/rbac/17",
+      "text": "And that's it! We've learned to use the RBAC feature via the roles & users settings! ✨"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "image": "/img/assets/interactive-demos/rbac/17"
+  }
+}

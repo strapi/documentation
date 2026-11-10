@@ -50,7 +50,9 @@ There are a few factors that you should keep in mind when using the admin panel,
 - **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the <FeatureFlagBadge /> badge in the docs and read the [Feature flags documentation](/cms/configurations/features#enabling-a-future-flag) for more information.
 :::
 
-<Guideflow lightId="dkd2m1lsgr" darkId="dkd2mjlugr"/>
+<!-- <Guideflow lightId="dkd2m1lsgr" darkId="dkd2mjlugr"/> -->
+
+<InteractiveDemo id="admin-panel" />
 
 ## Configuration
 

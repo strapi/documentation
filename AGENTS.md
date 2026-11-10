@@ -73,7 +73,7 @@ All development is done in the `/docusaurus` subdirectory (`cd docusaurus`).
 Path‑based policy (applies to folders and all subfolders):
 - `src/` (and `docusaurus/src/`): allow `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.css`, `.scss`, `.html`.
 - `docs/cms/`, `docs/cloud/`, `docs/snippets/`: allow only `.md`, `.mdx`.
-- `static/`: allow image assets (`.png`, `.svg`, `.gif`, `.jpg`), `.html`, `.js`.
+- `static/`: allow image assets (`.png`, `.svg`, `.gif`, `.jpg`, `.webp`), `.html`, `.js`. Interactive demo screenshots use `.webp`.
 - `.github/workflows/`: allow only `.yml`.
 - Also present elsewhere: `.scss`, `.css`, image assets (do not expand usage without approval).
 - Not allowed without explicit approval: Python, Ruby, Go, Rust, etc. (no new stacks).

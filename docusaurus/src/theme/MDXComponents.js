@@ -34,6 +34,7 @@ import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods, NamingConventions } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
 import Icon from '../components/Icon';
 import Guideflow from '../components/Guideflow';
+import InteractiveDemo from '../components/InteractiveDemo/InteractiveDemo';
 import { ExternalLink } from '../components/ExternalLink';
 import BreakingChangeIdCard from '../components/BreakingChangeIdCard';
 import MermaidWithFallback from '../components/MermaidWithFallback.js';
@@ -95,6 +96,7 @@ export default {
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
   Guideflow,
+  InteractiveDemo,
   Annotation,
   Icon,
   ExternalLink,
