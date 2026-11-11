@@ -2169,6 +2169,36 @@
       "number": 28339,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3665",
       "added": "2026-11-10"
+    },
+    {
+      "number": 28550,
+      "reason": "Triage: documentation only, no runtime change",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28542,
+      "reason": "Router: Internal database validation fix. The error message improvement is for developers debugging content-type schemas, not a user-facing API change. Already documented behavior (relations must point to valid models).",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28539,
+      "reason": "Router: This diff modifies docs/docs/packages/core/utils/traverse-entity.md which is internal Strapi monorepo documentation, not the public Strapi documentation repository. Router operates on the documentation repository only.",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28538,
+      "reason": "Router: Internal Content Manager bug fix. The formatRecentDocumentTitle helper ensures the title displays correctly regardless of field type, but this is an internal implementation detail. No new public behavior or API exposed.",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28535,
+      "reason": "Router: Error handling improvement in the upload service. The behavior is already documented (requests to deleted folders fail). This is a more graceful error response, not a new user-facing feature.",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28529,
+      "reason": "Router: Internal type definition update for the Content-Type Builder service. This types the editComponent payload correctly but doesn't change public API behavior or expose new capabilities.",
+      "added": "2026-11-11"
     }
   ]
 }
