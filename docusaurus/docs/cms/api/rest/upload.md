@@ -25,14 +25,17 @@ The [Media Library feature](/cms/features/media-library) is powered in the back-
 | GET    | `/api/upload/files`        | Get a list of files          |
 | GET    | `/api/upload/files/page`   | Get a paginated list of files |
 | GET    | `/api/upload/files/:id`    | Get a specific file          |
+| GET    | `/api/upload/folders`      | Get a paginated list of folders |
+| GET    | `/api/upload/folders/:id`  | Get a specific folder        |
 | POST   | `/api/upload`           | Upload files        |
 | POST   | `/api/upload?id=x`      | Update fileInfo     |
 | DELETE | `/api/upload/files/:id` | Delete a file       |
 
 :::note Notes
-- [Folders](/cms/features/media-library#organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
+- [Folders](/cms/features/media-library#organizing-assets-with-folders) can be browsed through the Content API read-only endpoints (`GET /api/upload/folders` and `GET /api/upload/folders/:id`). Files uploaded through REST are located in the automatically created "API Uploads" folder.
 - The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
 - `GET /api/upload/files/:id`, `DELETE /api/upload/files/:id`, and `POST /api/upload?id=x`, and [update `fileInfo`](#update-fileinfo)) accept either the file's numeric `id` or its `documentId`. Files have no draft and publish, so each file has exactly one `documentId`. An unknown `id` or `documentId` returns the same `404` error.
+- `GET /api/upload/folders/:id` accepts either the folder's numeric `id` or its `documentId`. Folders have no draft and publish, so each folder has exactly one `documentId`. An unknown `id` or `documentId` returns a `404` error.
 :::
 
 ## Get a list of files
@@ -147,6 +150,107 @@ When using pagination by offset, the `meta.pagination` object returns `start` an
 </ApiCall>
 
 When `pagination[withCount]` is `false`, the count query is skipped and `total` and `pageCount` are omitted from the response.
+
+## Browse folders
+
+The `/api/upload/folders` endpoints provide read-only access to the Media Library folder hierarchy from the Content API. These endpoints return folder information including the folder path and parent relationship.
+
+### Get a paginated list of folders
+
+`GET /api/upload/folders` returns folders using the standard [paginated response](/cms/api/rest/sort-pagination), wrapped in a `data` array and a `meta.pagination` object.
+
+It accepts the same query parameters as other REST collection endpoints:
+
+| Parameter | Description |
+| --------- | ----------- |
+| `pagination[page]` | Page number (1-based). Default `1`. |
+| `pagination[pageSize]` | Number of folders per page. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. |
+| `pagination[start]` | Pagination by offset: number of folders to skip. |
+| `pagination[limit]` | Pagination by offset: maximum number of folders to return. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. |
+| `pagination[withCount]` | Whether to run the count query and include `total` and `pageCount` in the response. Defaults to `true`. |
+| `filters` | [Filter](/cms/api/rest/filters) the results. |
+| `sort` | [Sort](/cms/api/rest/sort-pagination#sorting) the results. |
+
+<ApiCall>
+<Request title="Example request: Get the first page of folders">
+
+`GET /api/upload/folders?pagination[page]=1&pagination[pageSize]=10`
+
+</Request>
+
+<Response title="Example response">
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "folder-abc123",
+      "name": "Projects",
+      "path": "/1",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "parent": null,
+      "namePath": "/Projects"
+    },
+    {
+      "id": 2,
+      "documentId": "folder-def456",
+      "name": "2026",
+      "path": "/1/2",
+      "createdAt": "2026-01-15T10:30:00.000Z",
+      "updatedAt": "2026-01-15T10:30:00.000Z",
+      "parent": {
+        "id": 1,
+        "documentId": "folder-abc123"
+      },
+      "namePath": "/Projects/2026"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 10,
+      "pageCount": 2,
+      "total": 15
+    }
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
+### Get a specific folder
+
+`GET /api/upload/folders/:id` returns a single folder. The `:id` can be either the folder's numeric `id` or its `documentId`.
+
+<ApiCall>
+<Request title="Example request: Get a folder by documentId">
+
+`GET /api/upload/folders/folder-abc123`
+
+</Request>
+
+<Response title="Example response">
+
+```json
+{
+  "data": {
+    "id": 1,
+    "documentId": "folder-abc123",
+    "name": "Projects",
+    "path": "/1",
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z",
+    "parent": null,
+    "namePath": "/Projects"
+  }
+}
+```
+
+</Response>
+</ApiCall>
 
 
 ## Upload files
