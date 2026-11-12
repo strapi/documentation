@@ -246,7 +246,7 @@ By default, all logs are displayed in reverse chronological order. You can filte
 
 - Action: select the type of action to filter by (e.g `create` or `update`).
 - User: select the user to filter by.
-- Date: select a date (range) and time to filter by.
+- Date: select a date and, optionally, a time to filter by. A date alone matches the entire day; adding a time narrows the match to that specific minute.
 
 <ThemedImage
   alt="Audit Logs filters"
@@ -271,6 +271,10 @@ To export audit logs:
 1. (Optional) Apply filters to select the entries to export.
 2. Click **Export as CSV** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
 3. Click **Download CSV** to save the exported file.
+
+:::note Date filter and exports
+The Date filter matches an entire day, or a specific minute when a time is picked (see [filtering logs](#filtering-logs)). The export uses the same day or minute bounds as the filtered list, so the CSV file contains the same entries.
+:::
 
 Every export is itself recorded as an `audit-log.export` event. This event is included in the exported CSV file.
 
