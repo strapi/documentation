@@ -40,32 +40,30 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 
 #### CMS
 - [Document copying existing component content in the Content Manager](https://github.com/strapi/documentation/pull/3635)
+- [Document partial releases, outcomes, and new statuses](https://github.com/strapi/documentation/pull/3665)
 
 #### Repository
-- [Move interactive demo scenarios to YAML and add /inki:inki-interactive-demo](https://github.com/strapi/documentation/pull/3667)
-- [Add three interactive 404 pages drawn at random](https://github.com/strapi/documentation/pull/3666)
-- [Show partial releases in the Releases interactive demo](https://github.com/strapi/documentation/pull/3659)
-- [Replace the remaining Guideflow embeds with captured interactive demos](https://github.com/strapi/documentation/pull/3658)
-- [Add interactive demos captured from a real Strapi app to replace Guideflow](https://github.com/strapi/documentation/pull/3654)
 - [Add Lexi, the animated Strapi Docs AI mascot, to AI mode and the Ask AI modal](https://github.com/strapi/documentation/pull/3646)
+- [Add three interactive 404 pages drawn at random](https://github.com/strapi/documentation/pull/3666)
 
 ### <Icon name='pen-nib' /> Updated content
 
 <br />
 
 #### CMS
+
+- [Document partial releases](https://github.com/strapi/documentation/pull/3625)
 - [Document the admin password policy settings](https://github.com/strapi/documentation/pull/3671)
-- [Document partial releases, outcomes, and new statuses](https://github.com/strapi/documentation/pull/3665)
 - [Document filter value casting and $null operands](https://github.com/strapi/documentation/pull/3661)
 - [Fix TypeScript cron examples to compile in strict mode](https://github.com/strapi/documentation/pull/3648)
 - [Fix the policy and middleware config key in plugin route docs](https://github.com/strapi/documentation/pull/3643)
 - [Document how to check admin permissions on plugin server routes](https://github.com/strapi/documentation/pull/3642)
 - [Document audit log events for media, Content History, drafts and settings](https://github.com/strapi/documentation/pull/3640)
 - [Fix component settings and add copy details in Content Manager and CTB docs](https://github.com/strapi/documentation/pull/3636)
-- [Document partial releases](https://github.com/strapi/documentation/pull/3625)
+- [Add interactive demos captured from a real Strapi app to replace Guideflow](https://github.com/strapi/documentation/pull/3654)
 
 #### Repository
-- [Add sad and happy moods to Lexi, the AI mode mascot](https://github.com/strapi/documentation/pull/3649)
+
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
@@ -89,6 +87,8 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Document optional time on date-time filters](https://github.com/strapi/documentation/pull/3641)
 - [Clarify email template requirements](https://github.com/strapi/documentation/pull/3638)
 - [Clarify Audit Logs permission persistence when config is disabled](https://github.com/strapi/documentation/pull/3637)
+- [Show partial releases in the Releases interactive demo](https://github.com/strapi/documentation/pull/3659)
+- [Replace the remaining Guideflow embeds with captured interactive demos](https://github.com/strapi/documentation/pull/3658)
 
 #### Cloud
 - [Clarify Processing off behavior on Cloud upload size limits page](https://github.com/strapi/documentation/pull/3678)
@@ -110,6 +110,8 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Keep Inki PR descriptions short and stop restating the diff](https://github.com/strapi/documentation/pull/3652)
 - [Blur sample Enterprise price in billing portal screenshot](https://github.com/strapi/documentation/pull/3650)
 - [Fix self-healing ignore-list commits, unrouted candidates, and fix PR triage](https://github.com/strapi/documentation/pull/3639)
+- [Move interactive demo scenarios to YAML and add /inki:inki-interactive-demo](https://github.com/strapi/documentation/pull/3667)
+- [Add sad and happy moods to Lexi, the AI mode mascot](https://github.com/strapi/documentation/pull/3649)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
