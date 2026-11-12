@@ -151,6 +151,23 @@ Both logos can also be customized programmatically via the Strapi application's 
   }}
 />
 
+### Strapi upgrade banner
+
+**Location:** <Icon name="gear-six" /> *Settings > Administration panel > Overview*
+
+The admin panel displays an upgrade banner in the Settings Overview page when your installed Strapi version is behind the latest GitHub release. The banner indicates how many minor releases you are behind and provides links to upgrade your installation and view release notes.
+
+The upgrade banner shows different severity levels based on how far behind your installation is:
+
+| Severity | Condition | Banner style |
+| -------- | --------- | ------------ |
+| No update available | Your installation is up to date | No banner displayed |
+| Primary | 1 to 10 minor releases behind (same major version) | Primary banner with "What's new" and "How to upgrade" buttons |
+| Warning | 11 to 20 minor releases behind (same major version) | Warning-style banner |
+| Urgent | Your installation is on an older major version than the latest release | Urgent-style banner |
+
+You can dismiss the banner by clicking the close button. The banner reappears when a newer release is available, or when the reminding period expires.
+
 ### Configuring the password policy
 
 **Path to configure the password policy:** <Icon name="gear-six" /> *Settings > Administration panel > Password policy*
