@@ -16130,7 +16130,7 @@ File path: ./src/api/restaurant/routes/01-custom-restaurant.js
 const config = {
   type: 'content-api',
   routes: [
-    { // Path defined with an URL parameter
+    { // Path defined with a URL parameter
       method: 'POST',
       path: '/restaurants/:id/review', 
       handler: 'api::restaurant.restaurant.review',

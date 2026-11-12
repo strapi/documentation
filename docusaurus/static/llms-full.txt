@@ -8849,7 +8849,7 @@ The GraphQL plugin exposes only one endpoint that handles all queries and mutati
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
-:::caution `documentId` only
+:::caution documentId only
 The GraphQL API exposes documents using only the `documentId` field. The previous numeric `id` is no longer available here, although it is still returned by the REST API for backward compatibility (see [breaking change](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details).
 :::
 
@@ -10143,7 +10143,7 @@ The OpenAPI generation feature is currently experimental. Its behavior and outpu
 
 The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
 
-:::note Known limitation for nested component `required` metadata
+:::note Known limitation for nested component required metadata
 The Admin panel can mark inner fields on a component as required, yet the generated OpenAPI file may still skip a `required` entry for those scalars. The parent object (for instance a component inside a dynamic zone) might list `required` while the nested properties do not. There is more background in [GitHub issue #2236](https://github.com/strapi/documentation/issues/2236). Client generators that trust the raw schema alone can therefore emit types that look looser than what Strapi actually enforces.
 
 This area is still experimental, same as the warning banner at the top of the page, so keep validating nested payloads in application code or with the [REST validation helpers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) from the controllers guide instead of assuming every Admin rule is mirrored in the exported JSON schema yet.
@@ -16572,7 +16572,7 @@ Strapi’s back end is a Koa-based server where requests pass through global mid
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
 
-- The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
+- The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and sends responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
 - The **front-end** part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
 
 Throughout this developer documentation, 'back end' refers _exclusively_ to the back-end part of Strapi.
@@ -16582,7 +16582,7 @@ The [Getting Started > Admin panel page](/cms/features/admin-panel) gives an adm
 
 The Strapi back end runs an HTTP server based on [Koa](https://koajs.com/), a back-end JavaScript framework.
 
-Like any HTTP server, the Strapi back end receives requests and send responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
+Like any HTTP server, the Strapi back end receives requests and sends responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
 
 A request can travel through the Strapi back end as follows:
 
@@ -16850,7 +16850,7 @@ In Strapi 5, both query parameters and input data (i.e., create and update body 
 - non-writable fields and internal timestamps like `createdAt` and `createdBy` fields
 - setting or updating an `id` field (except for connecting relations)
 
-:::note Internal `entity-validator` service
+:::note Internal entity-validator service
 Strapi exposes a low-level `entity-validator` service (accessible through `strapi.service('entity-validator')`) with `validateEntityCreation` and `validateEntityUpdate` methods that the document service uses internally. These are not part of the public API and their semantics can change between releases. From a custom controller, service, or middleware, use the documented `validateInput` factory helper or the [`strapi.contentAPI.validate.*` helpers](#sanitize-validate-custom-controllers) instead. They apply the same content-type schema rules and additionally account for permissions, non-writable fields, and the request authentication strategy.
 :::
 
@@ -19293,7 +19293,7 @@ Database validations and settings are custom options passed directly onto the `t
 | `type`        | string  | Changes the database type, if `type` has arguments, you should pass them in `args`            | -       |
 | `args`        | array   | Arguments passed into the Knex.js function that changes things like `type`                    | `[]`    |
 
-:::caution Draft & Publish and `unique`
+:::caution Draft & Publish and unique
 When [Draft & Publish](/cms/features/draft-and-publish) is enabled, Strapi intentionally skips `unique` validations while an entry is saved as a draft. Duplicates therefore remain undetected until publication, at which point the database constraint triggers an error even though the UI previously displayed “Saved document” for the drafts.
 
 To avoid unexpected publication failures:
@@ -20537,7 +20537,7 @@ In the following example, the custom routes file name is prefixed with `01-` to 
 const config = {
   type: 'content-api',
   routes: [
-    { // Path defined with an URL parameter
+    { // Path defined with a URL parameter
       method: 'POST',
       path: '/restaurants/:id/review', 
       handler: 'api::restaurant.restaurant.review',
@@ -41716,7 +41716,7 @@ Possible errors:
 | 404 | `"User not found"` | No user with the given `id` |
 | 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
 
-:::note Relation inputs support both `documentId` and numeric IDs
+:::note Relation inputs support both documentId and numeric IDs
 When updating a user, including the `role` relation, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
 ```json
 {
@@ -49547,7 +49547,7 @@ When used to create a new section, `addSettingsLink()` accepts the following par
   | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon (default: `false`) |
   | `exact` | `boolean` | ❌ | Whether the active-link match should be exact |
 
-:::caution Deprecated: `createSettingSection()`
+:::caution Deprecated: createSettingSection()
 The dedicated `app.createSettingSection(section, links)` method is deprecated. It still works (it delegates to `addSettingsLink` internally) but new code should call `addSettingsLink(section, links)` directly. See [Deprecated methods](#deprecated-methods).
 :::
 
@@ -49658,7 +49658,7 @@ To add links to an existing settings section, use `addSettingsLink()` in the `bo
 
 `addSettingsLink` takes a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is either a single link object or an array of link objects, using the same properties as the `links` array in [Creating a new settings section](#creating-a-new-settings-section).
 
-:::caution Deprecated: `addSettingsLinks()`
+:::caution Deprecated: addSettingsLinks()
 The plural `app.addSettingsLinks(sectionId, links)` method is deprecated. Call `addSettingsLink(sectionId, links)` (singular) with an array instead; it accepts both single links and arrays. See [Deprecated methods](#deprecated-methods).
 :::
 
