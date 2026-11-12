@@ -19040,6 +19040,23 @@ export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
 ```
 
 ---
+Language: JavaScript
+File path: ./config/database.js
+
+```js
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      // postgres://USER:PASSWORD@pooled.db.prisma.io:5432/postgres?sslmode=verify-full
+      connectionString: env('DATABASE_URL'),
+    },
+    pool: { min: 0, max: env.int('DATABASE_POOL_MAX', 10) },
+  },
+});
+```
+
+---
 Language: DOCKERFILE
 File path: ./config/database.js
 
