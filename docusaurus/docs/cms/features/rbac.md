@@ -63,7 +63,7 @@ You will be redirected to the roles edition interface, where you will be able to
 />
 
 :::tip
-In the *Roles* interface, from the table, you can click on the duplicate button <Icon name="copy" /> to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button <Icon name="copy" /> to create a new role by duplicating an existing one. If you are not a Super Admin, the new role only keeps the permissions you hold yourself.
 :::
 
 ### Deleting a role
@@ -110,6 +110,16 @@ In the top right corner, you can see a counter indicating how many administrator
 The permissions area of an administrator role editing interface allows you to configure in detail what actions an administrator can do for any part of the Strapi application.
 
 It is displayed as a table, split into 4 categories: [Collection types](#collection-and-single-types), [Single types](#collection-and-single-types), [Plugins](#plugins-and-settings) and [Settings](#plugins-and-settings).
+
+:::note
+If you are not a Super Admin, you can only grant permissions that you hold yourself:
+
+- Options outside your own permissions are disabled, with the tooltip "You can't grant a permission you don't have yourself".
+- Each combination of action, field, locale, and condition must be covered by one of your permissions. For instance, holding Read on the `title` field for English and on the `body` field for French does not allow you to grant Read on `title` for French.
+- Permissions that the role already has, but that you do not hold, can be kept or removed, but not extended.
+
+Saving a role with permissions you do not hold returns an error. Super Admins are not limited.
+:::
 
 ##### Collection and Single types
 
@@ -160,7 +170,7 @@ Settings permissions can be configured for all settings accessible from *General
 | Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows you to create new locales</li><li>"Read" - allows you to see available locales</li><li>"Update" - allows you to edit available locales</li><li>"Delete" - allows you to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
 | Review Workflows | <ul><li>"Create" - allows you to create workflows</li><li>"Read" - allows you to see created workflows</li><li>"Update" - allows you to edit workflows</li><li>"Delete" - allows you to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
 | Single sign on | <ul><li>Options</li><ul><li>"Read" - allows you to access the SSO settings</li><li>"Update" - allows you to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
-| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
+| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li><li>"Export" - allows you to [export audit logs](/cms/features/audit-logs#exporting-audit-logs) as a CSV file</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul> |
 | Webhooks | <ul><li>General</li><ul><li>"Create" - allows you to create webhooks</li><li>"Read" - allows you to see created webhooks</li><li>"Update" - allows you to edit webhooks</li><li>"Delete" - allows you to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
