@@ -17026,7 +17026,7 @@ module.exports = (config, { strapi }) => {
     if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
 
     // Compute HMAC over raw body + timestamp
-    const raw = ctx.request.rawBody || (ctx.request.body and JSON.stringify(ctx.request.body)) || "";
+    const raw = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
     const hmac = crypto.createHmac("sha256", secret);
     hmac.update(timestamp + "." + raw);
     const expected = "sha256=" + hmac.digest("hex");
@@ -17034,7 +17034,7 @@ module.exports = (config, { strapi }) => {
     // Constant-time compare + basic replay protection
     const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
     const skew = Math.abs(Date.now() - Number(timestamp));
-    if (!ok or skew > 5 * 60 * 1000) {
+    if (!ok || skew > 5 * 60 * 1000) {
       return ctx.unauthorized("Invalid or expired signature");
     }
 
@@ -17580,29 +17580,62 @@ File path: N/A
 
 
 ## releases.publish
-Description: Example payload
+Description: Code example from "releases.publish"
 (Source: https://docs.strapi.io/cms/backend-customization/webhooks#releases-publish)
 
 Language: JSON
-File path: N/A
+File path: /core/content-releases/server/src/services/release-run.ts
 
 ```json
-
 {
   "event": "releases.publish",
   "createdAt": "2024-02-21T16:45:36.877Z",
   "isPublished": true,
   "release": {
     "id": 2,
+    "documentId": "tx0fk0o7p0mfnvdhicuk3nfx",
     "name": "Fall Winter highlights",
     "releasedAt": "2024-02-21T16:45:36.873Z",
     "scheduledAt": null,
     "timezone": null,
+    "status": "partial",
+    "releaseCondition": "allow_partial",
+    "totalPublishedEntries": 8,
+    "totalUnpublishedEntries": 1,
+    "totalSkippedEntries": 2,
+    "failureReason": null,
     "createdAt": "2024-02-21T15:16:22.555Z",
-    "updatedAt": "2024-02-21T16:45:36.875Z",
-    "actions": {
-      "count": 1
-    }
+    "updatedAt": "2024-02-21T16:45:36.875Z"
+  }
+}
+```
+
+Language: JSON
+File path: /core/content-releases/server/src/services/release.ts
+
+```json
+{
+  "event": "releases.publish",
+  "createdAt": "2024-02-22T09:06:00.412Z",
+  "isPublished": false,
+  "error": {
+    "name": "MissedSchedule"
+  },
+  "release": {
+    "id": 3,
+    "documentId": "q8m2cz1v6w0rj5yk7d3hbn4e",
+    "name": "Spring launch",
+    "releasedAt": "2024-02-22T09:06:00.407Z",
+    "scheduledAt": "2024-02-22T09:00:00.000Z",
+    "timezone": "Europe/Paris",
+    "status": "failed",
+    "releaseCondition": "all_or_nothing",
+    "totalPublishedEntries": 0,
+    "totalUnpublishedEntries": 0,
+    "totalSkippedEntries": 5,
+    "failureReason": "missed_schedule",
+    "createdAt": "2024-02-20T14:12:09.301Z",
+    "updatedAt": "2024-02-22T09:06:00.409Z"
   }
 }
 ```
