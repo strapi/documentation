@@ -58,7 +58,7 @@ The `intlLabel.id` values should correspond to keys in your translation files lo
 :::
 
 :::caution
-The `permissions` parameter only controls whether the link is visible in the navigation. It does not protect the page itself. A user who knows the URL can still access the page directly. To fully secure a plugin route, you must also check permissions inside your page component and register your RBAC actions on the server side with `actionProvider.registerMany`. See the [Admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins) guide for a complete walkthrough.
+The `permissions` parameter only controls whether the link is visible in the navigation. It does not protect the page itself. A user who knows the URL can still access the page directly. To fully secure a plugin route, you must also check permissions inside your page component, register your RBAC actions on the server side with `actionProvider.registerMany`, and [check them on the plugin's admin routes](/cms/plugins-development/guides/admin-permissions-for-plugins#protect-the-server-routes) with the `admin::hasPermissions` policy. See the [Admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins) guide for a complete walkthrough.
 :::
 
 <Tabs groupId="js-ts">
