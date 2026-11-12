@@ -153,7 +153,7 @@ Both logos can also be customized programmatically via the Strapi application's 
 
 ### Strapi upgrade banner
 
-**Location:** <Icon name="gear-six" /> *Settings > Administration panel > Overview*
+**Location:** <Icon name="gear-six" /> *Settings > Global settings > Overview*
 
 When your installed Strapi version is older than the latest Strapi release on GitHub, the Overview page displays an upgrade banner and a badge next to the Strapi version. The banner shows your current version and includes 2 buttons:
 
