@@ -153,20 +153,23 @@ Both logos can also be customized programmatically via the Strapi application's 
 
 ### Strapi upgrade banner
 
-**Location:** <Icon name="gear-six" /> *Settings > Administration panel > Overview*
+**Location:** <Icon name="gear-six" /> *Settings > Global settings > Overview*
 
-The admin panel displays an upgrade banner in the Settings Overview page when your installed Strapi version is behind the latest GitHub release. The banner indicates how many minor releases you are behind and provides links to upgrade your installation and view release notes.
+When your installed Strapi version is older than the latest Strapi release on GitHub, the Overview page displays an upgrade banner and a badge next to the Strapi version. The banner shows your current version and includes 2 buttons:
 
-The upgrade banner shows different severity levels based on how far behind your installation is:
+- **Release notes** opens the list of Strapi releases on GitHub.
+- **Upgrade guide** opens the [upgrade tool documentation](/cms/upgrade-tool#upgrade-to-a-new-version).
 
-| Severity | Condition | Banner style |
-| -------- | --------- | ------------ |
-| No update available | Your installation is up to date | No banner displayed |
-| Primary | 1 to 10 minor releases behind (same major version) | Primary banner with "What's new" and "How to upgrade" buttons |
-| Warning | 11 to 20 minor releases behind (same major version) | Warning-style banner |
-| Urgent | Your installation is on an older major version than the latest release | Urgent-style banner |
+The banner and the badge have 2 severity levels, based on how far behind your installation is:
 
-You can dismiss the banner by clicking the close button. The banner reappears when a newer release is available, or when the reminding period expires.
+| Severity | Condition | Badge | Closing the banner <Icon name="x" /> |
+| -------- | --------- | ----- | ------------------------------------ |
+| Default | Same major version, and 10 minor versions behind or less (patch updates included) | "Update available" | Hides the banner until a newer version is released |
+| Urgent | More than 10 minor versions behind, or an older major version | The number of minor versions behind (for example, "12 minor versions behind"), or "Major update available" | Hides the banner for 7 days |
+
+Closing the banner is saved in the browser, for each project.
+
+The latest release is only checked when release notifications are enabled. To hide the banner and the badge, set `notifications.releases` to `false` in the `src/admin/app` file (see [admin panel configuration](/cms/configurations/admin-panel#admin-panel-behavior)).
 
 ### Configuring the password policy
 
