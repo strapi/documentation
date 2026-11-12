@@ -2209,6 +2209,11 @@
       "number": 28447,
       "reason": "Triage: internal performance optimization, output unchanged",
       "added": "2026-11-12"
+    },
+    {
+      "number": 27116,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3685",
+      "added": "2026-11-12"
     }
   ]
 }
