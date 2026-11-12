@@ -23289,7 +23289,7 @@ Some specific features require additional configuration:
 | [TypeScript](/cms/configurations/typescript) | <ul><li>In `tsconfig.json` for general [TypeScript-related configuration](/cms/configurations/typescript#project-structure-and-typescript-specific-configuration-files)</li><li>In the `config/typescript` file for [dedicated TypeScript features](/cms/configurations/typescript#strapi-specific-configuration-for-typescript) specific to Strapi</li></ul> | Required to use TypeScript efficiently |
 | [API tokens](/cms/features/api-tokens) | In the `config/admin` file | Required if using API tokens for authentication instead of the [Users & Permissions plugin](/cms/features/users-permissions) |
 | [Lifecycle functions](/cms/configurations/functions) | In the `/src/index` file | Optionally used to perform various actions that happen during the server lifecycle. Includes the `register`, `bootstrap`, and `destroy` functions. |
-| [Cron jobs](/cms/configurations/cron) | <ul><li>In the `/config/server` file to enable the feature</li><li>In a dedicated, optional `cron-tasks` file that can be used to declare the jobs</li></ul> | Required to setup CRON jobs for the server. |
+| [Cron jobs](/cms/configurations/cron) | <ul><li>In the `/config/server` file to enable the feature</li><li>In a dedicated, optional `cron-tasks` file that can be used to declare the jobs</li></ul> | Required to set up CRON jobs for the server. |
 | [Environment variables](/cms/configurations/environment) | In dedicated files and folders for the environment (e.g., `config/env/production/server`) | Optionally used to define different environments and their variables. |
 | [Single Sign-On (SSO)](/cms/configurations/guides/configure-sso)   | In the `config/admin` file | Required to use the SSO feature if enabled on your project. |
 | [Feature flags](/cms/configurations/features) | In the `config/features` file | Optional for a typical, stable Strapi application.<br/>Only required to enable [future flags](/cms/configurations/features).|
@@ -28854,7 +28854,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/discord
 
 Discord SSO provider enables users to sign in and sign up to Strapi through their Discord account. Configure it in `config/admin` using `passport-discord` with client credentials and email scope.
 
-The present page explains how to setup the Discord provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Discord provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -28954,7 +28954,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/github
 
 Configure GitHub as an SSO provider for Strapi admin sign-in using `passport-github2` in the `config/admin` file with your GitHub OAuth credentials and user email scope.
 
-The present page explains how to setup the GitHub provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the GitHub provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29052,7 +29052,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/google
 
 Configure Google as an SSO provider in your Strapi admin panel to allow users to sign in and sign up using their Google account credentials.
 
-The present page explains how to setup the Google provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Google provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29156,7 +29156,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/keycloak
 
 Keycloak is an OpenID Connect SSO provider that lets users sign in to Strapi through Keycloak authentication using the `passport-keycloak-oauth2-oidc` strategy configured in `config/admin`.
 
-The present page explains how to setup the Keycloak provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Keycloak provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29262,7 +29262,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/microsoft
 
 Configure the Microsoft SSO provider using `passport-azure-ad-oauth2` to allow users to sign in and sign up to your Strapi admin panel via their Microsoft accounts.
 
-The present page explains how to setup the Microsoft provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Microsoft provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29371,7 +29371,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/okta
 
 Okta is an SSO provider that allows users to sign in and sign up to Strapi through their Okta account using OAuth2 credentials configured in the `auth.providers` array.
 
-The present page explains how to setup the Okta provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Okta provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29605,7 +29605,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Auth0 provider setup enables OAuth 2.0 authentication for the Users & Permissions feature, requiring configuration in both Auth0 tenant and Strapi admin settings using Client ID, Client Secret, and subdomain credentials.
 
-The present page explains how to setup the Auth0 provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Auth0 provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29654,7 +29654,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 AWS Cognito provider lets you set up OAuth 2.0 authentication for Users & Permissions by configuring a user pool in AWS and adding the client credentials and domain to Strapi's provider settings.
 
-The present page explains how to setup the AWS Cognito provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the AWS Cognito provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29776,7 +29776,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Discord provider setup allows you to authenticate users via Discord OAuth2 by configuring your Discord app credentials in Strapi's Users & Permissions provider settings.
 
-The present page explains how to setup the Discord provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Discord provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29820,7 +29820,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Facebook provider setup enables social login authentication in Strapi's Users & Permissions feature. Configure a Facebook app with OAuth credentials and update Strapi settings to enable the provider with your Client ID, Client Secret, and frontend redirect URL.
 
-The present page explains how to setup the Facebook provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Facebook provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29870,7 +29870,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 GitHub provider setup enables OAuth authentication for Strapi's Users & Permissions feature, requiring GitHub OAuth app configuration and Strapi provider settings.
 
-The present page explains how to setup the GitHub provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the GitHub provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29917,7 +29917,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure Google OAuth authentication for Strapi Users & Permissions by creating credentials in Google Developer Console and adding them to the provider settings.
 
-The present page explains how to setup the Google provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Google provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29973,7 +29973,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 The Instagram Basic Display API is deprecated as of December 4, 2024. Strapi's built-in Instagram provider no longer works and requires updating to Meta's Instagram Business Login API instead.
 
-The present page explains how to setup the Instagram provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Instagram provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30029,7 +30029,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Set up Keycloak as an identity provider for Strapi's Users & Permissions feature by configuring a client in Keycloak, then enabling and filling in the Keycloak provider details in Strapi's admin settings.
 
-The present page explains how to setup the Keycloak provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Keycloak provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30086,7 +30086,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure LinkedIn as a provider for Strapi's Users & Permissions feature by creating a LinkedIn app, registering the redirect URL, and entering your credentials in the Strapi admin panel.
 
-The present page explains how to setup the LinkedIn provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the LinkedIn provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30462,7 +30462,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Set up Patreon as an OAuth provider for Users & Permissions by registering an OAuth client on Patreon and configuring it in Strapi with your Client ID and Client Secret.
 
-The present page explains how to setup the Patreon provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Patreon provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30513,7 +30513,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure the Reddit provider for Users & Permissions by creating a Reddit app and inputting the Client ID and Secret in Strapi's provider settings.
 
-The present page explains how to setup the Reddit provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Reddit provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30555,7 +30555,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure Twitch OAuth authentication for Strapi's Users & Permissions feature by registering your application on the Twitch developer console and adding your credentials to Strapi's provider settings.
 
-The present page explains how to setup the Twitch provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Twitch provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30600,7 +30600,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure Twitter (now X) as an OAuth provider for Users & Permissions. Requires a paid X Developer Portal plan since the v1.1 API endpoint is no longer freely available.
 
-The present page explains how to setup the Twitter provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Twitter provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30658,7 +30658,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 VK provider setup for Users & Permissions enables authentication via VK. Configure a VK app, then set the client ID, secret, and redirect URL in Strapi's provider settings to enable VK login.
 
-The present page explains how to setup the VK provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the VK provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
