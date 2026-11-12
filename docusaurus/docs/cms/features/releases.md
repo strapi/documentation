@@ -86,6 +86,8 @@ You can rename a release. To do so, while on a release page:
 
 ### Choosing a release mode
 
+<VersionBadge version="5.62.0" />
+
 **Path to configure the feature:** <Icon name="paper-plane-tilt" /> Releases
 
 The release mode defines what happens when a release is published while some of its entries are not ready. You choose the release mode when [creating a release](#creating-a-release), and can change it by editing the release until the release is published or ends as `Failed`.
@@ -266,6 +268,8 @@ Once a release is published, it cannot be edited or published again, and entries
 
 ### Reviewing release results
 
+<VersionBadge version="5.62.0" />
+
 **Path:** <Icon name="paper-plane-tilt" /> Releases
 
 Once a release has been published, manually or at its scheduled time, its badge displays the final status of the release:
@@ -275,10 +279,8 @@ Once a release has been published, manually or at its scheduled time, its badge 
 - `Failed`: no entry was published or unpublished.
 
 :::note
-A release that failed before your project was upgraded to a Strapi version supporting partial releases displays the `Unknown` status for its entries. Strapi did not record which entries were published before the failure.
+A release that failed before your project was upgraded to Strapi 5.62.0 or later displays the `Unknown` status for its entries. Strapi did not record which entries were published before the failure.
 :::
-
-<!-- TODO: Add the Strapi version that introduces partial releases once strapi/strapi#28339 is released. -->
 
 The header of the release page indicates how many entries were released (published or unpublished) and how many were skipped. The *All*, *Released*, and *Skipped* tabs filter the list of entries by result.
 
@@ -305,13 +307,15 @@ When a release is published or ends as `Failed`, Strapi also sends the [`release
 
 ### Creating a release from skipped entries
 
+<VersionBadge version="5.62.0" />
+
 **Path:** <Icon name="paper-plane-tilt" /> Releases
 
 A release cannot be published twice. To publish the entries skipped by a `Partial` or `Failed` release, create a new release containing these entries.
 
 :::prerequisites
 - The status of the release is `Partial` or `Failed`.
-- The release did not fail before your project was upgraded to a Strapi version supporting partial releases (see [Reviewing release results](#reviewing-release-results)).
+- The release did not fail before your project was upgraded to Strapi 5.62.0 or later (see [Reviewing release results](#reviewing-release-results)).
 - At least 1 skipped entry still exists.
 - Your role has the permissions to create releases and to add entries to releases (see [configuring administrator roles](/cms/features/rbac#configuring-roles-permissions)).
 :::
