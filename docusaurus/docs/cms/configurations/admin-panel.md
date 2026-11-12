@@ -43,7 +43,7 @@ Some UI elements of the admin panel must be configured in the `src/admin/app` fi
 To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
 
 **Releases notifications**  
-To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`. This also hides the [upgrade banner](/cms/features/admin-panel#strapi-upgrade-banner) in *Settings > Administration panel > Overview*.
 
 ```js title="/src/admin/app.js"
 const config = {
