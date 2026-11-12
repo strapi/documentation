@@ -2597,7 +2597,7 @@ The `config` object of `/src/admin/app` accepts the following parameters:
 | `menu`                         | Object           | Accepts the `logo` key to change the logo in the main navigation                                            |
 | `theme.light` and `theme.dark` | Object           | Overwrite theme properties for light and dark modes                                               |
 | `tutorials`                    | Boolean          | Toggles displaying the video tutorials
-| `notifications`                | Object           | Accepts the `releases` key (Boolean) to toggle displaying notifications about new releases |
+| `notifications`                | Object           | Accepts the `releases` key (Boolean) to toggle displaying notifications about new releases, including the [upgrade banner](/cms/features/admin-panel#strapi-upgrade-banner) |
 
 <br/>
 Click on any of the following cards to get more details about a specific topic:
@@ -23245,7 +23245,7 @@ These commands install Strapi Enterprise plugins from the Strapi package registr
 
 ### `strapi enterprise install`
 
-Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
+Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install. Plugins outside your license appear below the list, and you cannot select them.
 
 ```bash
 strapi enterprise install [packages...]
@@ -23411,7 +23411,7 @@ Some UI elements of the admin panel must be configured in the `src/admin/app` fi
 To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
 
 **Releases notifications**  
-To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`. This also hides the [upgrade banner](/cms/features/admin-panel#strapi-upgrade-banner) in *Settings > Global settings > Overview*.
 
 ```js title="/src/admin/app.js"
 const config = {
@@ -24450,7 +24450,7 @@ Despite its name, `forceMigration` does not control whether migrations run, whic
 
 ### Connection pool timeouts
 
-When Knex (through Tarn.js) cannot acquire a database connection before `acquireConnectionTimeout` or `pool.acquireTimeoutMillis` elapses, whichever is smaller, it throws a `KnexTimeoutError`. Unless `settings.poolTimeoutDiagnostics` is `false`, Strapi appends a link to this section to the error's message. It also attaches an `error.details` object describing the pool at that moment. The error's class, name, and underlying stack stay unchanged.
+When Knex (through Tarn.js) cannot acquire a database connection before `acquireConnectionTimeout` or `pool.acquireTimeoutMillis` elapses, whichever is smaller, it throws a `KnexTimeoutError`. Unless `settings.poolTimeoutDiagnostics` is `false`, Strapi appends a link to this section to the error's message. It also attaches an `error.details` object describing the pool at that moment. The error's class and name stay unchanged. The error's stack includes the code that issued the query, so you can find which request or code path waited for a connection.
 
 Strapi also logs a warning block, at most once every 30 seconds while the pool keeps timing out. Neither `error.details` nor the warning includes SQL statements or query parameters.
 
@@ -33689,20 +33689,23 @@ Both logos can also be customized programmatically via the Strapi application's 
 
 ### Strapi upgrade banner
 
-**Location:**  *Settings > Administration panel > Overview*
+**Location:**  *Settings > Global settings > Overview*
 
-The admin panel displays an upgrade banner in the Settings Overview page when your installed Strapi version is behind the latest GitHub release. The banner indicates how many minor releases you are behind and provides links to upgrade your installation and view release notes.
+When your installed Strapi version is older than the latest Strapi release on GitHub, the Overview page displays an upgrade banner and a badge next to the Strapi version. The banner shows your current version and includes 2 buttons:
 
-The upgrade banner shows different severity levels based on how far behind your installation is:
+- **Release notes** opens the list of Strapi releases on GitHub.
+- **Upgrade guide** opens the [upgrade tool documentation](/cms/upgrade-tool#upgrade-to-a-new-version).
 
-| Severity | Condition | Banner style |
-| -------- | --------- | ------------ |
-| No update available | Your installation is up to date | No banner displayed |
-| Primary | 1 to 10 minor releases behind (same major version) | Primary banner with "What's new" and "How to upgrade" buttons |
-| Warning | 11 to 20 minor releases behind (same major version) | Warning-style banner |
-| Urgent | Your installation is on an older major version than the latest release | Urgent-style banner |
+The banner and the badge have 2 severity levels, based on how far behind your installation is:
 
-You can dismiss the banner by clicking the close button. The banner reappears when a newer release is available, or when the reminding period expires.
+| Severity | Condition | Badge | Closing the banner  |
+| -------- | --------- | ----- | ------------------------------------ |
+| Default | Same major version, and 10 minor versions behind or less (patch updates included) | "Update available" | Hides the banner until a newer version is released |
+| Urgent | More than 10 minor versions behind, or an older major version | The number of minor versions behind (for example, "12 minor versions behind"), or "Major update available" | Hides the banner for 7 days |
+
+Closing the banner is saved in the browser, for each project.
+
+The latest release is only checked when release notifications are enabled. To hide the banner and the badge, set `notifications.releases` to `false` in the `src/admin/app` file (see [admin panel configuration](/cms/configurations/admin-panel#admin-panel-behavior)).
 
 ### Configuring the password policy
 
@@ -33811,7 +33814,7 @@ If you're not the Strapi instance's super admin, the super admin must have grant
    - Use the checkboxes to enable or disable individual permissions.
 
     :::note
-    Permissions that the current user does not hold appear disabled and cannot be selected. Conditions applied to the owner's role are shown as read-only and apply automatically to the token.
+    Permissions that the current user does not hold appear disabled and cannot be selected. Each combination of action, field, and locale must be covered by one of the owner's permissions: holding `title` for English and `body` for French does not allow `title` for French. Conditions applied to the owner's role are shown as read-only and apply automatically to the token. When the server starts, and whenever the owner's roles or role permissions change, token permissions the owner no longer holds are removed and inherited conditions are updated.
     :::
 4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button .
 
@@ -34055,7 +34058,9 @@ There is no equivalent setting in the admin panel: the retention period can only
 The `/config/admin` file also accepts `auditLogs.enabled`, which turns off Audit Logs when set to `false`, and `auditLogs.exportMaxRows`, which limits [exports](#exporting-audit-logs). See the [admin panel configuration](/cms/configurations/admin-panel#audit-logs) for all available parameters.
 
 :::note Audit Logs permissions and configuration
-When `auditLogs.enabled` is set to `false`, the Audit Logs feature is disabled and the routes are not available. However, audit log permissions that were granted to roles and admin tokens are preserved. This means when you turn `auditLogs.enabled` back to `true`, the previously granted permissions work again without needing to be re-granted.
+When `auditLogs.enabled` is set to `false`, the Audit Logs feature is disabled and the routes are not available. With Strapi 5.62.0 or later, the admin panel also hides the Audit Logs link in the settings and the *Last activity* homepage widget, and the `/settings/audit-logs` page displays a not found page.
+
+However, audit log permissions that were granted to roles and admin tokens are preserved. The permission editors of roles and admin tokens still display the Audit Logs section, with a *Disabled by configuration* badge. This means when you turn `auditLogs.enabled` back to `true`, the previously granted permissions work again without needing to be re-granted.
 :::
 
 ## Usage
@@ -37712,6 +37717,34 @@ Click on the  *Fill in from another locale* button, in the top right corner, for
  For localizable relations, Strapi automatically fetch the corresponding entry in the target locale if it exists. If the target locale does not exist for that relation, it will not be filled in. For non-localizable relations, the exact same entry is used.
 :::
 
+### Editing shared fields
+
+Fields without [localization enabled](#content-type-builder) are shared fields: they have one value common to all locales.
+
+When you edit a locale other than the default locale, and the entry already exists in the default locale, shared fields are locked:
+
+- Shared fields are disabled. Shared components and dynamic zones are read-only, including all their nested fields.
+- A  icon next to the field label indicates that the value is common to all locales and should be edited in the default locale.
+
+Shared fields are not locked if the entry does not exist in the default locale, for instance when the entry was created directly in another locale.
+
+To edit shared fields from a locale other than the default locale:
+
+1. In the _Draft_ tab of the edit view, click on the  *Edit shared fields* button in the top right corner.
+2. In the *Edit fields common to all locales?* dialog, click on the **Yes, edit shared fields** button.
+3. Edit the shared fields.
+4. Click on the **Save** button.
+
+:::caution
+Saving shared fields updates their value in the default locale and in all other locales of the entry.
+:::
+
+To lock shared fields again without saving them, click on the  *Keep shared fields locked* button. Unsaved changes to shared fields are discarded, while changes to localized fields are kept. Shared fields are also locked again when you switch to another locale or entry.
+
+:::note
+The *Edit shared fields* button is only displayed to users who have the permission to update content in the default locale.
+:::
+
 ### AI-powered internationalization
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
@@ -39460,7 +39493,7 @@ On the top right side of the *Administration panel > Roles* interface, an **Add 
 You will be redirected to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-roles-details)).
 
 :::tip
-In the *Roles* interface, from the table, you can click on the duplicate button  to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button  to create a new role by duplicating an existing one. If you are not a Super Admin, the new role only keeps the permissions you hold yourself.
 :::
 
 ### Deleting a role
@@ -39499,6 +39532,16 @@ In the top right corner, you can see a counter indicating how many administrator
 The permissions area of an administrator role editing interface allows you to configure in detail what actions an administrator can do for any part of the Strapi application.
 
 It is displayed as a table, split into 4 categories: [Collection types](#collection-and-single-types), [Single types](#collection-and-single-types), [Plugins](#plugins-and-settings) and [Settings](#plugins-and-settings).
+
+:::note
+If you are not a Super Admin, you can only grant permissions that you hold yourself:
+
+- Options outside your own permissions are disabled, with the tooltip "You can't grant a permission you don't have yourself".
+- Each combination of action, field, locale, and condition must be covered by one of your permissions. For instance, holding Read on the `title` field for English and on the `body` field for French does not allow you to grant Read on `title` for French.
+- Permissions that the role already has, but that you do not hold, can be kept or removed, but not extended.
+
+Saving a role with permissions you do not hold returns an error. Super Admins are not limited.
+:::
 
 ##### Collection and Single types
 
@@ -39547,7 +39590,7 @@ Settings permissions can be configured for all settings accessible from *General
 | Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows you to create new locales</li><li>"Read" - allows you to see available locales</li><li>"Update" - allows you to edit available locales</li><li>"Delete" - allows you to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
 | Review Workflows | <ul><li>"Create" - allows you to create workflows</li><li>"Read" - allows you to see created workflows</li><li>"Update" - allows you to edit workflows</li><li>"Delete" - allows you to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
 | Single sign on | <ul><li>Options</li><ul><li>"Read" - allows you to access the SSO settings</li><li>"Update" - allows you to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
-| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
+| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li><li>"Export" - allows you to [export audit logs](/cms/features/audit-logs#exporting-audit-logs) as a CSV file</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul> |
 | Webhooks | <ul><li>General</li><ul><li>"Create" - allows you to create webhooks</li><li>"Read" - allows you to see created webhooks</li><li>"Update" - allows you to edit webhooks</li><li>"Delete" - allows you to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
@@ -39895,10 +39938,8 @@ Once a release has been published, manually or at its scheduled time, its badge 
 - `Failed`: no entry was published or unpublished.
 
 :::note
-A release that failed before your project was upgraded to a Strapi version supporting partial releases displays the `Unknown` status for its entries. Strapi did not record which entries were published before the failure.
+A release that failed before your project was upgraded to Strapi 5.62.0 or later displays the `Unknown` status for its entries. Strapi did not record which entries were published before the failure.
 :::
-
-<!-- TODO: Add the Strapi version that introduces partial releases once strapi/strapi#28339 is released. -->
 
 The header of the release page indicates how many entries were released (published or unpublished) and how many were skipped. The *All*, *Released*, and *Skipped* tabs filter the list of entries by result.
 
@@ -39931,7 +39972,7 @@ A release cannot be published twice. To publish the entries skipped by a `Partia
 
 :::prerequisites
 - The status of the release is `Partial` or `Failed`.
-- The release did not fail before your project was upgraded to a Strapi version supporting partial releases (see [Reviewing release results](#reviewing-release-results)).
+- The release did not fail before your project was upgraded to Strapi 5.62.0 or later (see [Reviewing release results](#reviewing-release-results)).
 - At least 1 skipped entry still exists.
 - Your role has the permissions to create releases and to add entries to releases (see [configuring administrator roles](/cms/features/rbac#configuring-roles-permissions)).
 :::
@@ -40059,7 +40100,7 @@ The default workflow is configured to have 4 stages, in this order: To do, Ready
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
 
 :::note
-A Strapi project can have up to 200 workflows, and each workflow up to 200 stages.
+Your license sets how many workflows a Strapi project can have and how many stages each workflow can have, up to 200 of each. The workflow limit only applies when you create a workflow: if your project already has more workflows than your license allows, you can still edit them.
 :::
 
 #### Editing a workflow
@@ -42288,6 +42329,7 @@ The above installation guide only covers the basic installation option using the
 | `--no-example`                      | Do not add example data, skipping the related CLI prompt                                                                                                                                                                                        |
 | `--skip-cloud`                      | Skip [Strapi login and project creation steps](#skipping-the-strapi-login-step)                                                                                                                                                     |
 | `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no example data). The `<directory>` argument is required when using this flag.                                        |
+| `--agent <name>`                    | Name the coding agent that runs the command, for anonymous [usage information](/cms/usage-information). You can also set the `STRAPI_AGENT` environment variable instead. If both are set, `--agent` is used. |
 | `--skip-db`                         | Skip all database-related prompts and create a project with the default (SQLite) database                                                                                                                                                       |
 | `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details.                                                                            |
 | `--dbclient <dbclient>`             | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sqlite` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
@@ -42297,7 +42339,7 @@ The above installation guide only covers the basic installation option using the
 | `--dbusername <dbusername>`         | Define the database username to use by replacing `<dbusername>` in the command by the value of your choice                                                                                                                                      |
 | `--dbpassword <dbpassword>`         | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice                                                                                                                                      |
 | `--dbssl <dbssl>`                   | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default)                                                                                                                                                        |
-| `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbfile>` in the command by the value of your choice                                                                                                                 |
+| `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbfile>` in the command by the value of your choice. Defaults to `.tmp/data.db`.                                                                                                                 |
 | `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Unlike `--non-interactive`, it still asks you to log in to Strapi Cloud unless you also pass `--skip-cloud`. Use `--non-interactive` instead.                                                                                                                             |
 
 :::note Notes
@@ -56020,7 +56062,7 @@ Enterprise plugins are not published on the public npm registry. They are instal
 
 To install Enterprise plugins, run the `strapi enterprise install` command from the root folder of your Strapi application:
 
-- Without any argument, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade.
+- Without any argument, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade. Enterprise plugins outside your license appear below the list, and you cannot select them. If your license includes no Enterprise plugin yet, the command says so.
 - When passing one or more plugin name(s) as arguments, the command installs them directly. The `@strapi-enterprise/` prefix is optional.
 
 Listing available plugins to install or upgrade:
@@ -56131,7 +56173,8 @@ The file now holds your license, so restrict it to your user with `chmod 600 ~/.
 | `This Strapi license is not valid…` | Copy the whole license again from the billing portal. |
 | `This Strapi license expired on…` | Renew your license. |
 | `…rejected this Strapi license…` | Check that the license is still active in the billing portal. |
-| `Your license does not include…` | Check the plugin name. If the name is correct, contact your account manager. |
+| `Your license does not include…` | Check the plugin name, or run `strapi enterprise install` without a name to see the plugins you can install. To get a plugin outside your license, contact your account manager. |
+| `… is installed but is not included in your license.` | Your license no longer includes this installed plugin. Contact your account manager. |
 | `No Enterprise package named…` | Check the plugin name. |
 | `… has no version or tag …` | Check the version you added to the plugin name. |
 | `… requires Strapi … and this app uses …` | Upgrade Strapi first. |
@@ -59640,6 +59683,7 @@ The following data is collected:
 - Environment state (development, staging, production)
 - System information (OS)
 - Build configurations
+- How the project creation command was run: by a person, in a CI environment, or by a coding agent, with the agent name (from a fixed list of known agents)
 
 :::caution GDPR
 Any identifiable data collected and aggregated is of a non-sensitive nature. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and then anonymized.
@@ -59670,6 +59714,8 @@ npm run strapi telemetry:disable
 Alternatively, the `strapi.telemetryDisabled: true` flag in the project `package.json` file will also disable data collection.
 
 Data collection can later be re-enabled by deleting the flag or setting it to false, or by using the `telemetry:enable` command.
+
+The `telemetry:disable` command and the `package.json` flag require an existing project. To also disable data collection while creating a project, set the `STRAPI_TELEMETRY_DISABLED` environment variable to `true` or `1` before running the [installation command](/cms/installation/cli).
 
 :::note
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).
