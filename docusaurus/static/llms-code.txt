@@ -36438,7 +36438,7 @@ export const appContext = ai.mcp.definePrompt({
 Source: https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-for-plugins
 
 ## Register the permissions server side
-Description: Each individual permission has to registered in the bootstrap function of your plugin, as follows:
+Description: Each individual permission has to be registered in the bootstrap function of your plugin, as follows:
 (Source: https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-for-plugins#register-the-permissions-server-side)
 
 Language: JavaScript
@@ -36500,6 +36500,66 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
 };
 
 export default bootstrap;
+```
+
+
+## Protect the server routes
+Description: To check a permission on a route, add the admin::hasPermissions policy to the route configuration.
+(Source: https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-for-plugins#protect-the-server-routes)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/admin/index.js
+
+```js
+'use strict';
+
+module.exports = {
+  type: 'admin',
+  routes: [
+    {
+      method: 'GET',
+      path: '/overview',
+      handler: 'overview.find',
+      config: {
+        policies: [
+          {
+            name: 'admin::hasPermissions',
+            config: {
+              actions: ['plugin::my-plugin.overview.access'],
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/admin/index.ts
+
+```ts
+export default {
+  type: 'admin' as const,
+  routes: [
+    {
+      method: 'GET' as const,
+      path: '/overview',
+      handler: 'overview.find',
+      config: {
+        policies: [
+          {
+            name: 'admin::hasPermissions',
+            config: {
+              actions: ['plugin::my-plugin.overview.access'],
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
 ```
 
 
