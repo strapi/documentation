@@ -97,7 +97,9 @@ The *Required stage for publishing* setting of a workflow prevents entries from 
 
 An entry must be exactly at the selected stage to be published: an entry at a later stage cannot be published either. Choosing the last stage of the workflow as the required stage avoids this situation.
 
-When the setting is defined, publishing an entry that is not at the required stage returns an error. In [Releases](/cms/features/releases), entries that are not at the required stage are flagged as not ready to be published.
+When the setting is defined, publishing an entry that is not at the required stage returns an error.
+
+In [Releases](/cms/features/releases), entries that are not at the required stage have the `Not ready` status. What happens to them depends on the [release mode](/cms/features/releases#choosing-a-release-mode): with *Require every entry to be ready*, they prevent the release from being published, and with *Release all ready items*, they are skipped when the release is published.
 
 ##### Deleting a stage
 
