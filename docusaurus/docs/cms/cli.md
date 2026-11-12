@@ -924,7 +924,7 @@ These commands install Strapi Enterprise plugins from the Strapi package registr
 
 <EnterpriseBadge />
 
-Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
+Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install. Plugins outside your license appear below the list, and you cannot select them.
 
 ```bash
 strapi enterprise install [packages...]

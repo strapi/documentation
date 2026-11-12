@@ -52,7 +52,7 @@ The default workflow is configured to have 4 stages, in this order: To do, Ready
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
 
 :::note
-A Strapi project can have up to 200 workflows, and each workflow up to 200 stages.
+Your license sets how many workflows a Strapi project can have and how many stages each workflow can have, up to 200 of each. The workflow limit only applies when you create a workflow: if your project already has more workflows than your license allows, you can still edit them.
 :::
 
 

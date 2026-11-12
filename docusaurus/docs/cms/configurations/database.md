@@ -121,7 +121,7 @@ Despite its name, `forceMigration` does not control whether migrations run, whic
 
 ### Connection pool timeouts
 
-When Knex (through Tarn.js) cannot acquire a database connection before `acquireConnectionTimeout` or `pool.acquireTimeoutMillis` elapses, whichever is smaller, it throws a `KnexTimeoutError`. Unless `settings.poolTimeoutDiagnostics` is `false`, Strapi appends a link to this section to the error's message. It also attaches an `error.details` object describing the pool at that moment. The error's class, name, and underlying stack stay unchanged.
+When Knex (through Tarn.js) cannot acquire a database connection before `acquireConnectionTimeout` or `pool.acquireTimeoutMillis` elapses, whichever is smaller, it throws a `KnexTimeoutError`. Unless `settings.poolTimeoutDiagnostics` is `false`, Strapi appends a link to this section to the error's message. It also attaches an `error.details` object describing the pool at that moment. The error's class and name stay unchanged. The error's stack includes the code that issued the query, so you can find which request or code path waited for a connection.
 
 Strapi also logs a warning block, at most once every 30 seconds while the pool keeps timing out. Neither `error.details` nor the warning includes SQL statements or query parameters.
 
