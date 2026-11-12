@@ -2199,6 +2199,16 @@
       "number": 28529,
       "reason": "Router: Internal type definition update for the Content-Type Builder service. This types the editComponent payload correctly but doesn't change public API behavior or expose new capabilities.",
       "added": "2026-11-11"
+    },
+    {
+      "number": 28546,
+      "reason": "Triage: internal performance optimization, output unchanged",
+      "added": "2026-11-12"
+    },
+    {
+      "number": 28447,
+      "reason": "Triage: internal performance optimization, output unchanged",
+      "added": "2026-11-12"
     }
   ]
 }
