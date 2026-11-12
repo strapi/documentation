@@ -31,7 +31,9 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 
 ## Overview
 
-<Guideflow lightId="lpnm3w1ber" darkId="zklmd4gijr" />
+<!-- <Guideflow lightId="lpnm3w1ber" darkId="zklmd4gijr" /> -->
+
+<InteractiveDemo id="content-type-builder" />
 
 The <Icon name="layout" /> Content-type Builder allows the creation and management of content-types, which can be:
 
@@ -459,42 +461,6 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 </Tabs>
  
-#### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
-
-The Password field displays a password field that is encrypted.
-
-<Tabs>
-
-<TabItem value="base" label="Basic settings">
-
-| Setting name  | Instructions                                                    |
-|---------------|-----------------------------------------------------------------|
-| Name          | Write the name of the Password field.                           |
-
-</TabItem>
-
-<TabItem value="advanced" label="Advanced settings">
-
-| Setting name   | Instructions                                                                |
-|----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Password field.                              |
-| Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
-| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
-
-</TabItem>
-
-<TabItem value="condition" label="Condition">
-
-<ConditionalFields components={props.components} />
-
-</TabItem>
-
-</Tabs>
-
-
 #### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
 
 The Media field allows you to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
@@ -880,8 +846,8 @@ When configuring a component through the Content-type Builder, it is possible to
 |----------------|-----------------------------------------------------------------------------------------|
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
 | Private field  | Tick to make the field private and prevent it from being found via the API.             |
-| Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
-| Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
+| Minimum components | For repeatable components only - Tick to define a minimum number of components allowed. |
+| Maximum components | For repeatable components only - Tick to define a maximum number of components allowed. |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the component to be translated per available locale. |
 
 </TabItem>
@@ -913,8 +879,8 @@ Dynamic zones are a combination of components that can be added to content-types
 | Setting name   | Instructions                                                                            |
 |----------------|-----------------------------------------------------------------------------------------|
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
-| Maximum value  | Tick to define a maximum number of characters allowed.                                  |
-| Minimum value  | Tick to define a minimum number of characters allowed.                                  |
+| Maximum value  | Tick to define a maximum number of components allowed.                                  |
+| Minimum value  | Tick to define a minimum number of components allowed.                                  |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
 
 </TabItem>

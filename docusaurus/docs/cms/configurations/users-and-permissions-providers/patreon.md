@@ -1,6 +1,6 @@
 ---
 title: Patreon provider setup for Users & Permissions
-description: Learn how to setup the Patreon provider for the Users & Permissions feature.
+description: Learn how to set up the Patreon provider for the Users & Permissions feature.
 displayed_sidebar: cmsSidebar
 tags:
 - users and permissions
@@ -20,7 +20,7 @@ Set up Patreon as an OAuth provider for Users & Permissions by registering an OA
 </Tldr>
 
 
-The present page explains how to setup the Patreon provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Patreon provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -37,7 +37,7 @@ ngrok http 1337
 Don't forget to update the server url in the Strapi config file `./config/server.js` and the server URL in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react" text="react login example app"/>) with the generated ngrok URL.
 :::
 
-1. You must be a Patreon Creator in order to register an Oauth client.
+1. You must be a Patreon Creator in order to register an OAuth client.
 2. Go to the <ExternalLink to="https://www.patreon.com/portal" text="Patreon developer portal"/>
 3. Click on <ExternalLink to="https://www.patreon.com/portal/registration/register-clients" text="Clients & API Keys"/>
 4. Click on "Create Client"

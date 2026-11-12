@@ -271,6 +271,29 @@ export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
 AWS RDS IAM authentication requires SSL. Refer to the <ExternalLink to="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html" text="AWS documentation"/> for the required certificate bundle and SSL parameters.
 :::
 
+**Example: PostgreSQL with Prisma Postgres (pooled connection)**
+
+<ExternalLink to="https://www.prisma.io/postgres?utm_source=strapi&utm_medium=docs&utm_campaign=strapi_database_configuration" text="Prisma Postgres"/> provides 2 connection strings for each database: a pooled one (host `pooled.db.prisma.io`), which goes through PgBouncer in transaction mode, and a direct one (host `db.prisma.io`). Both use port `5432` and require SSL. Use the pooled connection string for the Strapi server, and set the pool `min` value to `0` because the pooler closes connections that have been idle for 60 minutes:
+
+```js title="./config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      // postgres://USER:PASSWORD@pooled.db.prisma.io:5432/postgres?sslmode=verify-full
+      connectionString: env('DATABASE_URL'),
+    },
+    pool: { min: 0, max: env.int('DATABASE_POOL_MAX', 10) },
+  },
+});
+```
+
+:::note
+- The connection strings end with `sslmode=require`, which makes `pg` print a warning about SSL modes when Strapi starts. Replace it with `sslmode=verify-full` to remove the warning. `pg` 8 handles both values the same way and verifies the server certificate.
+- Use the direct connection string if you set a custom `schema`, or if some queries run for more than 10 minutes. Strapi sets the schema with a session-level `SET search_path` command, which a pooler in transaction mode does not keep between transactions, and the pooler stops queries after 10 minutes.
+- Each Strapi instance can open up to `pool.max` connections. Refer to the <ExternalLink to="https://www.prisma.io/docs/postgres/database/connection-pooling?utm_source=strapi&utm_medium=docs&utm_campaign=strapi_database_configuration#connection-limits" text="Prisma Postgres documentation"/> for the connection limits of each plan.
+:::
+
 </TabItem>
 
  <TabItem value="MySQL/MariaDB" label="MySQL/MariaDB">

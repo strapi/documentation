@@ -51,7 +51,7 @@ A policy is a function that runs before the controller action for a given route.
 Policies are exported as plain functions (not factory functions). Each policy receives the following 3 arguments:
 
 - `policyContext` is a wrapper around the Koa context object. Use it to access `policyContext.state.user`, `policyContext.request`, etc.
-- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }`, where `config` is the per-policy options object).
+- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }`, where `config` is the per-route configuration object).
 - `{ strapi }` gives access to the Strapi instance.
 
 :::note
@@ -75,7 +75,7 @@ module.exports = {
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const targetRole = config.role;
@@ -115,7 +115,7 @@ import type { Core } from '@strapi/strapi';
 type UserRole = { code?: string; name?: string };
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 export default (
   policyContext: Core.PolicyContext,
   config: { role?: string },
@@ -169,7 +169,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -206,7 +206,7 @@ export default [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -416,13 +416,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A server-level middleware that throws or never calls `next()` will break every request on the server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
 :::
 
-:::note Version/runtime behavior
-For route declarations, validation accepts object entries shaped as `{ name, options }` for both `policies` and `middlewares` (see `services/server/routing.ts`).
-
-At runtime, some internals still reference `{ resolve, config }` support in the middleware resolver (`services/server/middleware.ts`), but that shape is not accepted by route validation in standard route files.
-
-To avoid validation errors, use `{ name, options }` in route configurations.
-:::
+In route configurations, pass per-route parameters for both `policies` and `middlewares` in the `config` key of the `{ name, config }` object. Routes do not read an `options` key: a policy or middleware declared with `{ name, options }` in a route receives an empty object.
 
 :::strapi Backend customization
 For the full middleware reference, see [Middlewares](/cms/backend-customization/middlewares).
@@ -438,4 +432,4 @@ For the full middleware reference, see [Middlewares](/cms/backend-customization/
 
 - **Always call `await next()` in middlewares.** Forgetting `next()` means the request chain is interrupted and the controller never executes, resulting in a hanging request with no response.
 
-- **Use `options` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, options }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.
+- **Use `config` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, config }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.

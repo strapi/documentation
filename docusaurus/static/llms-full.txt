@@ -1008,7 +1008,7 @@ Source: https://docs.strapi.io/cloud/advanced/upload-size-limits
 
 # Upload size limits for Strapi Cloud
 
-Non-image files are capped at 200 MB on all plans. Image files have a memory-based recommended maximum that varies by format, plan, and Media Library settings. To upload larger images, disable Responsive friendly upload and Size optimization.
+Non-image files are capped at 200 MB on all plans. Image files have a memory-based recommended maximum that varies by format, plan, and Media Library settings. To upload larger images, disable Responsive friendly upload and Size optimization, and keep Auto orientation disabled.
 
 Strapi Cloud applies 2 distinct limits to uploads. The first is a hard maximum file size, enforced at the infrastructure level for non-image files. The second is a memory-based recommendation for image files that depends on your CMS settings.
 
@@ -1021,7 +1021,7 @@ Non-image uploads are capped at 200 MB on all Strapi Cloud plans. The cap is enf
 Image uploads are subject to an additional, memory-driven recommendation that is independent of the non-image cap and varies by image format.
 
 :::tip Uploading a large image?
-To upload an image larger than the recommended maximum, disable both Responsive friendly upload and Size optimization in the [Media Library settings](/cms/features/media-library#configuring-settings). The CMS then stores the source file as-is without in-process processing, which raises the recommended maximum (see the _Processing off_ values in the tables below).
+To upload an image larger than the recommended maximum, disable both Responsive friendly upload and Size optimization in the [Media Library settings](/cms/features/media-library#configuring-settings), and keep Auto orientation disabled (the default). The CMS then stores the source file as-is, without re-encoding it or generating the `small`, `medium`, and `large` formats, which raises the recommended maximum (see the _Processing off_ values in the tables below). The CMS still decodes the image in memory to validate it and to generate the Media Library thumbnail, so image uploads always use some memory.
 :::
 
 When Responsive friendly upload and Size optimization are both enabled in the [Media Library settings](/cms/features/media-library#configuring-settings), the CMS resizes the source image and generates a set of thumbnails (small, medium, large) in the instance's memory before persisting them. This processing happens in-process, regardless of the configured upload provider.
@@ -1033,7 +1033,7 @@ Actual memory usage depends on the image dimensions, format, and your Media Libr
 The recommendation depends on whether Responsive friendly upload and Size optimization are enabled in the [Media Library settings](/cms/features/media-library#configuring-settings):
 
 - _Processing on_: both settings enabled, with the default `small`, `medium`, and `large` sizes. Strapi generates the thumbnails in memory, so the safe upload size is lower.
-- _Processing off_: both settings disabled. The source image is stored as-is with no in-process processing, so the safe upload size is higher.
+- _Processing off_: both settings disabled. The source image is stored as-is. Strapi still decodes it to validate it and to generate the Media Library thumbnail, but generates no other formats, so the safe upload size is higher. Keep Auto orientation disabled (the default): when enabled, it re-encodes the full-size image on every upload, which uses more memory.
 
 Recommended maximum image size, expressed in megapixels (MP), per format and plan:
 
@@ -4328,7 +4328,7 @@ With Javascript, import the `strapi` function and create a client instance:
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
 
-With Typescript, import the `strapi` function and create a client instance with your Strapi API base URL:
+With TypeScript, import the `strapi` function and create a client instance with your Strapi API base URL:
 
 ```typescript
 
@@ -8849,7 +8849,7 @@ The GraphQL plugin exposes only one endpoint that handles all queries and mutati
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
-:::caution `documentId` only
+:::caution documentId only
 The GraphQL API exposes documents using only the `documentId` field. The previous numeric `id` is no longer available here, although it is still returned by the REST API for backward compatibility (see [breaking change](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details).
 :::
 
@@ -10143,7 +10143,7 @@ The OpenAPI generation feature is currently experimental. Its behavior and outpu
 
 The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
 
-:::note Known limitation for nested component `required` metadata
+:::note Known limitation for nested component required metadata
 The Admin panel can mark inner fields on a component as required, yet the generated OpenAPI file may still skip a `required` entry for those scalars. The parent object (for instance a component inside a dynamic zone) might list `required` while the nested properties do not. There is more background in [GitHub issue #2236](https://github.com/strapi/documentation/issues/2236). Client generators that trust the raw schema alone can therefore emit types that look looser than what Strapi actually enforces.
 
 This area is still experimental, same as the warning banner at the top of the page, so keep validating nested payloads in application code or with the [REST validation helpers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) from the controllers guide instead of assuming every Admin rule is mirrored in the exported JSON schema yet.
@@ -11601,7 +11601,7 @@ Returns a paginated list of documents. Supports filtering, sorting, field select
 - `populate` (string | object): Relations and components to include. Use `*` for all. See populate (/cms/api/rest/populate-select).
 - `fields` (string[]): Select specific fields to return. See field selection (/cms/api/rest/populate-select#field-selection).
 - `pagination[page]` (integer): Page number. Default: `1`
-- `pagination[pageSize]` (integer): Items per page. Default: `25`. The maximum is set by `api.rest.maxLimit` (see pagination (/cms/api/rest/sort-pagination#pagination-by-page)).
+- `pagination[pageSize]` (integer): Items per page. Default: `25`. Capped by `api.rest.maxLimit` when it is set (see pagination (/cms/api/rest/sort-pagination#pagination-by-page)).
 - `locale` (string): Locale of the documents to fetch. See locale (/cms/api/rest/locale).
 - `status` (string): `published` or `draft`. See status (/cms/api/rest/status).
 - `publicationFilter` (string): Query documents by the relationship between their draft and published versions. See publicationFilter (/cms/api/rest/publication-filter).
@@ -15671,7 +15671,7 @@ To paginate results by page, use the following parameters:
 | Parameter               | Type    | Description                                                               | Default |
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
-| `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
+| `pagination[pageSize]`  | Integer | Page size, capped by `api.rest.maxLimit` when it is set                   | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 #### GET /api/articles?pagination[page]=1&pagination[pageSize]=10 — Pagination by page
@@ -15716,11 +15716,11 @@ await request(`/api/articles?${query}`);
 
 To paginate results by offset, use the following parameters:
 
-| Parameter               | Type    | Description                                                    | Default |
-| ----------------------- | ------- | -------------------------------------------------------------- | ------- |
-| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                      | 0       |
-| `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
-| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
+| Parameter               | Type    | Description                                                                                                                | Default |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                                                                                   | 0       |
+| `pagination[limit]`     | Integer | Number of entries to return, capped by `api.rest.maxLimit` when it is set. Use `-1` to return all entries, up to that cap. | 25      |
+| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response                                                             | `true`  |
 
 :::tip
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/cms/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
@@ -16287,7 +16287,7 @@ It accepts the same query parameters as other REST collection endpoints:
 | `pagination[page]` | Page number (1-based). Default `1`. |
 | `pagination[pageSize]` | Number of files per page. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. |
 | `pagination[start]` | Pagination by offset: number of files to skip. |
-| `pagination[limit]` | Pagination by offset: maximum number of files to return. |
+| `pagination[limit]` | Pagination by offset: maximum number of files to return. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. Use `-1` to return all files, up to that cap. |
 | `pagination[withCount]` | Whether to run the count query and include `total` and `pageCount` in the response. Defaults to `true`. |
 | `filters` | [Filter](/cms/api/rest/filters) the results. |
 | `sort` | [Sort](/cms/api/rest/sort-pagination#sorting) the results. |
@@ -16572,7 +16572,7 @@ Strapi’s back end is a Koa-based server where requests pass through global mid
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
 
-- The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
+- The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and sends responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
 - The **front-end** part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
 
 Throughout this developer documentation, 'back end' refers _exclusively_ to the back-end part of Strapi.
@@ -16582,7 +16582,7 @@ The [Getting Started > Admin panel page](/cms/features/admin-panel) gives an adm
 
 The Strapi back end runs an HTTP server based on [Koa](https://koajs.com/), a back-end JavaScript framework.
 
-Like any HTTP server, the Strapi back end receives requests and send responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
+Like any HTTP server, the Strapi back end receives requests and sends responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
 
 A request can travel through the Strapi back end as follows:
 
@@ -16850,7 +16850,7 @@ In Strapi 5, both query parameters and input data (i.e., create and update body 
 - non-writable fields and internal timestamps like `createdAt` and `createdBy` fields
 - setting or updating an `id` field (except for connecting relations)
 
-:::note Internal `entity-validator` service
+:::note Internal entity-validator service
 Strapi exposes a low-level `entity-validator` service (accessible through `strapi.service('entity-validator')`) with `validateEntityCreation` and `validateEntityUpdate` methods that the document service uses internally. These are not part of the public API and their semantics can change between releases. From a custom controller, service, or middleware, use the documented `validateInput` factory helper or the [`strapi.contentAPI.validate.*` helpers](#sanitize-validate-custom-controllers) instead. They apply the same content-type schema rules and additionally account for permissions, non-writable fields, and the request authentication strategy.
 :::
 
@@ -19293,7 +19293,7 @@ Database validations and settings are custom options passed directly onto the `t
 | `type`        | string  | Changes the database type, if `type` has arguments, you should pass them in `args`            | -       |
 | `args`        | array   | Arguments passed into the Knex.js function that changes things like `type`                    | `[]`    |
 
-:::caution Draft & Publish and `unique`
+:::caution Draft & Publish and unique
 When [Draft & Publish](/cms/features/draft-and-publish) is enabled, Strapi intentionally skips `unique` validations while an entry is saved as a draft. Duplicates therefore remain undetected until publication, at which point the database constraint triggers an error even though the UI previously displayed “Saved document” for the drafts.
 
 To avoid unexpected publication failures:
@@ -20537,7 +20537,7 @@ In the following example, the custom routes file name is prefixed with `01-` to 
 const config = {
   type: 'content-api',
   routes: [
-    { // Path defined with an URL parameter
+    { // Path defined with a URL parameter
       method: 'POST',
       path: '/restaurants/:id/review', 
       handler: 'api::restaurant.restaurant.review',
@@ -22754,6 +22754,8 @@ Administrator's first name, last name, email, and password can be:
 - passed as options
 - or set interactively if you call the command without passing any option.
 
+The password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks. When the password is set interactively, it is checked after the last question and the command asks for the password again. When it is passed with `--password`, the command exits with an error.
+
 **Example**
 
 ```bash
@@ -22777,6 +22779,8 @@ strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io -
 
 Reset an admin user's password.
 You can pass the email and new password as options or set them interactively if you call the command without passing the options.
+
+The new password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks and the command exits with an error, whether the password is set interactively or passed with `--password`.
 
 **Example**
 
@@ -23285,7 +23289,7 @@ Some specific features require additional configuration:
 | [TypeScript](/cms/configurations/typescript) | <ul><li>In `tsconfig.json` for general [TypeScript-related configuration](/cms/configurations/typescript#project-structure-and-typescript-specific-configuration-files)</li><li>In the `config/typescript` file for [dedicated TypeScript features](/cms/configurations/typescript#strapi-specific-configuration-for-typescript) specific to Strapi</li></ul> | Required to use TypeScript efficiently |
 | [API tokens](/cms/features/api-tokens) | In the `config/admin` file | Required if using API tokens for authentication instead of the [Users & Permissions plugin](/cms/features/users-permissions) |
 | [Lifecycle functions](/cms/configurations/functions) | In the `/src/index` file | Optionally used to perform various actions that happen during the server lifecycle. Includes the `register`, `bootstrap`, and `destroy` functions. |
-| [Cron jobs](/cms/configurations/cron) | <ul><li>In the `/config/server` file to enable the feature</li><li>In a dedicated, optional `cron-tasks` file that can be used to declare the jobs</li></ul> | Required to setup CRON jobs for the server. |
+| [Cron jobs](/cms/configurations/cron) | <ul><li>In the `/config/server` file to enable the feature</li><li>In a dedicated, optional `cron-tasks` file that can be used to declare the jobs</li></ul> | Required to set up CRON jobs for the server. |
 | [Environment variables](/cms/configurations/environment) | In dedicated files and folders for the environment (e.g., `config/env/production/server`) | Optionally used to define different environments and their variables. |
 | [Single Sign-On (SSO)](/cms/configurations/guides/configure-sso)   | In the `config/admin` file | Required to use the SSO feature if enabled on your project. |
 | [Feature flags](/cms/configurations/features) | In the `config/features` file | Optional for a typical, stable Strapi application.<br/>Only required to enable [future flags](/cms/configurations/features).|
@@ -23881,7 +23885,7 @@ General settings for API calls can be set in the `./config/api.js` (or `./config
 | `rest`                        | REST API configuration                                                                                                                                                                                                                               | Object       | -       |
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
 | `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). Setting it to `-1` removes the limit (see note below).                                                                     | Integer      | `25`    |
-| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
+| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). When unset, there is no maximum. New projects set `rest.maxLimit` to `100` in the generated `config/api` file. | Integer      | -       |
 | `rest.withCount`              | Whether list responses include the total number of entries and pages in `meta.pagination` by default. Can be overridden per request with the [`pagination[withCount]`](/cms/api/rest/sort-pagination#pagination-by-offset) parameter. | Boolean      | `true`  |
 | `rest.strictParams`           | When `true`, only allowed query and body parameters are accepted on Content API routes; unknown top-level keys are rejected. Add allowed parameters via [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters) in `register`. | Boolean      | -       |
 | `documents`                   | Document Service configuration                                                                                                                                                                                                                        | Object       | -       |
@@ -24510,6 +24514,29 @@ Knex supports short-lived credentials by letting you provide `connection.connect
 
 :::note
 AWS RDS IAM authentication requires SSL. Refer to the [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html) for the required certificate bundle and SSL parameters.
+:::
+
+**Example: PostgreSQL with Prisma Postgres (pooled connection)**
+
+[Prisma Postgres](https://www.prisma.io/postgres?utm_source=strapi&utm_medium=docs&utm_campaign=strapi_database_configuration) provides 2 connection strings for each database: a pooled one (host `pooled.db.prisma.io`), which goes through PgBouncer in transaction mode, and a direct one (host `db.prisma.io`). Both use port `5432` and require SSL. Use the pooled connection string for the Strapi server, and set the pool `min` value to `0` because the pooler closes connections that have been idle for 60 minutes:
+
+```js title="./config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      // postgres://USER:PASSWORD@pooled.db.prisma.io:5432/postgres?sslmode=verify-full
+      connectionString: env('DATABASE_URL'),
+    },
+    pool: { min: 0, max: env.int('DATABASE_POOL_MAX', 10) },
+  },
+});
+```
+
+:::note
+- The connection strings end with `sslmode=require`, which makes `pg` print a warning about SSL modes when Strapi starts. Replace it with `sslmode=verify-full` to remove the warning. `pg` 8 handles both values the same way and verifies the server certificate.
+- Use the direct connection string if you set a custom `schema`, or if some queries run for more than 10 minutes. Strapi sets the schema with a session-level `SET search_path` command, which a pooler in transaction mode does not keep between transactions, and the pooler stops queries after 10 minutes.
+- Each Strapi instance can open up to `pool.max` connections. Refer to the [Prisma Postgres documentation](https://www.prisma.io/docs/postgres/database/connection-pooling?utm_source=strapi&utm_medium=docs&utm_campaign=strapi_database_configuration#connection-limits) for the connection limits of each plan.
 :::
 
  ```js title="./config/database.js"
@@ -28827,7 +28854,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/discord
 
 Discord SSO provider enables users to sign in and sign up to Strapi through their Discord account. Configure it in `config/admin` using `passport-discord` with client credentials and email scope.
 
-The present page explains how to setup the Discord provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Discord provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -28927,7 +28954,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/github
 
 Configure GitHub as an SSO provider for Strapi admin sign-in using `passport-github2` in the `config/admin` file with your GitHub OAuth credentials and user email scope.
 
-The present page explains how to setup the GitHub provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the GitHub provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29025,7 +29052,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/google
 
 Configure Google as an SSO provider in your Strapi admin panel to allow users to sign in and sign up using their Google account credentials.
 
-The present page explains how to setup the Google provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Google provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29129,7 +29156,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/keycloak
 
 Keycloak is an OpenID Connect SSO provider that lets users sign in to Strapi through Keycloak authentication using the `passport-keycloak-oauth2-oidc` strategy configured in `config/admin`.
 
-The present page explains how to setup the Keycloak provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Keycloak provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29235,7 +29262,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/microsoft
 
 Configure the Microsoft SSO provider using `passport-azure-ad-oauth2` to allow users to sign in and sign up to your Strapi admin panel via their Microsoft accounts.
 
-The present page explains how to setup the Microsoft provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Microsoft provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29344,7 +29371,7 @@ Source: https://docs.strapi.io/cms/configurations/sso-providers/okta
 
 Okta is an SSO provider that allows users to sign in and sign up to Strapi through their Okta account using OAuth2 credentials configured in the `auth.providers` array.
 
-The present page explains how to setup the Okta provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Okta provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).
@@ -29578,7 +29605,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Auth0 provider setup enables OAuth 2.0 authentication for the Users & Permissions feature, requiring configuration in both Auth0 tenant and Strapi admin settings using Client ID, Client Secret, and subdomain credentials.
 
-The present page explains how to setup the Auth0 provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Auth0 provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29627,7 +29654,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 AWS Cognito provider lets you set up OAuth 2.0 authentication for Users & Permissions by configuring a user pool in AWS and adding the client credentials and domain to Strapi's provider settings.
 
-The present page explains how to setup the AWS Cognito provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the AWS Cognito provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29651,7 +29678,7 @@ The use of `ngrok` is not needed.
 9. Go to the **App integration section** and click on **App client settings**
 10. Look for your app client named `Strapi Auth` and enable Cognito User Pool by checking it in the **Enabled Identity Providers** section of your newly created App client
 11. Fill in your callback URL and Sign out URL with the value `http://localhost:1337/api/connect/cognito/callback` or the one provided by your AWS Cognito provider in Strapi
-12. In the **Oauth 2.0** section select `Authorization code grant` and `Implicit grant` for the **Allowed OAuth Flows** and select `email`, `openid` and `profile` for the **Allowed OAuth Scopes**
+12. In the **OAuth 2.0** section select `Authorization code grant` and `Implicit grant` for the **Allowed OAuth Flows** and select `email`, `openid` and `profile` for the **Allowed OAuth Scopes**
 13. You can now click on **Save changes** and if you have already configured your domain name then you should be able to see a link to the **Launch Hosted UI**. You can click on it in order to display the AWS Cognito login page. In case you haven't yet configured your domain name, use the link **Choose domain name** at the bottom right of the page in order to configure your domain name. On that page you will have an `Amazon Cognito Domain` section where a `Domain prefix` is already setup. Type a domain prefix to use for the sign-up and sign-in pages that are hosted by Amazon Cognito, this domain prefix together with the `.auth.YOUR_REGION.amazoncognito.com` will be the **Host URI (Subdomain)** value for your strapi configuration later on.
 
 ## Strapi configuration
@@ -29749,7 +29776,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Discord provider setup allows you to authenticate users via Discord OAuth2 by configuring your Discord app credentials in Strapi's Users & Permissions provider settings.
 
-The present page explains how to setup the Discord provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Discord provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29793,7 +29820,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Facebook provider setup enables social login authentication in Strapi's Users & Permissions feature. Configure a Facebook app with OAuth credentials and update Strapi settings to enable the provider with your Client ID, Client Secret, and frontend redirect URL.
 
-The present page explains how to setup the Facebook provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Facebook provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29843,7 +29870,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 GitHub provider setup enables OAuth authentication for Strapi's Users & Permissions feature, requiring GitHub OAuth app configuration and Strapi provider settings.
 
-The present page explains how to setup the GitHub provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the GitHub provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29890,7 +29917,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure Google OAuth authentication for Strapi Users & Permissions by creating credentials in Google Developer Console and adding them to the provider settings.
 
-The present page explains how to setup the Google provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Google provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -29946,7 +29973,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 The Instagram Basic Display API is deprecated as of December 4, 2024. Strapi's built-in Instagram provider no longer works and requires updating to Meta's Instagram Business Login API instead.
 
-The present page explains how to setup the Instagram provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Instagram provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30002,7 +30029,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Set up Keycloak as an identity provider for Strapi's Users & Permissions feature by configuring a client in Keycloak, then enabling and filling in the Keycloak provider details in Strapi's admin settings.
 
-The present page explains how to setup the Keycloak provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Keycloak provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30059,7 +30086,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure LinkedIn as a provider for Strapi's Users & Permissions feature by creating a LinkedIn app, registering the redirect URL, and entering your credentials in the Strapi admin panel.
 
-The present page explains how to setup the LinkedIn provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the LinkedIn provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30435,7 +30462,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Set up Patreon as an OAuth provider for Users & Permissions by registering an OAuth client on Patreon and configuring it in Strapi with your Client ID and Client Secret.
 
-The present page explains how to setup the Patreon provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Patreon provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30452,7 +30479,7 @@ ngrok http 1337
 Don't forget to update the server url in the Strapi config file `./config/server.js` and the server URL in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)) with the generated ngrok URL.
 :::
 
-1. You must be a Patreon Creator in order to register an Oauth client.
+1. You must be a Patreon Creator in order to register an OAuth client.
 2. Go to the [Patreon developer portal](https://www.patreon.com/portal)
 3. Click on [Clients & API Keys](https://www.patreon.com/portal/registration/register-clients)
 4. Click on "Create Client"
@@ -30486,7 +30513,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure the Reddit provider for Users & Permissions by creating a Reddit app and inputting the Client ID and Secret in Strapi's provider settings.
 
-The present page explains how to setup the Reddit provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Reddit provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30528,7 +30555,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure Twitch OAuth authentication for Strapi's Users & Permissions feature by registering your application on the Twitch developer console and adding your credentials to Strapi's provider settings.
 
-The present page explains how to setup the Twitch provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Twitch provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30573,7 +30600,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 Configure Twitter (now X) as an OAuth provider for Users & Permissions. Requires a paid X Developer Portal plan since the v1.1 API endpoint is no longer freely available.
 
-The present page explains how to setup the Twitter provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Twitter provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -30631,7 +30658,7 @@ Source: https://docs.strapi.io/cms/configurations/users-and-permissions-provider
 
 VK provider setup for Users & Permissions enables authentication via VK. Configure a VK app, then set the client ID, secret, and redirect URL in Strapi's provider settings to enable VK login.
 
-The present page explains how to setup the VK provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the VK provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -33427,7 +33454,7 @@ Strapi CMS features are available on 3 plans: Community, Growth, and Enterprise.
 Strapi CMS comes with 3 plans:
 
 - Community: the free and open-source core of Strapi, under the MIT license.
-- Growth : Adds Strapi AI Growth, Live Preview, Releases, and Content History.
+- Growth : Adds Strapi AI Growth, Live Preview, Releases, and Content History. Single Sign-On is also available as a paid add-on to the Growth plan.
 - Enterprise : Adds Single Sign-On, Review Workflows, and Audit Logs to the Growth features. [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise) is also available as a paid add-on on top of the Enterprise features.
 
 ## Self-hosted and Strapi Cloud projects
@@ -33474,7 +33501,7 @@ Source: https://docs.strapi.io/cms/features/admin-panel
 
 # Administration panel
 
-The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel before focusing on profile settings that manage interface language and mode, login and personal information, and logo for branding.
+The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel. It then covers profile settings (interface language and mode, login and personal information) and settings (logo for branding, password policy for administrator accounts).
 
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types and write their actual content, but also manage users, both administrators and end users of your Strapi application.
 
@@ -33502,11 +33529,13 @@ There are a few factors that you should keep in mind when using the admin panel,
 - **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the  badge in the docs and read the [Feature flags documentation](/cms/configurations/features#enabling-a-future-flag) for more information.
 :::
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the admin panel:** Account name or initials (bottom left hand corner) > Profile
 
-If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application.
+If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application. From the settings, administrators with the "Read the password policy" and "Update the password policy" permissions can also define the [password policy](#configuring-the-password-policy) that applies to all administrator passwords.
 
 There are many more configuration and customization options available. See the following pages for more details:
 
@@ -33535,7 +33564,7 @@ There are many more configuration and customization options available. See the f
 | Password modification | Instructions                                |
 | --------------------- | ------------------------------------------- |
 | Current password      | Write your current password in the textbox. |
-| Password              | Write the new password in the textbox.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](#configuring-the-password-policy), whose rules are displayed under the field. |
 | Password confirmation | Write the same new password in the textbox. |
 
 3. Click on the **Save** button.
@@ -33580,6 +33609,39 @@ Once uploaded, the new logo can be replaced with another one , or reset  with th
 :::note
 Both logos can also be customized programmatically via the Strapi application's configuration files (see [Admin panel customization](/cms/admin-panel-customization/logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
 :::
+
+### Configuring the password policy
+
+**Path to configure the password policy:**  *Settings > Administration panel > Password policy*
+
+The password policy defines the rules that every administrator password must follow. End users of the [Users & Permissions feature](/cms/features/users-permissions) are managed separately and do not follow this policy.
+
+Viewing the policy requires the "Read the password policy" permission, and editing it requires the "Update the password policy" permission (see [RBAC](/cms/features/rbac#plugins-and-settings)). With the read permission only, the options are displayed but cannot be edited, and the **Save** button is not displayed.
+
+The rules apply whenever an administrator password is set or changed:
+
+- when registering,
+- when resetting a forgotten password,
+- when changing your own password from your profile (see [Changing account password](#changing-account-password)),
+- when editing another administrator account (see [RBAC](/cms/features/rbac#editing-an-account)),
+- when using the `admin:create-user` and `admin:reset-user-password` [CLI commands](/cms/cli#administration).
+
+Existing passwords stay valid until they are changed.
+
+To configure the password policy:
+
+1. Fill in the following options:
+
+| Option                      | Instructions                                                                                                                        | Default value |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Minimum length              | Write the minimum number of characters for a password, between 8 and 64. Whatever the policy, a password cannot exceed 72 bytes. | 8             |
+| Require a lowercase letter  | Choose whether a password must contain at least one lowercase letter.                                                               | True          |
+| Require an uppercase letter | Choose whether a password must contain at least one uppercase letter.                                                               | True          |
+| Require a number            | Choose whether a password must contain at least one number.                                                                         | True          |
+| Require a special character | Choose whether a password must contain at least one special character, meaning any character that is neither a letter nor a digit. | False         |
+
+2. Check the *Hint shown to users* preview. It displays the rules as administrators will read them under password fields.
+3. Click on the **Save** button.
 
 ## Usage
 
@@ -34093,6 +34155,8 @@ Available by default, if required plan
 
 Available in both Development & Production environment
 
+<!--  -->
+
 A version is only created when a document is modified through the  Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
 
 :::note
@@ -34204,6 +34268,7 @@ Available in both Development & Production environment.
 -->
 
 <!-- TODO: create dark mode version and replace the darkId value -->
+<!--  -->
 
 The  Content Manager contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/cms/features/content-type-builder).
 
@@ -34451,22 +34516,28 @@ Components are a combination of several fields, which are grouped together in th
 
 There are 2 types of components: non-repeatable and repeatable components.
 
-Non-repeatable components are a combination of fields that can be used only once.
+A non-repeatable component groups several fields, and an entry holds a single instance of it.
 
-By default, the combination of fields is not directly displayed in the edit view:
+When the component has not been added yet, the edit view does not display its fields. The component area only displays a  _No entry yet. Click to add one._ message. To add the component:
 
-1. Click on the add button  to add the component.
-2. Fill in the fields of the component.
+1. Click on the _No entry yet. Click to add one._ message.
+2. If you're editing a collection type, choose &nbsp;**Empty entry** to start with blank fields, or &nbsp;**Use existing content…** to [copy the component from an existing entry](#reusing-existing-component-content).<br/>If you're editing a single type, the component is added directly with blank fields.
+3. Fill in the fields of the component.
 
-To delete the non-repeatable component, click on the delete button , located in the top right corner of the component area.
+To remove the component and its content from the entry, click on the delete button , displayed on the right of the component name.
+
+When editing collection types, once the component is added, another button, displayed on the right of the component name just before the delete button, copies content from an existing entry into the component. Its label depends on the content of the component:
+  - &nbsp;**Use existing content…** while all the fields of the component are empty or still hold their default values.
+  - &nbsp;**Replace content…** as soon as a field holds another value, since copying then overwrites the current content.
 
 Repeatable components are also a combination of fields, but they allow the creation of multiple component entries, all following the same combination of fields.
 
 To add a new entry and display its combination of fields:
 
 1. Click on the add button  to add the component.
-2. Fill in the fields of the component.
-3. (optional) Click on the **Add an entry** button and fill in the fields again.
+2. If you're editing a collection type, choose &nbsp;**Empty entry** to start with blank fields, or &nbsp;**Use existing content…** to [copy the component's content from an existing entry](#reusing-existing-component-content).<br/>If you're editing a single type, the component is added directly with blank fields.
+3. Fill in the fields of the component.
+4. (optional) Click on the &nbsp;**Add an entry** button to add another entry. In collection types, the same &nbsp;**Empty entry** and &nbsp;**Use existing content…** choices are displayed.
 
 The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 
@@ -34476,6 +34547,31 @@ The repeatable component entries can be reordered or deleted directly in the edi
 :::note
 Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end users will read/see the content.
 :::
+
+##### Reusing existing component content {#reusing-existing-component-content}
+
+In collection types, the content of a component can be copied from an existing entry instead of being filled in again by hand. The source entry must belong to the same content-type and locale, and can be the current entry.
+This applies to non-repeatable components, repeatable components and the components of dynamic zones.
+
+1. Click on &nbsp;**Use existing content…** (or &nbsp;**Replace content…** for a filled non-repeatable component) from the [component](#components) or [dynamic zone](#dynamic-zones) field.
+2. In the left pane of the window, pick an entry from the _Recently updated entries_ list, or use the _Search all entries_ field to find one.
+3. In the right pane, review the content to copy:
+   - For repeatable components and dynamic zones, tick the box of each component to copy, or tick **Select all**.
+   - For non-repeatable components, review the read-only preview. If the entry holds several matching components, for instance when the component is nested in a repeatable component, pick one of them.
+4. Click on the confirmation button. Its label depends on the selection: **Use content**, **Use content from [number] items** or **Replace content**. **Replace content** overwrites the current content of the non-repeatable component, and a warning in the window reminds you of it.
+
+The copied content is added to the field and displays a _Copied_ badge until the entry is saved.
+The copied content is independent from the source entry: editing it does not change the original entry.
+
+The following rules apply when copying content:
+
+- The content is copied from the same field only: a component used in another field of the source entry is not offered.
+- Entries that do not hold the component are disabled in the list. For a component nested in another component, the check only runs once the entry is picked.
+- The current entry is listed first, with a _This entry_ badge, and copies from its last saved version. The current entry is disabled in the list while it has unsaved changes.
+- If [Draft & Publish](/cms/features/draft-and-publish) is enabled, the content is copied from the draft version of the source entry, which can differ from its published version.
+- The values of `uid` fields and of fields set as unique are not copied. These fields are left empty, so they can be filled in with new values.
+- Relations of the copied components are copied too. A warning is displayed if some relations could not be loaded.
+- The selection cannot exceed the number of components the field can still hold. The limit comes from the maximum set in the Content-type Builder (_Maximum components_ for [repeatable components](/cms/features/content-type-builder#components), _Maximum value_ for [dynamic zones](/cms/features/content-type-builder#dynamiczones)). If too many components are selected, the confirmation button is disabled and the window indicates how many components to unselect.
 
 #### Dynamic zones
 
@@ -34487,7 +34583,8 @@ Developers set this image in the [component schema](/cms/backend-customization/m
 
 1. Click on the  **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
-3. Fill in the fields of the component.
+3. If you're editing a collection type, choose &nbsp;**Empty component** to start with blank fields, or &nbsp;**Use existing content…** to [copy components from an existing entry](#reusing-existing-component-content). If you're editing a single type, the component is added directly with blank fields.
+4. Fill in the fields of the component.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
@@ -34627,6 +34724,8 @@ Minimum "Read" permission in Roles > Plugins - Content Type Builder.
 Available in Development environment only.
 
 ## Overview
+
+<!--  -->
 
 The  Content-type Builder allows the creation and management of content-types, which can be:
 
@@ -34940,27 +35039,6 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 2. Define the *if* part of the condition, based on a Boolean or Enumeration field of the same content-type (e.g. if `boolean_field` is `true`).
 3. Define the *then* part of the condition by choosing whether to hide or show the field you are configuring (e.g. then `show carousel_media`).
  
-#### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
-
-The Password field displays a password field that is encrypted.
-
-| Setting name  | Instructions                                                    |
-|---------------|-----------------------------------------------------------------|
-| Name          | Write the name of the Password field.                           |
-
-| Setting name   | Instructions                                                                |
-|----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Password field.                              |
-| Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
-| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
-
-1. Click the **Apply condition** button.
-2. Define the *if* part of the condition, based on a Boolean or Enumeration field of the same content-type (e.g. if `boolean_field` is `true`).
-3. Define the *then* part of the condition by choosing whether to hide or show the field you are configuring (e.g. then `show carousel_media`).
-
 #### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
 
 The Media field allows you to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
@@ -35212,8 +35290,8 @@ When configuring a component through the Content-type Builder, it is possible to
 |----------------|-----------------------------------------------------------------------------------------|
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
 | Private field  | Tick to make the field private and prevent it from being found via the API.             |
-| Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
-| Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
+| Minimum components | For repeatable components only - Tick to define a minimum number of components allowed. |
+| Maximum components | For repeatable components only - Tick to define a maximum number of components allowed. |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the component to be translated per available locale. |
 
 1. Click the **Apply condition** button.
@@ -35231,8 +35309,8 @@ Dynamic zones are a combination of components that can be added to content-types
 | Setting name   | Instructions                                                                            |
 |----------------|-----------------------------------------------------------------------------------------|
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
-| Maximum value  | Tick to define a maximum number of characters allowed.                                  |
-| Minimum value  | Tick to define a minimum number of characters allowed.                                  |
+| Maximum value  | Tick to define a maximum number of components allowed.                                  |
+| Minimum value  | Tick to define a minimum number of components allowed.                                  |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
 
 1. Click the **Apply condition** button.
@@ -36889,6 +36967,8 @@ Available but disabled by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the feature:**  Content Type Builder
@@ -37450,6 +37530,8 @@ Available but disabled by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 Before being usable in the Content Manager, the Internationalization feature must be configured from  *Settings*, and it should be enabled on your content types from the  _Content-type Builder_.
@@ -37597,6 +37679,8 @@ Available and activated by default
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -39250,6 +39334,8 @@ Available and activated by default
 
 Available in both Development & Production environment
 
+<!--  -->
+
 ## Configuration
 
 **Path to configure the feature:**  *Settings > Administration panel > Roles*
@@ -39368,6 +39454,7 @@ Settings permissions can be configured for all settings accessible from *General
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
 | API Tokens |  <ul><li>API tokens</li><ul><li>"Access the API tokens settings page" - toggles access to the API tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br /> *General > Settings > Global Settings - API Tokens* |
 | Admin Tokens | <ul><li>Admin tokens</li><ul><li>"Access the Admin tokens settings page" - toggles access to the Admin Tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Admin tokens</li><li>"Read" - allows you to see created Admin tokens</li><li>"Update" - allows editing of Admin tokens</li><li>"Delete (revoke)" - allows deletion of Admin tokens</li><li>"Regenerate" - allows regeneration of Admin tokens</li></ul></ul> 👉 Path reminder to Admin Tokens settings: <br /> *General > Settings > Administration Panel - Admin Tokens*  |
+| Password policy | <ul><li>General</li><ul><li>"Read the password policy" - gives access to the password policy settings, displayed as read-only without the "Update the password policy" permission</li><li>"Update the password policy" - allows you to edit the password policy</li></ul></ul> 👉 Path reminder to the password policy settings: <br /> *General > Settings > Administration Panel - Password policy* |
 | Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows you to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
 | Transfer Tokens | <ul><li>Transfer tokens</li><ul><li>"Access the Transfer tokens settings page" - toggles access to the Transfer tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Transfer tokens</li><li>"Read" - allows you to see created Transfer tokens (disabling this permission will disable access to the *Global Settings - Transfer Tokens* settings)</li><li>"Update" - allows editing of Transfer tokens</li><li>"Delete (revoke)" - allows deletion of Transfer tokens</li> <li> "Regenerate" - allows regeneration of the Transfer token</li></ul></ul> 👉 Path reminder to Transfer Tokens settings: <br /> *General > Settings > Global Settings - Transfer Tokens* |
 
@@ -39466,7 +39553,7 @@ It is possible to delete one or several administrator accounts at the same time.
 | Last name             | Write the administrator's last name in the textbox.                                         |
 | Email                 | Write the administrator's complete email address in the textbox.                            |
 | Username              | Write the administrator's username in the textbox.                                          |
-| Password              | Write the new administrator account's password in the textbox.                              |
+| Password              | Write the new administrator account's password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field.                              |
 | Confirm password      | Write the new password in the textbox for confirmation.                                     |
 | Active                | Click on **TRUE** to activate the administrator's account.                                  |
 
@@ -39501,6 +39588,8 @@ Available by default, if required plan
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -39700,6 +39789,8 @@ Available by default, if required plan
 **Environment**
 
 Available in both Development & Production environment
+
+<!--  -->
 
 ## Configuration
 
@@ -41625,7 +41716,7 @@ Possible errors:
 | 404 | `"User not found"` | No user with the given `id` |
 | 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
 
-:::note Relation inputs support both `documentId` and numeric IDs
+:::note Relation inputs support both documentId and numeric IDs
 When updating a user, including the `role` relation, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
 ```json
 {
@@ -41817,7 +41908,7 @@ To change the password of your account:
 | Password modification |                                                                                                                  |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | Current password      | Write your current password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown. |
-| Password              | Write the new password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field. <br/> 💡 You can click on the  icon for the password to be shown.      |
 | Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the  icon for the password to be shown. |
 
 3. Click on the **Save** button.
@@ -49456,7 +49547,7 @@ When used to create a new section, `addSettingsLink()` accepts the following par
   | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon (default: `false`) |
   | `exact` | `boolean` | ❌ | Whether the active-link match should be exact |
 
-:::caution Deprecated: `createSettingSection()`
+:::caution Deprecated: createSettingSection()
 The dedicated `app.createSettingSection(section, links)` method is deprecated. It still works (it delegates to `addSettingsLink` internally) but new code should call `addSettingsLink(section, links)` directly. See [Deprecated methods](#deprecated-methods).
 :::
 
@@ -49567,7 +49658,7 @@ To add links to an existing settings section, use `addSettingsLink()` in the `bo
 
 `addSettingsLink` takes a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is either a single link object or an array of link objects, using the same properties as the `links` array in [Creating a new settings section](#creating-a-new-settings-section).
 
-:::caution Deprecated: `addSettingsLinks()`
+:::caution Deprecated: addSettingsLinks()
 The plural `app.addSettingsLinks(sectionId, links)` method is deprecated. Call `addSettingsLink(sectionId, links)` (singular) with an array instead; it accepts both single links and arrays. See [Deprecated methods](#deprecated-methods).
 :::
 
@@ -53586,7 +53677,7 @@ A policy is a function that runs before the controller action for a given route.
 Policies are exported as plain functions (not factory functions). Each policy receives the following 3 arguments:
 
 - `policyContext` is a wrapper around the Koa context object. Use it to access `policyContext.state.user`, `policyContext.request`, etc.
-- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }`, where `config` is the per-policy options object).
+- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }`, where `config` is the per-route configuration object).
 - `{ strapi }` gives access to the Strapi instance.
 
 :::note
@@ -53607,7 +53698,7 @@ module.exports = {
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const targetRole = config.role;
@@ -53640,7 +53731,7 @@ module.exports = (policyContext, config, { strapi }) => {
 type UserRole = { code?: string; name?: string };
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 
   policyContext: Core.PolicyContext,
   config: { role?: string },
@@ -53688,7 +53779,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -53719,7 +53810,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -53890,13 +53981,7 @@ module.exports = ({ strapi }) => {
 Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A server-level middleware that throws or never calls `next()` will break every request on the server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
 :::
 
-:::note Version/runtime behavior
-For route declarations, validation accepts object entries shaped as `{ name, options }` for both `policies` and `middlewares` (see `services/server/routing.ts`).
-
-At runtime, some internals still reference `{ resolve, config }` support in the middleware resolver (`services/server/middleware.ts`), but that shape is not accepted by route validation in standard route files.
-
-To avoid validation errors, use `{ name, options }` in route configurations.
-:::
+In route configurations, pass per-route parameters for both `policies` and `middlewares` in the `config` key of the `{ name, config }` object. Routes do not read an `options` key: a policy or middleware declared with `{ name, options }` in a route receives an empty object.
 
 :::strapi Backend customization
 For the full middleware reference, see [Middlewares](/cms/backend-customization/middlewares).
@@ -53912,7 +53997,7 @@ For the full middleware reference, see [Middlewares](/cms/backend-customization/
 
 - **Always call `await next()` in middlewares.** Forgetting `next()` means the request chain is interrupted and the controller never executes, resulting in a hanging request with no response.
 
-- **Use `options` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, options }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.
+- **Use `config` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), pass them from the route's `{ name, config }` object. These values are received in the policy function's `config` argument. This avoids duplicating similar policies.
 
 
 
@@ -54222,29 +54307,25 @@ Each route accepts an optional `config` object with the following properties:
 
 ### `policies`
 
-**Type:** `Array<string | PolicyHandler | { name: string; options?: object }>`
+**Type:** `Array<string | PolicyHandler | { name: string; config?: object }>`
 
-Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `options`.
+Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `config`.
 
-The `options` object is passed as-is to the policy function's second argument (`config` in policy signatures). The shape of this object depends on the policy.
+The `config` object is passed as-is to the policy function's second argument. The shape of this object depends on the policy.
 
 Plugin policies are referenced as `plugin::my-plugin.policy-name`.
 
 ### `middlewares`
 
-**Type:** `Array<string | MiddlewareHandler | { name: string; options?: object }>`
+**Type:** `Array<string | MiddlewareHandler | { name: string; config?: object }>`
 
 Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with:
 
 - `name`: a registered middleware name,
-- `options` (optional): middleware options.
+- `config` (optional): middleware configuration, passed as-is to the middleware factory's first argument.
 
-:::note Route middlewares vs. global server middlewares
-At route validation time, Strapi validates middleware/policy objects against `{ name: string; options?: object }` (see `services/server/routing.ts`).
-
-The middleware resolver (`services/server/middleware.ts`) still contains runtime support for `{ resolve, config }` objects, but this shape is rejected by route validation before resolution for standard plugin route declarations.
-
-Use `{ name, options }` in route configs for compatibility with validation.
+:::caution
+Routes do not read an `options` key in policy or middleware objects. A policy or middleware declared with `{ name, options }` in a route receives an empty object, so always pass per-route parameters in `config`.
 :::
 
 ### `auth`
@@ -54307,6 +54388,8 @@ Usable via the admin panel.<br/>Configured through both admin panel and server c
 :::caution Unmaintained plugin
 The Documentation plugin is not actively maintained and may not work with Strapi 5.
 :::
+
+<!--  -->
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). The Documentation plugin generates the [paths objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [schema objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object) and converts all Strapi types to [OpenAPI data types](https://swagger.io/docs/specification/data-models/data-types/).
 
@@ -55534,7 +55617,7 @@ Strapi uses `documentId` as the unique identifier for entities instead of `id`. 
 const client = new ApolloClient({
   link: new HttpLink({ uri: "http://localhost:1337/graphql" }),
   cache: new InMemoryCache({
-    dataIdFromObject: (o) => `${o.__typename}:${o["documentId"]}`,
+    dataIdFromObject: (o) => `${o.__typename}:${o["documentId"] || o["id"]}`,
   }),
 });
 ```
@@ -58872,7 +58955,7 @@ Source: https://docs.strapi.io/cms/typescript/guides
 
 Guides for leveraging TypeScript in Strapi projects, covering patterns for manipulating documents and entries, and adding TypeScript support to existing projects.
 
-The following guides will help you on specific aspects of a [Typescript-based](/cms/typescript) Strapi project.
+The following guides will help you on specific aspects of a [TypeScript-based](/cms/typescript) Strapi project.
 
 - [Manipulating documents and entries](/cms/typescript/documents-and-entries): Explore TypeScript patterns for manipulating documents and entries.
 - [Adding TypeScript support](/cms/typescript/adding-support-to-existing-project): Learn how to add TypeScript support to an existing Strapi project.

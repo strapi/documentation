@@ -354,3 +354,15 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 | `--help`, `-h` | Print usage and stop. |
+
+## Special commands: run by a maintainer only
+
+No orchestrator runs these commands, and Claude never starts them on its own (`disable-model-invocation: true`).
+
+### `/inki:inki-interactive-demo`
+
+Create or update an interactive demo from a plain-text description of its steps: finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures it and checks the result. See [its README](./skills/inki-interactive-demo/README.md).
+
+```
+/inki:inki-interactive-demo <demo-id> [description file or text]
+```

@@ -260,7 +260,7 @@ When used to create a new section, `addSettingsLink()` accepts the following par
   | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon (default: `false`) |
   | `exact` | `boolean` | ❌ | Whether the active-link match should be exact |
 
-:::caution Deprecated: `createSettingSection()`
+:::caution Deprecated: createSettingSection()
 The dedicated `app.createSettingSection(section, links)` method is deprecated. It still works (it delegates to `addSettingsLink` internally) but new code should call `addSettingsLink(section, links)` directly. See [Deprecated methods](#deprecated-methods).
 :::
 
@@ -383,7 +383,7 @@ export default {
 
 `addSettingsLink` takes a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is either a single link object or an array of link objects, using the same properties as the `links` array in [Creating a new settings section](#creating-a-new-settings-section).
 
-:::caution Deprecated: `addSettingsLinks()`
+:::caution Deprecated: addSettingsLinks()
 The plural `app.addSettingsLinks(sectionId, links)` method is deprecated. Call `addSettingsLink(sectionId, links)` (singular) with an array instead; it accepts both single links and arrays. See [Deprecated methods](#deprecated-methods).
 :::
 

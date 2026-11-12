@@ -16130,7 +16130,7 @@ File path: ./src/api/restaurant/routes/01-custom-restaurant.js
 const config = {
   type: 'content-api',
   routes: [
-    { // Path defined with an URL parameter
+    { // Path defined with a URL parameter
       method: 'POST',
       path: '/restaurants/:id/review', 
       handler: 'api::restaurant.restaurant.review',
@@ -19037,6 +19037,23 @@ export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
     },
   };
 };
+```
+
+---
+Language: JavaScript
+File path: ./config/database.js
+
+```js
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      // postgres://USER:PASSWORD@pooled.db.prisma.io:5432/postgres?sslmode=verify-full
+      connectionString: env('DATABASE_URL'),
+    },
+    pool: { min: 0, max: env.int('DATABASE_POOL_MAX', 10) },
+  },
+});
 ```
 
 ---
@@ -38315,7 +38332,7 @@ File path: /src/plugins/my-plugin/server/src/policies/has-role.js
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const targetRole = config.role;
@@ -38360,7 +38377,7 @@ import type { Core } from '@strapi/strapi';
 type UserRole = { code?: string; name?: string };
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 export default (
   policyContext: Core.PolicyContext,
   config: { role?: string },
@@ -38412,7 +38429,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -38450,7 +38467,7 @@ export default [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -39969,7 +39986,7 @@ import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 const client = new ApolloClient({
   link: new HttpLink({ uri: "http://localhost:1337/graphql" }),
   cache: new InMemoryCache({
-    dataIdFromObject: (o) => `${o.__typename}:${o["documentId"]}`,
+    dataIdFromObject: (o) => `${o.__typename}:${o["documentId"] || o["id"]}`,
   }),
 });
 ```

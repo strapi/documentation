@@ -79,7 +79,7 @@ The GraphQL plugin exposes only one endpoint that handles all queries and mutati
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
-:::caution `documentId` only
+:::caution documentId only
 The GraphQL API exposes documents using only the `documentId` field. The previous numeric `id` is no longer available here, although it is still returned by the REST API for backward compatibility (see [breaking change](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details).
 :::
 
