@@ -146,6 +146,35 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 <VersionBadge version="5.42.1+" tooltip="Preserving relations is available since Strapi 5.42.1."/> For localizable relations, Strapi automatically fetch the corresponding entry in the target locale if it exists. If the target locale does not exist for that relation, it will not be filled in. For non-localizable relations, the exact same entry is used.
 :::
 
+### Editing shared fields
+<VersionBadge version="5.62.0" />
+
+Fields without [localization enabled](#content-type-builder) are shared fields: they have one value common to all locales.
+
+When you edit a locale other than the default locale, and the entry already exists in the default locale, shared fields are locked:
+
+- Shared fields are disabled. Shared components and dynamic zones are read-only, including all their nested fields.
+- A <Icon name="lock" /> icon next to the field label indicates that the value is common to all locales and should be edited in the default locale.
+
+Shared fields are not locked if the entry does not exist in the default locale, for instance when the entry was created directly in another locale.
+
+To edit shared fields from a locale other than the default locale:
+
+1. In the _Draft_ tab of the edit view, click on the <Icon name="lock" /> *Edit shared fields* button in the top right corner.
+2. In the *Edit fields common to all locales?* dialog, click on the **Yes, edit shared fields** button.
+3. Edit the shared fields.
+4. Click on the **Save** button.
+
+:::caution
+Saving shared fields updates their value in the default locale and in all other locales of the entry.
+:::
+
+To lock shared fields again without saving them, click on the <Icon name="lock" /> *Keep shared fields locked* button. Unsaved changes to shared fields are discarded, while changes to localized fields are kept. Shared fields are also locked again when you switch to another locale or entry.
+
+:::note
+The *Edit shared fields* button is only displayed to users who have the permission to update content in the default locale.
+:::
+
 ### AI-powered internationalization
 <GrowthBadge /> <AiAddonBadge />
 
