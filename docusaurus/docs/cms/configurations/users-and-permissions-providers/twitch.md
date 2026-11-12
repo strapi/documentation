@@ -1,6 +1,6 @@
 ---
 title: Twitch provider setup for Users & Permissions
-description: Learn how to setup the Twitch provider for the Users & Permissions feature.
+description: Learn how to set up the Twitch provider for the Users & Permissions feature.
 displayed_sidebar: cmsSidebar
 tags:
 - users and permissions
@@ -20,7 +20,7 @@ Configure Twitch OAuth authentication for Strapi's Users & Permissions feature b
 </Tldr>
 
 
-The present page explains how to setup the Twitch provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the Twitch provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
