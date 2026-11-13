@@ -18,7 +18,7 @@ You run on Haiku for cost efficiency. Do NOT draft content or create PRs.
 
 Read these files once:
 
-- Router prompt: `$DOC_REPO/claude-plugins/inki/references/prompts/router.md`
+- Router prompt: `$DOC_REPO/claude-plugins/inki/skills/inki-references/prompts/router.md`
 - Sidebars: `$DOC_REPO/docusaurus/sidebars.js`
 - Page index: `$DOC_REPO/docusaurus/static/llms.txt`
 
@@ -84,7 +84,7 @@ Write it to `/tmp/router-results.json` using Bash (`cat <<'EOF' > /tmp/router-re
       "decision": "has_targets",
       "complexity": "full",
       "reason": "",
-      "targets_yaml": "targets:\n  - path: cms/features/x.md\n    action: update_section\n    priority: primary\n    existing_section: \"Configuration\"\n    description: \"Add feature X config options\"\n\ndoc_type: feature\ntemplate: null\nguide: claude-plugins/inki/references/authoring/AGENTS.cms.features.md\nconfidence: high"
+      "targets_yaml": "targets:\n  - path: cms/features/x.md\n    action: update_section\n    priority: primary\n    existing_section: \"Configuration\"\n    description: \"Add feature X config options\"\n\ndoc_type: feature\ntemplate: null\nguide: claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.features.md\nconfidence: high"
     },
     {
       "number": 12350,
@@ -173,14 +173,14 @@ Then run the style-lint gate, commit, and push:
 # the catalog. On 2026-09-04 an em dash reached PR #3443 and Pierre had to strip
 # it by hand. Micro-edits skip the Style Checker prompt, so this script is their
 # only style guard: it is not optional here.
-chmod +x claude-plugins/inki/scripts/style-lint.sh
+chmod +x claude-plugins/inki/skills/inki-scripts/style-lint.sh
 LINT_FILES=$(git status --porcelain | awk '{print $NF}' \
   | grep -E '^docusaurus/docs/.*\.mdx?$' || true)
 
 LINT_STATUS=0
 if [ -n "$LINT_FILES" ]; then
   # shellcheck disable=SC2086
-  claude-plugins/inki/scripts/style-lint.sh $LINT_FILES || LINT_STATUS=$?
+  claude-plugins/inki/skills/inki-scripts/style-lint.sh $LINT_FILES || LINT_STATUS=$?
 fi
 # 0 = clean, 1 = errors (blocking), 2 = warnings only (not blocking)
 echo "style-lint exit: $LINT_STATUS"
@@ -239,7 +239,7 @@ git reset --hard origin/main
 
 Write `$DESCRIPTION` from what you actually changed. There is no template to paste. The
 rules are the ones every hand-written PR on this repo follows, defined in
-`$DOC_REPO/claude-plugins/inki/skills/_shared/pr-description-rules.md`:
+`$DOC_REPO/claude-plugins/inki/skills/inki-references/shared/pr-description-rules.md`:
 
 1. Start with `This PR ...`.
 2. One or two sentences saying **what changed and why**. Name the page and what you added
@@ -256,7 +256,7 @@ rules are the ones every hand-written PR on this repo follows, defined in
    extension. If the slug exceeds 35 characters Vercel truncates the host, so add on the
    next line: `⚠️ The branch slug for this preview URL is <N> characters long (over the
    35-character limit), so the URL above is likely truncated and incorrect. It must be
-   fixed with `/inki:pr-fix` once Vercel has finished building the preview.`
+   fixed with `/inki-pr-fix` once Vercel has finished building the preview.`
 6. **No boilerplate about the workflow itself.** Do not write "Generated automatically by
    the docs self-healing workflow" or "Review before merging". The `auto-doc-healing`
    label, the assignee and the draft status already carry that, and repeating it in prose

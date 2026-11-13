@@ -1,17 +1,17 @@
 # Inki command reference
 
-Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, what it does, its argument signature, and every flag it accepts. Typing `/inki:<skill> --help` prints a single command's usage. The shared flags are also summarized in the "Common flags" section of the [README](./README.md).
+Every Inki skill is invoked as `/inki-<skill>`. This page lists each command, what it does, its argument signature, and every flag it accepts. Typing `/inki-<skill> --help` prints a single command's usage. The shared flags are also summarized in the "Common flags" section of the [README](./README.md).
 
 > This file is not auto-generated; it is curated. Whoever adds or changes a command (or its flags), whether a human editor or an AI agent, should update its entry here so the description, argument signature, and flag table stay in sync with the skill's frontmatter and its argument-parsing step. The command set changes rarely once stable.
 
 ## Document: the full chain in one command
 
-### `/inki:document`
+### `/inki-document`
 
 End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --non-interactive chains without pauses and runs a review-fix loop. The simplest way to document a subject from scratch.
 
 ```
-/inki:document [--non-interactive] [--max-review-fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>
+/inki-document [--non-interactive] [--max-review-fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>
 # alias for --max-review-fix-rounds: --fix-rounds
 ```
 
@@ -20,7 +20,7 @@ The command accepts the following flags:
 | Flag | Description |
 |------|-------------|
 | `--non-interactive` | Chain all phases without pausing, and approve the review-fix loop. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
-| `--max-review-fix-rounds <N>` | Cap the review→fix→re-review iterations (passed through to `/inki:review`). Default 3. Alias: `--fix-rounds <N>`. |
+| `--max-review-fix-rounds <N>` | Cap the review→fix→re-review iterations (passed through to `/inki-review`). Default 3. Alias: `--fix-rounds <N>`. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
@@ -28,12 +28,12 @@ The command accepts the following flags:
 
 ## Research: figure out where the doc goes
 
-### `/inki:research`
+### `/inki-research`
 
 Top-level research orchestrator: combines exists, route, and coverage to give a complete picture before writing.
 
 ```
-/inki:research [--no-log] <topic, feature name, or strapi/strapi or strapi/cloud PR>
+/inki-research [--no-log] <topic, feature name, or strapi/strapi or strapi/cloud PR>
 ```
 
 The command accepts the following flags:
@@ -44,12 +44,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:exists`
+### `/inki-exists`
 
 Check whether a documentation topic is already covered on strapi/documentation: searches llms.txt, doc files, sidebars, and open GitHub PRs.
 
 ```
-/inki:exists [--no-log] <topic or keyword>
+/inki-exists [--no-log] <topic or keyword>
 ```
 
 The command accepts the following flags:
@@ -60,12 +60,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:route`
+### `/inki-route`
 
 Given a strapi/strapi or strapi/cloud PR, identify which documentation pages and sections must be updated to cover the change.
 
 ```
-/inki:route [--no-log] <strapi/strapi or strapi/cloud PR: number or URL>
+/inki-route [--no-log] <strapi/strapi or strapi/cloud PR: number or URL>
 ```
 
 The command accepts the following flags:
@@ -76,12 +76,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:coverage`
+### `/inki-coverage`
 
 Audit the documentation coverage of a Strapi feature or module: list what is documented vs missing.
 
 ```
-/inki:coverage [--no-log] <feature or module name>
+/inki-coverage [--no-log] <feature or module name>
 ```
 
 The command accepts the following flags:
@@ -94,12 +94,12 @@ The command accepts the following flags:
 
 ## Write: produce new content
 
-### `/inki:write`
+### `/inki-write`
 
 Top-level write orchestrator: outline a new page, get user approval, then draft from the outline.
 
 ```
-/inki:write [--non-interactive] [--no-log] <topic brief or path to a brief file>
+/inki-write [--non-interactive] [--no-log] <topic brief or path to a brief file>
 ```
 
 The command accepts the following flags:
@@ -112,12 +112,12 @@ The command accepts the following flags:
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 | `--help`, `-h` | Print usage and stop. |
 
-### `/inki:outline`
+### `/inki-outline`
 
 Generate an outline for a new documentation page from a topic brief and the appropriate template.
 
 ```
-/inki:outline [--non-interactive] [--no-log] <topic brief or path to a brief file>
+/inki-outline [--non-interactive] [--no-log] <topic brief or path to a brief file>
 ```
 
 The command accepts the following flags:
@@ -130,12 +130,12 @@ The command accepts the following flags:
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 | `--help`, `-h` | Print usage and stop. |
 
-### `/inki:draft`
+### `/inki-draft`
 
 Draft a documentation page from an approved outline, the matching template, and the relevant authoring guide.
 
 ```
-/inki:draft [--no-log] <path to outline file>
+/inki-draft [--no-log] <path to outline file>
 ```
 
 The command accepts the following flags:
@@ -148,12 +148,12 @@ The command accepts the following flags:
 
 ## Review: check what you wrote
 
-### `/inki:review`
+### `/inki-review`
 
 Top-level review orchestrator: runs style-check, outline-check, outline-ux-analyzer, code-verify, coherence-check, and pitfalls-check on a file, directory, or PR.
 
 ```
-/inki:review [--non-interactive] [--fix] [--max-review-fix-rounds <N>] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>
+/inki-review [--non-interactive] [--fix] [--max-review-fix-rounds <N>] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>
 # alias for --max-review-fix-rounds: --fix-rounds
 ```
 
@@ -169,12 +169,12 @@ The command accepts the following flags:
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 | `--help`, `-h` | Print usage and stop. |
 
-### `/inki:style-check`
+### `/inki-style-check`
 
 Run deterministic style checks on a documentation file or directory, then layer AI judgment on top using the migrated style-checker prompt.
 
 ```
-/inki:style-check [--fix] [--no-log] <file or directory path>
+/inki-style-check [--fix] [--no-log] <file or directory path>
 ```
 
 The command accepts the following flags:
@@ -186,12 +186,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:outline-check`
+### `/inki-outline-check`
 
 Check the structural outline of a documentation page: heading hierarchy, section order, completeness against the template.
 
 ```
-/inki:outline-check [--no-log] <file path>
+/inki-outline-check [--no-log] <file path>
 ```
 
 The command accepts the following flags:
@@ -202,12 +202,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:outline-ux-analyzer`
+### `/inki-outline-ux-analyzer`
 
 Analyze the pedagogical UX of a documentation outline: progression from beginner to advanced, signposting, and reading flow.
 
 ```
-/inki:outline-ux-analyzer [--no-log] <file path>
+/inki-outline-ux-analyzer [--no-log] <file path>
 ```
 
 The command accepts the following flags:
@@ -218,12 +218,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:code-verify`
+### `/inki-code-verify`
 
 Verify code blocks in a documentation file: check syntax, references, and consistency with the underlying Strapi APIs.
 
 ```
-/inki:code-verify [--no-log] <file path>
+/inki-code-verify [--no-log] <file path>
 ```
 
 The command accepts the following flags:
@@ -234,12 +234,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:coherence-check`
+### `/inki-coherence-check`
 
 Check a documentation file for cross-page coherence: terminology, links, and consistency with related pages.
 
 ```
-/inki:coherence-check [--no-log] <file path>
+/inki-coherence-check [--no-log] <file path>
 ```
 
 The command accepts the following flags:
@@ -250,12 +250,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:pitfalls-check`
+### `/inki-pitfalls-check`
 
 Audit a documentation file against the known-pitfalls list: common mistakes, outdated patterns, deprecated APIs.
 
 ```
-/inki:pitfalls-check [--no-log] <file path>
+/inki-pitfalls-check [--no-log] <file path>
 ```
 
 The command accepts the following flags:
@@ -266,12 +266,12 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-### `/inki:pitfalls-add`
+### `/inki-pitfalls-add`
 
 Add a new entry to the known-pitfalls catalog that pitfalls-check audits against. Verifies the correct pattern against the Strapi source before adding, and confirms with the user. Use when you have found a documentation mistake worth catching automatically in future reviews.
 
 ```
-/inki:pitfalls-add [--non-interactive] [--no-log] <description of the pitfall, or a pitfalls-check / code-verify finding to promote>
+/inki-pitfalls-add [--non-interactive] [--no-log] <description of the pitfall, or a pitfalls-check / code-verify finding to promote>
 ```
 
 The command accepts the following flags:
@@ -286,12 +286,12 @@ The command accepts the following flags:
 
 ## Submit: get it to GitHub
 
-### `/inki:submit`
+### `/inki-submit`
 
 Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --non-interactive is passed.
 
 ```
-/inki:submit [--non-interactive] [--no-log] [issue reference or topic hint, e.g. 'Fixes #2143']
+/inki-submit [--non-interactive] [--no-log] [issue reference or topic hint, e.g. 'Fixes #2143']
 ```
 
 The command accepts the following flags:
@@ -304,44 +304,44 @@ The command accepts the following flags:
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 | `--help`, `-h` | Print usage and stop. |
 
-### `/inki:branch`
+### `/inki-branch`
 
 Create a new branch in strapi/documentation with auto-detected prefix (cms/, cloud/, repo/) based on the files that will be touched.
 
 ```
-/inki:branch [description of the work]
+/inki-branch [description of the work]
 ```
 
-### `/inki:commit`
+### `/inki-commit`
 
-Stage and commit documentation changes in strapi/documentation. Enforces [git-rules.md](./references/git-rules.md), protected paths, and branch prefix detection.
-
-```
-/inki:commit [optional commit message]
-```
-
-### `/inki:push`
-
-Push the current branch in strapi/documentation to origin. Validates branch name against [git-rules.md](./references/git-rules.md) conventions.
+Stage and commit documentation changes in strapi/documentation. Enforces [git-rules.md](./skills/inki-references/git-rules.md), protected paths, and branch prefix detection.
 
 ```
-/inki:push
+/inki-commit [optional commit message]
 ```
 
-### `/inki:pr`
+### `/inki-push`
 
-Create a pull request on strapi/documentation following [git-rules.md](./references/git-rules.md). Strict flat-text description, no headings, no test plan.
-
-```
-/inki:pr [optional issue reference, e.g. 'Fixes #2143']
-```
-
-### `/inki:pr-fix`
-
-Rewrite the title or description/body of one or more open PRs on strapi/documentation to match [git-rules.md](./references/git-rules.md). Strict one-by-one confirmation, or auto-edit with --non-interactive.
+Push the current branch in strapi/documentation to origin. Validates branch name against [git-rules.md](./skills/inki-references/git-rules.md) conventions.
 
 ```
-/inki:pr-fix <title|description|body> [--non-interactive] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ...
+/inki-push
+```
+
+### `/inki-pr`
+
+Create a pull request on strapi/documentation following [git-rules.md](./skills/inki-references/git-rules.md). Strict flat-text description, no headings, no test plan.
+
+```
+/inki-pr [optional issue reference, e.g. 'Fixes #2143']
+```
+
+### `/inki-pr-fix`
+
+Rewrite the title or description/body of one or more open PRs on strapi/documentation to match [git-rules.md](./skills/inki-references/git-rules.md). Strict one-by-one confirmation, or auto-edit with --non-interactive.
+
+```
+/inki-pr-fix <title|description|body> [--non-interactive] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ...
 ```
 
 The command accepts the following flags:
@@ -359,10 +359,10 @@ The command accepts the following flags:
 
 No orchestrator runs these commands, and Claude never starts them on its own (`disable-model-invocation: true`).
 
-### `/inki:inki-interactive-demo`
+### `/inki-interactive-demo`
 
 Create or update an interactive demo from a plain-text description of its steps: finds the UI elements in a running Strapi demo app, writes the YAML scenario, captures it and checks the result. See [its README](./skills/inki-interactive-demo/README.md).
 
 ```
-/inki:inki-interactive-demo <demo-id> [description file or text]
+/inki-interactive-demo <demo-id> [description file or text]
 ```

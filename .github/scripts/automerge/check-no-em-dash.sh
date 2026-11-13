@@ -8,7 +8,7 @@
 # has to be stripped by hand at review time.
 #
 # The real fix is upstream: the self-healing prompts now run
-# claude-plugins/inki/scripts/style-lint.sh before committing, so an em dash should
+# claude-plugins/inki/skills/inki-scripts/style-lint.sh before committing, so an em dash should
 # never reach a PR in the first place. This check is the net under that, and it is
 # only ever a test: it reports, it never edits the PR.
 #

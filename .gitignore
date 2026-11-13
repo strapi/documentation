@@ -1,7 +1,13 @@
 # Keep Claude Code local files ignored, but track the shared project settings
-# (.claude/settings.json) so the Inki plugin marketplace is offered to everyone.
+# (.claude/settings.json) and the committed links to the Inki skills and agents.
 **/.claude/*
 !/.claude/settings.json
+!/.claude/skills/
+/.claude/skills/*
+!/.claude/skills/inki-*
+!/.claude/agents/
+/.claude/agents/*
+!/.claude/agents/inki-*
 
 # Local artifacts from Anthropic superpowers skill plugin (brainstorm, plans, specs).
 # These are working notes from individual contributors and should never be tracked.

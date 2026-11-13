@@ -109,39 +109,34 @@ That’s it! 🥳 Once the pull request is [reviewed and approved](#review-and-m
 
 If your contribution takes part in the [Docs Contribution Program](https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71), as soon as your pull request is merged, you should receive an email with a link to the Strapi Shop where points you have earned will have been granted to your account.
 
-## 🤖 Working with the Inki Claude Code plugin
+## 🤖 Working with Inki
 
-This repository hosts the **Inki** Claude Code plugin under `claude-plugins/inki/`. Inki bundles skills, prompts, templates, and authoring guides used to maintain these docs.
+This repository hosts **Inki**, the docs toolkit for AI agents, under `claude-plugins/inki/`. Inki bundles skills, prompts, templates, and authoring guides used to maintain these docs.
 
 ### What Inki does
 
 Inki organizes 21 skills into four families: **Research** (find what exists), **Write** (outline and draft new pages), **Review** (style, structure, code, coherence, pitfalls), and **Submit** (branch, commit, push, open or rewrite a PR).
 
 A few examples:
-- `/inki:exists <topic>` checks whether a topic is already covered before you write.
-- `/inki:review <path>` runs the full review pipeline on a documentation file.
-- `/inki:pr` opens a PR with a compliant title and description.
+- `/inki-exists <topic>` checks whether a topic is already covered before you write.
+- `/inki-review <path>` runs the full review pipeline on a documentation file.
+- `/inki-pr` opens a PR with a compliant title and description.
 
 For the full skill catalog, install instructions, and editing rules, see [`claude-plugins/inki/README.md`](claude-plugins/inki/README.md).
 
-### Installing Inki
+### Using Inki
 
-If you use Claude Code, you can install Inki with two slash commands:
-
-```bash
-/plugin marketplace add strapi/documentation
-/plugin install inki@strapi-documentation
-```
+There is nothing to install. The Inki skills are linked into `.claude/skills/`, `.agents/skills/`, and `.cursor/skills/`, so Claude Code, Codex, Cursor, and other agents that read these folders find them as soon as you open the repository. To use Inki outside this repository, Claude Code users can still install it as a plugin (see the [Inki README](claude-plugins/inki/README.md#install)).
 
 ### Editing canonical rules
 
-`git-rules.md` and `12-rules-of-technical-writing.md` at the repository root are the **canonical** versions. Copies live in `claude-plugins/inki/references/` for the plugin's autonomy, and are auto-synced by a GitHub Action on every PR.
+`git-rules.md` and `12-rules-of-technical-writing.md` at the repository root are the **canonical** versions. Copies live in `claude-plugins/inki/skills/inki-references/` for the plugin's autonomy, and are auto-synced by a GitHub Action on every PR.
 
-Always edit the root file, never the copy inside `claude-plugins/inki/references/`. CI rejects PRs that modify only the plugin copies.
+Always edit the root file, never the copy inside `claude-plugins/inki/skills/inki-references/`. CI rejects PRs that modify only the plugin copies.
 
 ### Editing agent prompts, templates, and authoring guides
 
-These now live inside the plugin at `claude-plugins/inki/references/prompts/`, `references/templates/`, and `references/authoring/`. The historical `agents/` folder contains only a pointer README.
+These now live inside the plugin at `claude-plugins/inki/skills/inki-references/prompts/`, `references/templates/`, and `references/authoring/`. The historical `agents/` folder contains only a pointer README.
 
 ## Review and management of pull requests
 

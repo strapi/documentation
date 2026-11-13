@@ -1,0 +1,25 @@
+name: Check Inki skills links
+
+on:
+  pull_request:
+    paths:
+      - 'claude-plugins/inki/skills/**'
+      - 'claude-plugins/inki/agents/**'
+      - '.claude/skills/**'
+      - '.claude/agents/**'
+      - '.agents/skills/**'
+      - '.cursor/skills/**'
+
+permissions:
+  contents: read
+
+jobs:
+  check-links:
+    if: github.repository == 'strapi/documentation'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - name: Check that every Inki skill and agent is linked
+        run: ./claude-plugins/inki/skills/inki-scripts/link-skills.sh --check

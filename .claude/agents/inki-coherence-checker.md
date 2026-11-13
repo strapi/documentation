@@ -1,0 +1,1 @@
+../../claude-plugins/inki/agents/inki-coherence-checker.md
