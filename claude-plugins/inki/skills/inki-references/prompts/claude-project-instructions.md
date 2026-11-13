@@ -299,44 +299,11 @@ The `AGENTS.md` file at the repo root can serve as an alternative entry point, b
 
 Add the prompt files to the workspace context. Depending on the IDE:
 
-- **Cursor**: Reference prompt files with `@file` (e.g., `@claude-plugins/inki/skills/inki-references/prompts/router.md`) or add them to `.cursor/rules/`. See [Cursor Rules Setup](#cursor-rules-setup) below.
+- **Cursor**: the Inki skills are linked in `.cursor/skills/` and load on their own. To use one prompt directly, reference it with `@file` (e.g., `@claude-plugins/inki/skills/inki-references/prompts/router.md`).
 - **Windsurf**: Add to `.windsurfrules` or reference in workspace context.
 - **Other IDE agents**: Add the prompt files to whatever context/knowledge mechanism the IDE provides.
 
 The key requirement is that the agent can read the full prompt spec before executing.
-
-#### Cursor Rules Setup
-
-Cursor supports `.mdc` rules files with conditional loading via frontmatter:
-
-```markdown
----
-description: "Run this when the user provides a spec, user story, or ticket and asks how to update or create documentation"
-globs: []
-alwaysApply: false
----
-
-[contents of router.md]
-```
-
-With `alwaysApply: false`, Cursor loads the rule only when the user's request matches the `description`. This avoids polluting the context with all prompt specs at once.
-
-Recommended `.cursor/rules/` files:
-
-| File | `description` | `alwaysApply` |
-|------|---------------|---------------|
-| `strapi-docs-orchestrator.mdc` | — | `true` |
-| `strapi-docs-router.mdc` | `"Run when user provides a spec, story, ticket, or PR and asks where/how to update docs"` | `false` |
-| `strapi-docs-style-checker.mdc` | `"Run when user asks for a style check, style review, or 12 Rules compliance check"` | `false` |
-| `strapi-docs-outline-checker.mdc` | `"Run when user asks to check structure, template compliance, or outline review"` | `false` |
-| `strapi-docs-ux-analyzer.mdc` | `"Run when user asks for UX analysis, reader experience review, or full outline review"` | `false` |
-| `strapi-docs-outline-generator.mdc` | `"Run when user needs an outline for new documentation from source material"` | `false` |
-| `strapi-docs-drafter.mdc` | `"Run when user asks to draft, write, or compose documentation content from an outline"` | `false` |
-| `strapi-docs-integrity-checker.mdc` | `"Run when user asks to verify code examples, fact-check technical claims, check links, or verify cross-page consistency"` | `false` |
-
-The `strapi-docs-orchestrator.mdc` file should contain this entire `claude-project-instructions.md` (including the appendix) with `alwaysApply: true`. It acts as the routing table and fallback. The individual prompt rules are loaded on-demand when Cursor detects a matching intent.
-
-**Important limitation:** Cursor's conditional loading is best-effort. The `description` matching is approximate and varies by model. The appendix output contracts serve as a safety net — even if a conditional rule fails to load, the orchestrator rule (always loaded) contains enough structure for a correct output.
 
 ### ChatGPT / other LLMs
 

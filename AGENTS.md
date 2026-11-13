@@ -94,8 +94,7 @@ Path‑based policy (applies to folders and all subfolders):
 │   │   └── inki-scripts/     # Shared scripts: style-lint.sh, link-skills.sh…
 │   └── agents/               # Read-only reviewers dispatched by inki-review
 ├── .claude/skills/, .agents/skills/, .cursor/skills/  # Committed links to the Inki skills
-├── .claude/agents/           # Committed links to the Inki agents
-└── .cursor/rules/            # Cursor IDE rules for documentation agents
+└── .claude/agents/           # Committed links to the Inki agents
 ```
 
 ### Key files
@@ -143,7 +142,7 @@ The `claude-plugins/inki/skills/inki-references/templates/README.md` explains th
 
 ### Specialized prompts
 
-Located in `claude-plugins/inki/skills/inki-references/prompts/`. Cursor IDE wrappers are in `.cursor/rules/`.
+Located in `claude-plugins/inki/skills/inki-references/prompts/`.
 
 | Prompt | Path | Purpose |
 |--------|------|---------|
@@ -174,9 +173,9 @@ Router → Outliner (Generator) → Drafter → Style Checker → Integrity Chec
 ### Usage
 
 These prompts are designed for use in:
-- **Claude Code / Claude Projects**: Install the Inki plugin (see the Inki section above); in Claude Projects, import prompts as project knowledge
-- **Cursor IDE**: Use the `.cursor/rules/*.mdc` wrappers
-- **Other AI tools (Codex, Copilot, Gemini CLI, Cline, Windsurf…)**: Follow the Inki skills directly (see the Inki section above), or use the prompts as system prompts
+- **Claude Code, Codex, Cursor**: use the Inki skills, which load on their own (see the Inki section above)
+- **Claude Projects**: import the prompts as project knowledge
+- **Other AI tools (Copilot, Gemini CLI, Cline, Windsurf…)**: follow the Inki skills directly (see the Inki section above), or use the prompts as system prompts
 
 See `claude-plugins/inki/skills/inki-references/prompts/README.md` for detailed usage instructions.
 

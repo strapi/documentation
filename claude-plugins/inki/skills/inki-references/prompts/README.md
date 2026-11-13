@@ -47,7 +47,8 @@ These prompts can be used in several ways:
 
 - **Claude Projects** — import the `.md` files as project knowledge. Use `claude-project-instructions.md` as the custom instructions (system prompt).
 - **Claude Code** — the prompt files live in `claude-plugins/inki/skills/inki-references/prompts/`. Claude Code reads them directly from disk. `AGENTS.md` at the repo root serves as an alternative entry point.
-- **Cursor / Windsurf / IDE agents** — add prompt files to workspace context (e.g., `.cursor/rules/`, `@file` references, or equivalent). The agent must be able to read the full prompt spec before executing.
+- **Cursor, Codex, and other agents that read skills folders** — use the Inki skills, linked in `.cursor/skills/` and `.agents/skills/`; they cite these prompts.
+- **Windsurf / other IDE agents** — add prompt files to workspace context (`@file` references or equivalent). The agent must be able to read the full prompt spec before executing.
 - **ChatGPT / other LLMs** — upload prompt files to the conversation or copy the relevant prompt's content when needed.
 - **API integrations** — use as system prompts or tool definitions. For machine-only consumers, the Router can return only the YAML block.
 

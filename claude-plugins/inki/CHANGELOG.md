@@ -9,6 +9,7 @@
 - Every skill and agent is renamed with an `inki-` prefix (`/inki-review`, `inki-style-checker`…) to avoid collisions with other skills in flat folders. As a Claude Code plugin, they are now called `/inki:inki-<skill>`.
 - `references/` moved to the `inki-references` skill, `scripts/` to the `inki-scripts` skill, and `skills/_shared/` to `inki-references/shared/`. Each holds a short `SKILL.md` that says what is inside. Skills cite them as `../inki-references/…`, a path that works from every linked folder. Agents keep `${CLAUDE_PLUGIN_ROOT}`, which Claude Code replaces with the plugin path in a plugin install, and fall back to `claude-plugins/inki` from the repository root when it is left as is (project agents in `.claude/agents/`, other tools).
 - The project settings no longer enable the Inki plugin, so Claude Code does not load every skill twice in this repository. The marketplace stays registered for users who install the plugin to use Inki elsewhere.
+- The Cursor rules in `.cursor/rules/` are removed. They were hand-made copies of the prompts that had drifted from them (missing the callout-scale rules, pointing to `agents/` paths that no longer exist), and Cursor now loads the Inki skills from `.cursor/skills/`.
 
 ## 2026-11-10
 
