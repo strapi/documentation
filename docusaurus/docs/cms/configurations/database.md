@@ -114,6 +114,7 @@ The `settings` object found in `./config/database.js` (or `./config/database.ts`
 | `runMigrations`  | Run the migration files found in `/database/migrations` on startup. Strapi's own internal migrations and the schema sync run regardless of this setting. | `Boolean` | `true`  |
 | `useTypescriptMigrations` | Look for migration files in the build directory instead of the source directory, so that TypeScript migrations are executed. See [handling migrations with TypeScript code](/cms/database-migrations#handling-migrations-with-typescript-code). | `Boolean` | `false` |
 | `poolTimeoutDiagnostics` | Add pool state, event loop delay, and phase information to connection pool acquire timeout errors, and log a periodic warning while the pool keeps timing out. Set to `false` to leave Knex's original error and message untouched. See [connection pool timeouts](#connection-pool-timeouts). | `Boolean` | `true` |
+| `queryTimeout` | Maximum time in milliseconds a query run through the query builder may run before the database cancels it. Unset by default (no limit). See [query timeouts](#query-timeouts). | `Integer` | - |
 
 :::caution
 Despite its name, `forceMigration` does not control whether migrations run, which is what `runMigrations` does. It controls whether the schema sync is allowed to drop database objects. Setting it to `false` prevents data loss, but the schema sync still records the new schema as the reference, so a table whose deletion was skipped is no longer tracked by Strapi and is not dropped if you later set the parameter back to `true`. See [database migrations](/cms/database-migrations#data-loss).
@@ -165,6 +166,28 @@ The diagnostics state facts and never name a cause. Common patterns:
 #### GraphQL responses
 
 An unexpected error returned by the GraphQL API no longer copies the internal error's `name`, `message`, and `details` (including the pool timeout diagnostics above) into the response. It now returns the same generic `Internal Server Error` as the REST API. The full error, diagnostics included, is still logged server-side. A custom resolver that throws a plain `Error` to return a message to clients should throw an `ApplicationError` from `@strapi/utils` instead.
+
+### Query timeouts
+
+`settings.queryTimeout` sets a maximum time, in milliseconds, for a query run through the query builder. This covers the entity manager and the [Document Service API](/cms/api/document-service), including relation population. The database cancels a query that runs past the limit instead of letting it hold a pooled connection.
+
+```js title="./config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    // ...
+  },
+  settings: {
+    queryTimeout: env.int('DATABASE_QUERY_TIMEOUT', 10000),
+  },
+});
+```
+
+The `queryTimeout` setting behaves as follows:
+
+- It is unset by default, so existing projects see no behavior change.
+- It only applies to PostgreSQL and MySQL/MariaDB connections, which can cancel a running query. SQLite ignores the setting.
+- It does not apply to database streams, direct `strapi.db.connection` queries (including `connection.raw()`), schema sync, or migrations.
+- Its value must be a positive number. Strapi fails to boot if `queryTimeout` is `0`, negative, `NaN`, `Infinity`, or a string (for example a raw `env('DATABASE_QUERY_TIMEOUT')` without `.int()`), because Knex would otherwise ignore the invalid value silently.
 
 ### Configuration examples
 
