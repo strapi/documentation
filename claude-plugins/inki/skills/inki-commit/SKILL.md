@@ -15,7 +15,7 @@ user-invocable: true
 
 ## Step 1: Apply shared commit rules
 
-Read and follow `../inki-references/references/shared/commit-rules.md` for: gathering context, validating/generating the commit message, and executing the commit.
+Read and follow `../inki-references/shared/commit-rules.md` for: gathering context, validating/generating the commit message, and executing the commit.
 
 ## Step 2: Protect infrastructure files
 

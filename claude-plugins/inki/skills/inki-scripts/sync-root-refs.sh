@@ -4,8 +4,8 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../../../.." && pwd)"
-PLUGIN_REFS="$REPO_ROOT/claude-plugins/inki/skills/inki-references/references"
+REPO_ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
+PLUGIN_REFS="$REPO_ROOT/claude-plugins/inki/skills/inki-references"
 
 mkdir -p "$PLUGIN_REFS"
 

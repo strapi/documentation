@@ -9,15 +9,15 @@ user-invocable: true
 
 The `pitfalls-checker` agent is read-only: it consults the catalog but never edits it. This skill is the writing counterpart: it adds a new, verified entry to the known-pitfalls catalog so the mistake is caught automatically in every future review.
 
-The catalog is versioned in the repo at `claude-plugins/inki/skills/inki-references/references/prompts/integrity-known-pitfalls.md` (the **canonical copy**). Agents that load Inki from the repo skills folders (`.claude/skills`, `.agents/skills`, `.cursor/skills`) read that file directly. Only an installed Claude Code plugin reads a separate **plugin cache copy** (`${CLAUDE_PLUGIN_ROOT}/skills/inki-references/references/prompts/integrity-known-pitfalls.md`), overwritten on every plugin update. Always write the canonical copy first, then mirror to the cache if there is one (Step 5): an entry written only to the cache is silently lost on the next update.
+The catalog is versioned in the repo at `claude-plugins/inki/skills/inki-references/prompts/integrity-known-pitfalls.md` (the **canonical copy**). Agents that load Inki from the repo skills folders (`.claude/skills`, `.agents/skills`, `.cursor/skills`) read that file directly. Only an installed Claude Code plugin reads a separate **plugin cache copy** (`${CLAUDE_PLUGIN_ROOT}/skills/inki-references/prompts/integrity-known-pitfalls.md`), overwritten on every plugin update. Always write the canonical copy first, then mirror to the cache if there is one (Step 5): an entry written only to the cache is silently lost on the next update.
 
 ## Step 0: Parse arguments
 
-If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/references/help.md`. Do not modify the catalog.
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/help.md`. Do not modify the catalog.
 
 Otherwise, from `$ARGUMENTS`, detect `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent) → `AUTO=true`. What remains describes the pitfall: either free text, or a finding copied from a `pitfalls-check` / `code-verify` report.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
 
 ## Step 1: Derive the three required fields
 
@@ -52,24 +52,24 @@ If `AUTO=false` (default), ask for confirmation before writing. If `AUTO=true`, 
 
 Write in this order. Never stop after the cache: that is how entries get lost.
 
-1. **Canonical copy (required).** Add the row to the chosen table in `claude-plugins/inki/skills/inki-references/references/prompts/integrity-known-pitfalls.md`, preserving the file's existing Markdown formatting. Do not reorder or rewrite existing entries.
+1. **Canonical copy (required).** Add the row to the chosen table in `claude-plugins/inki/skills/inki-references/prompts/integrity-known-pitfalls.md`, preserving the file's existing Markdown formatting. Do not reorder or rewrite existing entries.
 
    Resolve an absolute path to it before writing:
 
    ```bash
    ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
-   CANON="$ROOT/claude-plugins/inki/skills/inki-references/references/prompts/integrity-known-pitfalls.md"
+   CANON="$ROOT/claude-plugins/inki/skills/inki-references/prompts/integrity-known-pitfalls.md"
    [ -n "$ROOT" ] && [ -f "$CANON" ] && echo "$CANON" || echo "NOT_FOUND"
    ```
 
    This works from anywhere inside the repo, including subdirectories such as `docusaurus/`. If it prints `NOT_FOUND` (the session is running outside `strapi/documentation`, or in another repo), do **not** fall back to writing only the cache: say the canonical copy is unreachable, print the row for the user to add themselves, and stop.
 
-2. **Cache copy (mirror, plugin installs only).** If `${CLAUDE_PLUGIN_ROOT}` is set and does not point inside this repo, copy the same row into `${CLAUDE_PLUGIN_ROOT}/skills/inki-references/references/prompts/integrity-known-pitfalls.md` so the entry takes effect immediately in the running session, without waiting for a plugin update.
+2. **Cache copy (mirror, plugin installs only).** If `${CLAUDE_PLUGIN_ROOT}` is set and does not point inside this repo, copy the same row into `${CLAUDE_PLUGIN_ROOT}/skills/inki-references/prompts/integrity-known-pitfalls.md` so the entry takes effect immediately in the running session, without waiting for a plugin update.
 
 3. **Verify they match** (plugin installs only). The two files must be identical afterwards:
 
    ```bash
-   diff "$CANON" "${CLAUDE_PLUGIN_ROOT}/skills/inki-references/references/prompts/integrity-known-pitfalls.md"
+   diff "$CANON" "${CLAUDE_PLUGIN_ROOT}/skills/inki-references/prompts/integrity-known-pitfalls.md"
    ```
 
    If the diff shows entries present in the cache but missing from the canonical copy, those are earlier cache-only additions that were never persisted. Surface them to the user and offer to sync them into the canonical copy in the same pass, re-verifying each against the source per Step 2 before doing so.

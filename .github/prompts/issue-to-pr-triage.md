@@ -22,7 +22,7 @@ then you carry out the action for that classification.
 ## Step 1 — Read the context
 
 1. Read `$ISSUE_BODY_FILE`, `$KAPA_ANSWER_FILE` and `$KAPA_SOURCES_FILE`.
-2. Read `$DOC_REPO/claude-plugins/inki/skills/inki-references/references/git-rules.md` — binding for any
+2. Read `$DOC_REPO/claude-plugins/inki/skills/inki-references/git-rules.md` — binding for any
    branch, commit, PR title or PR description you produce.
 3. Kapa's answer is your main routing signal: it already contains a technical
    analysis and the pages it considered relevant. Trust it as a starting point,

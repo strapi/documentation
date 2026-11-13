@@ -45,9 +45,9 @@ The 30-day cutoff uses `createdAt` (not `updatedAt`) because bot activity bumps 
 
 ## Step 0: Parse arguments
 
-0. If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/references/help.md`. Do not edit any PR.
+0. If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/help.md`. Do not edit any PR.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
 1. Read the first positional token as `ACTION` (must be `title`, `description`, or `body`). Normalize `body` → `description` internally.
 2. Detect `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent) → `AUTO=true`. Remove from list.
 3. Detect `--include-old` → `INCLUDE_OLD=true`. Remove from list.
@@ -69,8 +69,8 @@ command -v gh >/dev/null || { echo "gh CLI required"; exit 1; }
 
 Depending on `ACTION`:
 
-- `title`: read `../inki-references/references/shared/pr-title-rules.md` and `../inki-references/references/git-rules.md` (section "Pull Request Titles").
-- `description` (and `body`): read `../inki-references/references/shared/pr-description-rules.md` and `../inki-references/references/git-rules.md` (the description section). Layer the strict strapi/documentation overrides on top:
+- `title`: read `../inki-references/shared/pr-title-rules.md` and `../inki-references/git-rules.md` (section "Pull Request Titles").
+- `description` (and `body`): read `../inki-references/shared/pr-description-rules.md` and `../inki-references/git-rules.md` (the description section). Layer the strict strapi/documentation overrides on top:
   1. Must start with "This PR ..."
   2. No headings (no `##`, no `###`)
   3. No "Test plan" section

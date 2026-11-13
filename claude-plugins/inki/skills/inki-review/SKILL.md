@@ -9,22 +9,22 @@ user-invocable: true
 
 ## Step 0: Parse arguments
 
-If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/references/help.md`. Do not run the review.
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/help.md`. Do not run the review.
 
 Otherwise, from `$ARGUMENTS`, detect optional flags anywhere in the list:
 
 - `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent) → `AUTO=true` (skip any confirmation gates inside sub-skills; no questions asked)
 - `--fix` → `FIX=true` (apply every actionable finding the reviewers can make, not only style — see Step 3b)
 - `--max-review-fix-rounds <N>` (canonical), alias `--fix-rounds <N>` (both equivalent) → set `MAX_FIX_ROUNDS=<N>`. Caps how many review→fix→re-review iterations Step 3b runs. Defaults to `1` if not given (a single pass, the historical behavior). Only meaningful with `--fix`; ignored otherwise.
-- `--no-log`, `--log-dir <path>`, `--short-log` → logging flags, handled per `../inki-references/references/logging.md`.
+- `--no-log`, `--log-dir <path>`, `--short-log` → logging flags, handled per `../inki-references/logging.md`.
 
 Remove the flags. What remains is the **target**.
 
-Unless `--no-log` is passed, write the consolidated report (Step 3) to the run log per `../inki-references/references/logging.md`, using the resolved `SCOPE` for the run slug. When `/inki-review` is invoked by `/inki-document`, it logs into that run's existing `review/` subdirectory (one file per fix-loop round) instead of creating its own run directory.
+Unless `--no-log` is passed, write the consolidated report (Step 3) to the run log per `../inki-references/logging.md`, using the resolved `SCOPE` for the run slug. When `/inki-review` is invoked by `/inki-document`, it logs into that run's existing `review/` subdirectory (one file per fix-loop round) instead of creating its own run directory.
 
 ## Step 1: Resolve target to a set of files
 
-Resolve the target by following `../inki-references/references/target-resolver.md`. It accepts any of: a local path or directory, a bare markdown filename, a GitHub PR (number, `#number`, or URL), a docs.strapi.io URL, pasted Markdown content, or nothing (changed files on the current branch).
+Resolve the target by following `../inki-references/target-resolver.md`. It accepts any of: a local path or directory, a bare markdown filename, a GitHub PR (number, `#number`, or URL), a docs.strapi.io URL, pasted Markdown content, or nothing (changed files on the current branch).
 
 The resolver returns:
 

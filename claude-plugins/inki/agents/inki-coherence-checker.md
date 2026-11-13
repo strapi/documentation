@@ -20,9 +20,9 @@ You check whether ONE Strapi documentation page is coherent with the rest of the
 
 2. Identify related pages by:
    - Following the links the target page contains.
-   - Searching `claude-plugins/inki/skills/inki-references/references/` and the repo's `docusaurus/static/llms.txt` for entries on the same topic.
+   - Searching `claude-plugins/inki/skills/inki-references/` and the repo's `docusaurus/static/llms.txt` for entries on the same topic.
 
-3. Read `claude-plugins/inki/skills/inki-references/references/prompts/integrity-coherence-checker.md` and apply it as your rubric. Follow it exactly.
+3. Read `claude-plugins/inki/skills/inki-references/prompts/integrity-coherence-checker.md` and apply it as your rubric. Follow it exactly.
 
 4. Compare the target against each related page: terminology drift, contradictory steps, links that point to moved/renamed pages, duplicated-but-divergent explanations.
 

@@ -9,11 +9,11 @@ user-invocable: true
 
 ## Step 0: Parse arguments
 
-If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/references/help.md`. Do not run the skill.
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/help.md`. Do not run the skill.
 
 Otherwise, from `$ARGUMENTS`, detect the autonomy flag anywhere in the list: `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the brief.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-write`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-write`), write into that run's existing directory instead of creating a new one.
 
 ## Step 1: Read the brief
 
@@ -21,11 +21,11 @@ The remaining `$ARGUMENTS` is either inline text or a path to a `.md` file conta
 
 ## Step 2: Pick the template
 
-Decide which template applies (feature, plugin, guide, API, configuration, breaking-change) based on the brief. Read the relevant template at `../inki-references/references/templates/<template>-template.md`.
+Decide which template applies (feature, plugin, guide, API, configuration, breaking-change) based on the brief. Read the relevant template at `../inki-references/templates/<template>-template.md`.
 
 ## Step 3: Apply the migrated outliner prompts
 
-Read `../inki-references/references/prompts/outliner.md` and `../inki-references/references/prompts/outline-generator.md`. Use them as system prompts to produce an outline.
+Read `../inki-references/prompts/outliner.md` and `../inki-references/prompts/outline-generator.md`. Use them as system prompts to produce an outline.
 
 ## Step 4: Show the outline for approval
 

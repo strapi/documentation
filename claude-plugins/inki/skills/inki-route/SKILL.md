@@ -20,7 +20,7 @@ Covers the two repos documented on docs.strapi.io: `strapi/strapi` (the CMS, rou
 
 Determine `REPO` (`strapi/strapi` or `strapi/cloud`) from the URL or an explicit `owner/repo` token; default to `strapi/strapi` for a bare number. Extract the trailing digits to obtain the PR number (regex `[0-9]+$` after stripping a trailing `/files`, `/commits`, etc.). If no numeric PR ID can be extracted, report the error and stop. If `REPO` is neither `strapi/strapi` nor `strapi/cloud`, report that the repo is not documented on docs.strapi.io and stop.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-research`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-research`), write into that run's existing directory instead of creating a new one.
 
 ## Step 1: Fetch the PR
 
@@ -28,7 +28,7 @@ Fetch with `gh pr view <num> --repo <REPO> --json title,body,files,labels`.
 
 ## Step 2: Apply the migrated router prompt
 
-Read `../inki-references/references/prompts/router.md`. Use it as the system prompt over the PR data. Target `docs/cms/` for a `strapi/strapi` PR and `docs/cloud/` for a `strapi/cloud` PR.
+Read `../inki-references/prompts/router.md`. Use it as the system prompt over the PR data. Target `docs/cms/` for a `strapi/strapi` PR and `docs/cloud/` for a `strapi/cloud` PR.
 
 ## Step 3: Report
 

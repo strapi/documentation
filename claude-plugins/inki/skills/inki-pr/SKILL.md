@@ -15,7 +15,7 @@ user-invocable: true
 
 ## Step 1: Apply shared PR rules
 
-Read and follow `../inki-references/references/shared/pr-rules.md` for: gathering context, analyzing changes, generating the title (delegates to `../inki-references/references/shared/pr-title-rules.md`), generating the description (delegates to `../inki-references/references/shared/pr-description-rules.md`), showing the plan, and creating the PR.
+Read and follow `../inki-references/shared/pr-rules.md` for: gathering context, analyzing changes, generating the title (delegates to `../inki-references/shared/pr-title-rules.md`), generating the description (delegates to `../inki-references/shared/pr-description-rules.md`), showing the plan, and creating the PR.
 
 ## Step 2: Add Vercel preview link
 

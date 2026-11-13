@@ -11,11 +11,11 @@ user-invocable: true
 
 `$ARGUMENTS` is a relative path to a documentation page.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-review`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Apply the migrated outline-ux-analyzer prompt
 
-Read `../inki-references/references/prompts/outline-ux-analyzer.md` and use it as the system prompt over the target.
+Read `../inki-references/prompts/outline-ux-analyzer.md` and use it as the system prompt over the target.
 
 ## Step 3: Report
 

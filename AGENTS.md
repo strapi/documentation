@@ -17,7 +17,7 @@ The same instructions are prepended to every generated agent-facing file (`llms.
 ## Scope and precedence
 
 - This file applies to the entire repository.
-- Area‑specific AGENTS files (in `claude-plugins/inki/skills/inki-references/references/authoring/`) may add or override rules for their scope.
+- Area‑specific AGENTS files (in `claude-plugins/inki/skills/inki-references/authoring/`) may add or override rules for their scope.
 
 ## Project overview
 
@@ -33,7 +33,7 @@ Before writing, reviewing, or submitting documentation in this repository, use I
 
 Inki skills are named `inki-<skill>` and are linked into `.claude/skills/`, `.agents/skills/`, and `.cursor/skills/`, so agents that read these folders discover them on their own. If your tool does not read any of them, the sources are in `claude-plugins/inki/skills/<skill>/SKILL.md`: pick one from the `description` in its frontmatter, treat `$ARGUMENTS` as the arguments the user gave, and resolve relative paths from the directory of the `SKILL.md` file. When a skill dispatches an `inki-<name>` agent your tool does not provide, follow `claude-plugins/inki/agents/inki-<name>.md` instead.
 
-After adding, renaming, or removing a skill or an agent, run `claude-plugins/inki/skills/inki-scripts/scripts/link-skills.sh` and commit the links.
+After adding, renaming, or removing a skill or an agent, run `claude-plugins/inki/skills/inki-scripts/link-skills.sh` and commit the links.
 
 ## Development commands and prerequisites
 
@@ -101,9 +101,9 @@ Path‑based policy (applies to folders and all subfolders):
 ### Key files
 - AI toolbar: `docusaurus/src/components/AiToolbar/openLLM.js`, `.../config/aiToolsConfig.js`, `.../config/aiPromptTemplates.js`
 - Generators/validators: `docusaurus/scripts/generate-llms-code.js`, `docusaurus/scripts/generate-llms.js`, `docusaurus/scripts/validate-prompts.js`
-- Authoring templates: `claude-plugins/inki/skills/inki-references/references/templates/*.md` (see `claude-plugins/inki/skills/inki-references/references/templates/README.md`)
-- Agent prompts: `claude-plugins/inki/skills/inki-references/references/prompts/` (see table in Documentation Review System section)
-- Components guidance: `claude-plugins/inki/skills/inki-references/references/templates/components/tabs.md` (Tabs/TabItem rules)
+- Authoring templates: `claude-plugins/inki/skills/inki-references/templates/*.md` (see `claude-plugins/inki/skills/inki-references/templates/README.md`)
+- Agent prompts: `claude-plugins/inki/skills/inki-references/prompts/` (see table in Documentation Review System section)
+- Components guidance: `claude-plugins/inki/skills/inki-references/templates/components/tabs.md` (Tabs/TabItem rules)
 - Configuration: `docusaurus.config.js`, `sidebars.js`, `package.json`
 
 ## Writing guidelines and content validation
@@ -130,34 +130,34 @@ Path‑based policy (applies to folders and all subfolders):
 
 ### Directory of AGENTS guides
 
-- CMS (canonical): `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.md`
-- CMS – How‑to Guides: `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.guides.md`
-- CMS – API docs: `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.api.md`
-- CMS – Configurations: `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.configurations.md`
-- CMS – Features: `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.features.md`
-- CMS – Plugins: `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.plugins.md`
-- Cloud docs: `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cloud.md`
-- Snippets: `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.snippets.md`
+- CMS (canonical): `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.md`
+- CMS – How‑to Guides: `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.guides.md`
+- CMS – API docs: `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.api.md`
+- CMS – Configurations: `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.configurations.md`
+- CMS – Features: `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.features.md`
+- CMS – Plugins: `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.plugins.md`
+- Cloud docs: `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cloud.md`
+- Snippets: `claude-plugins/inki/skills/inki-references/authoring/AGENTS.snippets.md`
 
-The `claude-plugins/inki/skills/inki-references/references/templates/README.md` explains the purpose of the templates directory (authoring skeletons) and lists all templates with links.
+The `claude-plugins/inki/skills/inki-references/templates/README.md` explains the purpose of the templates directory (authoring skeletons) and lists all templates with links.
 
 ### Specialized prompts
 
-Located in `claude-plugins/inki/skills/inki-references/references/prompts/`. Cursor IDE wrappers are in `.cursor/rules/`.
+Located in `claude-plugins/inki/skills/inki-references/prompts/`. Cursor IDE wrappers are in `.cursor/rules/`.
 
 | Prompt | Path | Purpose |
 |--------|------|---------|
-| **Orchestrator** | `claude-plugins/inki/skills/inki-references/references/prompts/orchestrator.md` | Coordinates Review and Create workflows |
-| **Router** | `claude-plugins/inki/skills/inki-references/references/prompts/router.md` | Identifies doc type, determines placement, loads template and authoring guide |
-| **Outliner** | `claude-plugins/inki/skills/inki-references/references/prompts/outliner.md` | Routes to Outline Checker, UX Analyzer, or Outline Generator |
-| **Outline Checker** | `claude-plugins/inki/skills/inki-references/references/prompts/outline-checker.md` | Ensures template compliance, frontmatter, heading hierarchy |
-| **Outline UX Analyzer** | `claude-plugins/inki/skills/inki-references/references/prompts/outline-ux-analyzer.md` | Checks reader experience, section order, cognitive load |
-| **Outline Generator** | `claude-plugins/inki/skills/inki-references/references/prompts/outline-generator.md` | Creates outlines from source material (Notion, Jira, specs) |
-| **Style Checker** | `claude-plugins/inki/skills/inki-references/references/prompts/style-checker.md` | Ensures compliance to 12 Rules of Technical Writing |
-| **Drafter** | `claude-plugins/inki/skills/inki-references/references/prompts/drafter.md` | Drafts documentation based on inputs from Router and Outliner |
-| **Integrity Checker** | `claude-plugins/inki/skills/inki-references/references/prompts/integrity-checker.md` | Coordinates technical verification (code examples, cross-page coherence) |
+| **Orchestrator** | `claude-plugins/inki/skills/inki-references/prompts/orchestrator.md` | Coordinates Review and Create workflows |
+| **Router** | `claude-plugins/inki/skills/inki-references/prompts/router.md` | Identifies doc type, determines placement, loads template and authoring guide |
+| **Outliner** | `claude-plugins/inki/skills/inki-references/prompts/outliner.md` | Routes to Outline Checker, UX Analyzer, or Outline Generator |
+| **Outline Checker** | `claude-plugins/inki/skills/inki-references/prompts/outline-checker.md` | Ensures template compliance, frontmatter, heading hierarchy |
+| **Outline UX Analyzer** | `claude-plugins/inki/skills/inki-references/prompts/outline-ux-analyzer.md` | Checks reader experience, section order, cognitive load |
+| **Outline Generator** | `claude-plugins/inki/skills/inki-references/prompts/outline-generator.md` | Creates outlines from source material (Notion, Jira, specs) |
+| **Style Checker** | `claude-plugins/inki/skills/inki-references/prompts/style-checker.md` | Ensures compliance to 12 Rules of Technical Writing |
+| **Drafter** | `claude-plugins/inki/skills/inki-references/prompts/drafter.md` | Drafts documentation based on inputs from Router and Outliner |
+| **Integrity Checker** | `claude-plugins/inki/skills/inki-references/prompts/integrity-checker.md` | Coordinates technical verification (code examples, cross-page coherence) |
 
-Shared resources: `claude-plugins/inki/skills/inki-references/references/prompts/shared/github-mcp-usage.md` (how to fetch PR content using GitHub MCP tools).
+Shared resources: `claude-plugins/inki/skills/inki-references/prompts/shared/github-mcp-usage.md` (how to fetch PR content using GitHub MCP tools).
 
 ### Workflows
 
@@ -178,7 +178,7 @@ These prompts are designed for use in:
 - **Cursor IDE**: Use the `.cursor/rules/*.mdc` wrappers
 - **Other AI tools (Codex, Copilot, Gemini CLI, Cline, Windsurf…)**: Follow the Inki skills directly (see the Inki section above), or use the prompts as system prompts
 
-See `claude-plugins/inki/skills/inki-references/references/prompts/README.md` for detailed usage instructions.
+See `claude-plugins/inki/skills/inki-references/prompts/README.md` for detailed usage instructions.
 
 ## PR, branch, and git rules
 

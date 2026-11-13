@@ -11,7 +11,7 @@ user-invocable: true
 
 ## Step 1: Apply shared push rules
 
-Read and follow `../inki-references/references/shared/push-rules.md` for: gathering state, safety checks, upstream status, showing the plan, and executing the push.
+Read and follow `../inki-references/shared/push-rules.md` for: gathering state, safety checks, upstream status, showing the plan, and executing the push.
 
 ## Step 2: Branch name validation (extra, doc-specific)
 

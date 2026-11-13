@@ -314,7 +314,7 @@ Create a new branch in strapi/documentation with auto-detected prefix (cms/, clo
 
 ### `/inki-commit`
 
-Stage and commit documentation changes in strapi/documentation. Enforces [git-rules.md](./skills/inki-references/references/git-rules.md), protected paths, and branch prefix detection.
+Stage and commit documentation changes in strapi/documentation. Enforces [git-rules.md](./skills/inki-references/git-rules.md), protected paths, and branch prefix detection.
 
 ```
 /inki-commit [optional commit message]
@@ -322,7 +322,7 @@ Stage and commit documentation changes in strapi/documentation. Enforces [git-ru
 
 ### `/inki-push`
 
-Push the current branch in strapi/documentation to origin. Validates branch name against [git-rules.md](./skills/inki-references/references/git-rules.md) conventions.
+Push the current branch in strapi/documentation to origin. Validates branch name against [git-rules.md](./skills/inki-references/git-rules.md) conventions.
 
 ```
 /inki-push
@@ -330,7 +330,7 @@ Push the current branch in strapi/documentation to origin. Validates branch name
 
 ### `/inki-pr`
 
-Create a pull request on strapi/documentation following [git-rules.md](./skills/inki-references/references/git-rules.md). Strict flat-text description, no headings, no test plan.
+Create a pull request on strapi/documentation following [git-rules.md](./skills/inki-references/git-rules.md). Strict flat-text description, no headings, no test plan.
 
 ```
 /inki-pr [optional issue reference, e.g. 'Fixes #2143']
@@ -338,7 +338,7 @@ Create a pull request on strapi/documentation following [git-rules.md](./skills/
 
 ### `/inki-pr-fix`
 
-Rewrite the title or description/body of one or more open PRs on strapi/documentation to match [git-rules.md](./skills/inki-references/references/git-rules.md). Strict one-by-one confirmation, or auto-edit with --non-interactive.
+Rewrite the title or description/body of one or more open PRs on strapi/documentation to match [git-rules.md](./skills/inki-references/git-rules.md). Strict one-by-one confirmation, or auto-edit with --non-interactive.
 
 ```
 /inki-pr-fix <title|description|body> [--non-interactive] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ...

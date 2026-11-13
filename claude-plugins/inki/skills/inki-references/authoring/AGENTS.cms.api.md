@@ -14,8 +14,8 @@ Frontmatter (mandatory)
 - Optional: `displayed_sidebar`, `sidebar_label` as needed by navigation.
 
 Templates
-- Start from `claude-plugins/inki/skills/inki-references/references/templates/api-template.md` to align sections and example layout.
-- See `claude-plugins/inki/skills/inki-references/references/templates/README.md` for a quick catalog of available templates with paths and purposes.
+- Start from `claude-plugins/inki/skills/inki-references/templates/api-template.md` to align sections and example layout.
+- See `claude-plugins/inki/skills/inki-references/templates/README.md` for a quick catalog of available templates with paths and purposes.
 
 API Overview Pages (e.g., Content API)
 1) H1 title — matches `title` frontmatter.
@@ -50,7 +50,7 @@ Heading Conventions
 
 Component Patterns by Page Type
 
-API pages use custom MDX components that vary by sub-section. When editing an existing page, always match the page's established patterns. `<Endpoint>` is the current component for all reference endpoints. See `claude-plugins/inki/skills/inki-references/references/templates/components/endpoint.md` for the full `<Endpoint>` contract and copy-pasteable examples.
+API pages use custom MDX components that vary by sub-section. When editing an existing page, always match the page's established patterns. `<Endpoint>` is the current component for all reference endpoints. See `claude-plugins/inki/skills/inki-references/templates/components/endpoint.md` for the full `<Endpoint>` contract and copy-pasteable examples.
 
 `<Endpoint>`, `<StepDetails>`, and `<NextSteps>` are registered as global MDX components in `docusaurus/src/theme/MDXComponents.js` (like `<Tabs>`, `<Annotation>`, and `<ApiCall>`), so they are used directly with no import line.
 

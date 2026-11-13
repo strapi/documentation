@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../../../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
 SKILL_DIRS=(.claude/skills .agents/skills .cursor/skills)
 AGENT_DIRS=(.claude/agents)
 
@@ -73,7 +73,7 @@ done
 
 if $CHECK; then
   if [ "$PROBLEMS" -gt 0 ]; then
-    echo "$PROBLEMS link problem(s). Run claude-plugins/inki/skills/inki-scripts/scripts/link-skills.sh to fix."
+    echo "$PROBLEMS link problem(s). Run claude-plugins/inki/skills/inki-scripts/link-skills.sh to fix."
     exit 1
   fi
   echo "All Inki links are in place."

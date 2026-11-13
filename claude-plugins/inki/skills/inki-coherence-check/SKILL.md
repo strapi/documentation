@@ -13,11 +13,11 @@ For the target file, find related pages by:
 - Walking links from the target file
 - Searching `docusaurus/static/llms.txt` for entries on the same topic
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-review`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Apply the migrated coherence-checker prompt
 
-Read `../inki-references/references/prompts/integrity-coherence-checker.md` and use it as the system prompt. Compare the target against each related page.
+Read `../inki-references/prompts/integrity-coherence-checker.md` and use it as the system prompt. Compare the target against each related page.
 
 ## Step 3: Report
 

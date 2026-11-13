@@ -27,7 +27,7 @@ PR_NUM="$2"
 
 [[ "$PR_NUM" =~ ^[0-9]+$ ]] || { echo "PR number must be numeric: $PR_NUM" >&2; exit 1; }
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../../../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
 WORKTREE_DIR="/tmp/inki-review-pr-${PR_NUM}"
 TMP_BRANCH="inki-tmp-review-${PR_NUM}"
 

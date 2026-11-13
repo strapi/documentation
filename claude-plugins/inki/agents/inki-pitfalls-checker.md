@@ -17,7 +17,7 @@ You audit ONE Strapi documentation page against a fixed catalog of documented mi
 
 1. Read the target page (`TARGET`).
 
-2. Read the catalog at `claude-plugins/inki/skills/inki-references/references/prompts/integrity-known-pitfalls.md`. It is organized by category, with tables mapping each wrong pattern to its correct form plus a short context note.
+2. Read the catalog at `claude-plugins/inki/skills/inki-references/prompts/integrity-known-pitfalls.md`. It is organized by category, with tables mapping each wrong pattern to its correct form plus a short context note.
 
 3. For each catalog entry, check whether the target file exhibits the hallucinated/outdated pattern. Cite the line or section when it does.
 

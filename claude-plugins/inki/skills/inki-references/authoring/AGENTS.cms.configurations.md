@@ -37,7 +37,7 @@ Scaling Patterns
 Building Blocks
 Use these recurring patterns within H2 sections as applicable:
 
-- **Parameter tables**: Columns `Parameter`, `Description`, `Type`, `Required`, `Default`. `Type` and `Required` are mandatory (see `claude-plugins/inki/skills/inki-references/references/templates/components/options-table.md`). Use a single table for flat option lists; use H3 subsections for nested objects.
+- **Parameter tables**: Columns `Parameter`, `Description`, `Type`, `Required`, `Default`. `Type` and `Required` are mandatory (see `claude-plugins/inki/skills/inki-references/templates/components/options-table.md`). Use a single table for flat option lists; use H3 subsections for nested objects.
 - **Environment variable tables**: Columns `Variable`, `Purpose`, `Type`, `Default`. Include a sample `.env` block when relevant.
 - **Code examples**: Always include a file path in the code fence title (e.g., `title="/config/server.js"`). Use `<Tabs groupId="js-ts">` for JavaScript/TypeScript variants.
 - **Per-environment overrides**: Show `/config/env/{environment}/...` files when the configuration supports environment-specific values.
@@ -50,8 +50,8 @@ Heading Conventions
 - Use sentence case for all headings.
 
 Templates
-- Start from `claude-plugins/inki/skills/inki-references/references/templates/configuration-template.md` for frontmatter, H1/TL;DR placement, and building block examples.
-- Quick overview of all templates (paths and purposes): `claude-plugins/inki/skills/inki-references/references/templates/README.md`.
+- Start from `claude-plugins/inki/skills/inki-references/templates/configuration-template.md` for frontmatter, H1/TL;DR placement, and building block examples.
+- Quick overview of all templates (paths and purposes): `claude-plugins/inki/skills/inki-references/templates/README.md`.
 
 Quality Checklist (before commit)
 - TL;DR present and precise about file paths and scope.

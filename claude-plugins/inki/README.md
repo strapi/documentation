@@ -215,13 +215,13 @@ Find out what already exists, where to put new content, what's missing.
 
 ## How it integrates with this repo
 
-- The canonical rules (`git-rules.md`, `12-rules-of-technical-writing.md`) live at the repo root. They are auto-synced into `claude-plugins/inki/skills/inki-references/references/` by a GitHub Action.
-- The agent prompts, templates, and authoring guides live inside the plugin at `claude-plugins/inki/skills/inki-references/references/`. They used to live in `agents/`; that folder now contains only a pointer README.
+- The canonical rules (`git-rules.md`, `12-rules-of-technical-writing.md`) live at the repo root. They are auto-synced into `claude-plugins/inki/skills/inki-references/` by a GitHub Action.
+- The agent prompts, templates, and authoring guides live inside the plugin at `claude-plugins/inki/skills/inki-references/`. They used to live in `agents/`; that folder now contains only a pointer README.
 
 ## Editing rules
 
-- Edit the canonical rules at the **repo root**, not in `claude-plugins/inki/skills/inki-references/references/`. The plugin copies are synced automatically. CI fails if you edit only the plugin copies.
-- Edit agent prompts, templates, and authoring guides inside `claude-plugins/inki/skills/inki-references/references/`. These are now the canonical home.
+- Edit the canonical rules at the **repo root**, not in `claude-plugins/inki/skills/inki-references/`. The plugin copies are synced automatically. CI fails if you edit only the plugin copies.
+- Edit agent prompts, templates, and authoring guides inside `claude-plugins/inki/skills/inki-references/`. These are now the canonical home.
 
 ## For plugin developers: refreshing changes
 
@@ -236,7 +236,7 @@ To pick up local edits to skill files, run this 4-step cycle:
 /reload-plugins
 ```
 
-Inside this repository you do not need it: the skills folders link to the source, so a new session picks up your edits. After adding, renaming, or removing a skill or an agent, run `claude-plugins/inki/skills/inki-scripts/scripts/link-skills.sh` and commit the links.
+Inside this repository you do not need it: the skills folders link to the source, so a new session picks up your edits. After adding, renaming, or removing a skill or an agent, run `claude-plugins/inki/skills/inki-scripts/link-skills.sh` and commit the links.
 
 This cycle is only needed during plugin development. End users running `/plugin install` get the latest version whenever they update the marketplace.
 

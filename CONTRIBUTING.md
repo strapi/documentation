@@ -130,13 +130,13 @@ There is nothing to install. The Inki skills are linked into `.claude/skills/`, 
 
 ### Editing canonical rules
 
-`git-rules.md` and `12-rules-of-technical-writing.md` at the repository root are the **canonical** versions. Copies live in `claude-plugins/inki/skills/inki-references/references/` for the plugin's autonomy, and are auto-synced by a GitHub Action on every PR.
+`git-rules.md` and `12-rules-of-technical-writing.md` at the repository root are the **canonical** versions. Copies live in `claude-plugins/inki/skills/inki-references/` for the plugin's autonomy, and are auto-synced by a GitHub Action on every PR.
 
-Always edit the root file, never the copy inside `claude-plugins/inki/skills/inki-references/references/`. CI rejects PRs that modify only the plugin copies.
+Always edit the root file, never the copy inside `claude-plugins/inki/skills/inki-references/`. CI rejects PRs that modify only the plugin copies.
 
 ### Editing agent prompts, templates, and authoring guides
 
-These now live inside the plugin at `claude-plugins/inki/skills/inki-references/references/prompts/`, `references/templates/`, and `references/authoring/`. The historical `agents/` folder contains only a pointer README.
+These now live inside the plugin at `claude-plugins/inki/skills/inki-references/prompts/`, `references/templates/`, and `references/authoring/`. The historical `agents/` folder contains only a pointer README.
 
 ## Review and management of pull requests
 

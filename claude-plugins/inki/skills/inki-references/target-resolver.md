@@ -51,11 +51,11 @@ Operates on the current working tree. `CLEANUP` is empty.
 4. Check the PR out in a temporary worktree so sub-skills see the PR's version, not `main`:
 
    ```bash
-   WORKTREE=$(./claude-plugins/inki/skills/inki-scripts/scripts/pr-worktree.sh create <num>)
+   WORKTREE=$(./claude-plugins/inki/skills/inki-scripts/pr-worktree.sh create <num>)
    ```
 
 5. `FILES` = each path from step 3, prefixed with `$WORKTREE/`.
-6. `CLEANUP` = `./claude-plugins/inki/skills/inki-scripts/scripts/pr-worktree.sh destroy <num>`.
+6. `CLEANUP` = `./claude-plugins/inki/skills/inki-scripts/pr-worktree.sh destroy <num>`.
 7. Detect upstream code PRs referenced in the title/body and populate `UPSTREAM_PRS` (see "Detecting upstream code PRs" below).
 
 `SCOPE` = `PR #<num> (<count> doc file[s])`. When `UPSTREAM_PRS` is non-empty, append ` — documents <repo>#<number>[, …]` so the report header makes the source of truth explicit.
@@ -69,14 +69,14 @@ A `docs.strapi.io` URL points at the *published* page, so the review must run ag
 3. Create the worktree (it fetches `origin/main` first); sub-skills see the published version, not the current branch. This never touches the working tree, so no stash or commit is needed first:
 
    ```bash
-   WORKTREE=$(./claude-plugins/inki/skills/inki-scripts/scripts/main-worktree.sh create)
+   WORKTREE=$(./claude-plugins/inki/skills/inki-scripts/main-worktree.sh create)
    ```
 
 4. The source file is that route under `$WORKTREE/docusaurus/docs/`, trying `.md` then `.mdx`:
    - `$WORKTREE/docusaurus/docs/cms/features/strapi-mcp-server.md`
    - if absent, `…/strapi-mcp-server.mdx`
    - if the route ends in a segment that is a directory, try `…/<segment>/index.md` / `index.mdx`.
-5. `FILES` = the first candidate that exists. `CLEANUP` = `./claude-plugins/inki/skills/inki-scripts/scripts/main-worktree.sh destroy`.
+5. `FILES` = the first candidate that exists. `CLEANUP` = `./claude-plugins/inki/skills/inki-scripts/main-worktree.sh destroy`.
 6. If the local working tree (in the main checkout) has uncommitted changes to the same path, note in the report header that the review ran against `origin/main` and that those local uncommitted changes were **not** included.
 7. If no candidate exists on `origin/main` (e.g. the page is generated, or the route uses a sidebar alias), destroy the worktree and fall back to fetching the rendered page with WebFetch, treating the result as **pasted content** (type 6). Note in the report that the review ran against the published HTML, not local source.
 

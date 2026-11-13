@@ -41,4 +41,4 @@ Quality Checklist (before commit)
 
 Templates
 - When a snippet evolves into a full page, prefer starting from a suitable CMS template:
-- For a compact overview of all templates with paths and purposes, see `claude-plugins/inki/skills/inki-references/references/templates/README.md`.
+- For a compact overview of all templates with paths and purposes, see `claude-plugins/inki/skills/inki-references/templates/README.md`.

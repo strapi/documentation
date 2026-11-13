@@ -20,7 +20,7 @@ If neither is available, ask the user for a path or fall back to GitHub fetches.
 
 `$ARGUMENTS` is a Strapi feature name (e.g., "Users & Permissions plugin", "Document Service API"). Resolve to a set of source files using one of the sources listed in Prerequisites.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-research`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-research`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Enumerate the public surface
 

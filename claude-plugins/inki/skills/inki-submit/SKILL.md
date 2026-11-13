@@ -9,11 +9,11 @@ user-invocable: true
 
 ## Step 0: Parse arguments
 
-If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/references/help.md`. Do not run the workflow.
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/help.md`. Do not run the workflow.
 
 Otherwise, from `$ARGUMENTS`, detect the autonomy flag anywhere in the list: `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the optional issue reference passed through to `/inki-pr`.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-document`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-document`), write into that run's existing directory instead of creating a new one.
 
 ## Workflow
 

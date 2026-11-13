@@ -13,23 +13,23 @@ It is a thin orchestrator: each phase is delegated to its existing top-level ski
 
 ## Step 0: Parse arguments
 
-If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/references/help.md`. Do not run the workflow.
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../inki-references/help.md`. Do not run the workflow.
 
 Otherwise, from `$ARGUMENTS`, detect these flags anywhere in the list, then remove them:
 
 - `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent) → set `AUTO=true`. Chains all phases without pausing AND approves the review-fix loop in Step 4 (see below).
 - `--max-review-fix-rounds <N>` (canonical), alias `--fix-rounds <N>` (both equivalent) → set `MAX_FIX_ROUNDS=<N>`. Caps how many review→fix→re-review iterations the review phase (Step 4) runs; this skill passes the value through to `/inki-review`. Defaults to `3` if not given.
-- `--no-log`, `--log-dir <path>`, `--short-log` → logging flags, handled per `../inki-references/references/logging.md`.
+- `--no-log`, `--log-dir <path>`, `--short-log` → logging flags, handled per `../inki-references/logging.md`.
 
 What remains is the **subject**. If no subject remains, ask the user what they want to document and stop.
 
 ## Step 0b: Set up logging
 
-Unless `--no-log` was passed, set up the run log by following `../inki-references/references/logging.md`: resolve the base directory, create the run directory `YYYY-MM-DD-<slug>` from `SUBJECT_LABEL` (resolved in Step 1), and write each phase's report into its subdirectory as that phase completes. If `--no-log` was passed, state once that nothing will be persisted. Logging is best-effort and never aborts the run.
+Unless `--no-log` was passed, set up the run log by following `../inki-references/logging.md`: resolve the base directory, create the run directory `YYYY-MM-DD-<slug>` from `SUBJECT_LABEL` (resolved in Step 1), and write each phase's report into its subdirectory as that phase completes. If `--no-log` was passed, state once that nothing will be persisted. Logging is best-effort and never aborts the run.
 
 ## Step 1: Resolve the subject to a brief
 
-Resolve the subject by following `../inki-references/references/subject-resolver.md`. It accepts keywords, a Strapi PR (URL, `owner/repo number`, a bare number, or prose naming a PR and repo), a Notion page URL, a Linear issue, a PDF (path or URL), a local text/markdown file, or pasted content.
+Resolve the subject by following `../inki-references/subject-resolver.md`. It accepts keywords, a Strapi PR (URL, `owner/repo number`, a bare number, or prose naming a PR and repo), a Notion page URL, a Linear issue, a PDF (path or URL), a local text/markdown file, or pasted content.
 
 The resolver returns:
 

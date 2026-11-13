@@ -28,8 +28,8 @@ These fields are always present, regardless of mode:
 ```yaml
 # From the Router
 doc_type: feature | plugin | configuration | guide | api | ...
-template: claude-plugins/inki/skills/inki-references/references/templates/feature-template.md    # or null
-guide: claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.features.md   # or null
+template: claude-plugins/inki/skills/inki-references/templates/feature-template.md    # or null
+guide: claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.features.md   # or null
 key_topics: [topic1, topic2]
 
 # Target being processed

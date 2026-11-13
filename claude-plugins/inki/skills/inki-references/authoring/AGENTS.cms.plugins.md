@@ -2,7 +2,7 @@
 
 Scope
 - Applies to pages under `docusaurus/docs/cms/plugins/` that document a single plugin: `documentation.md`, `graphql.md`, `sentry.md`, `byok.md`.
-- Does NOT apply to the how-to pages that sit in the same directory and the same Plugins sidebar category but explain how to install plugins rather than documenting one: `installing-plugins-via-marketplace.md` and `installing-enterprise-plugins.md`. Those follow `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.guides.md` and the guide template. They carry no identity card and no package name, and flagging them for it is a false positive.
+- Does NOT apply to the how-to pages that sit in the same directory and the same Plugins sidebar category but explain how to install plugins rather than documenting one: `installing-plugins-via-marketplace.md` and `installing-enterprise-plugins.md`. Those follow `claude-plugins/inki/skills/inki-references/authoring/AGENTS.cms.guides.md` and the guide template. They carry no identity card and no package name, and flagging them for it is a false positive.
 - Reuse repo‑wide rules for TL;DR, callouts, and code snippets; this guide encodes structure/headings specific to plugins.
 
 Purpose
@@ -35,19 +35,19 @@ Required Section Order
      - “Admin panel settings” — numbered steps, UI paths.
      - “Code-based configuration” — show `config/plugins.(js|ts)` (and other files) with code fences and file paths.
    - Include environment notes (e.g., disable in non‑production) under dedicated H3s when applicable.
-   - Document the options in a table with mandatory `Type` and `Required` columns: `Option | Type | Required | Description`. See `claude-plugins/inki/skills/inki-references/references/templates/components/options-table.md`.
+   - Document the options in a table with mandatory `Type` and `Required` columns: `Option | Type | Required | Description`. See `claude-plugins/inki/skills/inki-references/templates/components/options-table.md`.
 
-Tabs reminder (canonical rules: `claude-plugins/inki/skills/inki-references/references/templates/components/tabs.md`)
+Tabs reminder (canonical rules: `claude-plugins/inki/skills/inki-references/templates/components/tabs.md`)
 - Installation: if both package managers are shown, use Tabs with `groupId="yarn-npm"` and values `yarn`/`npm` (labels `Yarn`/`NPM`).
 - Code examples: when showing both JS and TS, use Tabs with `groupId="js-ts"` and values `js`/`ts` (labels `JavaScript`/`TypeScript`).
 
 6) Usage (H2)
    - Explain how to use the plugin after configuration; split into H3 tasks (e.g., “Regenerating documentation”, “GraphQL API”).
    - Add API‑specific sub‑sections when relevant (REST/GraphQL endpoints, admin UI tools).
-   - Document REST endpoints with the modern `<Endpoint>` component (`kind="http"`) and Document Service methods with `<Endpoint kind="js">`. See `claude-plugins/inki/skills/inki-references/references/templates/components/endpoint.md`. The legacy `<ApiCall>`/`<Request>`/`<Response>` trio is deprecated and allowed only on the not‑yet‑migrated `docs/cms/plugins/graphql.md` page.
+   - Document REST endpoints with the modern `<Endpoint>` component (`kind="http"`) and Document Service methods with `<Endpoint kind="js">`. See `claude-plugins/inki/skills/inki-references/templates/components/endpoint.md`. The legacy `<ApiCall>`/`<Request>`/`<Response>` trio is deprecated and allowed only on the not‑yet‑migrated `docs/cms/plugins/graphql.md` page.
 
 7) Troubleshooting (H2, optional)
-   - Heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list: the symptom in bold, then the cause, then the fix. No H3 per symptom, no table. See `claude-plugins/inki/skills/inki-references/references/templates/components/troubleshooting.md`.
+   - Heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list: the symptom in bold, then the cause, then the fix. No H3 per symptom, no table. See `claude-plugins/inki/skills/inki-references/templates/components/troubleshooting.md`.
    - Worth adding whenever installation depends on something outside the project, such as registry access or a provider API key.
 
 8) Uninstallation (H2, optional)
@@ -73,4 +73,4 @@ Quality Checklist (before commit)
 - Links to Marketplace and related docs included.
 
 Templates
-- See `claude-plugins/inki/skills/inki-references/references/templates/plugin-template.md` for a ready‑to‑use skeleton aligned with these conventions.
+- See `claude-plugins/inki/skills/inki-references/templates/plugin-template.md` for a ready‑to‑use skeleton aligned with these conventions.

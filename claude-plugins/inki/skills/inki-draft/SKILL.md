@@ -11,17 +11,17 @@ user-invocable: true
 
 `$ARGUMENTS` is a path to an outline file produced by `/inki-outline`.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-write`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-write`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Load supporting context
 
-- Read the template: `../inki-references/references/templates/<template>-template.md`
-- Read the relevant authoring guide: `../inki-references/references/authoring/AGENTS.<area>.md`
-- Read `../inki-references/references/12-rules-of-technical-writing.md`
+- Read the template: `../inki-references/templates/<template>-template.md`
+- Read the relevant authoring guide: `../inki-references/authoring/AGENTS.<area>.md`
+- Read `../inki-references/12-rules-of-technical-writing.md`
 
 ## Step 3: Apply the migrated drafter prompt
 
-Read `../inki-references/references/prompts/drafter.md`. Use it as the system prompt. Generate the draft, section by section.
+Read `../inki-references/prompts/drafter.md`. Use it as the system prompt. Generate the draft, section by section.
 
 ## Step 4: Save
 

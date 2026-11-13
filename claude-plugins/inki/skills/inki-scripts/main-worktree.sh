@@ -27,7 +27,7 @@ usage() {
 [ $# -eq 1 ] || usage
 ACTION="$1"
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../../../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
 WORKTREE_DIR="/tmp/inki-review-main"
 
 case "$ACTION" in

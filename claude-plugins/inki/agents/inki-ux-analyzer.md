@@ -17,7 +17,7 @@ You evaluate the PEDAGOGICAL experience of one Strapi documentation page: does i
 
 1. Read the target page in full.
 
-2. Read `claude-plugins/inki/skills/inki-references/references/prompts/outline-ux-analyzer.md` and apply it as your rubric. Follow it exactly.
+2. Read `claude-plugins/inki/skills/inki-references/prompts/outline-ux-analyzer.md` and apply it as your rubric. Follow it exactly.
 
 ## Output
 

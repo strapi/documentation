@@ -166,12 +166,12 @@ Each page should primarily serve ONE Diataxis type:
 
 | Path pattern | Type | Template |
 |-------------|------|----------|
-| `cms/features/*` | Feature | `claude-plugins/inki/skills/inki-references/references/templates/feature-template.md` |
-| `cms/plugins/*` | Plugin | `claude-plugins/inki/skills/inki-references/references/templates/plugin-template.md` |
-| `cms/configurations/*` | Configuration | `claude-plugins/inki/skills/inki-references/references/templates/configuration-template.md` |
-| `cms/api/*` | API | `claude-plugins/inki/skills/inki-references/references/templates/api-template.md` |
-| `cms/migration/**/breaking-changes/*` | Breaking Change | `claude-plugins/inki/skills/inki-references/references/templates/breaking-change-template.md` |
-| `**/guides/*` or title starts with "How to" | Guide | `claude-plugins/inki/skills/inki-references/references/templates/guide-template.md` |
+| `cms/features/*` | Feature | `claude-plugins/inki/skills/inki-references/templates/feature-template.md` |
+| `cms/plugins/*` | Plugin | `claude-plugins/inki/skills/inki-references/templates/plugin-template.md` |
+| `cms/configurations/*` | Configuration | `claude-plugins/inki/skills/inki-references/templates/configuration-template.md` |
+| `cms/api/*` | API | `claude-plugins/inki/skills/inki-references/templates/api-template.md` |
+| `cms/migration/**/breaking-changes/*` | Breaking Change | `claude-plugins/inki/skills/inki-references/templates/breaking-change-template.md` |
+| `**/guides/*` or title starts with "How to" | Guide | `claude-plugins/inki/skills/inki-references/templates/guide-template.md` |
 
 ### Override
 

@@ -20,16 +20,16 @@ The dispatching skill passes you:
 
 1. Run the deterministic linter and capture its output:
    ```bash
-   "claude-plugins/inki/skills/inki-scripts/scripts/style-lint.sh" <TARGET>
+   "claude-plugins/inki/skills/inki-scripts/style-lint.sh" <TARGET>
    ```
    Exit codes: `0` clean, `1` errors, `2` warnings only. Capture stdout regardless of exit code.
 
-2. Read `claude-plugins/inki/skills/inki-references/references/prompts/style-checker.md` and apply it as your judgment rubric over the file's content. This is the canonical style-checker prompt and the core of your judgment; follow it exactly. It carries both the 12-Rules detection guidance and the Strapi-specific style rules (e.g. numbers always written as numerals, em-dash exceptions, cross-reference formatting).
+2. Read `claude-plugins/inki/skills/inki-references/prompts/style-checker.md` and apply it as your judgment rubric over the file's content. This is the canonical style-checker prompt and the core of your judgment; follow it exactly. It carries both the 12-Rules detection guidance and the Strapi-specific style rules (e.g. numbers always written as numerals, em-dash exceptions, cross-reference formatting).
 
 3. The style judgment rests on three canonical sources:
    - The style-checker prompt above (rubric).
-   - `claude-plugins/inki/skills/inki-references/references/12-rules-of-technical-writing.md`: the canonical rule set. Read it when a rule in the prompt needs its full definition.
-   - **`STYLE_GUIDE.pdf`**: the authoritative Strapi style guide, especially for content formatting and capitalization/bold usage (Rule 12 of the 12 Rules points to it). Read it from `claude-plugins/inki/skills/inki-references/references/STYLE_GUIDE.pdf` if synced there, otherwise from the repo root `STYLE_GUIDE.pdf`. Consult it for any formatting or capitalization judgment call.
+   - `claude-plugins/inki/skills/inki-references/12-rules-of-technical-writing.md`: the canonical rule set. Read it when a rule in the prompt needs its full definition.
+   - **`STYLE_GUIDE.pdf`**: the authoritative Strapi style guide, especially for content formatting and capitalization/bold usage (Rule 12 of the 12 Rules points to it). Read it from `claude-plugins/inki/skills/inki-references/STYLE_GUIDE.pdf` if synced there, otherwise from the repo root `STYLE_GUIDE.pdf`. Consult it for any formatting or capitalization judgment call.
 
 ## Output
 

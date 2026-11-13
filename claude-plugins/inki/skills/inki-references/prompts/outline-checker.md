@@ -52,14 +52,14 @@ The Outline Checker determines the document type using this priority:
 
 | Path pattern | Document type | Template path |
 |--------------|---------------|---------------|
-| `cms/features/*` | Feature | `claude-plugins/inki/skills/inki-references/references/templates/feature-template.md` |
-| `cms/plugins/*` (not plugins-development), one page per plugin | Plugin | `claude-plugins/inki/skills/inki-references/references/templates/plugin-template.md` |
-| `cms/plugins/installing-*.md` | Guide | `claude-plugins/inki/skills/inki-references/references/templates/guide-template.md` |
-| `cms/configurations/*` | Configuration | `claude-plugins/inki/skills/inki-references/references/templates/configuration-template.md` |
-| `cms/api/*` | API | `claude-plugins/inki/skills/inki-references/references/templates/api-template.md` |
-| `cms/migration/**/breaking-changes/*.md` | Breaking Change | `claude-plugins/inki/skills/inki-references/references/templates/breaking-change-template.md` |
-| `**/guides/*` or title starts with "How to" | Guide | `claude-plugins/inki/skills/inki-references/references/templates/guide-template.md` |
-| `cloud/advanced/*` | Cloud Advanced | `claude-plugins/inki/skills/inki-references/references/templates/cloud-advanced-template.md` |
+| `cms/features/*` | Feature | `claude-plugins/inki/skills/inki-references/templates/feature-template.md` |
+| `cms/plugins/*` (not plugins-development), one page per plugin | Plugin | `claude-plugins/inki/skills/inki-references/templates/plugin-template.md` |
+| `cms/plugins/installing-*.md` | Guide | `claude-plugins/inki/skills/inki-references/templates/guide-template.md` |
+| `cms/configurations/*` | Configuration | `claude-plugins/inki/skills/inki-references/templates/configuration-template.md` |
+| `cms/api/*` | API | `claude-plugins/inki/skills/inki-references/templates/api-template.md` |
+| `cms/migration/**/breaking-changes/*.md` | Breaking Change | `claude-plugins/inki/skills/inki-references/templates/breaking-change-template.md` |
+| `**/guides/*` or title starts with "How to" | Guide | `claude-plugins/inki/skills/inki-references/templates/guide-template.md` |
+| `cloud/advanced/*` | Cloud Advanced | `claude-plugins/inki/skills/inki-references/templates/cloud-advanced-template.md` |
 | No match | General | No specific template — apply general rules only |
 
 ### Outputs
@@ -199,7 +199,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 > **IMPORTANT — Single Source of Truth (SSOT)**
 > 
-> The templates in `claude-plugins/inki/skills/inki-references/references/templates/` are the authoritative source for required sections, components, and structure. Before checking a page against its template, **READ the corresponding template file** to get the exact requirements.
+> The templates in `claude-plugins/inki/skills/inki-references/templates/` are the authoritative source for required sections, components, and structure. Before checking a page against its template, **READ the corresponding template file** to get the exact requirements.
 > 
 > The fallback information below is provided only for cases where templates cannot be accessed. Always prefer the template file.
 
@@ -207,7 +207,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 #### Feature Pages (`cms/features/*`)
 
-**Template (SSOT):** `claude-plugins/inki/skills/inki-references/references/templates/feature-template.md`
+**Template (SSOT):** `claude-plugins/inki/skills/inki-references/templates/feature-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required, immediately after H1
@@ -219,7 +219,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 #### Plugin Pages (`cms/plugins/*`, one page per plugin)
 
-**Template (SSOT):** `claude-plugins/inki/skills/inki-references/references/templates/plugin-template.md`
+**Template (SSOT):** `claude-plugins/inki/skills/inki-references/templates/plugin-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -233,7 +233,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 #### Guide Pages (`**/guides/*` or "How to..." titles)
 
-**Template (SSOT):** `claude-plugins/inki/skills/inki-references/references/templates/guide-template.md`
+**Template (SSOT):** `claude-plugins/inki/skills/inki-references/templates/guide-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -242,15 +242,15 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 **Key rule:** Steps MUST be numbered lists with one action per step.
 
-**Troubleshooting format (all page types):** a Troubleshooting section MUST use the heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list where each entry gives the symptom in bold, then the cause, then the fix. Flag as [warning] a missing icon, a missing introductory sentence, one H3 per symptom, a table, or bold run-in paragraphs without bullets. Rules: `claude-plugins/inki/skills/inki-references/references/templates/components/troubleshooting.md`.
+**Troubleshooting format (all page types):** a Troubleshooting section MUST use the heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list where each entry gives the symptom in bold, then the cause, then the fix. Flag as [warning] a missing icon, a missing introductory sentence, one H3 per symptom, a table, or bold run-in paragraphs without bullets. Rules: `claude-plugins/inki/skills/inki-references/templates/components/troubleshooting.md`.
 
-**Options tables (all page types):** any table listing configuration options or parameters MUST include a `Type` column and a `Required` column. Flag a missing column as [error]. Environment variable tables and component props tables are not concerned. Rules: `claude-plugins/inki/skills/inki-references/references/templates/components/options-table.md`.
+**Options tables (all page types):** any table listing configuration options or parameters MUST include a `Type` column and a `Required` column. Flag a missing column as [error]. Environment variable tables and component props tables are not concerned. Rules: `claude-plugins/inki/skills/inki-references/templates/components/options-table.md`.
 
 ---
 
 #### Configuration Pages (`cms/configurations/*`)
 
-**Template (SSOT):** `claude-plugins/inki/skills/inki-references/references/templates/configuration-template.md`
+**Template (SSOT):** `claude-plugins/inki/skills/inki-references/templates/configuration-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -261,7 +261,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 #### Cloud Advanced Pages (`cloud/advanced/*`)
 
-**Template (SSOT):** `claude-plugins/inki/skills/inki-references/references/templates/cloud-advanced-template.md`
+**Template (SSOT):** `claude-plugins/inki/skills/inki-references/templates/cloud-advanced-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required, immediately after H1
@@ -275,7 +275,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 #### API Pages (`cms/api/*`)
 
-**Template (SSOT):** `claude-plugins/inki/skills/inki-references/references/templates/api-template.md`
+**Template (SSOT):** `claude-plugins/inki/skills/inki-references/templates/api-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -286,7 +286,7 @@ A strong signal that an off-scope section should be its own page: other pages de
 
 #### Breaking Change Pages (`cms/migration/**/breaking-changes/*.md`)
 
-**Template (SSOT):** `claude-plugins/inki/skills/inki-references/references/templates/breaking-change-template.md`
+**Template (SSOT):** `claude-plugins/inki/skills/inki-references/templates/breaking-change-template.md`
 
 **Fallback — Key components:**
 - `import Intro from '/docs/snippets/breaking-change-page-intro.md'` — Required

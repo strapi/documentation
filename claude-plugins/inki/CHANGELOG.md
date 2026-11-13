@@ -7,7 +7,7 @@
 
 - Any agent can now use Inki without installing anything. The skills are linked into `.claude/skills/`, `.agents/skills/`, and `.cursor/skills/`, and the review agents into `.claude/agents/`, so Claude Code, Codex, Cursor, and other agents that read these folders discover them in every clone and worktree. `link-skills.sh` creates the links and checks them with `--check`.
 - Every skill and agent is renamed with an `inki-` prefix (`/inki-review`, `inki-style-checker`…) to avoid collisions with other skills in flat folders. As a Claude Code plugin, they are now called `/inki:inki-<skill>`.
-- `references/` moved to the `inki-references` skill, `scripts/` to the `inki-scripts` skill, and `skills/_shared/` to `inki-references/references/shared/`. Each holds a short `SKILL.md` that says what is inside. Skills cite them as `../inki-references/references/…`, a path that works from every linked folder, and agents no longer depend on `${CLAUDE_PLUGIN_ROOT}`.
+- `references/` moved to the `inki-references` skill, `scripts/` to the `inki-scripts` skill, and `skills/_shared/` to `inki-references/shared/`. Each holds a short `SKILL.md` that says what is inside. Skills cite them as `../inki-references/…`, a path that works from every linked folder, and agents no longer depend on `${CLAUDE_PLUGIN_ROOT}`.
 - The project settings no longer enable the Inki plugin, so Claude Code does not load every skill twice in this repository. The marketplace stays registered for users who install the plugin to use Inki elsewhere.
 
 ## 2026-11-10

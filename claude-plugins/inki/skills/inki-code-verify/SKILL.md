@@ -20,7 +20,7 @@ If neither is available, ask the user for a path or fall back to GitHub fetches.
 
 `$ARGUMENTS` is a relative path to a `.md` or `.mdx` file under `docusaurus/docs/`.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-review`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Extract all fenced code blocks
 
@@ -28,7 +28,7 @@ Parse the file and list every fenced code block with its language and content.
 
 ## Step 3: Apply the migrated code-verifier prompt
 
-Read `../inki-references/references/prompts/integrity-code-verifier.md` and use it as the system prompt to evaluate each code block for:
+Read `../inki-references/prompts/integrity-code-verifier.md` and use it as the system prompt to evaluate each code block for:
 - Syntax validity for the declared language
 - References to functions/types that exist in the version of Strapi this page targets
 - Consistency with surrounding prose

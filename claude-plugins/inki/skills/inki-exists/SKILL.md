@@ -13,7 +13,7 @@ user-invocable: true
 
 If no argument is provided and the conversation has context (e.g. a PR was just discussed), extract the relevant keywords from context.
 
-Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-research`), write into that run's existing directory instead of creating a new one.
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../inki-references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki-research`), write into that run's existing directory instead of creating a new one.
 
 ## Step 1: Search the page index
 

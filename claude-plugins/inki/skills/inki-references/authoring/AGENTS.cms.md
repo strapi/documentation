@@ -15,8 +15,8 @@ Frontmatter and structure
 - Never modify an existing page's frontmatter properties (`title`, `description`, `displayed_sidebar`, `sidebar_label`, `tags`, `canonicalUrl`, etc.) as a side effect of another edit. Changing these silently breaks page titles, SEO, and canonical URLs. Only touch a frontmatter value when the user explicitly asks for it, and confirm the exact before/after change with the user first.
 
 Templates
-- CMS authoring templates live in `claude-plugins/inki/skills/inki-references/references/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.
-- For a quick overview of available templates (paths and purposes), see `claude-plugins/inki/skills/inki-references/references/templates/README.md`.
+- CMS authoring templates live in `claude-plugins/inki/skills/inki-references/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.
+- For a quick overview of available templates (paths and purposes), see `claude-plugins/inki/skills/inki-references/templates/README.md`.
 
 MDX and code blocks
 - Use MDX Tabs for language variants (JS/TS) under the same example.
@@ -25,7 +25,7 @@ MDX and code blocks
 - Write tables as Markdown tables only, never as HTML `<table>`. When cells would need merging (`rowSpan`, `colSpan`), repeat the value in each row or split the table.
 
 Annotations
-- Use the `<Annotation>` component for inline glossary tooltips. See `claude-plugins/inki/skills/inki-references/references/templates/components/annotation.md` for full rules, props, and canonical examples.
+- Use the `<Annotation>` component for inline glossary tooltips. See `claude-plugins/inki/skills/inki-references/templates/components/annotation.md` for full rules, props, and canonical examples.
 
 Preflight checks before PR
 - `npm run generate:llms-code` (anchors + file checks by default)
