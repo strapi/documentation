@@ -1,0 +1,1 @@
+../../claude-plugins/inki/agents/inki-outline-checker.md

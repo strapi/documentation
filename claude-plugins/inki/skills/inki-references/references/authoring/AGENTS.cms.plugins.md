@@ -1,0 +1,76 @@
+# AGENTS.md (Plugins pages)
+
+Scope
+- Applies to pages under `docusaurus/docs/cms/plugins/` that document a single plugin: `documentation.md`, `graphql.md`, `sentry.md`, `byok.md`.
+- Does NOT apply to the how-to pages that sit in the same directory and the same Plugins sidebar category but explain how to install plugins rather than documenting one: `installing-plugins-via-marketplace.md` and `installing-enterprise-plugins.md`. Those follow `claude-plugins/inki/skills/inki-references/references/authoring/AGENTS.cms.guides.md` and the guide template. They carry no identity card and no package name, and flagging them for it is a false positive.
+- Reuse repo‑wide rules for TL;DR, callouts, and code snippets; this guide encodes structure/headings specific to plugins.
+
+Purpose
+- Standardize how plugin docs present installation, configuration (UI + code), and usage, with clear package and marketplace info.
+
+Frontmatter (mandatory)
+- `title`: Plugin name (e.g., “GraphQL plugin”).
+- `description`: One concise sentence describing what the plugin enables.
+- `displayed_sidebar: cmsSidebar`
+- Optional: `tags` (include `plugins` + relevant areas).
+
+Required Section Order
+1) H1 title — matches `title` frontmatter.
+2) TL;DR — 1–3 sentences about what the plugin adds and why it matters.
+3) Identity card (plugin‑specific)
+   - Use `<IdentityCard isPlugin>` with items in this order:
+     - `<IdentityCardItem icon="navigation-arrow" title="Location">…</IdentityCardItem>`
+       - Summarize where it’s used/configured (admin panel and/or server code).
+     - `<IdentityCardItem icon="package" title="Package name">`@strapi/plugin-…`</IdentityCardItem>`
+     - `<IdentityCardItem icon="plus-square" title="Additional resources">…</IdentityCardItem>`
+       - Link to Strapi Marketplace page; optionally vendor site.
+   - Add compatibility or maintenance notes (e.g., unmaintained) as admonitions below the card when needed.
+
+4) Installation (H2)
+   - Show package install commands (Tabs for yarn/npm if applicable).
+   - Mention minimal Strapi version if required.
+
+5) Configuration (H2)
+   - Prefer 2 subsections (H3):
+     - “Admin panel settings” — numbered steps, UI paths.
+     - “Code-based configuration” — show `config/plugins.(js|ts)` (and other files) with code fences and file paths.
+   - Include environment notes (e.g., disable in non‑production) under dedicated H3s when applicable.
+   - Document the options in a table with mandatory `Type` and `Required` columns: `Option | Type | Required | Description`. See `claude-plugins/inki/skills/inki-references/references/templates/components/options-table.md`.
+
+Tabs reminder (canonical rules: `claude-plugins/inki/skills/inki-references/references/templates/components/tabs.md`)
+- Installation: if both package managers are shown, use Tabs with `groupId="yarn-npm"` and values `yarn`/`npm` (labels `Yarn`/`NPM`).
+- Code examples: when showing both JS and TS, use Tabs with `groupId="js-ts"` and values `js`/`ts` (labels `JavaScript`/`TypeScript`).
+
+6) Usage (H2)
+   - Explain how to use the plugin after configuration; split into H3 tasks (e.g., “Regenerating documentation”, “GraphQL API”).
+   - Add API‑specific sub‑sections when relevant (REST/GraphQL endpoints, admin UI tools).
+   - Document REST endpoints with the modern `<Endpoint>` component (`kind="http"`) and Document Service methods with `<Endpoint kind="js">`. See `claude-plugins/inki/skills/inki-references/references/templates/components/endpoint.md`. The legacy `<ApiCall>`/`<Request>`/`<Response>` trio is deprecated and allowed only on the not‑yet‑migrated `docs/cms/plugins/graphql.md` page.
+
+7) Troubleshooting (H2, optional)
+   - Heading `## <Icon name="bug" /> Troubleshooting`, one introductory sentence, then a bulleted list: the symptom in bold, then the cause, then the fix. No H3 per symptom, no table. See `claude-plugins/inki/skills/inki-references/references/templates/components/troubleshooting.md`.
+   - Worth adding whenever installation depends on something outside the project, such as registry access or a provider API key.
+
+8) Uninstallation (H2, optional)
+   - Add it when removing the plugin takes more than deleting the package, for instance leftover configuration keys or data.
+
+Optional Elements
+- Screenshots or ThemedImage blocks for UIs (playgrounds, marketplaces).
+- Marketplace/verification badges explanation when helpful.
+
+Heading Conventions
+- Use H2 for Installation, Configuration, Usage; H3 for sub‑tasks/settings.
+- Keep headings action‑oriented and specific (“Disable in non‑production”).
+
+Cross‑linking
+- Link to related features (e.g., Content API), configuration pages, and Marketplace entries.
+- Prefer relative links under `/cms/` and consistent link text.
+
+Quality Checklist (before commit)
+- TL;DR present and concise; IdentityCard present with Location/Package/Resources.
+- Installation steps clear (yarn/npm tabs if needed) and versions noted when relevant.
+- Configuration includes both UI and code‑based subsections with paths and fences.
+- Usage section tasks are clear with examples/screenshots where helpful.
+- Links to Marketplace and related docs included.
+
+Templates
+- See `claude-plugins/inki/skills/inki-references/references/templates/plugin-template.md` for a ready‑to‑use skeleton aligned with these conventions.

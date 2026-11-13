@@ -6,7 +6,7 @@ user-invocable: true
 disable-model-invocation: true
 ---
 
-# /inki:inki-interactive-demo: write an interactive demo from a plain-text description
+# /inki-interactive-demo: write an interactive demo from a plain-text description
 
 Interactive demos are clickable tours captured from a real Strapi app. Each demo is a YAML scenario played by a capture script. This skill turns a description written by a person ("highlight the navigation, then click Article…") into that scenario, captures it, and checks the screens.
 
@@ -124,4 +124,4 @@ Keep it short:
 - Image pairs, and two weights: what a reader downloads to go through the demo (`bytes` in the JSON, light and dark) and what the images add to the repository (`du -sh` of the image folder, all sizes included).
 - Files changed: `description.md`, `scenario.yaml`, `setup.js` (if any), the JSON and the images, and the docs page.
 
-Do not commit: leave that to the user, or to `/inki:commit` when asked.
+Do not commit: leave that to the user, or to `/inki-commit` when asked.

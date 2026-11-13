@@ -70,11 +70,11 @@ where it is. A pull request that restates an existing page is worse than none.
 
 **Load these agent prompts now and follow them:**
 
-- Router: `$DOC_REPO/claude-plugins/inki/references/prompts/router.md`
-- Outline Generator: `$DOC_REPO/claude-plugins/inki/references/prompts/outline-generator.md`
-- Drafter: `$DOC_REPO/claude-plugins/inki/references/prompts/drafter.md`
-- Style Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/style-checker.md`
-- Integrity Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/integrity-checker.md`
+- Router: `$DOC_REPO/claude-plugins/inki/skills/inki-references/references/prompts/router.md`
+- Outline Generator: `$DOC_REPO/claude-plugins/inki/skills/inki-references/references/prompts/outline-generator.md`
+- Drafter: `$DOC_REPO/claude-plugins/inki/skills/inki-references/references/prompts/drafter.md`
+- Style Checker: `$DOC_REPO/claude-plugins/inki/skills/inki-references/references/prompts/style-checker.md`
+- Integrity Checker: `$DOC_REPO/claude-plugins/inki/skills/inki-references/references/prompts/integrity-checker.md`
 
 Verify every code example against the actual `strapi/strapi` codebase, as the
 repository guide requires. An example you cannot verify is one you do not write.

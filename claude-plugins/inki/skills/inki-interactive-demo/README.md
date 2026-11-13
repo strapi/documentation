@@ -68,7 +68,7 @@ Recapturing only adds the screens that changed to the Git history.
 
 ## Write a demo from a plain-text description
 
-Describe the tour in your own words in `docusaurus/interactive-demos/<id>/description.md`: the page it starts on, then each step in order, with the text of each bubble when you have one. Then run `/inki:inki-interactive-demo <id>` in Claude Code: it writes the scenario, captures the demo and lists where it had to differ from your description.
+Describe the tour in your own words in `docusaurus/interactive-demos/<id>/description.md`: the page it starts on, then each step in order, with the text of each bubble when you have one. Then run `/inki-interactive-demo <id>` in Claude Code: it writes the scenario, captures the demo and lists where it had to differ from your description.
 
 ## Write or change a scenario
 

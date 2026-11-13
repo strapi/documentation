@@ -2,11 +2,11 @@
 
 The agent prompts, templates, and authoring guides that used to live here are now part of the Inki Claude Code plugin.
 
-You can find them under `../claude-plugins/inki/references/`:
+You can find them under `../claude-plugins/inki/skills/inki-references/references/`:
 
-- Prompts → `../claude-plugins/inki/references/prompts/`
-- Templates → `../claude-plugins/inki/references/templates/`
-- Authoring guides → `../claude-plugins/inki/references/authoring/`
+- Prompts → `../claude-plugins/inki/skills/inki-references/references/prompts/`
+- Templates → `../claude-plugins/inki/skills/inki-references/references/templates/`
+- Authoring guides → `../claude-plugins/inki/skills/inki-references/references/authoring/`
 
 To install and use the plugin:
 
