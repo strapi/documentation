@@ -6,7 +6,7 @@ user-invocable: false
 
 # Inki references
 
-This skill holds no workflow. It hosts the files that several `inki-*` skills share, so each file exists once. Other skills cite them as `../inki-references/<path>`, a path that resolves the same from the source folder and from every linked skills folder.
+This skill holds no workflow. It hosts the files that several `inki-*` skills share, so each file exists once. Other skills cite them as `../inki-references/<path>`, relative to their own SKILL.md, a path that resolves the same from the source folder and from every linked skills folder.
 
 - `templates/`: page skeletons per doc type (feature, plugin, configuration, API, guide, breaking change, Cloud). Start with `templates/README.md`. Component rules (badges, tabs…) are in `templates/components/`.
 - `authoring/`: `AGENTS.*.md` authoring guides, one per docs area (CMS features, plugins, API, configurations, guides, breaking changes, Cloud, snippets).
