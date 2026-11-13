@@ -182,10 +182,12 @@ module.exports = ({ env }) => ({
 });
 ```
 
-- Unset by default, so existing projects see no behavior change.
-- Only applied on PostgreSQL and MySQL/MariaDB connections, which can cancel a running query. SQLite ignores the setting.
-- Not applied to database streams, direct `strapi.db.connection` queries (including `connection.raw()`), schema sync, or migrations.
-- Must be a positive number. Strapi fails to boot if `queryTimeout` is `0`, negative, `NaN`, `Infinity`, or a string (for example a raw `env('DATABASE_QUERY_TIMEOUT')` without `.int()`), because Knex would otherwise ignore the invalid value silently.
+The `queryTimeout` setting behaves as follows:
+
+- It is unset by default, so existing projects see no behavior change.
+- It only applies to PostgreSQL and MySQL/MariaDB connections, which can cancel a running query. SQLite ignores the setting.
+- It does not apply to database streams, direct `strapi.db.connection` queries (including `connection.raw()`), schema sync, or migrations.
+- Its value must be a positive number. Strapi fails to boot if `queryTimeout` is `0`, negative, `NaN`, `Infinity`, or a string (for example a raw `env('DATABASE_QUERY_TIMEOUT')` without `.int()`), because Knex would otherwise ignore the invalid value silently.
 
 ### Configuration examples
 
