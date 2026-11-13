@@ -4,7 +4,11 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [ -z "$REPO_ROOT" ] || [ ! -d "$REPO_ROOT/docusaurus/docs" ]; then
+  echo "error: run this script from inside a strapi/documentation clone" >&2
+  exit 1
+fi
 PLUGIN_REFS="$REPO_ROOT/claude-plugins/inki/skills/inki-references"
 
 mkdir -p "$PLUGIN_REFS"

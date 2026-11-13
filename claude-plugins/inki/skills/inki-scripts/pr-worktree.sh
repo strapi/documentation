@@ -27,7 +27,11 @@ PR_NUM="$2"
 
 [[ "$PR_NUM" =~ ^[0-9]+$ ]] || { echo "PR number must be numeric: $PR_NUM" >&2; exit 1; }
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [ -z "$REPO_ROOT" ] || [ ! -d "$REPO_ROOT/docusaurus/docs" ]; then
+  echo "error: run this script from inside a strapi/documentation clone" >&2
+  exit 1
+fi
 WORKTREE_DIR="/tmp/inki-review-pr-${PR_NUM}"
 TMP_BRANCH="inki-tmp-review-${PR_NUM}"
 

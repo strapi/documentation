@@ -8,7 +8,11 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [ -z "$REPO_ROOT" ] || [ ! -d "$REPO_ROOT/docusaurus/docs" ]; then
+  echo "error: run this script from inside a strapi/documentation clone" >&2
+  exit 1
+fi
 SKILL_DIRS=(.claude/skills .agents/skills .cursor/skills)
 AGENT_DIRS=(.claude/agents)
 
