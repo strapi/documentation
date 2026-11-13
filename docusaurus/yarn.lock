@@ -2123,11 +2123,6 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.28.tgz#d45e01c4a56f143ee69c54dd6b12eade9e270a73"
   integrity sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==
 
-"@senthor-io/vercel@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@senthor-io/vercel/-/vercel-1.2.0.tgz#4c70557337a12e29cb317de8c4e771a8c516e7b3"
-  integrity sha512-OoTQ15oNxlWL5MZ0nziCXNji4kgLKQhLnEMIvUA3FADYS1vWMkIkhaKC8hWr53IQQUm/3wYPbZEjTj2YeeI8Tw==
-
 "@sideway/address@^4.1.5":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.5.tgz#4bc149a0076623ced99ca8208ba780d65a99b9d5"

@@ -227,6 +227,21 @@ lint_file() {
       has_errors=1
     fi
 
+    # An admonition title must be plain text. Docusaurus passes a plain title as
+    # the `title` prop, but turns a title with markup (inline code, bold, italic,
+    # a link, a tag) into an `mdxAdmonitionTitle` child. The swizzled component
+    # (`src/theme/Admonition/index.js`) never extracts that child, so the page
+    # renders the default label glued to the title, e.g. "CautionDraft & Publish".
+    # Only types with a default label are affected: `:::callout` has none, so its
+    # `<Icon />` titles render on their own.
+    # Checked on the original line, since inline code is stripped from `$line`.
+    local admonition_line
+    admonition_line=$(sed -n "${line_num}p" "$file")
+    if echo "$admonition_line" | grep -qE '^[[:space:]]*:::(note|tip|info|caution|warning|danger|prerequisites)[[:space:]]+.*(`|\*|\[.*\]\(|<|(^|[[:space:]])_[^_]+_)'; then
+      echo "error:${line_num}:admonition-title-markup:Admonition title contains markup -- it renders glued to the default label; use plain text, or move the title into the body"
+      has_errors=1
+    fi
+
     # Tables are Markdown tables only. An HTML `<table>` is reported once, on its
     # opening tag; code blocks and inline code are already stripped, so a table
     # shown as an example in a fence is not flagged. Case-sensitive on purpose:

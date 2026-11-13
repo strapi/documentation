@@ -6802,7 +6802,7 @@ mutation Mutation($updateUploadFileId: ID!, $info: FileInfoInput) {
 
 
 ## Delete an uploaded media file
-Description: When deleting an uploaded media file, pass the media's id (not its documentId).
+Description: When deleting an uploaded media file, pass the media's id or documentId.
 (Source: https://docs.strapi.io/cms/api/graphql#delete-an-uploaded-media-file)
 
 Language: GRAPHQL
@@ -16130,7 +16130,7 @@ File path: ./src/api/restaurant/routes/01-custom-restaurant.js
 const config = {
   type: 'content-api',
   routes: [
-    { // Path defined with an URL parameter
+    { // Path defined with a URL parameter
       method: 'POST',
       path: '/restaurants/:id/review', 
       handler: 'api::restaurant.restaurant.review',
@@ -17026,7 +17026,7 @@ module.exports = (config, { strapi }) => {
     if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
 
     // Compute HMAC over raw body + timestamp
-    const raw = ctx.request.rawBody || (ctx.request.body and JSON.stringify(ctx.request.body)) || "";
+    const raw = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
     const hmac = crypto.createHmac("sha256", secret);
     hmac.update(timestamp + "." + raw);
     const expected = "sha256=" + hmac.digest("hex");
@@ -17034,7 +17034,7 @@ module.exports = (config, { strapi }) => {
     // Constant-time compare + basic replay protection
     const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
     const skew = Math.abs(Date.now() - Number(timestamp));
-    if (!ok or skew > 5 * 60 * 1000) {
+    if (!ok || skew > 5 * 60 * 1000) {
       return ctx.unauthorized("Invalid or expired signature");
     }
 
@@ -17580,29 +17580,62 @@ File path: N/A
 
 
 ## releases.publish
-Description: Example payload
+Description: Code example from "releases.publish"
 (Source: https://docs.strapi.io/cms/backend-customization/webhooks#releases-publish)
 
 Language: JSON
-File path: N/A
+File path: /core/content-releases/server/src/services/release-run.ts
 
 ```json
-
 {
   "event": "releases.publish",
   "createdAt": "2024-02-21T16:45:36.877Z",
   "isPublished": true,
   "release": {
     "id": 2,
+    "documentId": "tx0fk0o7p0mfnvdhicuk3nfx",
     "name": "Fall Winter highlights",
     "releasedAt": "2024-02-21T16:45:36.873Z",
     "scheduledAt": null,
     "timezone": null,
+    "status": "partial",
+    "releaseCondition": "allow_partial",
+    "totalPublishedEntries": 8,
+    "totalUnpublishedEntries": 1,
+    "totalSkippedEntries": 2,
+    "failureReason": null,
     "createdAt": "2024-02-21T15:16:22.555Z",
-    "updatedAt": "2024-02-21T16:45:36.875Z",
-    "actions": {
-      "count": 1
-    }
+    "updatedAt": "2024-02-21T16:45:36.875Z"
+  }
+}
+```
+
+Language: JSON
+File path: /core/content-releases/server/src/services/release.ts
+
+```json
+{
+  "event": "releases.publish",
+  "createdAt": "2024-02-22T09:06:00.412Z",
+  "isPublished": false,
+  "error": {
+    "name": "MissedSchedule"
+  },
+  "release": {
+    "id": 3,
+    "documentId": "q8m2cz1v6w0rj5yk7d3hbn4e",
+    "name": "Spring launch",
+    "releasedAt": "2024-02-22T09:06:00.407Z",
+    "scheduledAt": "2024-02-22T09:00:00.000Z",
+    "timezone": "Europe/Paris",
+    "status": "failed",
+    "releaseCondition": "all_or_nothing",
+    "totalPublishedEntries": 0,
+    "totalUnpublishedEntries": 0,
+    "totalSkippedEntries": 5,
+    "failureReason": "missed_schedule",
+    "createdAt": "2024-02-20T14:12:09.301Z",
+    "updatedAt": "2024-02-22T09:06:00.409Z"
   }
 }
 ```
@@ -19037,6 +19070,23 @@ export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
     },
   };
 };
+```
+
+---
+Language: JavaScript
+File path: ./config/database.js
+
+```js
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      // postgres://USER:PASSWORD@pooled.db.prisma.io:5432/postgres?sslmode=verify-full
+      connectionString: env('DATABASE_URL'),
+    },
+    pool: { min: 0, max: env.int('DATABASE_POOL_MAX', 10) },
+  },
+});
 ```
 
 ---
@@ -25118,7 +25168,7 @@ File path: N/A
   "data": null,
   "error": {
     "status": "", // HTTP status
-    "name": "", // Strapi error name ('ApplicationError' or 'ValidationError')
+    "name": "", // Strapi error name (e.g., 'ValidationError' or 'NotFoundError')
     "message": "", // A human readable error message
     "details": {
       // error info specific to the error type
@@ -25424,7 +25474,7 @@ File path: N/A
 
 <TabItem value="Forbidden" label="Forbidden">
 
-The `ForbiddenError` class is a specific error class used when a user either doesn't provide any or the correct authentication credentials. It accepts the following parameters:
+The `ForbiddenError` class is a specific error class for throwing `403` status code errors, used when a user has properly authenticated but doesn't have the proper role or permissions to perform a specific action. It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
@@ -25445,7 +25495,7 @@ The custom `message` passed to `ForbiddenError` is not included in the API respo
 
 <TabItem value="Unauthorized" label="Unauthorized">
 
-The `UnauthorizedError` class is a specific error class used when a user doesn't have the proper role or permissions to perform a specific action, but has properly authenticated. It accepts the following parameters:
+The `UnauthorizedError` class is a specific error class for throwing `401` status code errors, used when a user either doesn't provide any or the correct authentication credentials. It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
@@ -36421,7 +36471,7 @@ export const appContext = ai.mcp.definePrompt({
 Source: https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-for-plugins
 
 ## Register the permissions server side
-Description: Each individual permission has to registered in the bootstrap function of your plugin, as follows:
+Description: Each individual permission has to be registered in the bootstrap function of your plugin, as follows:
 (Source: https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-for-plugins#register-the-permissions-server-side)
 
 Language: JavaScript
@@ -36483,6 +36533,66 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
 };
 
 export default bootstrap;
+```
+
+
+## Protect the server routes
+Description: To check a permission on a route, add the admin::hasPermissions policy to the route configuration.
+(Source: https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-for-plugins#protect-the-server-routes)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/admin/index.js
+
+```js
+'use strict';
+
+module.exports = {
+  type: 'admin',
+  routes: [
+    {
+      method: 'GET',
+      path: '/overview',
+      handler: 'overview.find',
+      config: {
+        policies: [
+          {
+            name: 'admin::hasPermissions',
+            config: {
+              actions: ['plugin::my-plugin.overview.access'],
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/admin/index.ts
+
+```ts
+export default {
+  type: 'admin' as const,
+  routes: [
+    {
+      method: 'GET' as const,
+      path: '/overview',
+      handler: 'overview.find',
+      config: {
+        policies: [
+          {
+            name: 'admin::hasPermissions',
+            config: {
+              actions: ['plugin::my-plugin.overview.access'],
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
 ```
 
 
@@ -38315,7 +38425,7 @@ File path: /src/plugins/my-plugin/server/src/policies/has-role.js
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const targetRole = config.role;
@@ -38360,7 +38470,7 @@ import type { Core } from '@strapi/strapi';
 type UserRole = { code?: string; name?: string };
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 export default (
   policyContext: Core.PolicyContext,
   config: { role?: string },
@@ -38412,7 +38522,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -38450,7 +38560,7 @@ export default [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {

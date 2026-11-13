@@ -29,7 +29,120 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.61.0](https://github.com/strapi/strapi/releases/tag/v5.61.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.62.0](https://github.com/strapi/strapi/releases/tag/v5.62.0)._
+
+## 7.8.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Document copying existing component content in the Content Manager](https://github.com/strapi/documentation/pull/3635)
+- [Document partial releases, outcomes, and new statuses](https://github.com/strapi/documentation/pull/3665)
+
+#### Repository
+- [Add Lexi, the animated Strapi Docs AI mascot, to AI mode and the Ask AI modal](https://github.com/strapi/documentation/pull/3646)
+- [Add three interactive 404 pages drawn at random](https://github.com/strapi/documentation/pull/3666)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+
+- [Document partial releases](https://github.com/strapi/documentation/pull/3625)
+- [Document the admin password policy settings](https://github.com/strapi/documentation/pull/3671)
+- [Document filter value casting and $null operands](https://github.com/strapi/documentation/pull/3661)
+- [Fix TypeScript cron examples to compile in strict mode](https://github.com/strapi/documentation/pull/3648)
+- [Fix the policy and middleware config key in plugin route docs](https://github.com/strapi/documentation/pull/3643)
+- [Document how to check admin permissions on plugin server routes](https://github.com/strapi/documentation/pull/3642)
+- [Document audit log events for media, Content History, drafts and settings](https://github.com/strapi/documentation/pull/3640)
+- [Fix component settings and add copy details in Content Manager and CTB docs](https://github.com/strapi/documentation/pull/3636)
+- [Add interactive demos captured from a real Strapi app to replace Guideflow](https://github.com/strapi/documentation/pull/3654)
+
+#### Repository
+
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update docs for smaller Strapi 5.62.0 changes](https://github.com/strapi/documentation/pull/3692)
+- [Document the create-strapi-app --agent option and telemetry opt-out](https://github.com/strapi/documentation/pull/3691)
+- [Document that roles can only grant permissions the user holds](https://github.com/strapi/documentation/pull/3690)
+- [Document locked shared fields on secondary locales](https://github.com/strapi/documentation/pull/3689)
+- [Fix the upgrade banner description for Strapi 5.62.0](https://github.com/strapi/documentation/pull/3688)
+- [Add a Prisma Postgres configuration example to the database documentation](https://github.com/strapi/documentation/pull/3684)
+- [Fix incorrect use of "setup" in SSO providers pages](https://github.com/strapi/documentation/pull/3681)
+- [Fix OAuth and TypeScript capitalization](https://github.com/strapi/documentation/pull/3680)
+- [Fix subject-verb agreement and "a URL" article in backend customization](https://github.com/strapi/documentation/pull/3677)
+- [Remove duplicate Password field section from Content-type Builder page](https://github.com/strapi/documentation/pull/3670)
+- [Update dataIdFromObject to handle components id](https://github.com/strapi/documentation/pull/3660)
+- [Update upload API documentation to mention documentId support](https://github.com/strapi/documentation/pull/3651)
+- [Update cron docs: Strapi now uses croner instead of node-schedule](https://github.com/strapi/documentation/pull/3647)
+- [Document pagination[limit]=-1 in REST API pagination](https://github.com/strapi/documentation/pull/3645)
+- [Document optional time on date-time filters](https://github.com/strapi/documentation/pull/3641)
+- [Clarify email template requirements](https://github.com/strapi/documentation/pull/3638)
+- [Clarify Audit Logs permission persistence when config is disabled](https://github.com/strapi/documentation/pull/3637)
+- [Show partial releases in the Releases interactive demo](https://github.com/strapi/documentation/pull/3659)
+- [Replace the remaining Guideflow embeds with captured interactive demos](https://github.com/strapi/documentation/pull/3658)
+
+#### Cloud
+- [Clarify Processing off behavior on Cloud upload size limits page](https://github.com/strapi/documentation/pull/3678)
+
+#### Repository
+- [Check for new Strapi releases hourly on every weekday](https://github.com/strapi/documentation/pull/3687)
+- [Fix admonition titles that render glued to the Caution or Note label](https://github.com/strapi/documentation/pull/3676)
+- [Make the Lexi Run game twice as likely as the other 404 pages](https://github.com/strapi/documentation/pull/3675)
+- [Make Sad Lexi scream NOOOO when poked too much on the 404 page](https://github.com/strapi/documentation/pull/3674)
+- [Remove the Senthor middleware](https://github.com/strapi/documentation/pull/3673)
+- [Show starter pages on the 404 when no page matches](https://github.com/strapi/documentation/pull/3672)
+- [Restart Sad Lexi's lines after it calms down on the 404 page](https://github.com/strapi/documentation/pull/3669)
+- [Fix Sad Lexi's mood mismatch and make terminal help commands clickable on the 404 page](https://github.com/strapi/documentation/pull/3668)
+- [Stop serving snippet files as standalone pages](https://github.com/strapi/documentation/pull/3663)
+- [Use the automerge needs human review label for PRs held by the cron](https://github.com/strapi/documentation/pull/3657)
+- [Label self-healing PRs that fail the auto-merge checks as needing human review](https://github.com/strapi/documentation/pull/3656)
+- [Document Inki in AGENTS.md for any AI tool](https://github.com/strapi/documentation/pull/3655)
+- [Shrink Lexi to 44px and match its moods to the reference SVGs](https://github.com/strapi/documentation/pull/3653)
+- [Keep Inki PR descriptions short and stop restating the diff](https://github.com/strapi/documentation/pull/3652)
+- [Blur sample Enterprise price in billing portal screenshot](https://github.com/strapi/documentation/pull/3650)
+- [Fix self-healing ignore-list commits, unrouted candidates, and fix PR triage](https://github.com/strapi/documentation/pull/3639)
+- [Move interactive demo scenarios to YAML and add /inki:inki-interactive-demo](https://github.com/strapi/documentation/pull/3667)
+- [Add sad and happy moods to Lexi, the AI mode mascot](https://github.com/strapi/documentation/pull/3649)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/ankur-arch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/64993082?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ankur-arch"/>
+</a>
+<a href="https://github.com/bolg55" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/43022248?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="bolg55"/>
+</a>
+<a href="https://github.com/butcherZ" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8189028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="butcherZ"/>
+</a>
+<a href="https://github.com/nclsndr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5462986?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="nclsndr"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/unrevised6419" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/1881266?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="unrevised6419"/>
+</a>
+<a href="https://github.com/yfwmaniish" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/116950854?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="yfwmaniish"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.7.0
 

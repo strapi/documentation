@@ -83,7 +83,9 @@ There is no equivalent setting in the admin panel: the retention period can only
 The `/config/admin` file also accepts `auditLogs.enabled`, which turns off Audit Logs when set to `false`, and `auditLogs.exportMaxRows`, which limits [exports](#exporting-audit-logs). See the [admin panel configuration](/cms/configurations/admin-panel#audit-logs) for all available parameters.
 
 :::note Audit Logs permissions and configuration
-When `auditLogs.enabled` is set to `false`, the Audit Logs feature is disabled and the routes are not available. However, audit log permissions that were granted to roles and admin tokens are preserved. This means when you turn `auditLogs.enabled` back to `true`, the previously granted permissions work again without needing to be re-granted.
+When `auditLogs.enabled` is set to `false`, the Audit Logs feature is disabled and the routes are not available. With Strapi 5.62.0 or later, the admin panel also hides the Audit Logs link in the settings and the *Last activity* homepage widget, and the `/settings/audit-logs` page displays a not found page.
+
+However, audit log permissions that were granted to roles and admin tokens are preserved. The permission editors of roles and admin tokens still display the Audit Logs section, with a *Disabled by configuration* badge. This means when you turn `auditLogs.enabled` back to `true`, the previously granted permissions work again without needing to be re-granted.
 :::
 
 ## Usage
@@ -246,7 +248,7 @@ By default, all logs are displayed in reverse chronological order. You can filte
 
 - Action: select the type of action to filter by (e.g `create` or `update`).
 - User: select the user to filter by.
-- Date: select a date (range) and time to filter by.
+- Date: select a date and, optionally, a time to filter by. A date alone matches the entire day; adding a time narrows the match to that specific minute.
 
 <ThemedImage
   alt="Audit Logs filters"
@@ -271,6 +273,10 @@ To export audit logs:
 1. (Optional) Apply filters to select the entries to export.
 2. Click **Export as CSV** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
 3. Click **Download CSV** to save the exported file.
+
+:::note Date filter and exports
+The Date filter matches an entire day, or a specific minute when a time is picked (see [filtering logs](#filtering-logs)). The export uses the same day or minute bounds as the filtered list, so the CSV file contains the same entries.
+:::
 
 Every export is itself recorded as an `audit-log.export` event. This event is included in the exported CSV file.
 

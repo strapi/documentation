@@ -202,6 +202,10 @@ export default {
 </TabItem>
 </Tabs>
 
+:::tip
+Admin routes already require an authenticated admin user, so the `admin::isAuthenticatedAdmin` policy is optional. To restrict an admin route to users with a specific permission, use the `admin::hasPermissions` policy, as described in [How to create admin permissions from plugins](/cms/plugins-development/guides/admin-permissions-for-plugins#protect-the-server-routes).
+:::
+
 ### Factory callback format
 
 For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on configuration), you can export a factory callback.
@@ -361,29 +365,25 @@ Each route accepts an optional `config` object with the following properties:
 
 ### `policies`
 
-**Type:** `Array<string | PolicyHandler | { name: string; options?: object }>`
+**Type:** `Array<string | PolicyHandler | { name: string; config?: object }>`
 
-Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `options`.
+Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `config`.
 
-The `options` object is passed as-is to the policy function's second argument (`config` in policy signatures). The shape of this object depends on the policy.
+The `config` object is passed as-is to the policy function's second argument. The shape of this object depends on the policy.
 
 Plugin policies are referenced as `plugin::my-plugin.policy-name`.
 
 ### `middlewares`
 
-**Type:** `Array<string | MiddlewareHandler | { name: string; options?: object }>`
+**Type:** `Array<string | MiddlewareHandler | { name: string; config?: object }>`
 
 Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with:
 
 - `name`: a registered middleware name,
-- `options` (optional): middleware options.
+- `config` (optional): middleware configuration, passed as-is to the middleware factory's first argument.
 
-:::note Route middlewares vs. global server middlewares
-At route validation time, Strapi validates middleware/policy objects against `{ name: string; options?: object }` (see `services/server/routing.ts`).
-
-The middleware resolver (`services/server/middleware.ts`) still contains runtime support for `{ resolve, config }` objects, but this shape is rejected by route validation before resolution for standard plugin route declarations.
-
-Use `{ name, options }` in route configs for compatibility with validation.
+:::caution
+Routes do not read an `options` key in policy or middleware objects. A policy or middleware declared with `{ name, options }` in a route receives an empty object, so always pass per-route parameters in `config`.
 :::
 
 ### `auth`

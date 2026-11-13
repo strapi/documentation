@@ -16,6 +16,8 @@ import styles from './agentBot.module.scss';
  * Styles that matter are inline so the bot also renders inside a shadow DOM
  * (the Kapa modal), where the CSS module does not reach.
  * Props (bubbles, page, blocks) only render from 64px up unless forced.
+ * onAngryChange(angry) fires when repeated pokes make the bot angry, and
+ * again when it calms down.
  */
 
 // Eye x positions, in viewBox units
@@ -121,6 +123,7 @@ export default function AgentBot({
   decorative = false,
   tune = null,
   props = null,
+  onAngryChange = null,
 }) {
   const rootRef = useRef(null);
   const id = `bot${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -129,6 +132,8 @@ export default function AgentBot({
   const tuneRef = useRef(DEFAULT_TUNE);
   tuneRef.current = { ...DEFAULT_TUNE, ...tune };
   const wakeRef = useRef(null);
+  const onAngryChangeRef = useRef(onAngryChange);
+  onAngryChangeRef.current = onAngryChange;
 
   // A state change restarts the loop if it was paused for reduced motion
   useEffect(() => {
@@ -182,7 +187,7 @@ export default function AgentBot({
       happyUntil: 0, lastHop: 0, anger: 0, shown: 0, lastPoke: 0,
       tantrumAt: -1e9, huffAt: -1e9, sulkK: 0, vSulkK: 0, shake: 0, sulkUntil: 0,
       tint: -1, tintCool: -1, clock: 0, fThink: 0, fRead: 0, fWork: 0, fWave: 0, fSad: 0, fHappy: 0, lastBlock: -1,
-      lastState: '', stateAt: 0,
+      lastState: '', stateAt: 0, wasAngry: false,
       nextBlink: performance.now() + 1500 + 3000 * Math.random(),
       blinkT: -1, double: false, seed: 100 * Math.random(),
     };
@@ -311,6 +316,13 @@ export default function AgentBot({
       s.shown = calm ? s.anger : s.shown + (s.anger - s.shown) * Math.min(1, 9 * dt);
       const frown = smoothstep(0.3, 0.75, s.shown);
       const redness = smoothstep(0.5, 1.05, s.shown);
+      // Tells the page when the bot turns red from repeated pokes, and when it
+      // calms down again; the gap between both thresholds avoids flickering
+      const angry = s.wasAngry ? s.shown > 0.3 : s.shown > 0.5;
+      if (angry !== s.wasAngry) {
+        s.wasAngry = angry;
+        onAngryChangeRef.current?.(angry);
+      }
       const sulking = now < s.sulkUntil;
       if (sulking) {
         s.anger = Math.max(s.anger, 0.85);

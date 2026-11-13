@@ -16,7 +16,7 @@ tags:
 # Webhooks
 
 <Tldr>
-Webhooks let Strapi notify external systems when content changes, while omitting the Users type for privacy. Configuration in `config/server` sets default headers and endpoints to trigger third-party processing. Optional destination checks, also set in `config/server`, can restrict where webhooks are sent.
+Webhooks let Strapi notify external systems when content changes, while omitting the Users type for privacy. Configuration in `config/server` sets default headers and endpoints to trigger third-party processing. Optional destination checks, also set in `config/server`, can restrict where webhooks are sent. This documentation lists the available events, which can be selected per content type, and the payload each one sends.
 </Tldr>
 
 Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third-party providers to start some processing (CI, build, deployment ...).
@@ -56,7 +56,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
@@ -195,7 +195,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
@@ -229,7 +229,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
@@ -278,7 +278,7 @@ module.exports = (config, { strapi }) => {
     if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
 
     // Compute HMAC over raw body + timestamp
-    const raw = ctx.request.rawBody || (ctx.request.body and JSON.stringify(ctx.request.body)) || "";
+    const raw = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
     const hmac = crypto.createHmac("sha256", secret);
     hmac.update(timestamp + "." + raw);
     const expected = "sha256=" + hmac.digest("hex");
@@ -286,7 +286,7 @@ module.exports = (config, { strapi }) => {
     // Constant-time compare + basic replay protection
     const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
     const skew = Math.abs(Date.now() - Number(timestamp));
-    if (!ok or skew > 5 * 60 * 1000) {
+    if (!ok || skew > 5 * 60 * 1000) {
       return ctx.unauthorized("Invalid or expired signature");
     }
 
@@ -392,21 +392,21 @@ By default Strapi webhooks can be triggered by the following events:
 | [`entry.delete`](#entrydelete)    | Triggered when a Content Type entry is deleted.       |
 | [`entry.publish`](#entrypublish)   | Triggered when a Content Type entry is published.\*   |
 | [`entry.unpublish`](#entryunpublish) | Triggered when a Content Type entry is unpublished.\* |
-| [`entry.draft-discard`](#entry-draft-discard) | Triggered when the draft version of a Content Type entry is discarded.\*<br />This event is not listed in the **Webhooks** form of the admin panel, so subscribing to it requires creating the webhook programmatically. |
+| [`entry.draft-discard`](#entry-draft-discard) | Triggered when the draft version of a Content Type entry is discarded.\*<br />This event is not listed in the *Webhooks* form of the admin panel, so subscribing to it requires creating the webhook programmatically. |
 | [`media.create`](#mediacreate)    | Triggered when a media is created.                    |
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
 | [`review-workflows.updateEntryStage`](#review-workflowsupdateentrystage) | Triggered when content is moved between review stages (see [review workflows](/cms/features/review-workflows#configuration)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi. |
-| [`releases.publish`](#releases-publish) | Triggered when a Release is published (see [Releases](/cms/features/releases)).<br />This event is only available with the <GrowthBadge /> or <EnterpriseBadge /> plan of Strapi CMS. |
+| [`releases.publish`](#releases-publish) | Triggered when a release is published, whether all, some, or none of its entries are published or unpublished (see [Releases](/cms/features/releases)).<br />This event is only available with the <GrowthBadge /> or <EnterpriseBadge /> plan of Strapi CMS. |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
 ### Entry events per content type
 <VersionBadge version="5.60.0+" noTooltip />
 
-The entry events above are triggered for every content type by default. In the **Settings > Webhooks** form, the events table also lists each collection type and single type below the **Entry** row, so an event can be selected for one content type only, for example `Create` on articles and `Publish` on pages in the same webhook.
+The entry events above are triggered for every content type by default. In the *Settings > Webhooks* form, the events table also lists each collection type and single type below the *Entry* row, so an event can be selected for one content type only, for example `Create` on articles and `Publish` on pages in the same webhook.
 
-An event checked on the **Entry** row still applies to every content type: it is displayed as checked and locked on each content type row and can't be unchecked from there. An event can't be selected for `entry.publish` or `entry.unpublish` on a content type that doesn't have [Draft & Publish](/cms/features/draft-and-publish) enabled, since those events never occur for it.
+An event checked on the *Entry* row still applies to every content type: it is displayed as checked and locked on each content type row and can't be unchecked from there. An event can't be selected for `entry.publish` or `entry.unpublish` on a content type that doesn't have [Draft & Publish](/cms/features/draft-and-publish) enabled, since those events never occur for it.
 
 This selection is saved in the webhook's `contentTypeEvents` attribute, which maps a content type UID to the entry events selected for it as in the following example:
 
@@ -416,9 +416,11 @@ This selection is saved in the webhook's `contentTypeEvents` attribute, which ma
 }
 ```
 
-Only events not already selected on the **Entry** row are kept in `contentTypeEvents`. Changes to `contentTypeEvents` are recorded in the [Audit Logs](/cms/features/audit-logs) along with the webhook's other fields.
+Only events not already selected on the *Entry* row are kept in `contentTypeEvents`. Changes to `contentTypeEvents` are recorded in the [Audit Logs](/cms/features/audit-logs) along with the webhook's other fields.
 
 ## Payloads
+
+Each webhook request sends a JSON payload whose structure depends on the event.
 
 :::info
 Private fields are not sent in the payload.
@@ -926,27 +928,80 @@ This event is only available with the <EnterpriseBadge/> plan of Strapi.<br />Th
 ### `releases.publish`  {#releases-publish}
 <GrowthBadge/><EnterpriseBadge/>
 
-The event is triggered when a [release](/cms/features/releases) is published.
+The event is triggered when a [release](/cms/features/releases) is published, regardless of the result:
+
+- `isPublished` is `true` when the release ends as `done` (every entry was published or unpublished) or `partial` (some entries were published or unpublished, and the others were skipped).
+- `isPublished` is `false` when the release ends as `failed`: no entry was published or unpublished. This includes a scheduled release with entries that could not be published at its scheduled time. A scheduled release without entries ends as `done` instead. The payload then also includes an `error` key. Do not rely on its content: it can be an empty object.
+
+No event is sent when a database conflict (for example, a deadlock) interrupts the publication, since nothing was published. If the release was scheduled and is not published manually within 5 minutes of its scheduled time, it then ends as `failed` with the `missed_schedule` failure reason, and the event is sent at that point.
+
+No event is sent either when a manual publication is refused because the release is not ready: the release is not published and its status changes to `Blocked`.
+
+The `release` object describes the release after it was published. In addition to its name and schedule, it includes:
+
+<!-- source: packages/core/content-releases/server/src/content-types/release/schema.ts, packages/core/content-releases/server/src/services/release.ts#L46-L112 -->
+| Field | Description |
+| --- | --- |
+| `status` | `done`, `partial`, or `failed` |
+| `releaseCondition` | The [release mode](/cms/features/releases#choosing-a-release-mode): `all_or_nothing` (*Require every entry to be ready*) or `allow_partial` (*Release all ready items*) |
+| `totalPublishedEntries` | Number of entries published |
+| `totalUnpublishedEntries` | Number of entries unpublished |
+| `totalSkippedEntries` | Number of entries skipped |
+| `failureReason` | `missed_schedule` when a scheduled release could not be published at its scheduled time (for example, because the server was unavailable), `null` otherwise |
 
 **Example payload**
 
+<!-- source: packages/core/content-releases/server/src/services/release-run.ts#L263-L282, packages/core/content-releases/server/src/services/release.ts#L46-L112 -->
 ```json
-
 {
   "event": "releases.publish",
   "createdAt": "2024-02-21T16:45:36.877Z",
   "isPublished": true,
   "release": {
     "id": 2,
+    "documentId": "tx0fk0o7p0mfnvdhicuk3nfx",
     "name": "Fall Winter highlights",
     "releasedAt": "2024-02-21T16:45:36.873Z",
     "scheduledAt": null,
     "timezone": null,
+    "status": "partial",
+    "releaseCondition": "allow_partial",
+    "totalPublishedEntries": 8,
+    "totalUnpublishedEntries": 1,
+    "totalSkippedEntries": 2,
+    "failureReason": null,
     "createdAt": "2024-02-21T15:16:22.555Z",
-    "updatedAt": "2024-02-21T16:45:36.875Z",
-    "actions": {
-      "count": 1
-    }
+    "updatedAt": "2024-02-21T16:45:36.875Z"
+  }
+}
+```
+
+**Example payload for a scheduled release that missed its scheduled time**
+
+<!-- source: packages/core/content-releases/server/src/services/release.ts (recordMissedRun, reportFailedRun), packages/core/content-releases/server/src/services/scheduling.ts (reportFrozenRelease) -->
+```json
+{
+  "event": "releases.publish",
+  "createdAt": "2024-02-22T09:06:00.412Z",
+  "isPublished": false,
+  "error": {
+    "name": "MissedSchedule"
+  },
+  "release": {
+    "id": 3,
+    "documentId": "q8m2cz1v6w0rj5yk7d3hbn4e",
+    "name": "Spring launch",
+    "releasedAt": "2024-02-22T09:06:00.407Z",
+    "scheduledAt": "2024-02-22T09:00:00.000Z",
+    "timezone": "Europe/Paris",
+    "status": "failed",
+    "releaseCondition": "all_or_nothing",
+    "totalPublishedEntries": 0,
+    "totalUnpublishedEntries": 0,
+    "totalSkippedEntries": 5,
+    "failureReason": "missed_schedule",
+    "createdAt": "2024-02-20T14:12:09.301Z",
+    "updatedAt": "2024-02-22T09:06:00.409Z"
   }
 }
 ```

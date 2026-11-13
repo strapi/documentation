@@ -2104,6 +2104,191 @@
       "number": 28169,
       "reason": "Router: Documentation updates are already included in the source PR (content-releases backend.md updated to clarify published releases are not modified). Behavior docs are handled.",
       "added": "2026-11-07"
+    },
+    {
+      "number": 28534,
+      "reason": "Triage: type/contract fix with no observable behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28528,
+      "reason": "Triage: type fix with no observable behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28523,
+      "reason": "Triage: type tightening fix with no runtime code changes",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28522,
+      "reason": "Triage: type fix with no runtime change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28517,
+      "reason": "Triage: type fix, server unchanged, admin query returns same tree as before",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28515,
+      "reason": "Triage: type fix, route behavior unchanged",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28478,
+      "reason": "Triage: compiler performance fix with no behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28469,
+      "reason": "Triage: type fix with no runtime change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28429,
+      "reason": "Triage: test infrastructure change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28356,
+      "reason": "Triage: bug fix enabling edge case to work",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28157,
+      "reason": "Triage: performance optimization with no behavior change",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28357,
+      "reason": "Router: Diff too large (3905 lines). Internal enhancement removing an experimental feature flag; no new user-facing functionality added, only a flag removal. Minimal documentation impact expected.",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28339,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3665",
+      "added": "2026-11-10"
+    },
+    {
+      "number": 28550,
+      "reason": "Triage: documentation only, no runtime change",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28542,
+      "reason": "Router: Internal database validation fix. The error message improvement is for developers debugging content-type schemas, not a user-facing API change. Already documented behavior (relations must point to valid models).",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28539,
+      "reason": "Router: This diff modifies docs/docs/packages/core/utils/traverse-entity.md which is internal Strapi monorepo documentation, not the public Strapi documentation repository. Router operates on the documentation repository only.",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28538,
+      "reason": "Router: Internal Content Manager bug fix. The formatRecentDocumentTitle helper ensures the title displays correctly regardless of field type, but this is an internal implementation detail. No new public behavior or API exposed.",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28535,
+      "reason": "Router: Error handling improvement in the upload service. The behavior is already documented (requests to deleted folders fail). This is a more graceful error response, not a new user-facing feature.",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28529,
+      "reason": "Router: Internal type definition update for the Content-Type Builder service. This types the editComponent payload correctly but doesn't change public API behavior or expose new capabilities.",
+      "added": "2026-11-11"
+    },
+    {
+      "number": 28546,
+      "reason": "Triage: internal performance optimization, output unchanged",
+      "added": "2026-11-12"
+    },
+    {
+      "number": 28447,
+      "reason": "Triage: internal performance optimization, output unchanged",
+      "added": "2026-11-12"
+    },
+    {
+      "number": 27116,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3685",
+      "added": "2026-11-12"
+    },
+    {
+      "number": 28585,
+      "reason": "Triage: bug fix for internal admin permission cleanup logic",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28558,
+      "reason": "Triage: TypeScript type changes only, no runtime behavior change",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28557,
+      "reason": "Triage: CI/test infrastructure change",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28441,
+      "reason": "Triage: test infrastructure/plugin for internal testing",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28029,
+      "reason": "Triage: admin UI bugfix for IME handling",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28559,
+      "reason": "Router: Internal Content Type Builder API fix. The component API now returns proper HTTP error codes, but this is internal backend behavior not part of the public developer docs.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28555,
+      "reason": "Router: Internal implementation fix for locale normalization in the content manager. This is backend plumbing that doesn't affect the public API surface.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28551,
+      "reason": "Router: UI display fix for the admin panel homepage. This is internal behavior change that doesn't need documentation.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28540,
+      "reason": "Router: Development-only feature that logs warnings when filter keys are unknown. This is a development helper in NODE_ENV=development and doesn't need user-facing documentation.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28431,
+      "reason": "Router: Diff too large (6094 lines). Internal database fix and test additions for Postgres and MySQL compatibility.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28563,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3693",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28541,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3694",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28513,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3695",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28561,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3696",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 27669,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3697",
+      "added": "2026-11-13"
     }
   ]
 }

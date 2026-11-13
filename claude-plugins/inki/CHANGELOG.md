@@ -1,6 +1,13 @@
 # Inki Changelog
 
 
+## 2026-11-10
+
+### Added
+
+- `/inki:inki-interactive-demo <demo-id>`, the first special command (outside the four families, run by a maintainer only, never started by Claude on its own): creates or updates an interactive demo from a plain-text description of its steps (`docusaurus/interactive-demos/<id>/description.md`). It finds the UI elements in a running Strapi demo app with `explore.js`, writes the YAML scenario and its setup, captures the demo twice, checks the screens, and reports deviations from the description.
+- `style-lint.sh` flags an admonition title that contains markup (inline code, bold, italic, a link, a tag) with the `admonition-title-markup` error. Such a title renders glued to the default label (for example "CautionDraft & Publish"). `:::callout` has no default label and is not checked.
+
 ## 2026-10-16
 
 ### Added

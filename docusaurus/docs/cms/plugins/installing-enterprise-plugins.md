@@ -28,7 +28,7 @@ Enterprise plugins are not published on the public npm registry. They are instal
 
 To install Enterprise plugins, run the `strapi enterprise install` command from the root folder of your Strapi application:
 
-- Without any argument, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade.
+- Without any argument, the command lists the Enterprise plugins your license includes, so you can choose which ones to install or upgrade. Enterprise plugins outside your license appear below the list, and you cannot select them. If your license includes no Enterprise plugin yet, the command says so.
 - When passing one or more plugin name(s) as arguments, the command installs them directly. The `@strapi-enterprise/` prefix is optional.
 
 <Tabs groupId="yarn-npm">
@@ -160,7 +160,8 @@ The file now holds your license, so restrict it to your user with `chmod 600 ~/.
 | `This Strapi license is not valid…` | Copy the whole license again from the billing portal. |
 | `This Strapi license expired on…` | Renew your license. |
 | `…rejected this Strapi license…` | Check that the license is still active in the billing portal. |
-| `Your license does not include…` | Check the plugin name. If the name is correct, contact your account manager. |
+| `Your license does not include…` | Check the plugin name, or run `strapi enterprise install` without a name to see the plugins you can install. To get a plugin outside your license, contact your account manager. |
+| `… is installed but is not included in your license.` | Your license no longer includes this installed plugin. Contact your account manager. |
 | `No Enterprise package named…` | Check the plugin name. |
 | `… has no version or tag …` | Check the version you added to the plugin name. |
 | `… requires Strapi … and this app uses …` | Upgrade Strapi first. |

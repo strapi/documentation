@@ -1,0 +1,108 @@
+{
+  "id": "content-history",
+  "title": "Content History",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 560276,
+    "dark": 539252
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Content History feature!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/content-history/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-history/02",
+      "text": "**Content History** is accessible via this button, which lists several options for the entry.",
+      "rect": {
+        "x": 92.66,
+        "y": 5.75,
+        "w": 3.44,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-history/03",
+      "text": "Click on *Content History*.",
+      "rect": {
+        "x": 77.6,
+        "y": 20.63,
+        "w": 17.63,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/content-history/04",
+      "text": "This is the Content History interface! It shows the state of your content type at a chosen time."
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-history/05",
+      "text": "This is where you can see current and past versions of your content type. For each version, you can see:\n• the date and time,\n• the name of the user who edited the version,\n• and the status (if **Draft & Publish** is enabled).",
+      "rect": {
+        "x": 74.53,
+        "y": 0,
+        "w": 25.47,
+        "h": 100
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-history/06",
+      "text": "Let's click on a previous version!",
+      "rect": {
+        "x": 76.33,
+        "y": 42.12,
+        "w": 22.42,
+        "h": 15
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-history/07",
+      "text": "In this previous version, the category was \"news\" but it was later changed to \"nature\".",
+      "rect": {
+        "x": 37.66,
+        "y": 61.99,
+        "w": 31.48,
+        "h": 10
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-history/08",
+      "text": "If we want the content type to go back to that previous version, we can click on the **Restore** button.",
+      "rect": {
+        "x": 64.41,
+        "y": 7.5,
+        "w": 6.22,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-history/09",
+      "text": "Restoring a previous version of the content type means overriding the \"current\" one, but as a draft that can be later published.\n\nLet's confirm by clicking on **Restore** again!",
+      "rect": {
+        "x": 50.31,
+        "y": 65,
+        "w": 14.84,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/content-history/10",
+      "text": "And that's it! We've used Content History to restore a previous version ✨"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "image": "/img/assets/interactive-demos/content-history/10"
+  }
+}

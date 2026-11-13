@@ -121,6 +121,8 @@ const entries = await strapi.db.query('api::article.article').findMany({
 Using these operators may give different results depending on the database's implementation, as the comparison is handled by the database and not by Strapi.
 :::
 
+Values passed to `$eq`, `$ne`, `$in`, `$notIn`, `$lt`, `$lte`, `$gt`, `$gte`, and `$between` are cast to the type of the filtered attribute. A value that cannot be cast throws a database error, for instance `InvalidBooleanFormat` for a boolean attribute (accepted values are listed in the [REST API filters documentation](/cms/api/rest/filters#filter-values)), or an invalid date error for a date attribute. If the error is not caught during an HTTP request, Strapi responds with a `400` error and a `ValidationError`.
+
 ### `$not`
 
 Negates nested condition(s).
@@ -435,7 +437,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 
 ### `$null`
 
-Attribute is `null`.
+Attribute is `null`. Use `true` or `false`: `$null: false` is equivalent to `$notNull: true`.
 
 **Example**
 
@@ -451,7 +453,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 
 ### `$notNull`
 
-Attribute is not `null`.
+Attribute is not `null`. Use `true` or `false`: `$notNull: false` is equivalent to `$null: true`.
 
 **Example**
 

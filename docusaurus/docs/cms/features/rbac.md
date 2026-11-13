@@ -26,7 +26,9 @@ The Role-Based Access Control (RBAC) feature allows the management of the admini
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="gky9n4mtdp" darkId="zkjloxzaep"/>
+<!-- <Guideflow lightId="gky9n4mtdp" darkId="zkjloxzaep"/> -->
+
+<InteractiveDemo id="rbac" />
 
 ## Configuration
 
@@ -61,7 +63,7 @@ You will be redirected to the roles edition interface, where you will be able to
 />
 
 :::tip
-In the *Roles* interface, from the table, you can click on the duplicate button <Icon name="copy" /> to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button <Icon name="copy" /> to create a new role by duplicating an existing one. If you are not a Super Admin, the new role only keeps the permissions you hold yourself.
 :::
 
 ### Deleting a role
@@ -108,6 +110,16 @@ In the top right corner, you can see a counter indicating how many administrator
 The permissions area of an administrator role editing interface allows you to configure in detail what actions an administrator can do for any part of the Strapi application.
 
 It is displayed as a table, split into 4 categories: [Collection types](#collection-and-single-types), [Single types](#collection-and-single-types), [Plugins](#plugins-and-settings) and [Settings](#plugins-and-settings).
+
+:::note
+If you are not a Super Admin, you can only grant permissions that you hold yourself:
+
+- Options outside your own permissions are disabled, with the tooltip "You can't grant a permission you don't have yourself".
+- Each combination of action, field, locale, and condition must be covered by one of your permissions. For instance, holding Read on the `title` field for English and on the `body` field for French does not allow you to grant Read on `title` for French.
+- Permissions that the role already has, but that you do not hold, can be kept or removed, but not extended.
+
+Saving a role with permissions you do not hold returns an error. Super Admins are not limited.
+:::
 
 ##### Collection and Single types
 
@@ -158,12 +170,13 @@ Settings permissions can be configured for all settings accessible from *General
 | Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows you to create new locales</li><li>"Read" - allows you to see available locales</li><li>"Update" - allows you to edit available locales</li><li>"Delete" - allows you to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br /> *General > Settings > Global Settings - Internationalization* |
 | Review Workflows | <ul><li>"Create" - allows you to create workflows</li><li>"Read" - allows you to see created workflows</li><li>"Update" - allows you to edit workflows</li><li>"Delete" - allows you to delete workflows</li></ul> 👉 Path reminder to Review workflows settings: <br /> *General > Settings > Global Settings - Review workflows* |
 | Single sign on | <ul><li>Options</li><ul><li>"Read" - allows you to access the SSO settings</li><li>"Update" - allows you to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br />*General > Settings > Global Settings - Single Sign-On* |
-| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
+| Audit Logs | <ul><li>Options</li><ul><li>"Read" - allows you to access the Audit Logs settings</li><li>"Export" - allows you to [export audit logs](/cms/features/audit-logs#exporting-audit-logs) as a CSV file</li></ul></ul> 👉 Path reminder to the Audit Logs settings: <br />*General > Settings > Admin Panel - Audit Logs* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul> |
 | Webhooks | <ul><li>General</li><ul><li>"Create" - allows you to create webhooks</li><li>"Read" - allows you to see created webhooks</li><li>"Update" - allows you to edit webhooks</li><li>"Delete" - allows you to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br /> *General > Settings > Global Settings - Webhook* |
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows you to create administrator accounts</li><li>"Read" - allows you to see existing administrator accounts</li><li>"Update" - allows you to edit administrator accounts</li><li>"Delete" - allows you to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows you to create administrator roles</li><li>"Read" - allows you to see created administrator roles</li><li>"Update" - allows you to edit administrator roles</li><li>"Delete" - allows you to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br /> *General > Settings > Administration Panel* |
 | API Tokens |  <ul><li>API tokens</li><ul><li>"Access the API tokens settings page" - toggles access to the API tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br /> *General > Settings > Global Settings - API Tokens* |
 | Admin Tokens | <ul><li>Admin tokens</li><ul><li>"Access the Admin tokens settings page" - toggles access to the Admin Tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Admin tokens</li><li>"Read" - allows you to see created Admin tokens</li><li>"Update" - allows editing of Admin tokens</li><li>"Delete (revoke)" - allows deletion of Admin tokens</li><li>"Regenerate" - allows regeneration of Admin tokens</li></ul></ul> 👉 Path reminder to Admin Tokens settings: <br /> *General > Settings > Administration Panel - Admin Tokens*  |
+| Password policy | <ul><li>General</li><ul><li>"Read the password policy" - gives access to the password policy settings, displayed as read-only without the "Update the password policy" permission</li><li>"Update the password policy" - allows you to edit the password policy</li></ul></ul> 👉 Path reminder to the password policy settings: <br /> *General > Settings > Administration Panel - Password policy* |
 | Project | <ul><li>General</li><ul><li>"Update the project level settings" - allows you to edit the settings of the project</li><li>"Read the project level settings" - gives access to settings of the project</li></ul></ul> |
 | Transfer Tokens | <ul><li>Transfer tokens</li><ul><li>"Access the Transfer tokens settings page" - toggles access to the Transfer tokens page</li></ul></ul><ul><li>General</li><ul><li>"Create (generate)" - allows the creation of Transfer tokens</li><li>"Read" - allows you to see created Transfer tokens (disabling this permission will disable access to the *Global Settings - Transfer Tokens* settings)</li><li>"Update" - allows editing of Transfer tokens</li><li>"Delete (revoke)" - allows deletion of Transfer tokens</li> <li> "Regenerate" - allows regeneration of the Transfer token</li></ul></ul> 👉 Path reminder to Transfer Tokens settings: <br /> *General > Settings > Global Settings - Transfer Tokens* |
 
@@ -301,7 +314,7 @@ It is possible to delete one or several administrator accounts at the same time.
 | Last name             | Write the administrator's last name in the textbox.                                         |
 | Email                 | Write the administrator's complete email address in the textbox.                            |
 | Username              | Write the administrator's username in the textbox.                                          |
-| Password              | Write the new administrator account's password in the textbox.                              |
+| Password              | Write the new administrator account's password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field.                              |
 | Confirm password      | Write the new password in the textbox for confirmation.                                     |
 | Active                | Click on **TRUE** to activate the administrator's account.                                  |
 

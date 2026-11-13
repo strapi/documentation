@@ -5,6 +5,7 @@ toc_max_heading_level: 5
 tags:
 - admin panel
 - profile
+- password policy
 - light mode
 - dark mode
 ---
@@ -12,7 +13,7 @@ tags:
 # Administration panel
 
 <Tldr>
-The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel before focusing on profile settings that manage interface language and mode, login and personal information, and logo for branding.
+The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel. It then covers profile settings (interface language and mode, login and personal information) and settings (logo for branding, password policy for administrator accounts).
 </Tldr>
 
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types and write their actual content, but also manage users, both administrators and end users of your Strapi application.
@@ -49,13 +50,15 @@ There are a few factors that you should keep in mind when using the admin panel,
 - **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the <FeatureFlagBadge /> badge in the docs and read the [Feature flags documentation](/cms/configurations/features#enabling-a-future-flag) for more information.
 :::
 
-<Guideflow lightId="dkd2m1lsgr" darkId="dkd2mjlugr"/>
+<!-- <Guideflow lightId="dkd2m1lsgr" darkId="dkd2mjlugr"/> -->
+
+<InteractiveDemo id="admin-panel" />
 
 ## Configuration
 
 **Path to configure the admin panel:** Account name or initials (bottom left hand corner) > Profile
 
-If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application.
+If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information (name, username, email, password). You can also choose the language and mode of the interface for your Strapi application. From the settings, administrators with the "Read the password policy" and "Update the password policy" permissions can also define the [password policy](#configuring-the-password-policy) that applies to all administrator passwords.
 
 <ThemedImage
 alt="Homepage of the Admin Panel"
@@ -94,7 +97,7 @@ There are many more configuration and customization options available. See the f
 | Password modification | Instructions                                |
 | --------------------- | ------------------------------------------- |
 | Current password      | Write your current password in the textbox. |
-| Password              | Write the new password in the textbox.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](#configuring-the-password-policy), whose rules are displayed under the field. |
 | Password confirmation | Write the same new password in the textbox. |
 
 3. Click on the **Save** button.
@@ -147,6 +150,59 @@ Both logos can also be customized programmatically via the Strapi application's 
     dark: '/img/assets/settings/settings_custom-logo_DARK.png',
   }}
 />
+
+### Strapi upgrade banner
+
+**Location:** <Icon name="gear-six" /> *Settings > Global settings > Overview*
+
+When your installed Strapi version is older than the latest Strapi release on GitHub, the Overview page displays an upgrade banner and a badge next to the Strapi version. The banner shows your current version and includes 2 buttons:
+
+- **Release notes** opens the list of Strapi releases on GitHub.
+- **Upgrade guide** opens the [upgrade tool documentation](/cms/upgrade-tool#upgrade-to-a-new-version).
+
+The banner and the badge have 2 severity levels, based on how far behind your installation is:
+
+| Severity | Condition | Badge | Closing the banner <Icon name="x" /> |
+| -------- | --------- | ----- | ------------------------------------ |
+| Default | Same major version, and 10 minor versions behind or less (patch updates included) | "Update available" | Hides the banner until a newer version is released |
+| Urgent | More than 10 minor versions behind, or an older major version | The number of minor versions behind (for example, "12 minor versions behind"), or "Major update available" | Hides the banner for 7 days |
+
+Closing the banner is saved in the browser, for each project.
+
+The latest release is only checked when release notifications are enabled. To hide the banner and the badge, set `notifications.releases` to `false` in the `src/admin/app` file (see [admin panel configuration](/cms/configurations/admin-panel#admin-panel-behavior)).
+
+### Configuring the password policy
+
+**Path to configure the password policy:** <Icon name="gear-six" /> *Settings > Administration panel > Password policy*
+
+The password policy defines the rules that every administrator password must follow. End users of the [Users & Permissions feature](/cms/features/users-permissions) are managed separately and do not follow this policy.
+
+Viewing the policy requires the "Read the password policy" permission, and editing it requires the "Update the password policy" permission (see [RBAC](/cms/features/rbac#plugins-and-settings)). With the read permission only, the options are displayed but cannot be edited, and the **Save** button is not displayed.
+
+The rules apply whenever an administrator password is set or changed:
+
+- when registering,
+- when resetting a forgotten password,
+- when changing your own password from your profile (see [Changing account password](#changing-account-password)),
+- when editing another administrator account (see [RBAC](/cms/features/rbac#editing-an-account)),
+- when using the `admin:create-user` and `admin:reset-user-password` [CLI commands](/cms/cli#administration).
+
+Existing passwords stay valid until they are changed.
+
+To configure the password policy:
+
+1. Fill in the following options:
+
+| Option                      | Instructions                                                                                                                        | Default value |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Minimum length              | Write the minimum number of characters for a password, between 8 and 64. Whatever the policy, a password cannot exceed 72 bytes. | 8             |
+| Require a lowercase letter  | Choose whether a password must contain at least one lowercase letter.                                                               | True          |
+| Require an uppercase letter | Choose whether a password must contain at least one uppercase letter.                                                               | True          |
+| Require a number            | Choose whether a password must contain at least one number.                                                                         | True          |
+| Require a special character | Choose whether a password must contain at least one special character, meaning any character that is neither a letter nor a digit. | False         |
+
+2. Check the *Hint shown to users* preview. It displays the rules as administrators will read them under password fields.
+3. Click on the **Save** button.
 
 ## Usage
 

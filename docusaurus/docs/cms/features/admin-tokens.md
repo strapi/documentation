@@ -73,7 +73,7 @@ If you're not the Strapi instance's super admin, the super admin must have grant
    - Use the checkboxes to enable or disable individual permissions.
 
     :::note
-    Permissions that the current user does not hold appear disabled and cannot be selected. Conditions applied to the owner's role are shown as read-only and apply automatically to the token.
+    Permissions that the current user does not hold appear disabled and cannot be selected. Each combination of action, field, and locale must be covered by one of the owner's permissions: holding `title` for English and `body` for French does not allow `title` for French. Conditions applied to the owner's role are shown as read-only and apply automatically to the token. When the server starts, and whenever the owner's roles or role permissions change, token permissions the owner no longer holds are removed and inherited conditions are updated.
     :::
 4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
