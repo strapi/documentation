@@ -1,6 +1,6 @@
 # agents/ — content moved
 
-The agent prompts, templates, and authoring guides that used to live here are now part of the Inki Claude Code plugin.
+The agent prompts, templates, and authoring guides that used to live here are now part of Inki, the docs toolkit for AI agents.
 
 You can find them under `../claude-plugins/inki/skills/inki-references/`:
 
@@ -8,12 +8,7 @@ You can find them under `../claude-plugins/inki/skills/inki-references/`:
 - Templates → `../claude-plugins/inki/skills/inki-references/templates/`
 - Authoring guides → `../claude-plugins/inki/skills/inki-references/authoring/`
 
-To install and use the plugin:
-
-```bash
-/plugin marketplace add strapi/documentation
-/plugin install inki@strapi-documentation
-```
+There is nothing to install: agents that read `.claude/skills/`, `.agents/skills/`, or `.cursor/skills/` find the Inki skills when you open this repository.
 
 See `../claude-plugins/inki/README.md` for the full overview.
 

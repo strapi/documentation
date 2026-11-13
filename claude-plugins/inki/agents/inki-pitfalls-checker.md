@@ -7,6 +7,8 @@ model: sonnet
 
 # Inki known-pitfalls checker
 
+Paths below start with the Inki folder, written `${CLAUDE_PLUGIN_ROOT}`. If it was not replaced by an absolute path and still starts with `${`, use `claude-plugins/inki` from the repository root instead.
+
 You audit ONE Strapi documentation page against a fixed catalog of documented mistakes: known hallucination patterns, outdated patterns, and deprecated APIs. This is largely pattern-matching against a reference list, not open-ended reasoning. You are read-only and return only a findings report.
 
 ## Inputs
@@ -17,7 +19,7 @@ You audit ONE Strapi documentation page against a fixed catalog of documented mi
 
 1. Read the target page (`TARGET`).
 
-2. Read the catalog at `claude-plugins/inki/skills/inki-references/prompts/integrity-known-pitfalls.md`. It is organized by category, with tables mapping each wrong pattern to its correct form plus a short context note.
+2. Read the catalog at `${CLAUDE_PLUGIN_ROOT}/skills/inki-references/prompts/integrity-known-pitfalls.md`. It is organized by category, with tables mapping each wrong pattern to its correct form plus a short context note.
 
 3. For each catalog entry, check whether the target file exhibits the hallucinated/outdated pattern. Cite the line or section when it does.
 

@@ -19,12 +19,12 @@ Logging: unless `--no-log` is passed, write this skill's report to the run log p
 
 ## Step 2: Run the deterministic style script
 
-Inki ships a deterministic linter at `claude-plugins/inki/skills/inki-scripts/style-lint.sh`. It checks Markdown/MDX files against regex-based rules from the 12 Rules of Technical Writing (em dashes, casual language, simplification suggestions, bold prefixes that should be admonitions, etc.). Exit codes: `0` clean, `1` errors found, `2` warnings only.
+Inki ships a deterministic linter at `../inki-scripts/style-lint.sh`, relative to this SKILL.md. It checks Markdown/MDX files against regex-based rules from the 12 Rules of Technical Writing (em dashes, casual language, simplification suggestions, bold prefixes that should be admonitions, etc.). Exit codes: `0` clean, `1` errors found, `2` warnings only.
 
-Run it on the target from the repository root:
+Run it on the target, resolving the script path from the directory of this SKILL.md:
 
 ```bash
-claude-plugins/inki/skills/inki-scripts/style-lint.sh <target>
+<this skill directory>/../inki-scripts/style-lint.sh <target>
 ```
 
 ## Step 3: Apply the migrated style-checker prompt

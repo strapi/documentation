@@ -6,7 +6,7 @@ user-invocable: false
 
 # Inki scripts
 
-This skill holds no workflow. It hosts the scripts that several `inki-*` skills and CI share. Run them from the repository root, through their repo path `claude-plugins/inki/skills/inki-scripts/<script>`.
+This skill holds no workflow. It hosts the scripts that several `inki-*` skills and CI share. Other skills call them as `../inki-scripts/<script>`, relative to their own SKILL.md. `style-lint.sh` works anywhere; the other scripts act on a `strapi/documentation` clone, so run them from inside one.
 
 - `style-lint.sh <file|dir>…`: deterministic style checks from the 12 Rules of Technical Writing. Prints `<severity>:<line>:<rule>:<message>`; exits `0` when clean, `1` on errors, `2` on warnings only. Used by `inki-style-check` and the `inki-style-checker` agent.
 - `main-worktree.sh create|destroy`: create or remove a detached `origin/main` worktree. Used by `inki-review` to resolve docs.strapi.io URLs.
