@@ -102,6 +102,12 @@ Any other value, including an empty value (e.g., `filters[open][$eq]=no` or `fil
 
 The `$null` and `$notNull` operators take a boolean value. Use `true` or `false`: for instance, `filters[description][$null]=true` returns entries without a description, and `filters[description][$null]=false` returns entries with a description.
 
+The `$or` and `$and` operators take an array of filters, not an object. Strapi returns a `400` error with a `ValidationError` when the operand of `$or` or `$and` is a plain object instead, for example `filters[$or][title]=x`.
+
+:::note
+Sending more than 100 conditions in a single `$or` or `$and` list, or using an index of 100 or higher (for example `filters[$or][100][title]=x`), also returns this `400` error. The `strapi::query` middleware's `arrayLimit` (100 by default) makes `qs` turn such a list into an object keyed by index before Strapi can read it. Raise `arrayLimit` in `config/middlewares` to accept longer lists (see [`query` middleware configuration](/cms/configurations/middlewares#query)).
+:::
+
 ## Example: Find users having 'John' as a first name
 
 <Endpoint
