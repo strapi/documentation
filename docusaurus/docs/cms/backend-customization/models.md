@@ -150,7 +150,7 @@ The `preview` parameter must be set manually in the component's schema file. The
 
 ### Model attributes
 
-The content structure of a model consists of a list of attributes. Each attribute has a `type` parameter, which describes its nature and defines the attribute as a simple piece of data or a more complex structure used by Strapi.
+The content structure of a model consists of a list of attributes. Each attribute has a `type` parameter, which describes its nature and defines the attribute as a basic piece of data or a more complex structure used by Strapi.
 
 Many types of attributes are available:
 
@@ -298,6 +298,12 @@ Relations are explicitly defined in the [attributes](#model-attributes) of a mod
 | `relation`                  | The type of relation among these values:<ul><li>`oneToOne`</li><li>`oneToMany`</li><li>`manyToOne`</li><li>`manyToMany`</li></ul>                   |
 | `target`                    | Accepts a string value as the name of the target content-type                                                                                   |
 | `mappedBy` and `inversedBy`<br /><br />_Optional_ | In bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key |
+
+:::caution
+An inverse side (declaring `mappedBy`) must have an owner that points back to it: a relation on the target content-type, pointing back to this content-type, with `inversedBy` set to the inverse attribute's name. If no owner points back, the application fails to boot with an error such as `Error on attribute <attribute> in model <uid>: mappedBy attribute <mappedBy> in <target> must be a relation to <uid> with inversedBy "<attribute>"`.
+
+To fix the error, either add the missing `inversedBy` attribute to the owner, or remove the inverse attribute.
+:::
 
 <Tabs>
 
