@@ -2264,6 +2264,31 @@
       "number": 28431,
       "reason": "Router: Diff too large (6094 lines). Internal database fix and test additions for Postgres and MySQL compatibility.",
       "added": "2026-11-13"
+    },
+    {
+      "number": 28563,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3693",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28541,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3694",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28513,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3695",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28561,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3696",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 27669,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3697",
+      "added": "2026-11-13"
     }
   ]
 }
