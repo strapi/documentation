@@ -2214,6 +2214,56 @@
       "number": 27116,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3685",
       "added": "2026-11-12"
+    },
+    {
+      "number": 28585,
+      "reason": "Triage: bug fix for internal admin permission cleanup logic",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28558,
+      "reason": "Triage: TypeScript type changes only, no runtime behavior change",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28557,
+      "reason": "Triage: CI/test infrastructure change",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28441,
+      "reason": "Triage: test infrastructure/plugin for internal testing",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28029,
+      "reason": "Triage: admin UI bugfix for IME handling",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28559,
+      "reason": "Router: Internal Content Type Builder API fix. The component API now returns proper HTTP error codes, but this is internal backend behavior not part of the public developer docs.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28555,
+      "reason": "Router: Internal implementation fix for locale normalization in the content manager. This is backend plumbing that doesn't affect the public API surface.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28551,
+      "reason": "Router: UI display fix for the admin panel homepage. This is internal behavior change that doesn't need documentation.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28540,
+      "reason": "Router: Development-only feature that logs warnings when filter keys are unknown. This is a development helper in NODE_ENV=development and doesn't need user-facing documentation.",
+      "added": "2026-11-13"
+    },
+    {
+      "number": 28431,
+      "reason": "Router: Diff too large (6094 lines). Internal database fix and test additions for Postgres and MySQL compatibility.",
+      "added": "2026-11-13"
     }
   ]
 }
