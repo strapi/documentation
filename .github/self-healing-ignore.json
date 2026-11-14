@@ -2289,6 +2289,61 @@
       "number": 27669,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3697",
       "added": "2026-11-13"
+    },
+    {
+      "number": 28591,
+      "reason": "Triage: bug fix restoring intended error behavior",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28589,
+      "reason": "Triage: internal logging improvement",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28516,
+      "reason": "Triage: TypeScript type definition fix, no runtime API change",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28453,
+      "reason": "Triage: performance optimization, no API behavior change",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28623,
+      "reason": "Router: Internal admin permissions cleanup logic fix, no user-facing API or behavior change",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28599,
+      "reason": "Router: Internal admin RBAC field sanitization fix, no user-facing API change.",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28597,
+      "reason": "Router: Error handling improvement for folder operations, not a documented API surface.",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28593,
+      "reason": "Router: Internal contract alignment, no user-facing API documentation change.",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28592,
+      "reason": "Router: UID generation internal behavior fix, not core API or feature documentation.",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28581,
+      "reason": "Router: Internal cleanup behavior for AI metadata jobs, no user-facing API change.",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28412,
+      "reason": "Router: Future feature behind flag. UI/UX refinements, not core API or behavior changes.",
+      "added": "2026-11-14"
     }
   ]
 }
