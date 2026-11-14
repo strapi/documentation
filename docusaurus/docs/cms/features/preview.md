@@ -475,7 +475,8 @@ Live Preview is able to identify the parts of your frontend that correspond to f
 Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
 
 :::caution
-Content source maps are only added to REST API responses. If your front end fetches content through the [GraphQL API](/cms/api/graphql), double-click editing is not available.
+- Content source maps are only added to REST API responses. If your front end fetches content through the [GraphQL API](/cms/api/graphql), double-click editing is not available.
+- Breaking change: the Live Preview script no longer adds a `data-strapi-source` attribute to the elements it decodes on your frontend page. If your frontend queries or styles elements using `[data-strapi-source]` (for example `document.querySelectorAll('[data-strapi-source]')`), it will no longer find elements decoded by the script, unless your frontend renders that attribute itself.
 :::
 
 For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
