@@ -2344,6 +2344,16 @@
       "number": 28412,
       "reason": "Router: Future feature behind flag. UI/UX refinements, not core API or behavior changes.",
       "added": "2026-11-14"
+    },
+    {
+      "number": 28521,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3702",
+      "added": "2026-11-14"
+    },
+    {
+      "number": 28112,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3703",
+      "added": "2026-11-14"
     }
   ]
 }
