@@ -48,7 +48,8 @@ export default function homeStructuredData(siteUrl, description) {
           streetAddress: 'TODO_STREET_ADDRESS',
           postalCode: 'TODO_POSTAL_CODE',
           addressLocality: 'TODO_CITY',
-          addressCountry: 'TODO_COUNTRY_CODE',
+          addressRegion: 'DE',
+          addressCountry: 'US',
         },
       },
       {
