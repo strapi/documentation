@@ -238,12 +238,15 @@ class DocusaurusLlmsGenerator {
     if (entries.length === 0) return;
 
     const label = title || category.label;
+    const intro =
+      `This page is an index with no content of its own. ` +
+      `The ${label} section contains the following pages:`;
     pages.push({
       id: slug.replace(/^\/+/, ''),
       title: label,
       description: description || `Index of the ${label} pages.`,
       url: this.generatePageUrl('', slug),
-      content: [description, entries.join('\n')].filter(Boolean).join('\n\n'),
+      content: [description, intro, entries.join('\n')].filter(Boolean).join('\n\n'),
       generatedIndex: true,
     });
   }

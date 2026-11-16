@@ -90,6 +90,8 @@ test('generated-index categories become pages listing their children', async () 
     assert.equal(
       index.content,
       [
+        'This page is an index with no content of its own. The Account management section contains the following pages:',
+        '',
         `- [Profile settings](${BASE}/cloud/account/account-settings.md): Manage your profile.`,
         `- [Account billing & invoices](${BASE}/cloud/account/account-billing.md): Read your invoices.`,
       ].join('\n'),
