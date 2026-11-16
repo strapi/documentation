@@ -247,6 +247,8 @@ const config = {
       image: 'img/strapi-logo.png',
       metadata: [
         { property: 'og:type', content: 'website' },
+        // Tells the is-agentic.com scanner to score docs.strapi.io as a documentation site.
+        { name: 'is-agentic-site-type', content: 'content' },
       ],
       // announcementBar: {
       //   id: 'support_us',
