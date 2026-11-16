@@ -1,0 +1,686 @@
+// Measurements taken from the Guideflow embeds this component replaces, so both look alike.
+// Sizes follow 3 type scales measured on Guideflow, from a 616 px wide frame (the docs column) to 1400 px.
+$ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+.demo {
+  margin: 0 0 2rem;
+  container: demo / inline-size;
+  // Guideflow uses the Strapi primary in light mode and a lighter shade in dark mode.
+  --demo-accent: #4945ff;
+  --demo-accent-hover: #271fe0;
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--strapi-neutral-0);
+  font-family: 'Inter var', Inter, var(--strapi-font-family-body, sans-serif);
+}
+
+[data-theme='dark'] .demo {
+  --demo-accent: #7b79ff;
+  --demo-accent-hover: #6563f0;
+}
+
+// Three columns with equal sides, so the title stays centered whatever the controls on each side.
+.chrome {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, auto) 1fr;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--strapi-neutral-150);
+  background: #fff;
+
+  [data-theme='dark'] & {
+    border-bottom-color: #3a3a3a;
+    background: #262626;
+  }
+}
+
+.chromeSide {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.chromeSideEnd {
+  justify-content: flex-end;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 6px;
+  margin-right: 10px;
+
+  i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d4d4d8;
+
+    [data-theme='dark'] & {
+      background: #52525b;
+    }
+  }
+}
+
+.chromeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: #52525b;
+  cursor: pointer;
+
+  [data-theme='dark'] & {
+    color: #d4d4d8;
+  }
+
+  &:hover:not(:disabled) {
+    background: rgba(127, 127, 127, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.address {
+  display: inline-flex;
+  align-items: center;
+  gap: 5.25px;
+  justify-self: center;
+  min-width: 0;
+  max-width: 100%;
+  height: 21px;
+  padding: 0 21px 0 7px;
+  border-radius: 5.25px;
+  background: #f4f4f5;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  [data-theme='dark'] & {
+    background: #404040;
+    color: #d1d5db;
+  }
+
+  svg {
+    flex: none;
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: #9ca3af;
+    stroke-width: 1.1;
+
+    [data-theme='dark'] & {
+      stroke: #e5e7eb;
+    }
+  }
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: clip; // hidden would still let focus or scrollIntoView shift the screenshot
+  container-type: inline-size;
+  user-select: none;
+  --explain-size: clamp(13.79px, calc(8.36px + 0.881cqw), 20.7px); // explanation and chapter bubbles
+  --action-size: clamp(18.67px, calc(17.07px + 0.259cqw), 20.7px); // bubbles of steps to click
+  --intro-size: clamp(15.41px, calc(13.54px + 0.304cqw), 17.79px); // intro and outro cards
+  font-size: var(--explain-size);
+  line-height: 1.57;
+}
+
+.viewport {
+  transform-origin: 0 0;
+  transition: transform 0.5s $ease;
+}
+
+.screen {
+  display: block;
+  width: 100%;
+  height: auto; // the image sets the frame height; width/height attributes reserve it before load
+  margin: 0 !important; // docs images get a bottom margin from images.scss
+  // The docs image zoom targets every .markdown img: a click on the screenshot would hide it
+  // behind a zoom overlay, which is invisible in full screen.
+  pointer-events: none;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(1px);
+  background: rgba(201, 201, 201, 0.5); // Guideflow's intro veil, the same in both themes
+}
+
+// Dims the whole screen except the explained area.
+.spotlight {
+  position: absolute;
+  border-radius: 8px;
+  box-shadow: 0 0 40px 200cqw rgba(0, 0, 0, 0.4);
+  transition: left 0.35s $ease, top 0.35s $ease, width 0.35s $ease, height 0.35s $ease;
+  pointer-events: none;
+}
+
+// The reader clicks the real element: the whole target area is the button.
+.target {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--demo-accent);
+    outline-offset: 3px;
+  }
+}
+
+.hotspot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(26px, calc(20.5px + 0.893cqw), 33px);
+  height: clamp(26px, calc(20.5px + 0.893cqw), 33px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  // Outer ring: pulsates outwards.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--demo-accent);
+    border-radius: 9999px;
+    animation: pulsate 1s ease-out infinite;
+  }
+
+  // Inner ring: thick, with a breathing dot effect.
+  span {
+    position: absolute;
+    inset: 0;
+    border: 6px solid var(--demo-accent);
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.35);
+    animation: pulse-dot 1s ease-in-out infinite alternate;
+    transition: background 0.15s ease;
+  }
+}
+
+.target:hover .hotspot span {
+  background: color-mix(in srgb, var(--demo-accent) 35%, transparent);
+}
+
+.targetNudged .hotspot::before {
+  animation: pulsate 0.4s ease-out 3, pulsate 1s ease-out 1.2s infinite;
+}
+
+@keyframes pulsate {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-dot {
+  from {
+    transform: scale(0.85);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.typed {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 1.2cqw;
+  font-size: 1.1cqw;
+  line-height: 1;
+  color: #32324d;
+  pointer-events: none;
+
+  [data-theme='dark'] & {
+    color: #fff;
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 1px;
+  height: 1.2em;
+  margin-left: 1px;
+  background: currentColor;
+  animation: blink 0.8s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.bubble {
+  position: absolute;
+  z-index: 2;
+  border-radius: 0.5em;
+  animation: appear 0.2s ease;
+
+  // Arrow pointing at the target.
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0.6em;
+    height: 0.6em;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+.bubbleExplain {
+  font-size: var(--explain-size);
+  width: 16em;
+  max-width: calc(100% - 16px);
+  padding: 0.5em 0.9em 0.7em;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0.2em 0.9em rgba(0, 0, 0, 0.12);
+}
+
+.bubbleAction {
+  font-size: var(--action-size);
+  max-width: 13.75em;
+  padding: 0.5em;
+  background: var(--demo-accent);
+  color: #fff;
+  box-shadow: 0 0 0 0.25em color-mix(in srgb, var(--demo-accent) 20%, transparent);
+  text-align: center;
+}
+
+.bubbleChapter {
+  font-size: var(--explain-size);
+  width: 16em;
+  max-width: calc(100% - 16px);
+  padding: 0.75em 0.65em 0.6em;
+  background: var(--demo-accent);
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0.2em 0.9em rgba(0, 0, 0, 0.12);
+
+  a {
+    color: inherit;
+  }
+
+  .bubbleFooter {
+    margin-top: 1.15em;
+  }
+}
+
+.bubble_right {
+  transform: translate(0.9em, -50%);
+
+  &::before {
+    left: -0.3em;
+    top: calc(50% - 0.3em);
+  }
+}
+
+.bubble_left {
+  transform: translate(calc(-100% - 0.9em), -50%);
+
+  &::before {
+    right: -0.3em;
+    top: calc(50% - 0.3em);
+  }
+}
+
+.bubble_below {
+  transform: translate(-50%, 0.9em);
+
+  &::before {
+    top: -0.3em;
+    left: calc(50% - 0.3em);
+  }
+}
+
+.bubble_above {
+  transform: translate(-50%, calc(-100% - 0.9em));
+
+  &::before {
+    bottom: -0.3em;
+    left: calc(50% - 0.3em);
+  }
+}
+
+.bubble_center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bubble_inside {
+  transform: translate(-50%, -50%);
+}
+
+.bubble_center,
+.bubble_inside {
+  &::before {
+    display: none;
+  }
+}
+
+// Beats the docs dark-theme text colors: bubbles keep their own palette.
+.bubble .bubbleText {
+  color: inherit;
+  font-size: 0.75em;
+  line-height: 1.57;
+
+  strong,
+  em {
+    color: inherit;
+  }
+}
+
+.bubbleFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  margin-top: 0.5em;
+}
+
+.counter {
+  flex: 1;
+  font-size: 0.75em;
+  color: rgba(107, 114, 128, 0.5);
+  text-align: left;
+
+  .bubbleChapter & {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.backButton,
+.nextButton {
+  // Guideflow labels are 0.75em of the bubble size, in a 21 px high button at the docs width.
+  height: 2.03em;
+  padding: 0 0.834em;
+  border: 1px solid transparent;
+  border-radius: 0.333em;
+  font: inherit;
+  font-size: 0.75em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.backButton {
+  background: #fff;
+  color: var(--demo-accent);
+
+  &:hover {
+    background: color-mix(in srgb, var(--demo-accent) 8%, transparent);
+  }
+}
+
+.nextButton {
+  background: var(--demo-accent);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background: var(--demo-accent-hover);
+  }
+}
+
+.arrowButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.74em;
+  height: 1.52em;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  font: inherit;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  svg {
+    width: 0.75em;
+    height: 0.75em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1em;
+  width: 18.75em;
+  max-width: calc(100% - 16px);
+  padding: 1.5em;
+  border-radius: 0.7em;
+  font-size: var(--intro-size);
+  background: #fff;
+  color: #000;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0.2em 0.9em rgba(0, 0, 0, 0.12);
+}
+
+.card .cardText {
+  margin: 0;
+  color: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.572;
+}
+
+.startButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.52em;
+  padding: 0 1em;
+  border: 0;
+  border-radius: 0.7em;
+  background: var(--demo-accent);
+  color: #fff;
+  font: inherit;
+  font-size: 0.875em;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--demo-accent-hover);
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+.restartButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  border: 0;
+  background: none;
+  color: #71717a;
+  font: inherit;
+  font-size: 0.7em;
+  cursor: pointer;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+}
+
+// Dark mode: Guideflow keeps white bubbles and cards, which glare on a dark page.
+[data-theme='dark'] {
+  .bubbleExplain,
+  .card {
+    background: #27272a;
+    color: #f4f4f5;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0.2em 0.9em rgba(0, 0, 0, 0.4);
+  }
+
+  .counter {
+    color: rgba(244, 244, 245, 0.45);
+  }
+
+  .backButton {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #f4f4f5;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .restartButton {
+    color: #a1a1aa;
+  }
+}
+
+// Too narrow to sit next to the target: bubbles dock at the bottom of the frame.
+@container (max-width: 480px) {
+  .bubble {
+    left: 50% !important;
+    top: auto !important;
+    bottom: 8px;
+    width: calc(100% - 16px);
+    max-width: none;
+    transform: translateX(-50%);
+
+    &::before {
+      display: none;
+    }
+  }
+}
+
+.demo:fullscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--strapi-neutral-100);
+
+  .chrome,
+  .frame {
+    flex: none; // a column taller than the screen would squeeze the browser bar
+    width: min(100%, calc((100vh - 60px) * 1.6));
+    margin: 0 auto;
+  }
+
+  .transcript {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspot::before,
+  .hotspot span,
+  .bubble,
+  .spotlight,
+  .viewport {
+    animation: none;
+    transition: none;
+  }
+}
+
+// Stands in for the screenshot until it may load, with the same size to avoid layout shifts.
+.placeholder {
+  width: 100%;
+  background: var(--strapi-neutral-100);
+}
+
+.card .cardNote {
+  margin: -0.2em 0 0.2em;
+  color: #71717a;
+  font-size: 0.7em;
+}
+
+// Text version of the steps, for screen readers and readers who skip the demo.
+.transcript {
+  border-top: 1px solid var(--strapi-neutral-150);
+  font-size: var(--strapi-font-size-sm, 14px);
+
+  summary {
+    padding: 8px 14px;
+    color: var(--strapi-neutral-600);
+    cursor: pointer;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0 14px 12px 40px;
+  }
+
+  li {
+    margin: 4px 0;
+  }
+}
+
+// Narrow demos: drop the decorative dots so the centered title keeps its room.
+@container demo (max-width: 480px) {
+  .dots {
+    display: none;
+  }
+}

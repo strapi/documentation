@@ -17,7 +17,7 @@ Discord SSO provider enables users to sign in and sign up to Strapi through thei
 </Tldr>
 
 
-The present page explains how to setup the Discord provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Discord provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).

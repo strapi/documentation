@@ -1,7 +1,7 @@
 ---
 title: Setting up the admin panel
 displayed_sidebar: cmsSidebar
-description: How to setup your Strapi Admin Panel
+description: How to set up your Strapi Admin Panel
 tags:
 - admin panel
 - administrator
@@ -86,7 +86,7 @@ To change the password of your account:
 | Password modification |                                                                                                                  |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | Current password      | Write your current password in the textbox. <br/> 💡 You can click on the <Icon name="eye" /> icon for the password to be shown. |
-| Password              | Write the new password in the textbox. <br/> 💡 You can click on the <Icon name="eye" /> icon for the password to be shown.      |
+| Password              | Write the new password in the textbox. It must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy), whose rules are displayed under the field. <br/> 💡 You can click on the <Icon name="eye" /> icon for the password to be shown.      |
 | Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the <Icon name="eye" /> icon for the password to be shown. |
 
 3. Click on the **Save** button.

@@ -114,6 +114,8 @@ const config = {
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
+      // Animated mascot shown in the modal header (same character as the AI mode panel)
+      'data-modal-logo-src': '/img/ai-mascot.svg',
       'data-button-hide': 'true',
       'data-modal-disclaimer':
         'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
@@ -182,8 +184,21 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // Exclude agent guides and templates from docs ingestion
-          exclude: ['**/AGENTS.md', '**/AGENTS.*.md', '**/templates/**', '../agents/**'],
+          // Setting exclude replaces Docusaurus' defaults, so the first 4 patterns
+          // restate them (_-prefixed partials, tests). Snippets are imported into
+          // pages, never served as pages of their own. The patterns are inlined
+          // because SearchBar imports this file into the client bundle.
+          exclude: [
+            '**/_*.{js,jsx,ts,tsx,md,mdx}',
+            '**/_*/**',
+            '**/*.test.{js,jsx,ts,tsx}',
+            '**/__tests__/**',
+            'snippets/**',
+            '**/AGENTS.md',
+            '**/AGENTS.*.md',
+            '**/templates/**',
+            '../agents/**',
+          ],
           editUrl:
             'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {

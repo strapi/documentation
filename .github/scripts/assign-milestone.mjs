@@ -6,11 +6,11 @@
  *   - A PR that already has a milestone keeps it.
  *   - By default, the PR gets the next docs milestone: the open milestone with
  *     the earliest date.
- *   - If the PR body references a strapi/strapi PR whose milestone is not
- *     released yet and ships on another date than the next docs milestone,
- *     the PR gets the open docs milestone on that date. If none exists, one is
+ *   - If the PR body references strapi/strapi PRs that are not released yet
+ *     and ship after the next docs milestone, the PR gets the open docs
+ *     milestone on the latest of their ship dates. If none exists, one is
  *     created: the next milestone's version with the patch number bumped
- *     (7.5.1 -> 7.5.2), due on the strapi/strapi milestone's date.
+ *     (7.5.1 -> 7.5.2), due on that date.
  *   - If the PR has the "pr: new content" label, its milestone becomes a minor
  *     version: a patch milestone is renamed (7.5.1 -> 7.6.0), so every PR in
  *     that release follows. This also runs when the label is added later.
@@ -19,10 +19,19 @@
  * same time. With WAIT_FOR_LABEL=true, the script checks for it once a minute
  * for 5 minutes, then once more 30 minutes later, then goes on without it.
  *
- * Dates: docs and strapi/strapi milestones always ship on a Wednesday. A
- * milestone without a due date is assumed to ship on the first Wednesday after
- * the latest published release of its repository (same major for strapi/strapi,
- * where v4 and v5 releases interleave).
+ * Dates: docs and strapi/strapi both release on Wednesdays. A docs milestone
+ * without a due date is assumed to ship on the first Wednesday after the
+ * latest docs release.
+ *
+ * A strapi/strapi PR's ship date comes from where its merge commit sits in
+ * git, not from its milestone (strapi/strapi does not maintain milestones):
+ *   - in the latest v5 tag: already released, no date constraint;
+ *   - in an open release candidate (a releases/x.y.z branch with an open PR
+ *     against main), or not merged yet but targeting one: the next Wednesday,
+ *     today included;
+ *   - otherwise (on develop, or not merged yet): the release after the open
+ *     candidate, or the next Wednesday when no candidate is open.
+ * PRs into other branches (v4, main hotfixes) give no date.
  *
  * Usage: PR_NUMBER=3573 GH_TOKEN=... [DRY_RUN=true] [WAIT_FOR_LABEL=true] node assign-milestone.mjs
  *        ALL_WITHOUT_MILESTONE=true GH_TOKEN=... [DRY_RUN=true] node assign-milestone.mjs
@@ -70,6 +79,26 @@ export function nextWednesdayAfter(isoDate) {
   return date.toISOString().slice(0, 10);
 }
 
+/** First Wednesday on or after an ISO date, as YYYY-MM-DD (UTC). */
+export function wednesdayOnOrAfter(isoDate) {
+  const date = new Date(`${isoDate.slice(0, 10)}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + ((3 - date.getUTCDay() + 7) % 7));
+  return date.toISOString().slice(0, 10);
+}
+
+/**
+ * Ship date of a strapi/strapi PR from its state (see strapiPrState): null
+ * when released, else a Wednesday. A candidate ships on the next Wednesday,
+ * today included, even when it has slipped past the one it was cut for.
+ * Develop ships with the following cut.
+ */
+export function shipDate(state, today, hasCandidate) {
+  if (state === 'released') return null;
+  const candidateDate = wednesdayOnOrAfter(today);
+  if (state === 'candidate') return candidateDate;
+  return hasCandidate ? nextWednesdayAfter(candidateDate) : nextWednesdayAfter(today);
+}
+
 /** A milestone's ship date: its due date, or the Wednesday after the latest release. */
 export function milestoneDate(milestone, latestReleaseDate) {
   if (milestone.due_on) return milestone.due_on.slice(0, 10);
@@ -90,7 +119,7 @@ export function extractStrapiPrNumbers(body) {
  * Decide which docs milestone a PR gets.
  *
  * @param docsMilestones  all docs milestones (open and closed), with `date` resolved
- * @param strapiDate      ship date of the linked unreleased strapi/strapi milestone, or null
+ * @param strapiDate      latest ship date of the linked unreleased strapi/strapi PRs, or null
  * @returns {{action: 'assign', milestone} | {action: 'create', title, date} | {action: 'none', reason}}
  */
 export function decideMilestone(docsMilestones, strapiDate) {
@@ -104,7 +133,8 @@ export function decideMilestone(docsMilestones, strapiDate) {
   }
 
   const next = open[0];
-  if (!strapiDate || strapiDate === next.date) {
+  // The docs cannot ship before the next docs release.
+  if (!strapiDate || strapiDate <= next.date) {
     return { action: 'assign', milestone: next };
   }
 
@@ -154,34 +184,74 @@ async function ghAll(path) {
   }
 }
 
-/** Publish date of the latest non-draft, non-prerelease release, optionally restricted to a major. */
-async function latestReleaseDate(repo, major) {
+/** Publish date of the latest non-draft, non-prerelease release. */
+async function latestReleaseDate(repo) {
   const releases = await gh(`repos/${repo}/releases?per_page=50`);
   const dates = releases
     .filter((r) => !r.draft && !r.prerelease)
-    .filter((r) => major === undefined || parseVersion(r.tag_name)?.[0] === major)
     .map((r) => r.published_at)
     .sort();
   return dates.at(-1) ?? null;
 }
 
-/** Ship date of the first referenced strapi/strapi PR with an unreleased milestone, or null. */
-async function strapiShipDate(body) {
-  for (const number of extractStrapiPrNumbers(body)) {
-    const issue = await gh(`repos/${STRAPI_REPO}/issues/${number}`);
-    const milestone = issue?.milestone;
-    if (!milestone) continue;
-    console.log(`Linked ${STRAPI_REPO}#${number} is in milestone ${milestone.title} (${milestone.state})`);
-    if (milestone.state !== 'open') {
-      console.log('That milestone is already released: no date constraint');
-      return null;
-    }
-    const major = parseVersion(milestone.title)?.[0];
-    const date = milestoneDate(milestone, await latestReleaseDate(STRAPI_REPO, major));
-    console.log(`Its ship date is ${date}${milestone.due_on ? '' : ' (no due date, assumed next Wednesday)'}`);
-    return date;
+/**
+ * Latest v5 tag. Tags rather than GitHub releases: a hotfix can reach npm with
+ * a tag and no release.
+ */
+async function latestV5Tag() {
+  const refs = await gh(`repos/${STRAPI_REPO}/git/matching-refs/tags/v5.`);
+  const tags = (refs || [])
+    .map((r) => r.ref.replace('refs/tags/', ''))
+    .filter((tag) => parseVersion(tag))
+    .sort((a, b) => compareVersions(parseVersion(a), parseVersion(b)));
+  return tags.at(-1) ?? null;
+}
+
+/** Branches of the open release candidates: releases/x.y.z with an open PR against main. */
+async function openCandidateBranches() {
+  const pulls = await ghAll(`repos/${STRAPI_REPO}/pulls?state=open&base=main`);
+  return pulls.map((p) => p.head.ref).filter((ref) => ref.startsWith('releases/'));
+}
+
+/** Whether a commit is contained in a ref (a tag or a branch). */
+async function contains(ref, sha) {
+  const compare = await gh(`repos/${STRAPI_REPO}/compare/${encodeURIComponent(ref)}...${sha}`);
+  return ['behind', 'identical'].includes(compare?.status) && compare.ahead_by === 0;
+}
+
+/**
+ * Where a strapi/strapi PR stands: 'released', 'candidate', 'develop', or
+ * null when it targets a branch that does not ship through a weekly release.
+ */
+async function strapiPrState(pull, tag, candidates) {
+  const base = pull.base.ref;
+  if (base !== 'develop' && !base.startsWith('releases/')) return null;
+  if (!pull.merged) return base.startsWith('releases/') ? 'candidate' : 'develop';
+  if (tag && await contains(tag, pull.merge_commit_sha)) return 'released';
+  for (const branch of candidates) {
+    if (await contains(branch, pull.merge_commit_sha)) return 'candidate';
   }
-  return null;
+  return 'develop';
+}
+
+/** Latest ship date of the referenced strapi/strapi PRs that are not released yet, or null. */
+async function strapiShipDate(body, today) {
+  const numbers = extractStrapiPrNumbers(body);
+  if (numbers.length === 0) return null;
+
+  const [tag, candidates] = await Promise.all([latestV5Tag(), openCandidateBranches()]);
+  console.log(`Latest ${STRAPI_REPO} v5 tag: ${tag}; open release candidates: ${candidates.join(', ') || 'none'}`);
+
+  let latest = null;
+  for (const number of numbers) {
+    const pull = await gh(`repos/${STRAPI_REPO}/pulls/${number}`);
+    if (!pull) continue;
+    const state = await strapiPrState(pull, tag, candidates);
+    const date = state && shipDate(state, today, candidates.length > 0);
+    console.log(`Linked ${STRAPI_REPO}#${number} (into ${pull.base.ref}, ${pull.merged ? 'merged' : 'not merged'}): ${state ?? 'not a weekly release branch'}${date ? `, ships ${date}` : ''}`);
+    if (date && (!latest || date > latest)) latest = date;
+  }
+  return latest;
 }
 
 /** Re-read the PR on the LABEL_CHECK_DELAYS schedule until it has a "pr:" type label. */
@@ -238,7 +308,14 @@ async function assignMilestone(prNumber) {
     return;
   }
 
-  const decision = decideMilestone(docsMilestones, await strapiShipDate(pr.body));
+  // A strapi/strapi lookup failure must not leave the PR without a milestone.
+  let strapiDate = null;
+  try {
+    strapiDate = await strapiShipDate(pr.body, new Date().toISOString().slice(0, 10));
+  } catch (error) {
+    console.log(`::warning::Cannot read the linked ${STRAPI_REPO} PRs, using the next docs milestone: ${error.message}`);
+  }
+  const decision = decideMilestone(docsMilestones, strapiDate);
 
   let milestone;
   if (decision.action === 'none') {

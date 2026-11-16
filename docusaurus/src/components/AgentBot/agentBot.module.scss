@@ -1,0 +1,38 @@
+.agentBot {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.tilt {
+  display: block;
+  will-change: transform;
+}
+
+.shadow {
+  position: absolute;
+  bottom: -12%;
+  left: 50%;
+  width: 70%;
+  height: 10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(24, 24, 38, 0.22), transparent);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+// The light-mode shadow would read lighter than a dark background
+:global(html[data-theme='dark']) .shadow {
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent);
+}

@@ -1,0 +1,492 @@
+{
+  "id": "media-library",
+  "title": "Media Library Overview",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 2007966,
+    "dark": 1998824
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Media Library!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/media-library/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "The Media Library is accessible directly from the **navigation of the admin panel**.",
+      "rect": {
+        "x": 0.12,
+        "y": 20.88,
+        "w": 4.06,
+        "h": 6.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "The Media Library displays the **folders** that contain other folders and/or assets.",
+      "rect": {
+        "x": 26.41,
+        "y": 17,
+        "w": 69.69,
+        "h": 16
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "It also displays the **assets** that are not in any of the folders shown above.",
+      "rect": {
+        "x": 26.41,
+        "y": 33.5,
+        "w": 69.69,
+        "h": 60.1
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "**Folders** are also accessible as a tree view in the left sidebar.",
+      "rect": {
+        "x": 3.91,
+        "y": 0,
+        "w": 19.06,
+        "h": 100
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "A variety of buttons and options are available in the Media Library to help you manage your folders & assets. Let's discover them!"
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "From these buttons, you can **Filter** the folders and assets, or **Search** for a specific folder or asset.",
+      "rect": {
+        "x": 26.41,
+        "y": 9.38,
+        "w": 24.65,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "The **New** button in the top right corner allows you to **create a new folder** or **add a new asset** to the Media Library.",
+      "rect": {
+        "x": 88.59,
+        "y": 2.25,
+        "w": 7.5,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "And from these buttons, you can respectively:\n• **sort** the folder and assets.\n• **switch from grid to list view**",
+      "rect": {
+        "x": 60.1,
+        "y": 8.75,
+        "w": 36,
+        "h": 6.75
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "Now that we've explored the interface, let's try managing assets and folders!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/02",
+      "text": "Clicking the three dots button on an asset will automatically display other buttons. Let's try it!",
+      "rect": {
+        "x": 45.44,
+        "y": 57.43,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/03",
+      "text": "We can now see that for the selected asset, many actions are available, including *Download media, Move to folder*, and *Delete.*",
+      "rect": {
+        "x": 30.29,
+        "y": 61.17,
+        "w": 18.12,
+        "h": 26.51
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/04",
+      "text": "Let's select the other asset that's not in the right folder yet.",
+      "rect": {
+        "x": 68.78,
+        "y": 57.43,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/05",
+      "text": "Let's click the *Move to folder* button.",
+      "rect": {
+        "x": 54.48,
+        "y": 77.17,
+        "w": 16.41,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/06",
+      "text": "In the dialog, let's click the dropdown to reveal the list of folders.",
+      "rect": {
+        "x": 32.34,
+        "y": 48.75,
+        "w": 35,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/07",
+      "text": "Select 'Brand assets' from the list to move the elements to that location.",
+      "rect": {
+        "x": 32.73,
+        "y": 54.88,
+        "w": 34.22,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/08",
+      "text": "Confirm the action by clicking the *Move* button.",
+      "rect": {
+        "x": 63.48,
+        "y": 60.87,
+        "w": 5.12,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/media-library/09",
+      "text": "Our asset has been moved to the \"Brand assets\" folder!\n\nNow let's add a new asset!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/09",
+      "text": "Before adding the new asset, let's create a new folder.",
+      "rect": {
+        "x": 89.06,
+        "y": 3,
+        "w": 6.56,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/10",
+      "text": "Click 'New folder' to create a new directory for your files.",
+      "rect": {
+        "x": 80.34,
+        "y": 8.13,
+        "w": 14.9,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/media-library/11",
+      "text": "We will name the new folder \"PDF\".",
+      "rect": {
+        "x": 32.42,
+        "y": 48.87,
+        "w": 34.84,
+        "h": 4.75
+      },
+      "value": "PDF"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/12",
+      "text": "Click the *Create folder* button.",
+      "rect": {
+        "x": 59.88,
+        "y": 60.87,
+        "w": 8.72,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/13",
+      "text": "Let's go in our new \"PDF\" folder.",
+      "rect": {
+        "x": 26.88,
+        "y": 26,
+        "w": 22.08,
+        "h": 6.25
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/14",
+      "text": "Since the folder is empty, an *Add assets* button is displayed. Let's click it!\n\nYou'll have to select a file to upload from your computer.",
+      "rect": {
+        "x": 57.38,
+        "y": 48.75,
+        "w": 7.75,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/15",
+      "text": "We can follow the upload progress in a dialog in the bottom right corner of the user interface.",
+      "rect": {
+        "x": 67.03,
+        "y": 81,
+        "w": 32.97,
+        "h": 19
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/15",
+      "text": "Click the *Minimize* button to hide upload progress details…",
+      "rect": {
+        "x": 93.67,
+        "y": 84.46,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/16",
+      "text": "… or click the *Maximize* icon to view again the full details.",
+      "rect": {
+        "x": 93.67,
+        "y": 93.38,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/15",
+      "text": "Once you've uploaded a file from your computer, you can see it in the folder.",
+      "rect": {
+        "x": 26.41,
+        "y": 17,
+        "w": 23.02,
+        "h": 29.8
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/media-library/15",
+      "text": "We can also add another file from your computer by dragging and dropping it."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/15",
+      "text": "And finally you could also add another asset from the *New* dropdown…",
+      "rect": {
+        "x": 89.06,
+        "y": 3,
+        "w": 6.56,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/17",
+      "text": "… by clicking on *File upload.*\n\nNote that you can also upload a file from a URL.",
+      "rect": {
+        "x": 80.34,
+        "y": 12.63,
+        "w": 14.9,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/13",
+      "text": "Now let's learn how to manage individual assets!\n\nClick an asset…",
+      "rect": {
+        "x": 30.08,
+        "y": 58.17,
+        "w": 14.74,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/18",
+      "text": "A details panel opens on the right side of the interface.",
+      "rect": {
+        "x": 67.03,
+        "y": 0,
+        "w": 32.97,
+        "h": 100
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/19",
+      "text": "In the asset edition dialog, you can use the following options:\n• **File name** to rename the asset\n• **Location** to move the asset to another folder\n• **Caption** for the asset\n• **Alternative text** in case the asset isn't shown",
+      "rect": {
+        "x": 68.83,
+        "y": 54.91,
+        "w": 29.84,
+        "h": 36.23
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/20",
+      "text": "Via the asset edition dialog, you can also use these buttons to, respectively:\n• **Delete** the asset\n• **Copy the link** to the asset\n• **Download** the asset\n• **Replace** the asset",
+      "rect": {
+        "x": 68.67,
+        "y": 92.63,
+        "w": 12.81,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/21",
+      "text": "Images can also be cropped by clicking the **Crop** button in the top right corner of their preview. Let's try it!",
+      "rect": {
+        "x": 95.39,
+        "y": 9,
+        "w": 3.44,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/media-library/22",
+      "text": "We can drag and drop handles in the corners of the image, or use numeric values to crop the image."
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/22",
+      "text": "The link button helps you lock the aspect ratio.",
+      "rect": {
+        "x": 83.83,
+        "y": 82,
+        "w": 3.44,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/23",
+      "text": "We can also drag the circle to define the focal point. This keeps the most important part of an image visible when your front end crops or resizes it.",
+      "rect": {
+        "x": 47.34,
+        "y": 45,
+        "w": 5.31,
+        "h": 8.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/22",
+      "text": "Let's click *Cancel* to close the cropping UI.",
+      "rect": {
+        "x": 1.95,
+        "y": 93.88,
+        "w": 5.82,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/24",
+      "text": "Click the 'Close' button to hide the details panel.",
+      "rect": {
+        "x": 95.86,
+        "y": 2.63,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/media-library/13",
+      "text": "We can also select multiple assets to perform bulk actions on them."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/13",
+      "text": "Check the box in the upper left corner to select a first file…",
+      "rect": {
+        "x": 27.89,
+        "y": 35.88,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/25",
+      "text": "… then select a second one.",
+      "rect": {
+        "x": 51.22,
+        "y": 35.88,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/26",
+      "text": "When several assets are selected, a bulk actions bar is displayed.\n\nYou can use it to:\n• **Select all** assets and folders\n• Automatically **Create metadata** with AI (requires a Growth plan)\n• **Move** selected assets to another folder\n• **Delete** selected files and folders",
+      "rect": {
+        "x": 35.09,
+        "y": 90,
+        "w": 29.82,
+        "h": 8.75
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/media-library/26",
+      "text": "Selected files can also moved by dragging and dropping them on any folder in the tree view.",
+      "rect": {
+        "x": 3.91,
+        "y": 0,
+        "w": 19.06,
+        "h": 100
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/media-library/26",
+      "text": "Click the close icon to dismiss the bulk actions toolbar.",
+      "rect": {
+        "x": 61.24,
+        "y": 92.38,
+        "w": 2.5,
+        "h": 4
+      }
+    }
+  ],
+  "outro": {
+    "text": "And that's it!\n\nWe've explored the Media Library and saw how to add and manage assets and folders ✨",
+    "image": "/img/assets/interactive-demos/media-library/26"
+  }
+}

@@ -58,7 +58,7 @@ The `intlLabel.id` values should correspond to keys in your translation files lo
 :::
 
 :::caution
-The `permissions` parameter only controls whether the link is visible in the navigation. It does not protect the page itself. A user who knows the URL can still access the page directly. To fully secure a plugin route, you must also check permissions inside your page component and register your RBAC actions on the server side with `actionProvider.registerMany`. See the [Admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins) guide for a complete walkthrough.
+The `permissions` parameter only controls whether the link is visible in the navigation. It does not protect the page itself. A user who knows the URL can still access the page directly. To fully secure a plugin route, you must also check permissions inside your page component, register your RBAC actions on the server side with `actionProvider.registerMany`, and [check them on the plugin's admin routes](/cms/plugins-development/guides/admin-permissions-for-plugins#protect-the-server-routes) with the `admin::hasPermissions` policy. See the [Admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins) guide for a complete walkthrough.
 :::
 
 <Tabs groupId="js-ts">
@@ -260,7 +260,7 @@ When used to create a new section, `addSettingsLink()` accepts the following par
   | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon (default: `false`) |
   | `exact` | `boolean` | ❌ | Whether the active-link match should be exact |
 
-:::caution Deprecated: `createSettingSection()`
+:::caution Deprecated: createSettingSection()
 The dedicated `app.createSettingSection(section, links)` method is deprecated. It still works (it delegates to `addSettingsLink` internally) but new code should call `addSettingsLink(section, links)` directly. See [Deprecated methods](#deprecated-methods).
 :::
 
@@ -383,7 +383,7 @@ export default {
 
 `addSettingsLink` takes a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is either a single link object or an array of link objects, using the same properties as the `links` array in [Creating a new settings section](#creating-a-new-settings-section).
 
-:::caution Deprecated: `addSettingsLinks()`
+:::caution Deprecated: addSettingsLinks()
 The plural `app.addSettingsLinks(sectionId, links)` method is deprecated. Call `addSettingsLink(sectionId, links)` (singular) with an array instead; it accepts both single links and arrays. See [Deprecated methods](#deprecated-methods).
 :::
 

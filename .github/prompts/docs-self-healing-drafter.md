@@ -25,11 +25,11 @@ containing `targets`, `doc_type`, `template`, `guide`, and `confidence`.
 ## Step 2 — Run the documentation pipeline (per PR with targets)
 
 **Load these agent prompts now:**
-- Orchestrator: `$DOC_REPO/claude-plugins/inki/references/prompts/orchestrator.md`
-- Outline Generator: `$DOC_REPO/claude-plugins/inki/references/prompts/outline-generator.md`
-- Drafter: `$DOC_REPO/claude-plugins/inki/references/prompts/drafter.md`
-- Style Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/style-checker.md`
-- Integrity Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/integrity-checker.md`
+- Orchestrator: `$DOC_REPO/claude-plugins/inki/skills/inki-references/prompts/orchestrator.md`
+- Outline Generator: `$DOC_REPO/claude-plugins/inki/skills/inki-references/prompts/outline-generator.md`
+- Drafter: `$DOC_REPO/claude-plugins/inki/skills/inki-references/prompts/drafter.md`
+- Style Checker: `$DOC_REPO/claude-plugins/inki/skills/inki-references/prompts/style-checker.md`
+- Integrity Checker: `$DOC_REPO/claude-plugins/inki/skills/inki-references/prompts/integrity-checker.md`
 
 For each PR, read the pre-fetched body from `/tmp/pr-<NUMBER>-body.txt`, then check the
 diff size before reading it:
@@ -48,7 +48,7 @@ Follow the auto-chain execution from the Orchestrator:
 
 1. **For `create_page` targets:**
    - Run Outline Generator with Router YAML + source material
-   - Also load: `$DOC_REPO/claude-plugins/inki/references/prompts/outline-checker.md`
+   - Also load: `$DOC_REPO/claude-plugins/inki/skills/inki-references/prompts/outline-checker.md`
    - Run Drafter in Compose mode with the outline
    - Self-review: run Style Checker and Outline Checker on output
    - If errors: re-run Drafter once with corrections (max 1 retry)
@@ -66,10 +66,10 @@ Follow the auto-chain execution from the Orchestrator:
    - Run Integrity Checker on the final output (links, paths, anchors, code block syntax)
    - Log any issues but do not block PR creation — Pierre will verify during review
 
-**Authoring guides:** For each target, load the relevant authoring guide from `$DOC_REPO/claude-plugins/inki/references/authoring/`
+**Authoring guides:** For each target, load the relevant authoring guide from `$DOC_REPO/claude-plugins/inki/skills/inki-references/authoring/`
 based on the Router's `doc_type` and target path. Read per target, not upfront.
 
-**Templates:** For `create_page` targets, load the relevant template from `$DOC_REPO/claude-plugins/inki/references/templates/`
+**Templates:** For `create_page` targets, load the relevant template from `$DOC_REPO/claude-plugins/inki/skills/inki-references/templates/`
 based on the Router's `doc_type`.
 
 ## Step 3 — Create branch and draft PR (per PR)
@@ -97,14 +97,14 @@ git checkout -b "$BRANCH_NAME"
 # Style-lint gate. Every doc file you touched, before staging anything.
 # `git status --porcelain` rather than `git diff`, so a newly created page
 # (untracked, and the whole point of a create_page target) is linted too.
-chmod +x claude-plugins/inki/scripts/style-lint.sh
+chmod +x claude-plugins/inki/skills/inki-scripts/style-lint.sh
 LINT_FILES=$(git status --porcelain | awk '{print $NF}' \
   | grep -E '^docusaurus/docs/.*\.mdx?$' || true)
 
 LINT_STATUS=0
 if [ -n "$LINT_FILES" ]; then
   # shellcheck disable=SC2086
-  claude-plugins/inki/scripts/style-lint.sh $LINT_FILES || LINT_STATUS=$?
+  claude-plugins/inki/skills/inki-scripts/style-lint.sh $LINT_FILES || LINT_STATUS=$?
 fi
 # 0 = clean, 1 = errors (blocking), 2 = warnings only (not blocking)
 echo "style-lint exit: $LINT_STATUS"
@@ -172,7 +172,7 @@ gh pr create \
 
 The description is **written per PR, from what you actually changed**. There is no
 template to paste. It follows the same rules as every hand-written PR on this repo,
-defined in `$DOC_REPO/claude-plugins/inki/skills/_shared/pr-description-rules.md`:
+defined in `$DOC_REPO/claude-plugins/inki/skills/inki-references/shared/pr-description-rules.md`:
 
 1. Start with `This PR ...`.
 2. 1-3 sentences, or a short bullet list, saying **what changed and why**. Name the
@@ -206,7 +206,7 @@ cases to respect:
   so the slug-built URL will not resolve. Still include it, then append on the next
   line: `⚠️ The branch slug for this preview URL is <N> characters long (over the
   35-character limit), so the URL above is likely truncated and incorrect. It must be
-  fixed with `/inki:pr-fix` once Vercel has finished building the preview.`
+  fixed with `/inki-pr-fix` once Vercel has finished building the preview.`
 
 Build the whole body in a shell variable before the `gh pr create` call:
 

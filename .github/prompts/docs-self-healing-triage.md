@@ -19,6 +19,26 @@ For each PR, based ONLY on its title and body, decide:
 - `"yes"` — changes user-facing behavior, APIs, configuration, features, or CLI commands
 - `"no"` — clearly internal: refactors, race condition fixes, internal optimizations, test infrastructure, build tooling, admin UI polish with no behavior change, code style changes
 
+### `fix` PRs: "no" unless the fix changes what the docs describe
+
+Most `fix` PRs make Strapi do what it was already supposed to do. The documentation
+already describes that intended behavior, so there is nothing to update. Answer `"yes"`
+for a `fix` PR only when its title or body shows at least one of these:
+
+- a configuration option is added, removed, renamed, or changes its default or effect
+- a REST, GraphQL, or JavaScript API changes its parameters, response shape, or error
+  format
+- a CLI command or flag is added, removed, or changes behavior
+- something users were told to do, or not to do, changes (a requirement drops, a
+  limitation is lifted, a workaround is no longer needed)
+- a permission or security behavior that an admin configures changes
+
+Everything else is `"no"`: a crash fixed, a UI glitch fixed, a wrong value corrected,
+a log line added, a type tightened, a race condition closed. Give the reason in one short
+phrase, for example `"bug fix restoring intended behavior"`.
+
+### Every other PR
+
 When in doubt, say `"yes"`. False negatives are worse than false positives.
 
 Then write the result using Bash (do NOT use the Write tool):

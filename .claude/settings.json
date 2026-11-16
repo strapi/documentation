@@ -7,8 +7,5 @@
       },
       "autoUpdate": true
     }
-  },
-  "enabledPlugins": {
-    "inki@strapi-documentation": true
   }
 }

@@ -1,0 +1,46 @@
+# Content History tour, step for step the Guideflow tour it replaces.
+# Runs against the demo app from setup-demo-app.js, started with an Enterprise license
+# (Content History is an Enterprise feature): STRAPI_LICENSE=... npm run develop.
+
+title: Content History
+viewport:
+  width: 1280
+  height: 800
+# Replaced in setup by the edit view of the entry it recreates.
+start: /admin/content-manager/collection-types/api::article.article
+
+intro:
+  text: Welcome to the guided tour of the Content History feature!
+  button: Let's go 🚀
+
+steps:
+  - explain: role=button[name="More actions"]
+    text: '**Content History** is accessible via this button, which lists several options for the entry.'
+  - click: role=menuitem[name="Content History"]
+    text: Click on *Content History*.
+    before:
+      - click: role=button[name="More actions"]
+  - chapter: true
+    text: This is the Content History interface! It shows the state of your content type at a chosen time.
+  - explain: aside:has(h2:text-is("Versions"))
+    text: |-
+      This is where you can see current and past versions of your content type. For each version, you can see:
+      • the date and time,
+      • the name of the user who edited the version,
+      • and the status (if **Draft & Publish** is enabled).
+  - click: aside:has(h2:text-is("Versions")) li:nth-child(3) a
+    text: Let's click on a previous version!
+  - explain: main div:has(> div > label:text-is("category"))
+    text: In this previous version, the category was "news" but it was later changed to "nature".
+  - click: role=button[name="Restore"]
+    text: If we want the content type to go back to that previous version, we can click on the **Restore** button.
+  - click: role=alertdialog >> role=button[name="Restore"]
+    text: |-
+      Restoring a previous version of the content type means overriding the "current" one, but as a draft that can be later published.
+  
+      Let's confirm by clicking on **Restore** again!
+  - chapter: true
+    text: And that's it! We've used Content History to restore a previous version ✨
+
+outro:
+  text: Thank you for following this guided tour!

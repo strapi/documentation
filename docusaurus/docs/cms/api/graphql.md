@@ -79,7 +79,7 @@ The GraphQL plugin exposes only one endpoint that handles all queries and mutati
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
-:::caution `documentId` only
+:::caution documentId only
 The GraphQL API exposes documents using only the `documentId` field. The previous numeric `id` is no longer available here, although it is still returned by the REST API for backward compatibility (see [breaking change](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details).
 :::
 
@@ -610,11 +610,9 @@ If the Internationalization (i18n) feature is enabled for your content-type, you
 
 ### Mutations on media files
 
-:::caution
-Currently, mutations on media fields use Strapi v4 `id`, not Strapi 5 `documentId`, as unique identifiers for media files.
-:::
+Mutations on media fields accept either the file's numeric `id` or its `documentId` as a unique identifier.
 
-Media fields mutations use files `id`. However, GraphQL API queries in Strapi 5 do not return `id` anymore. Media files `id` can be found:
+To find media files `id` or `documentId`:
 
 - either in the [Media Library](/cms/features/media-library) from the admin panel,
 
@@ -630,7 +628,7 @@ Media fields mutations use files `id`. However, GraphQL API queries in Strapi 5 
 
 #### Update an uploaded media file
 
-When updating an uploaded media file, pass the media's `id` (not its `documentId`) and the `info` object containing new content. The `info` argument will has an associated input type that is specific to media files.
+When updating an uploaded media file, pass the media's `id` or `documentId` and the `info` object containing new content. The `info` argument will has an associated input type that is specific to media files.
 
 For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
 
@@ -661,7 +659,7 @@ If upload mutations return a forbidden access error, ensure proper permissions a
 
 #### Delete an uploaded media file
 
-When deleting an uploaded media file, pass the media's `id` (not its `documentId`).
+When deleting an uploaded media file, pass the media's `id` or `documentId`.
 
 ```graphql title="Example: Delete the media file with id 4"
 mutation DeleteUploadFile($deleteUploadFileId: ID!) {

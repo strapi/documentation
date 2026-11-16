@@ -1,0 +1,613 @@
+#!/usr/bin/env bash
+# style-lint.sh -- Deterministic style linting for Strapi documentation
+# Checks Markdown/MDX files against regex-based rules from the 12 Rules of Technical Writing.
+# Outputs: <severity>:<line>:<rule>:<message>
+# Exit codes: 0 = clean, 1 = errors found, 2 = warnings only (no errors)
+#
+# macOS-compatible: uses grep -E (no PCRE dependency).
+
+set -euo pipefail
+
+# Known acronyms that are allowed in ALL CAPS
+KNOWN_ACRONYMS="API|CLI|CSS|HTML|JS|JSON|NPM|REST|SDK|SQL|UI|URL|UUID|ULID|HTTP|HTTPS|CMS|SSO|RBAC|JWT|JWK|JWKS|JWS|JWE|JWA|CORS|DNS|FTP|SSH|CDN|SEO|RSS|SMTP|IMAP|POP3|LDAP|SAML|OIDC|OAuth|CRUD|ORM|MVC|SPA|SSR|CSR|PWA|DOM|YAML|TOML|XML|CSV|TSV|AWS|GCP|IAM|EC2|S3|RDS|ECS|EKS|VPC|VPN|WAF|MDX|JSX|TSX|GDPR|SSG|ISR|TLS|SSL|TCP|UDP|IDE|VSC|EOF|USA|FAQ|PDF|PNG|JPG|JPEG|GIF|SVG|WEBP|AVIF|RGB|HEX|HSL|ISO|UTC|GMT|MFA|TOTP|HOTP|ACL|PII|CRON|IPV4|IPV6|MIME|TTL|CTA|KPI|IIFE|GZIP"
+
+# Literal em dash character for matching (UTF-8)
+EM_DASH=$'\xe2\x80\x94'
+
+usage() {
+  echo "Usage: $0 <file1.md> [file2.md ...]" >&2
+  echo "  Runs deterministic style checks on Markdown/MDX files." >&2
+  echo "  Exit codes: 0 = clean, 1 = errors found, 2 = warnings only" >&2
+  exit 1
+}
+
+if [[ $# -eq 0 ]]; then
+  usage
+fi
+
+has_errors=0
+has_warnings=0
+
+# --- Preprocessing: strip code blocks, HTML comments, and inline code ---
+# Returns a version of the file where excluded content is replaced with blank
+# lines (preserving line numbers) or spaces (for inline code).
+
+strip_excluded_content() {
+  local file="$1"
+  awk '
+    BEGIN { in_code_block = 0; in_html_comment = 0 }
+
+    # Toggle code blocks (``` fences)
+    /^[[:space:]]*```/ {
+      if (in_code_block) {
+        in_code_block = 0
+        print ""
+        next
+      } else {
+        in_code_block = 1
+        print ""
+        next
+      }
+    }
+
+    in_code_block {
+      print ""
+      next
+    }
+
+    # Handle multi-line HTML comments
+    {
+      line = $0
+
+      # Remove complete single-line HTML comments
+      while (match(line, /<!--.*-->/)) {
+        before = substr(line, 1, RSTART - 1)
+        after = substr(line, RSTART + RLENGTH)
+        replacement = ""
+        for (i = 0; i < RLENGTH; i++) replacement = replacement " "
+        line = before replacement after
+      }
+
+      # Start of multi-line HTML comment
+      if (!in_html_comment && match(line, /<!--/)) {
+        in_html_comment = 1
+        before = substr(line, 1, RSTART - 1)
+        after_comment = substr(line, RSTART)
+        replacement = ""
+        for (i = 0; i < length(after_comment); i++) replacement = replacement " "
+        line = before replacement
+      }
+
+      if (in_html_comment) {
+        if (match(line, /-->/)) {
+          in_html_comment = 0
+          after = substr(line, RSTART + RLENGTH)
+          before = ""
+          for (i = 0; i < RSTART + RLENGTH - 1; i++) before = before " "
+          line = before after
+        } else {
+          print ""
+          next
+        }
+      }
+
+      # Remove inline code (backtick-wrapped content)
+      while (match(line, /`[^`]+`/)) {
+        before = substr(line, 1, RSTART - 1)
+        after = substr(line, RSTART + RLENGTH)
+        replacement = ""
+        for (i = 0; i < RLENGTH; i++) replacement = replacement " "
+        line = before replacement after
+      }
+
+      print line
+    }
+  ' "$file"
+}
+
+# Helper: case-insensitive word match using grep -Ei with word boundaries
+# GNU grep -E supports \b; the BSD grep shipped with macOS does not and uses
+# [[:<:]] and [[:>:]] instead. Probe with real input: matching against an empty
+# file always exits 1, so an exit-status probe on /dev/null can never succeed
+# and would leave every platform on the BSD classes.
+if printf 'x' | grep -qE '\bx\b' 2>/dev/null; then
+  word_boundary_start='\b'
+  word_boundary_end='\b'
+else
+  word_boundary_start='[[:<:]]'
+  word_boundary_end='[[:>:]]'
+fi
+
+lint_file() {
+  local file="$1"
+
+  if [[ ! -f "$file" ]]; then
+    echo "error:0:file-not-found:File not found: $file" >&2
+    has_errors=1
+    return
+  fi
+
+  # Get stripped content (code blocks, comments, inline code removed)
+  local stripped
+  stripped=$(strip_excluded_content "$file")
+
+  local line_num=0
+  local in_frontmatter=0
+  local frontmatter_started=0
+
+  while IFS= read -r line; do
+    line_num=$((line_num + 1))
+
+    # Handle frontmatter (YAML between --- delimiters at start of file)
+    if [[ $line_num -eq 1 && "$line" == "---" ]]; then
+      in_frontmatter=1
+      frontmatter_started=1
+      continue
+    fi
+    if [[ $in_frontmatter -eq 1 ]]; then
+      if [[ "$line" == "---" ]]; then
+        in_frontmatter=0
+      fi
+      continue
+    fi
+
+    # Skip empty lines
+    [[ -z "$line" ]] && continue
+
+    # Skip import statements and JSX component-only lines
+    if echo "$line" | grep -qE '^import[[:space:]]'; then
+      continue
+    fi
+    if echo "$line" | grep -qE '^<[A-Z]'; then
+      continue
+    fi
+
+    # =====================
+    # ERROR-LEVEL CHECKS
+    # =====================
+
+    # Em dashes in prose (not in URLs)
+    if echo "$line" | grep -q "${EM_DASH}"; then
+      # Check it is not inside a URL
+      local is_url=0
+      if echo "$line" | grep -qE "https?://[^[:space:]]*${EM_DASH}"; then
+        is_url=1
+      fi
+      if [[ $is_url -eq 0 ]]; then
+        echo "error:${line_num}:em-dash:Em dash found -- replace with colon, period, or restructure"
+        has_errors=1
+      fi
+    fi
+
+    # Em dash written as an HTML entity: &mdash;, &#8212; (decimal), or &#x2014;
+    # (hex). MDX renders these as the em dash character, so they are the same
+    # violation as a literal em dash but slip past the literal-character match.
+    if echo "$line" | grep -qiE "&(mdash|#8212|#x2014);"; then
+      echo "error:${line_num}:em-dash-entity:Em dash HTML entity found -- replace with colon, period, or restructure"
+      has_errors=1
+    fi
+
+    # Double hyphens used as dashes in prose (not in frontmatter or HTML comments)
+    if echo "$line" | grep -qE " -- "; then
+      # Exclude frontmatter separators (---) and HTML comments (<!--)
+      if ! echo "$line" | grep -qE "^---|<!--|^-"; then
+        echo "error:${line_num}:double-hyphen-dash:Double hyphen used as dash -- replace with colon, period, or restructure"
+        has_errors=1
+      fi
+    fi
+
+    # "Easy/simple" words describing tasks
+    local easy_match
+    easy_match=$(echo "$line" | grep -oEi "${word_boundary_start}(easy|easily|simple|simply|straightforward)${word_boundary_end}" | head -1 || true)
+    if [[ -n "$easy_match" ]]; then
+      echo "error:${line_num}:easy-words:\"${easy_match}\" used to describe a task"
+      has_errors=1
+    fi
+
+    # Bold prefixes that should be admonitions
+    local bold_match
+    bold_match=$(echo "$line" | grep -oE '\*\*(Note|Important|Warning|Tip|Caution):\*\*' | head -1 || true)
+    if [[ -n "$bold_match" ]]; then
+      local bold_type
+      bold_type=$(echo "$bold_match" | sed 's/\*\*//g; s/://')
+      local bold_lower
+      bold_lower=$(echo "$bold_type" | tr '[:upper:]' '[:lower:]')
+      echo "error:${line_num}:bold-admonition:**${bold_type}:** should be a :::${bold_lower} admonition"
+      has_errors=1
+    fi
+
+    # `:::danger` is not part of the style guide scale, which goes
+    # tip -> note -> prerequisites -> caution -> warning. `warning` is the top
+    # level and covers data loss, crash prevention, and unsupported behavior.
+    # In this repo both keywords render the same red block titled "Warning"
+    # (`src/theme/Admonition/index.js`, `src/scss/admonition.scss`), so `danger`
+    # adds no signal and only diverges from the documented scale.
+    if echo "$line" | grep -qE '^[[:space:]]*:::danger([[:space:]]|$)'; then
+      echo "error:${line_num}:danger-admonition::::danger is not in the style guide -- use :::warning (top level: data loss, crash prevention)"
+      has_errors=1
+    fi
+
+    # An admonition title must be plain text. Docusaurus passes a plain title as
+    # the `title` prop, but turns a title with markup (inline code, bold, italic,
+    # a link, a tag) into an `mdxAdmonitionTitle` child. The swizzled component
+    # (`src/theme/Admonition/index.js`) never extracts that child, so the page
+    # renders the default label glued to the title, e.g. "CautionDraft & Publish".
+    # Only types with a default label are affected: `:::callout` has none, so its
+    # `<Icon />` titles render on their own.
+    # Checked on the original line, since inline code is stripped from `$line`.
+    local admonition_line
+    admonition_line=$(sed -n "${line_num}p" "$file")
+    if echo "$admonition_line" | grep -qE '^[[:space:]]*:::(note|tip|info|caution|warning|danger|prerequisites)[[:space:]]+.*(`|\*|\[.*\]\(|<|(^|[[:space:]])_[^_]+_)'; then
+      echo "error:${line_num}:admonition-title-markup:Admonition title contains markup -- it renders glued to the default label; use plain text, or move the title into the body"
+      has_errors=1
+    fi
+
+    # Tables are Markdown tables only. An HTML `<table>` is reported once, on its
+    # opening tag; code blocks and inline code are already stripped, so a table
+    # shown as an example in a fence is not flagged. Case-sensitive on purpose:
+    # HTML tags are lowercase, while `<Table>` is a React component in JSX examples.
+    if echo "$line" | grep -qE '<table([[:space:]>]|$)'; then
+      echo "error:${line_num}:html-table:HTML table -- use a Markdown table (repeat a value instead of rowSpan/colSpan, or split the table)"
+      has_errors=1
+    fi
+
+    # Multi-action steps: numbered list items with joining words
+    if echo "$line" | grep -qE '^[[:space:]]*[0-9]+\.[[:space:]]'; then
+      if echo "$line" | grep -qEi "(,?[[:space:]]*${word_boundary_start}then${word_boundary_end}|${word_boundary_start}and then${word_boundary_end}|${word_boundary_start}and also${word_boundary_end}|,?[[:space:]]*${word_boundary_start}next${word_boundary_end})"; then
+        echo "error:${line_num}:multi-action-step:Numbered step contains multiple actions -- split into separate steps"
+        has_errors=1
+      fi
+    fi
+
+    # Casual language
+    local casual_match
+    casual_match=$(echo "$line" | grep -oEi "${word_boundary_start}(gonna|wanna|pretty cool|awesome|super)${word_boundary_end}" | head -1 || true)
+    if [[ -n "$casual_match" ]]; then
+      echo "error:${line_num}:casual-language:Casual language \"${casual_match}\" -- use a neutral tone"
+      has_errors=1
+    fi
+
+    # =====================
+    # WARNING-LEVEL CHECKS
+    # =====================
+
+    # ALL CAPS words (3+ letters) that are not known acronyms
+    local caps_words
+    caps_words=$(echo "$line" | grep -oE "${word_boundary_start}[A-Z]{3,}${word_boundary_end}" || true)
+    if [[ -n "$caps_words" ]]; then
+      while IFS= read -r caps_word; do
+        [[ -z "$caps_word" ]] && continue
+        if ! echo "$caps_word" | grep -qE "^(${KNOWN_ACRONYMS})$"; then
+          echo "warning:${line_num}:all-caps:ALL CAPS \"${caps_word}\" is not a known acronym"
+          has_warnings=1
+        fi
+      done <<< "$caps_words"
+    fi
+
+    # ./ prefix in file paths (inside backticks -- checked on original line since
+    # inline code was stripped; re-check original file line)
+    local orig_line
+    orig_line=$(sed -n "${line_num}p" "$file")
+    if echo "$orig_line" | grep -qE '`\./[^`]*`'; then
+      echo "warning:${line_num}:dot-slash-path:File path uses ./ prefix -- should start with /"
+      has_warnings=1
+    fi
+
+    # Long sentences (> 150 chars as proxy for > 25 words)
+    # Only check lines that look like prose (not headings, lists, tables, etc.)
+    if ! echo "$line" | grep -qE '^[#|!\[]' && ! echo "$line" | grep -qE '^[[:space:]]*[-*]' && ! echo "$line" | grep -qE '^[[:space:]]*[0-9]+\.'; then
+      if [[ ${#line} -gt 150 ]]; then
+        echo "warning:${line_num}:long-sentence:Line exceeds 150 characters (likely > 25 words)"
+        has_warnings=1
+      fi
+    fi
+
+    # "utilize", "leverage", "in order to"
+    if echo "$line" | grep -qEi "${word_boundary_start}utilize[sd]?${word_boundary_end}"; then
+      echo "warning:${line_num}:simplify-word:\"utilize\" -- use \"use\" instead"
+      has_warnings=1
+    fi
+    if echo "$line" | grep -qEi "${word_boundary_start}leverage[sd]?${word_boundary_end}"; then
+      echo "warning:${line_num}:simplify-word:\"leverage\" -- use \"use\" instead"
+      has_warnings=1
+    fi
+    if echo "$line" | grep -qEi "${word_boundary_start}in order to${word_boundary_end}"; then
+      echo "warning:${line_num}:simplify-word:\"in order to\" -- use \"to\" instead"
+      has_warnings=1
+    fi
+
+    # i18n called "plugin" instead of "feature" (it's a core feature since Strapi 5)
+    if echo "$line" | grep -qEi "i18n.*plugin|internationalization.*plugin"; then
+      echo "warning:${line_num}:i18n-not-plugin:i18n is a feature since Strapi 5, not a plugin -- use \"feature\" instead of \"plugin\""
+      has_warnings=1
+    fi
+
+    # Users & Permissions called "plugin" instead of "feature" (core feature since Strapi 5)
+    # Exception: admin panel paths like "Users & Permissions plugin > Roles" are correct
+    if echo "$line" | grep -qE "Users & Permissions plugin" && ! echo "$line" | grep -qE "Users & Permissions plugin >"; then
+      echo "warning:${line_num}:up-not-plugin:Users & Permissions is a feature since Strapi 5, not a plugin -- use \"feature\" instead of \"plugin\""
+      has_warnings=1
+    fi
+
+    # Spelled-out numbers (should be numerals per Strapi style guide)
+    local spelled_number
+    spelled_number=$(echo "$line" | grep -oEi "${word_boundary_start}(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)${word_boundary_end}" | head -1 || true)
+    if [[ -n "$spelled_number" ]]; then
+      echo "warning:${line_num}:spelled-number:\"${spelled_number}\" -- write as a numeral per Strapi style guide"
+      has_warnings=1
+    fi
+
+    # Bold inside table cells. Per the Strapi style guide, bold is reserved for
+    # UI button names. A table row (a line starting with `|`) that carries a
+    # **bold** span is almost always emphasising a cell label, not a button, so
+    # it is flagged. The known false positive -- a button name legitimately
+    # mentioned in a cell -- is acceptable at warning level and noted in the message.
+    # Skip the header-separator row (| --- | --- |).
+    if echo "$line" | grep -qE '^[[:space:]]*\|' && ! echo "$line" | grep -qE '^[[:space:]]*\|[[:space:]:|-]+\|?[[:space:]]*$'; then
+      if echo "$line" | grep -qE '\*\*[^*]+\*\*'; then
+        echo "warning:${line_num}:bold-in-table:Bold inside a table cell -- bold is reserved for UI button names; remove emphasis from cell labels"
+        has_warnings=1
+      fi
+    fi
+
+    # =====================
+    # SUGGESTION-LEVEL
+    # =====================
+
+    # Standalone cross-reference sentences
+    if echo "$line" | grep -qE '^See \[.*\]\(.*\)\.[[:space:]]*$'; then
+      echo "suggestion:${line_num}:standalone-xref:Standalone \"See [link].\" -- consider integrating into preceding sentence"
+    fi
+
+    # UI button name without a leading <Icon> component. The Strapi docs convention
+    # prefixes a button name with its Phosphor icon, e.g. `<Icon name="copy" /> **Copy**`.
+    # Heuristic: a **bold** span on the same line as the word "button" (the bold is
+    # the button label) that is NOT preceded by an <Icon .../> tag. Suggestion-level
+    # because not every "button" mention is a UI button and the author may add the
+    # icon deliberately elsewhere; keep it non-blocking but visible.
+    if echo "$line" | grep -qiE "${word_boundary_start}buttons?${word_boundary_end}" && echo "$line" | grep -qE '\*\*[^*]+\*\*'; then
+      if ! echo "$line" | grep -qE '<Icon[[:space:]]+name='; then
+        echo "suggestion:${line_num}:button-missing-icon:Button name without a leading <Icon name=\"...\" /> -- prefix UI button names with their Phosphor icon"
+      fi
+    fi
+
+  done <<< "$stripped"
+
+  # Rule 12: overuse of bold -- more than 3 bolded terms in a single paragraph.
+  # Operates on the stripped content (code blocks and inline code already removed)
+  # so bold inside code is never counted. Paragraphs are blocks of consecutive
+  # non-blank lines; the finding is reported on the paragraph's first line.
+  check_bold_overuse "$file" "$stripped"
+  check_admonition_stacks "$file"
+  check_doc_card_props "$file"
+}
+
+# Counts **bold** spans per paragraph and warns when a paragraph carries more
+# than 3. Admonition prefixes (**Note:**, **Warning:**, etc.) are excluded:
+# they are handled by the bold-admonition rule and are not prose emphasis.
+# Operates on the already-stripped content so bold inside code is never counted.
+check_bold_overuse() {
+  local file="$1"
+  local stripped="$2"
+
+  local findings
+  findings=$(awk '
+    BEGIN { para_start = 0; count = 0; in_frontmatter = 0; line_num = 0 }
+
+    {
+      line_num++
+
+      # Skip YAML frontmatter (--- delimited block at the top of the file).
+      if (line_num == 1 && $0 == "---") { in_frontmatter = 1; next }
+      if (in_frontmatter) { if ($0 == "---") in_frontmatter = 0; next }
+    }
+
+    # Blank line ends the current paragraph: emit a finding if over threshold.
+    /^[[:space:]]*$/ {
+      if (count > 3) {
+        print "warning:" para_start ":bold-overuse:" count " bolded terms in one paragraph -- Rule 12: overuse of bold, use structure (headings, lists, admonitions) instead"
+      }
+      para_start = 0
+      count = 0
+      next
+    }
+
+    {
+      if (para_start == 0) para_start = line_num
+
+      # Strip admonition-prefix bolds so they are not counted as emphasis.
+      work = $0
+      gsub(/\*\*(Note|Important|Warning|Tip|Caution):\*\*/, "", work)
+
+      # Count remaining **...** spans on this line.
+      while (match(work, /\*\*[^*]+\*\*/)) {
+        count++
+        work = substr(work, RSTART + RLENGTH)
+      }
+    }
+
+    END {
+      if (count > 3) {
+        print "warning:" para_start ":bold-overuse:" count " bolded terms in one paragraph -- Rule 12: overuse of bold, use structure (headings, lists, admonitions) instead"
+      }
+    }
+  ' <<< "$stripped")
+
+  if [[ -n "$findings" ]]; then
+    echo "$findings"
+    has_warnings=1
+  fi
+}
+
+# Consecutive callouts, separated by nothing but blank lines, are checked for
+# three distinct defects:
+#
+#   admonition-run       3 or more in a row, whatever the types: a wall of
+#                        callouts the reader stops reading.
+#   same-type-admonitions  two callouts of the same type back to back: they are
+#                        one callout, and their points belong in one block as
+#                        bullets.
+#   stacked-alerts       two high-level callouts (caution, warning, the legacy
+#                        danger) back to back: the hierarchy flattens into a wall
+#                        of red and the severe stops standing out from the merely
+#                        annoying.
+#
+# A pair of different low-level types (:::info, :::note, :::tip) is harmless and is
+# not flagged, and neither is the documented :::prerequisites plus :::caution
+# page-header motif, as long as the run stops at two.
+# A fenced block between two callouts ends the run, since the second one then
+# carries its own context; a fenced block inside a callout does not.
+# Reads the original file rather than the stripped content, where fenced blocks
+# have already collapsed into blank lines.
+check_admonition_stacks() {
+  local file="$1"
+
+  local findings
+  findings=$(awk '
+    BEGIN {
+      in_code = 0; in_frontmatter = 0; in_admonition = 0
+      line_num = 0; run = 0; run_start = 0
+      alerts = "caution warning danger"
+    }
+
+    function is_alert(type) {
+      return index(alerts, type) > 0
+    }
+
+    # End of a run of consecutive callouts: report what the run contains.
+    function flush_run() {
+      if (run >= 3) {
+        print "warning:" run_start ":admonition-run:" run " admonitions in a row -- a wall of callouts, keep one and move the rest to prose or a list"
+      }
+
+      for (i = 2; i <= run; i++) {
+        if (types[i] == types[i - 1]) {
+          print "warning:" lines[i] ":same-type-admonitions:two " types[i] " callouts in a row -- merge them into one, with a bullet per point"
+        } else if (is_alert(types[i]) && is_alert(types[i - 1])) {
+          print "warning:" lines[i] ":stacked-alerts:" types[i - 1] " callout directly followed by a " types[i] " one -- keep one alert and move the rest to prose or a list"
+        }
+      }
+
+      run = 0
+    }
+
+    {
+      line_num++
+
+      # Skip YAML frontmatter (--- delimited block at the top of the file).
+      if (line_num == 1 && $0 == "---") { in_frontmatter = 1; next }
+      if (in_frontmatter) { if ($0 == "---") in_frontmatter = 0; next }
+
+      # Fenced blocks. One inside a callout is part of it; one between callouts
+      # ends the run.
+      if ($0 ~ /^[[:space:]]*```/) {
+        in_code = !in_code
+        if (!in_code && !in_admonition) flush_run()
+        next
+      }
+      if (in_code) next
+
+      # Blank lines keep the run open: ::: then a blank line then :::note is
+      # still two stacked callouts.
+      if ($0 ~ /^[[:space:]]*$/) next
+
+      # Opening line of a callout (:::note, :::warning Title). Nested callouts
+      # (::::) are left alone.
+      if (match($0, /^:::[a-zA-Z]+/)) {
+        type = substr($0, 4, RLENGTH - 3)
+
+        if (run == 0) run_start = line_num
+        run++
+        types[run] = type
+        lines[run] = line_num
+        in_admonition = 1
+        next
+      }
+
+      # Closing line of a callout. The run stays open.
+      if ($0 ~ /^:::[[:space:]]*$/) { in_admonition = 0; next }
+
+      # Any other prose: inside a callout it is its body, outside it ends the run.
+      if (!in_admonition) flush_run()
+    }
+
+    END { flush_run() }
+  ' "$file")
+
+  if [[ -n "$findings" ]]; then
+    echo "$findings"
+    has_warnings=1
+  fi
+}
+
+# `<CustomDocCard>` silently ignores any prop it does not read. The component
+# (`docusaurus/src/components/CustomDocCard.js`) destructures exactly
+# `title`, `description`, `link`, `icon` and `small`, so an `emoji` prop renders
+# a card with no icon at all and no error anywhere. `<SubtleCallout>` does take
+# an `emoji`, which is why this check is scoped to the card component instead of
+# the prop name.
+# Handles the multi-line form of the tag, and skips fenced blocks so that a
+# documented anti-pattern in an example is not flagged.
+check_doc_card_props() {
+  local file="$1"
+
+  local findings
+  findings=$(awk '
+    BEGIN {
+      in_code = 0; in_card = 0; line_num = 0
+      known = " title description link icon small "
+    }
+
+    {
+      line_num++
+
+      if ($0 ~ /^[[:space:]]*```/) { in_code = !in_code; next }
+      if (in_code) next
+
+      line = $0
+      if (!in_card) {
+        if (line !~ /<CustomDocCard/) next
+        sub(/.*<CustomDocCard/, "", line)
+        in_card = 1
+      }
+
+      # Drop attribute values before looking for prop names, so that a query
+      # string in a link (`?a=b`) is not read as a prop.
+      work = line
+      gsub(/"[^"]*"/, "", work)
+
+      while (match(work, /[a-zA-Z][a-zA-Z0-9_-]*[[:space:]]*=/)) {
+        prop = substr(work, RSTART, RLENGTH)
+        sub(/[[:space:]]*=$/, "", prop)
+
+        if (index(known, " " prop " ") == 0) {
+          print "error:" line_num ":unknown-card-prop:<CustomDocCard> has no \"" prop "\" prop, so it is ignored at render time -- supported props are title, description, link, icon and small"
+        }
+
+        work = substr(work, RSTART + RLENGTH)
+      }
+
+      if (work ~ />/) in_card = 0
+    }
+  ' "$file")
+
+  if [[ -n "$findings" ]]; then
+    echo "$findings"
+    has_errors=1
+  fi
+}
+
+# --- Main ---
+
+for file in "$@"; do
+  lint_file "$file"
+done
+
+# Exit code logic
+if [[ $has_errors -eq 1 ]]; then
+  exit 1
+elif [[ $has_warnings -eq 1 ]]; then
+  exit 2
+else
+  exit 0
+fi

@@ -75,7 +75,7 @@ const client = strapi({ baseURL: 'http://localhost:1337/api' });
 
 <TabItem value="ts" label="TypeScript">
 
-With Typescript, import the `strapi` function and create a client instance with your Strapi API base URL:
+With TypeScript, import the `strapi` function and create a client instance with your Strapi API base URL:
 
 ```typescript
 import { strapi } from '@strapi/client';

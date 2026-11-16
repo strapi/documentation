@@ -53,6 +53,8 @@ The following operators are available:
 | [`$and`](#and)                   | Joins the filters in an "and" expression |
 | [`$not`](#not)                   | Joins the filters in an "not" expression |
 
+Filter values are cast to the type of the filtered attribute. A value that cannot be cast throws a `ValidationError` (e.g., `'no'` on a boolean attribute, or `'tomorrow'` on a date attribute). For boolean attributes, the accepted values are listed in the [REST API filters documentation](/cms/api/rest/filters#filter-values).
+
 <DeepFilteringBlogLink />
 
 ## Attribute operators
@@ -590,7 +592,7 @@ const entries = await strapi.documents('api::article.article').findMany({
   kind="js"
   path="strapi.documents().findMany()"
   title="$null"
-  description={<>Attribute is <code>null</code>.</>}>
+  description={<>Attribute is <code>null</code>. Use <code>true</code> or <code>false</code>: <code>$null: false</code> is equivalent to <code>$notNull: true</code>.</>}>
 
 <Tabs>
 <TabItem value="javascript" label="JavaScript">
@@ -615,7 +617,7 @@ const entries = await strapi.documents('api::article.article').findMany({
   kind="js"
   path="strapi.documents().findMany()"
   title="$notNull"
-  description={<>Attribute is not <code>null</code>.</>}>
+  description={<>Attribute is not <code>null</code>. Use <code>true</code> or <code>false</code>: <code>$notNull: false</code> is equivalent to <code>$null: true</code>.</>}>
 
 <Tabs>
 <TabItem value="javascript" label="JavaScript">

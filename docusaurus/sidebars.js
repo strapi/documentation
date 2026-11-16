@@ -33,11 +33,17 @@ const sidebars = {
           type: 'doc',
           id: 'cms/features/admin-panel',
           label: 'Admin panel',
+          customProps: {
+            updated: true
+          }
         },
         {
           type: 'doc',
           id: 'cms/features/content-manager',
           label: 'Content Manager',
+          customProps: {
+            updated: true
+          }
         },
         {
           type: 'doc',
@@ -73,6 +79,7 @@ const sidebars = {
           label: 'Audit Logs',
           id: 'cms/features/audit-logs',
           customProps: {
+            updated: true,
             enterprise: true
           }
         },
@@ -117,9 +124,6 @@ const sidebars = {
           type: 'doc',
           label: 'MCP server',
           id: 'cms/features/strapi-mcp-server',
-          customProps: {
-            updated: true
-          }
         },
         {
           type: 'doc',
@@ -136,6 +140,7 @@ const sidebars = {
           label: 'Releases',
           id: 'cms/features/releases',
           customProps: {
+            updated: true,
             growth: true
           }
         },
@@ -197,8 +202,8 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'Bring your own AI key',
-          id: 'cms/plugins/byok',
+          label: 'Strapi AI Enterprise',
+          id: 'cms/plugins/strapi-ai-enterprise',
           customProps: {
             enterprise: true
           }
@@ -437,7 +442,13 @@ const sidebars = {
             'cms/backend-customization/controllers',
             'cms/backend-customization/services',
             'cms/backend-customization/models',
-            'cms/backend-customization/webhooks',
+            {
+              type: 'doc',
+              id: 'cms/backend-customization/webhooks',
+              customProps: {
+                updated: true
+              }
+            },
             {
               type: 'category',
               label: 'Guides',
@@ -597,7 +608,13 @@ const sidebars = {
           collapsed: true,
           items: [
             'cms/plugins-development/guides/pass-data-from-server-to-admin',
-            'cms/plugins-development/guides/admin-permissions-for-plugins',
+            {
+              type: 'doc',
+              id: 'cms/plugins-development/guides/admin-permissions-for-plugins',
+              customProps: {
+                updated: true
+              }
+            },
             'cms/plugins-development/guides/store-and-access-data',
             'cms/plugins-development/guides/create-components-for-plugins',
             'cms/plugins-development/guides/reuse-admin-panel-components',

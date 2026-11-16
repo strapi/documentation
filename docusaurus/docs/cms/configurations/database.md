@@ -121,7 +121,7 @@ Despite its name, `forceMigration` does not control whether migrations run, whic
 
 ### Connection pool timeouts
 
-When Knex (through Tarn.js) cannot acquire a database connection before `acquireConnectionTimeout` or `pool.acquireTimeoutMillis` elapses, whichever is smaller, it throws a `KnexTimeoutError`. Unless `settings.poolTimeoutDiagnostics` is `false`, Strapi appends a link to this section to the error's message. It also attaches an `error.details` object describing the pool at that moment. The error's class, name, and underlying stack stay unchanged.
+When Knex (through Tarn.js) cannot acquire a database connection before `acquireConnectionTimeout` or `pool.acquireTimeoutMillis` elapses, whichever is smaller, it throws a `KnexTimeoutError`. Unless `settings.poolTimeoutDiagnostics` is `false`, Strapi appends a link to this section to the error's message. It also attaches an `error.details` object describing the pool at that moment. The error's class and name stay unchanged. The error's stack includes the code that issued the query, so you can find which request or code path waited for a connection.
 
 Strapi also logs a warning block, at most once every 30 seconds while the pool keeps timing out. Neither `error.details` nor the warning includes SQL statements or query parameters.
 
@@ -269,6 +269,29 @@ export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
 
 :::note
 AWS RDS IAM authentication requires SSL. Refer to the <ExternalLink to="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html" text="AWS documentation"/> for the required certificate bundle and SSL parameters.
+:::
+
+**Example: PostgreSQL with Prisma Postgres (pooled connection)**
+
+<ExternalLink to="https://www.prisma.io/postgres?utm_source=strapi&utm_medium=docs&utm_campaign=strapi_database_configuration" text="Prisma Postgres"/> provides 2 connection strings for each database: a pooled one (host `pooled.db.prisma.io`), which goes through PgBouncer in transaction mode, and a direct one (host `db.prisma.io`). Both use port `5432` and require SSL. Use the pooled connection string for the Strapi server, and set the pool `min` value to `0` because the pooler closes connections that have been idle for 60 minutes:
+
+```js title="./config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      // postgres://USER:PASSWORD@pooled.db.prisma.io:5432/postgres?sslmode=verify-full
+      connectionString: env('DATABASE_URL'),
+    },
+    pool: { min: 0, max: env.int('DATABASE_POOL_MAX', 10) },
+  },
+});
+```
+
+:::note
+- The connection strings end with `sslmode=require`, which makes `pg` print a warning about SSL modes when Strapi starts. Replace it with `sslmode=verify-full` to remove the warning. `pg` 8 handles both values the same way and verifies the server certificate.
+- Use the direct connection string if you set a custom `schema`, or if some queries run for more than 10 minutes. Strapi sets the schema with a session-level `SET search_path` command, which a pooler in transaction mode does not keep between transactions, and the pooler stops queries after 10 minutes.
+- Each Strapi instance can open up to `pool.max` connections. Refer to the <ExternalLink to="https://www.prisma.io/docs/postgres/database/connection-pooling?utm_source=strapi&utm_medium=docs&utm_campaign=strapi_database_configuration#connection-limits" text="Prisma Postgres documentation"/> for the connection limits of each plan.
 :::
 
 </TabItem>

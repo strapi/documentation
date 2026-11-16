@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="9 2 781 781" width="64" height="64">
+  <!-- Strapi AI mascot, static version of src/components/AgentBot for the Kapa widget logo. Breathes and blinks with CSS only, so it animates inside an <img>. -->
+  <style>
+    .body { transform-origin: 399.5px 753px; animation: breathe 3.2s ease-in-out infinite; }
+    .eye { transform-box: fill-box; transform-origin: center; animation: blink 5.2s infinite; }
+    .eye + .eye { animation-delay: 0.02s; }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1, 1); }
+      50% { transform: scale(0.993, 1.012); }
+    }
+    @keyframes blink {
+      0%, 88%, 94%, 100% { transform: scaleY(1); }
+      91% { transform: scaleY(0.08); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .body, .eye { animation: none; }
+    }
+  </style>
+  <defs>
+    <radialGradient id="tile" gradientUnits="userSpaceOnUse" cx="280.5" cy="239.5" r="640">
+      <stop offset="0" stop-color="#6461FF"/>
+      <stop offset="0.5" stop-color="#4945FF"/>
+      <stop offset="1" stop-color="#3B37E6"/>
+    </radialGradient>
+    <radialGradient id="fold" gradientUnits="userSpaceOnUse" cx="280.5" cy="239.5" r="640">
+      <stop offset="0" stop-color="#A5A3FF"/>
+      <stop offset="0.45" stop-color="#9593FF"/>
+      <stop offset="1" stop-color="#8885F7"/>
+    </radialGradient>
+  </defs>
+  <g class="body">
+    <path fill="url(#tile)" d="M39 282c0-118 0-176.9 36.6-213.5C112.2 32 171.1 32 288.9 32h221.2c117.8 0 176.7 0 213.3 36.6C760 105.2 760 164.1 760 281.9v221.2c0 117.8 0 176.7-36.6 213.3C686.8 753 627.9 753 510.1 753H288.9c-117.8 0-176.7 0-213.3-36.6C39 679.8 39 620.9 39 503.1V281.9Z"/>
+    <path fill="#fff" d="M536.4 250.7H293.7v123.8h123.8v123.7h123.8V255.5c0-2.6-2.2-4.8-4.9-4.8Z"/>
+    <path fill="#fff" d="M412.7 374.5h4.8v4.8h-4.8z"/>
+    <path fill="url(#fold)" d="M293.8 374.5h119c2.6 0 4.8 2.1 4.8 4.8v119h-119a4.8 4.8 0 0 1-4.8-4.9v-119Z"/>
+    <path fill="url(#fold)" d="M417.5 498.2h123.8L421.6 618a2.4 2.4 0 0 1-4-1.7v-118Z"/>
+    <path fill="url(#fold)" d="M293.8 374.5h-118a2.4 2.4 0 0 1-1.7-4.1l119.7-119.7v123.8Z"/>
+    <rect class="eye" x="365" y="278.6" width="30" height="68" rx="15" fill="#4945FF"/>
+    <rect class="eye" x="455" y="278.6" width="30" height="68" rx="15" fill="#4945FF"/>
+  </g>
+</svg>

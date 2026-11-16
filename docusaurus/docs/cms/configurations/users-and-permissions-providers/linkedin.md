@@ -1,6 +1,6 @@
 ---
 title: LinkedIn provider setup for Users & Permissions
-description: Learn how to setup the LinkedIn provider for the Users & Permissions feature.
+description: Learn how to set up the LinkedIn provider for the Users & Permissions feature.
 displayed_sidebar: cmsSidebar
 tags:
 - users & permissions
@@ -20,7 +20,7 @@ Configure LinkedIn as a provider for Strapi's Users & Permissions feature by cre
 </Tldr>
 
 
-The present page explains how to setup the LinkedIn provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to set up the LinkedIn provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).

@@ -17,7 +17,7 @@ Configure the Microsoft SSO provider using `passport-azure-ad-oauth2` to allow u
 </Tldr>
 
 
-The present page explains how to setup the Microsoft provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
+The present page explains how to set up the Microsoft provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites
 You have read the [How to configure SSO guide](/cms/configurations/guides/configure-sso).

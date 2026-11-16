@@ -71,7 +71,7 @@ It accepts the same query parameters as other REST collection endpoints:
 | `pagination[page]` | Page number (1-based). Default `1`. |
 | `pagination[pageSize]` | Number of files per page. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. |
 | `pagination[start]` | Pagination by offset: number of files to skip. |
-| `pagination[limit]` | Pagination by offset: maximum number of files to return. |
+| `pagination[limit]` | Pagination by offset: maximum number of files to return. Defaults to the `api.rest.defaultLimit` [configuration](/cms/configurations/api) (`25`), capped by `api.rest.maxLimit` if set. Use `-1` to return all files, up to that cap. |
 | `pagination[withCount]` | Whether to run the count query and include `total` and `pageCount` in the response. Defaults to `true`. |
 | `filters` | [Filter](/cms/api/rest/filters) the results. |
 | `sort` | [Sort](/cms/api/rest/sort-pagination#sorting) the results. |
@@ -239,7 +239,7 @@ The following parameters are accepted:
 | --------- | ----------- |
 |`files`    | The file(s) to upload. The value(s) can be a Buffer or Stream. |
 |`path` (optional) | The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). |
-| `refId` | The ID of the entry which the file(s) will be linked to. |
+| `refId` | The ID of the entry which the file(s) will be linked to. Can be either the entry's numeric `id` or its `documentId`. |
 | `ref` | The unique ID (uid) of the model which the file(s) will be linked to (see more below). |
 | `source` (optional) | The name of the plugin where the model is located. |
 | `field` | The field of the entry which the file(s) will be precisely linked to. |

@@ -86,7 +86,7 @@ The `config` object of `/src/admin/app` accepts the following parameters:
 | `menu`                         | Object           | Accepts the `logo` key to change the logo in the main navigation                                            |
 | `theme.light` and `theme.dark` | Object           | Overwrite theme properties for light and dark modes                                               |
 | `tutorials`                    | Boolean          | Toggles displaying the video tutorials
-| `notifications`                | Object           | Accepts the `releases` key (Boolean) to toggle displaying notifications about new releases |
+| `notifications`                | Object           | Accepts the `releases` key (Boolean) to toggle displaying notifications about new releases, including the [upgrade banner](/cms/features/admin-panel#strapi-upgrade-banner) |
 
 <br/>
 Click on any of the following cards to get more details about a specific topic:

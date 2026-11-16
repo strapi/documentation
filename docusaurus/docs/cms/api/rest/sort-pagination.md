@@ -246,7 +246,7 @@ To paginate results by page, use the following parameters:
 | Parameter               | Type    | Description                                                               | Default |
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
-| `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
+| `pagination[pageSize]`  | Integer | Page size, capped by `api.rest.maxLimit` when it is set                   | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 <Endpoint
@@ -311,11 +311,11 @@ await request(`/api/articles?${query}`);
 
 To paginate results by offset, use the following parameters:
 
-| Parameter               | Type    | Description                                                    | Default |
-| ----------------------- | ------- | -------------------------------------------------------------- | ------- |
-| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                      | 0       |
-| `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
-| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
+| Parameter               | Type    | Description                                                                                                                | Default |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                                                                                   | 0       |
+| `pagination[limit]`     | Integer | Number of entries to return, capped by `api.rest.maxLimit` when it is set. Use `-1` to return all entries, up to that cap. | 25      |
+| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response                                                             | `true`  |
 
 :::tip
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/cms/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.

@@ -24,7 +24,9 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="9r2m2y1sok" darkId="er566mli6p"/>
+<!-- <Guideflow lightId="9r2m2y1sok" darkId="er566mli6p"/> -->
+
+<InteractiveDemo id="content-history" />
 
 A version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
 

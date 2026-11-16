@@ -8,15 +8,11 @@ name: Unflag released PRs
 # deterministic test: the source PR's merge commit is either an ancestor of the
 # newest published v5 tag, or it is not.
 #
-# Runs Wednesdays because that is when Strapi ships (24 of the last 30 releases),
-# and again on Thursday to catch releases that slip by a day.
-#
-# Releases are published around midday: the last 30 landed between 07:18 and
-# 14:37 UTC, 17 of them between 10:00 and 13:00. A single run at 15:00 UTC
-# left a released PR flagged for hours. The workflow now runs every hour from
-# 10:00 to 15:00 UTC, so a release is picked up within the hour. Repeated runs
-# are harmless: a PR loses its label once, and Slack is only notified when a
-# run actually unflags something.
+# Strapi usually ships on Wednesdays around midday, but a release can slip to
+# another weekday and land late in the afternoon. The workflow runs every hour
+# from 10:00 to 18:00 UTC on weekdays, so a release is picked up within the
+# hour whatever the day. Repeated runs are harmless: a PR loses its label once,
+# and Slack is only notified when a run actually unflags something.
 #
 # When a run unflags something, it dispatches `automerge-cron.yml` right away.
 # That workflow otherwise runs once, at 08:00 UTC, so a PR unflagged during the
@@ -29,7 +25,7 @@ name: Unflag released PRs
 
 on:
   schedule:
-    - cron: '0 10-15 * * 3,4' # hourly 10:00-15:00 UTC Wed + Thu (12:00-17:00 Paris in summer, 11:00-16:00 in winter)
+    - cron: '0 10-18 * * 1-5' # hourly 10:00-18:00 UTC on weekdays (12:00-20:00 Paris in summer, 11:00-19:00 in winter)
   workflow_dispatch:
     inputs:
       dry_run:

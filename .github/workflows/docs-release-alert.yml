@@ -18,11 +18,13 @@ name: 'Docs release: alert and launch'
 
 on:
   schedule:
-    # Strapi ships on Wednesdays (24 of the last 29 releases), around midday.
-    - cron: '0 11-17 * * 3'
-      timezone: 'Europe/Paris'
-    # Other weekdays: one look, to catch a release that slipped.
-    - cron: '0 15 * * 1,2,4,5'
+    # Strapi usually ships on Wednesdays around midday, but a release can slip
+    # to another weekday and land late in the afternoon. A single daily look
+    # misses those until the next day, so every weekday is checked hourly until
+    # 18:00, the latest a docs release can still be launched the same day.
+    # Repeated runs are harmless: the cache marker below announces each release
+    # once.
+    - cron: '0 11-18 * * 1-5'
       timezone: 'Europe/Paris'
   workflow_dispatch:
     inputs:

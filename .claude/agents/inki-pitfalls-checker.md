@@ -1,0 +1,1 @@
+../../claude-plugins/inki/agents/inki-pitfalls-checker.md

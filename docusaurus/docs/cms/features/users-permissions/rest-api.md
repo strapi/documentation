@@ -715,7 +715,7 @@ Possible errors:
 | 404 | `"User not found"` | No user with the given `id` |
 | 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
 
-:::note Relation inputs support both `documentId` and numeric IDs
+:::note Relation inputs support both documentId and numeric IDs
 When updating a user, including the `role` relation, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
 ```json
 {

@@ -1,0 +1,219 @@
+{
+  "id": "admin-panel",
+  "title": "Admin Panel Overview",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 763974,
+    "dark": 748930
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Admin Panel!",
+    "button": "Let's start 🚀",
+    "image": "/img/assets/interactive-demos/admin-panel/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/admin-panel/01",
+      "text": "This is the navigation of the admin panel. It can be different from one project to another, depending on which plugins are available or not.",
+      "rect": {
+        "x": 0,
+        "y": 6.38,
+        "w": 4.77,
+        "h": 86.25
+      },
+      "zoom": true
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/admin-panel/01",
+      "text": "Let's see what's behind the main items of the admin panel navigation!",
+      "rect": {
+        "x": 0,
+        "y": 6.38,
+        "w": 4.77,
+        "h": 86.25
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/01",
+      "text": "Let's start by visiting the **Content Manager**!",
+      "rect": {
+        "x": 0.59,
+        "y": 15.13,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/admin-panel/02",
+      "text": "From the Content Manager, you can write and manage your content."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/03",
+      "text": "Let's visit the **Media Library**!",
+      "rect": {
+        "x": 0.59,
+        "y": 21.63,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/admin-panel/04",
+      "text": "From the Media Library, you can add and manage assets."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/05",
+      "text": "Let's visit the **Content-type Builder**!",
+      "rect": {
+        "x": 0.59,
+        "y": 28.13,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/admin-panel/06",
+      "text": "With the Content-type Builder, you can create and edit content types."
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/07",
+      "text": "Let's take a look at the admin panel **Settings**!",
+      "rect": {
+        "x": 0.59,
+        "y": 47.63,
+        "w": 3.13,
+        "h": 5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/admin-panel/08",
+      "text": "A variety of settings, focusing on both the admin panel or your plugins, are accessible from here. Each setting is controlled by a system of user permissions."
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/admin-panel/09",
+      "text": "Finally, let's visit your **user profile**!",
+      "rect": {
+        "x": 0.12,
+        "y": 64.25,
+        "w": 16.58,
+        "h": 35
+      },
+      "zoom": true
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/admin-panel/09",
+      "text": "You access your profile and its settings, as well as the logout button, by clicking on your initials in the navigation.",
+      "rect": {
+        "x": 0.12,
+        "y": 64.25,
+        "w": 16.58,
+        "h": 35
+      },
+      "zoom": true
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/admin-panel/10",
+      "text": "From your profile, you can change your account information, password and experience preferences."
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/admin-panel/10",
+      "text": "Let's set up this account so that it fits our preferences: French language and a Dark Mode interface.",
+      "rect": {
+        "x": 9.38,
+        "y": 76.48,
+        "w": 85.63,
+        "h": 21
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/10",
+      "text": "Click here to choose another language.",
+      "rect": {
+        "x": 11.25,
+        "y": 89.47,
+        "w": 40.16,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/11",
+      "text": "Click on \"*Français*\" to have the admin panel in French.",
+      "rect": {
+        "x": 11.64,
+        "y": 79.21,
+        "w": 39.38,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/12",
+      "text": "Click here to switch to dark mode.",
+      "rect": {
+        "x": 52.97,
+        "y": 89.47,
+        "w": 40.16,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/13",
+      "text": "Click on \"*Dark Mode*\" in the dropdown.",
+      "rect": {
+        "x": 53.36,
+        "y": 83.71,
+        "w": 39.38,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/admin-panel/14",
+      "text": "Click on the *Save* button to confirm the new preferences for the account.",
+      "rect": {
+        "x": 88.88,
+        "y": 5.5,
+        "w": 6.74,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/admin-panel/15",
+      "text": "The account is now personalised based on our preferences, and we're ready to work more efficiently with the admin panel! 👏",
+      "rect": {
+        "x": 9.38,
+        "y": 76.48,
+        "w": 85.63,
+        "h": 23.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/admin-panel/15",
+      "text": "This is the end of our guided tour!"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "image": "/img/assets/interactive-demos/admin-panel/15"
+  }
+}

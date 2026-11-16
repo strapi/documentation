@@ -25,7 +25,9 @@ The Review Workflows feature allows you to create and manage workflows for your 
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<Guideflow lightId="zpez8vgs3p" darkId="lpx4d4zs4k"/>
+<!-- <Guideflow lightId="zpez8vgs3p" darkId="lpx4d4zs4k"/> -->
+
+<InteractiveDemo id="review-workflows" />
 
 ## Configuration
 
@@ -50,7 +52,7 @@ The default workflow is configured to have 4 stages, in this order: To do, Ready
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
 
 :::note
-A Strapi project can have up to 200 workflows, and each workflow up to 200 stages.
+Your license sets how many workflows a Strapi project can have and how many stages each workflow can have, up to 200 of each. The workflow limit only applies when you create a workflow: if your project already has more workflows than your license allows, you can still edit them.
 :::
 
 
@@ -95,7 +97,9 @@ The *Required stage for publishing* setting of a workflow prevents entries from 
 
 An entry must be exactly at the selected stage to be published: an entry at a later stage cannot be published either. Choosing the last stage of the workflow as the required stage avoids this situation.
 
-When the setting is defined, publishing an entry that is not at the required stage returns an error. In [Releases](/cms/features/releases), entries that are not at the required stage are flagged as not ready to be published.
+When the setting is defined, publishing an entry that is not at the required stage returns an error.
+
+In [Releases](/cms/features/releases), entries that are not at the required stage have the `Not ready` status. What happens to them depends on the [release mode](/cms/features/releases#choosing-a-release-mode): with *Require every entry to be ready*, they prevent the release from being published, and with *Release all ready items*, they are skipped when the release is published.
 
 ##### Deleting a stage
 

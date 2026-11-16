@@ -213,7 +213,7 @@ In the following example, the custom routes file name is prefixed with `01-` to 
 const config = {
   type: 'content-api',
   routes: [
-    { // Path defined with an URL parameter
+    { // Path defined with a URL parameter
       method: 'POST',
       path: '/restaurants/:id/review', 
       handler: 'api::restaurant.restaurant.review',

@@ -483,6 +483,8 @@ Administrator's first name, last name, email, and password can be:
 - passed as options
 - or set interactively if you call the command without passing any option.
 
+The password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks. When the password is set interactively, it is checked after the last question and the command asks for the password again. When it is passed with `--password`, the command exits with an error.
+
 **Example**
 
 ```bash
@@ -506,6 +508,8 @@ strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io -
 
 Reset an admin user's password.
 You can pass the email and new password as options or set them interactively if you call the command without passing the options.
+
+The new password must follow the [password policy](/cms/features/admin-panel#configuring-the-password-policy) of your Strapi application. If it does not, the error message lists the rules that the password breaks and the command exits with an error, whether the password is set interactively or passed with `--password`.
 
 **Example**
 
@@ -920,7 +924,7 @@ These commands install Strapi Enterprise plugins from the Strapi package registr
 
 <EnterpriseBadge />
 
-Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install.
+Install [Strapi Enterprise plugins](/cms/plugins/installing-enterprise-plugins) from the Strapi package registry. Without plugin names, the command lists the plugins your license includes so you can choose which ones to install. Plugins outside your license appear below the list, and you cannot select them.
 
 ```bash
 strapi enterprise install [packages...]

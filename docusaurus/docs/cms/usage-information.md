@@ -43,6 +43,7 @@ The following data is collected:
 - Environment state (development, staging, production)
 - System information (OS)
 - Build configurations
+- How the project creation command was run: by a person, in a CI environment, or by a coding agent, with the agent name (from a fixed list of known agents)
 
 :::caution GDPR
 Any identifiable data collected and aggregated is of a non-sensitive nature. We are compliant with the European GDPR recommendations (see our <ExternalLink to="https://strapi.io/privacy" text="Privacy Policy"/>). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and then anonymized.
@@ -86,16 +87,18 @@ Alternatively, the `strapi.telemetryDisabled: true` flag in the project `package
 
 Data collection can later be re-enabled by deleting the flag or setting it to false, or by using the `telemetry:enable` command.
 
+The `telemetry:disable` command and the `package.json` flag require an existing project. To also disable data collection while creating a project, set the `STRAPI_TELEMETRY_DISABLED` environment variable to `true` or `1` before running the [installation command](/cms/installation/cli).
+
 :::note
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).
 :::
 
 ## Strapi AI data handling {#strapi-ai-data-handling}
 
-With Strapi-managed AI, on the <GrowthBadge /> plan, [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
+With Strapi AI Growth, on the <GrowthBadge noTooltip/> plan, [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
 
-With the [Bring your own AI key plugin](/cms/plugins/byok), on the <EnterpriseBadge /> plan, Strapi AI requests go to your own AI provider instead, and that provider's data handling terms apply.
+With [Strapi AI Enterprise](/cms/plugins/strapi-ai-enterprise), on the <EnterpriseBadge noTooltip/> plan, Strapi AI requests go to your own AI provider instead, and that provider's data handling terms apply.
 
-Strapi-managed AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
+Strapi AI Growth follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
 
 For more information, refer to Strapi's <ExternalLink to="https://strapi.io/privacy" text="Privacy Policy"/>.

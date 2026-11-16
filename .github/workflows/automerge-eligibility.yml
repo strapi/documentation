@@ -42,6 +42,13 @@ permissions:
 
 env:
   ELIGIBLE_LABEL: 'automerge: eligible'
+  # The negative verdict, made visible. Without it, a PR that fails the checks
+  # looks the same as one never evaluated: `evaluate` is green either way, and
+  # only the run summary says why. Every evaluated PR carries exactly one of
+  # the two labels, so the review queue is one label filter away.
+  #
+  # If you rename it, also update the job's `if:` below, which cannot read env.
+  REVIEW_LABEL: 'automerge: needs human review'
   # The maintainer's override. The mechanical checks judge form, and form is a
   # proxy: a change can violate a criterion and still be right. When that
   # happens, this label records that a human read the PR and vouched for it.
@@ -63,7 +70,14 @@ env:
 
 jobs:
   evaluate:
-    if: github.repository == 'strapi/documentation'
+    # This workflow sets REVIEW_LABEL itself, and a label set with the PAT fires
+    # `labeled`. Re-evaluating on that event would wait out the quiet period
+    # only to reach the same verdict, so it is ignored. Changes to
+    # ELIGIBLE_LABEL still trigger a run: that is what removes a hand-added one.
+    if: >-
+      github.repository == 'strapi/documentation' &&
+      !((github.event.action == 'labeled' || github.event.action == 'unlabeled') &&
+        github.event.label.name == 'automerge: needs human review')
     runs-on: ubuntu-latest
 
     steps:
@@ -95,6 +109,13 @@ jobs:
             echo "PR #$PR carries '$APPROVED_LABEL' — form checks skipped"
             echo "in_scope=false" >> "$GITHUB_OUTPUT"
             echo "approved=true" >> "$GITHUB_OUTPUT"
+
+            # The approval is the human review that label asked for.
+            if echo "$LABELS" | grep -Fxq "$REVIEW_LABEL"; then
+              gh api --method DELETE --silent \
+                "repos/$GITHUB_REPOSITORY/issues/$PR/labels/$(jq -rn --arg l "$REVIEW_LABEL" '$l|@uri')"
+              echo "Removed '$REVIEW_LABEL'"
+            fi
             {
               echo "## Auto-merge eligibility — #$PR"
               echo ""
@@ -243,7 +264,8 @@ jobs:
               [ -n "$VIOLATED" ] && echo "- Criteria violated: \`${VIOLATED%, }\`"
               [ -n "$UNKNOWN" ] && echo "- Could not be evaluated: \`${UNKNOWN%, }\` (treated as blocking)"
               echo ""
-              echo "The \`$ELIGIBLE_LABEL\` label is not applied, or is removed if it was there."
+              echo "The \`$REVIEW_LABEL\` label is applied. The \`$ELIGIBLE_LABEL\`"
+              echo "label is not applied, or is removed if it was there."
               echo ""
               echo "These criteria judge form, not content. If you have read this PR"
               echo "and it is fine as it stands, add \`$APPROVED_LABEL\`: the checks"
@@ -322,6 +344,28 @@ jobs:
             echo "Label already correct, nothing to do"
             echo "- Label unchanged (already correct)" >> "$GITHUB_STEP_SUMMARY"
             echo "newly_eligible=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          # REVIEW_LABEL is the mirror image: present exactly when the PR is not
+          # eligible. Same REST calls, same reason.
+          if gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels \
+            --jq '.labels[].name' | grep -Fxq "$REVIEW_LABEL"; then
+            HAS_REVIEW=true
+          else
+            HAS_REVIEW=false
+          fi
+
+          if [ "$ELIGIBLE" != "true" ] && [ "$HAS_REVIEW" != "true" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR/labels" \
+              -f "labels[]=$REVIEW_LABEL" --silent
+            echo "Added '$REVIEW_LABEL'"
+            echo "- Label **added**: \`$REVIEW_LABEL\`" >> "$GITHUB_STEP_SUMMARY"
+
+          elif [ "$ELIGIBLE" = "true" ] && [ "$HAS_REVIEW" = "true" ]; then
+            gh api --method DELETE --silent \
+              "repos/$GITHUB_REPOSITORY/issues/$PR/labels/$(jq -rn --arg l "$REVIEW_LABEL" '$l|@uri')"
+            echo "Removed '$REVIEW_LABEL'"
+            echo "- Label **removed**: \`$REVIEW_LABEL\` (the PR is now eligible)" >> "$GITHUB_STEP_SUMMARY"
           fi
 
           exit 0

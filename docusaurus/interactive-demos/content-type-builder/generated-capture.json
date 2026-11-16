@@ -1,0 +1,443 @@
+{
+  "id": "content-type-builder",
+  "title": "Content-type Builder Overview",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 1325698,
+    "dark": 1257838
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Content-type Builder!",
+    "button": "Let's start 🚀",
+    "image": "/img/assets/interactive-demos/content-type-builder/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "This is the **navigation of the Content-type Builder**. It gives access to already created content-type and allows to create more.\n\nIt is organised in **3 categories**: *Collection types*, *Single types* and *Components*.\n\n✏️ When creating a new content-type, the first thing you have to decide is which type of content you want to create.",
+      "rect": {
+        "x": 3.91,
+        "y": 0,
+        "w": 19.06,
+        "h": 100
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "The navigation also displays **centralised buttons and a search** which apply to all content-types and components, which allow you to work on several at the same time.\n• The *Save* button saves all changes made to all content-types and components.\n• The *...* button gives access to *Undo*, *Redo* and *Discard changes* buttons.",
+      "rect": {
+        "x": 5.47,
+        "y": 8.88,
+        "w": 15.86,
+        "h": 11
+      },
+      "zoom": true
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "Let's now take a look at the **content-type edition interface**! 🚀",
+      "rect": {
+        "x": 25,
+        "y": 2,
+        "w": 72.5,
+        "h": 56.75
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "This is the button to **configure the edit view** of the content-type when in the Content Manager.",
+      "rect": {
+        "x": 61.88,
+        "y": 4.75,
+        "w": 14.14,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "The *Edit* button leads to the content-type's **settings** which allow you to rename the content-type or even change its type.\n\nFrom the content-type's **advanced settings** you can also enable or disable features such as **Draft & Publish** and **Internationalisation**.",
+      "rect": {
+        "x": 75.7,
+        "y": 4.75,
+        "w": 7.27,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "This is the button to **add another field** to the content-type.",
+      "rect": {
+        "x": 82.66,
+        "y": 4.75,
+        "w": 13.43,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "And this is the **list of fields** that have been added to the content-type.",
+      "rect": {
+        "x": 26.48,
+        "y": 14.38,
+        "w": 69.53,
+        "h": 42.13
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "For each field, you can click on:\n• the ✏️ **edit** button to access the field's basic and advanced settings\n• the 🗑️ **delete** button to delete the field from the content-type",
+      "rect": {
+        "x": 88.52,
+        "y": 24.63,
+        "w": 6.25,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/content-type-builder/01",
+      "text": "Let's create a simple content-type together! 🚀"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/02",
+      "text": "Click on \"*New Collection-Type*\".",
+      "rect": {
+        "x": 19.53,
+        "y": 27.88,
+        "w": 14.87,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-type-builder/03",
+      "text": "Let's create a content type for simple articles.",
+      "rect": {
+        "x": 20.16,
+        "y": 46.38,
+        "w": 29.14,
+        "h": 4.75
+      },
+      "value": "Simple article"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/04",
+      "text": "Let's take a look at the **Advanced settings**.",
+      "rect": {
+        "x": 67.92,
+        "y": 34.76,
+        "w": 12,
+        "h": 5.88
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/05",
+      "text": "Tick the \"*Internationalization*\" box to enable this feature for our new content-type.",
+      "rect": {
+        "x": 50.47,
+        "y": 52,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/06",
+      "text": "Click the *Continue* button.",
+      "rect": {
+        "x": 74.04,
+        "y": 64.12,
+        "w": 6.82,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/07",
+      "text": "Our newly created collection type is now listed among the collection types!\n\n✏️ The **\"N\" status** **indicates that the content type is new**. Other statuses can be displayed in the navigation:\n• **\"M\"** for **modified**\n• **\"D\"** for **deleted**\n\nAll statuses are erased after clicking the *Save* button.",
+      "rect": {
+        "x": 4.53,
+        "y": 40.63,
+        "w": 17.73,
+        "h": 6
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/07",
+      "text": "Let's save our new collection type!",
+      "rect": {
+        "x": 5.94,
+        "y": 9.63,
+        "w": 11.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/08",
+      "text": "It's now time to **select fields for our content-type**!",
+      "rect": {
+        "x": 55.4,
+        "y": 42.13,
+        "w": 11.7,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/09",
+      "text": "Let's start with a **Text field**.",
+      "rect": {
+        "x": 20.08,
+        "y": 27.13,
+        "w": 29.3,
+        "h": 8.75
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-type-builder/10",
+      "text": "Let's make our Text field the title for our simple article.",
+      "rect": {
+        "x": 20.16,
+        "y": 43.26,
+        "w": 29.14,
+        "h": 4.75
+      },
+      "value": "title"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/11",
+      "text": "Let's see what options are available in our field's Advanced settings!",
+      "rect": {
+        "x": 67.92,
+        "y": 31.64,
+        "w": 12,
+        "h": 5.88
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/12",
+      "text": "Tick the *Required field* box to make sure this field is always filled in by content managers.",
+      "rect": {
+        "x": 20.08,
+        "y": 45.25,
+        "w": 1.56,
+        "h": 2.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/13",
+      "text": "Let's **add another field** to our simple article!",
+      "rect": {
+        "x": 62.35,
+        "y": 88.36,
+        "w": 12.49,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/14",
+      "text": "A **Rich text** field could be quite useful to write the content of the article.",
+      "rect": {
+        "x": 20.08,
+        "y": 37.37,
+        "w": 29.3,
+        "h": 8.75
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-type-builder/15",
+      "text": "Let's name our new field.",
+      "rect": {
+        "x": 20.16,
+        "y": 52.13,
+        "w": 28.98,
+        "h": 4.75
+      },
+      "value": "body"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/16",
+      "text": "And let's add one more field!",
+      "rect": {
+        "x": 62.35,
+        "y": 66.62,
+        "w": 12.49,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/17",
+      "text": "A **Media field** would be great to add a cover to our article!",
+      "rect": {
+        "x": 20.08,
+        "y": 68.11,
+        "w": 29.3,
+        "h": 8.75
+      }
+    },
+    {
+      "type": "fill",
+      "image": "/img/assets/interactive-demos/content-type-builder/18",
+      "text": "Let's name our new media field.",
+      "rect": {
+        "x": 20.16,
+        "y": 44.25,
+        "w": 28.98,
+        "h": 4.75
+      },
+      "value": "cover"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/19",
+      "text": "Select the **Single media** option since we do not want content managers to be able to upload more than one photo.",
+      "rect": {
+        "x": 50.47,
+        "y": 57.62,
+        "w": 29.14,
+        "h": 9.75
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/20",
+      "text": "Click on *Finish* to stop adding new fields for now.",
+      "rect": {
+        "x": 75.47,
+        "y": 74.61,
+        "w": 5.39,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/21",
+      "text": "✏️ Just like in the navigation, **statuses are displayed in the list of fields** to indicate whether the fields are new, modified or deleted.",
+      "rect": {
+        "x": 85.14,
+        "y": 17.37,
+        "w": 3.61,
+        "h": 20
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/21",
+      "text": "Let's not forget to click on the *Save* button for all the modifications to be validated.",
+      "rect": {
+        "x": 5.94,
+        "y": 9.63,
+        "w": 11.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/22",
+      "text": "Let's edit one of our fields to see another status!",
+      "rect": {
+        "x": 88.98,
+        "y": 33.5,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/23",
+      "text": "Let's switch from Single to Multiple media.",
+      "rect": {
+        "x": 20.08,
+        "y": 57.62,
+        "w": 29.14,
+        "h": 9.75
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/24",
+      "text": "And click on *Finish*.",
+      "rect": {
+        "x": 75.47,
+        "y": 74.61,
+        "w": 5.39,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/25",
+      "text": "You can see the \"Modified\" status here in the list of fields...",
+      "rect": {
+        "x": 82.88,
+        "y": 33.63,
+        "w": 5.87,
+        "h": 3.75
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/content-type-builder/25",
+      "text": "... and an \"M\" here in the navigation!",
+      "rect": {
+        "x": 4.53,
+        "y": 40.63,
+        "w": 17.73,
+        "h": 6
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/25",
+      "text": "One last thing to try in the Content-type Builder: let's click on the *...* button.",
+      "rect": {
+        "x": 18.36,
+        "y": 9.63,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/content-type-builder/26",
+      "text": "Instead of clicking the edit button changing the settings again, you can click the *Undo last change* button!",
+      "rect": {
+        "x": 18.75,
+        "y": 14.75,
+        "w": 14.89,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/content-type-builder/22",
+      "text": "And that's it, we have created the new \"*Simple article*\" collection type and tried various options available in the Content-type Builder!"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "image": "/img/assets/interactive-demos/content-type-builder/22"
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "id": "review-workflows",
+  "title": "Review Workflows",
+  "width": 1280,
+  "height": 800,
+  "bytes": {
+    "light": 912022,
+    "dark": 880282
+  },
+  "intro": {
+    "text": "Welcome to the guided tour of the Review Workflows feature!",
+    "button": "Let's go 🚀",
+    "image": "/img/assets/interactive-demos/review-workflows/01"
+  },
+  "steps": [
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/01",
+      "text": "The Review Workflows feature must first be configured via the **Settings section of the admin panel**.",
+      "rect": {
+        "x": 4.53,
+        "y": 1.38,
+        "w": 17.73,
+        "h": 53.74
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/01",
+      "text": "In the Review Workflows section of Global settings, you can **create a new workflow**.",
+      "rect": {
+        "x": 80.94,
+        "y": 4.75,
+        "w": 15.15,
+        "h": 5.5
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/01",
+      "text": "Or you can **edit the default workflow** already available in your project. This is what we will do in this demo!",
+      "rect": {
+        "x": 28.36,
+        "y": 18.88,
+        "w": 65.78,
+        "h": 16.56
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/01",
+      "text": "Let's click on the *Edit* button!",
+      "rect": {
+        "x": 89.92,
+        "y": 28.69,
+        "w": 2.5,
+        "h": 4
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/02",
+      "text": "Let's enable the review workflow for the Article content type.",
+      "rect": {
+        "x": 62.27,
+        "y": 37.88,
+        "w": 31.09,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/review-workflows/03",
+      "text": "Make sure to select all the content type where the review workflow should be enabled, as they're not selected by default!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/04",
+      "text": "Now let's define a required stage before an article can be published.",
+      "rect": {
+        "x": 29.14,
+        "y": 65.5,
+        "w": 31.09,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/05",
+      "text": "Other configurations are also available per review stage. Let's discover them!",
+      "rect": {
+        "x": 26.95,
+        "y": 70.98,
+        "w": 62.5,
+        "h": 6
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/06",
+      "text": "Other than editing the stage name or colour, we can assign a specific role that can change the stage.",
+      "rect": {
+        "x": 28.83,
+        "y": 91.96,
+        "w": 27.73,
+        "h": 5
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/07",
+      "text": "For instance, let's decide that only Authors can change the \"Ready to review\" stage.",
+      "rect": {
+        "x": 29.22,
+        "y": 86.21,
+        "w": 26.95,
+        "h": 4.5
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/review-workflows/08",
+      "text": "Each review stage can be similarly configured.\n\nLet's do the same with the \"In progress\" and \"Reviewed\" stages!"
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/09",
+      "text": "Now let's click *Save* to confirm all the changes.",
+      "rect": {
+        "x": 88.88,
+        "y": 7.75,
+        "w": 6.74,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/10",
+      "text": "Now that our review workflow is fully configured for our Article content type, we can use the feature in the **Content Manager**.",
+      "rect": {
+        "x": 3.91,
+        "y": 0,
+        "w": 19.06,
+        "h": 100
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/11",
+      "text": "You can see in the **list view** that there is now a \"Review stage\" column indicating the stage in which the articles currently are.",
+      "rect": {
+        "x": 68.79,
+        "y": 26.88,
+        "w": 9.91,
+        "h": 49.06
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/11",
+      "text": "Let's go to the **edit view** of one of the articles to see how to change the review stage!",
+      "rect": {
+        "x": 34.42,
+        "y": 59,
+        "w": 23.85,
+        "h": 8.13
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/12",
+      "text": "Available actions related to the Review Workflows feature are displayed in this area.\n\nLet's **select another review stage**: for example, \"In progress\".",
+      "rect": {
+        "x": 78.91,
+        "y": 59.36,
+        "w": 17.19,
+        "h": 38.47
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/13",
+      "text": "There is no need to save.\n\nNow let's go back to the list view!",
+      "rect": {
+        "x": 5,
+        "y": 19.88,
+        "w": 16.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/14",
+      "text": "We can now see from the list view that our article's review is in progress!",
+      "rect": {
+        "x": 68.79,
+        "y": 58.25,
+        "w": 10.34,
+        "h": 9.63
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/14",
+      "text": "Let's go to the edit view of another article!",
+      "rect": {
+        "x": 34.42,
+        "y": 42.75,
+        "w": 23.85,
+        "h": 8.13
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/15",
+      "text": "This time, let's **assign a specific user** for the review of this article!",
+      "rect": {
+        "x": 78.91,
+        "y": 59.36,
+        "w": 17.19,
+        "h": 25.23
+      }
+    },
+    {
+      "type": "click",
+      "image": "/img/assets/interactive-demos/review-workflows/16",
+      "text": "And let's go back again to the list view!",
+      "rect": {
+        "x": 5,
+        "y": 19.88,
+        "w": 16.8,
+        "h": 4
+      }
+    },
+    {
+      "type": "explain",
+      "image": "/img/assets/interactive-demos/review-workflows/17",
+      "text": "You can now notice another new column in the list view, \"Assignee\", which now indicates that Kai Doe has been assigned to the review of the article.",
+      "rect": {
+        "x": 68.79,
+        "y": 26.88,
+        "w": 17.25,
+        "h": 49.06
+      }
+    },
+    {
+      "type": "chapter",
+      "image": "/img/assets/interactive-demos/review-workflows/17",
+      "text": "And that's it! We've learned to configure and use the Review Workflows feature! ✨"
+    }
+  ],
+  "outro": {
+    "text": "Thank you for following this guided tour!",
+    "image": "/img/assets/interactive-demos/review-workflows/17"
+  }
+}

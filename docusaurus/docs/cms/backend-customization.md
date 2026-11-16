@@ -28,7 +28,7 @@ Strapi’s back end is a Koa-based server where requests pass through global mid
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
 
-- The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
+- The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and sends responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
 - The **front-end** part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
 
 Throughout this developer documentation, 'back end' refers _exclusively_ to the back-end part of Strapi.
@@ -38,7 +38,7 @@ The [Getting Started > Admin panel page](/cms/features/admin-panel) gives an adm
 
 The Strapi back end runs an HTTP server based on <ExternalLink to="https://koajs.com/" text="Koa"/>, a back-end JavaScript framework.
 
-Like any HTTP server, the Strapi back end receives requests and send responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
+Like any HTTP server, the Strapi back end receives requests and sends responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
 
 A request can travel through the Strapi back end as follows:
 
