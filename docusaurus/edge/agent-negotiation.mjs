@@ -84,9 +84,9 @@ export function notFoundMarkdown(pathname, origin) {
   ].join('\n');
 }
 
-// CloudFront in front of docs.strapi.io keys its cache on the URL only, not on
-// Accept, so a cached Markdown response would be served to browsers. Markdown
-// answers to a page URL must therefore never be stored by a shared cache.
+// Markdown answers share their URL with the HTML page. CloudFront keys its
+// cache on Accept, but a single cache misconfigured upstream would serve them
+// to browsers, so they are never stored by a shared cache.
 const MARKDOWN_HEADERS = {
   'content-type': 'text/markdown; charset=utf-8',
   vary: 'Accept, Accept-Encoding',
