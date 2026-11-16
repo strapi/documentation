@@ -110,9 +110,34 @@ test('HTML requests are untouched and trigger no subrequest', async () => {
   assert.equal(fetchImpl.calls.length, 0);
 });
 
-test('file paths and non-GET requests are untouched', async () => {
+test('missing .md file with Accept: text/markdown returns a Markdown 404', async () => {
   const fetchImpl = fakeFetch({});
+  const res = await negotiateMarkdown(get('/cms/does-not-exist.md', 'text/markdown'), fetchImpl);
+  assert.equal(res.status, 404);
+  assert.equal(res.headers.get('content-type'), 'text/markdown; charset=utf-8');
+  assert.equal(res.headers.get('cache-control'), 'private, no-store');
+  assert.match(await res.text(), /No page exists at `\/cms\/does-not-exist\.md`/);
+  assert.deepEqual(fetchImpl.calls.map((c) => `${c.method} ${c.pathname}`), [
+    'HEAD /cms/does-not-exist.md',
+  ]);
+});
+
+test('existing .md file falls through to the static site', async () => {
+  const fetchImpl = fakeFetch({ '/cms/intro.md': 200 });
   assert.equal(await negotiateMarkdown(get('/cms/intro.md', 'text/markdown'), fetchImpl), undefined);
+});
+
+test('missing .md file requested by a browser keeps the HTML 404', async () => {
+  const fetchImpl = fakeFetch({});
+  const accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
+  assert.equal(await negotiateMarkdown(get('/404.md', accept), fetchImpl), undefined);
+  assert.equal(fetchImpl.calls.length, 0);
+});
+
+test('other file paths and non-GET requests are untouched', async () => {
+  const fetchImpl = fakeFetch({});
+  assert.equal(await negotiateMarkdown(get('/llms.txt', 'text/markdown'), fetchImpl), undefined);
+  assert.equal(await negotiateMarkdown(get('/img/logo.png', 'text/markdown'), fetchImpl), undefined);
   const head = new Request(`${ORIGIN}/`, { method: 'HEAD', headers: { accept: 'text/markdown' } });
   assert.equal(await negotiateMarkdown(head, fetchImpl), undefined);
   assert.equal(fetchImpl.calls.length, 0);

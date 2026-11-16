@@ -84,9 +84,9 @@ export function notFoundMarkdown(pathname, origin) {
   ].join('\n');
 }
 
-// CloudFront in front of docs.strapi.io keys its cache on the URL only, not on
-// Accept, so a cached Markdown response would be served to browsers. Markdown
-// answers to a page URL must therefore never be stored by a shared cache.
+// Markdown answers share their URL with the HTML page. CloudFront keys its
+// cache on Accept, but a single cache misconfigured upstream would serve them
+// to browsers, so they are never stored by a shared cache.
 const MARKDOWN_HEADERS = {
   'content-type': 'text/markdown; charset=utf-8',
   vary: 'Accept, Accept-Encoding',
@@ -104,7 +104,22 @@ export async function negotiateMarkdown(request, fetchImpl = fetch) {
 
     const url = new URL(request.url);
     const markdownPath = markdownPathFor(url.pathname);
-    if (!markdownPath) return undefined;
+    if (!markdownPath) {
+      if (!url.pathname.endsWith('.md')) return undefined;
+
+      // A Markdown file URL: let it through when it exists, otherwise answer
+      // with the Markdown 404. The HEAD asks for HTML so it does not loop back
+      // through this branch.
+      const file = await fetchImpl(new URL(url.pathname, url.origin), {
+        method: 'HEAD',
+        headers: { accept: 'text/html' },
+      });
+      if (file.status !== 404) return undefined;
+      return new Response(notFoundMarkdown(url.pathname, url.origin), {
+        status: 404,
+        headers: MARKDOWN_HEADERS,
+      });
+    }
 
     const twin = await fetchImpl(new URL(markdownPath, url.origin), {
       headers: { accept: 'text/markdown' },
