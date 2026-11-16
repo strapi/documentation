@@ -48,3 +48,58 @@ test('build output gets an index.md twin for the homepage', async () => {
     await fs.remove(path.dirname(outDir));
   }
 });
+
+/** Temp docs dir with two Cloud pages and a sidebar using a generated index. */
+async function generatedIndexFixture() {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'llms-index-'));
+  const docsDir = path.join(root, 'docs');
+  await fs.outputFile(
+    path.join(docsDir, 'cloud/account/account-settings.md'),
+    '---\ntitle: Profile settings\ndescription: Manage your profile.\n---\n\n# Profile settings\n\nBody.',
+  );
+  await fs.outputFile(
+    path.join(docsDir, 'cloud/account/account-billing.md'),
+    '---\ntitle: Account billing\ndescription: Read your invoices.\n---\n\n# Account billing\n\nBody.',
+  );
+  const sidebarPath = path.join(root, 'sidebars.js');
+  await fs.outputFile(
+    sidebarPath,
+    `module.exports = { cloudSidebar: [{
+      type: 'category',
+      label: 'Account management',
+      link: { type: 'generated-index', slug: '/cloud/account' },
+      items: [
+        'cloud/account/account-settings',
+        { type: 'doc', id: 'cloud/account/account-billing', label: 'Account billing & invoices' },
+      ],
+    }] };`,
+  );
+  return { root, docsDir, sidebarPath };
+}
+
+test('generated-index categories become pages listing their children', async () => {
+  const { root, docsDir, sidebarPath } = await generatedIndexFixture();
+  try {
+    const generator = new DocusaurusLlmsGenerator({ baseUrl: BASE, docsDir, sidebarPath });
+    const pages = await generator.extractAllPages();
+    const index = pages.find((p) => p.url === `${BASE}/cloud/account`);
+
+    assert.ok(index, 'the generated index is emitted as a page');
+    assert.equal(index.title, 'Account management');
+    assert.equal(index.generatedIndex, true);
+    assert.equal(
+      index.content,
+      [
+        'This page is an index with no content of its own. The Account management section contains the following pages:',
+        '',
+        `- [Profile settings](${BASE}/cloud/account/account-settings.md): Manage your profile.`,
+        `- [Account billing & invoices](${BASE}/cloud/account/account-billing.md): Read your invoices.`,
+      ].join('\n'),
+    );
+
+    assert.ok(generator.generateLlmsTxt(pages).includes(`- [Account management](${BASE}/cloud/account.md)`));
+    assert.ok(!generator.generateLlmsFullTxt(pages).includes('# Account management'));
+  } finally {
+    await fs.remove(root);
+  }
+});
