@@ -208,11 +208,71 @@ class DocusaurusLlmsGenerator {
         await this.processDocPage(item.id, pages);
       } else if (item.type === 'category' && item.items) {
         await this.processItems(item.items, pages);
+        if (item.link && item.link.type === 'generated-index') {
+          this.addGeneratedIndexPage(item, pages);
+        }
       } else if (item.items) {
         // Gère les groupes ou autres structures
         await this.processItems(item.items, pages);
       }
     }
+  }
+
+  /**
+   * A generated-index category has no doc file: Docusaurus builds its page
+   * from the sidebar. Emit the same thing as a page whose content lists the
+   * category's direct children, so the index also gets a Markdown twin.
+   * Called after the children were processed, so their pages are available.
+   */
+  addGeneratedIndexPage(category, pages) {
+    const { slug, title, description } = category.link;
+    if (!slug) return;
+
+    const entries = category.items
+      .map((child) => this.indexEntryFor(child, pages))
+      .filter(Boolean)
+      .map(({ label, url, description: childDescription }) => {
+        const link = `- [${label}](${this.toMarkdownUrl(url)})`;
+        return childDescription ? `${link}: ${childDescription}` : link;
+      });
+    if (entries.length === 0) return;
+
+    const label = title || category.label;
+    pages.push({
+      id: slug.replace(/^\/+/, ''),
+      title: label,
+      description: description || `Index of the ${label} pages.`,
+      url: this.generatePageUrl('', slug),
+      content: [description, entries.join('\n')].filter(Boolean).join('\n\n'),
+      generatedIndex: true,
+    });
+  }
+
+  /** Label, URL and description of one sidebar item, as listed on an index. */
+  indexEntryFor(item, pages) {
+    const docId = typeof item === 'string' ? item : item.type === 'doc' ? item.id : null;
+    if (docId) {
+      const page = pages.find((p) => p.id === docId);
+      if (!page) return null;
+      return { label: item.label || page.title, url: page.url, description: page.description };
+    }
+    if (item.type === 'category' && item.link) {
+      if (item.link.type === 'generated-index' && item.link.slug) {
+        return {
+          label: item.link.title || item.label,
+          url: this.generatePageUrl('', item.link.slug),
+          description: item.link.description,
+        };
+      }
+      if (item.link.type === 'doc') {
+        const page = pages.find((p) => p.id === item.link.id);
+        if (page) return { label: item.label, url: page.url, description: page.description };
+      }
+    }
+    if (item.type === 'link' && item.href) {
+      return { label: item.label, url: item.href, description: item.description };
+    }
+    return null;
   }
 
   async processDocPage(docId, pages) {
@@ -982,7 +1042,8 @@ class DocusaurusLlmsGenerator {
   generateLlmsFullTxt(pages) {
     const sections = [agentInstructionsBlock(), '\n'];
 
-    pages.forEach(page => {
+    // Generated indexes only list pages whose full content is already here.
+    pages.filter(page => !page.generatedIndex).forEach(page => {
       sections.push(`# ${page.title}`);
       sections.push(`Source: ${page.url}`);
       sections.push('');
