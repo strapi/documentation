@@ -43,6 +43,13 @@ export default function homeStructuredData(siteUrl, description) {
             url: 'https://strapi.io/contact',
           },
         ],
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'TODO_STREET_ADDRESS',
+          postalCode: 'TODO_POSTAL_CODE',
+          addressLocality: 'TODO_CITY',
+          addressCountry: 'TODO_COUNTRY_CODE',
+        },
       },
       {
         '@type': 'SoftwareApplication',
