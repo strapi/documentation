@@ -1,8 +1,9 @@
 /**
  * JSON-LD for the homepage: the documentation website, the Strapi product it
  * documents, and the Strapi organization that publishes both. Profiles and
- * the contact address are the ones listed on strapi.io (contact page footer
- * and privacy policy).
+ * the privacy address are the ones listed on strapi.io (contact page footer
+ * and privacy policy); hi@strapi.io is the general contact from the code of
+ * conduct.
  */
 const ORGANIZATION_ID = 'https://strapi.io/#organization';
 
@@ -28,11 +29,27 @@ export default function homeStructuredData(siteUrl, description) {
           'https://www.twitch.tv/strapijs',
           'https://discord.strapi.io',
         ],
-        contactPoint: {
-          '@type': 'ContactPoint',
-          contactType: 'privacy',
-          email: 'privacy@strapi.io',
-          url: 'https://strapi.io/contact',
+        contactPoint: [
+          {
+            '@type': 'ContactPoint',
+            contactType: 'general inquiries',
+            email: 'hi@strapi.io',
+            url: 'https://strapi.io/contact',
+          },
+          {
+            '@type': 'ContactPoint',
+            contactType: 'privacy',
+            email: 'privacy@strapi.io',
+            url: 'https://strapi.io/contact',
+          },
+        ],
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'TODO_STREET_ADDRESS',
+          postalCode: 'TODO_POSTAL_CODE',
+          addressLocality: 'TODO_CITY',
+          addressRegion: 'DE',
+          addressCountry: 'US',
         },
       },
       {
