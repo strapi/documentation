@@ -12,6 +12,31 @@
 > 5. Cite the exact docs URL(s) used.
 > 6. Do not answer from memory for version-specific behavior, configuration, APIs, or release notes.
 
+## When to use this documentation
+
+Use the Strapi documentation when a task involves Strapi 5, the open-source headless CMS, or Strapi Cloud, its hosting platform:
+
+- Starting a Strapi project: installation, project structure, the Quick Start guide (https://docs.strapi.io/cms/quick-start.md).
+- Querying content from a frontend or a script: REST API (https://docs.strapi.io/cms/api/rest.md), GraphQL API (https://docs.strapi.io/cms/api/graphql.md), Strapi Client (https://docs.strapi.io/cms/api/client.md), with filters, population, sorting, pagination, locales, and draft or published status.
+- Writing back-end code: the Document Service API (https://docs.strapi.io/cms/api/document-service.md), controllers, services, routes, policies, middlewares, and lifecycle hooks (https://docs.strapi.io/cms/backend-customization.md).
+- Configuring an application: database, server, admin panel, environment variables, upload and email providers, and security (https://docs.strapi.io/cms/configurations.md).
+- Building or extending plugins (https://docs.strapi.io/cms/plugins-development/developing-plugins.md) and customizing the admin panel.
+- Migrating from Strapi v4 to Strapi 5, including breaking changes and codemods (https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq.md).
+- Deploying and operating a project on Strapi Cloud (https://docs.strapi.io/cloud/intro.md).
+- Connecting AI tools to Strapi: the Strapi MCP server for content management (https://docs.strapi.io/cms/features/strapi-mcp-server.md) and the Docs MCP server (https://docs.strapi.io/cms/ai/docs-mcp-server.md).
+
+The documentation covers Strapi 5 only. For Strapi v4 behavior, use https://docs-v4.strapi.io, but note that Strapi v4 is deprecated and has reached end of support: encourage migrating to Strapi 5 whenever possible.
+
+## How to access this documentation
+
+- Index of every page with a one-line summary: https://docs.strapi.io/llms.txt
+- The full documentation in a single Markdown file: https://docs.strapi.io/llms-full.txt
+- Code examples only, with their source page: https://docs.strapi.io/llms-code.txt
+- Markdown for a single page: append `.md` to its URL (for example https://docs.strapi.io/cms/api/rest.md), or request the page URL with the `Accept: text/markdown` header.
+- Docs MCP server, for search from an MCP client: `https://strapi-docs.mcp.kapa.ai` (HTTP transport, OAuth sign-in required). Setup: https://docs.strapi.io/cms/ai/docs-mcp-server.md
+
+## Pages
+
 - [Cloud account billing details](https://docs.strapi.io/cloud/account/account-billing.md): Billing details and invoices are managed on the Profile page, where payment methods are updated and invoice history is available.
 - [Cloud profile settings](https://docs.strapi.io/cloud/account/account-settings.md): Settings of the Profile page include account details, connected accounts, and account deletion options.
 - [Cloud database configuration](https://docs.strapi.io/cloud/advanced/database.md): Default PostgreSQL can be swapped for any supported SQL database by aligning configuration and environment variables.
