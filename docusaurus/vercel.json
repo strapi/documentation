@@ -1,5 +1,31 @@
 {
+  "headers": [
+    {
+      "source": "/((?!assets/|img/|js/|diagrams/).*)",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept, Accept-Encoding"
+        }
+      ]
+    }
+  ],
   "redirects": [
+    {
+      "source": "/about",
+      "destination": "https://strapi.io/about-us",
+      "permanent": false
+    },
+    {
+      "source": "/contact",
+      "destination": "https://strapi.io/contact",
+      "permanent": false
+    },
+    {
+      "source": "/privacy",
+      "destination": "https://strapi.io/privacy",
+      "permanent": false
+    },
     {
       "source": "/cloud",
       "destination": "/cloud/intro",
