@@ -320,6 +320,7 @@ The following parameters are accepted:
 | `ref` | The unique ID (uid) of the model which the file(s) will be linked to (see more below). |
 | `source` (optional) | The name of the plugin where the model is located. |
 | `field` | The field of the entry which the file(s) will be precisely linked to. |
+| `folder` (optional) | The ID of the Media Library folder where the file(s) will be uploaded (see [Upload files to a specific folder](#upload-files-to-a-specific-folder)). |
 
 For example, given the `Restaurant` model attributes:
 
