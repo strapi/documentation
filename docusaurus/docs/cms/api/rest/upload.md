@@ -302,6 +302,10 @@ const response = await fetch('http://localhost:1337/api/upload', {
 
 To upload to the library root instead of a folder, pass `null` for the `folder` parameter.
 
+:::note
+The `folder` parameter only applies to new uploads. When [replacing a file](#update-fileinfo) with `POST /api/upload?id=x`, `folder` is ignored and the file stays in its current folder.
+:::
+
 ## Upload entry files
 
 Upload one or more files that will be linked to a specific entry.
