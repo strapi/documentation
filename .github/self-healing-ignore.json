@@ -2354,6 +2354,56 @@
       "number": 28112,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3703",
       "added": "2026-11-14"
+    },
+    {
+      "number": 28659,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28657,
+      "reason": "Triage: test infrastructure fix",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28577,
+      "reason": "Triage: internal optimization, no behavior change",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28180,
+      "reason": "Triage: performance optimization, output unchanged",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28130,
+      "reason": "Triage: type tightening, no runtime behavior change",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28609,
+      "reason": "Router: PR includes documentation updates in diff (docs/docs/architecture/06-http-request-path.md). Self-documenting.",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28607,
+      "reason": "Router: Internal schema fix that corrects state consistency. Does not change user-facing behavior or API surface. No documentation needed.",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28560,
+      "reason": "Router: Error handling fix for race condition edge case. Changes 500 to 400 error response. This is a correctness fix, not a user-facing feature or API change.",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28471,
+      "reason": "Router: PR includes documentation updates in diff (docs/docs/packages/core/database/01-relations/polymorphic-relations.md). Self-documenting. Bug fix for morphMany relations.",
+      "added": "2026-11-17"
+    },
+    {
+      "number": 28428,
+      "reason": "Router: UI behavior fix for image insertion in Blocks editor. This is an internal UX improvement that corrects unexpected behavior (text deletion). Not a new feature or API change requiring documentation.",
+      "added": "2026-11-17"
     }
   ]
 }
