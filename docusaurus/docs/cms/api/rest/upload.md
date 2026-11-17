@@ -158,7 +158,7 @@ The following parameters are accepted:
 | Parameter | Description |
 | --------- | ----------- |
 | `files` | The file(s) to upload. The value(s) can be a Buffer or Stream. |
-| `folder` (optional) | The ID of the Media Library folder where files will be uploaded. If omitted, files are placed in the "API Uploads" folder. Pass `null` to upload to the library root. The folder applies to every file in the request. An unknown folder ID, or a value that is not a positive integer or `null`, returns a `400` ValidationError and no file is uploaded. |
+| `folder` (optional) <VersionBadge version="5.63.0+" noTooltip /> | The ID of the Media Library folder where files will be uploaded. If omitted, files are placed in the "API Uploads" folder. Pass `null` to upload to the library root. The folder applies to every file in the request. An unknown folder ID, or a value that is not a positive integer or `null`, returns a `400` ValidationError and no file is uploaded. |
 | `fileInfo` (optional) | File metadata: `name`, `alternativeText`, `caption`, and `focalPoint`. |
 
 :::info Signed URLs with private S3 buckets
@@ -236,6 +236,7 @@ You have to send FormData in your request body.
 :::
 
 ### Upload files to a specific folder
+<VersionBadge version="5.63.0" />
 
 Use the optional `folder` parameter to upload files to a specific Media Library folder. The Content API does not list folders. To find a folder ID, open the folder in the Media Library: the URL shows the ID in its `folder` parameter (for example, `?folder=42`).
 
@@ -320,7 +321,7 @@ The following parameters are accepted:
 | `ref` | The unique ID (uid) of the model which the file(s) will be linked to (see more below). |
 | `source` (optional) | The name of the plugin where the model is located. |
 | `field` | The field of the entry which the file(s) will be precisely linked to. |
-| `folder` (optional) | The ID of the Media Library folder where the file(s) will be uploaded (see [Upload files to a specific folder](#upload-files-to-a-specific-folder)). |
+| `folder` (optional) <VersionBadge version="5.63.0+" noTooltip /> | The ID of the Media Library folder where the file(s) will be uploaded (see [Upload files to a specific folder](#upload-files-to-a-specific-folder)). |
 
 For example, given the `Restaurant` model attributes:
 
