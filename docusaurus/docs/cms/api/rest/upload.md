@@ -159,7 +159,7 @@ The following parameters are accepted:
 | --------- | ----------- |
 | `files` | The file(s) to upload. The value(s) can be a Buffer or Stream. |
 | `folder` (optional) | The ID of the Media Library folder where files will be uploaded. If omitted, files are placed in the "API Uploads" folder. Pass `null` to upload to the library root. The folder applies to every file in the request. An unknown folder ID, or a value that is not a positive integer or `null`, returns a `400` ValidationError and no file is uploaded. |
-| `fileInfo` (optional) | File metadata including `name`, `alternativeText`, and `caption`. |
+| `fileInfo` (optional) | File metadata: `name`, `alternativeText`, `caption`, and `focalPoint`. |
 
 :::info Signed URLs with private S3 buckets
 When using AWS S3 with the `ACL` parameter set to `"private"`, file URLs returned by the upload endpoints are automatically signed. Signed URLs include `X-Amz-Signature` query parameters and an `isUrlSigned: true` flag in the response, making them accessible despite the private bucket ACL. Signed URLs expire based on your `signedUrlExpires` configuration (default: 15 minutes).
