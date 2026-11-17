@@ -237,7 +237,7 @@ You have to send FormData in your request body.
 
 ### Upload files to a specific folder
 
-Use the optional `folder` parameter to upload files to a specific Media Library folder:
+Use the optional `folder` parameter to upload files to a specific Media Library folder. The Content API does not list folders. To find a folder ID, open the folder in the Media Library: the URL shows the ID in its `folder` parameter (for example, `?folder=42`).
 
 <Tabs>
 <TabItem value="browser" label="Browser">
