@@ -158,7 +158,7 @@ The following parameters are accepted:
 | Parameter | Description |
 | --------- | ----------- |
 | `files` | The file(s) to upload. The value(s) can be a Buffer or Stream. |
-| `folder` (optional) | The ID of the Media Library folder where files will be uploaded. If omitted, files are placed in the "API Uploads" folder. Pass `null` to upload to the library root. Unknown folder IDs return a `400` ValidationError. |
+| `folder` (optional) | The ID of the Media Library folder where files will be uploaded. If omitted, files are placed in the "API Uploads" folder. Pass `null` to upload to the library root. The folder applies to every file in the request. An unknown folder ID, or a value that is not a positive integer or `null`, returns a `400` ValidationError and no file is uploaded. |
 | `fileInfo` (optional) | File metadata including `name`, `alternativeText`, and `caption`. |
 
 :::info Signed URLs with private S3 buckets
