@@ -478,7 +478,7 @@ Metadatas will only be added in your Content API responses when the `strapi-enco
 Content source maps are only added to REST API responses. If your front end fetches content through the [GraphQL API](/cms/api/graphql), double-click editing is not available.
 :::
 
-<VersionBadge version="5.62.1+" noTooltip /> The Live Preview script decodes content source maps without modifying the HTML your frontend renders. It keeps the decoded sources in memory instead of adding a `data-strapi-source` attribute to the decoded elements. CSS selectors or scripts that target `[data-strapi-source]` only match elements where your frontend renders this attribute itself. When an element has the attribute, Live Preview reads its value instead of the decoded content source map.
+<VersionBadge version="5.63.0+" noTooltip /> The Live Preview script decodes content source maps without modifying the HTML your frontend renders. It keeps the decoded sources in memory instead of adding a `data-strapi-source` attribute to the decoded elements. CSS selectors or scripts that target `[data-strapi-source]` only match elements where your frontend renders this attribute itself. When an element has the attribute, Live Preview reads its value instead of the decoded content source map.
 
 For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
 
