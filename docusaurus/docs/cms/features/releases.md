@@ -358,8 +358,8 @@ To list releases without a release date, use the *Scheduled for* field with the 
 
 To sort releases, click the **Sort** button, which displays the current sort order, and select one of the following options:
 
-- *Scheduled date (soonest first)* (default)
-- *Scheduled date (latest first)*
+- *Scheduled date (latest first)* (default)
+- *Scheduled date (earliest first)*
 - *Most recent updates*
 - *Oldest updates*
 - *Most recently created*
