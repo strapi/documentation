@@ -30,7 +30,7 @@ The [Media Library feature](/cms/features/media-library) is powered in the back-
 | DELETE | `/api/upload/files/:id` | Delete a file       |
 
 :::note Notes
-- [Folders](/cms/features/media-library#organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
+- By default, files uploaded through the REST API are placed in the automatically created "API Uploads" folder. Use the optional `folder` parameter in `POST /api/upload` to place files in a different [Media Library folder](/cms/features/media-library#organizing-assets-with-folders).
 - The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
 - `GET /api/upload/files/:id`, `DELETE /api/upload/files/:id`, and `POST /api/upload?id=x`, and [update `fileInfo`](#update-fileinfo)) accept either the file's numeric `id` or its `documentId`. Files have no draft and publish, so each file has exactly one `documentId`. An unknown `id` or `documentId` returns the same `404` error.
 :::
@@ -153,7 +153,13 @@ When `pagination[withCount]` is `false`, the count query is skipped and `total` 
 
 Upload one or more files to your application.
 
-`files` is the only accepted parameter, and describes the file(s) to upload. The value(s) can be a Buffer or Stream.
+The following parameters are accepted:
+
+| Parameter | Description |
+| --------- | ----------- |
+| `files` | The file(s) to upload. The value(s) can be a Buffer or Stream. |
+| `folder` (optional) | The ID of the Media Library folder where files will be uploaded. If omitted, files are placed in the "API Uploads" folder. Pass `null` to upload to the library root. Unknown folder IDs return a `400` ValidationError. |
+| `fileInfo` (optional) | File metadata including `name`, `alternativeText`, and `caption`. |
 
 :::info Signed URLs with private S3 buckets
 When using AWS S3 with the `ACL` parameter set to `"private"`, file URLs returned by the upload endpoints are automatically signed. Signed URLs include `X-Amz-Signature` query parameters and an `isUrlSigned: true` flag in the response, making them accessible despite the private bucket ACL. Signed URLs expire based on your `signedUrlExpires` configuration (default: 15 minutes).
@@ -228,6 +234,73 @@ const response = await fetch('http://localhost:1337/api/upload', {
 :::caution
 You have to send FormData in your request body.
 :::
+
+### Upload files to a specific folder
+
+Use the optional `folder` parameter to upload files to a specific Media Library folder:
+
+<Tabs>
+<TabItem value="browser" label="Browser">
+
+```html
+<form>
+  <input type="file" name="files" />
+  <input
+    type="hidden"
+    name="fileInfo"
+    value='{"name":"vacation-photo","alternativeText":"Beach sunset"}'
+  />
+  <!-- Upload to folder with ID 42 -->
+  <input type="hidden" name="folder" value="42" />
+  <input type="submit" value="Submit" />
+</form>
+
+<script type="text/javascript">
+  const form = document.querySelector('form');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    await fetch('/api/upload', {
+      method: 'post',
+      body: new FormData(e.target)
+    });
+  });
+</script>
+```
+
+</TabItem>
+
+<TabItem value="Node.js" label="Node.js">
+
+```js
+import { FormData } from 'formdata-node';
+import fetch, { blobFrom } from 'node-fetch';
+
+const file = await blobFrom('./photo.jpg', 'image/jpeg');
+const form = new FormData();
+
+form.append('files', file, 'photo.jpg');
+form.append(
+  'fileInfo',
+  JSON.stringify({
+    name: 'Vacation photo',
+    alternativeText: 'Beach sunset',
+  })
+);
+// Upload to folder with ID 42
+form.append('folder', '42');
+
+const response = await fetch('http://localhost:1337/api/upload', {
+  method: 'post',
+  body: form,
+});
+```
+
+</TabItem>
+</Tabs>
+
+To upload to the library root instead of a folder, pass `null` for the `folder` parameter.
 
 ## Upload entry files
 
