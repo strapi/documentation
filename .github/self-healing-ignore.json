@@ -2404,6 +2404,81 @@
       "number": 28428,
       "reason": "Router: UI behavior fix for image insertion in Blocks editor. This is an internal UX improvement that corrects unexpected behavior (text deletion). Not a new feature or API change requiring documentation.",
       "added": "2026-11-17"
+    },
+    {
+      "number": 28674,
+      "reason": "Triage: error becomes explicit but behavior unchanged",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28666,
+      "reason": "Triage: types-only fix, no runtime change",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28654,
+      "reason": "Triage: admin UI polish with no behavior change",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28647,
+      "reason": "Triage: internal transaction fix",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28645,
+      "reason": "Triage: admin UI display fix",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 27941,
+      "reason": "Triage: internal optimization, behavior unchanged",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28671,
+      "reason": "Router: Internal bug fix: the preview handler now correctly omits null locale values. No user-facing API change or new documentation needed.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28669,
+      "reason": "Router: Internal bug fix: batch delete endpoint now skips missing IDs instead of throwing 500. No user-facing documentation needed.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28664,
+      "reason": "Router: Internal bug fix: missing user update now returns 404 instead of 500. No user-facing documentation needed.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28661,
+      "reason": "Router: Bug fix for deprecated internal Entity Service method. The Entity Service is documented as deprecated in favor of Document Service API. No user-facing documentation updates needed.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28653,
+      "reason": "Router: Bug fix preventing silent data loss from duplicate component IDs. Architecture docs are updated in the PR. No user-facing API surface changes requiring documentation.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28631,
+      "reason": "Router: Validation fix that rejects invalid filter syntax that previously returned 500. No user-facing documentation needed; filtering documentation already explains valid operators.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28629,
+      "reason": "Router: Internal admin permission cleanup logic fix. No user-facing documentation changes needed.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28622,
+      "reason": "Router: Internal implementation improvement adding heartbeat mechanism for multi-server job tracking. No user-facing API or feature change requires documentation.",
+      "added": "2026-11-18"
+    },
+    {
+      "number": 28518,
+      "reason": "Router: TypeScript type-level improvement that catches filter typos at compile time. No runtime API changes or new user-facing features requiring documentation.",
+      "added": "2026-11-18"
     }
   ]
 }
