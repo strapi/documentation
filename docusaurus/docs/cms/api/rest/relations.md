@@ -90,7 +90,7 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 `connect` can be used in combination with [`disconnect`](#disconnect).
 
 :::caution
-`connect` is not officially supported for media attributes. Advanced users can technically connect media entries by targeting upload file IDs, but this workaround isn't recommended or supported by Strapi and can easily break (e.g. when Draft & Publish uses mismatched IDs). Proceed with caution.
+`connect` is not officially supported for media attributes. Advanced users can technically connect media entries by targeting upload file IDs, but this workaround isn't recommended or supported by Strapi and can break (e.g. when Draft & Publish uses mismatched IDs). Proceed with caution. See [Media fields](#media-fields) for the exact `connect`, `disconnect`, and `set` behavior on media attributes.
 :::
 
 <Tabs groupId="shorthand-longhand">
@@ -480,5 +480,58 @@ Sending the following request updates a `restaurant`, identified by its `documen
 
 </TabItem>
 </Tabs>
+
+## Media fields
+
+Media fields, whether single (`multiple: false`) or multiple (`multiple: true`), accept the same `connect`, `disconnect`, and `set` payloads as relations, using upload file ids instead of `documentId`.
+
+| Payload | Effect on a media field |
+|---------|--------------------------|
+| `connect: []`, `disconnect: []`, or `{}` | Leaves the field unchanged. |
+| `connect` on a single media field | Replaces the attached file. If the array contains more than one id, only the last one is kept. |
+| `connect` on a multiple media field | Adds the listed file(s) to the existing ones. |
+| `disconnect` | Removes only the listed file(s). Disconnecting a file that isn't attached leaves the field unchanged. |
+| `set` | Replaces all attached files with the ones specified. On a single media field, only the last id in the array is kept. |
+
+<Request title="Example request to replace a single media field using connect">
+
+`PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
+
+```js
+{
+  data: {
+    avatar: {
+      connect: [12]
+    }
+  }
+}
+```
+
+</Request>
+
+Sending this request attaches file `12` to the `avatar` field and detaches whichever file was previously attached, so the field keeps exactly one file.
+
+Creating an entry with a `connect` payload on a media field also attaches the listed file(s):
+
+<Request title="Example request to attach a file while creating an entry">
+
+`POST http://localhost:1337/api/restaurants`
+
+```js
+{
+  data: {
+    name: 'Biscotte Restaurant',
+    avatar: {
+      connect: [12]
+    }
+  }
+}
+```
+
+</Request>
+
+:::note `{ set: null }` on media fields
+A bare `{ set: null }` clears a media field, the same way sending `avatar: null` does. This differs from regular relations, where a bare `{ set: null }` changes nothing (see [`set`](#set)). Combining `set: null` with `connect` or `disconnect` in the same payload still applies the delta instead of clearing the field. This distinction is tracked for future unification in [GitHub issue #27432](https://github.com/strapi/strapi/issues/27432).
+:::
 
 <FeedbackPlaceholder />

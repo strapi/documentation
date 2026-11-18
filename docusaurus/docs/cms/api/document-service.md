@@ -50,6 +50,19 @@ Additional information on how to migrate from the Entity Service API to the Docu
 
 :::note
 Relations can also be connected, disconnected, and set through the Document Service API, just like with the REST API (see the [REST API relations documentation](/cms/api/rest/relations) for examples).
+
+Media fields accept the same `connect`, `disconnect`, and `set` payloads and follow the same behavior as on the REST API, including the [media-specific behavior](/cms/api/rest/relations#media-fields) for single media fields (a `connect` replaces the attached file) and empty deltas (`connect: []` or `disconnect: []` leave the field unchanged):
+
+```js
+await strapi.documents('api::restaurant.restaurant').update({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
+  data: {
+    avatar: {
+      connect: [12]
+    }
+  }
+})
+```
 :::
 
 :::caution Document Service returns unsanitized data
