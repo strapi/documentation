@@ -2567,6 +2567,25 @@ console.log('Deleted file name:', deletedFile.name);
 # Document Service API
 Source: https://docs.strapi.io/cms/api/document-service
 
+## Document Service API
+Description: Media fields accept the same connect, disconnect, and set payloads and follow the same behavior as on the REST API, including the media-specific behavior for single media fields (a connect replaces the attached file) and empty deltas (connect: [] or disconnect: [] leave the field unchanged):
+(Source: https://docs.strapi.io/cms/api/document-service#document-service-api)
+
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::restaurant.restaurant').update({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
+  data: {
+    avatar: {
+      connect: [12]
+    }
+  }
+})
+```
+
+
 ## findOne()
 Description: { name: 'publicationFilter', type: 'String', required: false, description: 'If Draft & Publish is enabled: select documents by how their draft and published versions relate, before applying status .
 (Source: https://docs.strapi.io/cms/api/document-service#findone)
@@ -12082,6 +12101,38 @@ File path: N/A
 ```
 
 
+## Media fields
+Description: PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm
+(Source: https://docs.strapi.io/cms/api/rest/relations#media-fields)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  data: {
+    avatar: {
+      connect: [12]
+    }
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  data: {
+    name: 'Biscotte Restaurant',
+    avatar: {
+      connect: [12]
+    }
+  }
+}
+```
+
+
 
 # Sort and Pagination
 Source: https://docs.strapi.io/cms/api/rest/sort-pagination
@@ -12892,6 +12943,134 @@ File path: N/A
       "start": 20,
       "limit": 5
     }
+  }
+}
+```
+
+
+## Get a paginated list of folders
+Description: Response
+(Source: https://docs.strapi.io/cms/api/rest/upload#get-a-paginated-list-of-folders)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "folder-abc123",
+      "name": "Projects",
+      "path": "/1",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "parent": null,
+      "namePath": "/Projects"
+    },
+    {
+      "id": 2,
+      "documentId": "folder-def456",
+      "name": "2026",
+      "path": "/1/2",
+      "createdAt": "2026-01-15T10:30:00.000Z",
+      "updatedAt": "2026-01-15T10:30:00.000Z",
+      "parent": {
+        "id": 1,
+        "documentId": "folder-abc123"
+      },
+      "namePath": "/Projects/2026"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 10,
+      "pageCount": 2,
+      "total": 15
+    }
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "folder-abc123",
+      "name": "Projects",
+      "path": "/1",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "parent": null,
+      "namePath": "/Projects"
+    },
+    {
+      "id": 2,
+      "documentId": "folder-def456",
+      "name": "2026",
+      "path": "/1/2",
+      "createdAt": "2026-01-15T10:30:00.000Z",
+      "updatedAt": "2026-01-15T10:30:00.000Z",
+      "parent": {
+        "id": 1,
+        "documentId": "folder-abc123"
+      },
+      "namePath": "/Projects/2026"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 10,
+      "pageCount": 2,
+      "total": 15
+    }
+  }
+}
+```
+
+
+## Get a specific folder
+Description: Response
+(Source: https://docs.strapi.io/cms/api/rest/upload#get-a-specific-folder)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "id": 1,
+    "documentId": "folder-abc123",
+    "name": "Projects",
+    "path": "/1",
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z",
+    "parent": null,
+    "namePath": "/Projects"
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "id": 1,
+    "documentId": "folder-abc123",
+    "name": "Projects",
+    "path": "/1",
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z",
+    "parent": null,
+    "namePath": "/Projects"
   }
 }
 ```
@@ -17654,7 +17833,7 @@ File path: N/A
 
 ```shell
 strapi develop
-options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling | --debug | --silent]
+options: [--bundler | --open | --no-open | --no-watch-admin | --no-build-admin | --polling | --debug | --silent]
 ```
 
 
@@ -18970,8 +19149,27 @@ See https://docs.strapi.io/cms/configurations/database#connection-pool-timeouts.
 ```
 
 
+## Query timeouts
+Description: settings.queryTimeout sets a maximum time, in milliseconds, for a query run through the query builder.
+(Source: https://docs.strapi.io/cms/configurations/database#query-timeouts)
+
+Language: JavaScript
+File path: ./config/database.js
+
+```js
+module.exports = ({ env }) => ({
+  connection: {
+    // ...
+  },
+  settings: {
+    queryTimeout: env.int('DATABASE_QUERY_TIMEOUT', 10000),
+  },
+});
+```
+
+
 ## Configuration examples
-Description: An unexpected error returned by the GraphQL API no longer copies the internal error's name, message, and details (including the pool timeout diagnostics above) into the response.
+Description: It is unset by default, so existing projects see no behavior change.
 (Source: https://docs.strapi.io/cms/configurations/database#configuration-examples)
 
 Language: DOCKERFILE
