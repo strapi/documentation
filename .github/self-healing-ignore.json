@@ -2479,6 +2479,11 @@
       "number": 28518,
       "reason": "Router: TypeScript type-level improvement that catches filter typos at compile time. No runtime API changes or new user-facing features requiring documentation.",
       "added": "2026-11-18"
+    },
+    {
+      "number": 28615,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3711",
+      "added": "2026-11-18"
     }
   ]
 }
