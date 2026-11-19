@@ -2484,6 +2484,51 @@
       "number": 28615,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3711",
       "added": "2026-11-18"
+    },
+    {
+      "number": 28714,
+      "reason": "Triage: packaging metadata fix for internal types path, no runtime changes",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28705,
+      "reason": "Triage: CI/build tooling fix",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28698,
+      "reason": "Triage: crash fixes that restore intended behavior",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28697,
+      "reason": "Triage: bug fix restoring intended behavior without behavior changes",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28680,
+      "reason": "Triage: types-only fix, no runtime behavior change",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28583,
+      "reason": "Triage: test infrastructure, not user-facing",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28582,
+      "reason": "Triage: test infrastructure, not user-facing",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28710,
+      "reason": "Router: Internal upload plugin bug fix. No public API or behavior changes requiring documentation.",
+      "added": "2026-11-19"
+    },
+    {
+      "number": 28694,
+      "reason": "Router: Internal fallback mechanism for upload providers. Provider contract is documented separately in PR 28691.",
+      "added": "2026-11-19"
     }
   ]
 }
