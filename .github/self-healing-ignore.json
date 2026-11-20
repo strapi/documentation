@@ -2529,6 +2529,16 @@
       "number": 28694,
       "reason": "Router: Internal fallback mechanism for upload providers. Provider contract is documented separately in PR 28691.",
       "added": "2026-11-19"
+    },
+    {
+      "number": 28719,
+      "reason": "Triage: bug fix restoring intended API behavior",
+      "added": "2026-11-20"
+    },
+    {
+      "number": 28713,
+      "reason": "Triage: internal utility bug fix",
+      "added": "2026-11-20"
     }
   ]
 }
