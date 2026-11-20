@@ -477,6 +477,57 @@ Available enum values:
 
 To learn more, see the [use cases and accepted values](/cms/api/document-service/publication-filter#values) on the Document Service API page.
 
+### Fetch upload folders {#upload-folders}
+
+GraphQL exposes read-only queries for the folders of the [Media Library](/cms/features/media-library#organizing-assets-with-folders), matching the folder discovery available through the REST API. There is no mutation to create, update, or delete a folder through GraphQL.
+
+| Use case                                        | Query                      |
+| ------------------------------------------------ | -------------------------- |
+| Fetch a single folder                           | `uploadFolder`             |
+| Fetch multiple folders                          | `uploadFolders`            |
+| Fetch multiple folders with pagination metadata | `uploadFolders_connection` |
+
+`uploadFolders` and `uploadFolders_connection` require the `plugin::upload.folder.find` permission scope. `uploadFolder` requires `plugin::upload.folder.findOne`.
+
+```graphql title="Example query: Find all root folders"
+{
+  uploadFolders(filters: { parent: { documentId: { null: true } } }) {
+    documentId
+    name
+    path
+    namePath
+  }
+}
+```
+
+The `UploadFolder` type exposes `documentId`, `name`, `path`, `namePath`, and `parent`. `namePath` returns the full ancestor path of the folder, built from folder names instead of `path` ids (e.g. `/Clients/Acme/2026`).
+
+:::note
+`files`, `children`, and `pathId` are not exposed on `UploadFolder`. Use the `parent` filter on `uploadFolders` to walk the folder tree, and the REST API to list a folder's files.
+:::
+
+Fetching the `parent` field requires the `plugin::upload.folder.find` scope, even when calling `uploadFolder`. A token restricted to `plugin::upload.folder.findOne` can fetch a single folder but gets a forbidden error on its `parent` field.
+
+```graphql title="Example query: Fetch a folder and its parent"
+query GetFolder($documentId: ID!) {
+  uploadFolder(documentId: $documentId) {
+    documentId
+    name
+    parent {
+      documentId
+    }
+  }
+}
+```
+
+:::caution
+`filters` and `sort` cannot reference the `files` relation, as files are private on folders. Filtering or sorting `uploadFolders` by a field under `files` returns a validation error.
+:::
+
+:::note Private folder names
+If the folder content-type's `name` attribute is marked `private: true`, `UploadFolder` exposes neither `name` nor `namePath`.
+:::
+
 ## Mutations
 
 Mutations in GraphQL are used to modify data (e.g. create, update, and delete data).
