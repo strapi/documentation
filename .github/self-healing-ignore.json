@@ -2539,6 +2539,41 @@
       "number": 28713,
       "reason": "Triage: internal utility bug fix",
       "added": "2026-11-20"
+    },
+    {
+      "number": 28740,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-21"
+    },
+    {
+      "number": 28737,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-21"
+    },
+    {
+      "number": 28728,
+      "reason": "Triage: bug fix preventing crash",
+      "added": "2026-11-21"
+    },
+    {
+      "number": 28442,
+      "reason": "Triage: documentation/agent instructions only",
+      "added": "2026-11-21"
+    },
+    {
+      "number": 28235,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-21"
+    },
+    {
+      "number": 28747,
+      "reason": "Router: Removes internal tooling feature (Cloud login prompt from CLI). Not a user-facing documentation change.",
+      "added": "2026-11-21"
+    },
+    {
+      "number": 27650,
+      "reason": "Router: Internal admin component fix (Pagination.Root). No public API or user-facing feature change.",
+      "added": "2026-11-21"
     }
   ]
 }
