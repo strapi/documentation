@@ -120,6 +120,24 @@ sources={{
 The main view of Content History clearly states whether a field was inexistent, deleted, or renamed in other versions of the content-type. Fields that are unknown for the selected version will be displayed under an _Unknown fields_ heading below the other fields.
 :::
 
+### Version source and author
+
+Each version records its source and author:
+
+| Source | Meaning |
+|--------|---------|
+| **admin-panel** | The version was created by a user logged into the admin panel |
+| **admin-api** | The version was created using an Admin API token on the Content Manager routes |
+
+The author is tracked separately from the source. Each version stores the type of author (person or token) and an identifier:
+
+- **Person**: An admin panel user. The version shows the user's current name. If the user is deleted, the version shows "Deleted user".
+- **Token**: An admin token. The version shows the token's current name. If the token is deleted, the version shows "Deleted token".
+
+An author reference persists after deletion. If a user or token is recreated later with the same identifier, it does not reuse the reference.
+
+Versions created before source and author tracking was added show the source as `admin-panel` and their author is the admin panel user from the `createdBy` field.
+
 ### Restoring a previous version
 
 You can choose to restore a previous version of a document. When restoring a version, the content of this version will override the content of the current draft version. The document switches to the Modified status and you will then be able to publish the content whenever you want (see [Publishing a draft](/cms/features/draft-and-publish#publishing-a-draft)).
