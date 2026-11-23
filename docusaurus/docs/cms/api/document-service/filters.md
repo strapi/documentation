@@ -747,3 +747,48 @@ const entries = await strapi.documents('api::article.article').findMany({
 :::tip
 `$and`, `$or` and `$not` operators are nestable inside of another `$and`, `$or` or `$not` operator.
 :::
+
+## Relation, media field, and component filters {#relation-media-and-component-filters}
+
+A relation, media field, or component attribute accepts a filter on the attributes of the related entry, media file, or component (e.g. `author: { name: 'John' }`). It also accepts exactly one operator applied to its `id`, as the [REST API](/cms/api/rest/filters#filter-on-id) does.
+
+<Endpoint
+  id="relation-id-operator"
+  kind="js"
+  path="strapi.documents().findMany()"
+  title="Operator on the related id"
+  description="Applies the operator to the id of the related entry, media file, or component.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const entries = await strapi.documents('api::article.article').findMany({
+  filters: {
+    // Same as author: { id: { $in: [1, 2] } }
+    author: { $in: [1, 2] },
+  },
+});
+
+// Articles with a cover
+const withCover = await strapi.documents('api::article.article').findMany({
+  filters: { cover: { $notNull: true } },
+});
+
+// Articles with no seo component
+const withoutSeo = await strapi.documents('api::article.article').findMany({
+  filters: { seo: { $null: true } },
+});
+```
+
+</TabItem>
+</Tabs>
+
+</Endpoint>
+
+:::caution
+- The operator compares the numeric `id`, not the `documentId`. A `documentId` passed this way matches no entry, or throws an error with PostgreSQL. To filter on `documentId`, name it: `author: { documentId: { $in: ['a1b2c3', 'd4e5f6'] } }`.
+- The operator must be the only key. An operator next to other keys (e.g. `author: { $in: [1, 2], name: 'John' }`) or 2 operators (e.g. `author: { $gt: 1, $lt: 5 }`) throw an error. Name `id` instead: `author: { id: { $gt: 1, $lt: 5 }, name: 'John' }`.
+- The TypeScript filter types do not accept a bare id (e.g. `author: 5`, write `author: { id: 5 }` or `author: { $eq: 5 }`), nor a text operator directly on the attribute (e.g. `author: { $contains: '1' }`).
+- `$ne` and `$notIn` compare the id, so entries without a related entry are not returned.
+:::
