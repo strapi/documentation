@@ -79,9 +79,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     </Tabs>
 
-2. The terminal will ask you whether you want to `Login/Signup` or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to login, you'll receive a 30-day trial of the <GrowthBadge /> plan that will be automatically applied to your created project. If you skip this step, the project will fall back to the CMS Free plan.
-
-3. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer will be used. Most questions default to Yes, but the question about starting with an example structure and data defaults to No:
+2. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer will be used. Most questions default to Yes, but the question about starting with an example structure and data defaults to No:
 
   ![Terminal prompts at installation](/img/assets/installation/prompts.png)
 
@@ -89,7 +87,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
   You can skip these questions using various options passed to the installation command. Please refer to the [table](#cli-installation-options) for the full list of available options.
   :::
 
-4. _(optional)_ If you answered `n` for "no" to the default (SQLite) database question, the CLI will ask for more questions about the database:
+3. _(optional)_ If you answered `n` for "no" to the default (SQLite) database question, the CLI will ask for more questions about the database:
 
     * Use arrow keys to select the database type you want, then press `Enter`.
     * Give the database a name, define the database host address and port, define the database admin username and password, and define whether the database will use a SSL connection.<br/>For any of these questions, if you press `Enter` without typing anything, the default value (indicated in parentheses in the terminal output) will be used.
@@ -114,7 +112,6 @@ The above installation guide only covers the basic installation option using the
 | `--no-git-init`                     | Do not initialize a git repository, skipping the related CLI prompt                                                                                                                                                                             |
 | `--example`                         | Add example data, skipping the related CLI prompt                                                                                                                                                                                               |
 | `--no-example`                      | Do not add example data, skipping the related CLI prompt                                                                                                                                                                                        |
-| `--skip-cloud`                      | Skip [Strapi login and project creation steps](#skipping-the-strapi-login-step)                                                                                                                                                     |
 | `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no example data). The `<directory>` argument is required when using this flag.                                        |
 | `--agent <name>`                    | Name the coding agent that runs the command, for anonymous [usage information](/cms/usage-information). You can also set the `STRAPI_AGENT` environment variable instead. If both are set, `--agent` is used. |
 | `--skip-db`                         | Skip all database-related prompts and create a project with the default (SQLite) database                                                                                                                                                       |
@@ -127,7 +124,7 @@ The above installation guide only covers the basic installation option using the
 | `--dbpassword <dbpassword>`         | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice                                                                                                                                      |
 | `--dbssl <dbssl>`                   | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default)                                                                                                                                                        |
 | `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbfile>` in the command by the value of your choice. Defaults to `.tmp/data.db`. If an empty value is passed, it also falls back to `.tmp/data.db`.                                                                                                                 |
-| `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Unlike `--non-interactive`, it still asks you to log in to Strapi Cloud unless you also pass `--skip-cloud`. Use `--non-interactive` instead.                                                                                                                             |
+| `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Use `--non-interactive` instead.                                                                                                                             |
 
 :::note Notes
 * If you do not pass a `--use-npm|pnpm|yarn` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
@@ -138,18 +135,14 @@ The above installation guide only covers the basic installation option using the
   * `--example` with `--template`,
   * more than one of `--use-npm`, `--use-pnpm`, and `--use-yarn`,
   * `--quickstart` or `--non-interactive` without a `<directory>` argument.
-* The `--enable-ab-tests` and `--no-enable-ab-tests` options are still accepted so that existing scripts keep working, but they have no effect.
+* The `--enable-ab-tests`, `--no-enable-ab-tests`, and `--skip-cloud` options are still accepted so that existing scripts keep working, but they have no effect. The CLI no longer asks you to log in to Strapi Cloud.
 * For additional information about database configuration, please refer to the [database configuration documentation](/cms/configurations/database).
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
 
-### Skipping the Strapi login step
+### Choosing a plan
 
-When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will provide you with a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> that will be automatically applied to your created project. This will give you access to advanced CMS features.
-
-If you prefer skipping this Strapi login part, use the arrow keys to select `Skip`. The script will resume and create a local project using the CMS Free plan.
-
-You will be able to purchase a CMS license later by checking out our <ExternalLink to="https://strapi.io/pricing-self-hosted" text="pricing page"/>.
+A new project uses the CMS Community plan. To use the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> or <EnterpriseBadge /> features, buy a license on the <ExternalLink to="https://strapi.io/pricing-self-hosted" text="pricing page"/>.
 
 ### Hosting your project
 
