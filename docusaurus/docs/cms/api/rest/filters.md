@@ -347,7 +347,8 @@ The response above only contains a book's own attributes. The `author` relation 
 
 :::note
 - Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these content structures (see [`populate` documentation](/cms/api/rest/populate-select#population))
-- You can filter what you populate, and you can also filter nested relations, media fields, and components, but you can't use filters on dynamic zones.
+- You can filter what you populate, and you can also filter nested relations, media fields, and components. You can't use filters on dynamic zones or polymorphic relations.
+- For instance, `GET /api/restaurants?filters[cover][id][$notNull]=true` returns restaurants that have an image in their `cover` media field, and `GET /api/restaurants?filters[chef][documentId][$eq]=<documentId>` returns restaurants whose `chef` relation targets the given document.
 :::
 
 :::caution
@@ -425,79 +426,4 @@ await request(`/api/restaurants?${query}`);
 
 :::note
 The response above mirrors the default REST output, which excludes the relations traversed by the filter. Add a [`populate` parameter](/cms/api/rest/populate-select#population) such as `&populate[chef][populate][restaurants]=true` to also return the `chef.restaurants` relation referenced in the filter.
-:::
-
-### Filter on the id of a relation, media field, or component {#filter-on-id}
-
-Instead of filtering on the fields of a relation, media field, or component, you can apply exactly one operator directly to the attribute. Strapi applies it to the `id` of the related entry, media file, or component.
-
-For instance, `filters[chef][$in][0]=1&filters[chef][$in][1]=2` is the same filter as `filters[chef][id][$in][0]=1&filters[chef][id][$in][1]=2`. `filters[cover][$null]=true` returns entries without a cover. The [Document Service API](/cms/api/document-service/filters#relation-media-and-component-filters) accepts the same filters.
-
-<Endpoint
-  method="GET"
-  path="/api/restaurants?filters[chef][$in][0]=1&filters[chef][$in][1]=2"
-  title="Find restaurants owned by the chef with id 1 or 2"
-  description="Apply one operator to the id of a relation.">
-
-<Tabs>
-<TabItem value="curl" label="cURL">
-
-```bash
-curl 'http://localhost:1337/api/restaurants?filters[chef][$in][0]=1&filters[chef][$in][1]=2' \
-  -H 'Authorization: Bearer <token>'
-```
-
-</TabItem>
-<TabItem value="js" label="JavaScript">
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  filters: {
-    chef: {
-      $in: [1, 2],
-    },
-  },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/restaurants?${query}`);
-```
-
-</TabItem>
-</Tabs>
-
-<Responses>
-<ResponseTab status={200} statusText="OK">
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "cvsz61qg33rtyv1qljb1nrtg",
-      "name": "GORDON RAMSAY STEAK",
-      "stars": 5
-    },
-    {
-      "id": 2,
-      "documentId": "uh17h7ibw0g8thit6ivi71d8",
-      "name": "GORDON RAMSAY BURGER",
-      "stars": 5
-    }
-  ],
-  "meta": {}
-}
-```
-
-</ResponseTab>
-</Responses>
-
-</Endpoint>
-
-:::caution
-- The operator compares the numeric `id`, not the `documentId`. A `documentId` passed this way matches no entry, or returns an error with PostgreSQL. To filter on `documentId`, name it: `filters[chef][documentId][$in][0]=<documentId>`.
-- The operator must be the only key. An operator next to other keys (e.g. `filters[chef][$in][0]=1&filters[chef][name][$eq]=John`) or 2 operators (e.g. `filters[chef][$gt]=1&filters[chef][$lt]=5`) return an error. Name `id` instead: `filters[chef][id][$gt]=1&filters[chef][id][$lt]=5`.
-- `$ne` and `$notIn` compare the id, so entries without a related entry are not returned.
 :::
