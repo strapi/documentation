@@ -1063,7 +1063,7 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 
 ## Pagination
 
-<ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries can accept a `pagination` parameter. Results can be paginated either by page or by offset.
+Flat and <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries accept a `pagination` parameter, but only Relay-style queries return pagination metadata in `pageInfo`. Results can be paginated either by page or by offset.
 
 :::note
 Pagination methods can not be mixed. Always use either `page` with `pageSize` or `start` with `limit`.
