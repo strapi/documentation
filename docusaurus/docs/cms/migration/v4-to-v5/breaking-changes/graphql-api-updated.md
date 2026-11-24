@@ -33,7 +33,7 @@ Flat queries still return a simple array of documents. You can also use Relay-st
 
 | Topic                        |  Description of the changes |
 |------------------------------|-----------------------------------------------------------------------------------------------------|
-| File upload support          | <ul><li>Removed `uploadFile` `uploadFiles` mutations</li><li>Removed `updateFileInfo` mutation in favor of using the `updateUploadFile` mutation</li><li>Removed `removeFile` mutation in favor of using the `deleteUploadFile` mutation</li><li>Removed `folder` queries & mutations</li><li>Removed `createUploadFile` mutation</li></ul> |
+| File upload support          | <ul><li>Removed `uploadFile` `uploadFiles` mutations</li><li>Removed `updateFileInfo` mutation in favor of using the `updateUploadFile` mutation</li><li>Removed `removeFile` mutation in favor of using the `deleteUploadFile` mutation</li><li>Removed `folder` queries & mutations (read-only folder queries are available again since Strapi 5.63.0, see [Fetch Media Library folders](/cms/api/graphql#upload-folders))</li><li>Removed `createUploadFile` mutation</li></ul> |
 | Internationalization support | Removed the `createXXLocalization` mutations in favor of being able to update any locale from the main `updateXXX` mutation |
 | Draft & Publish support      | Removed `publicationState` in favor of `status` to align with the new Draft & Publish behavior |
 | Schema changes               | <ul><li>Simplified the basic queries with no `meta`/`pagination`</li><li>Introduced `Connection` to add pagination</li></ul> |

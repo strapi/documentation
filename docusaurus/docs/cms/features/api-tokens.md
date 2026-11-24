@@ -163,5 +163,5 @@ API tokens can be helpful to give access to people or applications without manag
 When performing a request to Strapi's REST API, the API token should be added to the request's `Authorization` header with the following syntax: `bearer your-api-token`.
 
 :::note
-Read-only API tokens can only access the `find` and `findOne` functions.
+Read-only API tokens can only access the `find` and `findOne` actions. This includes the Media Library folder endpoints of the [REST API](/cms/api/rest/upload#browse-folders) and the folder queries of the [GraphQL API](/cms/api/graphql#upload-folders), which return the name and path of every folder.
 :::
