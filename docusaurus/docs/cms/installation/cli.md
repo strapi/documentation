@@ -115,7 +115,8 @@ The above installation guide only covers the basic installation option using the
 | `--example`                         | Add example data, skipping the related CLI prompt                                                                                                                                                                                               |
 | `--no-example`                      | Do not add example data, skipping the related CLI prompt                                                                                                                                                                                        |
 | `--skip-cloud`                      | Skip [Strapi login and project creation steps](#skipping-the-strapi-login-step)                                                                                                                                                     |
-| `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no example data). The `<directory>` argument is required when using this flag.                                        |
+| `--non-interactive`                 | Skip all interactive prompts and use defaults (TypeScript, install dependencies, initialize git, SQLite database, no example data). The `<directory>` argument is required when using this flag. The CLI also switches to this mode on its own in some cases, see [Automatic non-interactive mode](#automatic-non-interactive-mode).            |
+| `--interactive`                     | Show the interactive prompts even in a CI environment or without a terminal. You cannot combine `--interactive` with `--non-interactive`.                                                                                                        |
 | `--agent <name>`                    | Name the coding agent that runs the command, for anonymous [usage information](/cms/usage-information). You can also set the `STRAPI_AGENT` environment variable instead. If both are set, `--agent` is used. |
 | `--skip-db`                         | Skip all database-related prompts and create a project with the default (SQLite) database                                                                                                                                                       |
 | `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details.                                                                            |
@@ -142,6 +143,17 @@ The above installation guide only covers the basic installation option using the
 * For additional information about database configuration, please refer to the [database configuration documentation](/cms/configurations/database).
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
+
+### Automatic non-interactive mode
+
+The CLI switches to non-interactive mode on its own, even without the `--non-interactive` flag, in 2 cases:
+
+* It detects a CI environment.
+* The input or the output has no terminal, for example when you pipe the command's output to another command.
+
+In both cases, the CLI logs the reason and uses your flags and the default values for the other options, the same as with `--non-interactive`. The `<directory>` argument is then required.
+
+Use `--interactive` to keep the prompts in a CI environment or without a terminal. You cannot combine `--interactive` with `--non-interactive`.
 
 ### Skipping the Strapi login step
 
