@@ -2584,6 +2584,11 @@
       "number": 28349,
       "reason": "Triage: admin UI enhancement with no behavior or API change",
       "added": "2026-11-25"
+    },
+    {
+      "number": 28765,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3719",
+      "added": "2026-11-25"
     }
   ]
 }
