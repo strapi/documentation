@@ -2574,6 +2574,16 @@
       "number": 27650,
       "reason": "Router: Internal admin component fix (Pagination.Root). No public API or user-facing feature change.",
       "added": "2026-11-21"
+    },
+    {
+      "number": 28781,
+      "reason": "Triage: comment fix for internal documentation",
+      "added": "2026-11-25"
+    },
+    {
+      "number": 28349,
+      "reason": "Triage: admin UI enhancement with no behavior or API change",
+      "added": "2026-11-25"
     }
   ]
 }
