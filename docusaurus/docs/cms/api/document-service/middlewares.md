@@ -307,7 +307,7 @@ strapi.documents.use((context, next) => {
 
 ### Where to register
 
-`strapi.documents.use()` works in every lifecycle phase, and a middleware applies to the Document Service calls made after it is registered. Generally speaking you should register your middlewares during the Strapi registration phase, so they also apply to the calls made during the bootstrap phase.
+`strapi.documents.use()` works in every lifecycle phase. A middleware applies only to the Document Service calls made after it is registered. Register middlewares in the register phase so they also apply to calls made during the bootstrap phase.
 
 #### Users
 

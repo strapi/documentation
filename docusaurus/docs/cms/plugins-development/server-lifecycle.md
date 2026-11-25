@@ -96,7 +96,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 </Tabs>
 
 :::caution Middleware order
-A middleware added with `strapi.server.use()` in `register()` runs before every middleware of the [middlewares configuration](/cms/configurations/middlewares), including `strapi::errors` and `strapi::body`. Strapi does not format the errors this middleware throws, and the request body is not parsed yet. A middleware added in `bootstrap()` runs after the configured middlewares.
+A middleware added with `strapi.server.use()` in `register()` runs before every middleware of the [middlewares configuration](/cms/configurations/middlewares), including `strapi::errors` and `strapi::body`. Strapi does not format the errors this middleware throws. Its code that runs before `await next()` sees an unparsed request body. A middleware added in `bootstrap()` runs after the configured middlewares.
 :::
 
 ## bootstrap()

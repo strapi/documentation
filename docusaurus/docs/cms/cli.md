@@ -160,7 +160,7 @@ Start the server and evaluate commands in your application in real time.
 strapi console
 ```
 
-The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js <ExternalLink to="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" text="REPL"/>. The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice stops the HTTP server and exits the process. The `destroy()` lifecycle functions do not run.
+The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js <ExternalLink to="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" text="REPL"/>. The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice stops the HTTP server and exits the process. The [`destroy()`](/cms/configurations/functions#destroy) lifecycle functions do not run.
 
 #### Available helpers
 

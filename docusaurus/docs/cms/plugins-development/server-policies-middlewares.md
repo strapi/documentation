@@ -414,6 +414,8 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 :::caution
 Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A server-level middleware that throws or never calls `next()` will break every request on the server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
+
+A middleware added in `register()` also runs before the configured middlewares, including `strapi::errors` and `strapi::body` (see [middleware order](/cms/plugins-development/server-lifecycle#register)).
 :::
 
 In route configurations, pass per-route parameters for both `policies` and `middlewares` in the `config` key of the `{ name, config }` object. Routes do not read an `options` key: a policy or middleware declared with `{ name, options }` in a route receives an empty object.
