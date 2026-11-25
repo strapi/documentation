@@ -24132,6 +24132,7 @@ General settings for API calls can be set in the `./config/api.js` (or `./config
 | `rest.strictParams`           | When `true`, only allowed query and body parameters are accepted on Content API routes; unknown top-level keys are rejected. Add allowed parameters via [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters) in `register`. | Boolean      | -       |
 | `documents`                   | Document Service configuration                                                                                                                                                                                                                        | Object       | -       |
 | `documents.strictParams`      | When `true`, Document Service methods reject parameters with unrecognized root-level keys (e.g., invalid `status`, `locale`). When `false` or unset, unknown parameters are ignored. See [Document Service API](/cms/api/document-service#configuration). | Boolean      | -       |
+| `documents.strictRelations`   | When `true`, the Document Service enforces `required` on media and relation fields at publish time. When `false` or unset, publishing entries with empty required relations or media is allowed. When `strictRelations` is off, the Content-Type Builder disables the Required checkbox for relation attributes with a tooltip explaining how to enable enforcement. | Boolean      | -       |
 
 :::note
 `rest.defaultLimit` and `rest.maxLimit` interact in 2 ways:
@@ -24162,6 +24163,7 @@ module.exports = ({ env }) => ({
   },
   documents: {
     strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
+    strictRelations: true, // enforce required on media and relation fields at publish time
   },
 });
 ```
@@ -24179,6 +24181,7 @@ module.exports = ({ env }) => ({
   },
   documents: {
     strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
+    strictRelations: true, // enforce required on media and relation fields at publish time
   },
 });
 ```

@@ -18768,6 +18768,7 @@ module.exports = ({ env }) => ({
   },
   documents: {
     strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
+    strictRelations: true, // enforce required on media and relation fields at publish time
   },
 });
 ```
@@ -18791,6 +18792,7 @@ export default ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Api => ({
   },
   documents: {
     strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
+    strictRelations: true, // enforce required on media and relation fields at publish time
   },
 });
 ```
