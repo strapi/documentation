@@ -114,6 +114,8 @@ module.exports = (plugin) => {
 ```
 </details>
 
+Pushing to `plugin.routes['content-api'].routes` works in the extension file or in a `register()` function. Strapi builds the routers at the start of the bootstrap phase, and a route pushed after that point is never served. The router must be an object, or a core Content API router factory that exposes `routes` for backward compatibility (e.g. Users & Permissions, Upload, i18n, Email).
+
 :::note Factory-based controllers
 Some plugin controllers, such as the `auth` controller in the Users & Permissions plugin, use a factory pattern (i.e. they are exported as functions: `({ strapi }) => ({ ... })`). 
 

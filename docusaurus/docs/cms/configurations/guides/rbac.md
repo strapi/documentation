@@ -109,13 +109,15 @@ To be available in the admin panel, conditions should be declared and registered
 
 ```js title="/src/index.js"
 
-module.exports = async () => {
-  await strapi.admin.services.permission.conditionProvider.register({
-    displayName: 'Billing amount under 10K',
-    name: 'billing-amount-under-10k',
-    plugin: 'admin',
-    handler: { amount: { $lt: 10000 } },
-  });
+module.exports = {
+  async bootstrap({ strapi }) {
+    await strapi.service('admin::permission').conditionProvider.register({
+      displayName: 'Billing amount under 10K',
+      name: 'billing-amount-under-10k',
+      plugin: 'admin',
+      handler: { amount: { $lt: 10000 } },
+    });
+  },
 };
 ```
 
@@ -125,13 +127,15 @@ module.exports = async () => {
 
 ```ts title="/src/index.ts"
 
-export default async () => {
-  await strapi.admin.services.permission.conditionProvider.register({
-    displayName: 'Billing amount under 10K',
-    name: 'billing-amount-under-10k',
-    plugin: 'admin',
-    handler: { amount: { $lt: 10000 } },
-  });
+export default {
+  async bootstrap({ strapi }) {
+    await strapi.service('admin::permission').conditionProvider.register({
+      displayName: 'Billing amount under 10K',
+      name: 'billing-amount-under-10k',
+      plugin: 'admin',
+      handler: { amount: { $lt: 10000 } },
+    });
+  },
 };
 ```
 
@@ -166,10 +170,8 @@ const conditions = [
 ];
 
 module.exports = {
-  async bootstrap(/*{ strapi }*/) {
-  // do your boostrap
-
-    await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+  async bootstrap({ strapi }) {
+    await strapi.service('admin::permission').conditionProvider.registerMany(conditions);
   },
 };
 ```
@@ -198,10 +200,10 @@ const conditions = [
   }
 ];
 
-export default async () => {
-  // do your boostrap
-
-  await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+export default {
+  async bootstrap({ strapi }) {
+    await strapi.service('admin::permission').conditionProvider.registerMany(conditions);
+  },
 };
 ```
 

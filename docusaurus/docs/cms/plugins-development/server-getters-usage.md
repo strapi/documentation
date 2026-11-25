@@ -67,6 +67,10 @@ The following table lists all available getters for a plugin named `todo` with a
 
 Both styles return the same underlying object. Routes have no global getter equivalent. Configuration uses dedicated config APIs rather than resource getters, both forms read the same merged value.
 
+:::note Shape of routes
+The value of `strapi.plugin('todo').routes` depends on when you read it. Until Strapi sets up routing at the start of the bootstrap phase, it holds the routes as the plugin declares them: an object of routers, where each router is an object or a factory function, or a plain array of routes. From the bootstrap phase on, each router entry is a built router object with a `routes` array. A plain array stays an array.
+:::
+
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to inspect the `strapi` object in a live console and explore available plugins and their resources interactively.
 :::

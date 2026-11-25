@@ -307,11 +307,11 @@ strapi.documents.use((context, next) => {
 
 ### Where to register
 
-Generaly speaking you should register your middlewares during the Strapi registration phase.
+`strapi.documents.use()` works in every lifecycle phase, and a middleware applies to the Document Service calls made after it is registered. Generally speaking you should register your middlewares during the Strapi registration phase, so they also apply to the calls made during the bootstrap phase.
 
 #### Users
 
-The middleware must be registered in the general `register()` lifecycle method:
+Register the middleware in the general `register()` lifecycle method:
 
 ```js title="/src/index.js|ts"
 module.exports = {
@@ -329,7 +329,7 @@ module.exports = {
 
 #### Plugin developers
 
-The middleware must be registered in the plugin's `register()` lifecycle method:
+Register the middleware in the plugin's `register()` lifecycle method:
 
 ```js title="/(plugin-root-folder)/strapi-server.js|ts"
 module.exports = {

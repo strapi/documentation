@@ -43,7 +43,7 @@ Understanding when each lifecycle runs helps you put the right code in the right
 | Phase | What is available in your plugin |
 | --- | --- |
 | 2. Register | `strapi` object is available, but the database is not initialized yet and routing is not initialized yet |
-| 4. Bootstrap | Full runtime: database initialized, routes initialized, services and content-types loaded, other plugins available |
+| 4. Bootstrap | Database initialized, routes initialized, services and content-types loaded, other plugins registered. The admin bootstrap, the start of cron jobs, and the loading of stored webhooks run only after every plugin's `bootstrap()` |
 | 5. Shutdown | Shutdown is in progress; use this hook to release resources before Strapi finishes stopping |
 
 :::note
@@ -94,6 +94,10 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 </TabItem>
 </Tabs>
+
+:::caution Middleware order
+A middleware added with `strapi.server.use()` in `register()` runs before every middleware of the [middlewares configuration](/cms/configurations/middlewares), including `strapi::errors` and `strapi::body`. Strapi does not format the errors this middleware throws, and the request body is not parsed yet. A middleware added in `bootstrap()` runs after the configured middlewares.
+:::
 
 ## bootstrap()
 
@@ -206,7 +210,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 - **Use `bootstrap()` for database reads/writes.** The database is initialized during the bootstrap phase, not during register. Any call to `strapi.documents()` or a service that queries the database belongs in `bootstrap()`.
 
-- **Register admin RBAC actions in `bootstrap()`.** Use `strapi.service('admin::permission').actionProvider.registerMany(...)` in `bootstrap()`. This is when the permission service is available. Content API actions are registered automatically by Strapi during the same phase.
+- **Register admin RBAC actions in `register()` or `bootstrap()`.** Use `strapi.service('admin::permission').actionProvider.registerMany(...)`. The permission service is available from `register()` on, because the admin registers before plugins and bootstraps after them. Content API actions are registered automatically by Strapi during the bootstrap phase, before plugins bootstrap.
 
 - **Always pair resource creation with `destroy()`.** If your plugin opens a connection, registers a global interval, or attaches a process listener in `bootstrap()`, implement `destroy()` to clean up those resources. This prevents resource leaks during testing and graceful restarts.
 
