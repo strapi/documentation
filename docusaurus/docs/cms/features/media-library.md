@@ -1037,17 +1037,25 @@ Metadata can also be generated for images that already exist in the library, eit
 
 ### Finding assets
 
-The toolbar offers a <Icon name="funnel-simple" classes="ph-bold" /> **Filter** button, a _Search_ field and a **Sort** button, in that order. Search looks across the whole library, while filters and sorting apply to the location you are browsing.
+The toolbar offers a <Icon name="funnel-simple" classes="ph-bold" /> **Filter** button, a _Search_ field and a **Sort** button, in that order. Filters and sorting always apply to the location you are browsing. Search does too, except at the root of the library, where it covers the whole library.
 
 #### Searching assets
 
 Type in the toolbar's _Search_ field to find assets and folders by name.
 
-The search covers the whole library, not only the folder you are browsing, and it returns both folders and assets. The page title becomes _Search results for "your term"_ followed by the number of folders and assets found.
+At the root of the library, search covers the whole library. Inside a folder, search covers that folder and all its subfolders, and the page title keeps naming the folder you are browsing, followed by its item count. Search returns both folders and assets, and the number of results is displayed next to the search field, for instance 3 results.
 
-To leave the search, click the <Icon name="x" classes="ph-bold" /> **Clear** button inside the search field, press the `Esc` key while still in the search field, or navigate to a folder in the folder tree.
+While browsing a folder, once you type a search term, a **Search all media** switch is displayed next to the search field. Turn it on to widen the search to the whole library. The switch is off by default and is not displayed at the root of the library or before you start typing.
+
+In the folder tree, the folder you are browsing stays highlighted while the search is limited to it. The highlight is removed when **Search all media** is turned on, since results may no longer come from that folder.
+
+To leave the search, click the <Icon name="x" classes="ph-bold" /> **Clear** button inside the search field, press the `Esc` key while still in the search field, or navigate to a folder in the folder tree. Navigating to another folder also turns off **Search all media**, along with the search term.
 
 When a search returns nothing, the list is replaced by a _No results found_ message with a <Icon name="x" classes="ph-bold" /> **Clear search** button.
+
+:::note
+The same folder-scoped search, **Search all media** switch, and result count are used in the Content Manager's media field asset picker (see [media fields](/cms/features/content-manager#media-fields)).
+:::
 
 #### Filtering assets
 
