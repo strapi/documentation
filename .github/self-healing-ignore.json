@@ -2599,6 +2599,16 @@
       "number": 28716,
       "reason": "Triage: test infrastructure, build tooling",
       "added": "2026-11-26"
+    },
+    {
+      "number": 28756,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3721",
+      "added": "2026-11-26"
+    },
+    {
+      "number": 28752,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3722",
+      "added": "2026-11-26"
     }
   ]
 }
