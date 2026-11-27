@@ -171,6 +171,16 @@ Closing the banner is saved in the browser, for each project.
 
 The latest release is only checked when release notifications are enabled. To hide the banner and the badge, set `notifications.releases` to `false` in the `src/admin/app` file (see [admin panel configuration](/cms/configurations/admin-panel#admin-panel-behavior)).
 
+### Admin users count <GrowthBadge /> <EnterpriseBadge />
+
+**Location:** <Icon name="gear-six" /> *Settings > Global settings > Overview*
+
+On a Growth or Enterprise license, the **Admin users** field shows the number of unique active admin users across every instance that shares the license, compared to the license limit (for example `7/10`). The count turns red with an "over" badge when it goes over the limit.
+
+Strapi reports each instance's active admin users to the license registry after every license check, and a few seconds after an admin user is created, deleted, or has its active status or email changed. The caption below the count shows how many admin users are active in this environment, and when the count across instances was last updated.
+
+If the registry has not answered yet, or its last answer is more than 48 hours old, for example after a network error or a switch to another license key, the field shows only this environment's admin users, with no caption.
+
 ### Configuring the password policy
 
 **Path to configure the password policy:** <Icon name="gear-six" /> *Settings > Administration panel > Password policy*

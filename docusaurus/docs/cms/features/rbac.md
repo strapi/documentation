@@ -256,6 +256,10 @@ Sorting can be enabled for most fields displayed in the table. Click on a field 
 
 ### Creating a new account
 
+:::note
+On a Growth or Enterprise license, a banner appears above the administrator accounts table when the number of active admin users reaches the license's user limit, and turns red when it goes over the limit. The **Invite new user** button is disabled while the limit is reached or exceeded. The banner's button opens [seats management](/cms/billing-portal#changing-users-and-add-ons-on-a-growth-subscription) on the Growth plan, or links to Strapi's sales team on other licensed plans. See [Admin users count](/cms/features/admin-panel#admin-users-count) for how the user count is calculated.
+:::
+
 <ThemedImage
   alt="User invitation"
   sources={{
