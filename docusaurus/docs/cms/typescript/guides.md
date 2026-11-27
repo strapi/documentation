@@ -22,4 +22,5 @@ The following guides will help you on specific aspects of a [TypeScript-based](/
 <CustomDocCardsWrapper>
 <CustomDocCard icon="blueprint" title="Manipulating documents and entries" description="Explore TypeScript patterns for manipulating documents and entries." link="/cms/typescript/documents-and-entries" />
 <CustomDocCard icon="plus" title="Adding TypeScript support" description="Learn how to add TypeScript support to an existing Strapi project." link="/cms/typescript/adding-support-to-existing-project" />
+<CustomDocCard icon="shield-check" title="Turning on strict types" description="Turn on strict types in an existing TypeScript project and fix the first type errors." link="/cms/typescript/enabling-strict-types" />
 </CustomDocCardsWrapper>
