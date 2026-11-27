@@ -537,6 +537,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'cms/typescript/strict-types',
+          label: 'Strict types',
+        },
+        {
+          type: 'doc',
           id: 'cms/typescript/guides',
           label: 'Guides',
         },
