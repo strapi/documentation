@@ -124,3 +124,7 @@ TypeScript support can be added to an existing Strapi project using the followin
   </Tabs>
 
 A `dist` directory will be added at the project root (see [project structure](/cms/project-structure)) and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.
+
+:::tip
+Keep the `types/generated` folder in the `include` scope of the root `tsconfig.json` file, as in the example of step 1. To check your server code against registered contracts, [turn on strict types](/cms/typescript/enabling-strict-types) <BetaBadge />.
+:::
