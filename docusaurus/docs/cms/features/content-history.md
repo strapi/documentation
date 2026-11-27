@@ -12,7 +12,7 @@ tags:
 <GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 
 <Tldr>
-Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for 14 days on the Growth plan and 30 days on the Enterprise plan.
+Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are created for content edited in the Content Manager and through the Content API, and are kept for 14 days on the Growth plan and 30 days on the Enterprise plan.
 </Tldr>
 
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
@@ -28,17 +28,17 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
 
 <InteractiveDemo id="content-history" />
 
-A version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
+A version is created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel, or through a Content API write (REST or GraphQL). Content modified in any other way does not appear in the Content History of the document: this includes the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
 
 :::note
-Content History is not a record of every change made to a document. Documents written programmatically, such as those created by a migration script or an integration calling the REST API, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History.
+Content History is not a record of every change made to a document. Documents written outside a request, such as those created by a migration script, a lifecycle hook, or the `strapi import` and `strapi transfer` commands, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History.
 
 To trace the actions performed by users of the admin panel, use [Audit Logs](/cms/features/audit-logs).
 :::
 
 ## Configuration
 
-The only configurable aspect is how long versions are kept before they are deleted.
+You can configure how long versions are kept before they are deleted, and whether Content History also records Content API writes.
 
 Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and deletes every version older than the retention period, counted from the creation date of each version.
 
@@ -64,6 +64,8 @@ Versions deleted by the retention job cannot be recovered from the Content Histo
 
 The retention period can be shortened, but never extended, with the [`history.retentionDays`](/cms/configurations/admin-panel#content-history) parameter of the `/config/admin` file. When both the license and the configuration file define a value, the lower of the 2 applies.
 
+Content History records Content API writes (REST and GraphQL) by default. Set [`history.contentApi.enabled`](/cms/configurations/admin-panel#content-history) to `false` to stop recording them. This flag does not affect writes made through the Content Manager.
+
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
@@ -72,6 +74,11 @@ module.exports = ({ env }) => ({
   // … other configuration properties
   history: {
     retentionDays: 7,
+    // highlight-start
+    contentApi: {
+      enabled: false,
+    },
+    // highlight-end
   },
 });
 ```
@@ -84,6 +91,11 @@ export default ({ env }) => ({
   // … other configuration properties
   history: {
     retentionDays: 7,
+    // highlight-start
+    contentApi: {
+      enabled: false,
+    },
+    // highlight-end
   },
 });
 ```
@@ -91,7 +103,7 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-There is no equivalent setting in the admin panel: the retention period can only be shortened from the `/config/admin` file.
+There is no equivalent setting in the admin panel: the retention period and the Content API recording flag can only be set from the `/config/admin` file.
 
 ## Usage
 
@@ -105,6 +117,7 @@ With Content History, you can browse your content through:
 - The sidebar on the right, which lists the total number of versions available, and for each version:
   - the date and time when the version was created,
   - the user who created it,
+  - a tag for the source of the write: Admin panel, Admin API, or Content API,
   - and whether its status is Draft, Modified, or Published (see [Draft & Publish](/cms/features/draft-and-publish) for more information about document statuses).
 
 
