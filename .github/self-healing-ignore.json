@@ -2669,6 +2669,21 @@
       "number": 28731,
       "reason": "Router: UI-only enhancement; no public API, configuration, or behavior changes",
       "added": "2026-11-27"
+    },
+    {
+      "number": 28706,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3723",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28672,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3724",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28010,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3725",
+      "added": "2026-11-27"
     }
   ]
 }
