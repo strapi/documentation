@@ -80,12 +80,29 @@ For JavaScript projects, types are automatically generated when running `strapi 
 :::
 
 :::tip Tip: Using types in your front-end application
-To use Strapi types in your front-end application, you can <ExternalLink to="https://github.com/strapi-community/strapi-typed-fronend" text="use a workaround"/> until Strapi implements an official solution.
+To use Strapi types in your front-end application, you can <ExternalLink to="https://github.com/strapi-community/strapi-typed-fronend" text="use a workaround"/> until Strapi implements an official solution. If your project uses [strict types](/cms/typescript/strict-types), share only `contentTypes.d.ts` and `components.d.ts` with the front end: the other generated files import the server code of the application.
 :::
+
+### Generate strict types
+
+<BetaBadge />
+
+[Strict types](/cms/typescript/strict-types) are turned on with `strictTypes: true` in [the `config/typescript.ts` configuration file](/cms/configurations/typescript#strapi-specific-configuration-for-typescript). `ts:generate-types` and `strapi develop` then also write the following files in `types/generated/`:
+
+- `strict.d.ts` and `plugins.d.ts`
+- `services.ts`, `controllers.ts`, `policies.ts`, and `middlewares.ts`
+
+These files register the services, controllers, policies, and middlewares of the application, so TypeScript checks your code against them. Since the `tsconfig.json` of Strapi projects sets `noEmitOnError`, a strict type error then stops `strapi build`.
+
+When strict types are turned off again, the next type generation removes these files.
 
 ### Fix build issues with the generated types
 
-The generated types can be excluded so that the Entity Service doesn't use them and falls back on looser types that don't check the actual properties available in the content types.
+The generated types can be excluded so that the Document Service doesn't use them and falls back on looser types that don't check the actual properties available in the content types.
+
+:::caution
+If your project uses [strict types](/cms/typescript/strict-types), excluding `types/generated/**` turns strict types off without any type error. Type generation only logs a warning.
+:::
 
 To do that, edit the `tsconfig.json` of the Strapi project and add `types/generated/**` to the `exclude` array:
 
@@ -106,7 +123,7 @@ To do that, edit the `tsconfig.json` of the Strapi project and add `types/genera
   // ...
 ```
 
-However, if you still want to use the generated types on your project, but don't want Strapi to use them, a workaround could be to copy those generated types and paste them outside of the `generated` directory (so that they aren't overwritten when the types are regenerated) and remove the `declare module '@strapi/types'` from the bottom of the file.
+However, if you still want to use the generated types on your project, but don't want Strapi to use them, a workaround could be to copy those generated types and paste them outside of the `generated` directory (so that they aren't overwritten when the types are regenerated) and remove the `declare module '@strapi/strapi'` block from the bottom of the file.
 
 :::warning
 Types should only be imported from `@strapi/strapi` to avoid breaking changes. The types in `@strapi/types` are for internal use only and may change without notice.
