@@ -2609,6 +2609,66 @@
       "number": 28752,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3722",
       "added": "2026-11-26"
+    },
+    {
+      "number": 28795,
+      "reason": "Triage: contributor docs only, no user-facing behavior change",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28783,
+      "reason": "Triage: test infrastructure",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28782,
+      "reason": "Triage: test infrastructure",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28641,
+      "reason": "Triage: UI display fix restoring intended behavior",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28618,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28174,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 27945,
+      "reason": "Triage: performance optimization, no user-facing behavior change",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 27696,
+      "reason": "Triage: bug fix for error handling",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 27681,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28831,
+      "reason": "Router: Architecture documentation in strapi/strapi; not part of strapi/documentation",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28816,
+      "reason": "Router: Architecture documentation in strapi/strapi; not part of strapi/documentation",
+      "added": "2026-11-27"
+    },
+    {
+      "number": 28731,
+      "reason": "Router: UI-only enhancement; no public API, configuration, or behavior changes",
+      "added": "2026-11-27"
     }
   ]
 }
