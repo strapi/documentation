@@ -2709,6 +2709,11 @@
       "number": 28817,
       "reason": "Triage: bug fix restoring intended behavior",
       "added": "2026-11-28"
+    },
+    {
+      "number": 28796,
+      "reason": "Drafted: https://github.com/strapi/documentation/pull/3727",
+      "added": "2026-11-28"
     }
   ]
 }
