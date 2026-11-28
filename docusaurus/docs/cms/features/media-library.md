@@ -405,6 +405,17 @@ export default {
 
 </Tabs>
 
+#### Understanding size limit errors
+
+When a file exceeds the size limits, the upload fails with an error. Two limits can reject an upload:
+
+| Error code | Cause | Setting |
+|-----------|-------|---------|
+| `FileTooBig` | The request exceeds the `strapi::body` middleware limit (`formidable.maxFileSize`), enforced while parsing the request. | `/config/middlewares.js`: `formidable.maxFileSize` |
+| `SizeLimitExceeded` | The file exceeds the Upload plugin's file size limit (`sizeLimit`), checked after parsing. | `/config/plugins.js`: `sizeLimit` |
+
+The body parser limit is checked first, so if both limits are configured and a file exceeds the lower one, only that error will be shown. The admin panel displays a helpful message describing which limit was exceeded and what the limit value is.
+
 #### Security
 
 The Upload plugin validates files based on their actual MIME type rather than the declared file extension.
