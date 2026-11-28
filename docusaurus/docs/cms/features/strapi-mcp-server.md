@@ -7,6 +7,7 @@ tags:
   - ai
   - MCP
   - audit logs
+  - content history
   - content management
 toc_max_heading_level: 4
 ---
@@ -434,6 +435,12 @@ Create dedicated Admin tokens for each AI client or use case. Use the most restr
 <EnterpriseBadge /> <VersionBadge version="5.52.0" />
 
 Entry actions performed through the MCP server are recorded in the [Audit Logs](/cms/features/audit-logs). Each log payload carries an `origin` key set to `mcp`, which distinguishes actions triggered by an AI client from actions performed in the admin panel. Operations that only read content are not recorded.
+
+### Content History
+
+<GrowthBadge /> <EnterpriseBadge /> <VersionBadge version="5.65.0" />
+
+Document writes performed through the MCP server are recorded in [Content History](/cms/features/content-history). Each version is attributed to the admin who owns the Admin token, not to the token itself. Operations that only read content are not recorded.
 
 ### Stateless architecture
 

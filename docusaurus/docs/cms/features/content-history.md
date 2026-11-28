@@ -6,6 +6,7 @@ tags:
  - content manager
  - content history
  - features
+ - MCP
 ---
 
 # Content History
@@ -31,9 +32,8 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
 A version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
 
 :::note
-Content History is not a record of every change made to a document. Documents written programmatically, such as those created by a migration script or an integration calling the REST API, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History.
-
-To trace the actions performed by users of the admin panel, use [Audit Logs](/cms/features/audit-logs).
+- Content History is not a record of every change made to a document. Documents written programmatically, such as those created by a migration script or an integration calling the REST API, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History. To trace the actions performed by users of the admin panel, use [Audit Logs](/cms/features/audit-logs).
+- With Strapi <VersionBadge version="5.65.0" noTooltip /> or later, versions are also created when a document is modified through the [MCP server](/cms/features/strapi-mcp-server) with an Admin token. These versions are attributed to the admin who owns the token, not to the token itself.
 :::
 
 ## Configuration
