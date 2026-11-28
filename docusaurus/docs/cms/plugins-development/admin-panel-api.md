@@ -226,6 +226,7 @@ Use the following table to find which function to use and where to declare it. C
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
 | Provide translations for the plugin admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | `registerTrads()` |
 | Make authenticated HTTP requests | [`useFetchClient()`](/cms/plugins-development/admin-fetch-client) / [`getFetchClient()`](/cms/plugins-development/admin-fetch-client#outside-a-react-component) | Any |
+| Add headers to requests sent to the Strapi server | [`unstable_addRequestHeaders()`](#request-headers) | [`register()`](#register) |
 | Access Content Manager Edit View context from React | [`unstable_useContentManagerContext`](/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager) | Any |
 
 <br/>
@@ -252,3 +253,86 @@ All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are avail
 
 This dotenv exposure does not apply to Strapi Cloud projects.
 :::
+
+## Request headers {#request-headers}
+
+A plugin can add headers to the requests that the admin panel sends to the Strapi server, for example the space a browser tab works in. The plugin registers a provider: a function that returns the headers to add.
+
+:::caution
+This API is unstable: it can change in a minor release.
+:::
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" default>
+
+```js title="my-plugin/admin/src/index.js"
+export default {
+  register(app) {
+    const removeHeaders = app.unstable_addRequestHeaders(() => ({
+      'x-strapi-space': getSelectedSpace(),
+    }));
+  },
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="my-plugin/admin/src/index.ts"
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    const removeHeaders = app.unstable_addRequestHeaders(() => ({
+      'x-strapi-space': getSelectedSpace(),
+    }));
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+`unstable_addRequestHeaders()` returns a function that removes the provider. The same function and `unstable_getRequestHeaders()` are also exported from `@strapi/admin/strapi-admin`, for code that does not call `app.unstable_addRequestHeaders()` directly.
+
+### Which requests get the headers
+
+* Every request made through the fetch client: `get()`, `post()`, `put()` and `del()` of `getFetchClient()` and `useFetchClient()` (see [Fetch client](/cms/plugins-development/admin-fetch-client)). The RTK Query `adminApi` uses the fetch client in its base query, so its endpoints get the headers too.
+* Media Library uploads. They don't use the fetch client, so they call `unstable_getRequestHeaders()` directly.
+
+Login, logout, and other pre-login requests (for example `/admin/login` or `/admin/register`) don't get the headers: they carry no context such as a space, so a failing provider can't block a login or a logout.
+
+### How the headers are merged
+
+The fetch client builds the request headers in this order, with a later source replacing an earlier one that has the same name (header names are case-insensitive):
+
+1. The defaults: `Authorization`, plus `Accept` and `Content-Type` except for a `get()` with a `responseType` other than `json`.
+2. The provider headers, in the order the providers were registered.
+3. The `headers` option of the call.
+
+A provider can't replace `Authorization`, `Content-Type` or `Accept`. A value of `undefined` or `null` only skips that provider's entry for the header: the request still carries the value from an earlier provider, or goes out with no value for that header if none exists.
+
+The provider is read once per call, before any retry. A retry after a 401 response sends the same values as the first attempt, so a write cannot move to another space while the token refreshes.
+
+### Error handling
+
+If a provider throws, or returns a header name or value the browser cannot send (for example a non-Latin-1 value, or a result that is not a plain object), the request fails with a `RequestHeadersError` and is not sent. Sending the request without the header could run it in the wrong context, for example the default space.
+
+### CORS
+
+When the admin panel is hosted on another origin than the server, add the header names to the `headers` option of the `strapi::cors` middleware, or the browser blocks the requests:
+
+```js title="config/middlewares.js"
+module.exports = [
+  // ...
+  {
+    name: 'strapi::cors',
+    config: {
+      headers: ['Content-Type', 'Authorization', 'Origin', 'Accept', 'x-strapi-space'],
+    },
+  },
+  // ...
+];
+```
+
+This option replaces the default list instead of adding to it, so keep the default headers (`Content-Type`, `Authorization`, `Origin`, `Accept`) in the list.
