@@ -115,7 +115,7 @@ For environments that require foreign key-free schemas, consider using Strapi wi
 
 ## Can you filter and/or deep filter on dynamic zones and polymorphic relations?
 
-At this time we do not plan to allow for filtering on dynamic zones or polymorphic relations due to various complexity and performance issues that come from doing so.
+At this time we do not plan to allow for filtering on dynamic zones or polymorphic relations due to various complexity and performance issues that come from doing so. Media fields and components, however, can be filtered (see [REST API filters](/cms/api/rest/filters#deep-filtering)).
 
 ## How do I setup SSL with Strapi?
 

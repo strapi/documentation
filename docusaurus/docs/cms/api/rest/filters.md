@@ -347,7 +347,8 @@ The response above only contains a book's own attributes. The `author` relation 
 
 :::note
 - Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these content structures (see [`populate` documentation](/cms/api/rest/populate-select#population))
-- You can filter what you populate, you can also filter nested relations, but you can't use filters for polymorphic content structures (such as media fields and dynamic zones).
+- You can filter what you populate, and you can also filter nested relations, media fields, and components. You can't use filters on dynamic zones or polymorphic relations.
+- For instance, `GET /api/restaurants?filters[cover][id][$notNull]=true` returns restaurants that have an image in their `cover` media field, and `GET /api/restaurants?filters[chef][documentId][$eq]=<documentId>` returns restaurants whose `chef` relation targets the given document.
 :::
 
 :::caution
