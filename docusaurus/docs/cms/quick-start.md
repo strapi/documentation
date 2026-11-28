@@ -52,7 +52,7 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<StepDetails title="Step 1: Run the installation script and create a Strapi Cloud account" defaultOpen>
+<StepDetails title="Step 1: Run the installation script" defaultOpen>
 
 1. Run the following command in a terminal:
 
@@ -64,23 +64,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     </TabItem>
 
-2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> plan will be automatically applied to your project. For the purpose of this tutorial, ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
-
-3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
-
-4. Still in the browser tab, click **Continue with GitHub**. If you are not already logged in into GitHub with your current browser session, you might be redirected to a GitHub login page.
-
-5. Once logged in, the browser will display a "Congratulations, you're all set!" message and you can safely close the browser tab and get back to the terminal.
-
-    <ThemedImage
-      alt="Login GIF"
-      sources={{
-        light: '/img/assets/quick-start-guide/qsg-cloud-login.gif',
-        dark: '/img/assets/quick-start-guide/qsg-cloud-login.gif',
-      }}
-    />
-
-6. The terminal will now ask you a few questions. Press `Enter` to accept the default answer to all questions.
+2. The terminal will now ask you a few questions. Press `Enter` to accept the default answer to all questions.
 
     ![Questions and answers from the terminal](/img/assets/quick-start-guide/qsg-questions-answers-terminal.png)
 
@@ -88,7 +72,6 @@ As you will see in the terminal, your project is now building locally.
 
 :::info
 
-* The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi servers.
 * Many more installation options are available. Please refer to the [installation documentation](/cms/installation) for details.
 :::
 
