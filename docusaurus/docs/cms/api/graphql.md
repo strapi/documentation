@@ -21,7 +21,7 @@ import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 <Tldr>
 
-The GraphQL API allows querying and mutating content-types with filtering, sorting, and pagination. It uses `documentId` as the unique identifier and provides singular and plural queries with support for relations, media fields, components, dynamic zones, and localization.
+The GraphQL API allows querying and mutating content-types with filtering, sorting, and pagination. It uses `documentId` as the unique identifier and provides singular and plural queries with support for relations, media fields, components, dynamic zones, and localization. It also provides read-only queries for Media Library folders.
 
 </Tldr>
 
@@ -76,7 +76,7 @@ The GraphQL plugin exposes only one endpoint that handles all queries and mutati
 ```
 
 :::note No GraphQL API to upload media files
-The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
+The GraphQL API does not support media upload. Use the [REST API `POST /api/upload` endpoint](/cms/api/rest/upload) for all file uploads, including [uploads to a specific folder](/cms/api/rest/upload#upload-files-to-a-specific-folder), and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using the file's `id` or `documentId` (see [mutations on media files](#mutations-on-media-files)). Media Library folders can be fetched with read-only queries (see [Fetch Media Library folders](#upload-folders)).
 :::
 
 :::caution documentId only
@@ -476,6 +476,107 @@ Available enum values:
 | `PUBLISHED_WITH_DRAFT` | `published-with-draft` ([diagnostics only](/cms/api/document-service/publication-filter#diagnostics)) |
 
 To learn more, see the [use cases and accepted values](/cms/api/document-service/publication-filter#values) on the Document Service API page.
+
+### Fetch Media Library folders {#upload-folders}
+
+<VersionBadge version="5.63.0" />
+
+GraphQL exposes read-only queries for the [Media Library folders](/cms/features/media-library#organizing-assets-with-folders). They are similar to the [folder endpoints of the REST API](/cms/api/rest/upload#browse-folders). Folders cannot be created, renamed, moved, or deleted through GraphQL.
+
+<!-- source: packages/core/upload/server/src/graphql.ts#L25-L31, packages/core/upload/server/src/graphql.ts#L171-L187 -->
+The following queries are available:
+
+| Use case | Query | Required action |
+| -------- | ----- | --------------- |
+| Fetch a single folder | `uploadFolder` | `findOne` |
+| Fetch multiple folders | `uploadFolders` | `find` |
+| Fetch multiple folders with pagination metadata | `uploadFolders_connection` | `find` |
+
+Enable these actions in the *folder* section of the *Upload* permissions of a [Users & Permissions role](/cms/features/users-permissions#editing-a-role) or a custom [API token](/cms/features/api-tokens#creating-a-new-api-token). They are separate from the permissions on files and are disabled by default. Reading the `parent` field of a folder also requires the `find` action, including in `uploadFolder` queries.
+
+:::caution Folder names can be sensitive
+Full access and read-only API tokens can run these queries without additional configuration. Folder names can include client, brand, or campaign names: limit who holds these tokens, and do not grant the folder actions to the Public role when names are sensitive (see [Browse folders](/cms/api/rest/upload#browse-folders)).
+:::
+
+The `UploadFolder` type exposes the following fields:
+
+| Field | Description |
+| ----- | ----------- |
+| `documentId` | Document ID of the folder. |
+| `name` | Name of the folder. |
+| `path` | Internal path of the folder, used to filter a folder and its subfolders. Its segments are internal identifiers, not folder IDs. |
+| `namePath` | Path of the folder built from folder names (for example, `/Clients/Acme/2026`). It cannot be used in `filters` or `sort`. |
+| `parent` | Parent folder, or `null` for a folder at the root of the Media Library. Without the `find` action, `parent` is also `null` and the response contains a `Forbidden access` error for this field. |
+| `createdAt`, `updatedAt` | Creation and last update dates of the folder. |
+
+`UploadFolder` does not expose the numeric `id` of a folder, which the `folder` parameter of [REST uploads](/cms/api/rest/upload#upload-files-to-a-specific-folder) requires. To get it, call `GET /api/upload/folders/:id` with the `documentId` of the folder.
+
+`uploadFolders` and `uploadFolders_connection` accept the same [filters](#filters), [sorting](#sorting), and [pagination](#pagination) arguments as other collection queries. Without pagination arguments, the number of returned folders depends on the `defaultLimit` option of the [GraphQL plugin](/cms/plugins/graphql#available-options).
+
+The following example fetches the folders at the root of the Media Library:
+
+<!-- source: tests/api/core/upload/content-api/folders-graphql.test.api.js, strapi/strapi#28615 -->
+```graphql title="Example query: Fetch the root folders"
+{
+  uploadFolders(filters: { parent: { documentId: { null: true } } }) {
+    documentId
+    name
+    namePath
+  }
+}
+```
+
+The following example fetches the direct subfolders of a folder, to walk down the folder tree:
+
+<!-- source: tests/api/core/upload/content-api/folders-graphql.test.api.js, strapi/strapi#28615 -->
+```graphql title="Example query: Fetch the subfolders of a folder"
+{
+  uploadFolders(filters: { parent: { documentId: { eq: "h7d2k9m4p1q8r5s3t6v0w2xy" } } }) {
+    documentId
+    name
+    path
+  }
+}
+```
+
+To fetch a folder and all its subfolders, at any depth, first get the `path` of the folder. Then match the folders whose `path` equals this value, or starts with this value followed by `/`. `startsWith` alone is not enough: `/1` would also match `/10`. The following example fetches the folder whose `path` is `/1` and all its subfolders:
+
+<!-- source: packages/core/upload/server/src/utils/folder-query.ts, strapi/strapi#28344 -->
+```graphql title="Example query: Fetch a folder and all its subfolders"
+{
+  uploadFolders(filters: { or: [{ path: { eq: "/1" } }, { path: { startsWith: "/1/" } }] }) {
+    documentId
+    name
+    namePath
+  }
+}
+```
+
+The following example fetches a folder and its parent folder:
+
+<!-- source: tests/api/core/upload/content-api/folders-graphql.test.api.js, strapi/strapi#28615 -->
+```graphql title="Example query: Fetch a folder and its parent"
+{
+  uploadFolder(documentId: "n3b8c1f6g4j9k2l7m5p0q8rz") {
+    name
+    path
+    namePath
+    parent {
+      documentId
+      name
+    }
+  }
+}
+```
+
+:::note
+- `UploadFolder` does not expose the files or the subfolders of a folder. To walk the folder tree, filter `uploadFolders` by `parent`. The folder of a file is not exposed either.
+- `sort` cannot use the `files` relation of folders, at any depth (for example, `sort: "children.files.name"`). Such queries return an `Invalid key files` error.
+:::
+
+:::caution Name conflicts with the UploadFolder type
+If your application defines its own `UploadFolder` type, rename it, or fully disable the folder content-type in the Shadow CRUD. To do so, call `strapi.plugin('graphql').service('extension').shadowCRUD('plugin::upload.folder').disable()` in the `register()` function of `/src/index.js|ts`. This removes the `UploadFolder` type and the folder queries (see [disabling operations in the Shadow CRUD](/cms/plugins/graphql#disabling-operations-in-the-shadow-crud)).
+:::
 
 ## Mutations
 
@@ -962,7 +1063,7 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 
 ## Pagination
 
-<ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries can accept a `pagination` parameter. Results can be paginated either by page or by offset.
+Flat and <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries accept a `pagination` parameter, but only Relay-style queries return pagination metadata in `pageInfo`. Results can be paginated either by page or by offset.
 
 :::note
 Pagination methods can not be mixed. Always use either `page` with `pageSize` or `start` with `limit`.

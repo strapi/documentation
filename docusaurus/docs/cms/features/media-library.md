@@ -1266,8 +1266,10 @@ Metadata can be generated for up to 40 assets at a time. Only PNG, JPEG, WebP, H
 
 Folders in the Media Library help you organize uploaded assets. From the Media Library, it is possible to create new folders, move assets and folders, rename a folder, and delete folders. To browse them, see [navigating folders](#navigating-folders).
 
+Applications can browse folders through the [REST API](/cms/api/rest/upload#browse-folders) and the [GraphQL API](/cms/api/graphql#upload-folders). The REST API can also [upload files to a specific folder](/cms/api/rest/upload#upload-files-to-a-specific-folder).
+
 :::note
-Folders follow the permission system of assets (see [Users & Permissions feature](/cms/features/users-permissions)). It is not yet possible to define specific permissions for a folder. Creating a folder requires the _Create_ permission on assets, and renaming, moving or deleting one requires the _Update_ permission.
+In the admin panel, folders follow the permissions of assets (see [RBAC](/cms/features/rbac#plugins-and-settings)), and it is not yet possible to restrict a permission to a specific folder. Creating a folder requires the _Create_ permission on assets, and renaming, moving or deleting one requires the _Update_ permission. Reading folders through the Content API requires separate `find` and `findOne` actions (see [Browse folders](/cms/api/rest/upload#browse-folders)).
 :::
 
 :::caution
