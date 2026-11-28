@@ -868,7 +868,7 @@ Column headers in the table view are labels, not sort controls. Use the toolbar'
 
 #### Navigating folders {#navigating-folders}
 
-The folder tree on the left side of the interface lists the whole folder hierarchy. There is no breadcrumb: the tree and the page title tell you where you are.
+The folder tree on the left side of the interface lists the whole folder hierarchy. On screens at or above the medium breakpoint, there is no breadcrumb: the tree and the page title tell you where you are.
 
 <ThemedImage
   alt="Media Library displaying the content of a folder, with the folder tree expanded"
@@ -883,6 +883,14 @@ The folder tree on the left side of the interface lists the whole folder hierarc
 - Click <Icon name="house" /> **Home** to go back to the root of the library.
 
 Strapi does not enforce a maximum folder depth. The folder tree expands automatically to reveal the folder you are browsing.
+
+On screens below the medium breakpoint, the folder tree is hidden. While you are browsing a folder, the page title is replaced by a breadcrumb:
+
+- At the first level, the breadcrumb shows <Icon name="house" /> **Home** followed by the folder name.
+- Deeper in the hierarchy, a **Show more folders** button appears between **Home** and the folder name. It lists every folder in between, shallowest first, and clicking one navigates there.
+- The item count moves to a line below the breadcrumb, so the folder name gets the full width. A long folder name is truncated.
+
+Click <Icon name="house" /> **Home** in the breadcrumb to go back to the root of the library. The breadcrumb is not displayed at the root, while searching, or on screens at or above the medium breakpoint.
 
 #### Using the item actions menu {#item-actions}
 
