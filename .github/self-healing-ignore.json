@@ -2684,6 +2684,31 @@
       "number": 28010,
       "reason": "Drafted: https://github.com/strapi/documentation/pull/3725",
       "added": "2026-11-27"
+    },
+    {
+      "number": 28844,
+      "reason": "Triage: type correctness fix, no runtime behavior change",
+      "added": "2026-11-28"
+    },
+    {
+      "number": 28834,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-28"
+    },
+    {
+      "number": 28833,
+      "reason": "Triage: type fix matching runtime, no behavior change",
+      "added": "2026-11-28"
+    },
+    {
+      "number": 28820,
+      "reason": "Triage: development-only warning, no behavior change",
+      "added": "2026-11-28"
+    },
+    {
+      "number": 28817,
+      "reason": "Triage: bug fix restoring intended behavior",
+      "added": "2026-11-28"
     }
   ]
 }
