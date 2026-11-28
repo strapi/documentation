@@ -185,5 +185,7 @@ let data = await strapi.db.query('plugin::my-plugin.my-plugin-content-type').fin
 ````
 
 :::tip
-You can access the database via the `strapi` object which can be found in `middlewares`, `policies`, `controllers`, `services`, as well as from the `register`, `boostrap`, `destroy` lifecycle functions.
+You can access the database via the `strapi` object which can be found in `middlewares`, `policies`, `controllers`, `services`, as well as from the `bootstrap` and `destroy` lifecycle functions.
+
+The database is not available in the `register` lifecycle function. Strapi initializes it at the start of the bootstrap phase, so a query made in `register` throws a `Model <uid> not found` error.
 :::

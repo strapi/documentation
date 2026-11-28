@@ -285,7 +285,7 @@ export default {
 
 Lifecycle functions let you place code at specific phases of Strapi's startup and shutdown.
 
-- The `register()` function is for configuration-time setup before services start.
+- The `register()` function is for configuration-time setup before the database and routes are initialized.
 - The `bootstrap()` function is for initialization that needs Strapi's APIs.
 - The `destroy()` function is for teardown when the application stops.
 
@@ -293,7 +293,7 @@ Lifecycle functions let you place code at specific phases of Strapi's startup an
 
 The `register` lifecycle function, found in `./src/index.js` (or in `./src/index.ts`), is an asynchronous function that runs before the application is initialized.
 
-`register()` is the very first thing that happens when a Strapi application is starting. This happens _before_ any setup process and you don't have any access to database, routes, policies, or any other backend server elements within the `register()` function.
+The application's `register()` runs last in the register phase, after the `register()` function of every plugin. Content-types, components, policies, middlewares, and services are already loaded. The database is not initialized and routes are not set up yet, so you can't query the database or rely on HTTP routes within the `register()` function.
 
 The `register()` function can be used to:
 

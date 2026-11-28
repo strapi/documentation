@@ -131,6 +131,10 @@ Because the `user` and `auth` controllers have different types (plain object vs.
 
 You can add policies, register new endpoints, or remove existing ones by modifying the `plugin.routes['content-api'].routes` array in the extension file.
 
+:::note
+The Users & Permissions Content API router is a factory function that exposes its `routes` array for backward compatibility. Modify this array in the extension file or in a `register()` function. Strapi builds the routers at the start of the bootstrap phase. A route added after that point is never served.
+:::
+
 ### Add a custom policy {#add-custom-policy}
 
 A common requirement is restricting who can update or delete user accounts: for example, ensuring users can only update their own profile.

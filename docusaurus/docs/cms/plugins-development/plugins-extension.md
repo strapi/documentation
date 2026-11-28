@@ -114,6 +114,8 @@ module.exports = (plugin) => {
 ```
 </details>
 
+Pushing to `plugin.routes['content-api'].routes` works in the extension file or in a `register()` function. Strapi builds the routers at the start of the bootstrap phase, and a route pushed after that point is never served. The router must be an object or a core Content API router factory that exposes `routes` for backward compatibility. Users & Permissions, Upload, i18n, and Email use such factories.
+
 :::note Factory-based controllers
 Some plugin controllers, such as the `auth` controller in the Users & Permissions plugin, use a factory pattern (i.e. they are exported as functions: `({ strapi }) => ({ ... })`). 
 
@@ -179,7 +181,7 @@ This customization relies on an internal Upload plugin service (`image-manipulat
 
 ### Within the register and bootstrap functions
 
-To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-getters-usage).
+To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-getters-usage). Add routes in `register()`: Strapi builds the routers at the start of the bootstrap phase.
 
 <details>
 <summary>Example of extending a plugin's content-type within ./src/index.js|ts</summary>
