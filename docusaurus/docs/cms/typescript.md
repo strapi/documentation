@@ -51,5 +51,6 @@ There are 2 ways of getting started with TypeScript in Strapi:
 - Understand the [structure](/cms/project-structure) of a TypeScript-based Strapi project
 - Learn about the [configuration options](/cms/configurations/typescript) options related to TypeScript
 - Deep dive into TypeScript-related development [options and features](/cms/typescript/development)
+- Check your server code against registered contracts with [strict types](/cms/typescript/strict-types) <BetaBadge />
 - Read the [guides](/cms/typescript/guides) for specific use cases
 :::

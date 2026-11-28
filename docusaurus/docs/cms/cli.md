@@ -807,6 +807,8 @@ strapi ts:generate-types
 - **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
   Generate typings specifying the output directory in which the file will be created.
 
+When [strict types](/cms/typescript/strict-types) <BetaBadge /> are on (`strictTypes: true` in `config/typescript.ts`), `strapi ts:generate-types` also writes the strict files: `strict.d.ts`, `plugins.d.ts`, `services.ts`, `controllers.ts`, `policies.ts`, and `middlewares.ts`. If `tsconfig.json` leaves them out, the command logs a warning. A `strictTypes` value that is not a boolean fails the command.
+
 :::caution
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::

@@ -31,6 +31,10 @@ This guide will explore [TypeScript](/cms/typescript) patterns for manipulating 
 - **Generated Types:** Application types [have been generated](/cms/typescript/development#generate-typings-for-content-types-schemas) and are accessible.
   :::
 
+:::note
+With [strict types](/cms/typescript/strict-types) <BetaBadge />, Document Service results describe what Strapi returns at runtime: scalar attributes can be `null`, and relations are only present when populated. Such a result can still be passed where a `Data.ContentType` is expected, so the patterns of this guide keep working.
+:::
+
 ## Type Imports
 
 The `UID` namespace contains literal unions representing the available resources in the application.
